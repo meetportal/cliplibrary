@@ -1,14 +1,13 @@
 import { definePack } from '../../../pack';
+import { allInOne, EMERALD, hundredClients, SUNSET, saasBusiness, zeroConfusion } from './posts';
 import {
-  allInOne,
-  EMERALD,
-  hundredClients,
-  SUNSET,
-  saasBusiness,
+  aiAutomations,
+  clearDecision,
+  getInformed,
+  newFeature,
+  threeSteps,
   usersChoose,
-  zeroConfusion,
-} from './posts';
-import { aiAutomations, clearDecision, getInformed, newFeature, threeSteps } from './posts-more';
+} from './posts-more';
 
 export const emeraldSaasLaunchPack = definePack({
   id: 'emerald-saas-launch',
