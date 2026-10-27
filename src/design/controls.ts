@@ -11,6 +11,7 @@ export const toneSchema = z.object({
   l: z.number(),
   c: z.number(),
   h: z.number(),
+  neutral: z.boolean().optional(),
 });
 
 export const colorTargetSchema = z.object({
@@ -86,26 +87,31 @@ const oklch = (color: string): Tone | null => {
 
 export const alphaOf = (color: string): number => parse(color)?.alpha ?? 1;
 
+const NEUTRAL_CHROMA = 0.02;
+
 export const toneBetween = (base: string, shade: string): Tone | undefined => {
-  const from = oklch(base);
-  const to = oklch(shade);
-  if (from === null || to === null) {
-    return undefined;
-  }
   const baseColor = parse(base);
   const shadeColor = parse(shade);
-  if (
-    baseColor !== undefined &&
-    shadeColor !== undefined &&
-    formatHex(baseColor) === formatHex(shadeColor)
-  ) {
+  if (baseColor === undefined || shadeColor === undefined) {
     return undefined;
   }
-  return {
-    l: to.l - from.l,
-    c: from.c > 0.002 ? to.c / from.c : to.c,
-    h: to.h - from.h,
-  };
+  if (formatHex(baseColor) === formatHex(shadeColor)) {
+    return undefined;
+  }
+  const from = toOklch(baseColor);
+  const to = toOklch(shadeColor);
+  const l = to.l - from.l;
+  if (from.c < NEUTRAL_CHROMA) {
+    return { l, c: to.c, h: to.h ?? 0, neutral: true };
+  }
+  return { l, c: to.c / from.c, h: (to.h ?? 0) - (from.h ?? 0) };
+};
+
+const shiftedTone = (from: Tone, tone: Tone): Pick<Tone, 'c' | 'h'> => {
+  if (tone.neutral !== true) {
+    return { c: from.c * tone.c, h: from.h + tone.h };
+  }
+  return from.c < NEUTRAL_CHROMA ? { c: tone.c, h: tone.h } : { c: from.c, h: from.h };
 };
 
 export const applyTone = (base: string, tone: Tone | undefined, alpha = 1): string => {
@@ -122,8 +128,7 @@ export const applyTone = (base: string, tone: Tone | undefined, alpha = 1): stri
             {
               mode: 'oklch',
               l: Math.min(1, Math.max(0, from.l + tone.l)),
-              c: from.c > 0.002 ? from.c * tone.c : tone.c,
-              h: from.h + tone.h,
+              ...shiftedTone(from, tone),
             },
             'oklch',
           ),
@@ -133,6 +138,15 @@ export const applyTone = (base: string, tone: Tone | undefined, alpha = 1): stri
   }
   const rgb = parse(hex);
   return rgb === undefined ? hex : formatRgb({ ...rgb, alpha });
+};
+
+export const recolor = (next: string, base: string, sample: string): string => {
+  if (next.toLowerCase() === base.toLowerCase()) {
+    return sample;
+  }
+  return base.toLowerCase() === sample.toLowerCase()
+    ? next
+    : applyTone(next, toneBetween(base, sample), alphaOf(sample));
 };
 
 interface Controlled {
