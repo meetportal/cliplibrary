@@ -128,14 +128,7 @@ describe('clip control layouts', () => {
       expect(() => resolveClipControls(module.schema, module.controls)).not.toThrow();
     });
 
-    const reworked = module.controls.sections.some(
-      (section) =>
-        section.title === 'Colors' &&
-        section.fields.some(
-          (field) => typeof field !== 'string' && field.label === 'Primary color',
-        ),
-    );
-    it.if(reworked)(`${module.id} follows the standard Colors roles and first-glance limit`, () => {
+    it(`${module.id} follows the standard Colors roles and first-glance limit`, () => {
       expect(auditClipStandard(module.schema, module.controls)).toEqual([]);
     });
   }
