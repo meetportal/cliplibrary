@@ -309,7 +309,7 @@ export const DesignEditor = ({
         </button>
         <aside
           className={cn(
-            'shrink-0 overflow-y-auto bg-background lg:static lg:block lg:w-[280px] lg:border-l lg:shadow-none',
+            'shrink-0 overflow-y-auto bg-background lg:static lg:block lg:w-[280px] xl:w-[320px] lg:border-l lg:shadow-none',
             propertiesOpen
               ? 'fixed inset-x-0 bottom-0 z-40 block h-[60dvh] rounded-t-2xl border-t shadow-2xl md:inset-x-auto md:top-28 md:right-0 md:h-auto md:w-[280px] md:rounded-none md:border-t-0 md:border-l'
               : 'hidden',

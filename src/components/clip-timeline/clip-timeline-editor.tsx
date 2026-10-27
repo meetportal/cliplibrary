@@ -121,13 +121,20 @@ export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimel
 
   const durationInFrames = project.durationInFrames;
   const fitTimeline = useCallback(() => {
-    setPxPerFrame(
-      Math.min(DEFAULT_PX_PER_FRAME, fitPxPerFrame(durationInFrames, window.innerWidth)),
-    );
+    setPxPerFrame(fitPxPerFrame(durationInFrames, window.innerWidth));
   }, [durationInFrames]);
 
   useEffect(() => {
     fitTimeline();
+    let fittedWidth = window.innerWidth;
+    const onResize = () => {
+      if (window.innerWidth !== fittedWidth) {
+        fittedWidth = window.innerWidth;
+        fitTimeline();
+      }
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, [fitTimeline]);
 
   useEffect(() => {
@@ -232,7 +239,7 @@ export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimel
         <MobilePanelSwitch active={mobilePanel} onChange={setMobilePanel} />
         <aside
           className={cn(
-            'min-h-0 flex-col overflow-y-auto border-border bg-sidebar lg:flex lg:w-[360px] lg:flex-none lg:shrink-0 lg:border-l',
+            'min-h-0 flex-col overflow-y-auto border-border bg-sidebar lg:flex lg:w-[320px] xl:w-[360px] 2xl:w-[420px] lg:flex-none lg:shrink-0 lg:border-l',
             mobilePanel === 'properties' ? 'flex flex-1' : 'hidden',
           )}
         >
@@ -246,7 +253,7 @@ export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimel
       </div>
       <div
         className={cn(
-          'min-h-0 flex-col border-border border-t bg-sidebar lg:flex lg:h-72 lg:flex-none lg:shrink-0',
+          'min-h-0 flex-col border-border border-t bg-sidebar lg:flex lg:h-[clamp(12rem,30dvh,20rem)] lg:flex-none lg:shrink-0',
           mobilePanel === 'timeline' ? 'flex flex-1' : 'hidden',
         )}
       >
