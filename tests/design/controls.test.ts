@@ -6,6 +6,7 @@ import {
   createText,
   type DesignControl,
   linear,
+  recolor,
   setControlValue,
   setListItem,
   toneBetween,
@@ -78,6 +79,27 @@ describe('design controls', () => {
   it('round-trips a tone back to the original shade', () => {
     expect(applyTone('#1f4a36', toneBetween('#1f4a36', '#133024'))).toBe('#133024');
     expect(toneBetween('#1f4a36', '#1F4A36')).toBeUndefined();
+  });
+
+  it('keeps shades of a coloured role neutral when the role turns grey', () => {
+    const deep = toneBetween('#1f4a36', '#133024');
+    expect(applyTone('#808080', deep)).toBe('#666666');
+    expect(applyTone('#ffffff', deep)).toBe('#e1e1e1');
+  });
+
+  it('carries shades of a neutral role over to a coloured one', () => {
+    const divider = toneBetween('#ffffff', '#e7e3da');
+    expect(divider).toMatchObject({ neutral: true });
+    expect(applyTone('#ffffff', divider)).toBe('#e7e3da');
+    expect(applyTone('#2244aa', divider)).toBe('#0f2a8f');
+  });
+
+  it('recolours a sample relative to its base', () => {
+    expect(recolor('#1f4a36', '#1f4a36', '#133024')).toBe('#133024');
+    expect(recolor('#2244aa', '#1f4a36', '#1f4a36')).toBe('#2244aa');
+    expect(recolor('#2244aa', '#1f4a36', '#133024')).toBe(
+      applyTone('#2244aa', toneBetween('#1f4a36', '#133024')),
+    );
   });
 
   it('sets fonts, text and list items', () => {
