@@ -13,29 +13,51 @@ export const K = {
   white: '#ffffff',
   muted: '#a3ab9c',
   line: 'rgba(255,255,255,0.14)',
+  dim: '#3f4639',
 };
 
 export const { width: SW, height: SH } = SLIDE_SIZE;
 
-export const { head, body } = typeset('Space Grotesk', 'Manrope');
+export const HEADING = { label: 'Heading font', value: 'Space Grotesk' } as const;
+export const BODY = { label: 'Body font', value: 'Manrope' } as const;
 
-export const backdrop = (angle = 180) => [
-  rect(0, 0, SW, SH, K.black, { name: 'Background' }),
-  rect(0, 0, SW, SH, linear(angle, 'rgba(61,90,12,0.6)', 'rgba(6,8,5,0)', 'rgba(6,8,5,0)'), {
-    name: 'Glow wash',
-  }),
+type Role = 'background' | 'primary' | 'text';
+
+export interface Ink {
+  color: (key: Role) => string;
+  shade: (key: Role, exact: string) => string;
+}
+
+export const fonts = (t: { font: (key: 'heading' | 'body') => string }) =>
+  typeset(t.font('heading'), t.font('body'));
+
+export const backdrop = (ink: Ink, angle = 180) => [
+  rect(0, 0, SW, SH, ink.color('background'), { name: 'Background' }),
+  rect(
+    0,
+    0,
+    SW,
+    SH,
+    linear(
+      angle,
+      ink.shade('primary', 'rgba(61,90,12,0.6)'),
+      ink.shade('background', 'rgba(6,8,5,0)'),
+      ink.shade('background', 'rgba(6,8,5,0)'),
+    ),
+    { name: 'Glow wash' },
+  ),
 ];
 
-export const glow = (cx: number, cy: number, radius: number, strength = 0.55) =>
+export const glow = (ink: Ink, cx: number, cy: number, radius: number, strength = 0.55) =>
   circle(
     cx,
     cy,
     radius,
     radial(
-      `rgba(184,245,49,${strength})`,
-      `rgba(143,198,26,${(strength * 0.3).toFixed(2)})`,
-      'rgba(61,90,12,0)',
-      'rgba(61,90,12,0)',
+      ink.shade('primary', `rgba(184,245,49,${strength})`),
+      ink.shade('primary', `rgba(143,198,26,${(strength * 0.3).toFixed(2)})`),
+      ink.shade('primary', 'rgba(61,90,12,0)'),
+      ink.shade('primary', 'rgba(61,90,12,0)'),
     ),
     { name: 'Glow' },
   );
@@ -53,4 +75,5 @@ export const mono = (
     filters: { ...NO_FILTERS, grayscale: 1, contrast: 1.1 },
   });
 
-export const fade = (from: string) => linear(180, from, 'rgba(255,255,255,0.04)');
+export const fade = (ink: Ink, from: string) =>
+  linear(180, ink.shade('text', from), ink.shade('text', 'rgba(255,255,255,0.04)'));

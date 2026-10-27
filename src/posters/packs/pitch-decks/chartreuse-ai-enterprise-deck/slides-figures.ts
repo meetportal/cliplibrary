@@ -1,186 +1,227 @@
-import { circle, rating, rect, rotateNodes, template } from '../../../kit';
-import { backdrop, body, fade, glow, head, K, SH, SW } from './theme';
+import { circle, rating, rect, rotateNodes, type ThemeSpec, themed } from '../../../kit';
+import { BODY, backdrop, fade, fonts, glow, HEADING, K, SH, SW } from './theme';
 
-const tile = (
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  value: string,
-  label: string,
-  tone: 'lime' | 'white' | 'dark',
-) => {
-  const ink = tone === 'dark' ? K.white : K.black;
-  return [
-    rect(x, y, width, height, tone === 'lime' ? K.lime : tone === 'white' ? K.white : K.panel, {
-      name: 'Figure tile',
-      cornerRadius: 28,
-      stroke: K.line,
-      strokeWidth: tone === 'dark' ? 2 : 0,
-    }),
-    head(value, x + 40, y + 36, width - 80, 96, ink),
-    body(label, x + 40, y + 150, width - 80, 28, tone === 'dark' ? K.muted : K.black, {
-      fontWeight: 600,
-    }),
-  ];
-};
+type Tone = 'lime' | 'white' | 'dark';
 
-export const figuresSlide = template(SW, SH, () => [
-  backdrop(220),
-  head('Behind\nEvery\nFigure', 100, 180, 640, 120, K.white),
-  body(
-    'Every number here is a team that shipped faster, spent less and trusted the data behind its decisions.',
-    100,
-    620,
-    600,
-    32,
-    K.muted,
-  ),
-  tile(860, 260, 340, 320, '50+', 'Native features', 'lime'),
-  tile(860, 620, 340, 320, '8x', 'More layouts', 'dark'),
-  tile(1240, 100, 580, 300, '20x', 'Less time on reports', 'dark'),
-  tile(1240, 440, 580, 260, '2027', 'Global launch year', 'white'),
-  rect(1240, 740, 580, 200, K.panel, {
-    name: 'Rating tile',
-    cornerRadius: 28,
-    stroke: K.line,
-    strokeWidth: 2,
-  }),
-  head('4.8', 1280, 780, 200, 96, K.white),
-  rating(1480, 812, 52, 5, K.lime),
-  body('Average review score', 1480, 876, 320, 26, K.muted),
-]);
-
-const TIERS = [
-  {
-    name: 'Starter',
-    price: '$0',
-    copy: 'Try the core agent with\nstarter monthly credits.',
-    cta: 'Start free',
-  },
-  {
-    name: 'Pro',
-    price: '$12',
-    copy: 'Unlimited workflows, faster\nruns and priority support.',
-    cta: 'Upgrade now',
-  },
-  {
-    name: 'Scale',
-    price: '$29',
-    copy: 'Team seats, custom models\nand admin controls.',
-    cta: 'Talk to sales',
-  },
+const TILES: readonly { x: number; y: number; width: number; height: number; tone: Tone }[] = [
+  { x: 860, y: 260, width: 340, height: 320, tone: 'lime' },
+  { x: 860, y: 620, width: 340, height: 320, tone: 'dark' },
+  { x: 1240, y: 100, width: 580, height: 300, tone: 'dark' },
+  { x: 1240, y: 440, width: 580, height: 260, tone: 'white' },
 ];
 
-const TIER_LOOKS = [
-  { card: K.panel, ink: K.white, soft: K.muted, button: K.panelSoft, label: K.white, stroke: 2 },
-  { card: K.panel, ink: K.white, soft: K.muted, button: K.lime, label: K.black, stroke: 2 },
-  { card: K.white, ink: K.black, soft: '#3f4639', button: K.black, label: K.white, stroke: 0 },
-];
-
-const tierCard = (tier: (typeof TIERS)[number], index: number) => {
-  const x = 160 + index * 540;
-  const look = TIER_LOOKS[index] ?? TIER_LOOKS[0];
-  if (look === undefined) {
-    return [];
-  }
-  return [
-    rect(x, 360, 520, 600, look.card, {
-      name: 'Tier card',
-      cornerRadius: 28,
-      stroke: K.line,
-      strokeWidth: look.stroke,
-    }),
-    head(tier.name, x + 40, 400, 440, 44, look.ink),
-    body(tier.copy, x + 40, 470, 440, 28, look.soft),
-    head(tier.price, x + 40, 610, 200, 96, look.ink),
-    body('/month', x + 60 + tier.price.length * 58, 662, 200, 30, look.soft),
-    rect(x + 40, 840, 440, 80, look.button, { name: 'Tier button', cornerRadius: 40 }),
-    body(tier.cta, x + 40, 860, 440, 28, look.label, { align: 'center', fontWeight: 700 }),
-  ];
-};
-
-export const pricingSlide = template(SW, SH, () => [
-  backdrop(),
-  head('Pricing', 0, 30, SW, 300, fade('rgba(255,255,255,0.45)'), { align: 'center' }),
-  rect(694, 284, 532, 682, K.lime, { name: 'Popular frame', cornerRadius: 34 }),
-  body('Most popular', 700, 300, 520, 30, K.black, { align: 'center', fontWeight: 700 }),
-  TIERS.map((tier, index) => tierCard(tier, index)),
-]);
-
-const YEARS = ['2025', '2026', '2027'];
-
-export const revenueSlide = template(SW, SH, () => [
-  backdrop(160),
-  glow(1360, 800, 280, 0.35),
-  head('Revenue\nFocus', 100, 140, 700, 120, K.white),
-  body(
-    'We moved from growth at any cost to efficient, durable revenue: fewer pilots, bigger contracts and expansion inside every account.',
-    100,
-    450,
-    640,
-    32,
-    K.muted,
-  ),
-  YEARS.map((year, index) => [
-    body(year, 860, 200 + index * 250, 160, 30, K.muted, { fontWeight: 600 }),
-    rect(860, 250 + index * 250, 220, 3, K.line, { name: 'Year rule' }),
-    circle(1080, 251 + index * 250, 9, K.white),
-  ]),
-  head('20', 1140, 60, 600, 280, K.white, { lineHeight: 1 }),
-  head('27', 1140, 310, 600, 280, fade('rgba(255,255,255,0.9)'), { lineHeight: 1 }),
-  head('45', 1140, 560, 600, 280, K.lime, { lineHeight: 1 }),
-  head('Million', 1490, 760, 400, 72, K.lime),
-]);
-
-export const gaugeSlide = template(SW, SH, () => [
-  backdrop(),
-  glow(960, 640, 420, 0.25),
-  Array.from({ length: 7 }, (_, index) => {
-    const angle = -45 + index * 15;
-    const center = angle === 0;
-    return rotateNodes(angle, 960, 940, [
-      rect(950, 340, 20, center ? 120 : 90, center ? K.lime : 'rgba(255,255,255,0.5)', {
-        name: 'Tick',
-        cornerRadius: 10,
+export const figuresSlide = themed(
+  SW,
+  SH,
+  {
+    colors: {
+      background: { value: K.black, hint: 'Page and the text on the lime and white tiles' },
+      surface: { value: K.panel, hint: 'Dark figure tiles and the rating tile' },
+      primary: { value: K.lime, hint: 'First figure tile, the rating stars and the green wash' },
+      text: {
+        value: K.white,
+        hint: 'Title, the white tile, the figures on dark tiles and the tile outlines; its grey shade colors the paragraph and the dark tile labels',
+      },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      title: { label: 'Title', value: 'Behind\nEvery\nFigure' },
+      paragraph: {
+        label: 'Paragraph',
+        value:
+          'Every number here is a team that shipped faster, spent less and trusted the data behind its decisions.',
+      },
+      values: { label: 'Figure', value: ['50+', '8x', '20x', '2027'] },
+      labels: {
+        label: 'Figure label',
+        value: ['Native features', 'More layouts', 'Less time on reports', 'Global launch year'],
+      },
+      score: { label: 'Score', value: '4.8' },
+      scoreLabel: { label: 'Score label', value: 'Average review score' },
+    },
+  } as const satisfies ThemeSpec,
+  (t) => {
+    const { head, body } = fonts(t);
+    const muted = t.shade('text', K.muted);
+    const line = t.shade('text', K.line);
+    const labels = t.list('labels');
+    const tileFill = { lime: t.color('primary'), white: t.color('text'), dark: t.color('surface') };
+    return [
+      backdrop(t, 220),
+      head(t.copy('title'), 100, 180, 640, 120, t.color('text')),
+      body(t.copy('paragraph'), 100, 620, 600, 32, muted),
+      t.list('values').map((value, index) => {
+        const tile = TILES[index] ?? { x: 0, y: 0, width: 0, height: 0, tone: 'dark' };
+        const ink = tile.tone === 'dark' ? t.color('text') : t.color('background');
+        return [
+          rect(tile.x, tile.y, tile.width, tile.height, tileFill[tile.tone], {
+            name: 'Figure tile',
+            cornerRadius: 28,
+            stroke: tile.tone === 'dark' ? line : K.line,
+            strokeWidth: tile.tone === 'dark' ? 2 : 0,
+          }),
+          head(value, tile.x + 40, tile.y + 36, tile.width - 80, 96, ink),
+          body(
+            labels[index] ?? '',
+            tile.x + 40,
+            tile.y + 150,
+            tile.width - 80,
+            28,
+            tile.tone === 'dark' ? muted : t.color('background'),
+            { fontWeight: 600 },
+          ),
+        ];
       }),
-    ]);
-  }),
-  head('91%', 180, 560, 400, 140, 'rgba(255,255,255,0.22)'),
-  head('92%', 0, 500, SW, 230, K.white, { align: 'center' }),
-  head('93%', 1440, 560, 400, 140, 'rgba(255,255,255,0.22)', { align: 'right' }),
-  body(
-    'Average time saved by automating legacy workflows\nwith Kestrel agents.',
-    0,
-    820,
-    SW,
-    36,
-    K.muted,
-    { align: 'center' },
-  ),
-]);
+      rect(1240, 740, 580, 200, t.color('surface'), {
+        name: 'Rating tile',
+        cornerRadius: 28,
+        stroke: line,
+        strokeWidth: 2,
+      }),
+      head(t.copy('score'), 1280, 780, 200, 96, t.color('text')),
+      rating(1480, 812, 52, 5, t.color('primary')),
+      body(t.copy('scoreLabel'), 1480, 876, 320, 26, muted),
+    ];
+  },
+);
 
-export const legacySlide = template(SW, SH, () => [
-  backdrop(200),
-  glow(520, 540, 420, 0.3),
-  head('$120B+', 100, 400, 900, 200, K.lime),
-  body('Lost to downtime every year', 110, 640, 800, 36, K.white, { fontWeight: 600 }),
-  head('Legacy\nSystems', 1120, 120, 700, 110, K.white),
-  body(
-    'Old maintenance is reactive: teams firefight, outages compound and costs climb quarter after quarter.',
-    1120,
-    400,
-    700,
-    30,
-    K.muted,
-  ),
-  body(
-    'Kestrel turns that cycle around, predicting failures and fixing them before customers notice.',
-    1120,
-    620,
-    700,
-    30,
-    K.white,
-    { fontWeight: 600 },
-  ),
-]);
+export const revenueSlide = themed(
+  SW,
+  SH,
+  {
+    colors: {
+      background: { value: K.black, hint: 'Page' },
+      primary: { value: K.lime, hint: 'Last figure, Million, the glow and the green wash' },
+      text: {
+        value: K.white,
+        hint: 'Title, the first two figures, the year dots and rules; its grey shade colors the paragraph and the years',
+      },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      title: { label: 'Title', value: 'Revenue\nFocus' },
+      paragraph: {
+        label: 'Paragraph',
+        value:
+          'We moved from growth at any cost to efficient, durable revenue: fewer pilots, bigger contracts and expansion inside every account.',
+      },
+      years: { label: 'Year', value: ['2025', '2026', '2027'] },
+      figures: { label: 'Figure line', value: ['20', '27', '45'] },
+      unit: { label: 'Unit', value: 'Million' },
+    },
+  } as const satisfies ThemeSpec,
+  (t) => {
+    const { head, body } = fonts(t);
+    const [first = '', second = '', third = ''] = t.list('figures');
+    return [
+      backdrop(t, 160),
+      glow(t, 1360, 800, 280, 0.35),
+      head(t.copy('title'), 100, 140, 700, 120, t.color('text')),
+      body(t.copy('paragraph'), 100, 450, 640, 32, t.shade('text', K.muted)),
+      t.list('years').map((year, index) => [
+        body(year, 860, 200 + index * 250, 160, 30, t.shade('text', K.muted), {
+          fontWeight: 600,
+        }),
+        rect(860, 250 + index * 250, 220, 3, t.shade('text', K.line), { name: 'Year rule' }),
+        circle(1080, 251 + index * 250, 9, t.color('text')),
+      ]),
+      head(first, 1140, 60, 600, 280, t.color('text'), { lineHeight: 1 }),
+      head(second, 1140, 310, 600, 280, fade(t, 'rgba(255,255,255,0.9)'), { lineHeight: 1 }),
+      head(third, 1140, 560, 600, 280, t.color('primary'), { lineHeight: 1 }),
+      head(t.copy('unit'), 1490, 760, 400, 72, t.color('primary')),
+    ];
+  },
+);
+
+export const gaugeSlide = themed(
+  SW,
+  SH,
+  {
+    colors: {
+      background: { value: K.black, hint: 'Page' },
+      primary: { value: K.lime, hint: 'Center gauge tick, the glow and the green wash' },
+      text: {
+        value: K.white,
+        hint: 'Main figure, the side figures and the other ticks; its grey shade colors the caption',
+      },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      figures: { label: 'Figure', value: ['91%', '92%', '93%'] },
+      caption: {
+        label: 'Caption',
+        value: 'Average time saved by automating legacy workflows\nwith Kestrel agents.',
+      },
+    },
+  } as const satisfies ThemeSpec,
+  (t) => {
+    const { head, body } = fonts(t);
+    const [low = '', main = '', high = ''] = t.list('figures');
+    const faint = t.shade('text', 'rgba(255,255,255,0.22)');
+    return [
+      backdrop(t),
+      glow(t, 960, 640, 420, 0.25),
+      Array.from({ length: 7 }, (_, index) => {
+        const angle = -45 + index * 15;
+        const center = angle === 0;
+        return rotateNodes(angle, 960, 940, [
+          rect(
+            950,
+            340,
+            20,
+            center ? 120 : 90,
+            center ? t.color('primary') : t.shade('text', 'rgba(255,255,255,0.5)'),
+            { name: 'Tick', cornerRadius: 10 },
+          ),
+        ]);
+      }),
+      head(low, 180, 560, 400, 140, faint),
+      head(main, 0, 500, SW, 230, t.color('text'), { align: 'center' }),
+      head(high, 1440, 560, 400, 140, faint, { align: 'right' }),
+      body(t.copy('caption'), 0, 820, SW, 36, t.shade('text', K.muted), { align: 'center' }),
+    ];
+  },
+);
+
+export const legacySlide = themed(
+  SW,
+  SH,
+  {
+    colors: {
+      background: { value: K.black, hint: 'Page' },
+      primary: { value: K.lime, hint: 'Big figure, the glow and the green wash' },
+      text: {
+        value: K.white,
+        hint: 'Figure label, the title and the closing paragraph; its grey shade colors the first paragraph',
+      },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      figure: { label: 'Figure', value: '$120B+' },
+      figureLabel: { label: 'Figure label', value: 'Lost to downtime every year' },
+      title: { label: 'Title', value: 'Legacy\nSystems' },
+      paragraph: {
+        label: 'Paragraph',
+        value:
+          'Old maintenance is reactive: teams firefight, outages compound and costs climb quarter after quarter.',
+      },
+      closing: {
+        label: 'Closing paragraph',
+        value:
+          'Kestrel turns that cycle around, predicting failures and fixing them before customers notice.',
+      },
+    },
+  } as const satisfies ThemeSpec,
+  (t) => {
+    const { head, body } = fonts(t);
+    return [
+      backdrop(t, 200),
+      glow(t, 520, 540, 420, 0.3),
+      head(t.copy('figure'), 100, 400, 900, 200, t.color('primary')),
+      body(t.copy('figureLabel'), 110, 640, 800, 36, t.color('text'), { fontWeight: 600 }),
+      head(t.copy('title'), 1120, 120, 700, 110, t.color('text')),
+      body(t.copy('paragraph'), 1120, 400, 700, 30, t.shade('text', K.muted)),
+      body(t.copy('closing'), 1120, 620, 700, 30, t.color('text'), { fontWeight: 600 }),
+    ];
+  },
+);
