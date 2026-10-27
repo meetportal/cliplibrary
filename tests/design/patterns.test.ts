@@ -64,4 +64,18 @@ describe('mergePatterns', () => {
     );
     expect(patternsOf(stars)).toHaveLength(1);
   });
+
+  it('keeps shapes driven by different colour roles in separate patterns', () => {
+    const squares = [0, 10, 20, 30].map((x) => square(x, 0));
+    const role = (id: string) => (squares.findIndex((shape) => shape.id === id) < 2 ? 'a' : 'b');
+    const merged = mergePatterns(squares, role).elements;
+    expect(merged).toMatchObject([
+      { type: 'path', width: 20 },
+      { type: 'path', x: 20, width: 20 },
+    ]);
+    const paired = mergePatterns([...squares, square(40, 0)], (id) =>
+      squares.findIndex((shape) => shape.id === id) === 0 ? 'a' : 'b',
+    ).elements;
+    expect(paired.map((element) => element.type)).toEqual(['rect', 'path']);
+  });
 });
