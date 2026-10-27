@@ -10,67 +10,166 @@ import {
   rect,
   rotateNodes,
   STORY_SIZE,
-  template,
+  type Theme,
+  type ThemeSpec,
   text,
+  themed,
 } from '../../../kit';
-import { AMBER, H, HEAD, type ReviewPalette, reviewCard, sparkle, W } from './posts';
+import {
+  AMBER,
+  BODY,
+  type CardLook,
+  H,
+  HEADING,
+  QUOTE_GREY,
+  type ReviewPalette,
+  reviewCard,
+  sparkle,
+  W,
+} from './posts';
 
 const FACES = ['woman-portrait-1', 'man-portrait-2', 'woman-portrait-5', 'man-portrait-3'] as const;
 
-const typewriterBody = (p: ReviewPalette): Nodes[] => [
-  rect(130, 860, 520, 70, '#3a3a3f', { cornerRadius: 30, name: 'Roller' }),
-  circle(130, 895, 40, p.from),
-  circle(650, 895, 40, p.from),
-  rect(180, 880, 420, 26, '#d4d4d8', { cornerRadius: 6, name: 'Paper guide' }),
-  rect(100, 920, 580, 330, linear(180, p.from, p.to), {
-    cornerRadius: 50,
-    name: 'Typewriter body',
-  }),
-  rect(150, 1000, 480, 190, p.ink, { cornerRadius: 26, name: 'Keyboard' }),
-  [0, 1, 2].map((row) =>
-    Array.from({ length: 8 - row }, (_, key) =>
-      circle(195 + row * 28 + key * 56, 1045 + row * 52, 18, p.paper),
-    ),
-  ),
-];
-
 export const typewriter = (p: ReviewPalette) =>
-  template(W, H, () => [
-    rect(0, 0, W, H, p.ink, { name: 'Background' }),
-    rect(560, 300, 520, 560, linear(160, p.from, p.to), { name: 'Panel' }),
-    rect(200, 60, 380, 830, '#fff8ec', { name: 'Paper roll', cornerRadius: 6 }),
-    FACES.map((face, index) => {
-      const y = 100 + index * 190;
+  themed(
+    W,
+    H,
+    {
+      colors: {
+        background: {
+          value: p.ink,
+          hint: 'Page, the keyboard and the second headline; its lighter shades color the roller and the name lines',
+        },
+        primary: {
+          value: p.from,
+          hint: 'Top of the side panel and typewriter gradients and the roller knobs; its deeper shade colors the bottom of the gradients and the stars',
+        },
+        surface: {
+          value: p.paper,
+          hint: 'First headline, the keys and the sparkles; its shades color the paper roll, paper guide and text lines',
+        },
+      },
+      fonts: { heading: HEADING },
+      copy: {
+        headline: { label: 'Headline', value: 'Digital\nMarketing' },
+        subline: { label: 'Second headline', value: 'Results\nthat speak' },
+      },
+    } as const satisfies ThemeSpec,
+    (t) => {
+      const gradient = linear(160, t.color('primary'), t.shade('primary', p.to));
+      const headline = (content: string, y: number, fill: string) =>
+        text(content, 640, y, 420, {
+          fontFamily: t.font('heading'),
+          fontSize: 72,
+          fontWeight: 900,
+          fill,
+          lineHeight: 1.05,
+        });
+      const textLine = t.shade('surface', '#cfc6b6');
       return [
-        avatar(face, 250, y + 40, 26),
-        rect(290, y + 20, 180, 14, '#2b2b2b', { cornerRadius: 7, name: 'Name line' }),
-        rating(290, y + 46, 16, 5, p.to, 0.2),
-        rect(230, y + 92, 320, 10, '#cfc6b6', { cornerRadius: 5, name: 'Text line' }),
-        rect(230, y + 116, 260, 10, '#cfc6b6', { cornerRadius: 5, name: 'Text line' }),
-        rect(220, y + 160, 340, 2, '#e6dccb', { name: 'Rule' }),
+        rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+        rect(560, 300, 520, 560, gradient, { name: 'Panel' }),
+        rect(200, 60, 380, 830, t.shade('surface', '#fff8ec'), {
+          name: 'Paper roll',
+          cornerRadius: 6,
+        }),
+        FACES.map((face, index) => {
+          const y = 100 + index * 190;
+          return [
+            avatar(face, 250, y + 40, 26),
+            rect(290, y + 20, 180, 14, t.shade('background', '#2b2b2b'), {
+              cornerRadius: 7,
+              name: 'Name line',
+            }),
+            rating(290, y + 46, 16, 5, t.shade('primary', p.to), 0.2),
+            rect(230, y + 92, 320, 10, textLine, { cornerRadius: 5, name: 'Text line' }),
+            rect(230, y + 116, 260, 10, textLine, { cornerRadius: 5, name: 'Text line' }),
+            rect(220, y + 160, 340, 2, t.shade('surface', '#e6dccb'), { name: 'Rule' }),
+          ];
+        }),
+        rect(130, 860, 520, 70, t.shade('background', '#3a3a3f'), {
+          cornerRadius: 30,
+          name: 'Roller',
+        }),
+        circle(130, 895, 40, t.color('primary')),
+        circle(650, 895, 40, t.color('primary')),
+        rect(180, 880, 420, 26, t.shade('surface', '#d4d4d8'), {
+          cornerRadius: 6,
+          name: 'Paper guide',
+        }),
+        rect(100, 920, 580, 330, linear(180, t.color('primary'), t.shade('primary', p.to)), {
+          cornerRadius: 50,
+          name: 'Typewriter body',
+        }),
+        rect(150, 1000, 480, 190, t.color('background'), { cornerRadius: 26, name: 'Keyboard' }),
+        [0, 1, 2].map((row) =>
+          Array.from({ length: 8 - row }, (_, key) =>
+            circle(195 + row * 28 + key * 56, 1045 + row * 52, 18, t.color('surface')),
+          ),
+        ),
+        headline(t.copy('headline'), 420, t.color('surface')),
+        headline(t.copy('subline'), 600, t.color('background')),
+        sparkle(560, 230, 110, t.color('surface')),
+        sparkle(900, 900, 120, t.color('surface')),
       ];
-    }),
-    typewriterBody(p),
-    text('Digital\nMarketing', 640, 420, 420, {
-      fontFamily: HEAD,
-      fontSize: 72,
-      fontWeight: 900,
-      fill: p.paper,
-      lineHeight: 1.05,
-    }),
-    text('Results\nthat speak', 640, 600, 420, {
-      fontFamily: HEAD,
-      fontSize: 72,
-      fontWeight: 900,
-      fill: p.ink,
-      lineHeight: 1.05,
-    }),
-    sparkle(560, 230, 110),
-    sparkle(900, 900, 120),
-  ]);
+    },
+  );
 
-const envelope = (top: number): Nodes[] => [
-  rect(220, top, 640, 400, '#1f1f1f', { cornerRadius: 30, name: 'Envelope' }),
+const envelopeColors = (story: boolean) => ({
+  primary: {
+    value: AMBER.from,
+    hint: 'Top of the page gradient and the stars; its deeper shade is the bottom of the gradient',
+  },
+  secondary: {
+    value: '#1f1f1f',
+    hint: 'Envelope; its lighter shades color the envelope front and fold',
+  },
+  surface: {
+    value: AMBER.paper,
+    hint: story
+      ? 'The word reviews, the review cards, the button label and the sparkle'
+      : 'The word reviews, the review cards and the white sparkle',
+  },
+  text: {
+    value: AMBER.ink,
+    hint: story
+      ? 'CLIENT, reviewer names, the button and the arrow; its lighter shade colors the quotes'
+      : 'CLIENT, reviewer names and the dark sparkle; its lighter shade colors the quotes',
+  },
+});
+
+const envelopeCopy = {
+  title: { label: 'Title', value: 'CLIENT' },
+  subtitle: { label: 'Subtitle', value: 'reviews' },
+  names: { label: 'Reviewer', value: ['Ava Kim', 'Leo Grant', 'Nia Brooks'] },
+  quotes: {
+    label: 'Quote',
+    value: [
+      'Clear plan, fast results.',
+      'Best agency call we made.',
+      'Our reach tripled in a month.',
+    ],
+  },
+} as const;
+
+const envelopeSpec = {
+  colors: envelopeColors(false),
+  fonts: { heading: HEADING, body: BODY },
+  copy: envelopeCopy,
+} as const satisfies ThemeSpec;
+
+const envelopeStorySpec = {
+  colors: envelopeColors(true),
+  fonts: { heading: HEADING, body: BODY },
+  copy: { ...envelopeCopy, button: { label: 'Button', value: 'Read them all' } },
+} as const satisfies ThemeSpec;
+
+type EnvelopeTheme = Theme<typeof envelopeSpec>;
+
+const REVIEW_FACES = ['woman-portrait-2', 'man-portrait-1', 'woman-portrait-6'] as const;
+
+const envelope = (t: EnvelopeTheme, top: number): Nodes[] => [
+  rect(220, top, 640, 400, t.color('secondary'), { cornerRadius: 30, name: 'Envelope' }),
   poly(
     [
       [220, top + 30],
@@ -79,7 +178,7 @@ const envelope = (top: number): Nodes[] => [
       [860, top + 370],
       [220, top + 370],
     ],
-    '#2c2c2c',
+    t.shade('secondary', '#2c2c2c'),
     { name: 'Envelope front' },
   ),
   poly(
@@ -88,75 +187,85 @@ const envelope = (top: number): Nodes[] => [
       [540, top + 170],
       [840, top + 380],
     ],
-    '#383838',
+    t.shade('secondary', '#383838'),
     { name: 'Envelope fold' },
   ),
 ];
 
-const REVIEWS = [
-  { name: 'Ava Kim', face: 'woman-portrait-2', quote: 'Clear plan, fast results.' },
-  { name: 'Leo Grant', face: 'man-portrait-1', quote: 'Best agency call we made.' },
-  { name: 'Nia Brooks', face: 'woman-portrait-6', quote: 'Our reach tripled in a month.' },
-] as const;
+const envelopeScene = (t: EnvelopeTheme, offsetY: number): Nodes[] => {
+  const look: CardLook = {
+    card: t.color('surface'),
+    name: t.color('text'),
+    stars: t.color('primary'),
+    quote: t.shade('text', QUOTE_GREY),
+    heading: t.font('heading'),
+    body: t.font('body'),
+  };
+  const quotes = t.list('quotes');
+  return [
+    t.list('names').map((name, index) =>
+      rotateNodes([-6, 5, -3][index] ?? 0, 540, offsetY + 100 + index * 165, [
+        reviewCard(
+          250 + (index % 2) * 60,
+          offsetY + index * 165,
+          520,
+          look,
+          {
+            name,
+            face: REVIEW_FACES[index] ?? 'woman-portrait-2',
+            quote: quotes[index] ?? '',
+          },
+          0.85,
+        ),
+      ]),
+    ),
+    envelope(t, offsetY + 500),
+  ];
+};
 
-const envelopeScene = (p: ReviewPalette, offsetY: number): Nodes[] => [
-  REVIEWS.map((review, index) =>
-    rotateNodes([-6, 5, -3][index] ?? 0, 540, offsetY + 100 + index * 165, [
-      reviewCard(250 + (index % 2) * 60, offsetY + index * 165, 520, p, review, 0.85),
-    ]),
-  ),
-  envelope(offsetY + 500),
+const titles = (t: EnvelopeTheme, top: number, sizes: readonly [number, number, number]) => [
+  text(t.copy('title'), 0, top, W, {
+    fontFamily: t.font('heading'),
+    fontSize: sizes[0],
+    fontWeight: 900,
+    fill: t.color('text'),
+    align: 'center',
+    letterSpacing: 4,
+  }),
+  text(t.copy('subtitle'), 0, top + sizes[2], W, {
+    fontFamily: t.font('heading'),
+    fontSize: sizes[1],
+    fontWeight: 600,
+    fill: t.color('surface'),
+    align: 'center',
+  }),
 ];
 
-export const clientEnvelope = template(W, H, () => [
-  rect(0, 0, W, H, linear(160, AMBER.from, AMBER.to), { name: 'Background' }),
-  text('CLIENT', 0, 90, W, {
-    fontFamily: HEAD,
-    fontSize: 130,
-    fontWeight: 900,
-    fill: AMBER.ink,
-    align: 'center',
-    letterSpacing: 4,
-  }),
-  text('reviews', 0, 240, W, {
-    fontFamily: HEAD,
-    fontSize: 56,
-    fontWeight: 600,
-    fill: AMBER.paper,
-    align: 'center',
-  }),
-  envelopeScene(AMBER, 400),
-  sparkle(860, 380, 110),
-  sparkle(120, 1150, 90, AMBER.ink),
-]);
-
-export const clientEnvelopeStory = template(STORY_SIZE.width, STORY_SIZE.height, () => [
-  rect(0, 0, STORY_SIZE.width, STORY_SIZE.height, linear(160, AMBER.from, AMBER.to), {
+export const clientEnvelope = themed(W, H, envelopeSpec, (t) => [
+  rect(0, 0, W, H, linear(160, t.color('primary'), t.shade('primary', AMBER.to)), {
     name: 'Background',
   }),
-  text('CLIENT', 0, 230, W, {
-    fontFamily: HEAD,
-    fontSize: 150,
-    fontWeight: 900,
-    fill: AMBER.ink,
-    align: 'center',
-    letterSpacing: 4,
+  titles(t, 90, [130, 56, 150]),
+  envelopeScene(t, 400),
+  sparkle(860, 380, 110, t.color('surface')),
+  sparkle(120, 1150, 90, t.color('text')),
+]);
+
+const { width: SW, height: SH } = STORY_SIZE;
+
+export const clientEnvelopeStory = themed(SW, SH, envelopeStorySpec, (t) => [
+  rect(0, 0, SW, SH, linear(160, t.color('primary'), t.shade('primary', AMBER.to)), {
+    name: 'Background',
   }),
-  text('reviews', 0, 400, W, {
-    fontFamily: HEAD,
-    fontSize: 64,
-    fontWeight: 600,
-    fill: AMBER.paper,
-    align: 'center',
-  }),
-  envelopeScene(AMBER, 620),
-  pill('Read them all', 370, 1600, {
-    fill: AMBER.ink,
-    color: AMBER.paper,
+  titles(t, 230, [150, 64, 170]),
+  envelopeScene(t, 620),
+  pill(t.copy('button'), 370, 1600, {
+    fill: t.color('text'),
+    color: t.color('surface'),
     fontSize: 36,
-    fontFamily: HEAD,
+    fontFamily: t.font('heading'),
     fontWeight: 800,
   }),
-  icon('arrow-down', 510, 1750, 60, AMBER.ink, { strokeWidth: 2.6 }),
-  sparkle(860, 560, 120),
+  icon('arrow-down', 510, 1750, 60, t.color('text'), { strokeWidth: 2.6 }),
+  sparkle(860, 560, 120, t.color('surface')),
 ]);
