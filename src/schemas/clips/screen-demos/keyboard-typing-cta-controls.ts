@@ -10,9 +10,9 @@ export const keyboardTypingCtaControls = defineControls<KeyboardTypingCtaProps>(
         { path: 'copy.typed', label: 'Typed message' },
         { path: 'copy.headline', label: 'End card headline' },
         { path: 'copy.button', label: 'Button text' },
-        { path: 'copy.brand', label: 'Brand name' },
       ],
       more: [
+        { path: 'copy.brand', label: 'Brand name' },
         {
           path: 'copy.watermark',
           label: 'Watermark',
@@ -26,14 +26,81 @@ export const keyboardTypingCtaControls = defineControls<KeyboardTypingCtaProps>(
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: [
+            'keyboard.accent',
+            'keyboard.enter',
+            'endCard.accent',
+            'endCard.button',
+            'endCard.mark',
+          ],
+          label: 'Primary color',
+          hint: 'Send button, Enter key, caret, key press glow, the end card button, logo tile and headline caret',
+        },
+        {
+          link: ['endCard.background', 'endCard.buttonInk'],
+          label: 'Secondary color',
+          hint: 'End card backdrop and the button text and arrow',
+        },
+        {
+          link: ['keyboard.ink', 'keyboard.fieldColor'],
+          label: 'Text color',
+          hint: 'Key labels, keyboard icons and the typed message',
+        },
+        {
+          link: ['keyboard.panel', 'keyboard.key', 'keyboard.popup', 'keyboard.pill'],
+          label: 'Surface color',
+          hint: 'Keyboard panel, keys, key popups and message bar',
+        },
+        {
+          link: ['wall.color', 'wall.edge'],
+          label: 'Background color',
+          hint: 'The wall behind the hands, light and edge together',
+        },
+      ],
+      more: [
+        {
+          path: 'keyboard.accent',
+          label: 'Highlight color',
+          hint: 'Send button, caret, active shift, key popup underline and key press glow',
+        },
+        { path: 'keyboard.enter', label: 'Enter key color' },
+        { path: 'endCard.button', label: 'Button color' },
+        { path: 'endCard.mark', label: 'Logo tile color' },
+        { path: 'endCard.accent', label: 'Headline caret color' },
+        { path: 'endCard.background', label: 'End card background' },
+        {
+          path: 'endCard.buttonInk',
+          label: 'Button text color',
+          hint: 'Also the button arrow',
+        },
+        { path: 'keyboard.ink', label: 'Key label color', hint: 'Also the keyboard icons' },
+        { path: 'keyboard.fieldColor', label: 'Message text color' },
+        { path: 'keyboard.panel', label: 'Panel color' },
+        { path: 'keyboard.key', label: 'Key color' },
+        { path: 'keyboard.popup', label: 'Key popup color' },
+        { path: 'keyboard.pill', label: 'Message bar color' },
+        { path: 'wall.color', label: 'Wall color' },
+        {
+          path: 'wall.edge',
+          label: 'Wall edge color',
+          hint: 'Color the wall darkens to away from the top right',
+        },
+      ],
+    },
+    {
       title: 'Typing',
       fields: [
-        { path: 'timing.typeStart', label: 'Typing starts at', hint: 'Frame number' },
         {
           path: 'timing.typeEnd',
           label: 'Typing ends by',
           hint: 'Frame number; longer messages type faster to fit',
         },
+      ],
+      more: [
+        { path: 'timing.typeStart', label: 'Typing starts at', hint: 'Frame number' },
         {
           path: 'timing.maxKeyFrames',
           label: 'Max frames per key',
@@ -44,8 +111,6 @@ export const keyboardTypingCtaControls = defineControls<KeyboardTypingCtaProps>(
           label: 'Tap send at the end',
           hint: 'Presses Enter after the message, which sends it off the bar',
         },
-      ],
-      more: [
         {
           path: 'timing.rhythm',
           label: 'Rhythm variation',
@@ -80,42 +145,15 @@ export const keyboardTypingCtaControls = defineControls<KeyboardTypingCtaProps>(
     },
     {
       title: 'Keyboard',
-      fields: [
-        {
-          link: ['keyboard.panel', 'keyboard.key', 'keyboard.popup', 'keyboard.pill'],
-          label: 'Glass tint',
-          hint: 'Keyboard panel, keys, key popups and message bar',
-        },
-        {
-          link: ['keyboard.ink', 'keyboard.fieldColor'],
-          label: 'Text color',
-          hint: 'Key labels, icons and the typed message',
-        },
-        {
-          link: ['keyboard.accent', 'keyboard.enter'],
-          label: 'Accent color',
-          hint: 'Send button, Enter key, caret and key press glow',
-        },
-        { path: 'keyboard.scale', label: 'Keyboard size' },
-      ],
+      fields: [{ path: 'keyboard.scale', label: 'Keyboard size' }],
       more: [
-        { path: 'keyboard.panel', label: 'Panel color' },
         { path: 'keyboard.panelOpacity', label: 'Panel opacity' },
-        { path: 'keyboard.key', label: 'Key color' },
         { path: 'keyboard.keyOpacity', label: 'Key opacity' },
-        { path: 'keyboard.popup', label: 'Key popup color' },
-        { path: 'keyboard.ink', label: 'Key label color', hint: 'Also the keyboard icons' },
         {
           path: 'keyboard.hint',
           label: 'Muted color',
           hint: 'Placeholder, bottom row icons, key edges and dividers',
         },
-        {
-          path: 'keyboard.accent',
-          label: 'Highlight color',
-          hint: 'Send button, caret, active shift, key popup underline and key press glow',
-        },
-        { path: 'keyboard.enter', label: 'Enter key color' },
         {
           path: 'keyboard.iconInk',
           label: 'Arrow icon color',
@@ -138,9 +176,7 @@ export const keyboardTypingCtaControls = defineControls<KeyboardTypingCtaProps>(
           label: 'Rise distance',
           hint: 'Pixels the keyboard slides up while it fades in',
         },
-        { path: 'keyboard.pill', label: 'Message bar color' },
         { path: 'keyboard.pillOpacity', label: 'Message bar opacity' },
-        { path: 'keyboard.fieldColor', label: 'Message text color' },
         { path: 'keyboard.fieldSize', label: 'Message text size' },
         {
           path: 'keyboard.fieldY',
@@ -151,16 +187,14 @@ export const keyboardTypingCtaControls = defineControls<KeyboardTypingCtaProps>(
     },
     {
       title: 'Hands',
-      fields: [
-        { path: 'hand.show', label: 'Show hands' },
+      fields: [{ path: 'hand.show', label: 'Show hands' }],
+      more: [
         {
           path: 'hand.twoHands',
           label: 'Use two hands',
           hint: 'Off types everything with the right hand',
         },
         { path: 'hand.skin', label: 'Skin tone' },
-      ],
-      more: [
         { path: 'hand.size', label: 'Hand size' },
         {
           path: 'hand.bracelet',
@@ -216,24 +250,15 @@ export const keyboardTypingCtaControls = defineControls<KeyboardTypingCtaProps>(
       title: 'End card',
       fields: [
         {
-          link: ['endCard.accent', 'endCard.button', 'endCard.mark'],
-          label: 'Accent color',
-          hint: 'Button, logo tile and headline caret',
-        },
-        { path: 'endCard.background', label: 'Background' },
-        { path: 'endCard.ink', label: 'Text color', hint: 'Headline and brand name' },
-        {
-          path: 'endCard.buttonInk',
-          label: 'Button text color',
-          hint: 'Also the button arrow',
+          path: 'timing.cut',
+          label: 'End card starts at',
+          hint: 'Frame number where the iris opens from the Enter key',
         },
       ],
       more: [
-        { path: 'endCard.button', label: 'Button color' },
+        { path: 'endCard.ink', label: 'Headline color', hint: 'Headline and brand name' },
         { path: 'endCard.buttonArrow', label: 'Show button arrow' },
-        { path: 'endCard.mark', label: 'Logo tile color' },
         { path: 'endCard.markLeaf', label: 'Logo leaf color' },
-        { path: 'endCard.accent', label: 'Headline caret color' },
         { path: 'endCard.pattern', label: 'Leaf pattern color' },
         { path: 'endCard.patternOpacity', label: 'Leaf pattern opacity' },
         {
@@ -267,15 +292,9 @@ export const keyboardTypingCtaControls = defineControls<KeyboardTypingCtaProps>(
           ...LOOK.showBackdrop,
           hint: 'Off leaves the wall, end card fill and film grain transparent',
         },
-        { path: 'wall.color', label: 'Wall color' },
-        { path: 'wall.showPlant', label: 'Show plant' },
       ],
       more: [
-        {
-          path: 'wall.edge',
-          label: 'Wall edge color',
-          hint: 'Color the wall darkens to away from the top right',
-        },
+        { path: 'wall.showPlant', label: 'Show plant' },
         {
           path: 'wall.shadow',
           label: 'Wall shadow color',
@@ -299,12 +318,8 @@ export const keyboardTypingCtaControls = defineControls<KeyboardTypingCtaProps>(
     },
     {
       title: 'Timing',
-      fields: [
-        {
-          path: 'timing.cut',
-          label: 'End card starts at',
-          hint: 'Frame number where the iris opens from the Enter key',
-        },
+      fields: [{ link: ['motion.enter', 'motion.exit'], label: 'Entrance and exit' }],
+      more: [
         {
           path: 'timing.fadeOut',
           label: 'Final fade starts at',
@@ -314,8 +329,6 @@ export const keyboardTypingCtaControls = defineControls<KeyboardTypingCtaProps>(
           ...MOTION.speed,
           hint: 'Scales all scene timing; the clip length, entrance and exit stay the same',
         },
-      ],
-      more: [
         { path: 'timing.keyboardIn', label: 'Keyboard appears at', hint: 'Frame number' },
         { path: 'timing.keyboardFrames', label: 'Keyboard fade-in length', hint: 'In frames' },
         { path: 'timing.handIn', label: 'Hands enter at', hint: 'Frame number' },

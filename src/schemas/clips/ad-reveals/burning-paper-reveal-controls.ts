@@ -11,22 +11,16 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
       title: 'Text',
       fields: [
         { path: 'copy.headline', label: 'Headline' },
+        { path: 'copy.kicker', label: 'Top line', hint: 'Handwritten, above the headline' },
+        { path: 'copy.aside', label: 'Side note', hint: 'Handwritten, beside the headline' },
+      ],
+      more: [
+        { path: 'copy.footer', label: 'Footer line', hint: 'Shown in capitals' },
         {
           path: 'type.headlineSize',
           label: 'Headline size',
           hint: 'In pixels. Lower it for longer headlines so they stay on the paper',
         },
-        { path: 'copy.kicker', label: 'Top line', hint: 'Handwritten, above the headline' },
-        { path: 'copy.aside', label: 'Side note', hint: 'Handwritten, beside the headline' },
-        { path: 'copy.footer', label: 'Footer line', hint: 'Shown in capitals' },
-        { path: 'type.ink', label: 'Print color', hint: 'Headline, footer and border line' },
-        {
-          path: 'type.accent',
-          label: 'Handwriting color',
-          hint: 'Top line, side note and the underline swoosh',
-        },
-      ],
-      more: [
         { path: 'type.underline', label: 'Underline swoosh' },
         {
           link: ['type.kickerSize', 'type.asideSize'],
@@ -51,13 +45,75 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
       ],
     },
     {
-      title: 'Burn',
+      title: 'Colors',
       fields: [
-        { path: 'burn.startFrame', label: 'Burn starts at', hint: 'Frame number' },
-        { path: 'burn.endFrame', label: 'Burn ends at', hint: 'Frame number' },
-        { path: 'burn.ragged', label: 'Edge roughness', hint: 'In pixels' },
+        {
+          link: ['burn.ember', 'flame.outer', 'flame.tip', 'type.accent'],
+          label: 'Primary color',
+          hint: 'Glowing burn edge, sparks, the outer flames and their tips, the outer firelight on the wall, and the handwriting',
+        },
+        {
+          link: ['flame.core', 'flame.mid'],
+          label: 'Secondary color',
+          hint: 'Inner flames, the firelight tint and the light on the hand',
+        },
+        {
+          path: 'type.ink',
+          label: 'Text color',
+          hint: 'Printed headline, footer and border line',
+        },
+        {
+          link: ['paper.color', 'brandCard.ink'],
+          label: 'Surface color',
+          hint: 'The paper sheet and the end card text',
+        },
+        {
+          link: ['backdrop.upper', 'backdrop.upperEdge', 'brandCard.background'],
+          label: 'Background color',
+          hint: 'Upper wall and its fade, and the end card',
+        },
       ],
       more: [
+        {
+          path: 'burn.ember',
+          label: 'Ember color',
+          hint: 'Glowing edge line, sparks and the warm spill on the paper',
+        },
+        { path: 'flame.outer', label: 'Outer flame color' },
+        { path: 'flame.tip', label: 'Flame tip color' },
+        {
+          path: 'type.accent',
+          label: 'Handwriting color',
+          hint: 'Top line, side note and the underline swoosh',
+        },
+        { path: 'flame.core', label: 'Flame core color' },
+        { path: 'flame.mid', label: 'Middle flame color', hint: 'Also tints the firelight' },
+        { path: 'paper.color', label: 'Paper color' },
+        { path: 'brandCard.ink', label: 'Card text color' },
+        { path: 'backdrop.upper', label: 'Upper wall' },
+        {
+          path: 'backdrop.upperEdge',
+          label: 'Upper wall edge',
+          hint: 'Color the upper wall fades to away from the corner',
+        },
+        { path: 'brandCard.background', label: 'Card color' },
+        { path: 'backdrop.side', label: 'Left wall' },
+        { path: 'backdrop.wall', label: 'Lower wall' },
+        { path: 'backdrop.wallDeep', label: 'Lower wall shade' },
+        { path: 'burn.char', label: 'Char color' },
+        { path: 'burn.scorch', label: 'Scorch color' },
+        { path: 'flame.smokeColor', label: 'Smoke color' },
+        { path: 'hand.skin', label: 'Skin tone' },
+        { path: 'hand.sleeveColor', label: 'Sleeve color' },
+        { path: 'hand.braceletColor', label: 'Bracelet color' },
+      ],
+    },
+    {
+      title: 'Burn',
+      fields: [{ path: 'burn.startFrame', label: 'Burn starts at', hint: 'Frame number' }],
+      more: [
+        { path: 'burn.endFrame', label: 'Burn ends at', hint: 'Frame number' },
+        { path: 'burn.ragged', label: 'Edge roughness', hint: 'In pixels' },
         {
           path: 'burn.from',
           label: 'Revealed at start',
@@ -81,13 +137,6 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
           hint: 'Brown singe beside the edge, in pixels',
         },
         {
-          path: 'burn.ember',
-          label: 'Ember color',
-          hint: 'Glowing edge line, sparks and the warm spill on the paper',
-        },
-        { path: 'burn.char', label: 'Char color' },
-        { path: 'burn.scorch', label: 'Scorch color' },
-        {
           path: 'burn.seed',
           label: 'Edge variation',
           hint: 'Changes the edge shape, flicker and sparks',
@@ -96,16 +145,10 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
     },
     {
       title: 'Flames',
-      fields: [
-        { path: 'flame.height', label: 'Flame height' },
+      fields: [{ path: 'flame.height', label: 'Flame height' }],
+      more: [
         { path: 'flame.intensity', label: 'Flame brightness' },
         { path: 'flame.embers', label: 'Sparks', hint: 'Number of flying sparks' },
-      ],
-      more: [
-        { path: 'flame.core', label: 'Core color' },
-        { path: 'flame.mid', label: 'Middle color', hint: 'Also tints the firelight' },
-        { path: 'flame.outer', label: 'Outer color' },
-        { path: 'flame.tip', label: 'Tip color' },
         { path: 'flame.width', label: 'Flame width' },
         {
           path: 'flame.spread',
@@ -129,7 +172,6 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
         { path: 'flame.paperGlow', label: 'Firelight on paper' },
         { path: 'flame.shimmer', label: 'Heat haze', hint: 'Ripples the wall above the flames' },
         { path: 'flame.smoke', label: 'Smoke' },
-        { path: 'flame.smokeColor', label: 'Smoke color' },
         {
           path: 'flame.fadeStart',
           label: 'Flames die down from',
@@ -139,12 +181,10 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
       ],
     },
     {
-      title: 'Paper',
-      fields: [
-        { path: 'paper.color', label: 'Paper color' },
-        { path: 'paper.tilt', label: 'Paper tilt', hint: 'In degrees' },
-      ],
+      title: 'Paper and hand',
+      fields: [{ path: 'hand.show', label: 'Show hand' }],
       more: [
+        { path: 'paper.tilt', label: 'Paper tilt', hint: 'In degrees' },
         { path: 'paper.width', label: 'Paper width' },
         { path: 'paper.height', label: 'Paper height' },
         { path: 'paper.x', label: 'Paper X', hint: 'Left edge, screen pixels before zoom' },
@@ -158,19 +198,8 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
         { path: 'paper.bend', label: 'Paper bend', hint: 'Curve of the edges and fold highlights' },
         { path: 'paper.fibre', label: 'Paper texture' },
         { path: 'paper.border', label: 'Border line', hint: 'Thin printed frame, 0 hides it' },
-      ],
-    },
-    {
-      title: 'Hand',
-      fields: [
-        { path: 'hand.show', label: 'Show hand' },
-        { path: 'hand.skin', label: 'Skin tone' },
-      ],
-      more: [
         { path: 'hand.sleeve', label: 'Sleeve', hint: 'Off shows a bare arm' },
-        { path: 'hand.sleeveColor', label: 'Sleeve color' },
         { path: 'hand.bracelet', label: 'Bracelet' },
-        { path: 'hand.braceletColor', label: 'Bracelet color' },
         { path: 'hand.shadow', label: 'Hand shadow', hint: 'Shadow the hand casts on the paper' },
         { path: 'hand.scale', label: 'Hand size' },
         { path: 'hand.x', label: 'Grip X', hint: "Pixels from the paper's left edge" },
@@ -194,35 +223,26 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
           label: 'Show wall',
           hint: 'Off drops the wall, paper shadow, firelight on the wall and heat haze for a transparent background',
         },
-        { path: 'backdrop.upper', label: 'Upper wall' },
-        { path: 'backdrop.side', label: 'Left wall' },
-        { path: 'backdrop.wall', label: 'Lower wall' },
       ],
       more: [
-        {
-          path: 'backdrop.upperEdge',
-          label: 'Upper wall edge',
-          hint: 'Color the upper wall fades to away from the corner',
-        },
-        { path: 'backdrop.wallDeep', label: 'Lower wall shade' },
         { path: 'backdrop.apexX', label: 'Wall corner X', hint: 'Screen pixels' },
         { path: 'backdrop.apexY', label: 'Wall corner Y', hint: 'Screen pixels' },
       ],
     },
     {
-      title: 'Camera and timing',
+      title: 'Timing, camera and entrance',
       fields: [
-        {
-          path: 'camera.zoomFrom',
-          label: 'Start zoom',
-          hint: 'How close the paper starts. It eases out to full frame by Zoom settles at',
-        },
         {
           ...MOTION.speed,
           hint: 'Scales the burn, flames, camera and end card timing. Entrance and exit keep their length',
         },
       ],
       more: [
+        {
+          path: 'camera.zoomFrom',
+          label: 'Start zoom',
+          hint: 'How close the paper starts. It eases out to full frame by Zoom settles at',
+        },
         { path: 'camera.handheld', label: 'Handheld shake' },
         { path: 'camera.zoomHold', label: 'Mid zoom', hint: 'Zoom held while the burn plays' },
         { path: 'camera.holdStart', label: 'Zoom hold starts at', hint: 'Frame number' },
@@ -255,21 +275,17 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
         },
         { path: 'camera.rollFrames', label: 'Wall roll length', hint: 'In frames' },
         MOTION.enter,
-        MOTION.enterFrames,
         MOTION.exit,
+        MOTION.enterFrames,
         MOTION.exitFrames,
       ],
     },
     {
       title: 'End card',
-      fields: [
-        { path: 'brandCard.show', label: 'Show end card' },
+      fields: [{ path: 'brandCard.show', label: 'Show end card' }],
+      more: [
         { path: 'brandCard.name', label: 'Brand name' },
         { path: 'brandCard.tagline', label: 'Tagline' },
-      ],
-      more: [
-        { path: 'brandCard.background', label: 'Card color' },
-        { path: 'brandCard.ink', label: 'Card text color' },
         { path: 'brandCard.nameSize', label: 'Name size' },
         { path: 'brandCard.taglineSize', label: 'Tagline size' },
         { path: 'brandCard.start', label: 'Card appears at', hint: 'Frame number' },

@@ -8,15 +8,15 @@ export const phoneFlatLayControls = defineControls<PhoneFlatLayProps>({
       title: 'Phone',
       fields: [
         { path: 'phone.screen', label: 'Screen' },
+        { path: 'phone.finish', label: 'Phone finish' },
+        { path: 'scale', label: 'Phone size' },
+      ],
+      more: [
         {
           path: 'phone.customScreen',
           label: 'Custom screen image',
           hint: 'Replaces the built-in screen; leave empty to use the screen above',
         },
-        { path: 'phone.finish', label: 'Phone finish' },
-        { path: 'scale', label: 'Phone size' },
-      ],
-      more: [
         {
           path: 'phoneTurn',
           label: 'Phone rotation',
@@ -32,6 +32,36 @@ export const phoneFlatLayControls = defineControls<PhoneFlatLayProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          path: 'surface.color',
+          label: 'Primary color',
+          hint: 'The wavy clay ribbons under the phone',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners together, seen where the ribbons leave gaps or are hidden. A dark color also switches to darker studio lighting',
+        },
+        {
+          link: ['look.paperLine', 'look.accent'],
+          label: 'Accent color',
+          hint: 'Paper pattern lines and the paper margin line, seen where the ribbons leave gaps. Shows only when the paper pattern or margin line is on',
+        },
+      ],
+      more: [
+        {
+          ...LOOK.background,
+          label: 'Background center',
+          hint: 'A dark color also switches to darker studio lighting',
+        },
+        LOOK.backgroundEdge,
+        LOOK.paperLine,
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when Paper margin line is on' },
+      ],
+    },
+    {
       title: 'Camera',
       fields: [
         {
@@ -44,6 +74,8 @@ export const phoneFlatLayControls = defineControls<PhoneFlatLayProps>({
           label: 'Ending tilt',
           hint: 'Where the tilt lands, in radians; 0 is straight top-down',
         },
+      ],
+      more: [
         {
           path: 'camera.turnFrom',
           label: 'Starting turn',
@@ -55,8 +87,6 @@ export const phoneFlatLayControls = defineControls<PhoneFlatLayProps>({
           label: 'Camera move length',
           hint: 'In frames. Longer than the clip leaves the move still settling at the end',
         },
-      ],
-      more: [
         {
           path: 'camera.delay',
           label: 'Camera move starts at',
@@ -75,16 +105,15 @@ export const phoneFlatLayControls = defineControls<PhoneFlatLayProps>({
     {
       title: 'Ribbons',
       fields: [
-        { path: 'surface.color', label: 'Ribbon color' },
         {
           path: 'surface.show',
           label: 'Show ribbons',
           hint: 'Off leaves the phone floating over the background',
         },
-        { path: 'surface.count', label: 'Number of ribbons' },
         { path: 'surface.amplitude', label: 'Wave height' },
       ],
       more: [
+        { path: 'surface.count', label: 'Number of ribbons' },
         { path: 'surface.waves', label: 'Waves per ribbon', hint: 'Wave cycles along each ribbon' },
         {
           path: 'surface.curl',
@@ -113,11 +142,9 @@ export const phoneFlatLayControls = defineControls<PhoneFlatLayProps>({
     },
     {
       title: 'Lighting',
-      fields: [
-        STAGE.keyLight,
-        { ...STAGE.reflections, hint: 'Studio reflections on the phone and ribbons' },
-      ],
+      fields: [STAGE.keyLight],
       more: [
+        { ...STAGE.reflections, hint: 'Studio reflections on the phone and ribbons' },
         { ...STAGE.shadowSoftness, hint: 'Blur of the shadows the phone and ribbons cast' },
         { path: 'camera.lightX', label: 'Key light left to right' },
         { path: 'camera.lightY', label: 'Key light height' },
@@ -129,36 +156,27 @@ export const phoneFlatLayControls = defineControls<PhoneFlatLayProps>({
       ],
     },
     {
+      title: 'Background',
+      fields: [LOOK.showBackdrop],
+      more: [
+        { ...LOOK.grain, hint: 'Sits behind the ribbons, so it shows only where they leave gaps' },
+        LOOK.spotlight,
+        LOOK.liveGrain,
+        LOOK.paper,
+        LOOK.paperSpacing,
+        LOOK.paperMargin,
+      ],
+    },
+    {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
         {
           ...MOTION.speed,
           hint: 'Scales the camera move and its start frame. Camera drift, entrance and exit keep their pace',
         },
-      ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
-    },
-    {
-      title: 'Background',
-      fields: [
-        {
-          ...LOOK.background,
-          hint: 'Seen only where the ribbons leave gaps. A dark color also switches to darker studio lighting',
-        },
-        LOOK.showBackdrop,
-      ],
-      more: [
-        { ...LOOK.grain, hint: 'Sits behind the ribbons, so it shows only where they leave gaps' },
-        LOOK.backgroundEdge,
-        LOOK.spotlight,
-        LOOK.liveGrain,
-        LOOK.paper,
-        LOOK.paperLine,
-        LOOK.paperSpacing,
-        LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
+        MOTION.enterFrames,
+        MOTION.exitFrames,
       ],
     },
   ],

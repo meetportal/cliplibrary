@@ -14,13 +14,13 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
         },
         { path: 'board.tagline', label: 'Tagline' },
         { path: 'board.brand', label: 'Brand name', hint: 'Shown beside the star in the corner' },
+      ],
+      more: [
         {
           path: 'board.headlineSize',
           label: 'Headline size',
           hint: 'Three or more rows are set smaller automatically',
         },
-      ],
-      more: [
         {
           path: 'board.textWidth',
           label: 'Headline width limit',
@@ -35,42 +35,74 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
     {
       title: 'Colors',
       fields: [
-        { path: 'board.paper', label: 'Board background' },
-        {
-          link: ['board.headlineColor', 'board.brandColor'],
-          label: 'Text color',
-          hint: 'Headline and brand name',
-        },
         {
           link: ['board.accentColor', 'board.markColor', 'hero.emblem'],
-          label: 'Accent color',
+          label: 'Primary color',
           hint: "Headline highlight, corner brackets, tagline rule, logo star and the hero's chest emblem",
+        },
+        {
+          link: ['hero.suit', 'hero.cape', 'hero.trim'],
+          label: 'Secondary color',
+          hint: "The hero's suit, cape, boots, gloves and belt",
+        },
+        {
+          link: ['board.headlineColor', 'board.brandColor', 'board.taglineColor'],
+          label: 'Text color',
+          hint: 'Headline, brand name and tagline on the board',
+        },
+        {
+          link: ['board.paper', 'board.frame', 'board.pole'],
+          label: 'Surface color',
+          hint: 'Board face behind the text, steel frame, catwalk, back truss, lamp housings and pole',
+        },
+        {
+          link: ['world.skyTop', 'world.skyHorizon', 'world.haze', 'world.sea'],
+          label: 'Background color',
+          hint: 'Sky, distant haze and sea; only with the coastline shown',
         },
       ],
       more: [
-        { path: 'board.headlineColor', label: 'Headline color' },
         {
           path: 'board.accentColor',
           label: 'Highlight color',
           hint: 'Last headline line, corner brackets and the rule above the tagline',
         },
-        { path: 'board.taglineColor', label: 'Tagline color' },
-        { path: 'board.brandColor', label: 'Brand name color' },
         { path: 'board.markColor', label: 'Logo star color' },
+        { path: 'hero.emblem', label: 'Chest emblem color' },
+        { path: 'hero.suit', label: 'Suit color' },
+        { path: 'hero.cape', label: 'Cape color' },
+        { path: 'hero.trim', label: 'Boots, gloves and belt color' },
+        { path: 'board.headlineColor', label: 'Headline color' },
+        { path: 'board.brandColor', label: 'Brand name color' },
+        { path: 'board.taglineColor', label: 'Tagline color' },
+        { path: 'board.paper', label: 'Board background' },
+        {
+          path: 'board.frame',
+          label: 'Frame color',
+          hint: 'Frame, catwalk, back truss and lamp housings',
+        },
+        { path: 'board.pole', label: 'Pole color' },
+        { path: 'hero.visor', label: 'Visor color' },
+        { path: 'world.skyTop', label: 'Sky top color' },
+        { path: 'world.skyHorizon', label: 'Sky horizon color' },
+        {
+          path: 'world.haze',
+          label: 'Haze color',
+          hint: 'Fog over the distance and the color behind the horizon',
+        },
+        { path: 'world.sea', label: 'Sea color' },
       ],
     },
     {
       title: 'Billboard',
-      fields: [
-        { path: 'board.lamps', label: 'Billboard lamps' },
+      fields: [{ path: 'board.lamps', label: 'Billboard lamps' }],
+      more: [
         { path: 'board.lampColor', label: 'Lamp light color' },
         {
           path: 'timing.lampsStart',
           label: 'Lamps switch on at',
           hint: 'Frame number of the first lamp',
         },
-      ],
-      more: [
         { path: 'board.lampGlow', label: 'Lamp brightness' },
         { path: 'timing.lampsFrames', label: 'Lamp warm-up', hint: 'In frames per lamp' },
         {
@@ -79,17 +111,6 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
           hint: 'In frames; lamps light from left to right',
         },
         {
-          link: ['board.frame', 'board.pole'],
-          label: 'Steel color',
-          hint: 'Frame, catwalk, lamp housings and pole',
-        },
-        {
-          path: 'board.frame',
-          label: 'Frame color',
-          hint: 'Frame, catwalk, back truss and lamp housings',
-        },
-        { path: 'board.pole', label: 'Pole color' },
-        {
           path: 'board.yaw',
           label: 'Board angle',
           hint: 'Turns the billboard and the hero toward the left or right',
@@ -97,16 +118,15 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
       ],
     },
     {
-      title: 'Hero',
-      fields: [
-        { path: 'hero.suit', label: 'Suit color' },
-        { path: 'hero.cape', label: 'Cape color' },
-        { path: 'hero.scale', label: 'Hero size' },
-      ],
+      title: 'Hero and newspaper',
+      fields: [{ path: 'hero.masthead', label: 'Newspaper name' }],
       more: [
-        { path: 'hero.trim', label: 'Boots, gloves and belt color' },
-        { path: 'hero.visor', label: 'Visor color' },
-        { path: 'hero.emblem', label: 'Chest emblem color' },
+        {
+          path: 'hero.frontHeadline',
+          label: 'Newspaper headline',
+          hint: 'Front page, first two lines',
+        },
+        { path: 'hero.scale', label: 'Hero size' },
         {
           path: 'hero.seatX',
           label: 'Seat position',
@@ -118,19 +138,6 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
           label: 'Breathing and page rustle',
           hint: 'Higher moves the chest and paper more',
         },
-      ],
-    },
-    {
-      title: 'Newspaper',
-      fields: [
-        { path: 'hero.masthead', label: 'Newspaper name' },
-        {
-          path: 'hero.frontHeadline',
-          label: 'Newspaper headline',
-          hint: 'Front page, first two lines',
-        },
-      ],
-      more: [
         { path: 'hero.newsprint', label: 'Paper color' },
         { path: 'hero.newsInk', label: 'Ink color' },
         { path: 'timing.turnStart', label: 'Page turn starts at', hint: 'Frame number' },
@@ -147,18 +154,18 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
       title: 'Camera',
       fields: [
         {
-          path: 'camera.startDistance',
-          label: 'Start distance',
-          hint: 'How far the drone starts from the board',
-        },
-        {
           path: 'camera.endDistance',
           label: 'End distance',
           hint: 'How close the drone ends; lower is closer',
         },
-        { path: 'camera.handheld', label: 'Handheld shake' },
       ],
       more: [
+        {
+          path: 'camera.startDistance',
+          label: 'Start distance',
+          hint: 'How far the drone starts from the board',
+        },
+        { path: 'camera.handheld', label: 'Handheld shake' },
         { path: 'camera.fieldOfView', label: 'Field of view', hint: 'In degrees' },
         {
           path: 'camera.startHeight',
@@ -191,12 +198,7 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
     },
     {
       title: 'Scenery',
-      fields: [
-        { ...LOOK.showBackdrop, label: 'Show coastline and sky' },
-        { path: 'world.skyTop', label: 'Sky top color' },
-        { path: 'world.skyHorizon', label: 'Sky horizon color' },
-        { path: 'world.sea', label: 'Sea color' },
-      ],
+      fields: [{ ...LOOK.showBackdrop, label: 'Show coastline and sky' }],
       more: [
         { path: 'world.sunGlow', label: 'Sun glow color', hint: 'In the sky and on the sea' },
         {
@@ -208,11 +210,6 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
           path: 'world.sunAzimuth',
           label: 'Sun direction',
           hint: 'Moves the sun glow left or right across the horizon',
-        },
-        {
-          path: 'world.haze',
-          label: 'Haze color',
-          hint: 'Fog over the distance and the color behind the horizon',
         },
         { path: 'world.hazeDensity', label: 'Haze density' },
         { path: 'world.foam', label: 'Surf foam color' },
@@ -242,15 +239,13 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
     },
     {
       title: 'Lighting and grade',
-      fields: [
-        { path: 'light.sun', label: 'Sunlight strength' },
+      fields: [{ path: 'light.sun', label: 'Sunlight strength' }],
+      more: [
         {
           path: 'light.exposure',
           label: 'Exposure',
           hint: 'Scales the sunlight and sky fill light together',
         },
-      ],
-      more: [
         { path: 'light.sunColor', label: 'Sunlight color' },
         { path: 'light.fill', label: 'Sky fill light' },
         { path: 'light.fillColor', label: 'Sky fill color' },
@@ -271,13 +266,13 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
     },
     {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
+      fields: [MOTION.enter],
+      more: [
         MOTION.exit,
         { ...MOTION.exitFrames, hint: 'In frames; starts at 0, so raise it for the exit to play' },
         MOTION.speed,
+        MOTION.enterFrames,
       ],
-      more: [MOTION.enterFrames],
     },
   ],
   hidden: ['motion.float'],

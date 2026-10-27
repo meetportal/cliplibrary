@@ -17,6 +17,33 @@ export const phoneSwapControls = defineControls<PhoneSwapProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Primary color',
+          hint: 'The backdrop behind the phone, center and corners together. A dark color also switches the studio lighting to its dark setup',
+        },
+        {
+          ...LOOK.paperLine,
+          label: 'Secondary color',
+          hint: 'The ruled or grid paper lines; shows when Paper pattern is not plain',
+        },
+        {
+          ...LOOK.accent,
+          label: 'Accent color',
+          hint: 'The paper margin line; shows when Paper margin line is on',
+        },
+      ],
+      more: [
+        {
+          ...LOOK.background,
+          hint: 'A dark color also switches the studio lighting to its dark setup',
+        },
+        LOOK.backgroundEdge,
+      ],
+    },
+    {
       title: 'Swap',
       fields: [
         { path: 'startSide', label: 'First screen side' },
@@ -30,13 +57,13 @@ export const phoneSwapControls = defineControls<PhoneSwapProps>({
           label: 'Spins per swap',
           hint: 'Full turns the phone makes while it crosses to the other side',
         },
+      ],
+      more: [
         {
           path: 'turn',
           label: 'Turn toward center',
           hint: 'How far the screen angles inward on each side, in radians. 0 faces the camera',
         },
-      ],
-      more: [
         {
           path: 'sway',
           label: 'Idle sway',
@@ -52,38 +79,24 @@ export const phoneSwapControls = defineControls<PhoneSwapProps>({
     },
     {
       title: 'Phone',
-      fields: [
-        { path: 'scale', label: 'Phone size' },
-        STAGE.reflections,
-        STAGE.keyLight,
-        STAGE.shadow,
-      ],
-      more: [STAGE.shadowSoftness],
+      fields: [{ path: 'scale', label: 'Phone size' }],
+      more: [STAGE.reflections, STAGE.keyLight, STAGE.shadow, STAGE.shadowSoftness],
     },
     {
       title: 'Camera',
-      fields: [STAGE.cameraDistance, STAGE.cameraDrift],
-      more: [STAGE.fieldOfView],
+      fields: [],
+      more: [STAGE.cameraDistance, STAGE.cameraDrift, STAGE.fieldOfView],
     },
     {
       title: 'Background',
-      fields: [
-        { ...LOOK.showBackdrop, hint: 'Off leaves the phone on a transparent background' },
-        {
-          ...LOOK.background,
-          hint: 'A dark color also switches the studio lighting to its dark setup',
-        },
-        LOOK.grain,
-      ],
+      fields: [{ ...LOOK.showBackdrop, hint: 'Off leaves the phone on a transparent background' }],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         { ...LOOK.spotlight, hint: 'Soft glow that follows the phone' },
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { ...LOOK.accent, label: 'Margin line color' },
       ],
     },
     {

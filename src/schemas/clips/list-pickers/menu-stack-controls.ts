@@ -29,10 +29,53 @@ export const menuStackControls = defineControls<MenuStackProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['icon.color', 'pointer.color', 'look.accent'],
+          label: 'Primary color',
+          hint: 'Card icons, the pointer and the paper margin line',
+        },
+        { ...LOOK.ink, label: 'Text color', hint: 'Heading and front card text' },
+        {
+          ...LOOK.muted,
+          label: 'Secondary color',
+          hint: 'Card text fades toward this on rows away from the front',
+        },
+        {
+          link: ['card.fill', 'icon.glyph'],
+          label: 'Surface color',
+          hint: 'The cards and the arrow inside each icon',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge', 'card.veil'],
+          label: 'Background color',
+          hint: 'Background center and corners, and the color edge cards fade into',
+        },
+      ],
+      more: [
+        { path: 'icon.color', label: 'Icon color' },
+        { path: 'pointer.color', label: 'Pointer color' },
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when Paper margin line is on' },
+        { path: 'card.fill', label: 'Card color' },
+        { path: 'icon.glyph', label: 'Arrow color' },
+        LOOK.background,
+        LOOK.backgroundEdge,
+        {
+          path: 'card.veil',
+          label: 'Faded card color',
+          hint: 'Cards blend toward this as they fade at the edges',
+        },
+        LOOK.paperLine,
+      ],
+    },
+    {
       title: 'Rolling',
       fields: [
-        { path: 'timing.delay', label: 'First roll at', hint: 'Frame number' },
         { path: 'timing.interval', label: 'Time per row', hint: 'Frames between each roll' },
+      ],
+      more: [
+        { path: 'timing.delay', label: 'First roll at', hint: 'Frame number' },
         {
           path: 'timing.moveFrames',
           label: 'Roll length',
@@ -43,8 +86,6 @@ export const menuStackControls = defineControls<MenuStackProps>({
           label: 'Row spacing',
           hint: 'Vertical distance between cards in pixels',
         },
-      ],
-      more: [
         {
           path: 'card.shrink',
           label: 'Shrink per row',
@@ -60,22 +101,18 @@ export const menuStackControls = defineControls<MenuStackProps>({
           label: 'Edge fade',
           hint: 'How many rows at the top and bottom edges fade out',
         },
+        {
+          ...MOTION.speed,
+          hint: 'Scales the rolling and the fade-in timing. Entrance, exit and glow drift keep their pace',
+        },
       ],
     },
     {
       title: 'Text',
-      fields: [
-        { path: 'type.font', label: 'Font' },
+      fields: [{ path: 'type.font', label: 'Font', hint: 'Heading and card text' }],
+      more: [
         { path: 'type.size', label: 'Item text size' },
         { path: 'type.labelSize', label: 'Heading size' },
-        { ...LOOK.ink, hint: 'Heading and front card text' },
-      ],
-      more: [
-        {
-          ...LOOK.muted,
-          label: 'Faded text color',
-          hint: 'Rows away from the front fade toward this',
-        },
         { path: 'type.weight', label: 'Item text weight' },
         { path: 'type.labelWeight', label: 'Heading weight' },
         {
@@ -87,18 +124,11 @@ export const menuStackControls = defineControls<MenuStackProps>({
     },
     {
       title: 'Cards',
-      fields: [
-        { path: 'card.fill', label: 'Card color' },
+      fields: [],
+      more: [
         { path: 'card.width', label: 'Card width' },
         { path: 'card.height', label: 'Card height' },
         { path: 'card.radius', label: 'Corner roundness' },
-      ],
-      more: [
-        {
-          path: 'card.veil',
-          label: 'Faded card color',
-          hint: 'Cards blend toward this as they fade at the edges',
-        },
         { path: 'card.shadow', label: 'Shadow strength' },
         { path: 'card.shadowBlur', label: 'Shadow softness' },
         { path: 'card.shadowY', label: 'Shadow drop', hint: 'Downward offset in pixels' },
@@ -120,24 +150,16 @@ export const menuStackControls = defineControls<MenuStackProps>({
         {
           path: 'layout.centerY',
           label: 'Vertical center',
-          hint: 'Moves the heading, pointer and front card together',
+          hint: 'In pixels from the top, moves the heading, pointer and the whole card stack together',
         },
       ],
     },
     {
       title: 'Icons and pointer',
-      fields: [
-        {
-          link: ['icon.color', 'pointer.color'],
-          label: 'Accent color',
-          hint: 'Card icons and the pointer',
-        },
+      fields: [],
+      more: [
         { path: 'icon.show', label: 'Show icons' },
         { path: 'pointer.show', label: 'Show pointer' },
-      ],
-      more: [
-        { path: 'icon.color', label: 'Icon color' },
-        { path: 'icon.glyph', label: 'Arrow color' },
         { path: 'icon.size', label: 'Icon size' },
         {
           path: 'icon.radius',
@@ -145,7 +167,6 @@ export const menuStackControls = defineControls<MenuStackProps>({
           hint: 'Half the icon size makes a circle',
         },
         { path: 'icon.glyphStroke', label: 'Arrow thickness' },
-        { path: 'pointer.color', label: 'Pointer color' },
         { path: 'pointer.width', label: 'Pointer width' },
         { path: 'pointer.height', label: 'Pointer height' },
         {
@@ -162,9 +183,9 @@ export const menuStackControls = defineControls<MenuStackProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.spotlight],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.spotlight,
         {
           path: 'aura.blobs',
           label: 'Soft glows',
@@ -180,24 +201,19 @@ export const menuStackControls = defineControls<MenuStackProps>({
         LOOK.grain,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
       ],
     },
     {
       title: 'Motion',
-      fields: [
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
         {
           path: 'entrance.stagger',
           label: 'Card cascade',
           hint: 'Frames between each card appearing, outward from the front card',
         },
-        MOTION.enter,
-        MOTION.exit,
-      ],
-      more: [
         {
           path: 'entrance.delay',
           label: 'Fade-in start',
@@ -212,10 +228,6 @@ export const menuStackControls = defineControls<MenuStackProps>({
           path: 'entrance.rise',
           label: 'Card rise',
           hint: 'Pixels each card rises as it fades in',
-        },
-        {
-          ...MOTION.speed,
-          hint: 'Scales the rolling and the fade-in timing. Entrance, exit and glow drift keep their pace',
         },
         MOTION.enterFrames,
         MOTION.exitFrames,

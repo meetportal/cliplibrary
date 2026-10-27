@@ -16,19 +16,46 @@ export const pillFanControls = defineControls<PillFanProps>({
         {
           link: ['labelType.font', 'pill.font'],
           label: 'Font',
-          hint: 'Shows the phrase font. Picking one sets the phrase and the words to it; More options sets each on its own',
+          hint: 'Sets the phrase and the words to one font. Shows Currently mixed while they differ; More options sets each on its own',
         },
-        { path: 'labelType.size', label: 'Phrase size', hint: 'In pixels' },
-        { path: 'pill.textSize', label: 'Word size', hint: 'In pixels, the pill height stays put' },
-        { ...LOOK.ink, label: 'Phrase color' },
       ],
       more: [
+        { path: 'labelType.size', label: 'Phrase size', hint: 'In pixels' },
+        { path: 'pill.textSize', label: 'Word size', hint: 'In pixels, the pill height stays put' },
         { path: 'labelType.font', label: 'Phrase font' },
         { path: 'pill.font', label: 'Word font' },
         { path: 'labelType.weight', label: 'Phrase weight' },
         { path: 'pill.weight', label: 'Word weight' },
         { path: 'labelType.tracking', label: 'Phrase letter spacing', hint: 'In em' },
         { path: 'labelType.tilt', label: 'Phrase tilt', hint: 'In degrees' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['pill.color', 'look.accent'],
+          label: 'Primary color',
+          hint: 'The word pills and the paper margin line',
+        },
+        { ...LOOK.ink, label: 'Text color', hint: 'The phrase left of the hinge' },
+        { path: 'pill.text', label: 'Secondary color', hint: 'The words on the pills' },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        { path: 'pill.color', label: 'Pill color' },
+        {
+          ...LOOK.accent,
+          label: 'Margin line color',
+          hint: 'Shown when the paper margin line is on',
+        },
+        LOOK.background,
+        LOOK.backgroundEdge,
+        LOOK.paperLine,
       ],
     },
     {
@@ -44,14 +71,14 @@ export const pillFanControls = defineControls<PillFanProps>({
           label: 'Angle between pills',
           hint: 'Degrees each older pill turns further away',
         },
+        { path: 'steps.interval', label: 'Frames per word', hint: 'Lower switches words faster' },
+      ],
+      more: [
         {
           path: 'fan.trail',
           label: 'Pills left behind',
           hint: 'How many older pills stay visible in the fan',
         },
-        { path: 'steps.interval', label: 'Frames per word', hint: 'Lower switches words faster' },
-      ],
-      more: [
         {
           path: 'fan.swing',
           label: 'Swing-in angle',
@@ -78,19 +105,21 @@ export const pillFanControls = defineControls<PillFanProps>({
     },
     {
       title: 'Pills',
-      fields: [
-        { path: 'pill.color', label: 'Pill color' },
-        { path: 'pill.text', label: 'Word color' },
-        { path: 'pill.height', label: 'Pill height', hint: 'In pixels, the ends stay fully round' },
-      ],
+      fields: [],
       more: [
+        { path: 'pill.height', label: 'Pill height', hint: 'In pixels, the ends stay fully round' },
         { path: 'pill.padding', label: 'Side padding' },
-        { path: 'pill.shadow', label: 'Shadow strength' },
+        {
+          path: 'pill.shadow',
+          label: 'Shadow strength',
+          hint: 'The shadow is a darker shade of the pill color',
+        },
       ],
     },
     {
       title: 'Layout',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'position.x',
           label: 'Horizontal position',
@@ -107,8 +136,6 @@ export const pillFanControls = defineControls<PillFanProps>({
           label: 'Overall tilt',
           hint: 'Turns the phrase and fan around the hinge, in degrees',
         },
-      ],
-      more: [
         {
           path: 'labelType.gap',
           label: 'Gap before pills',
@@ -123,9 +150,8 @@ export const pillFanControls = defineControls<PillFanProps>({
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        LOOK.background,
+      fields: [LOOK.showBackdrop],
+      more: [
         {
           path: 'aura.blobs',
           label: 'Color glows',
@@ -138,22 +164,13 @@ export const pillFanControls = defineControls<PillFanProps>({
             strength: 'Strength',
           },
         },
-      ],
-      more: [
-        LOOK.backgroundEdge,
         LOOK.spotlight,
         { path: 'aura.drift', label: 'Glow drift', hint: 'How much the soft glows wander' },
         LOOK.grain,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        {
-          ...LOOK.accent,
-          label: 'Margin line color',
-          hint: 'Shown when the paper margin line is on',
-        },
       ],
     },
     {

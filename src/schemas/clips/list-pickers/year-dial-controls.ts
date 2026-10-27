@@ -13,6 +13,8 @@ export const yearDialControls = defineControls<YearDialProps>({
           label: 'First year',
           hint: 'Year in the highlight before the first turn; each turn counts on from here',
         },
+      ],
+      more: [
         {
           path: 'yearStep',
           label: 'Count by',
@@ -25,12 +27,51 @@ export const yearDialControls = defineControls<YearDialProps>({
         },
         { path: 'yearType.font', label: 'Font' },
         { path: 'yearType.size', label: 'Year size', hint: 'In pixels' },
-      ],
-      more: [
         { link: ['yearType.weight', 'yearType.labelWeight'], label: 'Font weight' },
         { path: 'yearType.weight', label: 'Year weight' },
         { path: 'yearType.labelSize', label: 'Label size', hint: 'In pixels' },
         { path: 'yearType.labelWeight', label: 'Label weight' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['highlight.color', 'pointer.color', 'look.accent'],
+          label: 'Primary color',
+          hint: 'The highlight bar, the pointer and the paper margin line',
+        },
+        {
+          path: 'highlight.text',
+          label: 'Secondary color',
+          hint: 'The year inside the highlight bar',
+        },
+        {
+          link: ['look.ink', 'labelColor'],
+          label: 'Text color',
+          hint: 'The years outside the highlight and the label beside the pointer',
+        },
+        {
+          link: ['ticks.color', 'ticks.minorColor'],
+          label: 'Accent color',
+          hint: 'The major and minor ticks around the dial together',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        { path: 'highlight.color', label: 'Highlight color' },
+        { path: 'pointer.color', label: 'Pointer color' },
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when the paper has a margin' },
+        { ...LOOK.ink, label: 'Year color', hint: 'Years outside the highlight' },
+        { path: 'labelColor', label: 'Label color' },
+        { path: 'ticks.color', label: 'Major tick color' },
+        { path: 'ticks.minorColor', label: 'Minor tick color' },
+        { ...LOOK.background, label: 'Background center' },
+        LOOK.backgroundEdge,
       ],
     },
     {
@@ -41,14 +82,14 @@ export const yearDialControls = defineControls<YearDialProps>({
           label: 'Time per turn',
           hint: 'Frames from one turn to the next; each turn moves on one year',
         },
+      ],
+      more: [
         {
           path: 'steps.moveFrames',
           label: 'Turn length',
           hint: 'Frames each turn takes, capped at the time per turn',
         },
         { path: 'steps.delay', label: 'First turn at', hint: 'Frame number' },
-      ],
-      more: [
         {
           path: 'turnEasing',
           label: 'Turn feel',
@@ -72,33 +113,9 @@ export const yearDialControls = defineControls<YearDialProps>({
       ],
     },
     {
-      title: 'Colors',
-      fields: [
-        {
-          link: ['highlight.color', 'pointer.color'],
-          label: 'Accent color',
-          hint: 'Highlight bar and pointer',
-        },
-        { path: 'highlight.text', label: 'Highlighted year color' },
-        {
-          link: ['look.ink', 'labelColor', 'ticks.color'],
-          label: 'Ink color',
-          hint: 'Years, label and major ticks',
-        },
-        { path: 'ticks.minorColor', label: 'Minor tick color' },
-      ],
-      more: [
-        { path: 'highlight.color', label: 'Highlight color' },
-        { path: 'pointer.color', label: 'Pointer color' },
-        { ...LOOK.ink, label: 'Year color', hint: 'Years outside the highlight' },
-        { path: 'labelColor', label: 'Label color' },
-        { path: 'ticks.color', label: 'Major tick color' },
-      ],
-    },
-    {
       title: 'Dial',
-      fields: [
-        { path: 'highlight.width', label: 'Highlight width', hint: 'In pixels' },
+      fields: [{ path: 'highlight.width', label: 'Highlight width', hint: 'In pixels' }],
+      more: [
         { path: 'highlight.height', label: 'Highlight height', hint: 'In pixels' },
         {
           path: 'highlight.radius',
@@ -106,8 +123,6 @@ export const yearDialControls = defineControls<YearDialProps>({
           hint: 'In pixels; half the height gives a pill',
         },
         { path: 'dial.slot', label: 'Year spacing', hint: 'Degrees between years around the dial' },
-      ],
-      more: [
         {
           path: 'dial.range',
           label: 'Visible years each side',
@@ -132,11 +147,9 @@ export const yearDialControls = defineControls<YearDialProps>({
     },
     {
       title: 'Ticks and pointer',
-      fields: [
-        { path: 'pointer.size', label: 'Pointer size' },
-        { path: 'ticks.spacing', label: 'Tick spacing', hint: 'Degrees between ticks' },
-      ],
+      fields: [{ path: 'pointer.size', label: 'Pointer size' }],
       more: [
+        { path: 'ticks.spacing', label: 'Tick spacing', hint: 'Degrees between ticks' },
         {
           path: 'pointer.gap',
           label: 'Pointer gap',
@@ -158,12 +171,10 @@ export const yearDialControls = defineControls<YearDialProps>({
     },
     {
       title: 'Camera',
-      fields: [
-        { path: 'camera.tilt', label: 'Tilt', hint: 'Degrees the dial leans back' },
+      fields: [{ path: 'camera.tilt', label: 'Tilt', hint: 'Degrees the dial leans back' }],
+      more: [
         { path: 'camera.spin', label: 'Rotation', hint: 'Degrees the dial turns in its own plane' },
         { path: 'camera.scale', label: 'Zoom' },
-      ],
-      more: [
         {
           path: 'camera.drift',
           label: 'Drift',
@@ -188,7 +199,7 @@ export const yearDialControls = defineControls<YearDialProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.backgroundEdge],
+      fields: [LOOK.showBackdrop],
       more: [
         LOOK.spotlight,
         LOOK.grain,
@@ -210,13 +221,12 @@ export const yearDialControls = defineControls<YearDialProps>({
         LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
       ],
     },
     {
       title: 'Motion',
-      fields: [MOTION.enter, MOTION.exit, MOTION.speed],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
+      fields: [MOTION.enter, MOTION.exit],
+      more: [MOTION.speed, MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.muted', 'motion.float'],

@@ -13,14 +13,14 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
           hint: 'Each one rises out of the screen in order',
           items: { sender: 'Sender', text: 'Message', time: 'Time label' },
         },
+      ],
+      more: [
         { path: 'card.appName', label: 'App name' },
         {
           path: 'card.showHeader',
           label: 'Show app header',
           hint: 'App icon, app name and time label across the top of each card',
         },
-      ],
-      more: [
         { path: 'card.showSender', label: 'Show sender name' },
         {
           path: 'card.maxLines',
@@ -28,6 +28,58 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
           hint: 'Longer messages are cut off with an ellipsis',
         },
         { path: 'card.textAlign', label: 'Message alignment', hint: 'Sender name and message' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.accent', 'card.icon'],
+          label: 'Primary color',
+          hint: 'Highlighted headline words, the rule beside the eyebrow and the app icon on each card',
+        },
+        {
+          link: ['look.ink', 'card.text'],
+          label: 'Text color',
+          hint: 'The headline and the sender and message text on the cards',
+        },
+        {
+          link: ['look.muted', 'card.muted'],
+          label: 'Secondary color',
+          hint: 'The eyebrow label, the app name and time label, and the card outline',
+        },
+        { path: 'card.fill', label: 'Surface color', hint: 'The notification cards' },
+        {
+          link: ['surface.color', 'look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'The table, the haze it fades into and the backdrop behind it. A dark color also switches the studio lighting to its dark setup',
+        },
+      ],
+      more: [
+        {
+          ...LOOK.accent,
+          label: 'Highlight color',
+          hint: 'Highlighted words, the rule beside the eyebrow and the paper margin line',
+        },
+        { path: 'card.icon', label: 'App icon color' },
+        { ...LOOK.ink, label: 'Headline color' },
+        { path: 'card.text', label: 'Card text color', hint: 'Sender name and message' },
+        { ...LOOK.muted, label: 'Eyebrow color' },
+        {
+          path: 'card.muted',
+          label: 'Card secondary text color',
+          hint: 'App name, time label and card outline',
+        },
+        { path: 'surface.color', label: 'Table color' },
+        {
+          ...LOOK.background,
+          hint: 'The far table fades into this color; it fills the frame when the table is hidden. A dark color also switches the studio lighting to its dark setup',
+        },
+        {
+          ...LOOK.backgroundEdge,
+          hint: 'Color the background fades to at the corners. Only visible when the table is hidden',
+        },
+        { ...LOOK.paperLine, hint: 'Only visible when the table is hidden' },
       ],
     },
     {
@@ -39,13 +91,13 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
           label: 'Arrival length',
           hint: 'Frames each card takes to rise while the older cards push up',
         },
+      ],
+      more: [
         {
           path: 'stack.maxVisible',
           label: 'Cards kept on screen',
           hint: 'Older cards fade out once this many are stacked',
         },
-      ],
-      more: [
         { path: 'stack.delay', label: 'First message at', hint: 'Frame number' },
         { path: 'stack.easing', label: 'Arrival easing' },
         { path: 'stack.riseFrames', label: 'Rise length', hint: 'In frames' },
@@ -85,22 +137,13 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
     },
     {
       title: 'Cards',
-      fields: [
-        { path: 'card.fill', label: 'Card color' },
-        { path: 'card.text', label: 'Text color', hint: 'Sender name and message' },
-        { path: 'card.width', label: 'Card width' },
-      ],
+      fields: [],
       more: [
+        { path: 'card.width', label: 'Card width' },
         {
           path: 'card.fontScale',
           label: 'Text size',
           hint: 'Scales the app header, sender and message together, so cards grow taller',
-        },
-        { path: 'card.icon', label: 'App icon color' },
-        {
-          path: 'card.muted',
-          label: 'Secondary text color',
-          hint: 'App name, time label and card outline',
         },
         { path: 'card.fillOpacity', label: 'Card opacity' },
         { path: 'card.radius', label: 'Corner roundness' },
@@ -119,26 +162,19 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
       fields: [
         { path: 'headline.show', label: 'Show headline' },
         { path: 'headline.text', label: 'Headline' },
+      ],
+      more: [
         {
           path: 'headline.highlight',
           label: 'Highlighted words',
           hint: 'Words from the headline drawn in the highlight color',
         },
         {
-          ...LOOK.accent,
-          label: 'Highlight color',
-          hint: 'Highlighted words and the short rule beside the eyebrow',
-        },
-      ],
-      more: [
-        {
           path: 'headline.eyebrow',
           label: 'Eyebrow label',
           hint: 'Small caps line above the headline; leave empty to hide it',
         },
         { path: 'headline.size', label: 'Headline size', hint: 'In pixels' },
-        { ...LOOK.ink, label: 'Headline color' },
-        { ...LOOK.muted, label: 'Eyebrow color' },
         { path: 'headline.weight', label: 'Font weight' },
         { path: 'headline.textAlign', label: 'Text alignment' },
         { path: 'headline.start', label: 'Headline appears at', hint: 'Frame number' },
@@ -151,8 +187,8 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
     },
     {
       title: 'Phone',
-      fields: [
-        { path: 'phone.screen', label: 'Screen' },
+      fields: [{ path: 'phone.screen', label: 'Screen' }],
+      more: [
         {
           path: 'phone.customScreen',
           label: 'Custom screen image',
@@ -160,8 +196,6 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
         },
         { path: 'phone.finish', label: 'Phone color' },
         { path: 'device.scale', label: 'Phone size' },
-      ],
-      more: [
         {
           path: 'device.x',
           label: 'Phone left or right',
@@ -185,7 +219,8 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
     },
     {
       title: 'Camera',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'camera.elevationFrom',
           label: 'Start camera height',
@@ -193,8 +228,6 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
         },
         { path: 'camera.elevationTo', label: 'End camera height' },
         STAGE.cameraDistance,
-      ],
-      more: [
         {
           path: 'camera.orbitFrom',
           label: 'Start camera swing',
@@ -213,17 +246,15 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
       ],
     },
     {
-      title: 'Scene',
-      fields: [
-        { path: 'surface.color', label: 'Table color' },
-        {
-          ...LOOK.background,
-          hint: 'The far table fades into this color; it fills the frame when the table is hidden',
-        },
-        { path: 'surface.show', label: 'Show table' },
-        STAGE.shadow,
-      ],
+      title: 'Table and background',
+      fields: [{ path: 'surface.show', label: 'Show table' }],
       more: [
+        {
+          ...LOOK.showBackdrop,
+          hint: 'Only visible when the table is hidden; off leaves the background transparent',
+        },
+        STAGE.shadow,
+        STAGE.shadowSoftness,
         { path: 'surface.texture', label: 'Table texture', hint: 'Image tiled across the table' },
         { path: 'surface.textureRepeat', label: 'Texture tiling' },
         { path: 'surface.roughness', label: 'Table roughness', hint: 'Lower is glossier' },
@@ -242,20 +273,10 @@ export const messageAriseControls = defineControls<MessageAriseProps>({
           label: 'Table depth',
           hint: 'Distance before the table curves up',
         },
-        STAGE.shadowSoftness,
-        {
-          ...LOOK.showBackdrop,
-          hint: 'Only visible when the table is hidden; off leaves the background transparent',
-        },
-        {
-          ...LOOK.backgroundEdge,
-          hint: 'Color the background fades to at the corners. Only visible when the table is hidden',
-        },
         { ...LOOK.spotlight, hint: 'Only visible when the table is hidden' },
         { ...LOOK.grain, hint: 'Only visible when the table is hidden' },
         LOOK.liveGrain,
         { ...LOOK.paper, hint: 'Ruled or grid lines. Only visible when the table is hidden' },
-        LOOK.paperLine,
         LOOK.paperSpacing,
         { ...LOOK.paperMargin, hint: 'Drawn in the highlight color' },
       ],
