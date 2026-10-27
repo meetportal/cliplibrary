@@ -4,7 +4,8 @@ import { useWindowVirtualizer } from '@tanstack/react-virtual';
 import { type ComponentType, useLayoutEffect, useRef, useState } from 'react';
 
 const GAP = 12;
-const MIN_COLUMN_WIDTH = 236;
+const MIN_COLUMN_WIDTH = 212;
+const MAX_COLUMNS_BEFORE_WIDENING = 8;
 const PHONE_WIDTH = 640;
 const OVERSCAN_ITEMS = 4;
 const OVERSCAN_PX = 600;
@@ -15,8 +16,13 @@ interface GridLayout {
   offset: number;
 }
 
+const columnWidthFloor = (width: number): number =>
+  Math.max(MIN_COLUMN_WIDTH, width / MAX_COLUMNS_BEFORE_WIDENING);
+
 const columnsFor = (width: number): number =>
-  width < PHONE_WIDTH ? 2 : Math.max(2, Math.floor((width + GAP) / (MIN_COLUMN_WIDTH + GAP)));
+  width < PHONE_WIDTH
+    ? 2
+    : Math.max(2, Math.floor((width + GAP) / (columnWidthFloor(width) + GAP)));
 
 const sameLayout = (left: GridLayout | null, right: GridLayout): boolean =>
   left !== null && left.width === right.width && left.offset === right.offset;
@@ -83,7 +89,7 @@ export const MasonryGrid = <Item extends object>({
 
   if (layout === null) {
     return (
-      <div ref={containerRef} className="columns-2 gap-3 sm:columns-[14.75rem]">
+      <div ref={containerRef} className="columns-2 gap-3 sm:columns-[13.25rem]">
         {items.slice(0, SERVER_RENDERED_ITEMS).map((item) => (
           <div key={itemKey(item)} className="mb-3 break-inside-avoid">
             <Tile {...item} />
