@@ -23,8 +23,8 @@ export const TAN = {
   slate: '#55607a',
 };
 
-export const HEAD = 'Urbanist';
-export const BODY = 'Work Sans';
+const HEAD = 'Urbanist';
+const BODY = 'Work Sans';
 export const { width: W, height: H } = POST_SIZE;
 
 export const HEADING_FONT = { label: 'Heading font', value: HEAD } as const;
