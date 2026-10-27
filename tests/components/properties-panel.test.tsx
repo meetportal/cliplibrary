@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { z } from 'zod';
 import { PropertiesPanel } from '@/components/editor/properties-panel';
 import { resolveClipControls } from '@/core';
+import { applyTone, toneBetween } from '@/design';
 import { zColor } from '@/schemas';
 
 const schema = z.object({
@@ -98,5 +99,43 @@ describe('PropertiesPanel', () => {
     fireEvent.click(screen.getByText('Scene'));
     fireEvent.click(screen.getByText('Add item'));
     expect(onChange).toHaveBeenCalledWith({ ...values, items: [{ name: 'One' }, { name: '' }] });
+  });
+
+  it('keeps each linked colour in its own shade when defaults differ', () => {
+    const shaded = resolveClipControls(
+      schema,
+      {
+        sections: [
+          {
+            title: 'Colors',
+            fields: [{ link: ['colors.title', 'colors.subtitle'], label: 'Text color' }],
+            more: ['title', 'subtitle', 'colors.title', 'colors.subtitle', 'colors.bg', 'items'],
+          },
+        ],
+      },
+      { colors: { title: '#1f4a36', subtitle: '#133024' } },
+    );
+    const onChange = mock();
+    render(
+      <PropertiesPanel
+        sections={shaded}
+        values={{ ...values, colors: { title: '#1f4a36', subtitle: '#133024', bg: '#000000' } }}
+        onChange={onChange}
+      />,
+    );
+    expect(screen.queryByText(/Currently mixed/)).not.toBeInTheDocument();
+    const [linked] = screen.getAllByDisplayValue('#1f4a36');
+    if (linked === undefined) {
+      throw new Error('missing linked color input');
+    }
+    fireEvent.change(linked, { target: { value: '#2244aa' } });
+    expect(onChange).toHaveBeenCalledWith({
+      ...values,
+      colors: {
+        title: '#2244aa',
+        subtitle: applyTone('#2244aa', toneBetween('#1f4a36', '#133024')),
+        bg: '#000000',
+      },
+    });
   });
 });
