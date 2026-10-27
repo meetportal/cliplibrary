@@ -36,8 +36,8 @@ export const MINT: ValuePalette = {
   soft: '#c8f5e3',
 };
 
-export const HEAD = 'Poppins';
-export const BODY = 'Manrope';
+const HEAD = 'Poppins';
+const BODY = 'Manrope';
 export const HEADING_FONT = { label: 'Heading font', value: HEAD } as const;
 export const BODY_FONT = { label: 'Body font', value: BODY } as const;
 export const { width: W, height: H } = POST_SIZE;
