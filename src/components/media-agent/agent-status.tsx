@@ -4,10 +4,9 @@ import type { ChatStatus } from 'ai';
 import { useEffect, useRef, useState } from 'react';
 import type { MediaAgentMessage } from '@/agent/tools';
 import { cn } from '@/lib/utils';
+import type { EditPart } from './edit-step';
 
 type Tone = 'idle' | 'busy' | 'done' | 'error';
-
-type EditPart = Extract<MediaAgentMessage['parts'][number], { type: 'tool-editMedia' }>;
 
 const toolPhase = (part: EditPart): { label: string; tone: Tone } => {
   if (part.state === 'input-streaming') {

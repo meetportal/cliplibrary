@@ -16,6 +16,7 @@ import { type FormEvent, type KeyboardEvent, useEffect, useRef, useState } from 
 import type { EditOperation } from '@/agent/edits';
 import type { MediaContext } from '@/agent/media';
 import type { MediaAgentMessage } from '@/agent/tools';
+import { agentContextSchema, agentMetadataSchema } from '@/agent/trace';
 import { Button } from '@/components/ui/button';
 import { AgentStatus } from './agent-status';
 import { AgentTurn } from './agent-turn';
@@ -78,7 +79,11 @@ export const AgentChat = ({
       }),
   );
   const { messages, sendMessage, status, stop, error, regenerate, setMessages, clearError } =
-    useChat<MediaAgentMessage>({ transport });
+    useChat<MediaAgentMessage>({
+      transport,
+      messageMetadataSchema: agentMetadataSchema,
+      dataPartSchemas: { context: agentContextSchema },
+    });
   const [input, setInput] = useState('');
   const applied = useRef(new Set<string>());
   const scroller = useRef<HTMLDivElement>(null);
