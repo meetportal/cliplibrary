@@ -1,7 +1,8 @@
 import { definePack } from '../../../pack';
-import { liveWorkshop, newClients, ourServices, versus } from './posts';
+import { liveWorkshop, newClients, ourServices } from './posts';
 import { raceAutumn, raceSummer, trueOrFalse } from './posts-extra';
 import { growthStats, keyFactors, tetrisFit, tetrisFitStory } from './posts-more';
+import { versus } from './posts-versus';
 
 const POSTS = [
   newClients,

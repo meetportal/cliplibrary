@@ -1,267 +1,308 @@
-import { linear } from '@/design';
-import { circle, photo, poly, rect, shadow, template, text } from '../../../kit';
+import { circle, photo, poly, rect, shadow, type ThemeSpec, text, themed } from '../../../kit';
 import {
-  BLOCKY,
-  CHUNKY,
   H,
+  HEADING_FONT,
   HEART,
-  HERO,
+  MONO_FONT,
+  PIXEL_FONT,
   PX,
-  ROBOT,
   scanlines,
   siteFooter,
   sprite,
-  TERMINAL,
   W,
+  WEBSITE,
 } from './pixel';
 
-const STRIPES = [PX.pink, PX.orange, PX.sun, PX.mint, PX.sky];
+const clientsSpec = {
+  colors: {
+    background: { value: PX.night, hint: 'Page and the shadow under NEW CLIENTS' },
+    primary: {
+      value: PX.pink,
+      hint: 'HI-SCORE label, the hearts, the top stripe and the answer pointer',
+    },
+    secondary: {
+      value: PX.sun,
+      hint: 'Yellow stripe; its orange shade colors the stripe above it',
+    },
+    accent: {
+      value: PX.mint,
+      hint: 'YES answer and the mint stripe; its blue shade colors the bottom stripe',
+    },
+    text: {
+      value: PX.white,
+      hint: 'Score, UNLOCK NEW CLIENTS, the question and NO; its grey shade colors the website',
+    },
+  },
+  fonts: { heading: HEADING_FONT, pixel: PIXEL_FONT },
+  copy: {
+    scoreLabel: { label: 'Score label', value: 'HI-SCORE' },
+    score: { label: 'Score', value: '098000' },
+    kicker: { label: 'Kicker', value: 'UNLOCK' },
+    title: { label: 'Title', value: 'NEW' },
+    subtitle: { label: 'Second title line', value: 'CLIENTS' },
+    question: { label: 'Question', value: 'READY TO LEVEL UP?' },
+    answers: { label: 'Answer', value: ['YES', 'NO'] },
+    site: WEBSITE,
+  },
+} as const satisfies ThemeSpec;
 
-export const newClients = template(W, H, () => [
-  rect(0, 0, W, H, PX.night, { name: 'Background' }),
-  text('HI-SCORE', 80, 86, 400, {
-    fontFamily: BLOCKY,
-    fontSize: 34,
-    fontWeight: 400,
-    fill: PX.pink,
-  }),
-  text('098000', 80, 132, 400, {
-    fontFamily: BLOCKY,
-    fontSize: 34,
-    fontWeight: 400,
-    fill: PX.white,
-  }),
-  [0, 1, 2].map((index) => sprite(HEART, 790 + index * 72, 104, 8, { P: PX.pink })),
-  STRIPES.map((color, index) =>
+export const newClients = themed(W, H, clientsSpec, (t) => {
+  const stripes = [
+    t.color('primary'),
+    t.shade('secondary', PX.orange),
+    t.color('secondary'),
+    t.color('accent'),
+    t.shade('accent', PX.sky),
+  ];
+  const [yes = '', no = ''] = t.list('answers');
+  const pixel = t.font('pixel');
+  const heading = t.font('heading');
+  return [
+    rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+    text(t.copy('scoreLabel'), 80, 86, 400, {
+      fontFamily: pixel,
+      fontSize: 34,
+      fontWeight: 400,
+      fill: t.color('primary'),
+    }),
+    text(t.copy('score'), 80, 132, 400, {
+      fontFamily: pixel,
+      fontSize: 34,
+      fontWeight: 400,
+      fill: t.color('text'),
+    }),
+    [0, 1, 2].map((index) => sprite(HEART, 790 + index * 72, 104, 8, { P: t.color('primary') })),
+    stripes.map((color, index) =>
+      poly(
+        [
+          [0, 800 + index * 36],
+          [W, 560 + index * 36],
+          [W, 590 + index * 36],
+          [0, 830 + index * 36],
+        ],
+        color,
+        { name: 'Stripe' },
+      ),
+    ),
+    text(t.copy('kicker'), 80, 360, 600, {
+      fontFamily: heading,
+      fontSize: 60,
+      fontWeight: 400,
+      fill: t.color('text'),
+    }),
+    text(t.copy('title'), 70, 430, 900, {
+      fontFamily: heading,
+      fontSize: 240,
+      fontWeight: 400,
+      fill: t.color('text'),
+      lineHeight: 1,
+      ...shadow(0, 10, t.color('background')),
+    }),
+    text(t.copy('subtitle'), 70, 690, 940, {
+      fontFamily: heading,
+      fontSize: 150,
+      fontWeight: 400,
+      fill: t.color('text'),
+      lineHeight: 1,
+      ...shadow(0, 10, t.color('background')),
+    }),
+    text(t.copy('question'), 0, 1030, W, {
+      fontFamily: pixel,
+      fontSize: 44,
+      fontWeight: 400,
+      fill: t.color('text'),
+      align: 'center',
+    }),
+    text(yes, 340, 1110, 160, {
+      fontFamily: pixel,
+      fontSize: 48,
+      fontWeight: 400,
+      fill: t.color('accent'),
+    }),
     poly(
       [
-        [0, 800 + index * 36],
-        [W, 560 + index * 36],
-        [W, 590 + index * 36],
-        [0, 830 + index * 36],
+        [530, 1136],
+        [565, 1116],
+        [565, 1156],
       ],
-      color,
-      { name: 'Stripe' },
+      t.color('primary'),
+      { name: 'Pointer' },
     ),
-  ),
-  text('UNLOCK', 80, 360, 600, {
-    fontFamily: CHUNKY,
-    fontSize: 60,
-    fontWeight: 400,
-    fill: PX.white,
-  }),
-  text('NEW', 70, 430, 900, {
-    fontFamily: CHUNKY,
-    fontSize: 240,
-    fontWeight: 400,
-    fill: PX.white,
-    lineHeight: 1,
-    ...shadow(0, 10, PX.night),
-  }),
-  text('CLIENTS', 70, 690, 940, {
-    fontFamily: CHUNKY,
-    fontSize: 150,
-    fontWeight: 400,
-    fill: PX.white,
-    lineHeight: 1,
-    ...shadow(0, 10, PX.night),
-  }),
-  text('READY TO LEVEL UP?', 0, 1030, W, {
-    fontFamily: BLOCKY,
-    fontSize: 44,
-    fontWeight: 400,
-    fill: PX.white,
-    align: 'center',
-  }),
-  text('YES', 340, 1110, 160, { fontFamily: BLOCKY, fontSize: 48, fontWeight: 400, fill: PX.mint }),
-  poly(
-    [
-      [530, 1136],
-      [565, 1116],
-      [565, 1156],
-    ],
-    PX.pink,
-    { name: 'Pointer' },
-  ),
-  text('NO', 600, 1110, 160, { fontFamily: BLOCKY, fontSize: 48, fontWeight: 400, fill: PX.white }),
-  siteFooter(1250, PX.grey),
-]);
-
-export const liveWorkshop = template(W, H, () => [
-  rect(0, 0, W, H, PX.night, { name: 'Background' }),
-  photo('console-1', 0, 0, W, H),
-  rect(0, 0, W, H, 'rgba(22,10,43,0.55)', { name: 'Photo tint' }),
-  text('FREE  ·  THU 6PM', 0, 100, W, {
-    fontFamily: BLOCKY,
-    fontSize: 40,
-    fontWeight: 400,
-    fill: PX.mint,
-    align: 'center',
-  }),
-  rect(250, 210, 580, 720, '#dcd6ca', {
-    cornerRadius: 40,
-    name: 'Handheld body',
-    ...shadow(50, 20, 'rgba(0,0,0,0.5)'),
-  }),
-  rect(290, 250, 500, 400, '#55526a', { cornerRadius: 18, name: 'Screen bezel' }),
-  rect(330, 285, 420, 330, '#b9f2a2', { name: 'Screen' }),
-  text('LIVE', 330, 320, 420, {
-    fontFamily: BLOCKY,
-    fontSize: 86,
-    fontWeight: 400,
-    fill: PX.night,
-    align: 'center',
-  }),
-  text('WORKSHOP', 330, 440, 420, {
-    fontFamily: BLOCKY,
-    fontSize: 58,
-    fontWeight: 400,
-    fill: PX.night,
-    align: 'center',
-  }),
-  text('GROWTH SECRETS', 330, 540, 420, {
-    fontFamily: BLOCKY,
-    fontSize: 28,
-    fontWeight: 400,
-    fill: '#2f6b3a',
-    align: 'center',
-  }),
-  rect(330, 760, 130, 40, PX.road, { cornerRadius: 6, name: 'D-pad' }),
-  rect(375, 715, 40, 130, PX.road, { cornerRadius: 6, name: 'D-pad' }),
-  circle(700, 750, 36, PX.pink),
-  circle(620, 810, 36, PX.mint),
-  rect(260, 990, 560, 230, '#9a5a34', {
-    cornerRadius: 22,
-    stroke: '#e2b48a',
-    strokeWidth: 5,
-    dashed: true,
-    name: 'Leather patch',
-  }),
-  text('SAVE YOUR\nSEAT TODAY!', 260, 1030, 560, {
-    fontFamily: TERMINAL,
-    fontSize: 62,
-    fontWeight: 700,
-    fill: PX.cream,
-    align: 'center',
-    lineHeight: 1.15,
-  }),
-]);
-
-const SERVICES = ['PAID ADS', 'BRAND IDENTITY', 'WEB DESIGN', 'GROWTH STRATEGY'];
-
-export const ourServices = template(W, H, () => [
-  rect(0, 0, W, H, PX.night, { name: 'Background' }),
-  scanlines(H),
-  ['OUR', 'SERVICES'].map((word, index) => [
-    text(word, 88, 238 + index * 150, 960, {
-      fontFamily: BLOCKY,
-      fontSize: 120,
+    text(no, 600, 1110, 160, {
+      fontFamily: pixel,
+      fontSize: 48,
       fontWeight: 400,
-      fill: PX.pink,
+      fill: t.color('text'),
     }),
-    text(word, 80, 230 + index * 150, 960, {
-      fontFamily: BLOCKY,
-      fontSize: 120,
+    siteFooter(t.copy('site'), 1250, t.shade('text', PX.grey), pixel),
+  ];
+});
+
+const workshopSpec = {
+  colors: {
+    background: {
+      value: PX.night,
+      hint: 'Tint over the photo and LIVE WORKSHOP on the screen; its lighter shades color the screen bezel and d-pad',
+    },
+    surface: { value: '#dcd6ca', hint: 'Handheld console body' },
+    primary: {
+      value: '#b9f2a2',
+      hint: 'Console screen; its darker shade colors GROWTH SECRETS',
+    },
+    secondary: {
+      value: '#9a5a34',
+      hint: 'Leather patch; its lighter shade colors the stitching',
+    },
+    accent: {
+      value: PX.mint,
+      hint: 'Date line and the mint button; its pink shade colors the other button',
+    },
+    text: { value: PX.cream, hint: 'SAVE YOUR SEAT TODAY on the leather patch' },
+  },
+  fonts: { pixel: PIXEL_FONT, mono: MONO_FONT },
+  copy: {
+    date: { label: 'Date line', value: 'FREE  ·  THU 6PM' },
+    title: { label: 'Title', value: 'LIVE' },
+    subtitle: { label: 'Subtitle', value: 'WORKSHOP' },
+    topic: { label: 'Topic', value: 'GROWTH SECRETS' },
+    cta: { label: 'Call to action', value: 'SAVE YOUR\nSEAT TODAY!' },
+  },
+} as const satisfies ThemeSpec;
+
+export const liveWorkshop = themed(W, H, workshopSpec, (t) => {
+  const pixel = t.font('pixel');
+  return [
+    rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+    photo('console-1', 0, 0, W, H),
+    rect(0, 0, W, H, t.shade('background', 'rgba(22,10,43,0.55)'), { name: 'Photo tint' }),
+    text(t.copy('date'), 0, 100, W, {
+      fontFamily: pixel,
+      fontSize: 40,
       fontWeight: 400,
-      fill: PX.white,
+      fill: t.color('accent'),
+      align: 'center',
     }),
-  ]),
-  SERVICES.map((service, index) => [
-    index === 0
-      ? poly(
-          [
-            [86, 660],
-            [120, 680],
-            [86, 700],
-          ],
-          PX.mint,
-          { name: 'Cursor' },
-        )
-      : [],
-    text(service, 150, 650 + index * 110, 880, {
-      fontFamily: BLOCKY,
-      fontSize: 54,
+    rect(250, 210, 580, 720, t.color('surface'), {
+      cornerRadius: 40,
+      name: 'Handheld body',
+      ...shadow(50, 20, 'rgba(0,0,0,0.5)'),
+    }),
+    rect(290, 250, 500, 400, t.shade('background', '#55526a'), {
+      cornerRadius: 18,
+      name: 'Screen bezel',
+    }),
+    rect(330, 285, 420, 330, t.color('primary'), { name: 'Screen' }),
+    text(t.copy('title'), 330, 320, 420, {
+      fontFamily: pixel,
+      fontSize: 86,
       fontWeight: 400,
-      fill: index === 0 ? PX.mint : PX.lilac,
+      fill: t.color('background'),
+      align: 'center',
     }),
-  ]),
-  text('PRESS START TO BOOK A CALL', 0, 1120, W, {
-    fontFamily: BLOCKY,
-    fontSize: 32,
-    fontWeight: 400,
-    fill: PX.sun,
-    align: 'center',
-  }),
-  siteFooter(1250, PX.grey),
-]);
+    text(t.copy('subtitle'), 330, 440, 420, {
+      fontFamily: pixel,
+      fontSize: 58,
+      fontWeight: 400,
+      fill: t.color('background'),
+      align: 'center',
+    }),
+    text(t.copy('topic'), 330, 540, 420, {
+      fontFamily: pixel,
+      fontSize: 28,
+      fontWeight: 400,
+      fill: t.shade('primary', '#2f6b3a'),
+      align: 'center',
+    }),
+    rect(330, 760, 130, 40, t.shade('background', PX.road), { cornerRadius: 6, name: 'D-pad' }),
+    rect(375, 715, 40, 130, t.shade('background', PX.road), { cornerRadius: 6, name: 'D-pad' }),
+    circle(700, 750, 36, t.shade('accent', PX.pink)),
+    circle(620, 810, 36, t.color('accent')),
+    rect(260, 990, 560, 230, t.color('secondary'), {
+      cornerRadius: 22,
+      stroke: t.shade('secondary', '#e2b48a'),
+      strokeWidth: 5,
+      dashed: true,
+      name: 'Leather patch',
+    }),
+    text(t.copy('cta'), 260, 1030, 560, {
+      fontFamily: t.font('mono'),
+      fontSize: 62,
+      fontWeight: 700,
+      fill: t.color('text'),
+      align: 'center',
+      lineHeight: 1.15,
+    }),
+  ];
+});
 
-const OLD_WAY = [
-  { label: 'MANUAL REPORTS', fill: 0.25 },
-  { label: 'SLOW DELIVERY', fill: 0.15 },
-  { label: 'GUESSWORK', fill: 0.3 },
-];
+const servicesSpec = {
+  colors: {
+    background: { value: PX.night, hint: 'Page' },
+    primary: { value: PX.pink, hint: 'Offset shadow behind OUR SERVICES' },
+    secondary: { value: PX.sun, hint: 'PRESS START line' },
+    accent: { value: PX.mint, hint: 'Selected service and its cursor' },
+    text: {
+      value: PX.white,
+      hint: 'OUR SERVICES and the scanlines; its lilac shade colors the other services and its grey shade the website',
+    },
+  },
+  fonts: { pixel: PIXEL_FONT },
+  copy: {
+    title: { label: 'Title line', value: ['OUR', 'SERVICES'] },
+    services: {
+      label: 'Service',
+      value: ['PAID ADS', 'BRAND IDENTITY', 'WEB DESIGN', 'GROWTH STRATEGY'],
+    },
+    cta: { label: 'Call to action', value: 'PRESS START TO BOOK A CALL' },
+    site: WEBSITE,
+  },
+} as const satisfies ThemeSpec;
 
-const OUR_WAY = [
-  { label: 'AUTO INSIGHTS', fill: 1 },
-  { label: 'FAST TURNAROUND', fill: 0.9 },
-  { label: 'REAL DATA', fill: 1 },
-];
-
-const meterColumn = (x: number, rows: readonly { label: string; fill: number }[], color: string) =>
-  rows.map((row, index) => {
-    const y = 330 + index * 170;
-    return [
-      rect(x, y, 360, 56, 'rgba(0,0,0,0)', { stroke: PX.white, strokeWidth: 5, name: 'Meter' }),
-      rect(x + 10, y + 10, 340 * row.fill, 36, color, { name: 'Meter fill' }),
-      text(row.label, x - 40, y + 76, 440, {
-        fontFamily: BLOCKY,
-        fontSize: 26,
+export const ourServices = themed(W, H, servicesSpec, (t) => {
+  const pixel = t.font('pixel');
+  return [
+    rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+    scanlines(H, t.shade('text', 'rgba(255,255,255,0.035)')),
+    t.list('title').map((word, index) => [
+      text(word, 88, 238 + index * 150, 960, {
+        fontFamily: pixel,
+        fontSize: 120,
         fontWeight: 400,
-        fill: PX.white,
-        align: 'center',
+        fill: t.color('primary'),
       }),
-    ];
-  });
-
-export const versus = template(W, H, () => [
-  rect(0, 0, W, H, PX.deep, { name: 'Background' }),
-  rect(540, 0, 540, H, PX.sky, { name: 'Right half' }),
-  text('OLD\nWAY', 0, 100, 540, {
-    fontFamily: BLOCKY,
-    fontSize: 60,
-    fontWeight: 400,
-    fill: PX.white,
-    align: 'center',
-    lineHeight: 1.2,
-  }),
-  text('OUR\nWAY', 540, 100, 540, {
-    fontFamily: BLOCKY,
-    fontSize: 60,
-    fontWeight: 400,
-    fill: PX.white,
-    align: 'center',
-    lineHeight: 1.2,
-  }),
-  meterColumn(90, OLD_WAY, PX.pink),
-  meterColumn(630, OUR_WAY, PX.mint),
-  text('VS', 340, 850, 400, {
-    fontFamily: BLOCKY,
-    fontSize: 150,
-    fontWeight: 400,
-    fill: PX.sun,
-    align: 'center',
-    ...shadow(0, 10, PX.night),
-  }),
-  rect(0, 1040, W, 310, linear(180, '#3a2680', PX.night), { name: 'Floor' }),
-  Array.from({ length: 5 }, (_, index) =>
-    rect(0, 1080 + index * 56, W, 3, 'rgba(201,168,255,0.25)', { name: 'Floor line' }),
-  ),
-  sprite(HERO, 190, 830, 18, {
-    Y: PX.sun,
-    S: '#f2c29b',
-    K: PX.night,
-    P: PX.pink,
-    B: '#3b4a8f',
-  }),
-  sprite(ROBOT, 740, 830, 18, { M: PX.mint, G: '#d7d2e6', K: PX.night }),
-]);
+      text(word, 80, 230 + index * 150, 960, {
+        fontFamily: pixel,
+        fontSize: 120,
+        fontWeight: 400,
+        fill: t.color('text'),
+      }),
+    ]),
+    t.list('services').map((service, index) => [
+      index === 0
+        ? poly(
+            [
+              [86, 660],
+              [120, 680],
+              [86, 700],
+            ],
+            t.color('accent'),
+            { name: 'Cursor' },
+          )
+        : [],
+      text(service, 150, 650 + index * 110, 880, {
+        fontFamily: pixel,
+        fontSize: 54,
+        fontWeight: 400,
+        fill: index === 0 ? t.color('accent') : t.shade('text', PX.lilac),
+      }),
+    ]),
+    text(t.copy('cta'), 0, 1120, W, {
+      fontFamily: pixel,
+      fontSize: 32,
+      fontWeight: 400,
+      fill: t.color('secondary'),
+      align: 'center',
+    }),
+    siteFooter(t.copy('site'), 1250, t.shade('text', PX.grey), pixel),
+  ];
+});
