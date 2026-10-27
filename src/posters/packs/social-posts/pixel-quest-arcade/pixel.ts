@@ -16,11 +16,11 @@ export const PX = {
   white: '#ffffff',
 };
 
-export const BLOCKY = 'Silkscreen';
-export const TERMINAL = 'Space Mono';
-export const CHUNKY = 'Bungee';
+const BLOCKY = 'Silkscreen';
+const TERMINAL = 'Space Mono';
+const CHUNKY = 'Bungee';
 
-export const SITE = 'pixelforge.studio';
+const SITE = 'pixelforge.studio';
 
 export const { width: W, height: H } = POST_SIZE;
 

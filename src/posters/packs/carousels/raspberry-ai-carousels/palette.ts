@@ -12,7 +12,7 @@ export const BERRY = {
   bottom: '#b0124f',
 };
 
-export const FONT = 'Plus Jakarta Sans';
+const FONT = 'Plus Jakarta Sans';
 
 export const { width: W, height: H } = POST_SIZE;
 
