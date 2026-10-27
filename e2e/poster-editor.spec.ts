@@ -22,3 +22,20 @@ test('opens a poster from the library grid in the editor', async ({ page }) => {
   ]);
   expect(download.suggestedFilename()).toBe('hiring-spotlight-2.png');
 });
+
+test('the theme panel recolours a poster through its colour roles', async ({ page }) => {
+  await page.goto('/posters/fernhill-mustard-marketing-07');
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  const theme = page.getByTestId('theme-panel');
+  await expect(theme).toBeVisible();
+  await theme.getByLabel('Primary colour', { exact: true }).fill('#2244aa');
+  await theme.getByLabel('Text: QUIZ').fill('POLL');
+  await expect(theme.getByLabel('Text: QUIZ')).toHaveValue('POLL');
+  await page.getByRole('button', { name: 'Layers', exact: true }).click();
+  const layers = page.getByRole('list', { name: 'Layers' });
+  await expect(layers.getByText('Check', { exact: true })).toHaveCount(0);
+  await layers.getByText('Check pattern', { exact: true }).click();
+  const properties = page.getByRole('complementary', { name: 'Properties' });
+  await expect(properties.getByLabel('Fill', { exact: true })).toHaveValue('#2244aa');
+});

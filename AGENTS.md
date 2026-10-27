@@ -185,3 +185,25 @@ To add a pack:
 
 Keep every template element inside the template's own bounds (use `poly` for diagonal bands), and
 only use the bundled fonts, icons and photos.
+
+### Standard poster controls
+
+Every poster opens on the editor's Theme panel, which is the same for all designs:
+
+- Colours: `Design.palette` is a list of colour roles (`background`, then `text` when one
+  colour is mostly used for copy, then `primary`, `secondary`, `accent`, ...), at most six.
+  `templateDesign` derives it with `derivePalette`, folding related shades (same hue, or close
+  neutrals) into one role. Change a role with `setSwatchColor(design, id, color)`: it recolours
+  every fill, stroke, gradient stop, text background and tinted shadow using that role, shifts the
+  role's shades by the same amount and keeps alpha. Recolour posters through roles, not element by
+  element.
+- Fonts: `fontRoles` ranks the families in use (Headings, Body, Accent font) and `replaceFont`
+  swaps one everywhere.
+- Text: every line of copy in reading order.
+
+Decorations stay out of the way: `mergePatterns` turns any run of three or more consecutive
+shapes with the same type, name and group (checkerboards, dot grids, star fields) into one locked
+`<name> pattern` path per colour, so a poster never exposes dozens of selectable blocks.
+`tests/posters/posters.test.ts` fails when a poster has no palette or still has a repeated run.
+Build repeated decorations as such runs (same `name`, solid fill, no rotation or shadow) so they
+merge.

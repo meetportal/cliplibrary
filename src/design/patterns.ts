@@ -125,7 +125,7 @@ const toPattern = (shapes: readonly PatternShape[]): PathElement => {
     viewHeight: height,
     fill: first.fill,
     opacity: first.opacity,
-    locked: first.locked,
+    locked: true,
     ...(first.groupId === undefined ? {} : { groupId: first.groupId }),
     data: shapes.map((shape) => shapePath(shape, shape.x - left, shape.y - top)).join(' '),
   });
