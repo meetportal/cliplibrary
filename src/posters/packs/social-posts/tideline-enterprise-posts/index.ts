@@ -1,6 +1,8 @@
 import { definePack } from '../../../pack';
-import { analyticsBars, skillPoll, websiteLive } from './posts';
-import { POSTS, stayAhead, stickyPost, stickyStory } from './posts-more';
+import { analyticsBars } from './posts';
+import { POSTS, stickyPost, stickyStory } from './posts-extra';
+import { stayAhead } from './posts-more';
+import { skillPoll, websiteLive } from './posts-web';
 
 export const tidelineEnterprisePostsPack = definePack({
   id: 'tideline-enterprise-posts',

@@ -1,6 +1,7 @@
 import { definePack } from '../../../pack';
-import { blueprintKeys, clientReviews, folderHero, modularClick } from './posts';
-import { glassPost, glassStory, POSTS } from './posts-more';
+import { blueprintKeys, modularClick } from './posts';
+import { glassPost, glassStory, POSTS } from './posts-extra';
+import { clientReviews, folderHero } from './posts-reviews';
 
 export const rosewireTechPostsPack = definePack({
   id: 'rosewire-tech-posts',
