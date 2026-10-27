@@ -1,5 +1,6 @@
 import { definePack } from '../../../pack';
-import { dayPost, everythingCtrl, MONDAY, startImpact, TEAL_DAY, webinarSpeaker } from './posts';
+import { everythingCtrl, startImpact, webinarSpeaker } from './posts';
+import { MONDAY, TUESDAY } from './posts-day';
 import { stagesPost, stagesStory, weAreHiring, wordStack } from './posts-extra';
 import { didYouKnow, mythFact, peopleStat, roiStats } from './posts-more';
 
@@ -32,7 +33,7 @@ export const sunsetOpsCorporatePack = definePack({
     MONDAY,
     everythingCtrl,
     startImpact,
-    dayPost(TEAL_DAY, ['TUE', "LET'S MAKE IT COUNT", 'Get in touch', 'emberline.co']),
+    TUESDAY,
     stagesPost,
     stagesStory,
   ],
