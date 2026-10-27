@@ -1,6 +1,8 @@
 import { definePack } from '../../../pack';
-import { automationCard, clientReviews, wifiSpeed } from './posts';
-import { architect, launchPost, launchStory, POSTS, wordsBlue, wordsGreen } from './posts-more';
+import { automationCard, wifiSpeed } from './posts';
+import { clientReviews } from './posts-reviews';
+import { architect, POSTS } from './posts-web';
+import { launchPost, launchStory, wordsBlue, wordsGreen } from './posts-words';
 
 export const voltageBlueAiPostsPack = definePack({
   id: 'voltage-blue-ai-posts',
