@@ -41,15 +41,15 @@ export const LAGOON: EventTheme = {
 };
 
 const { width: W, height: H } = POST_SIZE;
-export const HEAD = 'Outfit';
-export const BODY = 'DM Sans';
+const HEAD = 'Outfit';
+const BODY = 'DM Sans';
 
 export const FONTS = {
   heading: { label: 'Heading font', value: HEAD },
   body: { label: 'Body font', value: BODY },
 } as const;
 
-export const SITE = 'loopworks.events';
+const SITE = 'loopworks.events';
 
 export const backdropHint = 'Page gradient; its brighter shade is the top corner of the gradient';
 

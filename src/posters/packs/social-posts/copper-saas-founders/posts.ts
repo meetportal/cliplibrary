@@ -52,9 +52,9 @@ export const LILAC: SaasTheme = {
 export const W = POST_SIZE.width;
 export const H = POST_SIZE.height;
 
-export const DISPLAY_FONT = { label: 'Heading font', value: 'Archivo Black' } as const;
+const DISPLAY_FONT = { label: 'Heading font', value: 'Archivo Black' } as const;
 export const HEADING_FONT = { label: 'Heading font', value: 'Outfit' } as const;
-export const LOGO_FONT = { label: 'Logo font', value: 'Outfit' } as const;
+const LOGO_FONT = { label: 'Logo font', value: 'Outfit' } as const;
 export const BODY_FONT = { label: 'Body font', value: 'DM Sans' } as const;
 export const BRAND = { label: 'Brand name', value: 'Northpeak Labs' } as const;
 
