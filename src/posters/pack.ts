@@ -77,12 +77,30 @@ const retarget = (
       : { ...control, targets: unique(control.targets) };
   });
 
+const colorBindings = (controls: readonly DesignControl[]): Map<string, string> => {
+  const bindings = new Map<string, string[]>();
+  for (const control of controls) {
+    if (control.kind !== 'color') {
+      continue;
+    }
+    for (const target of control.targets) {
+      const key = JSON.stringify([control.id, target.prop, target.stop, target.tone, target.alpha]);
+      bindings.set(target.element, [...(bindings.get(target.element) ?? []), key]);
+    }
+  }
+  return new Map([...bindings].map(([element, keys]) => [element, keys.sort().join('|')]));
+};
+
 const lockShapes = (element: DesignElement): DesignElement =>
   element.type === 'text' || element.type === 'image' ? element : { ...element, locked: true };
 
 export const templateDesign = (item: Template, id: string, title: string): Design => {
   const composed = item.compose?.() ?? { elements: flatten(item.build()), controls: [] };
-  const { elements: merged, aliases } = mergePatterns(composed.elements);
+  const bindings = colorBindings(composed.controls);
+  const { elements: merged, aliases } = mergePatterns(
+    composed.elements,
+    (element) => bindings.get(element) ?? '',
+  );
   const themed = composed.controls.length > 0;
   const elements = themed ? merged.map(lockShapes) : merged;
   const [first, ...rest] = elements;
