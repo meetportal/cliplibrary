@@ -12,6 +12,7 @@ import {
   Upload,
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { MediaAgent } from '@/components/media-agent/media-agent';
 import {
   createImage,
   type Design,
@@ -326,6 +327,13 @@ export const DesignEditor = ({
         editor={editor}
         actions={actions}
         onClose={closeContextMenu}
+      />
+      <MediaAgent
+        kind="poster"
+        title={design.title}
+        document={design}
+        focus={editor.selectedIds}
+        onChange={(next) => editor.transform(() => next)}
       />
     </div>
   );

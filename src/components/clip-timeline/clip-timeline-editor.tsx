@@ -3,6 +3,7 @@
 import type { PlayerRef } from '@remotion/player';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { MediaAgent } from '@/components/media-agent/media-agent';
 import { ClipPreviewSkeleton } from '@/components/skeletons';
 import { Timeline } from '@/components/timeline/timeline';
 import { TimelineToolbar } from '@/components/timeline/timeline-toolbar';
@@ -292,6 +293,13 @@ export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimel
           />
         </div>
       </div>
+      <MediaAgent
+        kind="clip"
+        title={title}
+        document={project}
+        focus={selectedId === null ? [] : [selectedId]}
+        onChange={setProject}
+      />
     </div>
   );
 };

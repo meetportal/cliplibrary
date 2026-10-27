@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BrandMark } from '@/components/brand-mark';
+import { PAGE_ACTIONS_ID } from '@/components/media-agent/page-actions';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ThemeToggle } from '@/components/theme-toggle';
 import './globals.css';
@@ -41,6 +42,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
             clip library
           </Link>
           <nav className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div id={PAGE_ACTIONS_ID} className="contents" />
             <Link href="/" className="hover:text-foreground">
               Library
             </Link>
