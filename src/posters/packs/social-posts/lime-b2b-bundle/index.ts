@@ -1,6 +1,7 @@
 import { definePack } from '../../../pack';
-import { dosDonts, hiringPost, LIME, leadersStats, mythFact, PEACH, saleMegaphone } from './posts';
-import { checkComments, eventsList, quizTime, reviewWords } from './posts-more';
+import { dosDonts, LIME, mythFact, PEACH } from './posts';
+import { checkComments, eventsList, quizTime, reviewWords } from './posts-extra';
+import { hiringPost, leadersStats, saleMegaphone } from './posts-more';
 
 const POSTS = [
   mythFact(LIME),

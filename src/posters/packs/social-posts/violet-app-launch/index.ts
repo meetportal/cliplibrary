@@ -1,16 +1,8 @@
 import { definePack } from '../../../pack';
 import { SUNSET } from './device';
-import {
-  ALERTS,
-  addsUp,
-  downloadApp,
-  growth,
-  growthStory,
-  ideasHappen,
-  POSTS,
-  textAlerts,
-  workspace,
-} from './posts';
+import { addsUp, downloadApp, ideasHappen, workspace } from './posts';
+import { ALERTS, futureHand, textAlerts } from './posts-alerts';
+import { freshUpdate, growth, growthStory, trackTasks } from './posts-more';
 
 export const violetAppLaunchPack = definePack({
   id: 'violet-app-launch',
@@ -22,14 +14,16 @@ export const violetAppLaunchPack = definePack({
   theme: 'light',
 
   designs: [
-    ...POSTS,
     addsUp,
     downloadApp,
     ideasHappen,
     workspace,
-    ALERTS,
-    textAlerts(SUNSET),
+    trackTasks,
+    freshUpdate,
     growth,
+    ALERTS,
+    futureHand,
+    textAlerts(SUNSET),
     growthStory,
   ],
 });
