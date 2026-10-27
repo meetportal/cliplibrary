@@ -1,4 +1,10 @@
-import { createDesign, type Design, type DesignElement, type RectElement } from '@/design';
+import {
+  createDesign,
+  type Design,
+  type DesignElement,
+  mergePatterns,
+  type RectElement,
+} from '@/design';
 import type { ClipTheme, PosterCategory, PosterTag } from '@/schemas';
 import { flatten } from './kit/elements';
 import type { Template } from './kit/template';
@@ -43,7 +49,7 @@ const isBackdrop = (
   element.shadow === undefined;
 
 export const templateDesign = (item: Template, id: string, title: string): Design => {
-  const elements = flatten(item.build());
+  const elements = mergePatterns(flatten(item.build()));
   const [first, ...rest] = elements;
   return createDesign({
     id,

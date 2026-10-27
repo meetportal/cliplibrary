@@ -56,6 +56,51 @@ describe('posters', () => {
     expect(new Set(keys).size).toBe(keys.length);
   });
 
+  it('expose a small set of colour roles led by the background', () => {
+    for (const { meta, design } of designs) {
+      expect({
+        id: meta.id,
+        count: design.palette.length > 0 && design.palette.length <= 6,
+      }).toEqual({
+        id: meta.id,
+        count: true,
+      });
+      expect(design.palette[0]?.id).toBe('background');
+      const ids = design.palette.map((swatch) => swatch.id);
+      expect(new Set(ids).size).toBe(ids.length);
+    }
+  });
+
+  it('merge repeated decorative shapes into single pattern elements', () => {
+    const decorative = new Set(['rect', 'ellipse', 'polygon', 'star']);
+    const leftovers = designs.flatMap(({ meta, design }) => {
+      const runs: string[] = [];
+      let streak = 0;
+      design.elements.forEach((element, index) => {
+        const previous = design.elements[index - 1];
+        const repeats =
+          previous !== undefined &&
+          decorative.has(element.type) &&
+          previous.type === element.type &&
+          previous.name === element.name &&
+          'fill' in element &&
+          'fill' in previous &&
+          typeof element.fill === 'string' &&
+          element.fill === previous.fill &&
+          element.strokeWidth === 0 &&
+          element.rotation === 0 &&
+          element.shadow === undefined &&
+          element.opacity === 1;
+        streak = repeats ? streak + 1 : 0;
+        if (streak === 2) {
+          runs.push(`${meta.id}: ${element.name}`);
+        }
+      });
+      return runs;
+    });
+    expect(leftovers).toEqual([]);
+  });
+
   it('only use bundled fonts, icons and photos', () => {
     const photoSources = new Set<string>(Object.values(POSTER_PHOTOS).map((photo) => photo.src));
     const problems = elements.flatMap(({ pack, element }) => {
