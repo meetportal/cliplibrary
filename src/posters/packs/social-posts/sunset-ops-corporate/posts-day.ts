@@ -73,7 +73,7 @@ const dial = (cx: number, cy: number, radius: number, colors: DialColors): Nodes
   circle(cx, cy, 10, colors.hand),
 ];
 
-export const dayPost = (palette: DayPalette, words: readonly [string, string, string, string]) => {
+const dayPost = (palette: DayPalette, words: readonly [string, string, string, string]) => {
   const spec = {
     colors: {
       background: { value: palette.background, hint: 'Page' },
