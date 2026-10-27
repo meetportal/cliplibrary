@@ -1,5 +1,5 @@
-import { type Fill, linear } from '@/design';
-import { icon, POST_SIZE, rect, text } from '../../../kit';
+import { linear } from '@/design';
+import { icon, POST_SIZE, rect, type Theme, text } from '../../../kit';
 
 export const TANGERINE = {
   deep: '#06231f',
@@ -14,28 +14,36 @@ export const TANGERINE = {
 
 export const { width: W, height: H } = POST_SIZE;
 
-export const SANS = 'Plus Jakarta Sans';
+export const FONT = { label: 'Font', value: 'Plus Jakarta Sans' } as const;
+export const HANDLE = { label: 'Handle', value: 'northpine.co' } as const;
 
 type TextStyle = NonNullable<Parameters<typeof text>[4]>;
 
-export const say = (
-  content: string,
-  x: number,
-  y: number,
-  width: number,
-  size: number,
-  fill: string,
-  weight = 400,
-  extra: TextStyle = {},
-) =>
-  text(content, x, y, width, {
-    fontFamily: SANS,
-    fontSize: size,
-    fontWeight: weight,
-    fill,
-    lineHeight: 1.3,
-    ...extra,
-  });
+export const say =
+  (fontFamily: string) =>
+  (
+    content: string,
+    x: number,
+    y: number,
+    width: number,
+    size: number,
+    fill: string,
+    weight = 400,
+    extra: TextStyle = {},
+  ) =>
+    text(content, x, y, width, {
+      fontFamily,
+      fontSize: size,
+      fontWeight: weight,
+      fill,
+      lineHeight: 1.3,
+      ...extra,
+    });
+
+type BackgroundTheme = Pick<
+  Theme<{ colors: { background: { value: string; hint: string } } }>,
+  'color' | 'shade'
+>;
 
 const grid = (color: string) => [
   Array.from({ length: 17 }, (_, index) =>
@@ -46,18 +54,26 @@ const grid = (color: string) => [
   ),
 ];
 
-const background = (fill: Fill, lines?: string) => [
-  rect(0, 0, W, H, fill, { name: 'Background' }),
-  lines === undefined ? [] : grid(lines),
+export const DARK_PAGE = 'Page gradient and its faint grid lines';
+
+export const darkBackground = (t: BackgroundTheme) => [
+  rect(0, 0, W, H, linear(180, t.color('background'), t.shade('background', TANGERINE.deep)), {
+    name: 'Background',
+  }),
+  grid(t.shade('background', 'rgba(255,255,255,0.045)')),
 ];
 
-export const darkBackground = () =>
-  background(linear(180, TANGERINE.forest, TANGERINE.deep), 'rgba(255,255,255,0.045)');
+export const orangeBackground = (t: BackgroundTheme) => [
+  rect(0, 0, W, H, linear(180, t.color('background'), t.shade('background', '#ff7426')), {
+    name: 'Background',
+  }),
+  grid(t.shade('background', 'rgba(255,255,255,0.13)')),
+];
 
-export const orangeBackground = () =>
-  background(linear(180, '#ff9b55', '#ff7426'), 'rgba(255,255,255,0.13)');
-
-export const lightBackground = () => background(linear(180, '#ffffff', '#ffdcc2'));
+export const lightBackground = (t: BackgroundTheme) =>
+  rect(0, 0, W, H, linear(180, t.color('background'), t.shade('background', '#ffdcc2')), {
+    name: 'Background',
+  });
 
 export const nextArrow = (color: string, x = 890, y = 1150) =>
   icon('arrow-right', x, y, 96, color, { strokeWidth: 1.8 });
