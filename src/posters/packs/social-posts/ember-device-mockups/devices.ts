@@ -29,7 +29,7 @@ export const EMBER = {
   fade: 'rgba(7,7,10,0)',
 };
 
-export const HEAD = 'Plus Jakarta Sans';
+const HEAD = 'Plus Jakarta Sans';
 export const SITE = 'brightloop.app';
 
 export const HEADING = { label: 'Heading font', value: HEAD } as const;
@@ -41,7 +41,7 @@ export const ART_HINT = 'Sunset artwork on the device screens';
 
 export const { width: W, height: H } = POST_SIZE;
 
-export type Shade = (exact: string) => string;
+type Shade = (exact: string) => string;
 
 export interface DeviceInk {
   frame: Shade;
