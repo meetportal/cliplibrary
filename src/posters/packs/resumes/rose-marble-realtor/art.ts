@@ -9,7 +9,22 @@ export const ROSE = {
   glint: 'rgba(255,255,255,0.2)',
   white: '#ffffff',
   soft: 'rgba(255,255,255,0.32)',
+  clear: 'rgba(0,0,0,0)',
+  marble: '#1b2b4d',
 };
+
+export const NAME = {
+  first: { label: 'First name', value: 'AMARA' },
+  last: { label: 'Last name', value: 'QUINN' },
+  role: { label: 'Job title', value: 'REAL ESTATE ADVISOR' },
+} as const;
+
+export const CONTACT_COPY = {
+  label: 'Contact',
+  value: ['amara@quinnhomes.co', '+1 (555) 482 1170', '9 Seaview Terrace'],
+} as const;
+
+export const POPPINS = { label: 'Body font', value: 'Poppins' } as const;
 
 export const copy = (
   content: string,
@@ -18,10 +33,11 @@ export const copy = (
   width: number,
   fontSize: number,
   fill: string,
+  fontFamily: string,
   style: Partial<TextElement> = {},
 ) =>
   text(content, x, y, width, {
-    fontFamily: 'Poppins',
+    fontFamily,
     fontSize,
     fontWeight: 400,
     fill,
@@ -86,11 +102,20 @@ const mirrorVein = ([a, b, c, d, e, f]: Vein): Vein => [
   turn(f),
 ];
 
+export interface MarbleInk {
+  top: string;
+  base: string;
+  vein: string;
+  glint: string;
+  clear: string;
+}
+
 export const marble = (
   x: number,
   y: number,
   width: number,
   height: number,
+  ink: MarbleInk,
   options: { flip?: boolean } = {},
 ) => {
   const px = (value: number) => Math.round((options.flip === true ? 1 - value : value) * width);
@@ -106,7 +131,7 @@ export const marble = (
       y,
       width,
       height,
-      'rgba(0,0,0,0)',
+      ink.clear,
       { width, height },
       {
         stroke,
@@ -115,17 +140,25 @@ export const marble = (
       },
     );
   return group(
-    rect(x, y, width, height, linear(160, '#1b2b4d', ROSE.navy), { name: 'Marble base' }),
+    rect(x, y, width, height, linear(160, ink.top, ink.base), { name: 'Marble base' }),
     [...VEINS, ...VEINS.map(mirrorVein)].map((vein, index) => [
-      strand(veinPath(vein, 0), ROSE.vein, index < VEINS.length ? 3 : 1.6, 'Marble vein'),
-      strand(veinPath(vein, 6), ROSE.glint, 1.2, 'Marble glint'),
+      strand(veinPath(vein, 0), ink.vein, index < VEINS.length ? 3 : 1.6, 'Marble vein'),
+      strand(veinPath(vein, 6), ink.glint, 1.2, 'Marble glint'),
     ]),
   );
 };
 
-export const outline = (x: number, y: number, width: number, height: number, strokeWidth = 4) =>
-  rect(x, y, width, height, 'rgba(0,0,0,0)', {
-    stroke: ROSE.blush,
+export const outline = (
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  stroke: string,
+  clear: string,
+  strokeWidth = 4,
+) =>
+  rect(x, y, width, height, clear, {
+    stroke,
     strokeWidth,
     name: 'Frame line',
   });
