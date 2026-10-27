@@ -30,6 +30,7 @@ export type ControlEntry = {
   descriptor: AddressableDescriptor;
   hint: string | null;
   targets: string[][];
+  shades: string[] | null;
 };
 
 export type ControlSectionView = {
