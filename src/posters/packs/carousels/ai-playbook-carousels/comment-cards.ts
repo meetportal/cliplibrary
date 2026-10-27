@@ -1,363 +1,337 @@
 import { linear } from '@/design';
 import {
   avatar,
-  circle,
   icon,
   type Nodes,
   POST_SIZE,
   rect,
   rotateNodes,
   shadow,
-  template,
+  type ThemeSpec,
   text,
+  themed,
 } from '../../../kit';
 import type { PosterPhotoName } from '../../../photos';
 
-const { width: W, height: H } = POST_SIZE;
-const FONT = 'Plus Jakarta Sans';
-const INK = '#0b2b26';
-const TEAL = '#0f766e';
-const MINT = '#5eead4';
-const GREY = '#64748b';
-const BACKDROP = linear(160, '#0f766e', '#064e3b');
+export const { width: W, height: H } = POST_SIZE;
+export const FONT = { label: 'Font', value: 'Plus Jakarta Sans' } as const;
+export const INK = '#0b2b26';
+export const TEAL = '#0f766e';
+export const MINT = '#5eead4';
+export const GREY = '#64748b';
+export const WHITE = '#ffffff';
+export const DEEP = '#064e3b';
 
-interface Person {
-  photo: PosterPhotoName;
-  name: string;
-  role: string;
+export const backdrop = (from: string, to: string) =>
+  rect(0, 0, W, H, linear(160, from, to), { name: 'Background' });
+
+interface CommentStyle {
+  font: string;
+  card: string;
+  shadow: string;
+  ink: string;
+  muted: string;
 }
 
 const comment = (
+  style: CommentStyle,
   x: number,
   y: number,
   width: number,
-  person: Person,
-  message: string,
+  photo: PosterPhotoName,
+  copy: { name: string; role: string; message: string },
   rotation: number,
 ): Nodes[] =>
   rotateNodes(rotation, x + width / 2, y + 75, [
-    rect(x, y, width, 150, '#ffffff', {
+    rect(x, y, width, 150, style.card, {
       name: 'Comment card',
       cornerRadius: 18,
-      ...shadow(24, 10, 'rgba(2,44,34,0.35)'),
+      ...shadow(24, 10, style.shadow),
     }),
-    avatar(person.photo, x + 46, y + 46, 26),
-    text(person.name, x + 86, y + 20, width - 100, {
-      fontFamily: FONT,
+    avatar(photo, x + 46, y + 46, 26),
+    text(copy.name, x + 86, y + 20, width - 100, {
+      fontFamily: style.font,
       fontSize: 26,
       fontWeight: 700,
-      fill: INK,
+      fill: style.ink,
     }),
-    text(person.role, x + 86, y + 52, width - 100, {
-      fontFamily: FONT,
+    text(copy.role, x + 86, y + 52, width - 100, {
+      fontFamily: style.font,
       fontSize: 19,
       fontWeight: 500,
-      fill: GREY,
+      fill: style.muted,
     }),
-    text(message, x + 28, y + 98, width - 56, {
-      fontFamily: FONT,
+    text(copy.message, x + 28, y + 98, width - 56, {
+      fontFamily: style.font,
       fontSize: 24,
       fontWeight: 500,
-      fill: INK,
+      fill: style.ink,
     }),
   ]);
 
-export const commentsCover = template(W, H, () => [
-  rect(0, 0, W, H, BACKDROP, { name: 'Background' }),
-  comment(
-    60,
-    170,
-    410,
-    { photo: 'woman-portrait-1', name: 'Olivia Grant', role: 'Brand Strategist' },
-    'Start with a clear goal',
-    -6,
-  ),
-  comment(
-    610,
-    130,
-    420,
-    { photo: 'man-portrait-1', name: 'Marco Silva', role: 'Content Lead' },
-    'Context beats clever words',
-    5,
-  ),
-  icon('move-up-right', 700, 340, 110, '#ffffff', { strokeWidth: 1.75 }),
-  rect(260, 480, 560, 330, '#ffffff', {
-    name: 'Question card',
-    cornerRadius: 26,
-    ...shadow(40, 16, 'rgba(2,44,34,0.4)'),
-  }),
-  rect(300, 520, 96, 96, INK, { name: 'Logo', cornerRadius: 24 }),
-  icon('layers', 322, 542, 52, MINT, { strokeWidth: 2 }),
-  text('Northpeak Labs', 420, 532, 380, {
-    fontFamily: FONT,
-    fontSize: 34,
-    fontWeight: 700,
-    fill: INK,
-  }),
-  icon('badge-check', 420, 580, 30, TEAL, { strokeWidth: 2.25 }),
-  text('Verified page', 458, 580, 300, {
-    fontFamily: FONT,
-    fontSize: 22,
-    fontWeight: 500,
-    fill: GREY,
-  }),
-  text('What is your favourite\nAI shortcut?', 300, 640, 500, {
-    fontFamily: FONT,
-    fontSize: 40,
-    fontWeight: 600,
-    fill: INK,
-    lineHeight: 1.25,
-  }),
-  icon('message-square', 300, 755, 28, GREY, { strokeWidth: 2 }),
-  text('64 comments', 340, 755, 300, {
-    fontFamily: FONT,
-    fontSize: 24,
-    fontWeight: 500,
-    fill: GREY,
-  }),
-  comment(
-    60,
-    990,
-    400,
-    { photo: 'man-portrait-3', name: 'Daniel Kim', role: 'Sales Director' },
-    'Show it two good examples',
-    4,
-  ),
-  comment(
-    610,
-    1080,
-    410,
-    { photo: 'woman-portrait-4', name: 'Hana Ito', role: 'Ops Manager' },
-    'Ask it to critique a draft',
-    -5,
-  ),
-  icon('sparkles', 500, 900, 64, MINT, { strokeWidth: 2 }),
-]);
+const COVER_COMMENTS = [
+  { x: 60, y: 170, width: 410, photo: 'woman-portrait-1', rotation: -6 },
+  { x: 610, y: 130, width: 420, photo: 'man-portrait-1', rotation: 5 },
+  { x: 60, y: 990, width: 400, photo: 'man-portrait-3', rotation: 4 },
+  { x: 610, y: 1080, width: 410, photo: 'woman-portrait-4', rotation: -5 },
+] as const;
 
-const commentStep = (headline: string, body: string, person: Person, tool: string, rest: string) =>
-  template(W, H, () => [
-    rect(0, 0, W, H, BACKDROP, { name: 'Background' }),
-    comment(
-      680,
-      110,
-      360,
-      { photo: 'woman-portrait-6', name: 'Rosa Diaz', role: 'Founder' },
-      'Saved me hours',
-      5,
-    ),
-    text(headline, 90, 360, 900, {
-      fontFamily: FONT,
-      fontSize: 56,
-      fontWeight: 800,
-      fill: '#ffffff',
-      align: 'center',
+const coverSpec = {
+  colors: {
+    background: {
+      value: TEAL,
+      hint: 'Page gradient and the verified badge; its darker shades color the bottom of the gradient and the card shadows',
+    },
+    surface: { value: WHITE, hint: 'Comment cards, the question card and the arrow' },
+    text: {
+      value: INK,
+      hint: 'Names, comments, the page name, question and logo tile; its grey shade colors the roles, the verified label and the comment count',
+    },
+    accent: { value: MINT, hint: 'Logo icon and the sparkles' },
+  },
+  fonts: { body: FONT },
+  copy: {
+    names: {
+      label: 'Commenter',
+      value: ['Olivia Grant', 'Marco Silva', 'Daniel Kim', 'Hana Ito'],
+    },
+    roles: {
+      label: 'Commenter role',
+      value: ['Brand Strategist', 'Content Lead', 'Sales Director', 'Ops Manager'],
+    },
+    comments: {
+      label: 'Comment',
+      value: [
+        'Start with a clear goal',
+        'Context beats clever words',
+        'Show it two good examples',
+        'Ask it to critique a draft',
+      ],
+    },
+    page: { label: 'Page name', value: 'Northpeak Labs' },
+    verified: { label: 'Verified label', value: 'Verified page' },
+    question: { label: 'Question', value: 'What is your favourite\nAI shortcut?' },
+    count: { label: 'Comment count', value: '64 comments' },
+  },
+} as const satisfies ThemeSpec;
+
+export const commentsCover = themed(W, H, coverSpec, (t) => {
+  const font = t.font('body');
+  const muted = t.shade('text', GREY);
+  const style: CommentStyle = {
+    font,
+    card: t.color('surface'),
+    shadow: t.shade('background', 'rgba(2,44,34,0.35)'),
+    ink: t.color('text'),
+    muted,
+  };
+  const names = t.list('names');
+  const roles = t.list('roles');
+  const comments = t.list('comments');
+  const card = (index: number) => {
+    const spot = COVER_COMMENTS[index] ?? COVER_COMMENTS[0];
+    return comment(
+      style,
+      spot.x,
+      spot.y,
+      spot.width,
+      spot.photo,
+      { name: names[index] ?? '', role: roles[index] ?? '', message: comments[index] ?? '' },
+      spot.rotation,
+    );
+  };
+  return [
+    backdrop(t.color('background'), t.shade('background', DEEP)),
+    card(0),
+    card(1),
+    icon('move-up-right', 700, 340, 110, t.color('surface'), { strokeWidth: 1.75 }),
+    rect(260, 480, 560, 330, t.color('surface'), {
+      name: 'Question card',
+      cornerRadius: 26,
+      ...shadow(40, 16, t.shade('background', 'rgba(2,44,34,0.4)')),
     }),
-    text(body, 130, 440, 820, {
-      fontFamily: FONT,
-      fontSize: 46,
-      fontWeight: 400,
-      fill: '#ecfdf5',
-      align: 'center',
-      lineHeight: 1.35,
-    }),
-    rect(270, 720, 540, 260, '#ffffff', {
-      name: 'Quote card',
-      cornerRadius: 22,
-      ...shadow(36, 14, 'rgba(2,44,34,0.4)'),
-    }),
-    avatar(person.photo, 330, 780, 34),
-    text(person.name, 380, 752, 400, {
-      fontFamily: FONT,
-      fontSize: 30,
+    rect(300, 520, 96, 96, t.color('text'), { name: 'Logo', cornerRadius: 24 }),
+    icon('layers', 322, 542, 52, t.color('accent'), { strokeWidth: 2 }),
+    text(t.copy('page'), 420, 532, 380, {
+      fontFamily: font,
+      fontSize: 34,
       fontWeight: 700,
-      fill: INK,
+      fill: t.color('text'),
     }),
-    text(person.role, 380, 792, 400, {
-      fontFamily: FONT,
+    icon('badge-check', 420, 580, 30, t.color('background'), { strokeWidth: 2.25 }),
+    text(t.copy('verified'), 458, 580, 300, {
+      fontFamily: font,
       fontSize: 22,
       fontWeight: 500,
-      fill: GREY,
+      fill: muted,
     }),
-    text(tool, 300, 850, 480, {
-      fontFamily: FONT,
-      fontSize: 34,
-      fontWeight: 800,
-      fill: TEAL,
+    text(t.copy('question'), 300, 640, 500, {
+      fontFamily: font,
+      fontSize: 40,
+      fontWeight: 600,
+      fill: t.color('text'),
+      lineHeight: 1.25,
     }),
-    text(rest, 300, 896, 480, {
-      fontFamily: FONT,
-      fontSize: 32,
+    icon('message-square', 300, 755, 28, muted, { strokeWidth: 2 }),
+    text(t.copy('count'), 340, 755, 300, {
+      fontFamily: font,
+      fontSize: 24,
       fontWeight: 500,
-      fill: INK,
+      fill: muted,
     }),
-    comment(
-      50,
-      1110,
-      380,
-      { photo: 'man-portrait-2', name: 'Ethan Moss', role: 'Analyst' },
-      'Use it for structure',
-      -4,
-    ),
-  ]);
+    card(2),
+    card(3),
+    icon('sparkles', 500, 900, 64, t.color('accent'), { strokeWidth: 2 }),
+  ];
+});
+
+interface StepCopy {
+  headline: string;
+  body: string;
+  photo: PosterPhotoName;
+  name: string;
+  role: string;
+  tool: string;
+  rest: string;
+}
+
+const commentStep = (step: StepCopy) =>
+  themed(
+    W,
+    H,
+    {
+      colors: {
+        background: {
+          value: TEAL,
+          hint: 'Page gradient and the tool name; its darker shades color the bottom of the gradient and the card shadows',
+        },
+        surface: {
+          value: WHITE,
+          hint: 'Comment cards, the quote card and the headline; its pale shade colors the body text',
+        },
+        text: {
+          value: INK,
+          hint: 'Names, comments and the quote; its grey shade colors the roles',
+        },
+      },
+      fonts: { body: FONT },
+      copy: {
+        headline: { label: 'Headline', value: step.headline },
+        body: { label: 'Body', value: step.body },
+        names: { label: 'Name', value: ['Rosa Diaz', step.name, 'Ethan Moss'] },
+        roles: { label: 'Role', value: ['Founder', step.role, 'Analyst'] },
+        comments: { label: 'Comment', value: ['Saved me hours', 'Use it for structure'] },
+        tool: { label: 'Tool name', value: step.tool },
+        quote: { label: 'Quote', value: step.rest },
+      },
+    } as const satisfies ThemeSpec,
+    (t) => {
+      const font = t.font('body');
+      const style: CommentStyle = {
+        font,
+        card: t.color('surface'),
+        shadow: t.shade('background', 'rgba(2,44,34,0.35)'),
+        ink: t.color('text'),
+        muted: t.shade('text', GREY),
+      };
+      const [first = '', quoted = '', last = ''] = t.list('names');
+      const [firstRole = '', quotedRole = '', lastRole = ''] = t.list('roles');
+      const [saved = '', structure = ''] = t.list('comments');
+      return [
+        backdrop(t.color('background'), t.shade('background', DEEP)),
+        comment(
+          style,
+          680,
+          110,
+          360,
+          'woman-portrait-6',
+          { name: first, role: firstRole, message: saved },
+          5,
+        ),
+        text(t.copy('headline'), 90, 360, 900, {
+          fontFamily: font,
+          fontSize: 56,
+          fontWeight: 800,
+          fill: t.color('surface'),
+          align: 'center',
+        }),
+        text(t.copy('body'), 130, 440, 820, {
+          fontFamily: font,
+          fontSize: 46,
+          fontWeight: 400,
+          fill: t.shade('surface', '#ecfdf5'),
+          align: 'center',
+          lineHeight: 1.35,
+        }),
+        rect(270, 720, 540, 260, t.color('surface'), {
+          name: 'Quote card',
+          cornerRadius: 22,
+          ...shadow(36, 14, t.shade('background', 'rgba(2,44,34,0.4)')),
+        }),
+        avatar(step.photo, 330, 780, 34),
+        text(quoted, 380, 752, 400, {
+          fontFamily: font,
+          fontSize: 30,
+          fontWeight: 700,
+          fill: t.color('text'),
+        }),
+        text(quotedRole, 380, 792, 400, {
+          fontFamily: font,
+          fontSize: 22,
+          fontWeight: 500,
+          fill: t.shade('text', GREY),
+        }),
+        text(t.copy('tool'), 300, 850, 480, {
+          fontFamily: font,
+          fontSize: 34,
+          fontWeight: 800,
+          fill: t.color('background'),
+        }),
+        text(t.copy('quote'), 300, 896, 480, {
+          fontFamily: font,
+          fontSize: 32,
+          fontWeight: 500,
+          fill: t.color('text'),
+        }),
+        comment(
+          style,
+          50,
+          1110,
+          380,
+          'man-portrait-2',
+          { name: last, role: lastRole, message: structure },
+          -4,
+        ),
+      ];
+    },
+  );
 
 export const COMMENT_STEPS = [
-  commentStep(
-    'Skip the blank page.',
-    'Let AI draft a first version you can shape instead of staring at nothing.',
-    { photo: 'woman-portrait-2', name: 'Priya Nair', role: 'Head of Content' },
-    'Draftly',
-    'is perfect for first outlines.',
-  ),
-  commentStep(
-    'Stop guessing at trends.',
-    'Use AI to spot patterns in sales, churn and support tickets in minutes.',
-    { photo: 'man-portrait-1', name: 'Leo Hart', role: 'Growth Analyst' },
-    'Signalbox',
-    'surfaces trends I would miss.',
-  ),
-  commentStep(
-    'Untangle messy notes.',
-    'AI can turn scattered notes into clear tasks, owners and due dates.',
-    { photo: 'woman-portrait-5', name: 'Ana Ruiz', role: 'Operations Lead' },
-    'Tidynote',
-    'turns notes into task lists.',
-  ),
-] as const;
-
-export const searchCover = template(W, H, () => [
-  rect(0, 0, W, H, BACKDROP, { name: 'Background' }),
-  text('PRACTICAL PLAYBOOK', 90, 420, 900, {
-    fontFamily: FONT,
-    fontSize: 30,
-    fontWeight: 700,
-    fill: MINT,
-    letterSpacing: 3,
+  commentStep({
+    headline: 'Skip the blank page.',
+    body: 'Let AI draft a first version you can shape instead of staring at nothing.',
+    photo: 'woman-portrait-2',
+    name: 'Priya Nair',
+    role: 'Head of Content',
+    tool: 'Draftly',
+    rest: 'is perfect for first outlines.',
   }),
-  text('4 Ways AI\nGives You Back\nYour Week', 90, 480, 920, {
-    fontFamily: FONT,
-    fontSize: 96,
-    fontWeight: 500,
-    fill: '#ffffff',
-    lineHeight: 1.1,
+  commentStep({
+    headline: 'Stop guessing at trends.',
+    body: 'Use AI to spot patterns in sales, churn and support tickets in minutes.',
+    photo: 'man-portrait-1',
+    name: 'Leo Hart',
+    role: 'Growth Analyst',
+    tool: 'Signalbox',
+    rest: 'surfaces trends I would miss.',
   }),
-  rect(90, 1040, 900, 112, '#ffffff', { name: 'Search bar', cornerRadius: 56 }),
-  icon('search', 132, 1070, 52, GREY, { strokeWidth: 2.25 }),
-  text('What should I automate?', 204, 1074, 600, {
-    fontFamily: FONT,
-    fontSize: 38,
-    fontWeight: 500,
-    fill: GREY,
+  commentStep({
+    headline: 'Untangle messy notes.',
+    body: 'AI can turn scattered notes into clear tasks, owners and due dates.',
+    photo: 'woman-portrait-5',
+    name: 'Ana Ruiz',
+    role: 'Operations Lead',
+    tool: 'Tidynote',
+    rest: 'turns notes into task lists.',
   }),
-  circle(930, 1096, 40, TEAL),
-  icon('arrow-right', 908, 1074, 44, '#ffffff', { strokeWidth: 2.5 }),
-]);
-
-const ACTIONS = [
-  { name: 'thumbs-up', label: 'Like' },
-  { name: 'message-square', label: 'Comment' },
-  { name: 'repeat', label: 'Repost' },
-  { name: 'send', label: 'Send' },
-] as const;
-
-const strategy = (index: number, person: Person, title: string, body: string, progress: number) =>
-  template(W, H, () => [
-    rect(0, 0, W, H, BACKDROP, { name: 'Background' }),
-    rect(110, 190, 860, 840, '#ffffff', {
-      name: 'Post card',
-      cornerRadius: 32,
-      ...shadow(40, 16, 'rgba(2,44,34,0.4)'),
-    }),
-    rect(400, 150, 280, 72, '#ccfbf1', {
-      name: 'Tab',
-      cornerRadius: 20,
-      ...shadow(16, 6, 'rgba(2,44,34,0.25)'),
-    }),
-    text(`WAY ${index}`, 400, 168, 280, {
-      fontFamily: FONT,
-      fontSize: 30,
-      fontWeight: 800,
-      fill: TEAL,
-      align: 'center',
-      letterSpacing: 2,
-    }),
-    avatar(person.photo, 206, 316, 44),
-    text(person.name, 268, 282, 400, {
-      fontFamily: FONT,
-      fontSize: 32,
-      fontWeight: 700,
-      fill: INK,
-    }),
-    text(person.role, 268, 324, 400, {
-      fontFamily: FONT,
-      fontSize: 24,
-      fontWeight: 500,
-      fill: GREY,
-    }),
-    text('+ Follow', 740, 296, 190, {
-      fontFamily: FONT,
-      fontSize: 30,
-      fontWeight: 700,
-      fill: TEAL,
-      align: 'right',
-    }),
-    text(title, 162, 400, 760, {
-      fontFamily: FONT,
-      fontSize: 60,
-      fontWeight: 800,
-      fill: INK,
-      lineHeight: 1.12,
-    }),
-    text(body, 162, 560, 760, {
-      fontFamily: FONT,
-      fontSize: 34,
-      fontWeight: 400,
-      fill: '#475569',
-      lineHeight: 1.45,
-    }),
-    icon('thumbs-up', 162, 856, 28, TEAL, { strokeWidth: 2 }),
-    text('128', 200, 856, 200, { fontFamily: FONT, fontSize: 24, fontWeight: 500, fill: GREY }),
-    text('24 comments', 620, 856, 300, {
-      fontFamily: FONT,
-      fontSize: 24,
-      fontWeight: 500,
-      fill: GREY,
-      align: 'right',
-    }),
-    rect(162, 900, 756, 3, '#e2e8f0', { name: 'Rule' }),
-    ACTIONS.map((action, slot) => [
-      icon(action.name, 222 + slot * 190, 924, 38, '#334155', { strokeWidth: 2 }),
-      text(action.label, 166 + slot * 190, 970, 150, {
-        fontFamily: FONT,
-        fontSize: 22,
-        fontWeight: 500,
-        fill: '#334155',
-        align: 'center',
-      }),
-    ]),
-    rect(110, 1110, 860, 14, 'rgba(255,255,255,0.25)', { name: 'Track', cornerRadius: 7 }),
-    rect(110, 1110, 860 * progress, 14, '#ffffff', { name: 'Progress', cornerRadius: 7 }),
-  ]);
-
-export const STRATEGY_STEPS = [
-  strategy(
-    1,
-    { photo: 'man-portrait-2', name: 'Daniel Brooks', role: 'Operations Director' },
-    'Start With Real\nPain Points',
-    'Do not add AI because it is new. List the slow, repetitive or error prone tasks your team hates and solve those first.',
-    0.3,
-  ),
-  strategy(
-    2,
-    { photo: 'man-portrait-1', name: 'Mason Webb', role: 'Customer Lead' },
-    'Assist People,\nDo Not Replace Them',
-    'Strong teams let AI handle drafts and research so people can spend their time on judgement and relationships.',
-    0.55,
-  ),
-  strategy(
-    3,
-    { photo: 'woman-portrait-5', name: 'Grace Lin', role: 'Product Manager' },
-    'Turn Wins Into\nShared Workflows',
-    'Once a prompt works, save it as a team template so everyone gets the same quality every single time.',
-    0.8,
-  ),
 ] as const;

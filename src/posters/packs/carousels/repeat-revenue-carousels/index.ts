@@ -1,7 +1,8 @@
 import { definePack } from '../../../pack';
+import { DROP_STEPS, dropCover } from './drops';
 import { habitsCover, pairStep, streakStep, tinyStep } from './habits';
 import { LEVER_STEPS, leversCover, WAVE_STEPS, waveCover } from './levers';
-import { blocksStep, calendarCover, DROP_STEPS, dropCover, RITUAL_STEPS } from './routines';
+import { blocksStep, calendarCover, RITUAL_STEPS } from './routines';
 
 const leversDeck = [leversCover, ...LEVER_STEPS] as const;
 const waveDeck = [waveCover, ...WAVE_STEPS] as const;
