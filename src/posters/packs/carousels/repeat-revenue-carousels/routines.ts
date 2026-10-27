@@ -32,10 +32,10 @@ import {
   WINE,
 } from './style';
 
-export const pageDots = (active: number, on: string, off: string) =>
+const pageDots = (active: number, on: string, off: string) =>
   [0, 1, 2, 3, 4].map((index) => circle(460 + index * 40, 1190, 9, index === active ? on : off));
 
-export const stepTag = (
+const stepTag = (
   label: string,
   y: number,
   fontFamily: string,
