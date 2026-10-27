@@ -1,15 +1,6 @@
 import { definePack } from '../../../pack';
-import {
-  hiddenWords,
-  LILAC,
-  MAGENTA,
-  OCEAN,
-  pickNumber,
-  quizStory,
-  quizTime,
-  routeMaze,
-  unscramble,
-} from './posts';
+import { LILAC, MAGENTA, OCEAN, pickNumber, quizStory, quizTime, routeMaze } from './posts';
+import { hiddenWords, unscramble } from './posts-more';
 
 const mazePost = routeMaze(MAGENTA);
 const pick = pickNumber(MAGENTA);
