@@ -142,7 +142,7 @@ export const EditorHeader = ({
             event.currentTarget.blur();
           }
         }}
-        className="h-8 w-28 min-w-0 truncate rounded-md sm:w-56 bg-transparent px-2 font-medium text-sm outline-none hover:bg-muted focus:bg-muted"
+        className="h-8 w-28 min-w-0 truncate rounded-md bg-transparent sm:w-44 xl:w-56 px-2 font-medium text-sm outline-none hover:bg-muted focus:bg-muted"
       />
       <div className="flex items-center gap-0.5">
         <Button
@@ -166,7 +166,7 @@ export const EditorHeader = ({
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="hidden md:inline-flex">
+          <Button variant="ghost" size="sm" className="hidden lg:inline-flex">
             <Scaling /> Resize
           </Button>
         </DropdownMenuTrigger>
@@ -175,7 +175,7 @@ export const EditorHeader = ({
         </DropdownMenuContent>
       </DropdownMenu>
       <span
-        className="hidden items-center gap-1 text-muted-foreground text-xs md:flex"
+        className="hidden items-center gap-1 text-muted-foreground text-xs xl:flex"
         title="Your edits are saved in this browser automatically"
       >
         <CloudCheck className="size-4" />
@@ -183,7 +183,7 @@ export const EditorHeader = ({
       </span>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="hidden md:inline-flex">
+          <Button variant="ghost" size="sm" className="hidden lg:inline-flex">
             <LayoutGrid /> View
           </Button>
         </DropdownMenuTrigger>
@@ -197,7 +197,7 @@ export const EditorHeader = ({
           size="icon-sm"
           aria-label="Keyboard shortcuts"
           onClick={onHelp}
-          className="hidden md:inline-flex"
+          className="hidden lg:inline-flex"
         >
           <Keyboard />
         </Button>
@@ -255,7 +255,7 @@ export const EditorHeader = ({
           size="sm"
           onClick={onReset}
           title="Discard your edits and restore the original poster"
-          className="hidden md:inline-flex"
+          className="hidden lg:inline-flex"
         >
           <RotateCcw /> Reset
         </Button>
@@ -263,13 +263,13 @@ export const EditorHeader = ({
           variant="ghost"
           size="sm"
           onClick={() => openRef.current?.click()}
-          className="hidden md:inline-flex"
+          className="hidden lg:inline-flex"
         >
           <FolderOpen /> Open
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label="More options" className="md:hidden">
+            <Button variant="ghost" size="icon-sm" aria-label="More options" className="lg:hidden">
               <MoreHorizontal />
             </Button>
           </DropdownMenuTrigger>
