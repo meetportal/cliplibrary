@@ -38,7 +38,7 @@ export const SUNSET: SaasPalette = {
 
 export const W = POST_SIZE.width;
 export const H = POST_SIZE.height;
-export const WHITE = '#ffffff';
+const WHITE = '#ffffff';
 
 interface Role {
   value: string;
