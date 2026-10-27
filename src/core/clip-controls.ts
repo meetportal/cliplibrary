@@ -1,4 +1,5 @@
 import type { z } from 'zod';
+import { getAtPath } from '@/lib/value-path';
 import type { ClipControls, ControlField } from '@/schemas';
 import { describeSchema } from './schema-introspect';
 import type {
@@ -66,9 +67,21 @@ const withLabel = (
     ? { ...descriptor, label, item: relabelItems(descriptor.item, items) }
     : { ...descriptor, label };
 
+const defaultShades = (
+  descriptors: readonly AddressableDescriptor[],
+  defaults: unknown,
+): string[] | null => {
+  if (descriptors.length < 2 || descriptors[0]?.kind !== 'color') {
+    return null;
+  }
+  const shades = descriptors.map((descriptor) => getAtPath(defaults, descriptor.path));
+  return shades.every((shade): shade is string => typeof shade === 'string') ? shades : null;
+};
+
 export const resolveClipControls = (
   schema: z.ZodType,
   controls: ClipControls,
+  defaults?: unknown,
 ): ControlSectionView[] => {
   const byPath = describeControlPaths(schema);
   const lookup = (path: string): AddressableDescriptor => {
@@ -100,6 +113,7 @@ export const resolveClipControls = (
       descriptor: withLabel(primary, label, items),
       hint: typeof field === 'string' ? null : (field.hint ?? null),
       targets: descriptors.map((descriptor) => descriptor.path),
+      shades: defaultShades(descriptors, defaults),
     };
   };
 
