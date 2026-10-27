@@ -230,7 +230,10 @@ export const mythFact = themed(W, H, mythSpec, (t) => {
 
 const quizSpec = {
   colors: {
-    background: { value: FH.cream, hint: 'Light checks, the quiz card and the answer text' },
+    background: {
+      value: FH.cream,
+      hint: 'Page, the light checks, the quiz card and the answer text',
+    },
     primary: {
       value: FH.forest,
       hint: 'Dark checks, QUIZ, TIME, the blank line and the answer pills',
