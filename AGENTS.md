@@ -175,8 +175,8 @@ editor.
 Every clip and poster page has an "Edit with AI" panel (`src/components/media-agent`) that streams
 a chat with `useChat` from `@ai-sdk/react`. The editor sends its current document with each
 message to `POST /api/agent` (`src/app/api/agent/route.ts`), which runs `streamText` on Gemini 3.7
-Flash and falls back to Gemini 3.5 Flash when 3.7 is overloaded or rate limited
-(`src/agent/model.ts`). The route needs `GOOGLE_GENERATIVE_AI_API_KEY` (see `.env.example`).
+Flash through OpenRouter, with OpenRouter's `models` fallback to Gemini 3.5 Flash
+(`src/agent/model.ts`). The route needs `OPENROUTER_API_KEY` (see `.env.example`).
 
 - The model edits through one tool, `editMedia`, which takes RFC 6902 JSON Patch operations
   (`src/agent/edits.ts`, `fast-json-patch`). Each patch is validated with `checkMedia`

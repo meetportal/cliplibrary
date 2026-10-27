@@ -24,9 +24,9 @@ Edits live in the browser session. Nothing you change is stored on the
 server, so reloading a clip starts from its defaults. Images and videos you
 pick are loaded locally. When you message the AI editor, the current clip or
 poster is sent to the app's `/api/agent` route, which swaps embedded media
-for placeholders before it reaches Gemini. Set `GOOGLE_GENERATIVE_AI_API_KEY`
-(see `.env.example`) to enable it; everything else runs on any Next.js host
-such as Netlify.
+for placeholders before it reaches Gemini through OpenRouter. Set
+`OPENROUTER_API_KEY` (see `.env.example`) to enable it; everything else runs on
+any Next.js host such as Netlify.
 
 ## Export fidelity
 
