@@ -1,13 +1,8 @@
 import { definePack } from '../../../pack';
-import { finalStats, gameDayPost, gameDayStory, playerCard, playerOfYear, puckDrop } from './posts';
-import {
-  countdown,
-  quoteFrost,
-  quoteNight,
-  rivalGame,
-  schedule,
-  startingLineup,
-} from './posts-more';
+import { finalStats, playerCard, puckDrop } from './posts';
+import { quoteFrost, quoteNight, schedule, startingLineup } from './posts-more';
+import { gameDayPost, gameDayStory, playerOfYear } from './posts-player';
+import { countdown, rivalGame } from './posts-rival';
 
 const POSTS = [
   finalStats,

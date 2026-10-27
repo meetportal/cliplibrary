@@ -3,345 +3,261 @@ import {
   circle,
   ellipse,
   icon,
-  POST_SIZE,
   photo,
   poly,
   rect,
-  STORY_SIZE,
   star,
-  template,
-  text,
+  type ThemeSpec,
+  themed,
 } from '../../../kit';
-import { DISPLAY, HAWKS, iceBackground, LABEL, SCRIPT, toned } from './palette';
+import { H, HAWKS, HEADING, iceBackground, LABEL, RINK_HINT, say, toned, W } from './palette';
 
-const { width: W, height: H } = POST_SIZE;
+const PORTRAITS = ['man-portrait-1', 'man-portrait-2', 'man-portrait-3'] as const;
 
-const STAT_ROWS = [
-  ['FINAL SCORE', '5', '2'],
-  ['SHOTS ON GOAL', '38', '24'],
-  ['POWER PLAY', '2/4', '0/3'],
-  ['HITS', '21', '17'],
-  ['FACEOFFS', '56%', '44%'],
-  ['SAVES', '22', '33'],
-] as const;
+const finalStatsSpec = {
+  colors: {
+    background: {
+      value: HAWKS.navy,
+      hint: 'Page and side band gradients, the boxes behind home scores, the stat names and away scores',
+    },
+    surface: { value: HAWKS.white, hint: 'Stat rows, the matchup line and player names' },
+    primary: {
+      value: HAWKS.ice,
+      hint: 'FINAL STATS, the Three Stars heading, photo frames and the club line',
+    },
+    accent: { value: HAWKS.amber, hint: 'Home scores and the stars on the photos' },
+  },
+  fonts: { heading: HEADING, label: LABEL },
+  copy: {
+    title: { label: 'Title', value: 'FINAL STATS' },
+    matchup: { label: 'Matchup', value: 'HAWKS  vs  RAVENS' },
+    stats: {
+      label: 'Stat',
+      value: ['FINAL SCORE', 'SHOTS ON GOAL', 'POWER PLAY', 'HITS', 'FACEOFFS', 'SAVES'],
+    },
+    home: { label: 'Home value', value: ['5', '38', '2/4', '21', '56%', '22'] },
+    away: { label: 'Away value', value: ['2', '24', '0/3', '17', '44%', '33'] },
+    starsTitle: { label: 'Stars heading', value: 'THREE STARS' },
+    names: { label: 'Player', value: ['J. LAINE', 'M. OKAFOR', 'T. REYES'] },
+    club: { label: 'Club line', value: 'FROST HAWKS HOCKEY CLUB' },
+  },
+} as const satisfies ThemeSpec;
 
-const STARS = [
-  ['man-portrait-1', 'J. LAINE'],
-  ['man-portrait-2', 'M. OKAFOR'],
-  ['man-portrait-3', 'T. REYES'],
-] as const;
-
-export const finalStats = template(W, H, () => [
-  rect(0, 0, W, H, linear(170, HAWKS.navy, HAWKS.deep), { name: 'Background' }),
-  rect(0, 0, 300, H, linear(180, HAWKS.steel, HAWKS.navy), { name: 'Side band' }),
-  text('FINAL STATS', 30, 1290, 1230, {
-    fontFamily: DISPLAY,
-    fontSize: 250,
-    fontWeight: 400,
-    fill: HAWKS.ice,
-    rotation: -90,
-    letterSpacing: 4,
-    lineHeight: 1,
-  }),
-  text('HAWKS  vs  RAVENS', 340, 110, 680, {
-    fontFamily: LABEL,
-    fontSize: 44,
-    fontWeight: 700,
-    fill: HAWKS.white,
-    letterSpacing: 4,
-  }),
-  STAT_ROWS.map(([label, home, away], index) => {
-    const y = 200 + index * 92;
-    return [
-      rect(340, y, 680, 76, HAWKS.white, { cornerRadius: 12, name: 'Stat row' }),
-      text(label, 370, y + 16, 380, {
-        fontFamily: LABEL,
-        fontSize: 40,
-        fontWeight: 700,
-        fill: HAWKS.navy,
-      }),
-      rect(770, y + 10, 110, 56, HAWKS.navy, { cornerRadius: 8, name: 'Home value' }),
-      text(home, 770, y + 16, 110, {
-        fontFamily: LABEL,
-        fontSize: 40,
-        fontWeight: 700,
-        fill: HAWKS.amber,
-        align: 'center',
-      }),
-      text(away, 900, y + 16, 100, {
-        fontFamily: LABEL,
-        fontSize: 40,
-        fontWeight: 600,
-        fill: HAWKS.navy,
-        align: 'center',
-      }),
-    ];
-  }),
-  text('THREE STARS', 340, 790, 680, {
-    fontFamily: LABEL,
-    fontSize: 40,
-    fontWeight: 700,
-    fill: HAWKS.ice,
-    letterSpacing: 6,
-  }),
-  STARS.map(([portrait, name], index) => {
-    const x = 340 + index * 235;
-    return [
-      photo(portrait, x, 860, 210, 250, {
-        cornerRadius: 16,
-        stroke: HAWKS.ice,
-        strokeWidth: 4,
-      }),
-      star(5, x + 160, 875, 36, HAWKS.amber, { innerRatio: 0.45 }),
-      text(name, x - 10, 1130, 230, {
-        fontFamily: LABEL,
-        fontSize: 36,
-        fontWeight: 700,
-        fill: HAWKS.white,
-        align: 'center',
-      }),
-    ];
-  }),
-  text('FROST HAWKS HOCKEY CLUB', 340, 1240, 680, {
-    fontFamily: LABEL,
-    fontSize: 32,
-    fontWeight: 600,
-    fill: HAWKS.ice,
-    letterSpacing: 6,
-  }),
-]);
-
-export const puckDrop = template(W, H, () => [
-  iceBackground(W, H),
-  circle(540, 520, 350, linear(180, '#1f2a40', '#04070e'), {
-    name: 'Puck',
-    shadow: { color: 'rgba(5,12,29,0.35)', blur: 50, offsetX: 0, offsetY: 24 },
-  }),
-  ellipse(220, 200, 640, 640, 'rgba(0,0,0,0)', {
-    stroke: 'rgba(143,211,255,0.35)',
-    strokeWidth: 6,
-    name: 'Puck ring',
-  }),
-  text('PUCK DROP', 190, 270, 700, {
-    fontFamily: DISPLAY,
-    fontSize: 110,
-    fontWeight: 400,
-    fill: HAWKS.white,
-    align: 'center',
-    letterSpacing: 8,
-  }),
-  circle(540, 520, 105, linear(150, HAWKS.amber, HAWKS.gold)),
-  icon('feather', 480, 460, 120, HAWKS.navy, { strokeWidth: 1.8 }),
-  text('NOV 08, 2027', 190, 655, 700, {
-    fontFamily: DISPLAY,
-    fontSize: 84,
-    fontWeight: 400,
-    fill: HAWKS.ice,
-    align: 'center',
-    letterSpacing: 4,
-  }),
-  text('7:30', 60, 920, 640, {
-    fontFamily: DISPLAY,
-    fontSize: 360,
-    fontWeight: 400,
-    fill: HAWKS.navy,
-    align: 'right',
-    lineHeight: 1,
-  }),
-  text('PM', 730, 960, 300, {
-    fontFamily: DISPLAY,
-    fontSize: 150,
-    fontWeight: 400,
-    fill: HAWKS.gold,
-    lineHeight: 1,
-  }),
-  text('EST', 730, 1100, 300, {
-    fontFamily: DISPLAY,
-    fontSize: 150,
-    fontWeight: 400,
-    fill: HAWKS.navy,
-    lineHeight: 1,
-  }),
-]);
-
-export const playerCard = template(W, H, () => [
-  rect(0, 0, W, H, linear(160, HAWKS.steel, HAWKS.deep), { name: 'Background' }),
-  poly(
-    [
-      [120, 120],
-      [960, 120],
-      [960, 1100],
-      [880, 1190],
-      [120, 1190],
-    ],
-    linear(160, '#cfe8f7', '#3d6f99'),
-    { name: 'Card frame' },
-  ),
-  toned('hockey-2', 145, 145, 790, 950, 'rgba(10,22,49,0.28)'),
-  rect(80, 80, 210, 230, HAWKS.navy, { stroke: HAWKS.ice, strokeWidth: 6, name: 'Rating box' }),
-  text('94', 80, 96, 210, {
-    fontFamily: DISPLAY,
-    fontSize: 150,
-    fontWeight: 400,
-    fill: HAWKS.white,
-    align: 'center',
-    lineHeight: 1,
-  }),
-  text('OVERALL', 80, 250, 210, {
-    fontFamily: LABEL,
-    fontSize: 36,
-    fontWeight: 700,
-    fill: HAWKS.ice,
-    align: 'center',
-    letterSpacing: 4,
-  }),
-  rect(500, 1010, 500, 230, HAWKS.navy, { stroke: HAWKS.ice, strokeWidth: 6, name: 'Name box' }),
-  text('LUKAS', 535, 1030, 300, {
-    fontFamily: DISPLAY,
-    fontSize: 80,
-    fontWeight: 400,
-    fill: HAWKS.white,
-    letterSpacing: 4,
-  }),
-  text('#19', 830, 1040, 140, {
-    fontFamily: LABEL,
-    fontSize: 48,
-    fontWeight: 700,
-    fill: HAWKS.ice,
-    align: 'right',
-  }),
-  text('BRANDT', 535, 1105, 440, {
-    fontFamily: DISPLAY,
-    fontSize: 120,
-    fontWeight: 400,
-    fill: HAWKS.amber,
-    letterSpacing: 4,
-    lineHeight: 1,
-  }),
-  text('FROST HAWKS', 1050, 200, 600, {
-    fontFamily: LABEL,
-    fontSize: 44,
-    fontWeight: 700,
-    fill: HAWKS.ice,
-    rotation: 90,
-    letterSpacing: 10,
-  }),
-]);
-
-const playerStat = (value: string, label: string, y: number) => [
-  text(value, 760, y, 260, {
-    fontFamily: DISPLAY,
-    fontSize: 100,
-    fontWeight: 400,
-    fill: HAWKS.navy,
-    lineHeight: 1,
-  }),
-  text(label, 760, y + 100, 260, {
-    fontFamily: LABEL,
-    fontSize: 32,
-    fontWeight: 700,
-    fill: HAWKS.gold,
-    letterSpacing: 3,
-  }),
-];
-
-export const playerOfYear = template(W, H, () => [
-  iceBackground(W, H),
-  poly(
-    [
-      [0, 1220],
-      [W, 1110],
-      [W, H],
-      [0, H],
-    ],
-    linear(90, HAWKS.navy, HAWKS.blue),
-    { name: 'Ice band' },
-  ),
-  text('PLAYER OF THE YEAR', 0, 80, W, {
-    fontFamily: LABEL,
-    fontSize: 46,
-    fontWeight: 700,
-    italic: true,
-    fill: HAWKS.navy,
-    align: 'center',
-    letterSpacing: 14,
-  }),
-  text('150', 0, 150, W, {
-    fontFamily: DISPLAY,
-    fontSize: 430,
-    fontWeight: 400,
-    fill: HAWKS.navy,
-    align: 'center',
-    lineHeight: 1,
-  }),
-  text('POINTS', 600, 560, 400, {
-    fontFamily: DISPLAY,
-    fontSize: 90,
-    fontWeight: 400,
-    fill: HAWKS.gold,
-    align: 'right',
-    letterSpacing: 6,
-  }),
-  text('MILO', 80, 600, 400, {
-    fontFamily: DISPLAY,
-    fontSize: 80,
-    fontWeight: 400,
-    fill: HAWKS.navy,
-  }),
-  text('HARTLEY', 80, 670, 600, {
-    fontFamily: DISPLAY,
-    fontSize: 120,
-    fontWeight: 400,
-    fill: HAWKS.blue,
-  }),
-  text('#27  CENTER', 80, 800, 400, {
-    fontFamily: LABEL,
-    fontSize: 32,
-    fontWeight: 600,
-    fill: HAWKS.navy,
-    letterSpacing: 4,
-  }),
-  toned('hockey-2', 80, 860, 620, 400, 'rgba(29,111,184,0.18)', { radius: 28 }),
-  playerStat('61.2', 'FACEOFF WIN %', 680),
-  playerStat('94', 'ASSISTS', 860),
-  playerStat('56', 'GOALS', 1040),
-]);
-
-const gameDay = (height: number) => {
-  const top = (height - H) / 2;
-  return template(W, height, () => [
-    iceBackground(W, height),
-    text('Game Day', 0, 60 + top * 0.6, W, {
-      fontFamily: SCRIPT,
-      fontSize: 140,
-      fontWeight: 400,
-      fill: HAWKS.gold,
-      align: 'center',
+export const finalStats = themed(W, H, finalStatsSpec, (t) => {
+  const label = t.font('label');
+  const home = t.list('home');
+  const away = t.list('away');
+  return [
+    rect(0, 0, W, H, linear(170, t.color('background'), t.shade('background', HAWKS.deep)), {
+      name: 'Background',
     }),
-    text('NOV. 8', 0, 220 + top * 0.6, W, {
-      fontFamily: DISPLAY,
-      fontSize: 400,
-      fontWeight: 400,
-      fill: linear(180, HAWKS.blue, HAWKS.navy),
+    rect(0, 0, 300, H, linear(180, t.shade('background', HAWKS.steel), t.color('background')), {
+      name: 'Side band',
+    }),
+    say(t.copy('title'), 30, 1290, 1230, t.font('heading'), 250, 400, t.color('primary'), {
+      rotation: -90,
+      letterSpacing: 4,
+      lineHeight: 1,
+    }),
+    say(t.copy('matchup'), 340, 110, 680, label, 44, 700, t.color('surface'), {
+      letterSpacing: 4,
+    }),
+    t.list('stats').map((stat, index) => {
+      const y = 200 + index * 92;
+      return [
+        rect(340, y, 680, 76, t.color('surface'), { cornerRadius: 12, name: 'Stat row' }),
+        say(stat, 370, y + 16, 380, label, 40, 700, t.color('background')),
+        rect(770, y + 10, 110, 56, t.color('background'), {
+          cornerRadius: 8,
+          name: 'Home value',
+        }),
+        say(home[index] ?? '', 770, y + 16, 110, label, 40, 700, t.color('accent'), {
+          align: 'center',
+        }),
+        say(away[index] ?? '', 900, y + 16, 100, label, 40, 600, t.color('background'), {
+          align: 'center',
+        }),
+      ];
+    }),
+    say(t.copy('starsTitle'), 340, 790, 680, label, 40, 700, t.color('primary'), {
+      letterSpacing: 6,
+    }),
+    t.list('names').map((name, index) => {
+      const x = 340 + index * 235;
+      return [
+        photo(PORTRAITS[index] ?? 'man-portrait-1', x, 860, 210, 250, {
+          cornerRadius: 16,
+          stroke: t.color('primary'),
+          strokeWidth: 4,
+        }),
+        star(5, x + 160, 875, 36, t.color('accent'), { innerRatio: 0.45 }),
+        say(name, x - 10, 1130, 230, label, 36, 700, t.color('surface'), { align: 'center' }),
+      ];
+    }),
+    say(t.copy('club'), 340, 1240, 680, label, 32, 600, t.color('primary'), {
+      letterSpacing: 6,
+    }),
+  ];
+});
+
+const puckDropSpec = {
+  colors: {
+    background: { value: HAWKS.rinkTop, hint: RINK_HINT },
+    primary: {
+      value: HAWKS.navy,
+      hint: 'Feather, the big time and time zone; its shades color the puck and its shadow',
+    },
+    secondary: {
+      value: HAWKS.ice,
+      hint: 'Date and the ring around the puck; its blue shade colors the skate marks',
+    },
+    accent: {
+      value: HAWKS.amber,
+      hint: 'Center disc on the puck; its darker shade colors PM and the bottom of the disc',
+    },
+    text: { value: HAWKS.white, hint: 'PUCK DROP on the puck' },
+  },
+  fonts: { heading: HEADING },
+  copy: {
+    title: { label: 'Title', value: 'PUCK DROP' },
+    date: { label: 'Date', value: 'NOV 08, 2027' },
+    time: { label: 'Time', value: '7:30' },
+    meridiem: { label: 'AM or PM', value: 'PM' },
+    zone: { label: 'Time zone', value: 'EST' },
+  },
+} as const satisfies ThemeSpec;
+
+export const puckDrop = themed(W, H, puckDropSpec, (t) => {
+  const heading = t.font('heading');
+  return [
+    iceBackground(W, H, {
+      top: t.color('background'),
+      bottom: t.shade('background', HAWKS.rinkBottom),
+      mark: t.shade('secondary', HAWKS.skate),
+    }),
+    circle(
+      540,
+      520,
+      350,
+      linear(180, t.shade('primary', '#1f2a40'), t.shade('primary', '#04070e')),
+      {
+        name: 'Puck',
+        shadow: {
+          color: t.shade('primary', 'rgba(5,12,29,0.35)'),
+          blur: 50,
+          offsetX: 0,
+          offsetY: 24,
+        },
+      },
+    ),
+    ellipse(220, 200, 640, 640, t.shade('secondary', HAWKS.clear), {
+      stroke: t.shade('secondary', 'rgba(143,211,255,0.35)'),
+      strokeWidth: 6,
+      name: 'Puck ring',
+    }),
+    say(t.copy('title'), 190, 270, 700, heading, 110, 400, t.color('text'), {
+      align: 'center',
+      letterSpacing: 8,
+    }),
+    circle(540, 520, 105, linear(150, t.color('accent'), t.shade('accent', HAWKS.gold))),
+    icon('feather', 480, 460, 120, t.color('primary'), { strokeWidth: 1.8 }),
+    say(t.copy('date'), 190, 655, 700, heading, 84, 400, t.color('secondary'), {
+      align: 'center',
+      letterSpacing: 4,
+    }),
+    say(t.copy('time'), 60, 920, 640, heading, 360, 400, t.color('primary'), {
+      align: 'right',
+      lineHeight: 1,
+    }),
+    say(t.copy('meridiem'), 730, 960, 300, heading, 150, 400, t.shade('accent', HAWKS.gold), {
+      lineHeight: 1,
+    }),
+    say(t.copy('zone'), 730, 1100, 300, heading, 150, 400, t.color('primary'), {
+      lineHeight: 1,
+    }),
+  ];
+});
+
+const playerCardSpec = {
+  colors: {
+    background: {
+      value: HAWKS.steel,
+      hint: 'Page gradient; its darker shade is the bottom of the gradient',
+    },
+    surface: {
+      value: '#cfe8f7',
+      hint: 'Card frame gradient; its darker shade is the bottom of the frame',
+    },
+    primary: {
+      value: HAWKS.navy,
+      hint: 'Rating and name boxes; its translucent shade tints the photo',
+    },
+    secondary: {
+      value: HAWKS.ice,
+      hint: 'Box outlines, OVERALL, the jersey number and the side label',
+    },
+    text: { value: HAWKS.white, hint: 'Rating and first name' },
+    accent: { value: HAWKS.amber, hint: 'Last name' },
+  },
+  fonts: { heading: HEADING, label: LABEL },
+  copy: {
+    rating: { label: 'Rating', value: '94' },
+    ratingLabel: { label: 'Rating label', value: 'OVERALL' },
+    first: { label: 'First name', value: 'LUKAS' },
+    number: { label: 'Jersey number', value: '#19' },
+    last: { label: 'Last name', value: 'BRANDT' },
+    team: { label: 'Team', value: 'FROST HAWKS' },
+  },
+} as const satisfies ThemeSpec;
+
+export const playerCard = themed(W, H, playerCardSpec, (t) => {
+  const heading = t.font('heading');
+  const label = t.font('label');
+  return [
+    rect(0, 0, W, H, linear(160, t.color('background'), t.shade('background', HAWKS.deep)), {
+      name: 'Background',
+    }),
+    poly(
+      [
+        [120, 120],
+        [960, 120],
+        [960, 1100],
+        [880, 1190],
+        [120, 1190],
+      ],
+      linear(160, t.color('surface'), t.shade('surface', '#3d6f99')),
+      { name: 'Card frame' },
+    ),
+    toned('hockey-2', 145, 145, 790, 950, t.shade('primary', 'rgba(10,22,49,0.28)')),
+    rect(80, 80, 210, 230, t.color('primary'), {
+      stroke: t.color('secondary'),
+      strokeWidth: 6,
+      name: 'Rating box',
+    }),
+    say(t.copy('rating'), 80, 96, 210, heading, 150, 400, t.color('text'), {
       align: 'center',
       lineHeight: 1,
     }),
-    rect(190, 640 + top * 0.6, 700, 64, HAWKS.navy, { cornerRadius: 6, name: 'Info bar' }),
-    text('HAWKS vs RAVENS  |  7:30 PM EST', 190, 652 + top * 0.6, 700, {
-      fontFamily: LABEL,
-      fontSize: 36,
-      fontWeight: 700,
-      fill: HAWKS.white,
+    say(t.copy('ratingLabel'), 80, 250, 210, label, 36, 700, t.color('secondary'), {
       align: 'center',
-      letterSpacing: 3,
+      letterSpacing: 4,
     }),
-    photo('hockey-1', 60, 760 + top * 0.6, 960, height - 820 - top * 0.6, {
-      cornerRadius: 28,
-      stroke: HAWKS.navy,
-      strokeWidth: 8,
+    rect(500, 1010, 500, 230, t.color('primary'), {
+      stroke: t.color('secondary'),
+      strokeWidth: 6,
+      name: 'Name box',
     }),
-  ]);
-};
-
-export const gameDayPost = gameDay(H);
-export const gameDayStory = gameDay(STORY_SIZE.height);
+    say(t.copy('first'), 535, 1030, 300, heading, 80, 400, t.color('text'), { letterSpacing: 4 }),
+    say(t.copy('number'), 830, 1040, 140, label, 48, 700, t.color('secondary'), {
+      align: 'right',
+    }),
+    say(t.copy('last'), 535, 1105, 440, heading, 120, 400, t.color('accent'), {
+      letterSpacing: 4,
+      lineHeight: 1,
+    }),
+    say(t.copy('team'), 1050, 200, 600, label, 44, 700, t.color('secondary'), {
+      rotation: 90,
+      letterSpacing: 10,
+    }),
+  ];
+});
