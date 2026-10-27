@@ -1,10 +1,10 @@
-import { linear } from '@/design';
 import { definePack } from '../../../pack';
 import { type StatsCopy, statTemplates } from './posts';
 import type { PostTheme } from './theme';
 
 const LAGOON: PostTheme = {
-  background: linear(200, '#0f7f77', '#04201f'),
+  background: '#0f7f77',
+  backgroundEnd: '#04201f',
   surface: '#ffffff',
   ink: '#0b1f1e',
   text: '#ffffff',
@@ -18,7 +18,9 @@ const LAGOON: PostTheme = {
 };
 
 const PEACH: PostTheme = {
-  ...LAGOON,
+  surface: LAGOON.surface,
+  headFont: LAGOON.headFont,
+  bodyFont: LAGOON.bodyFont,
   background: '#ffe2d4',
   ink: '#3b1206',
   text: '#3b1206',
