@@ -2,7 +2,14 @@
 
 import type Konva from 'konva';
 import type { KonvaEventObject } from 'konva/lib/Node';
-import { type DragEvent as ReactDragEvent, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  type DragEvent as ReactDragEvent,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Group, Layer, Rect, Stage } from 'react-konva';
 import { type Box, boxesIntersect, type Point, unionBox } from '@/design';
 import { CANVAS_BACKGROUND_NAME, DesignContent } from './design-content';
@@ -116,7 +123,9 @@ export const CanvasWorkspace = ({
     onDragging: setMoving,
   });
 
-  const selectionBox = (() => {
+  const [selectionBox, setSelectionBox] = useState<Box | null>(null);
+
+  const measureSelection = (): Box | null => {
     if (moving || editingId !== null || marquee !== null) {
       return null;
     }
@@ -133,7 +142,21 @@ export const CanvasWorkspace = ({
           width: union.width * zoom,
           height: union.height * zoom,
         };
-  })();
+  };
+
+  useLayoutEffect(() => {
+    const next = measureSelection();
+    setSelectionBox((current) =>
+      current !== null &&
+      next !== null &&
+      current.x === next.x &&
+      current.y === next.y &&
+      current.width === next.width &&
+      current.height === next.height
+        ? current
+        : next,
+    );
+  });
 
   const onStageDown = (event: KonvaEventObject<MouseEvent | TouchEvent>) => {
     blurActiveElement();
