@@ -1,15 +1,6 @@
 import { definePack } from '../../../pack';
-import {
-  COBALT,
-  newspaper,
-  PINE,
-  photoQuote,
-  reviewWord,
-  SUNSET,
-  typewriter,
-  userEnvelope,
-  userStory,
-} from './posts';
+import { COBALT, newspaper, PINE, reviewWord, SUNSET } from './posts';
+import { photoQuote, typewriter, userEnvelope, userStory } from './posts-more';
 
 const word = reviewWord(PINE);
 const paper = newspaper(PINE);

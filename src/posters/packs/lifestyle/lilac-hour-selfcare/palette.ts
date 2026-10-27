@@ -17,7 +17,12 @@ export const SANS = 'DM Sans';
 export const MONO_FONT = 'Space Mono';
 export const HAND = 'Caveat';
 
-export const HANDLE = '@ines.slowdays';
+export const SERIF_FONT = { label: 'Heading font', value: SERIF } as const;
+export const SANS_FONT = { label: 'Body font', value: SANS } as const;
+export const HAND_FONT = { label: 'Script font', value: HAND } as const;
+export const MONO = { label: 'Mono font', value: MONO_FONT } as const;
+
+export const HANDLE = { label: 'Handle', value: '@ines.slowdays' } as const;
 
 export const SOFT = {
   brightness: 1.02,
