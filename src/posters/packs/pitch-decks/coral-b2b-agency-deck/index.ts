@@ -1,21 +1,8 @@
 import { definePack } from '../../../pack';
-import {
-  campaignSlide,
-  impactSlide,
-  matrixSlide,
-  onboardingSlide,
-  poweringSlide,
-  processSlide,
-} from './slides-data';
-import {
-  aboutSlide,
-  contentsSlide,
-  coverSlide,
-  keywordSlide,
-  revenueSlide,
-  teamSlide,
-  workSlide,
-} from './slides-story';
+import { campaignSlide, impactSlide, poweringSlide } from './slides-data';
+import { matrixSlide, onboardingSlide, processSlide } from './slides-model';
+import { aboutSlide, contentsSlide, coverSlide, keywordSlide } from './slides-story';
+import { revenueSlide, teamSlide, workSlide } from './slides-team';
 
 const INTRO = [coverSlide, contentsSlide, aboutSlide, keywordSlide, workSlide, teamSlide];
 const DATA = [

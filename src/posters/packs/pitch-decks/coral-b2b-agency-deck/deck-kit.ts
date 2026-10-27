@@ -3,41 +3,33 @@ import { path, text } from '../../../kit';
 
 type TextStyle = NonNullable<Parameters<typeof text>[4]>;
 
+const face =
+  (fontWeight: number, lineHeight: number) =>
+  (fontFamily: string) =>
+  (
+    content: string,
+    x: number,
+    y: number,
+    width: number,
+    size: number,
+    fill: Fill,
+    extra: TextStyle = {},
+  ) =>
+    text(content, x, y, width, {
+      fontFamily,
+      fontSize: size,
+      fontWeight,
+      fill,
+      lineHeight,
+      ...extra,
+    });
+
+export const head = face(700, 1.08);
+export const body = face(400, 1.4);
+
 export const typeset = (headFont: string, bodyFont: string) => ({
-  head: (
-    content: string,
-    x: number,
-    y: number,
-    width: number,
-    size: number,
-    fill: Fill,
-    extra: TextStyle = {},
-  ) =>
-    text(content, x, y, width, {
-      fontFamily: headFont,
-      fontSize: size,
-      fontWeight: 700,
-      fill,
-      lineHeight: 1.08,
-      ...extra,
-    }),
-  body: (
-    content: string,
-    x: number,
-    y: number,
-    width: number,
-    size: number,
-    fill: Fill,
-    extra: TextStyle = {},
-  ) =>
-    text(content, x, y, width, {
-      fontFamily: bodyFont,
-      fontSize: size,
-      fontWeight: 400,
-      fill,
-      lineHeight: 1.4,
-      ...extra,
-    }),
+  head: head(headFont),
+  body: body(bodyFont),
 });
 
 const point = (center: number, radius: number, angle: number) =>
