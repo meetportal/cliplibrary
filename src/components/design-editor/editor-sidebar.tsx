@@ -50,7 +50,7 @@ export const EditorSidebar = ({
         ))}
       </nav>
       {current === undefined ? null : (
-        <div className="absolute inset-x-0 bottom-full z-30 flex h-[55dvh] flex-col rounded-t-2xl border-t bg-background shadow-2xl md:static md:h-auto md:w-[300px] md:rounded-none md:border-t-0 md:shadow-none">
+        <div className="absolute inset-x-0 bottom-full z-30 flex h-[55dvh] flex-col rounded-t-2xl border-t bg-background shadow-2xl md:static md:h-auto md:w-[260px] lg:w-[300px] md:rounded-none md:border-t-0 md:shadow-none">
           <div className="flex items-center justify-between px-4 pt-4 pb-3">
             <h2 className="font-semibold text-sm">{current.label}</h2>
             <button
