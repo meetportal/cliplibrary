@@ -17,7 +17,7 @@ import { APP_COPY, BADGE_COPY, BODY, badges, device, HEADING, SITE, VIOLET } fro
 
 export const { width: W, height: H } = POST_SIZE;
 
-export const site = (content: string, x: number, y: number, fill: string, fontFamily: string) =>
+const site = (content: string, x: number, y: number, fill: string, fontFamily: string) =>
   text(content, x, y, 400, { fontFamily, fontSize: 28, fontWeight: 600, fill });
 
 export const headline = (

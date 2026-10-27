@@ -25,7 +25,7 @@ export const CONTACT_VALUES = {
   label: 'Contact detail',
   value: ['(555) 402-1189', 'hello@theomarlowe.co', '19 Alder Row'],
 } as const;
-export const CONTACT_ICONS: readonly DesignIconName[] = ['phone', 'mail', 'house'];
+const CONTACT_ICONS: readonly DesignIconName[] = ['phone', 'mail', 'house'];
 
 interface Font {
   label: string;
