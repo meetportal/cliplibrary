@@ -156,7 +156,7 @@ export const AgentChat = ({ readMedia, onEdit, onClose }: AgentChatProps) => {
         ) : null}
         {error === undefined ? null : (
           <div className="flex items-center justify-between gap-3 rounded-lg border border-destructive/40 bg-destructive/5 px-3 py-2 text-sm">
-            <span>The AI editor is busy right now. Try again in a moment.</span>
+            <span>{error.message}</span>
             <Button size="xs" variant="outline" onClick={() => regenerate().catch(() => undefined)}>
               Retry
             </Button>

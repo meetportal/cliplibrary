@@ -3,7 +3,7 @@ import { type Design, designSchema, FONT_FAMILIES, isDesignIcon } from '@/design
 import { type Project, projectSchema } from '@/project';
 import { CLIP_SCHEMAS, isClipId } from '@/schemas';
 
-export const MEDIA_KINDS = ['clip', 'poster'] as const;
+const MEDIA_KINDS = ['clip', 'poster'] as const;
 
 export type MediaKind = (typeof MEDIA_KINDS)[number];
 

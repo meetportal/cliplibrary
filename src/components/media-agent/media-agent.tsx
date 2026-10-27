@@ -81,7 +81,7 @@ export const MediaAgent = <K extends MediaKind>({
         id="media-agent-panel"
         aria-label="AI editor"
         className={cn(
-          'fixed inset-x-0 bottom-0 z-50 flex h-[min(72dvh,40rem)] flex-col rounded-t-2xl border-t bg-background shadow-2xl',
+          'fixed inset-x-0 bottom-0 z-50 flex h-[55dvh] flex-col rounded-t-2xl border-t bg-background shadow-2xl',
           'sm:inset-x-auto sm:top-14 sm:right-0 sm:h-auto sm:w-[400px] sm:rounded-none sm:border-t-0 sm:border-l',
           open ? '' : 'hidden',
         )}

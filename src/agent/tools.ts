@@ -38,6 +38,16 @@ export const createMediaTools = (kind: MediaKind, document: unknown, assets: rea
   };
 };
 
+export const editSucceeded = ({
+  steps,
+}: {
+  steps: ReadonlyArray<{ toolResults: ReadonlyArray<{ output: unknown }> }>;
+}): boolean =>
+  steps
+    .at(-1)
+    ?.toolResults.some((result) => editOutputSchema.safeParse(result.output).data?.ok === true) ??
+  false;
+
 export type MediaAgentMessage = UIMessage<
   never,
   never,

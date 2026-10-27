@@ -15,7 +15,7 @@ const SHARED_RULES = `Rules:
 - Strings like asset://3 stand for uploaded media. Keep or move them, never invent new ones.
 - If editMedia returns an error, read it, fix the operations and call editMedia again.
 - When the user says "this", "it" or "the selected one", they mean the selected elements.
-- After a successful edit, reply with one or two short plain sentences describing what changed. Never paste JSON or patch operations into the reply.
+- Before calling editMedia, write one short plain sentence telling the user what you are changing. Once editMedia succeeds you are done, so do not add more text. Never paste JSON or patch operations into the reply.
 - If the request is unclear, make the most sensible change instead of asking. If the request cannot be done with this document, say so briefly.`;
 
 const clipFieldGuide = (clipId: string): string =>

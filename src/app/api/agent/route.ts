@@ -8,8 +8,8 @@ import {
 import { maskAssets } from '@/agent/assets';
 import { mediaInstructions } from '@/agent/instructions';
 import { agentRequestSchema, checkMedia } from '@/agent/media';
-import { agentModel } from '@/agent/model';
-import { createMediaTools, type MediaAgentMessage } from '@/agent/tools';
+import { agentModel, describeAgentError } from '@/agent/model';
+import { createMediaTools, editSucceeded, type MediaAgentMessage } from '@/agent/tools';
 
 export const maxDuration = 60;
 
@@ -35,10 +35,10 @@ export const POST = async (request: Request): Promise<Response> => {
     instructions: mediaInstructions(media.kind, media.title, masked, media.focus),
     messages: await convertToModelMessages(messages, { tools }),
     tools,
-    stopWhen: stepCountIs(6),
+    stopWhen: [editSucceeded, stepCountIs(6)],
   });
 
   return createUIMessageStreamResponse({
-    stream: toUIMessageStream({ stream: result.stream }),
+    stream: toUIMessageStream({ stream: result.stream, onError: describeAgentError }),
   });
 };
