@@ -13,26 +13,41 @@ export const wordBuildControls = defineControls<WordBuildProps>({
           hint: 'The first words fly through huge, then the whole line builds. New lines start new rows',
         },
         { path: 'size', label: 'Line text size', hint: 'In pixels' },
-        { path: 'weight', label: 'Line font weight' },
-        {
-          link: ['look.ink', 'bigColor'],
-          label: 'Text color',
-          hint: 'Sets the big words and the line together',
-        },
-        {
-          ...LOOK.accent,
-          label: 'Highlight color',
-          hint: 'The walking highlight and the highlighted words',
-        },
       ],
       more: [
+        { path: 'weight', label: 'Line font weight' },
         {
           path: 'lineHeight',
           label: 'Row spacing',
           hint: 'Distance between rows as a multiple of the text size',
         },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.ink', 'bigColor'],
+          label: 'Primary color',
+          hint: 'The big words, their echo outlines and the line together',
+        },
+        {
+          ...LOOK.accent,
+          label: 'Accent color',
+          hint: 'The walking highlight, the highlighted words and the paper margin line',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
         { path: 'bigColor', label: 'Big word color', hint: 'Also colors the echo outlines' },
         { ...LOOK.ink, label: 'Line text color' },
+        LOOK.background,
+        LOOK.backgroundEdge,
+        LOOK.paperLine,
       ],
     },
     {
@@ -44,6 +59,13 @@ export const wordBuildControls = defineControls<WordBuildProps>({
           hint: 'Scroll pans all the big words across as one strip, the other styles show one word at a time',
         },
         {
+          path: 'wordFrames',
+          label: 'Frames per big word',
+          hint: 'How long each big word holds the screen. With Scroll, the strip travels this long per word. Lower is faster',
+        },
+      ],
+      more: [
+        {
           path: 'bigWords',
           label: 'Number of big words',
           hint: 'Taken from the start of the line, 0 uses every word',
@@ -54,17 +76,10 @@ export const wordBuildControls = defineControls<WordBuildProps>({
           hint: 'In pixels. With Step, the size of the last word',
         },
         {
-          path: 'wordFrames',
-          label: 'Frames per big word',
-          hint: 'How long each big word holds the screen. With Scroll, the strip travels this long per word. Lower is faster',
-        },
-        {
           path: 'bigExit',
           label: 'Last big word exit',
           hint: 'Cut away, drop its letters, or squeeze down into the line. With Scroll it only delays the line',
         },
-      ],
-      more: [
         { path: 'bigWeight', label: 'Big word font weight' },
         {
           path: 'direction',
@@ -97,19 +112,19 @@ export const wordBuildControls = defineControls<WordBuildProps>({
           label: 'Word entrance',
           hint: 'Rise up, swing in on a wave, or type in letter by letter',
         },
+        {
+          path: 'walkHighlight',
+          label: 'Walking highlight',
+          hint: 'Each new word flashes in the accent color as it lands',
+        },
+      ],
+      more: [
         { path: 'buildFrom', label: 'Build from', hint: 'Which end of the line appears first' },
         {
           path: 'buildFrames',
           label: 'Frames between words',
           hint: 'Lower builds the line faster',
         },
-        {
-          path: 'walkHighlight',
-          label: 'Walking highlight',
-          hint: 'Each new word flashes in the highlight color as it lands',
-        },
-      ],
-      more: [
         {
           path: 'lineDelay',
           label: 'Pause before the line',
@@ -118,7 +133,7 @@ export const wordBuildControls = defineControls<WordBuildProps>({
         {
           path: 'highlight',
           label: 'Highlighted words',
-          hint: 'Words kept in the highlight color, separated by spaces. Used when the walking highlight is off. Also tints matching big words in the Zoom, Shrink, Tilt, Pop and Echo styles',
+          hint: 'Words kept in the accent color, separated by spaces. Used when the walking highlight is off. Also tints matching big words in the Zoom, Shrink, Tilt, Pop and Echo styles',
         },
         {
           path: 'exitByWord',
@@ -149,28 +164,27 @@ export const wordBuildControls = defineControls<WordBuildProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
-        { ...LOOK.paperMargin, hint: 'A faded line in the highlight color' },
+        { ...LOOK.paperMargin, hint: 'A faded line in the accent color' },
       ],
     },
     {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
+        MOTION.enterFrames,
+        MOTION.exitFrames,
         {
           ...MOTION.speed,
           hint: 'Scales the big words, line build and word exits. Entrance and exit keep their length',
         },
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.muted', 'motion.float'],

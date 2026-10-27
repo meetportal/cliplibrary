@@ -18,14 +18,14 @@ export const ribbonWordsControls = defineControls<RibbonWordsProps>({
           hint: 'Rides along the ribbon on one line. Keep it short so it fits inside the frame',
         },
         {
+          path: 'highlight',
+          label: 'Highlighted word',
+          hint: 'Colored with the Accent color. Leave empty to keep every letter one color',
+        },
+        {
           path: 'words.size',
           label: 'Text size',
           hint: 'In pixels. Keep it under the ribbon width',
-        },
-        {
-          path: 'highlight',
-          label: 'Highlighted word',
-          hint: 'Colored with the Highlight color. Leave empty to keep every letter one color',
         },
       ],
       more: [
@@ -36,29 +36,51 @@ export const ribbonWordsControls = defineControls<RibbonWordsProps>({
           label: 'Vertical centering',
           hint: 'Moves the letters across the ribbon, as a share of the text size. Raise it to push them toward the lower edge',
         },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          path: 'ribbon.color',
+          label: 'Primary color',
+          hint: 'The ribbon, plus the letters in Outline style. Light version swaps it with the Background color',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'The background, plus the letters cut into a solid ribbon. Light version swaps it with the Primary color',
+        },
         {
           ...LOOK.accent,
-          label: 'Highlight color',
-          hint: 'Only used by the highlighted word',
+          label: 'Accent color',
+          hint: 'The highlighted word, and the margin line when Paper margin is on',
         },
+      ],
+      more: [
+        {
+          ...LOOK.background,
+          label: 'Background center',
+          hint: 'Also the letter color on a solid ribbon, and the ribbon color in Light version',
+        },
+        {
+          ...LOOK.backgroundEdge,
+          hint: 'Color the background fades to at the corners. Light version uses a flat Primary color instead',
+        },
+        { ...LOOK.paperLine, hint: 'Shows when Paper pattern is on' },
       ],
     },
     {
       title: 'Ribbon',
       fields: [
-        { path: 'ribbon.width', label: 'Ribbon width', hint: 'In pixels' },
-        {
-          path: 'ribbon.color',
-          label: 'Ribbon color',
-          hint: 'The light color. Colors the ribbon, or the background when Light version is on. In Outline style the letters take this color',
-        },
         {
           path: 'ribbon.style',
           label: 'Ribbon style',
-          hint: 'Solid cuts the letters out of the ribbon in the background color. Outline draws two thin edges with a see-through middle and letters in the Ribbon color',
+          hint: 'Solid cuts the letters out of the ribbon in the background color. Outline draws two thin edges with a see-through middle and letters in the Primary color',
         },
       ],
       more: [
+        { path: 'ribbon.width', label: 'Ribbon width', hint: 'In pixels' },
         {
           path: 'ribbon.outline',
           label: 'Outline thickness',
@@ -74,14 +96,14 @@ export const ribbonWordsControls = defineControls<RibbonWordsProps>({
           label: 'Show second ribbon',
           hint: 'A parallel ribbon behind the first, with its own phrase',
         },
+      ],
+      more: [
         { path: 'second.text', label: 'Second phrase' },
         {
           path: 'second.offsetY',
           label: 'Distance',
           hint: 'Gap from the first ribbon, center to center, measured across the overall direction of the path, in pixels. Negative puts it above',
         },
-      ],
-      more: [
         {
           path: 'second.shift',
           label: 'Wave offset',
@@ -107,6 +129,8 @@ export const ribbonWordsControls = defineControls<RibbonWordsProps>({
           label: 'Wave height',
           hint: `In pixels above and below the center line. 0 makes a straight ribbon. ${TIGHT_BENDS}`,
         },
+      ],
+      more: [
         {
           path: 'path.waves',
           label: 'Wave count',
@@ -122,8 +146,6 @@ export const ribbonWordsControls = defineControls<RibbonWordsProps>({
           label: 'Vertical position',
           hint: 'Where the center line crosses the middle of the frame, in pixels from the top',
         },
-      ],
-      more: [
         {
           path: 'path.shift',
           label: 'Wave shift',
@@ -140,6 +162,12 @@ export const ribbonWordsControls = defineControls<RibbonWordsProps>({
     {
       title: 'Timing',
       fields: [
+        {
+          ...MOTION.speed,
+          hint: 'Scales every beat. The exit fade keeps its length. Below 1 the retract can be cut off',
+        },
+      ],
+      more: [
         { path: 'timing.drawFrames', label: 'Draw-on length', hint: IN_FRAMES },
         {
           path: 'timing.settleAt',
@@ -156,12 +184,6 @@ export const ribbonWordsControls = defineControls<RibbonWordsProps>({
           label: 'Retract at',
           hint: `${FRAME_NUMBER}; the ribbon pulls off from the left and takes the words with it. Never starts before the draw-on finishes`,
         },
-        {
-          ...MOTION.speed,
-          hint: 'Scales every beat. The exit fade keeps its length. Below 1 the retract can be cut off',
-        },
-      ],
-      more: [
         { path: 'timing.drawAt', label: 'Draw-on starts at', hint: FRAME_NUMBER },
         {
           path: 'timing.lag',
@@ -183,37 +205,22 @@ export const ribbonWordsControls = defineControls<RibbonWordsProps>({
         {
           path: 'inverted',
           label: 'Light version',
-          hint: 'Swaps the two colors: Ribbon color fills the background, Background color fills the ribbon, and solid-ribbon letters turn light',
+          hint: 'Swaps the two colors: Primary color fills the background, Background color fills the ribbon, and solid-ribbon letters turn light',
         },
-        {
-          link: ['look.background', 'look.backgroundEdge'],
-          label: 'Background color',
-          hint: 'The dark color. Fills the background and the letters cut into a solid ribbon. In Light version it colors the ribbon instead',
-        },
-        LOOK.grain,
       ],
       more: [
-        {
-          ...LOOK.background,
-          label: 'Background center',
-          hint: 'Also the letter color on a solid ribbon, and the ribbon color in Light version',
-        },
-        {
-          ...LOOK.backgroundEdge,
-          hint: 'Color the background fades to at the corners. Light version uses a flat Ribbon color instead',
-        },
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
       ],
     },
     {
       title: 'Motion',
-      fields: [MOTION.enter, MOTION.exit],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
+      fields: [MOTION.exit],
+      more: [MOTION.enter, MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.ink', 'look.muted', 'motion.float'],

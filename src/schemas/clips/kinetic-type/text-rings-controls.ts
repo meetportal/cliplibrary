@@ -20,6 +20,8 @@ export const textRingsControls = defineControls<TextRingsProps>({
           label: 'Separator',
           hint: 'Sits halfway between repeats. Leave empty for plain gaps',
         },
+      ],
+      more: [
         {
           path: 'words.innerSize',
           label: 'Inner text size',
@@ -35,8 +37,6 @@ export const textRingsControls = defineControls<TextRingsProps>({
           label: 'Font weight',
           hint: 'Sets every ring. Change Every other ring weight on its own to alternate',
         },
-      ],
-      more: [
         {
           path: 'words.weight',
           label: 'Ring weight',
@@ -60,6 +60,46 @@ export const textRingsControls = defineControls<TextRingsProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.ink', 'look.accent'],
+          label: 'Primary color',
+          hint: 'The ring words and the center mark together. Dark version',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together. Dark version',
+        },
+      ],
+      more: [
+        { ...LOOK.ink, label: 'Ring words color', hint: DARK_ONLY },
+        {
+          ...LOOK.accent,
+          label: 'Mark color',
+          hint: 'Colors the circle, scribble and center word. Also the paper margin line. Dark version',
+        },
+        { ...LOOK.background, hint: DARK_ONLY },
+        {
+          ...LOOK.backgroundEdge,
+          hint: 'Color the background fades to at the corners. Dark version only',
+        },
+        {
+          path: 'inverted',
+          label: 'Light version',
+          hint: 'Draws on Light page with Light ink for the words and the mark',
+        },
+        { path: 'light.page', label: 'Light page', hint: 'Background in the light version' },
+        {
+          path: 'light.ink',
+          label: 'Light ink',
+          hint: 'Ring words, mark and paper margin line in the light version',
+        },
+        LOOK.paperLine,
+      ],
+    },
+    {
       title: 'Rings',
       fields: [
         {
@@ -72,14 +112,14 @@ export const textRingsControls = defineControls<TextRingsProps>({
           label: 'Ring spacing',
           hint: 'How many times wider each ring is than the next one inside it. Never tighter than the text size allows',
         },
+      ],
+      more: [
         { path: 'rings.firstAt', label: 'First ring at', hint: START_FRAME },
         {
           path: 'rings.lastAt',
           label: 'Last ring at',
           hint: 'Frame number of the last new ring. Rings come a little later if they would expand too fast or collide',
         },
-      ],
-      more: [
         {
           path: 'rings.startGap',
           label: 'Gap outside the circle',
@@ -128,6 +168,8 @@ export const textRingsControls = defineControls<TextRingsProps>({
           label: 'Mark style',
           hint: 'Circle with a scribble, circle with a word, the circle alone, or no mark',
         },
+      ],
+      more: [
         { path: 'mark.size', label: 'Circle size', hint: 'Diameter in pixels' },
         {
           link: ['mark.stroke', 'mark.scribbleStroke'],
@@ -139,8 +181,6 @@ export const textRingsControls = defineControls<TextRingsProps>({
           label: 'Draw length',
           hint: 'In frames for the circle. The scribble takes a little longer',
         },
-      ],
-      more: [
         { path: 'mark.word', label: 'Center word', hint: 'Word style only' },
         { path: 'mark.wordSize', label: 'Center word size', hint: 'In pixels. Word style only' },
         { path: 'mark.wordWeight', label: 'Center word weight', hint: 'Word style only' },
@@ -175,46 +215,13 @@ export const textRingsControls = defineControls<TextRingsProps>({
       ],
     },
     {
-      title: 'Colors',
-      fields: [
-        {
-          path: 'inverted',
-          label: 'Light version',
-          hint: 'Draws on Light page with Light ink for the words and the mark',
-        },
-        {
-          link: ['look.ink', 'look.accent'],
-          label: 'Ink color',
-          hint: 'Colors the ring words and the center mark together. Dark version',
-        },
-        { path: 'light.page', label: 'Light page', hint: 'Background in the light version' },
-        {
-          path: 'light.ink',
-          label: 'Light ink',
-          hint: 'Ring words, mark and paper margin line in the light version',
-        },
-      ],
-      more: [
-        { ...LOOK.ink, label: 'Ring words color', hint: DARK_ONLY },
-        {
-          ...LOOK.accent,
-          label: 'Mark color',
-          hint: 'Colors the circle, scribble and center word. Also the paper margin line. Dark version',
-        },
-      ],
-    },
-    {
       title: 'Background',
-      fields: [LOOK.showBackdrop, { ...LOOK.background, hint: DARK_ONLY }, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        {
-          ...LOOK.backgroundEdge,
-          hint: 'Color the background fades to at the corners. Dark version only',
-        },
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
       ],

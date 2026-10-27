@@ -39,6 +39,44 @@ export const printerPagesControls = defineControls<PrinterPagesProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['printer.body', 'printer.tray'],
+          label: 'Primary color',
+          hint: 'The printer body, its buttons and the output tray together',
+        },
+        {
+          path: 'printer.trim',
+          label: 'Secondary color',
+          hint: 'The front edge, control panel and tray end stop',
+        },
+        {
+          path: 'printer.light',
+          label: 'Accent color',
+          hint: 'The glowing status light and the readout on the display',
+        },
+        { path: 'paper.color', label: 'Surface color', hint: 'Every printed sheet' },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        {
+          path: 'printer.body',
+          label: 'Printer body color',
+          hint: 'Also colors the panel buttons',
+        },
+        { path: 'printer.tray', label: 'Output tray color' },
+        { path: 'printer.slot', label: 'Paper slot color' },
+        { path: 'printer.display', label: 'Display screen color' },
+        { ...LOOK.background, label: 'Background center color' },
+        { ...LOOK.backgroundEdge, label: 'Background corner color' },
+      ],
+    },
+    {
       title: 'Printing',
       fields: [
         {
@@ -57,7 +95,6 @@ export const printerPagesControls = defineControls<PrinterPagesProps>({
     {
       title: 'Paper',
       fields: [
-        { path: 'paper.color', label: 'Paper color' },
         {
           path: 'paper.width',
           label: 'Page size',
@@ -79,39 +116,9 @@ export const printerPagesControls = defineControls<PrinterPagesProps>({
       ],
     },
     {
-      title: 'Printer',
-      fields: [
-        {
-          link: ['printer.body', 'printer.tray'],
-          label: 'Printer color',
-          hint: 'Sets the printer body, its buttons and the output tray together',
-        },
-        {
-          path: 'printer.trim',
-          label: 'Front panel color',
-          hint: 'The front edge, control panel and tray end stop',
-        },
-        {
-          path: 'printer.light',
-          label: 'Status light color',
-          hint: 'The glowing light and the readout on the display',
-        },
-      ],
-      more: [
-        {
-          path: 'printer.body',
-          label: 'Printer body color',
-          hint: 'Also colors the panel buttons',
-        },
-        { path: 'printer.tray', label: 'Output tray color' },
-        { path: 'printer.slot', label: 'Paper slot color' },
-        { path: 'printer.display', label: 'Display screen color' },
-      ],
-    },
-    {
       title: 'Camera',
-      fields: [
-        { path: 'camera.zoom', label: 'Zoom' },
+      fields: [{ path: 'camera.zoom', label: 'Zoom' }],
+      more: [
         {
           path: 'camera.angle',
           label: 'Rotation',
@@ -122,8 +129,6 @@ export const printerPagesControls = defineControls<PrinterPagesProps>({
           label: 'Handheld drift',
           hint: 'Gentle sway and breathing zoom. 0 holds the camera still',
         },
-      ],
-      more: [
         {
           path: 'camera.x',
           label: 'Horizontal position',
@@ -138,7 +143,7 @@ export const printerPagesControls = defineControls<PrinterPagesProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.backgroundEdge],
+      fields: [LOOK.showBackdrop],
       more: [
         LOOK.spotlight,
         LOOK.grain,
@@ -163,12 +168,12 @@ export const printerPagesControls = defineControls<PrinterPagesProps>({
           label: 'Outro transition',
           hint: 'How the whole frame leaves at the end',
         },
+      ],
+      more: [
         {
           ...MOTION.speed,
           hint: 'Speeds up or slows down the printing and the camera drift',
         },
-      ],
-      more: [
         { ...MOTION.enterFrames, label: 'Intro length' },
         { ...MOTION.exitFrames, label: 'Outro length' },
       ],

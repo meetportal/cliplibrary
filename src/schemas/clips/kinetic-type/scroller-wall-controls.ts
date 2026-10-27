@@ -12,7 +12,6 @@ export const scrollerWallControls = defineControls<ScrollerWallProps>({
           label: 'Opening word',
           hint: 'Outlined word the block rolls across, filling one letter per landing',
         },
-        { path: 'scroller.word', label: 'Stacked word', hint: 'Repeats upward in a quick stack' },
         {
           path: 'headline.lines',
           label: 'Headline lines',
@@ -38,22 +37,90 @@ export const scrollerWallControls = defineControls<ScrollerWallProps>({
           hint: 'The dots land on its first and last "o", then it repeats into the outlined wall',
         },
       ],
-      more: [{ path: 'scroller.count', label: 'Stacked word copies' }],
+      more: [
+        { path: 'scroller.word', label: 'Stacked word', hint: 'Repeats upward in a quick stack' },
+        { path: 'scroller.count', label: 'Stacked word copies' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.field', 'square.color', 'card.logoAccent'],
+          label: 'Primary color',
+          hint: 'Main background after the cut, the rolling block and the logo tile, subtitle and icons',
+        },
+        {
+          link: ['look.ink', 'card.logoInk', 'card.rowInk'],
+          label: 'Text color',
+          hint: 'Words, dots, brand name and contact rows',
+        },
+        {
+          path: 'look.highlight',
+          label: 'Accent color',
+          hint: 'Headline lines set to Highlight',
+        },
+        {
+          link: ['intro.outline', 'wall.outline', 'card.rings'],
+          label: 'Secondary color',
+          hint: 'Outlined opening word, the call-to-action wall and the end card rings',
+        },
+        {
+          link: ['look.paper', 'card.background'],
+          label: 'Background color',
+          hint: 'Opening background, the end card background, its flash and the contact icon glyphs',
+        },
+      ],
+      more: [
+        {
+          path: 'look.field',
+          label: 'Main background',
+          hint: 'Behind everything from the cut until the end card',
+        },
+        { path: 'square.color', label: 'Block color' },
+        {
+          path: 'card.logoAccent',
+          label: 'Logo accent',
+          hint: 'Logo tile, subtitle and row icons',
+        },
+        { path: 'look.ink', label: 'Words color' },
+        { path: 'card.logoInk', label: 'Brand name color' },
+        { path: 'card.rowInk', label: 'Contact rows color' },
+        { path: 'intro.outline', label: 'Opening word outline' },
+        { path: 'wall.outline', label: 'Wall outline' },
+        { path: 'card.rings', label: 'Ring color' },
+        { path: 'look.paper', label: 'Opening background', hint: 'Behind the opening word' },
+        {
+          path: 'card.background',
+          label: 'End card background',
+          hint: 'Also the flash just before the card and the contact icon glyphs',
+        },
+        {
+          path: 'card.disc',
+          label: 'Logo disc color',
+          hint: 'Also the waves in the built-in mark',
+        },
+        {
+          path: 'card.tint',
+          label: 'Logo intro tint',
+          hint: 'The logo starts in this color and settles to its own',
+        },
+      ],
     },
     {
       title: 'End card',
       fields: [
         { path: 'card.brandTop', label: 'Brand name' },
-        { path: 'card.brandBottom', label: 'Brand subtitle' },
         {
           path: 'card.logoImage',
           label: 'Logo image',
           hint: 'Replaces the built-in wave mark. Leave empty to keep it',
         },
-        { path: 'card.phone', label: 'Phone line' },
-        { path: 'card.email', label: 'Email line' },
       ],
       more: [
+        { path: 'card.brandBottom', label: 'Brand subtitle' },
+        { path: 'card.phone', label: 'Phone line' },
+        { path: 'card.email', label: 'Email line' },
         { path: 'card.logoSize', label: 'Logo size' },
         { path: 'card.brandTopSize', label: 'Brand name size' },
         { path: 'card.brandBottomSize', label: 'Brand subtitle size' },
@@ -76,16 +143,14 @@ export const scrollerWallControls = defineControls<ScrollerWallProps>({
     },
     {
       title: 'Rolling block',
-      fields: [
-        { path: 'square.size', label: 'Block size' },
+      fields: [{ path: 'square.size', label: 'Block size' }],
+      more: [
         {
           path: 'square.radius',
           label: 'Corner roundness',
           hint: 'Share of the block size; 0.5 is a circle',
         },
         { path: 'square.hop', label: 'Hop height', hint: 'Extra arc as it rolls between letters' },
-      ],
-      more: [
         {
           path: 'square.dip',
           label: 'Landing squash',
@@ -118,66 +183,20 @@ export const scrollerWallControls = defineControls<ScrollerWallProps>({
       ],
     },
     {
-      title: 'Colors',
-      fields: [
-        {
-          link: ['look.ink', 'card.logoInk', 'card.rowInk'],
-          label: 'Text color',
-          hint: 'Words, dots, brand name and contact rows',
-        },
-        {
-          link: ['look.field', 'square.color', 'card.logoAccent'],
-          label: 'Brand color',
-          hint: 'Main background, rolling block and the logo tile, subtitle and icons',
-        },
-        {
-          path: 'look.highlight',
-          label: 'Highlight color',
-          hint: 'Headline lines set to Highlight',
-        },
-        {
-          link: ['intro.outline', 'wall.outline', 'card.rings'],
-          label: 'Outline color',
-          hint: 'Outlined opening word, the call-to-action wall and the end card rings',
-        },
-      ],
-      more: [
-        { path: 'look.ink', label: 'Words color' },
-        { path: 'card.logoInk', label: 'Brand name color' },
-        { path: 'card.rowInk', label: 'Contact rows color' },
-        { path: 'square.color', label: 'Block color' },
-        {
-          path: 'card.logoAccent',
-          label: 'Logo accent',
-          hint: 'Logo tile, subtitle and row icons',
-        },
-        { path: 'intro.outline', label: 'Opening word outline' },
-        { path: 'wall.outline', label: 'Wall outline' },
-        { path: 'card.rings', label: 'Ring color' },
-        {
-          path: 'card.disc',
-          label: 'Logo disc color',
-          hint: 'Also the waves in the built-in mark',
-        },
-        {
-          path: 'card.tint',
-          label: 'Logo intro tint',
-          hint: 'The logo starts in this color and settles to its own',
-        },
-      ],
-    },
-    {
       title: 'Type',
-      fields: [
+      fields: [],
+      more: [
         { path: 'intro.size', label: 'Opening word size' },
         { path: 'words.size', label: 'Punchline size' },
         { path: 'contact.size', label: 'Call to action size' },
-      ],
-      more: [
         { path: 'look.weight', label: 'Font weight', hint: 'Opening word, stack and headline' },
         { path: 'words.weight', label: 'Punchline weight' },
         { path: 'contact.weight', label: 'Call to action weight' },
-        { path: 'look.tracking', label: 'Letter spacing', hint: 'In em, for every line of text' },
+        {
+          path: 'look.tracking',
+          label: 'Letter spacing',
+          hint: 'In em, for every word before the end card',
+        },
         { path: 'scroller.size', label: 'Stacked word size' },
         { path: 'dots.size', label: 'Dot size' },
         {
@@ -191,7 +210,8 @@ export const scrollerWallControls = defineControls<ScrollerWallProps>({
     },
     {
       title: 'Layout',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'headline.top',
           label: 'Headline top',
@@ -212,8 +232,6 @@ export const scrollerWallControls = defineControls<ScrollerWallProps>({
           label: 'Wall rows',
           hint: 'Outlined copies split above and below the call to action',
         },
-      ],
-      more: [
         {
           path: 'intro.baselineY',
           label: 'Opening word baseline',
@@ -236,10 +254,12 @@ export const scrollerWallControls = defineControls<ScrollerWallProps>({
     },
     {
       title: 'Timing',
-      fields: [
+      fields: [MOTION.enter],
+      more: [
+        MOTION.exit,
         {
           path: 'intro.cutAt',
-          label: 'Cut to brand color at',
+          label: 'Cut to primary color at',
           hint: 'Frame number; the opening background switches to the main one and the block leaves, filling every letter',
         },
         { path: 'contact.at', label: 'Call to action at', hint: 'Frame number' },
@@ -248,8 +268,6 @@ export const scrollerWallControls = defineControls<ScrollerWallProps>({
           ...MOTION.speed,
           hint: 'Scales every beat. Entrance and exit keep their length. Below 1 the end card can be cut off',
         },
-      ],
-      more: [
         {
           path: 'scroller.at',
           label: 'Stack starts at',
@@ -292,29 +310,14 @@ export const scrollerWallControls = defineControls<ScrollerWallProps>({
         { path: 'card.fadeFrames', label: 'End card fade length', hint: 'In frames' },
         { path: 'card.tintFrames', label: 'Logo tint length', hint: 'In frames' },
         { path: 'card.ringFrames', label: 'Ring growth length', hint: 'In frames' },
-        MOTION.enter,
         MOTION.enterFrames,
-        MOTION.exit,
         MOTION.exitFrames,
       ],
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        { path: 'look.paper', label: 'Opening background', hint: 'Behind the opening word' },
-        {
-          path: 'card.background',
-          label: 'End card background',
-          hint: 'Also the flash just before the card and the contact icon glyphs',
-        },
-      ],
+      fields: [LOOK.showBackdrop],
       more: [
-        {
-          path: 'look.field',
-          label: 'Main background',
-          hint: 'Behind everything from the cut until the end card. Brand color sets it too',
-        },
         { path: 'wall.washTop', label: 'Wash top color' },
         { path: 'wall.washMiddle', label: 'Wash middle color' },
         { path: 'wall.washBottom', label: 'Wash bottom color' },

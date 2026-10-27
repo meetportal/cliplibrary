@@ -15,13 +15,12 @@ export const magnifierCaptionControls = defineControls<MagnifierCaptionProps>({
         {
           path: 'glow.accentWord',
           label: 'Keyword',
-          hint: 'Caption word drawn in the keyword color with an underline; leave empty for none',
+          hint: 'Caption word drawn in the accent color with an underline; leave empty for none',
         },
-        { path: 'caption.font', label: 'Font' },
-        { path: 'caption.size', label: 'Text size' },
-        { path: 'caption.color', label: 'Text color' },
       ],
       more: [
+        { path: 'caption.font', label: 'Font' },
+        { path: 'caption.size', label: 'Text size' },
         { path: 'caption.weight', label: 'Font weight' },
         { path: 'caption.lineHeight', label: 'Line spacing' },
         {
@@ -37,22 +36,81 @@ export const magnifierCaptionControls = defineControls<MagnifierCaptionProps>({
       ],
     },
     {
-      title: 'Magnifier',
+      title: 'Colors',
       fields: [
-        { path: 'lens.radius', label: 'Lens size', hint: 'Radius in pixels' },
+        {
+          link: ['lens.rim', 'brand.mark'],
+          label: 'Primary color',
+          hint: 'The magnifier rim, handle outline and collar, and the brand logo mark',
+        },
+        {
+          link: ['glow.accent', 'glow.accentText'],
+          label: 'Accent color',
+          hint: 'The keyword text, its underline and its cell glow',
+        },
+        {
+          link: ['caption.color', 'glow.color'],
+          label: 'Text color',
+          hint: 'The caption, and the glow and lit text of each caption word the lens finds',
+        },
+        {
+          link: ['field.ring', 'field.word', 'lens.ring', 'lens.word', 'brand.color'],
+          label: 'Secondary color',
+          hint: 'Honeycomb cell outlines and words, inside and outside the lens, and the brand text',
+        },
+        {
+          link: ['look.background', 'look.spotlight', 'lens.inside', 'lens.handle'],
+          label: 'Background color',
+          hint: 'The background, its center glow, the dark glass behind the lens cells and the handle body',
+        },
+      ],
+      more: [
+        { path: 'lens.rim', label: 'Rim color', hint: 'Also colors the handle outline and collar' },
+        { path: 'brand.mark', label: 'Logo mark color' },
+        {
+          path: 'glow.accent',
+          label: 'Keyword glow color',
+          hint: 'The underline and the glow behind the keyword cell',
+        },
+        {
+          path: 'glow.accentText',
+          label: 'Keyword text color',
+          hint: 'The keyword in the caption and in its lit cell',
+        },
+        { path: 'caption.color', label: 'Caption color' },
+        {
+          path: 'glow.color',
+          label: 'Found word glow',
+          hint: 'Glow and lit word of each caption cell under the lens; the keyword uses the accent colors',
+        },
+        { path: 'field.ring', label: 'Cell outline color', hint: 'Blurred cells outside the lens' },
+        { path: 'field.word', label: 'Cell word color', hint: 'Blurred cells outside the lens' },
+        { path: 'lens.ring', label: 'Lens cell outline color' },
+        { path: 'lens.word', label: 'Lens cell word color' },
+        { path: 'brand.color', label: 'Brand text color' },
+        { path: 'look.background', label: 'Background' },
+        {
+          path: 'look.spotlight',
+          label: 'Spotlight color',
+          hint: 'Glow in the center of the background',
+        },
+        {
+          path: 'lens.inside',
+          label: 'Lens background',
+          hint: 'Fill behind the cells seen through the glass',
+        },
+        { path: 'lens.handle', label: 'Handle color' },
+      ],
+    },
+    {
+      title: 'Magnifier',
+      fields: [{ path: 'lens.radius', label: 'Lens size', hint: 'Radius in pixels' }],
+      more: [
         {
           path: 'lens.magnify',
           label: 'Magnification',
           hint: 'How much larger the honeycomb looks through the glass',
         },
-        {
-          path: 'lens.rim',
-          label: 'Rim color',
-          hint: 'Also colors the handle outline and collar',
-        },
-        { path: 'lens.handle', label: 'Handle color' },
-      ],
-      more: [
         {
           path: 'lens.x',
           label: 'Lens position X',
@@ -82,46 +140,7 @@ export const magnifierCaptionControls = defineControls<MagnifierCaptionProps>({
           label: 'Glass glint',
           hint: 'Strength of the white shine on the glass',
         },
-        {
-          path: 'lens.inside',
-          label: 'Lens background',
-          hint: 'Fill behind the cells seen through the glass',
-        },
-        {
-          link: ['lens.ring', 'lens.word'],
-          label: 'Cells in the lens',
-          hint: 'Outline and word color of the cells seen through the glass',
-        },
-        { path: 'lens.ring', label: 'Lens cell outline color' },
-        { path: 'lens.word', label: 'Lens cell word color' },
         { path: 'lens.lineWidth', label: 'Lens cell outline thickness' },
-      ],
-    },
-    {
-      title: 'Glow',
-      fields: [
-        {
-          link: ['glow.accent', 'glow.accentText'],
-          label: 'Keyword color',
-          hint: 'Sets the keyword text, its underline and its cell glow together',
-        },
-        {
-          path: 'glow.color',
-          label: 'Found word glow',
-          hint: 'Glow and lit word color of each caption cell under the lens; the keyword uses the keyword color',
-        },
-      ],
-      more: [
-        {
-          path: 'glow.accent',
-          label: 'Keyword glow color',
-          hint: 'The underline and the glow behind the keyword cell',
-        },
-        {
-          path: 'glow.accentText',
-          label: 'Keyword text color',
-          hint: 'The keyword in the caption and in its lit cell',
-        },
         {
           path: 'glow.strength',
           label: 'Glow strength',
@@ -139,17 +158,10 @@ export const magnifierCaptionControls = defineControls<MagnifierCaptionProps>({
           label: 'Background words',
           hint: 'One per line, scattered across the cells; the first sits under the lens at rest',
         },
-        { path: 'field.shape', label: 'Cell shape' },
-        {
-          link: ['field.ring', 'field.word'],
-          label: 'Honeycomb color',
-          hint: 'Outline and word color of the blurred cells outside the lens',
-        },
-        { path: 'field.blur', label: 'Blur', hint: 'Blur of the honeycomb outside the lens' },
       ],
       more: [
-        { path: 'field.ring', label: 'Cell outline color' },
-        { path: 'field.word', label: 'Cell word color' },
+        { path: 'field.shape', label: 'Cell shape' },
+        { path: 'field.blur', label: 'Blur', hint: 'Blur of the honeycomb outside the lens' },
         { path: 'field.lineWidth', label: 'Cell outline thickness' },
         {
           path: 'field.wordSize',
@@ -210,6 +222,8 @@ export const magnifierCaptionControls = defineControls<MagnifierCaptionProps>({
           label: 'Pace',
           hint: 'Frames between words; the lens moves on the same beat so each word types as it is found',
         },
+      ],
+      more: [
         {
           path: 'timing.returnFrame',
           label: 'Lens returns at',
@@ -220,8 +234,6 @@ export const magnifierCaptionControls = defineControls<MagnifierCaptionProps>({
           label: 'Caption fades out at',
           hint: 'Frame number; also fades the underline',
         },
-      ],
-      more: [
         {
           path: 'timing.wordInterval',
           label: 'Frames between words',
@@ -265,24 +277,13 @@ export const magnifierCaptionControls = defineControls<MagnifierCaptionProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background],
-      more: [
-        {
-          path: 'look.spotlight',
-          label: 'Spotlight color',
-          hint: 'Glow in the center of the background',
-        },
-      ],
+      fields: [LOOK.showBackdrop],
     },
     {
       title: 'Brand',
-      fields: [
-        { path: 'brand.show', label: 'Show brand line' },
-        { path: 'brand.url', label: 'Brand text' },
-      ],
+      fields: [{ path: 'brand.show', label: 'Show brand line' }],
       more: [
-        { path: 'brand.color', label: 'Brand text color' },
-        { path: 'brand.mark', label: 'Logo mark color' },
+        { path: 'brand.url', label: 'Brand text' },
         { path: 'brand.size', label: 'Brand size' },
         { path: 'brand.y', label: 'Brand position', hint: 'Pixels from the top' },
       ],
@@ -291,14 +292,16 @@ export const magnifierCaptionControls = defineControls<MagnifierCaptionProps>({
       title: 'Motion',
       fields: [
         MOTION.enter,
-        MOTION.exit,
-        { ...MOTION.exitFrames, hint: 'In frames; starts at 0, so raise it for the exit to play' },
         {
           ...MOTION.speed,
           hint: 'Scales the lens, typing and fade timing; the clip length, entrance and exit stay the same',
         },
       ],
-      more: [MOTION.enterFrames],
+      more: [
+        MOTION.enterFrames,
+        MOTION.exit,
+        { ...MOTION.exitFrames, hint: 'In frames; starts at 0, so raise it for the exit to play' },
+      ],
     },
   ],
   hidden: ['motion.float'],

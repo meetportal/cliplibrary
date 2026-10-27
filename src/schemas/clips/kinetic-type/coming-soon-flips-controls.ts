@@ -19,10 +19,10 @@ export const comingSoonFlipsControls = defineControls<ComingSoonFlipsProps>({
             cycleFonts: 'Flicker through fonts',
           },
         },
-        { path: 'words.size', label: 'Word size', hint: 'In pixels' },
-        { path: 'words.bar.show', label: 'Show underline' },
       ],
       more: [
+        { path: 'words.size', label: 'Word size', hint: 'In pixels' },
+        { path: 'words.bar.show', label: 'Show underline' },
         {
           path: 'words.weight',
           label: 'Word weight',
@@ -55,14 +55,63 @@ export const comingSoonFlipsControls = defineControls<ComingSoonFlipsProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.light', 'words.bar.onDark', 'title.accent'],
+          label: 'Primary color',
+          hint: 'Light plates, underlines on dark plates and the solid bottom title line',
+        },
+        {
+          link: ['look.onLight', 'words.bar.onLight', 'logo.color', 'logo.captionColor'],
+          label: 'Secondary color',
+          hint: 'Words and underlines on light plates, and the logo with its caption',
+        },
+        {
+          link: ['look.onDark', 'title.color'],
+          label: 'Text color',
+          hint: 'Words on dark plates and the title',
+        },
+        {
+          path: 'wall.base',
+          label: 'Surface color',
+          hint: 'The plaster wall the light sweeps behind the logo',
+        },
+        {
+          path: 'look.dark',
+          label: 'Background color',
+          hint: 'Dark plates, and the backdrop around the light sweep in the finale',
+        },
+      ],
+      more: [
+        { path: 'look.light', label: 'Light plate' },
+        { path: 'look.onDark', label: 'Words on dark plates' },
+        { path: 'look.onLight', label: 'Words on light plates' },
+        { path: 'words.bar.onDark', label: 'Underline on dark plates' },
+        { path: 'words.bar.onLight', label: 'Underline on light plates' },
+        {
+          path: 'title.color',
+          label: 'Title color',
+          hint: 'The outlined line, and the top line when it is solid',
+        },
+        {
+          path: 'title.accent',
+          label: 'Solid bottom line color',
+          hint: 'The solid bottom line, used when the top line is outlined',
+        },
+        { path: 'logo.color', label: 'Logo color' },
+        { path: 'logo.captionColor', label: 'Caption color' },
+      ],
+    },
+    {
       title: 'Title',
       fields: [
         { path: 'title.top', label: 'Top line' },
         { path: 'title.bottom', label: 'Bottom line' },
-        { path: 'title.topSize', label: 'Top line size' },
-        { path: 'title.bottomSize', label: 'Bottom line size' },
       ],
       more: [
+        { path: 'title.topSize', label: 'Top line size' },
+        { path: 'title.bottomSize', label: 'Bottom line size' },
         {
           path: 'title.outlined',
           label: 'Outlined line',
@@ -98,11 +147,9 @@ export const comingSoonFlipsControls = defineControls<ComingSoonFlipsProps>({
           hint: 'The first letter sits in front and cuts a gap into the rest',
         },
         { path: 'logo.caption', label: 'Caption' },
-        { path: 'logo.size', label: 'Logo size' },
       ],
       more: [
-        { path: 'logo.color', label: 'Logo color' },
-        { path: 'logo.captionColor', label: 'Caption color' },
+        { path: 'logo.size', label: 'Logo size' },
         { path: 'logo.captionSize', label: 'Caption size' },
         {
           path: 'logo.overlap',
@@ -123,77 +170,19 @@ export const comingSoonFlipsControls = defineControls<ComingSoonFlipsProps>({
       ],
     },
     {
-      title: 'Colors',
-      fields: [
-        {
-          link: [
-            'look.dark',
-            'look.onLight',
-            'words.bar.onLight',
-            'logo.color',
-            'logo.captionColor',
-          ],
-          label: 'Ink color',
-          hint: 'Dark plates, the finale backdrop, words and underlines on light plates, and the logo',
-        },
-        {
-          link: ['look.light', 'words.bar.onDark', 'title.accent'],
-          label: 'Accent color',
-          hint: 'Light plates, underlines on dark plates and the solid bottom title line',
-        },
-        {
-          link: ['look.onDark', 'title.color'],
-          label: 'Light text color',
-          hint: 'Words on dark plates and the title',
-        },
-      ],
+      title: 'Wall light',
+      fields: [{ path: 'beam.strength', label: 'Light strength' }],
       more: [
-        {
-          path: 'look.dark',
-          label: 'Dark plate',
-          hint: 'Also fills behind the lit wall in the finale',
-        },
-        { path: 'look.light', label: 'Light plate' },
-        { path: 'look.onDark', label: 'Words on dark plates' },
-        { path: 'look.onLight', label: 'Words on light plates' },
-        { path: 'words.bar.onDark', label: 'Underline on dark plates' },
-        { path: 'words.bar.onLight', label: 'Underline on light plates' },
-        {
-          path: 'title.color',
-          label: 'Title color',
-          hint: 'The outlined line, and the top line when it is solid',
-        },
-        {
-          path: 'title.accent',
-          label: 'Solid bottom line color',
-          hint: 'Used when the top line is outlined',
-        },
-        {
-          path: 'look.showBackdrop',
-          label: 'Show color plates',
-          hint: 'Off leaves the plates and the finale backdrop transparent',
-        },
-        LOOK.grain,
-        LOOK.liveGrain,
-      ],
-    },
-    {
-      title: 'Wall',
-      fields: [
-        { path: 'wall.base', label: 'Wall color' },
         {
           path: 'beam.slats',
           label: 'Light slats',
           hint: 'Number of light bands sweeping the wall',
         },
-        { path: 'beam.strength', label: 'Light strength' },
         {
           path: 'beam.tint',
           label: 'Light tint',
           hint: 'Multiplied over the wall behind the logo',
         },
-      ],
-      more: [
         { path: 'beam.angle', label: 'Light angle', hint: 'In degrees' },
         { path: 'beam.softness', label: 'Slat softness', hint: 'Higher blurs the slat edges' },
         { path: 'beam.slatGap', label: 'Slat spacing', hint: 'In pixels' },
@@ -214,22 +203,22 @@ export const comingSoonFlipsControls = defineControls<ComingSoonFlipsProps>({
       title: 'Timing',
       fields: [
         {
-          path: 'flashFrames',
-          label: 'Wall flash',
-          hint: 'Frames the fully lit wall flashes between the words and the title',
-        },
-        {
           path: 'title.settleFrames',
           label: 'Title track-in length',
           hint: 'In frames',
+        },
+      ],
+      more: [
+        {
+          path: 'flashFrames',
+          label: 'Wall flash',
+          hint: 'Frames the fully lit wall flashes between the words and the title',
         },
         {
           path: 'beam.turnAt',
           label: 'Light turns at',
           hint: 'Frames into the finale when the sweep reverses',
         },
-      ],
-      more: [
         {
           path: 'title.settleStart',
           label: 'Title track-in delay',
@@ -274,16 +263,28 @@ export const comingSoonFlipsControls = defineControls<ComingSoonFlipsProps>({
       ],
     },
     {
-      title: 'Motion',
+      title: 'Background',
       fields: [
-        MOTION.enter,
-        MOTION.exit,
+        {
+          path: 'look.showBackdrop',
+          label: 'Show color plates',
+          hint: 'Off leaves the plates and the finale backdrop transparent',
+        },
+      ],
+      more: [LOOK.grain, LOOK.liveGrain],
+    },
+    {
+      title: 'Motion',
+      fields: [MOTION.enter],
+      more: [
+        { ...MOTION.exit, hint: 'Off by default, so the logo holds to the last frame' },
         {
           ...MOTION.speed,
           hint: 'Scales the word, flash and finale timing. Entrance and exit keep their length',
         },
+        MOTION.enterFrames,
+        MOTION.exitFrames,
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['motion.float'],
