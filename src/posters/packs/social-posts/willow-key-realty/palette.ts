@@ -11,10 +11,10 @@ export const KEY = {
   white: '#ffffff',
 };
 
-export const SERIF = 'Playfair Display';
-export const SCRIPT = 'Satisfy';
-export const SANS = 'Montserrat';
-export const DISPLAY = 'Oswald';
+const SERIF = 'Playfair Display';
+const SCRIPT = 'Satisfy';
+const SANS = 'Montserrat';
+const DISPLAY = 'Oswald';
 
 export const HEADING = { label: 'Heading font', value: SERIF } as const;
 export const SCRIPT_FONT = { label: 'Script font', value: SCRIPT } as const;
