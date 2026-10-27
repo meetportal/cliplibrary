@@ -12,7 +12,7 @@ Everything lives in one package. Modules import each other through the `@/` alia
   editor (live `@remotion/player` preview, schema-driven properties panel, timeline, in-memory
   undo/redo and export). The editor never writes project state to the server.
 - `src/render` - Bun render scripts (`@remotion/bundler` + `@remotion/renderer`) for the
-  committed gallery previews. They run locally only; the app has no API routes.
+  committed gallery previews. They run locally only. The app's one API route is the media agent.
 - Editor export runs in the browser (`src/lib/use-project-export.ts`, `renderMediaOnWeb`), and
   picked media becomes an object URL. Keep compositions within what `@remotion/web-renderer`
   can draw: no `z-index`, `OffthreadVideo` or `Html5Video`, and prefer linear gradients over
@@ -169,6 +169,26 @@ editor.
 - The `@/schemas` scenes are reusable building blocks: the timeline
   toolbar's "Animation" picker inserts one as a `composition` element (its `clipId` is a schema
   `ClipId`, rendered through `CLIP_COMPONENTS`), layerable alongside the primitive elements.
+
+## Media agent
+
+Every clip and poster page has an "Edit with AI" panel (`src/components/media-agent`) that streams
+a chat with `useChat` from `@ai-sdk/react`. The editor sends its current document with each
+message to `POST /api/agent` (`src/app/api/agent/route.ts`), which runs `streamText` on Gemini 3.7
+Flash and falls back to Gemini 3.5 Flash when 3.7 is overloaded or rate limited
+(`src/agent/model.ts`). The route needs `GOOGLE_GENERATIVE_AI_API_KEY` (see `.env.example`).
+
+- The model edits through one tool, `editMedia`, which takes RFC 6902 JSON Patch operations
+  (`src/agent/edits.ts`, `fast-json-patch`). Each patch is validated with `checkMedia`
+  (`src/agent/media.ts`): the `Project` or `Design` schema, every composition's clip schema,
+  unique ids, bundled fonts and icons. A failed patch goes back to the model as an error to fix.
+- The browser applies each successful tool output with the same `applyEdits` as one undoable step,
+  so the agent never owns state.
+- `src/agent/assets.ts` swaps data and object URLs for `asset://N` before the document reaches the
+  model and swaps them back in the returned operations.
+- `src/agent/instructions.ts` builds the system prompt: the document, its JSON schema and, for
+  clips, each composition's control layout as a field guide.
+- `e2e/media-agent.spec.ts` replays a recorded stream, so CI never calls Gemini.
 
 ## Poster packs and the image editor
 
