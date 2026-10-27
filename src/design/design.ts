@@ -1,7 +1,7 @@
 import { z } from 'zod';
+import { designControlSchema } from './controls';
 import { designElementSchema } from './element';
 import { fillSchema } from './fill';
-import { paletteSwatchSchema } from './palette';
 
 export const designSchema = z.object({
   id: z.string().min(1),
@@ -10,7 +10,7 @@ export const designSchema = z.object({
   height: z.number().int().positive(),
   background: fillSchema,
   elements: z.array(designElementSchema),
-  palette: z.array(paletteSwatchSchema),
+  controls: z.array(designControlSchema),
 });
 
 export type Design = z.infer<typeof designSchema>;

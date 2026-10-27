@@ -260,7 +260,7 @@ export const useDesignEditor = (initial: Design) => {
         ...design,
         background: scaled.background,
         elements: scaled.elements,
-        palette: scaled.palette,
+        controls: scaled.controls,
       });
       setSelectedIds([]);
       setEditingId(null);

@@ -157,18 +157,31 @@ const splitByStyle = (run: readonly PatternShape[]): PatternShape[][] => {
   return consecutive;
 };
 
-const mergeRun = (run: readonly PatternShape[]): DesignElement[] =>
-  run.length < MIN_PATTERN_SIZE
-    ? [...run]
-    : splitByStyle(run).flatMap((group): DesignElement[] =>
-        group.length > 1 ? [toPattern(group)] : group,
-      );
+export interface MergedPatterns {
+  elements: DesignElement[];
+  aliases: ReadonlyMap<string, string>;
+}
 
-export const mergePatterns = (elements: readonly DesignElement[]): DesignElement[] => {
+export const mergePatterns = (elements: readonly DesignElement[]): MergedPatterns => {
   const merged: DesignElement[] = [];
+  const aliases = new Map<string, string>();
   let run: PatternShape[] = [];
   const flush = () => {
-    merged.push(...mergeRun(run));
+    if (run.length < MIN_PATTERN_SIZE) {
+      merged.push(...run);
+    } else {
+      for (const group of splitByStyle(run)) {
+        if (group.length > 1) {
+          const pattern = toPattern(group);
+          for (const shape of group) {
+            aliases.set(shape.id, pattern.id);
+          }
+          merged.push(pattern);
+        } else {
+          merged.push(...group);
+        }
+      }
+    }
     run = [];
   };
   for (const element of elements) {
@@ -185,5 +198,5 @@ export const mergePatterns = (elements: readonly DesignElement[]): DesignElement
     }
   }
   flush();
-  return merged;
+  return { elements: merged, aliases };
 };

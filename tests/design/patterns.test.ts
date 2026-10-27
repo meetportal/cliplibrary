@@ -8,12 +8,14 @@ import {
   mergePatterns,
 } from '@/design';
 
+const patternsOf = (elements: readonly DesignElement[]) => mergePatterns(elements).elements;
+
 const square = (x: number, y: number, fill = '#1f4a36', extra: Partial<DesignElement> = {}) =>
   createRect({ name: 'Check', x, y, width: 10, height: 10, fill, ...extra });
 
 describe('mergePatterns', () => {
   it('turns a run of repeated shapes into one path per colour', () => {
-    const merged = mergePatterns([
+    const merged = patternsOf([
       createText({ id: 'title' }),
       square(0, 0),
       square(10, 0, '#ffffff'),
@@ -34,32 +36,32 @@ describe('mergePatterns', () => {
   });
 
   it('keeps paint order when differently coloured shapes overlap', () => {
-    const merged = mergePatterns([square(0, 0), square(0, 0), square(5, 5, '#fff'), square(9, 9)]);
+    const merged = patternsOf([square(0, 0), square(0, 0), square(5, 5, '#fff'), square(9, 9)]);
     expect(merged.map((element) => element.type)).toEqual(['path', 'rect', 'rect']);
   });
 
   it('leaves short runs, rotated shapes and shadows alone', () => {
     const short = [square(0, 0), square(10, 0)];
-    expect(mergePatterns(short)).toEqual(short);
+    expect(patternsOf(short)).toEqual(short);
     const rotated = [0, 10, 20].map((x) => square(x, 0, '#000', { rotation: 5 }));
-    expect(mergePatterns(rotated)).toEqual(rotated);
+    expect(patternsOf(rotated)).toEqual(rotated);
   });
 
   it('draws circles, rounded squares and stars as path data', () => {
     const dots = [0, 20, 40].map((x) =>
       createEllipse({ name: 'Dot', x, y: 0, width: 10, height: 10, fill: '#000' }),
     );
-    expect(mergePatterns(dots)[0]).toMatchObject({
+    expect(patternsOf(dots)[0]).toMatchObject({
       type: 'path',
       data: expect.stringContaining('A5 5 0 1 1'),
     });
     const tiles = [0, 20, 40].map((x) =>
       createRect({ name: 'Tile', x, y: 0, width: 10, height: 10, cornerRadius: 2, fill: '#000' }),
     );
-    expect(mergePatterns(tiles)[0]).toMatchObject({ data: expect.stringContaining('A2 2 0 0 1') });
+    expect(patternsOf(tiles)[0]).toMatchObject({ data: expect.stringContaining('A2 2 0 0 1') });
     const stars = [0, 20, 40].map((x) =>
       createStar({ name: 'Star', x, y: 0, width: 10, height: 10, fill: '#000' }),
     );
-    expect(mergePatterns(stars)).toHaveLength(1);
+    expect(patternsOf(stars)).toHaveLength(1);
   });
 });

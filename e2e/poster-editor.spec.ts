@@ -29,9 +29,9 @@ test('the theme panel recolours a poster through its colour roles', async ({ pag
   await page.reload();
   const theme = page.getByTestId('theme-panel');
   await expect(theme).toBeVisible();
-  await theme.getByLabel('Primary colour', { exact: true }).fill('#2244aa');
-  await theme.getByLabel('Text: QUIZ').fill('POLL');
-  await expect(theme.getByLabel('Text: QUIZ')).toHaveValue('POLL');
+  await theme.getByLabel('Primary color', { exact: true }).fill('#2244aa');
+  await theme.getByLabel('Title', { exact: true }).fill('POLL');
+  await expect(theme.getByLabel('Title', { exact: true })).toHaveValue('POLL');
   await page.getByRole('button', { name: 'Layers', exact: true }).click();
   const layers = page.getByRole('list', { name: 'Layers' });
   await expect(layers.getByText('Check', { exact: true })).toHaveCount(0);

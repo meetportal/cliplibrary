@@ -12,7 +12,6 @@ import type {
   StarElement,
   TextElement,
 } from './element';
-import { derivePalette } from './palette';
 
 export const createDesignId = (prefix: string): string => `${prefix}-${randomHex(8)}`;
 
@@ -174,15 +173,13 @@ export const createIcon = (overrides: Overrides<IconElement> = {}): IconElement 
   ...overrides,
 });
 
-export const createDesign = ({ palette, ...overrides }: Partial<Design> = {}): Design => {
-  const design = {
-    id: createDesignId('design'),
-    title: 'Untitled design',
-    width: 1080,
-    height: 1080,
-    background: '#ffffff',
-    elements: [],
-    ...overrides,
-  };
-  return { ...design, palette: palette ?? derivePalette(design) };
-};
+export const createDesign = (overrides: Partial<Design> = {}): Design => ({
+  id: createDesignId('design'),
+  title: 'Untitled design',
+  width: 1080,
+  height: 1080,
+  background: '#ffffff',
+  elements: [],
+  controls: [],
+  ...overrides,
+});

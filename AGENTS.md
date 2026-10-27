@@ -188,22 +188,34 @@ only use the bundled fonts, icons and photos.
 
 ### Standard poster controls
 
-Every poster opens on the editor's Theme panel, which is the same for all designs:
+Every poster is built with `themed(width, height, spec, (t) => nodes)` from `src/posters/kit`
+and opens on the editor's Theme panel, which shows that poster's own hand-written controls:
 
-- Colours: `Design.palette` is a list of colour roles (`background`, then `text` when one
-  colour is mostly used for copy, then `primary`, `secondary`, `accent`, ...), at most six.
-  `templateDesign` derives it with `derivePalette`, folding related shades (same hue, or close
-  neutrals) into one role. Change a role with `setSwatchColor(design, id, color)`: it recolours
-  every fill, stroke, gradient stop, text background and tinted shadow using that role, shifts the
-  role's shades by the same amount and keeps alpha. Recolour posters through roles, not element by
-  element.
-- Fonts: `fontRoles` ranks the families in use (Headings, Body, Accent font) and `replaceFont`
-  swaps one everywhere.
-- Text: every line of copy in reading order.
+- `spec.colors`: 2 to 6 roles from `background`, `surface`, `primary`, `secondary`, `accent` and
+  `text`, each with its default and a hint naming exactly what it paints. A role can paint the
+  backdrop and the front text together. In the build, `t.color(role)` gives the role colour and
+  `t.shade(role, exact)` gives a related shade or tint (the exact original colour, with alpha if
+  any); recolouring the role shifts that shade by the same amount.
+- `spec.fonts`: at most 3 font roles (`t.font(key)`), and every text uses one.
+- `spec.copy`: named copy (`t.copy(key)`), or a list for repeated copy such as answers, reviews or
+  events (`t.list(key)`). Every text shows one copy value unchanged (no slicing, casing or joining)
+  and the same template must build the same number of elements for any copy.
 
-Decorations stay out of the way: `mergePatterns` turns any run of three or more consecutive
-shapes with the same type, name and group (checkerboards, dot grids, star fields) into one locked
-`<name> pattern` path per colour, so a poster never exposes dozens of selectable blocks.
-`tests/posters/posters.test.ts` fails when a poster has no palette or still has a repeated run.
-Build repeated decorations as such runs (same `name`, solid fill, no rotation or shadow) so they
-merge.
+`themed` builds the template twice, once with marker values, to bind every control to the exact
+elements it drives (`Design.controls`, applied with `setControlValue` and `setListItem`). Shapes
+are locked and ignore clicks on the canvas, so people edit through the controls; text and images
+stay editable. Runs of three or more consecutive shapes with the same type, name and group
+(checkerboards, dot grids, star fields) merge into one `<name> pattern` path per colour.
+`auditPosterControls` (run by `tests/posters/posters.test.ts`) fails when a colour, text or font
+in a poster is not driven by a control, a control drives nothing, two roles paint the same
+property, or a poster has more than 12 copy controls. Defaults must render exactly as before:
+re-render the pack with `bun run render:posters <pack> --out <dir>` and compare.
+
+### Standard clip controls
+
+Every clip layout has a `Colors` section as its first or second section (it opens by default)
+whose `fields` are 2 to 5 role controls labelled `Primary color`, `Secondary color`,
+`Accent color`, `Text color`, `Background color` or `Surface color`, each linking the colour
+paths that role should drive (the front text can share Primary with a shape). Individual colour
+paths go in `more`. At most 14 controls show at first glance across all sections.
+`auditClipStandard` in `src/core/clip-controls.ts` enforces this.

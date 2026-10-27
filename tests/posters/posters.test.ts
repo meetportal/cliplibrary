@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { designSchema, isDesignIcon, isKnownFont } from '@/design';
 import {
+  auditPosterControls,
   findPoster,
   POSTER_META,
   POSTER_PHOTOS,
@@ -56,19 +57,13 @@ describe('posters', () => {
     expect(new Set(keys).size).toBe(keys.length);
   });
 
-  it('expose a small set of colour roles led by the background', () => {
-    for (const { meta, design } of designs) {
-      expect({
-        id: meta.id,
-        count: design.palette.length > 0 && design.palette.length <= 6,
-      }).toEqual({
-        id: meta.id,
-        count: true,
-      });
-      expect(design.palette[0]?.id).toBe('background');
-      const ids = design.palette.map((swatch) => swatch.id);
-      expect(new Set(ids).size).toBe(ids.length);
-    }
+  it('give every poster its own complete theme controls', () => {
+    const problems = designs
+      .filter(({ design }) => design.controls.length > 0)
+      .flatMap(({ meta, design }) =>
+        auditPosterControls(design).map((problem) => `${meta.id}: ${problem}`),
+      );
+    expect(problems).toEqual([]);
   });
 
   it('merge repeated decorative shapes into single pattern elements', () => {

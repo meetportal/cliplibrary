@@ -1,8 +1,10 @@
 import {
   createDesign,
   type Design,
+  type DesignControl,
   type DesignElement,
   mergePatterns,
+  PAGE_TARGET,
   type RectElement,
 } from '@/design';
 import type { ClipTheme, PosterCategory, PosterTag } from '@/schemas';
@@ -48,17 +50,54 @@ const isBackdrop = (
   element.cornerRadius === 0 &&
   element.shadow === undefined;
 
+const retarget = (
+  controls: readonly DesignControl[],
+  rename: (id: string) => string,
+): DesignControl[] =>
+  controls.map((control): DesignControl => {
+    if (control.kind === 'color') {
+      const seen = new Set<string>();
+      return {
+        ...control,
+        targets: control.targets.flatMap((target) => {
+          const next = { ...target, element: rename(target.element) };
+          const key = `${next.element}:${next.prop}:${next.stop ?? ''}`;
+          if (seen.has(key)) {
+            return [];
+          }
+          seen.add(key);
+          return [next];
+        }),
+      };
+    }
+    const unique = (targets: readonly { element: string }[]) =>
+      [...new Set(targets.map((target) => rename(target.element)))].map((element) => ({ element }));
+    return control.kind === 'list'
+      ? { ...control, targets: control.targets.map(unique) }
+      : { ...control, targets: unique(control.targets) };
+  });
+
+const lockShapes = (element: DesignElement): DesignElement =>
+  element.type === 'text' || element.type === 'image' ? element : { ...element, locked: true };
+
 export const templateDesign = (item: Template, id: string, title: string): Design => {
-  const elements = mergePatterns(flatten(item.build()));
+  const composed = item.compose?.() ?? { elements: flatten(item.build()), controls: [] };
+  const { elements: merged, aliases } = mergePatterns(composed.elements);
+  const themed = composed.controls.length > 0;
+  const elements = themed ? merged.map(lockShapes) : merged;
   const [first, ...rest] = elements;
+  const backdrop = isBackdrop(first, item.width, item.height) ? first : undefined;
+  const controls = retarget(composed.controls, (element) => {
+    const resolved = aliases.get(element) ?? element;
+    return resolved === backdrop?.id ? PAGE_TARGET : resolved;
+  });
   return createDesign({
     id,
     title,
     width: item.width,
     height: item.height,
-    ...(isBackdrop(first, item.width, item.height)
-      ? { background: first.fill, elements: rest }
-      : { elements }),
+    controls,
+    ...(backdrop === undefined ? { elements } : { background: backdrop.fill, elements: rest }),
   });
 };
 

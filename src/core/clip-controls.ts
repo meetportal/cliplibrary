@@ -143,3 +143,58 @@ export const auditClipControls = (schema: z.ZodType, controls: ClipControls): Co
     repeatedTitles: duplicates(controls.sections.map((section) => section.title)),
   };
 };
+
+export const CLIP_COLOR_ROLES = [
+  'Primary color',
+  'Secondary color',
+  'Accent color',
+  'Text color',
+  'Background color',
+  'Surface color',
+] as const;
+
+const MAX_FIRST_GLANCE = 14;
+const MAX_ROLES = 5;
+
+export const auditClipStandard = (schema: z.ZodType, controls: ClipControls): string[] => {
+  const known = describeControlPaths(schema);
+  const colorPaths = [...known.values()].filter((descriptor) => descriptor.kind === 'color');
+  const problems: string[] = [];
+  const firstGlance = controls.sections.reduce((sum, item) => sum + item.fields.length, 0);
+  if (firstGlance > MAX_FIRST_GLANCE) {
+    problems.push(`${firstGlance} controls at first glance; keep at most ${MAX_FIRST_GLANCE}`);
+  }
+  if (colorPaths.length === 0) {
+    return problems;
+  }
+  const index = controls.sections.findIndex((item) => item.title === 'Colors');
+  const section = controls.sections[index];
+  if (section === undefined || index > 1) {
+    return [...problems, 'needs a "Colors" section as the first or second section'];
+  }
+  const roles = section.fields.map((field) => (typeof field === 'string' ? field : field.label));
+  const minimum = Math.min(2, colorPaths.length);
+  if (roles.length < minimum || roles.length > MAX_ROLES) {
+    problems.push(`Colors has ${roles.length} role controls; use ${minimum} to ${MAX_ROLES}`);
+  }
+  const allowed: readonly (string | undefined)[] = CLIP_COLOR_ROLES;
+  for (const role of roles) {
+    if (!allowed.includes(role)) {
+      problems.push(`Colors role "${role}" is not one of ${CLIP_COLOR_ROLES.join(', ')}`);
+    }
+  }
+  if (new Set(roles).size !== roles.length) {
+    problems.push('Colors repeats a role');
+  }
+  if (!roles.includes('Primary color')) {
+    problems.push('Colors needs a Primary color role');
+  }
+  for (const field of section.fields) {
+    for (const path of fieldPaths(field)) {
+      if (known.get(path)?.kind !== 'color') {
+        problems.push(`Colors role field "${path}" is not a color`);
+      }
+    }
+  }
+  return problems;
+};

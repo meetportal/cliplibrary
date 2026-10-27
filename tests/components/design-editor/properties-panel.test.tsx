@@ -25,8 +25,7 @@ describe('PropertiesPanel', () => {
   it('shows page settings when nothing is selected', () => {
     const { result } = renderHook(() => useDesignEditor(createDesign()));
     render(<PropertiesPanel editor={result.current} />);
-    expect(screen.getByRole('heading', { name: 'Colours' })).toBeInTheDocument();
-    expect(screen.getByLabelText('Background colour')).toHaveValue('#ffffff');
+    expect(screen.queryByRole('heading', { name: 'Colors' })).not.toBeInTheDocument();
     expect(screen.getByText(/1080 × 1080 px/)).toBeInTheDocument();
   });
 

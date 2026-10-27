@@ -248,7 +248,9 @@ export const PropertiesPanel = ({
 }: { sections: ControlSectionView[] } & PanelProps) => (
   <Accordion
     type="multiple"
-    defaultValue={sections.slice(0, 1).map((section) => section.title)}
+    defaultValue={sections
+      .filter((section, index) => index === 0 || section.title === 'Colors')
+      .map((section) => section.title)}
     className="flex flex-col"
   >
     {sections.map((section) => (
