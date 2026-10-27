@@ -1,16 +1,8 @@
 import { definePack } from '../../../pack';
-import { clientSays, marketPortrait, seoFolders, topOnePercent, ultimateMove } from './posts';
-import {
-  didYouKnow,
-  eventsList,
-  guessWord,
-  guidePost,
-  guideStory,
-  LIME_LOCKERS,
-  lockers,
-  talkTalk,
-  VIOLET_LOCKER,
-} from './posts-more';
+import { clientSays, seoFolders, ultimateMove } from './posts';
+import { marketPortrait, topOnePercent } from './posts-extra';
+import { guidePost, guideStory, LIME_LOCKERS, lockers, VIOLET_LOCKER } from './posts-lockers';
+import { didYouKnow, eventsList, guessWord, talkTalk } from './posts-more';
 
 const POSTS = [
   ultimateMove,

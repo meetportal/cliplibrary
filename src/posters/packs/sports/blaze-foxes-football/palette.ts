@@ -16,6 +16,10 @@ export const DISPLAY = 'Anton';
 export const COND = 'Barlow Condensed';
 export const BLOCK = 'Archivo Black';
 
+export const HEADING = { label: 'Heading font', value: DISPLAY } as const;
+export const BODY = { label: 'Body font', value: COND } as const;
+export const TITLE = { label: 'Title font', value: BLOCK } as const;
+
 export const crest = (
   x: number,
   y: number,
