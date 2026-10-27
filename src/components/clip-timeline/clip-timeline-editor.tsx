@@ -3,7 +3,7 @@
 import type { PlayerRef } from '@remotion/player';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { MediaAgent } from '@/components/media-agent/media-agent';
+import { AgentWorkspace } from '@/components/media-agent/agent-workspace';
 import { ClipPreviewSkeleton } from '@/components/skeletons';
 import { Timeline } from '@/components/timeline/timeline';
 import { TimelineToolbar } from '@/components/timeline/timeline-toolbar';
@@ -220,93 +220,96 @@ export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimel
   }, [selectedId, handleDelete]);
 
   return (
-    <div className="flex h-[calc(100dvh-3.5rem)] min-h-0 flex-col">
-      <div
-        className={cn(
-          'flex min-h-0 flex-col lg:flex-1 lg:flex-row',
-          mobilePanel === 'properties' ? 'flex-1' : 'flex-none',
-        )}
-      >
-        <section className="flex h-[min(46dvh,26rem)] shrink-0 flex-col bg-muted/30 lg:h-auto lg:min-h-0 lg:flex-1">
-          <ClipPreview
-            project={project}
-            demoSrc={demoSrc}
-            playerRef={playerRef}
-            onFrameChange={frames.set}
-            onPlayingChange={setPlaying}
-          />
-        </section>
-        <MobilePanelSwitch active={mobilePanel} onChange={setMobilePanel} />
-        <aside
+    <AgentWorkspace
+      kind="clip"
+      title={title}
+      document={project}
+      focus={selectedId === null ? [] : [selectedId]}
+      onChange={setProject}
+    >
+      <div className="flex h-full min-h-0 flex-col">
+        <div
           className={cn(
-            'min-h-0 flex-col overflow-y-auto border-border bg-sidebar lg:flex lg:w-[320px] xl:w-[360px] 2xl:w-[420px] lg:flex-none lg:shrink-0 lg:border-l',
-            mobilePanel === 'properties' ? 'flex flex-1' : 'hidden',
+            'flex min-h-0 flex-col lg:flex-1 lg:flex-row',
+            mobilePanel === 'properties' ? 'flex-1' : 'flex-none',
           )}
         >
-          <ClipTimelineHeader title={title} />
-          <ClipPropertySidebar
-            element={selectedElement}
-            onChange={(next) => setProjectLive(replaceElement(project, next))}
-            onDelete={handleDelete}
-          />
-        </aside>
-      </div>
-      <div
-        className={cn(
-          'min-h-0 flex-col border-border border-t bg-sidebar lg:flex lg:h-[clamp(12rem,30dvh,20rem)] lg:flex-none lg:shrink-0',
-          mobilePanel === 'timeline' ? 'flex flex-1' : 'hidden',
-        )}
-      >
-        <TimelineToolbar
-          pxPerFrame={pxPerFrame}
-          playing={playing}
-          canUndo={editor.canUndo}
-          canRedo={editor.canRedo}
-          exportState={exporter.state}
-          exportProgress={exporter.progress}
-          download={exporter.download}
-          exportError={exporter.error}
-          animations={ANIMATION_OPTIONS}
-          onAddElement={handleAddElement}
-          onAddAnimation={handleAddAnimation}
-          onAddTrack={() =>
-            setProject(addTrack(project, createTrack(`Track ${project.tracks.length + 1}`)))
-          }
-          onZoom={(next) => setPxPerFrame(clampPxPerFrame(next))}
-          onFit={fitTimeline}
-          onTogglePlay={() => playerRef.current?.toggle()}
-          onUndo={undo}
-          onRedo={redo}
-          onExport={(settings) => exporter.run(project, settings, fileName)}
-        />
-        <div className="min-h-0 flex-1">
-          <Timeline
-            project={project}
+          <section className="flex h-[min(46dvh,26rem)] shrink-0 flex-col bg-muted/30 lg:h-auto lg:min-h-0 lg:flex-1">
+            <ClipPreview
+              project={project}
+              demoSrc={demoSrc}
+              playerRef={playerRef}
+              onFrameChange={frames.set}
+              onPlayingChange={setPlaying}
+            />
+          </section>
+          <MobilePanelSwitch active={mobilePanel} onChange={setMobilePanel} />
+          <aside
+            className={cn(
+              'min-h-0 flex-col overflow-y-auto border-border bg-sidebar lg:flex lg:w-[320px] xl:w-[360px] 2xl:w-[420px] lg:flex-none lg:shrink-0 lg:border-l',
+              mobilePanel === 'properties' ? 'flex flex-1' : 'hidden',
+            )}
+          >
+            <ClipTimelineHeader title={title} />
+            <ClipPropertySidebar
+              element={selectedElement}
+              onChange={(next) => setProjectLive(replaceElement(project, next))}
+              onDelete={handleDelete}
+            />
+          </aside>
+        </div>
+        <div
+          className={cn(
+            'min-h-0 flex-col border-border border-t bg-sidebar lg:flex lg:h-[clamp(12rem,30dvh,20rem)] lg:flex-none lg:shrink-0',
+            mobilePanel === 'timeline' ? 'flex flex-1' : 'hidden',
+          )}
+        >
+          <TimelineToolbar
             pxPerFrame={pxPerFrame}
-            frames={frames}
-            selectedId={selectedId}
-            activeTrackId={activeTrack}
-            onSeek={seek}
-            onActivateTrack={setActiveTrackId}
-            onSelectElement={setSelectedId}
-            onMoveElement={(id, from) => setProjectLive(moveElement(project, id, from))}
-            onResizeElement={(id, duration) => setProjectLive(resizeElement(project, id, duration))}
-            onTrimElementStart={(id, from) => setProjectLive(trimElementStart(project, id, from))}
-            onMoveElementToTrack={(id, trackId) =>
-              setProjectLive(moveElementToTrack(project, id, trackId))
+            playing={playing}
+            canUndo={editor.canUndo}
+            canRedo={editor.canRedo}
+            exportState={exporter.state}
+            exportProgress={exporter.progress}
+            download={exporter.download}
+            exportError={exporter.error}
+            animations={ANIMATION_OPTIONS}
+            onAddElement={handleAddElement}
+            onAddAnimation={handleAddAnimation}
+            onAddTrack={() =>
+              setProject(addTrack(project, createTrack(`Track ${project.tracks.length + 1}`)))
             }
-            onMoveTrack={(id, direction) => setProject(moveTrack(project, id, direction))}
-            onRemoveTrack={(id) => setProject(removeTrack(project, id))}
+            onZoom={(next) => setPxPerFrame(clampPxPerFrame(next))}
+            onFit={fitTimeline}
+            onTogglePlay={() => playerRef.current?.toggle()}
+            onUndo={undo}
+            onRedo={redo}
+            onExport={(settings) => exporter.run(project, settings, fileName)}
           />
+          <div className="min-h-0 flex-1">
+            <Timeline
+              project={project}
+              pxPerFrame={pxPerFrame}
+              frames={frames}
+              selectedId={selectedId}
+              activeTrackId={activeTrack}
+              onSeek={seek}
+              onActivateTrack={setActiveTrackId}
+              onSelectElement={setSelectedId}
+              onMoveElement={(id, from) => setProjectLive(moveElement(project, id, from))}
+              onResizeElement={(id, duration) =>
+                setProjectLive(resizeElement(project, id, duration))
+              }
+              onTrimElementStart={(id, from) => setProjectLive(trimElementStart(project, id, from))}
+              onMoveElementToTrack={(id, trackId) =>
+                setProjectLive(moveElementToTrack(project, id, trackId))
+              }
+              onMoveTrack={(id, direction) => setProject(moveTrack(project, id, direction))}
+              onRemoveTrack={(id) => setProject(removeTrack(project, id))}
+            />
+          </div>
         </div>
       </div>
-      <MediaAgent
-        kind="clip"
-        title={title}
-        document={project}
-        focus={selectedId === null ? [] : [selectedId]}
-        onChange={setProject}
-      />
-    </div>
+    </AgentWorkspace>
   );
 };

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { restoreAssets } from './assets';
 import { applyEdits, type EditOperation, editOperationSchema } from './edits';
 import type { MediaKind } from './media';
+import type { AgentContext, AgentMetadata } from './trace';
 
 const editOutputSchema = z.discriminatedUnion('ok', [
   z.object({ ok: z.literal(true), operations: z.array(editOperationSchema) }),
@@ -49,7 +50,7 @@ export const editSucceeded = ({
   false;
 
 export type MediaAgentMessage = UIMessage<
-  never,
-  never,
+  AgentMetadata,
+  { context: AgentContext },
   InferUITools<ReturnType<typeof createMediaTools>>
 >;

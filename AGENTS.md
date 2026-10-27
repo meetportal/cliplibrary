@@ -172,8 +172,12 @@ editor.
 
 ## Media agent
 
-Every clip and poster page has an "Edit with AI" panel (`src/components/media-agent`) that streams
-a chat with `useChat` from `@ai-sdk/react`. The editor sends its current document with each
+Every clip and poster page wraps its editor in `AgentWorkspace` (`src/components/media-agent`), which
+docks an "AI editor" column beside the editor on tablets and up and opens it as a bottom sheet on
+phones. It streams a chat with `useChat` from `@ai-sdk/react` and renders each turn as a live trace:
+the context the route read, the model's reasoning, its reply, every `editMedia` call with each
+operation named after the control it changes (`src/agent/describe-path.ts`) and its before and after
+values, the validation result or rejection, and the model, steps, tokens and time. The editor sends its current document with each
 message to `POST /api/agent` (`src/app/api/agent/route.ts`), which runs `streamText` on Gemini 3.7
 Flash through OpenRouter, with OpenRouter's `models` fallback to Gemini 3.5 Flash
 (`src/agent/model.ts`). The route needs `OPENROUTER_API_KEY` (see `.env.example`).
@@ -188,7 +192,10 @@ Flash through OpenRouter, with OpenRouter's `models` fallback to Gemini 3.5 Flas
   model and swaps them back in the returned operations.
 - `src/agent/instructions.ts` builds the system prompt: the document, its JSON schema and, for
   clips, each composition's control layout as a field guide.
-- `e2e/media-agent.spec.ts` replays a recorded stream, so CI never calls Gemini.
+- The route streams a `data-context` part (`src/agent/trace.ts`, `buildAgentContext`) before the
+  model output and attaches `AgentMetadata` to the message. The client strips `data-context` parts
+  before sending history back.
+- `e2e/media-agent.spec.ts` replays recorded streams, so CI never calls the model.
 
 ## Poster packs and the image editor
 

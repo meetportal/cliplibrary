@@ -1,8 +1,8 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 import { APICallError, type LanguageModel } from 'ai';
 
-const PRIMARY_MODEL = 'google/gemini-3.7-flash';
-const FALLBACK_MODEL = 'google/gemini-3.5-flash';
+export const PRIMARY_MODEL = 'google/gemini-3.7-flash';
+export const FALLBACK_MODEL = 'google/gemini-3.5-flash';
 
 export const agentModel = (): LanguageModel =>
   createOpenRouter()(PRIMARY_MODEL, { models: [PRIMARY_MODEL, FALLBACK_MODEL] });

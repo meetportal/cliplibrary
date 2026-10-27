@@ -1,21 +1,68 @@
 import { expect, type Page, test } from '@playwright/test';
 
-const streamEdit = (summary: string, reply: string, operations: unknown[]): string =>
+type Chunk = Record<string, unknown>;
+
+const context = (kind: 'clip' | 'poster', title: string): Chunk => ({
+  type: 'data-context',
+  data: {
+    model: 'google/gemini-3.7-flash',
+    fallbackModel: 'google/gemini-3.5-flash',
+    kind,
+    title,
+    canvas: '1080×1350',
+    timing: kind === 'clip' ? '3.0s at 30fps' : null,
+    layers: 1,
+    elements: 1,
+    controls: kind === 'clip' ? 62 : 0,
+    selection: [],
+    documentBytes: 2048,
+    assets: 0,
+    history: 1,
+    instructions: `You are the editing agent for "${title}".`,
+  },
+});
+
+const editCall = (id: string, summary: string, operations: unknown[], output: unknown): Chunk[] => [
+  { type: 'start-step' },
+  { type: 'tool-input-start', toolCallId: id, toolName: 'editMedia' },
+  {
+    type: 'tool-input-available',
+    toolCallId: id,
+    toolName: 'editMedia',
+    input: { summary, operations },
+  },
+  { type: 'tool-output-available', toolCallId: id, output },
+  { type: 'finish-step' },
+];
+
+const reply = (text: string): Chunk[] => [
+  { type: 'reasoning-start', id: 'think' },
+  {
+    type: 'reasoning-delta',
+    id: 'think',
+    delta: '**Finding the control**\n\nThe request maps to one field.',
+  },
+  { type: 'reasoning-end', id: 'think' },
+  { type: 'text-start', id: 'reply' },
+  ...text.split(' ').map((word) => ({ type: 'text-delta', id: 'reply', delta: `${word} ` })),
+  { type: 'text-end', id: 'reply' },
+];
+
+const sse = (chunks: Chunk[]): string =>
   [
-    { type: 'start', messageId: 'agent-message' },
-    { type: 'start-step' },
-    { type: 'text-start', id: 'reply' },
-    ...reply.split(' ').map((word) => ({ type: 'text-delta', id: 'reply', delta: `${word} ` })),
-    { type: 'text-end', id: 'reply' },
+    { type: 'start', messageId: 'agent', messageMetadata: { startedAt: 1000 } },
+    ...chunks,
     {
-      type: 'tool-input-available',
-      toolCallId: 'edit-1',
-      toolName: 'editMedia',
-      input: { summary, operations },
+      type: 'finish',
+      messageMetadata: {
+        finishedAt: 3400,
+        model: 'google/gemini-3.7-flash',
+        steps: 1,
+        inputTokens: 5108,
+        outputTokens: 531,
+        reasoningTokens: 418,
+      },
     },
-    { type: 'tool-output-available', toolCallId: 'edit-1', output: { ok: true, operations } },
-    { type: 'finish-step' },
-    { type: 'finish' },
   ]
     .map((chunk) => `data: ${JSON.stringify(chunk)}\n\n`)
     .concat('data: [DONE]\n\n')
@@ -42,39 +89,75 @@ const ask = async (page: Page, prompt: string): Promise<void> => {
   await panel.getByRole('button', { name: 'Send', exact: true }).click();
 };
 
-test('the agent streams an edit into a clip and it can be undone', async ({ page }) => {
+test('the agent traces how it edits a clip and the edit can be undone', async ({ page }) => {
   const operations = [
     { op: 'replace', path: '/tracks/0/elements/0/props/text', value: 'HELLO FROM THE AGENT' },
   ];
   const seen = await mockAgent(
     page,
-    streamEdit('Rewrite the line', 'Changing the line text.', operations),
+    sse([
+      context('clip', 'Word Build'),
+      ...reply('Changing the line text.'),
+      ...editCall('edit-1', 'Rewrite the line', operations, { ok: true, operations }),
+    ]),
   );
   await page.goto('/clips/word-build');
   await ask(page, 'Change the text');
 
   const panel = page.getByRole('region', { name: 'AI editor' });
+  await expect(panel.getByText('Read the video')).toBeVisible();
   await expect(panel.getByText('Changing the line text.')).toBeVisible();
-  await expect(panel.getByTestId('agent-edit')).toHaveAttribute('data-state', 'output-available');
+  const operation = panel.getByTestId('agent-operation');
+  await expect(operation).toContainText('Word Build › Text › Line');
+  await expect(operation).toContainText('HELLO FROM THE AGENT');
+  await expect(panel.getByText('Passed schema validation, applied as one undo step')).toBeVisible();
+  await expect(panel.getByTestId('agent-summary')).toContainText('5,108 tokens in');
+  await expect(panel.getByTestId('agent-status')).toContainText('Done');
   expect(seen.media[0]).toMatchObject({ kind: 'clip', title: 'Word Build' });
 
-  await panel.getByRole('button', { name: 'Close AI editor' }).click();
+  const editorBox = await page
+    .locator('aside')
+    .filter({ has: page.locator('textarea') })
+    .boundingBox();
+  const panelBox = await panel.boundingBox();
+  expect((editorBox?.x ?? 0) + (editorBox?.width ?? 0)).toBeLessThanOrEqual(panelBox?.x ?? 0);
+
   const line = page.locator('aside textarea').first();
   await expect(line).toHaveValue('HELLO FROM THE AGENT');
   await page.getByRole('button', { name: 'Undo' }).click();
   await expect(line).not.toHaveValue('HELLO FROM THE AGENT');
 });
 
-test('the agent edits a poster and shows on a phone as a bottom sheet', async ({ page }) => {
+test('a rejected poster edit is shown, retried and applied on a phone', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  const operations = [{ op: 'replace', path: '/title', value: 'Agent Poster' }];
-  await mockAgent(page, streamEdit('Rename the poster', 'Renaming the poster.', operations));
+  const rejected = [{ op: 'replace', path: '/elements/0/fontFamily', value: 'Comic Sans MS' }];
+  const fixed = [{ op: 'replace', path: '/title', value: 'Agent Poster' }];
+  await mockAgent(
+    page,
+    sse([
+      context('poster', 'Amber Client Reviews 1'),
+      ...reply('Updating the poster.'),
+      ...editCall('edit-1', 'Use Comic Sans', rejected, {
+        ok: false,
+        error: '/elements/0/fontFamily: "Comic Sans MS" is not a bundled font',
+      }),
+      ...editCall('edit-2', 'Rename the poster', fixed, { ok: true, operations: fixed }),
+    ]),
+  );
   await page.goto('/posters/amber-client-reviews-01');
   await expect(page.getByTestId('design-canvas').locator('canvas').first()).toBeVisible();
   await ask(page, 'Rename it');
 
   const panel = page.getByRole('region', { name: 'AI editor' });
-  await expect(panel.getByText('Renaming the poster.')).toBeVisible();
+  await expect(panel.getByText('Validation rejected this edit.', { exact: false })).toBeVisible();
+  await expect(panel.getByText('is not a bundled font', { exact: false }).first()).toBeVisible();
+  await expect(panel.getByText('· attempt 2')).toBeVisible();
+  await expect(panel.getByTestId('agent-operation').first()).toContainText(
+    'CLIENT › Text › Font family',
+  );
+  await expect(panel.getByTestId('agent-operation').first()).toContainText('“Figtree”');
+  await expect(panel.getByText('Passed schema validation, applied as one undo step')).toBeVisible();
+
   const box = await panel.boundingBox();
   expect(box?.width).toBe(390);
   expect((box?.y ?? 0) > 844 / 3).toBe(true);
