@@ -54,7 +54,7 @@ const boostSpec = {
   },
 } as const satisfies ThemeSpec;
 
-export const boostSteps = themed(W, H, boostSpec, (t) => {
+const boostSteps = themed(W, H, boostSpec, (t) => {
   const steps = t.list('steps');
   const grid = t.shade('primary', 'rgba(94,234,212,0.07)');
   return [

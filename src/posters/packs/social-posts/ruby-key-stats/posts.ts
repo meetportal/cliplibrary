@@ -45,7 +45,7 @@ export const { width: W, height: H } = POST_SIZE;
 export const GLOW =
   'Page gradient, full strength at the bottom; its darkest shade is the top of the page';
 
-export const clear = (hex: string) => {
+const clear = (hex: string) => {
   const channel = (start: number) => Number.parseInt(hex.slice(start, start + 2), 16);
   return `rgba(${channel(1)},${channel(3)},${channel(5)},0)`;
 };

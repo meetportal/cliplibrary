@@ -12,10 +12,10 @@ export const LILAC = {
   white: '#ffffff',
 };
 
-export const SERIF = 'Cormorant Garamond';
-export const SANS = 'DM Sans';
-export const MONO_FONT = 'Space Mono';
-export const HAND = 'Caveat';
+const SERIF = 'Cormorant Garamond';
+const SANS = 'DM Sans';
+const MONO_FONT = 'Space Mono';
+const HAND = 'Caveat';
 
 export const SERIF_FONT = { label: 'Heading font', value: SERIF } as const;
 export const SANS_FONT = { label: 'Body font', value: SANS } as const;
