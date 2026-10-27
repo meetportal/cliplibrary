@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 import { auditPosterControls, templateDesign } from '@/posters';
-import { rect, text, themed } from '@/posters/kit';
+import { paint, rect, text, themed } from '@/posters/kit';
 
 const poster = themed(
   400,
@@ -94,5 +94,16 @@ describe('themed templates', () => {
         'text "Hi" has no font control',
       ]),
     );
+  });
+});
+
+describe('paint', () => {
+  it('swaps exact colours inside kit blocks', () => {
+    const [shape, label] = paint(
+      [rect(0, 0, 10, 10, '#111111'), text('Hi', 0, 0, 10, { fill: '#FFFFFF' })],
+      { '#111111': '#222222', '#ffffff': '#eeeeee' },
+    );
+    expect(shape).toMatchObject({ fill: '#222222', stroke: '#222222' });
+    expect(label).toMatchObject({ fill: '#eeeeee' });
   });
 });

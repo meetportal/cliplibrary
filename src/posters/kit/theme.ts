@@ -293,3 +293,54 @@ export const themed = <S extends ThemeSpec>(
     return { elements, controls: bindControls(spec, elements, marked, markers) };
   },
 });
+
+const swapColor = (value: string, colors: Readonly<Record<string, string>>): string =>
+  colors[value.toLowerCase()] ?? colors[value] ?? value;
+
+const swapFill = (fill: Fill, colors: Readonly<Record<string, string>>): Fill =>
+  typeof fill === 'string'
+    ? swapColor(fill, colors)
+    : {
+        ...fill,
+        stops: fill.stops.map((stop) => ({ ...stop, color: swapColor(stop.color, colors) })),
+      };
+
+export const paint = (
+  nodes: readonly Nodes[],
+  colors: Readonly<Record<string, string>>,
+): DesignElement[] =>
+  flatten(nodes).map((element): DesignElement => {
+    const shadow =
+      element.shadow === undefined
+        ? {}
+        : { shadow: { ...element.shadow, color: swapColor(element.shadow.color, colors) } };
+    switch (element.type) {
+      case 'icon':
+        return { ...element, ...shadow, color: swapColor(element.color, colors) };
+      case 'line':
+      case 'image':
+        return { ...element, ...shadow, stroke: swapColor(element.stroke, colors) };
+      case 'text':
+        return {
+          ...element,
+          ...shadow,
+          fill: swapFill(element.fill, colors),
+          stroke: swapColor(element.stroke, colors),
+          ...(element.background === undefined
+            ? {}
+            : {
+                background: {
+                  ...element.background,
+                  fill: swapColor(element.background.fill, colors),
+                },
+              }),
+        };
+      default:
+        return {
+          ...element,
+          ...shadow,
+          fill: swapFill(element.fill, colors),
+          stroke: swapColor(element.stroke, colors),
+        };
+    }
+  });
