@@ -32,8 +32,6 @@ const runKey = (shape: PatternShape): string =>
 const isOpaque = (shape: PatternShape): boolean =>
   shape.opacity === 1 && typeof shape.fill === 'string' && (parse(shape.fill)?.alpha ?? 1) === 1;
 
-const styleKey = (shape: PatternShape): string => `${shape.fill}\u0000${shape.opacity}`;
-
 const round = (value: number): number => Math.round(value * 100) / 100;
 
 const pointsPath = (points: readonly number[], x: number, y: number): string => {
@@ -131,7 +129,10 @@ const toPattern = (shapes: readonly PatternShape[]): PathElement => {
   });
 };
 
-const splitByStyle = (run: readonly PatternShape[]): PatternShape[][] => {
+const splitByStyle = (
+  run: readonly PatternShape[],
+  styleKey: (shape: PatternShape) => string,
+): PatternShape[][] => {
   const buckets = new Map<string, PatternShape[]>();
   for (const shape of run) {
     const key = styleKey(shape);
@@ -162,7 +163,12 @@ export interface MergedPatterns {
   aliases: ReadonlyMap<string, string>;
 }
 
-export const mergePatterns = (elements: readonly DesignElement[]): MergedPatterns => {
+export const mergePatterns = (
+  elements: readonly DesignElement[],
+  bindingOf: (id: string) => string = () => '',
+): MergedPatterns => {
+  const styleKey = (shape: PatternShape): string =>
+    `${shape.fill}\u0000${shape.opacity}\u0000${bindingOf(shape.id)}`;
   const merged: DesignElement[] = [];
   const aliases = new Map<string, string>();
   let run: PatternShape[] = [];
@@ -170,7 +176,7 @@ export const mergePatterns = (elements: readonly DesignElement[]): MergedPattern
     if (run.length < MIN_PATTERN_SIZE) {
       merged.push(...run);
     } else {
-      for (const group of splitByStyle(run)) {
+      for (const group of splitByStyle(run, styleKey)) {
         if (group.length > 1) {
           const pattern = toPattern(group);
           for (const shape of group) {
