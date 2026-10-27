@@ -5,273 +5,360 @@ import {
   circle,
   icon,
   line,
-  photo,
-  rating,
   rect,
-  template,
+  type ThemeSpec,
   text,
+  themed,
 } from '../../../kit';
 import type { PosterPhotoName } from '../../../photos';
 import {
-  BODY,
+  BODY_FONT,
   background,
   body,
   EMBER,
-  HEAD,
+  HEADING_FONT,
   heading,
   ratingDots,
   SH,
   SW,
   strong,
-  tag,
 } from './deck-kit';
 
 const E = EMBER;
 
-export const metricsSlide = template(SW, SH, () => [
-  background(E.accent),
-  heading('CTR', 90, 60, 120, E.ink, 500),
-  body('Paid social ads', 90, 200, 500, 30, E.ink),
-  rect(640, 260, 1280, 820, E.paper, { name: 'Step' }),
-  heading('ROI', 700, 300, 120, E.ink, 500),
-  body('Email marketing', 700, 440, 500, 30, E.ink),
-  rect(1280, 520, 640, 560, E.ink, { name: 'Step' }),
-  heading('REV', 1340, 560, 120, E.paper, 500),
-  body('Content marketing', 1340, 700, 500, 30, E.paper),
-  heading('30x', 90, 860, 170, E.ink, 500),
-  heading('75%', 700, 860, 170, E.ink, 500),
-  heading('500+', 1340, 860, 170, E.paper, 500),
-]);
+const metricsSpec = {
+  colors: {
+    background: { value: E.accent, hint: 'Page' },
+    primary: {
+      value: E.ink,
+      hint: 'Tallest step, and every metric, channel and value on the orange page and white step',
+    },
+    surface: { value: E.paper, hint: 'Middle step and the text on the tallest step' },
+  },
+  fonts: { heading: HEADING_FONT, body: BODY_FONT },
+  copy: {
+    metrics: { label: 'Metric', value: ['CTR', 'ROI', 'REV'] },
+    channels: {
+      label: 'Channel',
+      value: ['Paid social ads', 'Email marketing', 'Content marketing'],
+    },
+    values: { label: 'Value', value: ['30x', '75%', '500+'] },
+  },
+} as const satisfies ThemeSpec;
 
-const team: readonly { photo: PosterPhotoName; name: string; role: string; bio: string }[] = [
-  {
-    photo: 'woman-portrait-1',
-    name: 'Samira Cole',
-    role: 'Lead Strategist',
-    bio: 'Shapes go-to-market plans and positioning for every client.',
-  },
-  {
-    photo: 'man-portrait-1',
-    name: 'Jonas Reed',
-    role: 'Creative Director',
-    bio: 'Builds brand worlds that stay sharp across every channel.',
-  },
-  {
-    photo: 'woman-portrait-5',
-    name: 'Elise Moreau',
-    role: 'Systems Lead',
-    bio: 'Automates reporting so teams can focus on the next idea.',
-  },
+const STEPS = [
+  { x: 90, y: 60 },
+  { x: 700, y: 300 },
+  { x: 1340, y: 560 },
+] as const;
+
+export const metricsSlide = themed(SW, SH, metricsSpec, (t) => {
+  const head = heading(t.font('heading'));
+  const copy = body(t.font('body'));
+  const [ctr = '', roi = '', rev = ''] = t.list('metrics');
+  const [social = '', email = '', content = ''] = t.list('channels');
+  const ink = t.color('primary');
+  const paper = t.color('surface');
+  return [
+    background(t.color('background')),
+    head(ctr, STEPS[0].x, STEPS[0].y, 120, ink, 500),
+    copy(social, 90, 200, 500, 30, ink),
+    rect(640, 260, 1280, 820, paper, { name: 'Step' }),
+    head(roi, STEPS[1].x, STEPS[1].y, 120, ink, 500),
+    copy(email, 700, 440, 500, 30, ink),
+    rect(1280, 520, 640, 560, ink, { name: 'Step' }),
+    head(rev, STEPS[2].x, STEPS[2].y, 120, paper, 500),
+    copy(content, 1340, 700, 500, 30, paper),
+    t
+      .list('values')
+      .map((value, index) =>
+        head(value, STEPS[index]?.x ?? 0, 860, 170, index === 2 ? paper : ink, 500),
+      ),
+  ];
+});
+
+const TEAM_PHOTOS: readonly PosterPhotoName[] = [
+  'woman-portrait-1',
+  'man-portrait-1',
+  'woman-portrait-5',
 ];
 
-export const teamSlide = template(SW, SH, () => [
-  background(E.ink),
-  heading('Meet Our Team', 0, 70, 130, E.paper, SW, 'center'),
-  team.map((member, index) => {
-    const cx = 420 + index * 540;
-    return [
-      avatar(member.photo, cx, 460, 170, E.accent),
-      heading(member.name, cx - 250, 680, 60, E.paper, 500, 'center'),
-      text(member.role.toUpperCase(), cx - 250, 762, 500, {
-        fontFamily: BODY,
-        fontSize: 24,
-        fontWeight: 800,
-        fill: E.accent,
-        align: 'center',
-        letterSpacing: 2,
-      }),
-      body(member.bio, cx - 210, 810, 420, 24, '#c9cdd6', 'center'),
-    ];
-  }),
-]);
+const teamSpec = {
+  colors: {
+    background: { value: E.ink, hint: 'Page' },
+    text: { value: E.paper, hint: 'Title and names; its dimmer shade colors the bios' },
+    accent: { value: E.accent, hint: 'Photo rings and job titles' },
+  },
+  fonts: { heading: HEADING_FONT, body: BODY_FONT },
+  copy: {
+    title: { label: 'Title', value: 'Meet Our Team' },
+    names: { label: 'Name', value: ['Samira Cole', 'Jonas Reed', 'Elise Moreau'] },
+    roles: {
+      label: 'Job title',
+      value: ['LEAD STRATEGIST', 'CREATIVE DIRECTOR', 'SYSTEMS LEAD'],
+    },
+    bios: {
+      label: 'Bio',
+      value: [
+        'Shapes go-to-market plans and positioning for every client.',
+        'Builds brand worlds that stay sharp across every channel.',
+        'Automates reporting so teams can focus on the next idea.',
+      ],
+    },
+  },
+} as const satisfies ThemeSpec;
 
-const plans: readonly {
-  name: string;
-  price: string;
-  icon: DesignIconName;
-  fill: string;
-  items: readonly string[];
-}[] = [
-  {
-    name: 'Startup',
-    price: '$0',
-    icon: 'rocket',
-    fill: E.accent,
-    items: ['Dedicated lead', 'Social campaigns', 'Monthly reports', 'Channel tuning'],
+export const teamSlide = themed(SW, SH, teamSpec, (t) => {
+  const head = heading(t.font('heading'));
+  const roles = t.list('roles');
+  const bios = t.list('bios');
+  return [
+    background(t.color('background')),
+    head(t.copy('title'), 0, 70, 130, t.color('text'), SW, 'center'),
+    t.list('names').map((name, index) => {
+      const cx = 420 + index * 540;
+      return [
+        avatar(TEAM_PHOTOS[index] ?? 'woman-portrait-1', cx, 460, 170, t.color('accent')),
+        head(name, cx - 250, 680, 60, t.color('text'), 500, 'center'),
+        text(roles[index] ?? '', cx - 250, 762, 500, {
+          fontFamily: t.font('body'),
+          fontSize: 24,
+          fontWeight: 800,
+          fill: t.color('accent'),
+          align: 'center',
+          letterSpacing: 2,
+        }),
+        body(t.font('body'))(
+          bios[index] ?? '',
+          cx - 210,
+          810,
+          420,
+          24,
+          t.shade('text', E.mist),
+          'center',
+        ),
+      ];
+    }),
+  ];
+});
+
+const PLAN_ICONS: readonly DesignIconName[] = ['rocket', 'trending-up', 'building-2'];
+
+const pricingSpec = {
+  colors: {
+    background: {
+      value: E.ink,
+      hint: 'Page, and the plan icons, names, features, checks and prices on the cards',
+    },
+    surface: { value: E.paper, hint: 'Pricing Options title and the Enterprise card' },
+    accent: {
+      value: E.accent,
+      hint: 'Startup card; its lighter tint colors the Growth card',
+    },
   },
-  {
-    name: 'Growth',
-    price: '$10',
-    icon: 'trending-up',
-    fill: E.soft,
-    items: ['Dedicated team', 'Bi-weekly calls', 'Custom web design', 'CRM integration'],
+  fonts: { heading: HEADING_FONT, body: BODY_FONT },
+  copy: {
+    title: { label: 'Title', value: 'Pricing Options' },
+    plans: { label: 'Plan', value: ['Startup', 'Growth', 'Enterprise'] },
+    features: {
+      label: 'Feature',
+      hint: 'Four features per plan, in plan order',
+      value: [
+        'Dedicated lead',
+        'Social campaigns',
+        'Monthly reports',
+        'Channel tuning',
+        'Dedicated team',
+        'Bi-weekly calls',
+        'Custom web design',
+        'CRM integration',
+        'Full agency access',
+        'Account-based ads',
+        'Live dashboard',
+        'Round-the-clock help',
+      ],
+    },
+    prices: { label: 'Price', value: ['$0 /mo', '$10 /mo', '$25 /mo'] },
   },
-  {
-    name: 'Enterprise',
-    price: '$25',
-    icon: 'building-2',
-    fill: E.paper,
-    items: ['Full agency access', 'Account-based ads', 'Live dashboard', 'Round-the-clock help'],
-  },
+} as const satisfies ThemeSpec;
+
+export const pricingSlide = themed(SW, SH, pricingSpec, (t) => {
+  const head = heading(t.font('heading'));
+  const features = t.list('features');
+  const prices = t.list('prices');
+  const ink = t.color('background');
+  const cards = [t.color('accent'), t.shade('accent', E.soft), t.color('surface')];
+  return [
+    background(ink),
+    head(t.copy('title'), 100, 70, 130, t.color('surface')),
+    t.list('plans').map((plan, index) => {
+      const x = 100 + index * 590;
+      return [
+        rect(x, 290, 540, 720, cards[index] ?? '', { cornerRadius: 32, name: 'Plan card' }),
+        icon(PLAN_ICONS[index] ?? 'rocket', x + 235, 330, 70, ink, { strokeWidth: 2 }),
+        head(plan, x, 420, 72, ink, 540, 'center'),
+        checklist(features.slice(index * 4, index * 4 + 4), x + 70, 540, 420, {
+          color: ink,
+          iconColor: ink,
+          icon: 'check',
+          fontSize: 28,
+          gap: 62,
+          fontFamily: t.font('body'),
+        }),
+        head(prices[index] ?? '', x, 860, 90, ink, 540, 'center'),
+      ];
+    }),
+  ];
+});
+
+const NODES: readonly { icon: DesignIconName; x: number; y: number }[] = [
+  { icon: 'database', x: 1350, y: 190 },
+  { icon: 'globe', x: 1720, y: 360 },
+  { icon: 'git-branch', x: 1720, y: 720 },
+  { icon: 'cloud', x: 1350, y: 890 },
+  { icon: 'layers', x: 980, y: 720 },
+  { icon: 'zap', x: 980, y: 360 },
 ];
 
-export const pricingSlide = template(SW, SH, () => [
-  background(E.ink),
-  heading('Pricing Options', 100, 70, 130, E.paper),
-  plans.map((plan, index) => {
-    const x = 100 + index * 590;
-    return [
-      rect(x, 290, 540, 720, plan.fill, { cornerRadius: 32, name: 'Plan card' }),
-      icon(plan.icon, x + 235, 330, 70, E.ink, { strokeWidth: 2 }),
-      heading(plan.name, x, 420, 72, E.ink, 540, 'center'),
-      checklist(plan.items, x + 70, 540, 420, {
-        color: E.ink,
-        iconColor: E.ink,
-        icon: 'check',
-        fontSize: 28,
-        gap: 62,
-        fontFamily: BODY,
-      }),
-      heading(`${plan.price} /mo`, x, 860, 90, E.ink, 540, 'center'),
-    ];
-  }),
-]);
-
-const nodes: readonly { label: string; icon: DesignIconName; x: number; y: number }[] = [
-  { label: 'Kitebase', icon: 'database', x: 1350, y: 190 },
-  { label: 'Orbitly', icon: 'globe', x: 1720, y: 360 },
-  { label: 'Pinewire', icon: 'git-branch', x: 1720, y: 720 },
-  { label: 'Halcyon', icon: 'cloud', x: 1350, y: 890 },
-  { label: 'Quarry', icon: 'layers', x: 980, y: 720 },
-  { label: 'Brightloop', icon: 'zap', x: 980, y: 360 },
-];
-
-const link = (x1: number, y1: number, x2: number, y2: number) =>
-  line(x1, y1, Math.hypot(x2 - x1, y2 - y1), E.ink, 4, {
+const link = (x1: number, y1: number, x2: number, y2: number, stroke: string) =>
+  line(x1, y1, Math.hypot(x2 - x1, y2 - y1), stroke, 4, {
     rotation: (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI,
     name: 'Link',
   });
 
-export const networkSlide = template(SW, SH, () => [
-  background(E.paper),
-  heading('Integrated\nNetwork', 100, 100, 130, E.ink),
-  body(
-    'Your stack, connected. We plug into the tools your team already uses and keep every channel in sync.',
-    100,
-    400,
-    640,
-    32,
-    E.grey,
-  ),
-  strong('Ember Sync', 100, 820, 600, 48, E.accent),
-  body('Live in 2 weeks', 100, 890, 600, 30, E.ink),
-  nodes.map((node, index) => {
-    const next = nodes[(index + 1) % nodes.length] ?? node;
-    return [link(node.x, node.y, 1350, 540), link(node.x, node.y, next.x, next.y)];
-  }),
-  circle(1350, 540, 130, E.ink),
-  icon('target', 1300, 440, 100, E.accent, { strokeWidth: 2 }),
-  text('ORBITAL HUB', 1220, 560, 260, {
-    fontFamily: BODY,
-    fontSize: 24,
-    fontWeight: 800,
-    fill: E.paper,
-    align: 'center',
-  }),
-  nodes.map((node) => [
-    circle(node.x, node.y, 74, E.ink),
-    icon(node.icon, node.x - 32, node.y - 46, 64, E.accent, { strokeWidth: 2 }),
-    text(node.label.toUpperCase(), node.x - 70, node.y + 22, 140, {
-      fontFamily: BODY,
-      fontSize: 17,
+const networkSpec = {
+  colors: {
+    background: { value: E.paper, hint: 'Page and the hub and node labels' },
+    primary: {
+      value: E.ink,
+      hint: 'Title, the Live line, the hub, nodes and links; its lighter shade colors the paragraph',
+    },
+    accent: { value: E.accent, hint: 'Ember Sync, and the hub and node icons' },
+  },
+  fonts: { heading: HEADING_FONT, body: BODY_FONT },
+  copy: {
+    title: { label: 'Title', value: 'Integrated\nNetwork' },
+    paragraph: {
+      label: 'Paragraph',
+      value:
+        'Your stack, connected. We plug into the tools your team already uses and keep every channel in sync.',
+    },
+    product: { label: 'Product', value: 'Ember Sync' },
+    timing: { label: 'Timing', value: 'Live in 2 weeks' },
+    hub: { label: 'Hub label', value: 'ORBITAL HUB' },
+    nodes: {
+      label: 'Node',
+      value: ['KITEBASE', 'ORBITLY', 'PINEWIRE', 'HALCYON', 'QUARRY', 'BRIGHTLOOP'],
+    },
+  },
+} as const satisfies ThemeSpec;
+
+export const networkSlide = themed(SW, SH, networkSpec, (t) => {
+  const copy = body(t.font('body'));
+  const ink = t.color('primary');
+  const labels = t.list('nodes');
+  return [
+    background(t.color('background')),
+    heading(t.font('heading'))(t.copy('title'), 100, 100, 130, ink),
+    copy(t.copy('paragraph'), 100, 400, 640, 32, t.shade('primary', E.grey)),
+    strong(t.font('body'))(t.copy('product'), 100, 820, 600, 48, t.color('accent')),
+    copy(t.copy('timing'), 100, 890, 600, 30, ink),
+    NODES.map((node, index) => {
+      const next = NODES[(index + 1) % NODES.length] ?? node;
+      return [link(node.x, node.y, 1350, 540, ink), link(node.x, node.y, next.x, next.y, ink)];
+    }),
+    circle(1350, 540, 130, ink),
+    icon('target', 1300, 440, 100, t.color('accent'), { strokeWidth: 2 }),
+    text(t.copy('hub'), 1220, 560, 260, {
+      fontFamily: t.font('body'),
+      fontSize: 24,
       fontWeight: 800,
-      fill: E.paper,
+      fill: t.color('background'),
       align: 'center',
     }),
-  ]),
-]);
+    NODES.map((node, index) => [
+      circle(node.x, node.y, 74, ink),
+      icon(node.icon, node.x - 32, node.y - 46, 64, t.color('accent'), { strokeWidth: 2 }),
+      text(labels[index] ?? '', node.x - 70, node.y + 22, 140, {
+        fontFamily: t.font('body'),
+        fontSize: 17,
+        fontWeight: 800,
+        fill: t.color('background'),
+        align: 'center',
+      }),
+    ]),
+  ];
+});
 
-const criteria = ['Strategy', 'Onboarding', 'Performance', 'Integration', 'Pricing'] as const;
-const scores: readonly (readonly number[])[] = [
+const SCORES: readonly (readonly number[])[] = [
   [3, 3, 3, 3, 3],
   [2, 2, 2, 1, 0],
   [1, 2, 1, 2, 1],
 ];
 
-export const matrixSlide = template(SW, SH, () => [
-  background(E.ink),
-  heading('Competitive Matrix', 0, 70, 130, E.paper, SW, 'center'),
-  ['Our firm', 'Competitor A', 'Competitor B'].map((label, index) => [
-    index === 0 ? rect(760, 290, 340, 60, E.accent, { cornerRadius: 12, name: 'Header' }) : [],
-    text(label.toUpperCase(), 760 + index * 370, 304, 340, {
-      fontFamily: BODY,
-      fontSize: 24,
-      fontWeight: 800,
-      fill: index === 0 ? E.ink : E.paper,
-      align: 'center',
-      letterSpacing: 1,
-    }),
-  ]),
-  criteria.map((label, row) => {
-    const y = 400 + row * 120;
-    return [
-      text(label.toUpperCase(), 260, y + 24, 420, {
-        fontFamily: BODY,
-        fontSize: 28,
+const matrixSpec = {
+  colors: {
+    background: { value: E.ink, hint: 'Page and the Our Firm header text' },
+    text: {
+      value: E.paper,
+      hint: 'Title, column and row labels, competitor dots, and the row rules (faint shade)',
+    },
+    accent: { value: E.accent, hint: 'Our Firm header and its score dots' },
+  },
+  fonts: { heading: HEADING_FONT, body: BODY_FONT },
+  copy: {
+    title: { label: 'Title', value: 'Competitive Matrix' },
+    columns: { label: 'Column', value: ['OUR FIRM', 'COMPETITOR A', 'COMPETITOR B'] },
+    criteria: {
+      label: 'Criterion',
+      value: ['STRATEGY', 'ONBOARDING', 'PERFORMANCE', 'INTEGRATION', 'PRICING'],
+    },
+  },
+} as const satisfies ThemeSpec;
+
+export const matrixSlide = themed(SW, SH, matrixSpec, (t) => {
+  const paper = t.color('text');
+
+  return [
+    background(t.color('background')),
+    heading(t.font('heading'))(t.copy('title'), 0, 70, 130, paper, SW, 'center'),
+    t.list('columns').map((column, index) => [
+      index === 0
+        ? rect(760, 290, 340, 60, t.color('accent'), { cornerRadius: 12, name: 'Header' })
+        : [],
+      text(column, 760 + index * 370, 304, 340, {
+        fontFamily: t.font('body'),
+        fontSize: 24,
         fontWeight: 800,
-        fill: E.paper,
+        fill: index === 0 ? t.color('background') : paper,
+        align: 'center',
         letterSpacing: 1,
       }),
-      rect(260, y + 96, 1440, 3, 'rgba(255,255,255,0.18)', { name: 'Row rule' }),
-      scores.map((values, column) =>
-        ratingDots(
-          890 + column * 370,
-          y + 40,
-          values[row] ?? 0,
-          column === 0 ? E.accent : E.paper,
-          E.paper,
+    ]),
+    t.list('criteria').map((criterion, row) => {
+      const y = 400 + row * 120;
+      return [
+        text(criterion, 260, y + 24, 420, {
+          fontFamily: t.font('body'),
+          fontSize: 28,
+          fontWeight: 800,
+          fill: paper,
+          letterSpacing: 1,
+        }),
+        rect(260, y + 96, 1440, 3, t.shade('text', 'rgba(255,255,255,0.18)'), {
+          name: 'Row rule',
+        }),
+        SCORES.map((values, column) =>
+          ratingDots(
+            890 + column * 370,
+            y + 40,
+            values[row] ?? 0,
+            column === 0 ? t.color('accent') : paper,
+            paper,
+            t.shade('text', 'rgba(255,255,255,0)'),
+          ),
         ),
-      ),
-    ];
-  }),
-]);
-
-const reviews = [
-  { quote: '"Their team rebuilt our funnel in a month."', brand: 'Kitebase' },
-  { quote: '"The playbook transformed our outbound."', brand: 'Orbitly' },
-  { quote: '"Clear reporting, real growth, zero fluff."', brand: 'Pinewire' },
-  { quote: '"Pipeline doubled within two quarters."', brand: 'Halcyon' },
-] as const;
-
-export const clientsSlide = template(SW, SH, () => [
-  background(E.accent),
-  heading('Hear From\nOur Clients!', 100, 80, 150, E.ink, 1000),
-  reviews.map((review, index) => {
-    const x = 100 + (index % 2) * 520;
-    const y = 470 + Math.floor(index / 2) * 260;
-    const dark = index === 0 || index === 3;
-    const color = dark ? E.paper : E.ink;
-    return [
-      rect(x, y, 490, 230, dark ? E.ink : E.paper, { cornerRadius: 26, name: 'Review' }),
-      rating(x + 30, y + 30, 26, 5, dark ? E.accent : E.ink),
-      body(review.quote, x + 30, y + 76, 430, 26, color),
-      tag(review.brand, x + 30, y + 160, dark ? E.accent : E.ink, dark ? E.ink : E.paper),
-    ];
-  }),
-  photo('phone-hand-2', 1180, 0, 740, SH),
-  rect(1330, 330, 360, 360, E.paper, { cornerRadius: 40, name: 'Rating card' }),
-  text('Rated', 1330, 370, 360, {
-    fontFamily: BODY,
-    fontSize: 34,
-    fontWeight: 700,
-    fill: E.ink,
-    align: 'center',
-  }),
-  text('4.7', 1330, 430, 360, {
-    fontFamily: HEAD,
-    fontSize: 170,
-    fontWeight: 400,
-    fill: E.ink,
-    align: 'center',
-  }),
-]);
+      ];
+    }),
+  ];
+});
