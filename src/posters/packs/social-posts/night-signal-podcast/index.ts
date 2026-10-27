@@ -1,14 +1,8 @@
 import { definePack } from '../../../pack';
-import { audiencePulse, inNumbers, lateNight, onAirNightly, thankYou } from './posts';
-import {
-  countdown,
-  liveQa,
-  meetTheHost,
-  tuneIn,
-  tuneInStory,
-  weeklyAfter,
-  weeklyBefore,
-} from './posts-more';
+import { audiencePulse, lateNight, onAirNightly, thankYou } from './posts';
+import { liveQa, weeklyAfter, weeklyBefore } from './posts-live';
+import { countdown, meetTheHost, tuneIn, tuneInStory } from './posts-more';
+import { inNumbers } from './posts-stats';
 
 const POSTS = [
   onAirNightly,

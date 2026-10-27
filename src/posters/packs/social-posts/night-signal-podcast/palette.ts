@@ -25,11 +25,23 @@ export const MONO = {
 
 export const { width: W, height: H } = POST_SIZE;
 
-export const brandMark = (color: string, y: number, centerX = W / 2) =>
+export const BRAND = { label: 'Brand', value: 'Lumen Radio' } as const;
+export const BLOCK = { label: 'Heading font', value: 'Archivo Black' } as const;
+export const DISPLAY = { label: 'Heading font', value: 'Anton' } as const;
+export const BODY = { label: 'Body font', value: 'Barlow' } as const;
+export const SCRIPT = { label: 'Script font', value: 'Dancing Script' } as const;
+
+export const brandMark = (
+  label: string,
+  fontFamily: string,
+  color: string,
+  y: number,
+  centerX = W / 2,
+) =>
   group(
     icon('mic', centerX - 150, y, 44, color, { strokeWidth: 2.4 }),
-    text('Lumen Radio', centerX - 98, y + 1, 260, {
-      fontFamily: 'Barlow',
+    text(label, centerX - 98, y + 1, 260, {
+      fontFamily,
       fontSize: 38,
       fontWeight: 700,
       fill: color,

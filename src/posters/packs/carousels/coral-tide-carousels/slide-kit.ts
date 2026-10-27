@@ -7,6 +7,7 @@ export const trail = (
   width: number,
   height: number,
   stroke: string,
+  fill: string,
   strokeWidth: number,
   dashed = false,
 ) =>
@@ -16,7 +17,7 @@ export const trail = (
     y,
     width,
     height,
-    'rgba(0,0,0,0)',
+    fill,
     { width, height },
     {
       stroke,

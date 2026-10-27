@@ -1,12 +1,23 @@
-import { poly, rect, type Template, template } from '../../../kit';
-import { bodyText, brandMark, H, LEAF, leafBackground, titleLine, W } from './palette';
+import { poly, rect, type Template, type ThemeSpec, themed } from '../../../kit';
+import {
+  BODY,
+  BRAND,
+  bodyText,
+  brandMark,
+  H,
+  HEAD,
+  LEAF,
+  leafBackground,
+  titleLine,
+  W,
+} from './palette';
 
 const TOP = 170;
 const BOTTOM = 1180;
 const THICK = 12;
 const POST_X = 64;
 
-const doubleChevron = (x: number, y: number) =>
+const doubleChevron = (x: number, y: number, fill: string) =>
   [0, 64].map((shift) =>
     poly(
       [
@@ -17,33 +28,76 @@ const doubleChevron = (x: number, y: number) =>
         [x + shift, y + 40],
         [x + shift + 40, y],
       ],
-      LEAF.wire,
+      fill,
       { name: 'Chevron' },
     ),
   );
 
-const wireCover = template(W, H, () => [
-  leafBackground(),
-  brandMark(90, 140),
-  titleLine('How to Sharpen\nYour Content', 90, 400, 88, LEAF.white),
-  titleLine('Strategy', 90, 604, 88, LEAF.mint),
-  rect(0, BOTTOM - THICK / 2, W, THICK, LEAF.wire, { name: 'Wire' }),
-  doubleChevron(860, BOTTOM),
+const BACKGROUND = {
+  value: LEAF.top,
+  hint: 'Backdrop gradient; its darker shade is the bottom of the gradient',
+};
+
+const coverSpec = {
+  colors: {
+    background: BACKGROUND,
+    primary: {
+      value: LEAF.mint,
+      hint: 'Strategy headline and the faint swoosh across the backdrop',
+    },
+    text: { value: LEAF.white, hint: 'Brand name and the How to Sharpen headline' },
+    accent: { value: LEAF.wire, hint: 'Wire along the bottom and its double chevron' },
+  },
+  fonts: { heading: HEAD },
+  copy: {
+    brand: BRAND,
+    title: { label: 'Title', value: 'How to Sharpen\nYour Content' },
+    highlight: { label: 'Highlight', value: 'Strategy' },
+  },
+} as const satisfies ThemeSpec;
+
+const wireCover = themed(W, H, coverSpec, (t) => [
+  leafBackground(t),
+  brandMark(t.copy('brand'), t.font('heading'), t.color('text'), 90, 140),
+  titleLine(t.copy('title'), t.font('heading'), 90, 400, 88, t.color('text')),
+  titleLine(t.copy('highlight'), t.font('heading'), 90, 604, 88, t.color('primary')),
+  rect(0, BOTTOM - THICK / 2, W, THICK, t.color('accent'), { name: 'Wire' }),
+  doubleChevron(860, BOTTOM, t.color('accent')),
 ]);
 
+const stepSpec = (lead: string, accent: string, body: string) =>
+  ({
+    colors: {
+      background: BACKGROUND,
+      primary: {
+        value: LEAF.mint,
+        hint: 'Second headline line and the faint swoosh across the backdrop',
+      },
+      text: { value: LEAF.white, hint: 'First headline line and the description' },
+      accent: { value: LEAF.wire, hint: 'Wire running around the slide and its double chevron' },
+    },
+    fonts: { heading: HEAD, body: BODY },
+    copy: {
+      lead: { label: 'Headline', value: lead },
+      highlight: { label: 'Highlight', value: accent },
+      body: { label: 'Description', value: body },
+    },
+  }) as const satisfies ThemeSpec;
+
 const wireStep = (lead: string, accent: string, body: string, entry: 'bottom' | 'top') =>
-  template(W, H, () => {
+  themed(W, H, stepSpec(lead, accent, body), (t) => {
     const enter = entry === 'bottom' ? BOTTOM : TOP;
     const leave = entry === 'bottom' ? TOP : BOTTOM;
+    const wire = t.color('accent');
     return [
-      leafBackground(),
-      rect(0, enter - THICK / 2, POST_X + THICK, THICK, LEAF.wire, { name: 'Wire' }),
-      rect(POST_X, TOP - THICK / 2, THICK, BOTTOM - TOP + THICK, LEAF.wire, { name: 'Wire' }),
-      rect(POST_X, leave - THICK / 2, W - POST_X, THICK, LEAF.wire, { name: 'Wire' }),
-      doubleChevron(860, leave),
-      titleLine(lead, 150, 440, 84, LEAF.white),
-      titleLine(accent, 150, 540, 84, LEAF.mint),
-      bodyText(body, 150, 690, 800),
+      leafBackground(t),
+      rect(0, enter - THICK / 2, POST_X + THICK, THICK, wire, { name: 'Wire' }),
+      rect(POST_X, TOP - THICK / 2, THICK, BOTTOM - TOP + THICK, wire, { name: 'Wire' }),
+      rect(POST_X, leave - THICK / 2, W - POST_X, THICK, wire, { name: 'Wire' }),
+      doubleChevron(860, leave, wire),
+      titleLine(t.copy('lead'), t.font('heading'), 150, 440, 84, t.color('text')),
+      titleLine(t.copy('highlight'), t.font('heading'), 150, 540, 84, t.color('primary')),
+      bodyText(t.copy('body'), t.font('body'), t.color('text'), 150, 690, 800),
     ];
   });
 
