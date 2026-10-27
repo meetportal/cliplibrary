@@ -11,13 +11,13 @@ export const ctaEndCardControls = defineControls<CtaEndCardProps>({
         {
           path: 'highlight',
           label: 'Highlighted words',
-          hint: 'Words from the headline shown in the highlight color',
+          hint: 'Words from the headline shown in the primary color',
         },
         { path: 'subline', label: 'Subline', hint: 'Leave empty to hide' },
         { path: 'url', label: 'Website', hint: 'Leave empty to hide' },
-        { path: 'headlineSize', label: 'Headline size' },
       ],
       more: [
+        { path: 'headlineSize', label: 'Headline size' },
         { path: 'headlineWeight', label: 'Headline weight' },
         { path: 'font', label: 'Headline font' },
         { path: 'sublineSize', label: 'Subline size' },
@@ -30,6 +30,55 @@ export const ctaEndCardControls = defineControls<CtaEndCardProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['markColor', 'markColorEnd', 'look.accent'],
+          label: 'Primary color',
+          hint: 'The logo mark and the highlighted headline words, also the paper margin line',
+        },
+        {
+          ...LOOK.ink,
+          label: 'Text color',
+          hint: 'Brand name, headline and pill buttons. Store badges stay black',
+        },
+        { ...LOOK.muted, label: 'Secondary color', hint: 'Subline and website' },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background, also the label on the filled pill button',
+        },
+      ],
+      more: [
+        { path: 'markColor', label: 'Ring and icon top color' },
+        { path: 'markColorEnd', label: 'Icon bottom color', hint: 'App icon gradient only' },
+        {
+          ...LOOK.accent,
+          label: 'Highlight color',
+          hint: 'Highlighted words, also the paper margin line',
+        },
+        { path: 'markInk', label: 'Icon symbol color', hint: 'App icon only' },
+        { ...LOOK.background, hint: 'Also the label color on the filled pill button' },
+        LOOK.backgroundEdge,
+        LOOK.paperLine,
+      ],
+    },
+    {
+      title: 'Brand',
+      fields: [{ path: 'brandName', label: 'Brand name', hint: 'Leave empty to hide' }],
+      more: [
+        { path: 'showMark', label: 'Show logo mark' },
+        { path: 'mark', label: 'Mark style', hint: 'A ring that draws itself, or an app icon' },
+        { path: 'markSize', label: 'Mark size' },
+        { path: 'brandSize', label: 'Brand name size' },
+        {
+          path: 'markGlyph',
+          label: 'Icon symbol',
+          hint: 'App icon only. Its shape is cut out and filled with the symbol color; empty uses the default symbol',
+        },
+      ],
+    },
+    {
       title: 'Buttons',
       fields: [
         {
@@ -37,12 +86,11 @@ export const ctaEndCardControls = defineControls<CtaEndCardProps>({
           label: 'Button style',
           hint: 'Pills in your text color, or black app store badges',
         },
-        { path: 'primaryLabel', label: 'First button label' },
-        { path: 'secondaryLabel', label: 'Second button label' },
         { path: 'showSecondaryButton', label: 'Show second button' },
-        { path: 'badgeScale', label: 'Button size' },
       ],
       more: [
+        { path: 'primaryLabel', label: 'First button label' },
+        { path: 'secondaryLabel', label: 'Second button label' },
         {
           path: 'primaryCaption',
           label: 'First button caption',
@@ -53,79 +101,26 @@ export const ctaEndCardControls = defineControls<CtaEndCardProps>({
           label: 'Second button caption',
           hint: 'Small line above the label',
         },
-      ],
-    },
-    {
-      title: 'Brand',
-      fields: [
-        { path: 'brandName', label: 'Brand name', hint: 'Leave empty to hide' },
-        { path: 'showMark', label: 'Show logo mark' },
-        { path: 'mark', label: 'Mark style', hint: 'A ring that draws itself, or an app icon' },
-        {
-          link: ['markColor', 'markColorEnd'],
-          label: 'Mark color',
-          hint: 'Ring color, or a solid app icon',
-        },
-      ],
-      more: [
-        { path: 'markSize', label: 'Mark size' },
-        { path: 'brandSize', label: 'Brand name size' },
-        { path: 'markColor', label: 'Ring and icon top color' },
-        { path: 'markColorEnd', label: 'Icon bottom color', hint: 'App icon gradient only' },
-        { path: 'markInk', label: 'Icon symbol color', hint: 'App icon only' },
-        {
-          path: 'markGlyph',
-          label: 'Icon symbol',
-          hint: 'App icon only. Its shape is cut out and filled with the symbol color; empty uses the default symbol',
-        },
-      ],
-    },
-    {
-      title: 'Colors',
-      fields: [
-        {
-          ...LOOK.ink,
-          label: 'Text and button color',
-          hint: 'Brand name, headline and pill buttons. Store badges stay black',
-        },
-        { ...LOOK.accent, label: 'Highlight color' },
-        { ...LOOK.muted, label: 'Subline and website color' },
-      ],
-    },
-    {
-      title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        { ...LOOK.background, hint: 'Also the label color on the filled pill button' },
-      ],
-      more: [
-        LOOK.backgroundEdge,
-        LOOK.spotlight,
-        LOOK.grain,
-        LOOK.liveGrain,
-        LOOK.paper,
-        LOOK.paperLine,
-        LOOK.paperSpacing,
-        { ...LOOK.paperMargin, hint: 'Drawn in the highlight color' },
+        { path: 'badgeScale', label: 'Button size' },
       ],
     },
     {
       title: 'Layout',
       fields: [
-        PLACEMENT.vertical,
-        PLACEMENT.horizontal,
         {
           path: 'textAlign',
           label: 'Text align',
           hint: 'Lines up the brand, headline, subline, buttons and website',
         },
+      ],
+      more: [
+        PLACEMENT.vertical,
+        PLACEMENT.horizontal,
         {
           path: 'gap',
           label: 'Spacing',
           hint: 'Space between the brand, headline, subline, buttons and website',
         },
-      ],
-      more: [
         {
           ...PLACEMENT.width,
           label: 'Content width',
@@ -136,8 +131,21 @@ export const ctaEndCardControls = defineControls<CtaEndCardProps>({
       ],
     },
     {
+      title: 'Background',
+      fields: [LOOK.showBackdrop],
+      more: [
+        LOOK.spotlight,
+        LOOK.grain,
+        LOOK.liveGrain,
+        LOOK.paper,
+        LOOK.paperSpacing,
+        { ...LOOK.paperMargin, hint: 'Drawn in the highlight color' },
+      ],
+    },
+    {
       title: 'Timing',
-      fields: [
+      fields: [MOTION.enter],
+      more: [
         {
           path: 'markAt',
           label: 'Brand appears at',
@@ -153,9 +161,6 @@ export const ctaEndCardControls = defineControls<CtaEndCardProps>({
           label: 'Buttons appear at',
           hint: 'Frame number. The website follows 12 frames later',
         },
-        MOTION.enter,
-      ],
-      more: [
         MOTION.enterFrames,
         MOTION.exit,
         MOTION.exitFrames,

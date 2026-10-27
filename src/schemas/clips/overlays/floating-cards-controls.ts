@@ -24,9 +24,32 @@ export const floatingCardsControls = defineControls<FloatingCardsProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Primary color',
+          hint: 'The backdrop behind the cards, center and corners together. A dark color also switches the 3D lighting to its dark setup',
+        },
+        {
+          path: 'look.paperLine',
+          label: 'Secondary color',
+          hint: 'Paper rule lines, when a paper pattern is on',
+        },
+        {
+          path: 'look.accent',
+          label: 'Accent color',
+          hint: 'Paper margin line, when the paper margin is on',
+        },
+      ],
+      more: [
+        { ...LOOK.background, label: 'Background center' },
+        { ...LOOK.backgroundEdge, label: 'Background corners' },
+      ],
+    },
+    {
       title: 'Pop-in',
       fields: [
-        { path: 'delay', label: 'First card appears at', hint: 'Frame number at playback speed 1' },
         {
           path: 'stagger',
           label: 'Gap between cards',
@@ -35,6 +58,7 @@ export const floatingCardsControls = defineControls<FloatingCardsProps>({
         { path: 'popFrames', label: 'Pop-in length', hint: 'In frames' },
       ],
       more: [
+        { path: 'delay', label: 'First card appears at', hint: 'Frame number at playback speed 1' },
         {
           path: 'popLift',
           label: 'Rise distance',
@@ -60,11 +84,9 @@ export const floatingCardsControls = defineControls<FloatingCardsProps>({
     },
     {
       title: 'Camera',
-      fields: [
-        { ...STAGE.cameraDistance, hint: 'Higher pulls back so the cards look smaller' },
-        { ...STAGE.cameraDrift, hint: 'Slow handheld sway of the camera' },
-      ],
+      fields: [{ ...STAGE.cameraDistance, hint: 'Higher pulls back so the cards look smaller' }],
       more: [
+        { ...STAGE.cameraDrift, hint: 'Slow handheld sway of the camera' },
         {
           ...STAGE.fieldOfView,
           hint: 'Lower zooms in and flattens the depth between cards',
@@ -73,16 +95,14 @@ export const floatingCardsControls = defineControls<FloatingCardsProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { ...LOOK.accent, label: 'Margin line color' },
       ],
     },
     {

@@ -22,6 +22,31 @@ export const chalkBadgeGridControls = defineControls<ChalkBadgeGridProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          ...LOOK.ink,
+          label: 'Primary color',
+          hint: 'The chalk dots where the grid lines cross, grid pattern only. Each badge keeps its own line, fill and word colors, set in Badges',
+        },
+        {
+          ...LOOK.paperLine,
+          label: 'Secondary color',
+          hint: 'The board pattern lines',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'The chalkboard, center and edges together',
+        },
+      ],
+      more: [
+        { ...LOOK.background, label: 'Board color' },
+        { ...LOOK.backgroundEdge, label: 'Board edge color' },
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when the margin line is on' },
+      ],
+    },
+    {
       title: 'Grid',
       fields: [
         { path: 'columns', label: 'Columns', hint: 'Rows are added as needed to fit every badge' },
@@ -53,17 +78,17 @@ export const chalkBadgeGridControls = defineControls<ChalkBadgeGridProps>({
           hint: 'Scattered at random, in grid order, or from the last badge back',
         },
         {
-          path: 'stagger',
-          label: 'Gap between badges',
-          hint: 'Frames between one badge starting to draw and the next',
-        },
-        {
           path: 'timing.drawFrames',
           label: 'Draw length',
           hint: 'Frames each badge takes to sketch on',
         },
       ],
       more: [
+        {
+          path: 'stagger',
+          label: 'Gap between badges',
+          hint: 'Frames between one badge starting to draw and the next',
+        },
         {
           path: 'delay',
           label: 'Start delay',
@@ -84,6 +109,8 @@ export const chalkBadgeGridControls = defineControls<ChalkBadgeGridProps>({
           label: 'Wipe starts at',
           hint: 'Frames after the start delay when the first badge begins to wipe',
         },
+      ],
+      more: [
         {
           path: 'timing.eraseFrames',
           label: 'Wipe length',
@@ -98,8 +125,8 @@ export const chalkBadgeGridControls = defineControls<ChalkBadgeGridProps>({
     },
     {
       title: 'Chalk',
-      fields: [
-        { path: 'chalk.width', label: 'Stroke width' },
+      fields: [{ path: 'chalk.width', label: 'Stroke width' }],
+      more: [
         {
           path: 'chalk.roughness',
           label: 'Rough edges',
@@ -110,8 +137,6 @@ export const chalkBadgeGridControls = defineControls<ChalkBadgeGridProps>({
           label: 'Dry chalk texture',
           hint: 'Higher leaves more speckled gaps in the strokes',
         },
-      ],
-      more: [
         {
           path: 'chalk.shadow',
           label: 'Drop shadow',
@@ -123,44 +148,37 @@ export const chalkBadgeGridControls = defineControls<ChalkBadgeGridProps>({
       title: 'Board',
       fields: [
         { ...LOOK.showBackdrop, label: 'Show chalkboard' },
-        { ...LOOK.background, label: 'Board color' },
         {
           ...LOOK.paper,
           label: 'Board pattern',
           hint: 'Grid also adds chalk dots where the lines cross',
         },
-        { ...LOOK.grain, label: 'Board grain' },
       ],
       more: [
-        { ...LOOK.backgroundEdge, label: 'Board edge color' },
+        { ...LOOK.grain, label: 'Board grain' },
         LOOK.spotlight,
         LOOK.liveGrain,
-        { ...LOOK.paperLine, label: 'Pattern line color' },
         { ...LOOK.paperSpacing, label: 'Pattern spacing' },
-        {
-          ...LOOK.ink,
-          label: 'Grid dot color',
-          hint: 'Chalk dots where the grid lines cross, shown with the grid pattern',
-        },
         { ...LOOK.paperMargin, label: 'Margin line' },
-        { ...LOOK.accent, label: 'Margin line color' },
       ],
     },
     {
       title: 'Motion',
       fields: [
         MOTION.enter,
-        MOTION.exit,
-        {
-          ...MOTION.exitFrames,
-          hint: 'In frames. The exit only plays when this is above 0, and it is 0 by default',
-        },
         {
           ...MOTION.speed,
           hint: 'Scales the drawing and wipe timing. Entrance and exit keep their length',
         },
       ],
-      more: [MOTION.enterFrames],
+      more: [
+        MOTION.enterFrames,
+        { ...MOTION.exit, hint: 'Plays only when Exit length is above 0' },
+        {
+          ...MOTION.exitFrames,
+          hint: 'In frames. The exit only plays when this is above 0, and it is 0 by default',
+        },
+      ],
     },
   ],
   hidden: ['look.muted', 'motion.float'],

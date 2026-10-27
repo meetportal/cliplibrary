@@ -39,16 +39,16 @@ export const spiderWebServicesControls = defineControls<SpiderWebServicesProps>(
         {
           path: 'card.statement',
           label: 'End card statement',
-          hint: 'The last line is larger and uses the highlight color',
+          hint: 'The last line is larger and uses the primary color',
         },
+      ],
+      more: [
         {
           path: 'card.punch',
           label: 'End card tagline',
           hint: 'Large italic lines under the divider',
         },
         { path: 'brand.url', label: 'Website', hint: 'Shown in the button at the end' },
-      ],
-      more: [
         { path: 'intro.headlineSize', label: 'Opening headline size' },
         { path: 'intro.x', label: 'Opening text left', hint: 'In pixels' },
         { path: 'intro.y', label: 'Opening text top', hint: 'In pixels' },
@@ -64,17 +64,101 @@ export const spiderWebServicesControls = defineControls<SpiderWebServicesProps>(
       ],
     },
     {
-      title: 'Titles',
+      title: 'Colors',
       fields: [
-        { path: 'title.face', label: 'Title face' },
-        { path: 'title.side', label: 'Title 3D sides' },
-        { path: 'title.depth', label: '3D depth', hint: 'In pixels' },
+        {
+          link: [
+            'intro.headlineColor',
+            'title.faceShade',
+            'brand.mark',
+            'card.highlight',
+            'card.pill',
+            'backdrop.bokeh',
+          ],
+          label: 'Primary color',
+          hint: 'Opening headline, the lower half of each 3D title face, the end card logo, the statement highlight and divider, the website button and arrow, and the bokeh lights',
+        },
+        {
+          link: ['cocoon.color', 'card.web', 'card.icons'],
+          label: 'Secondary color',
+          hint: 'Cobwebs on the titles, the end card web and the social icons',
+        },
+        {
+          link: ['intro.labelColor', 'brand.ink', 'card.ink'],
+          label: 'Text color',
+          hint: 'Opening brand name and logo, end card brand name, statement and tagline',
+        },
+        {
+          link: ['backdrop.glow', 'backdrop.top'],
+          label: 'Accent color',
+          hint: 'Side glows and the top glow on the background',
+        },
+        {
+          link: ['backdrop.base', 'backdrop.floor', 'backdrop.floorEdge'],
+          label: 'Background color',
+          hint: 'Background, plus the end card floor and its fade',
+        },
       ],
       more: [
+        { path: 'intro.headlineColor', label: 'Opening headline color' },
+        { path: 'card.highlight', label: 'Statement highlight and divider' },
+        {
+          path: 'card.pill',
+          label: 'Website button',
+          hint: 'Left end of the gradient, its glow and the arrow',
+        },
+        { path: 'card.pillShade', label: 'Website button fade', hint: 'Right end of the gradient' },
+        {
+          path: 'card.pillInk',
+          label: 'Website button text',
+          hint: 'Also the circle behind the arrow',
+        },
+        { path: 'backdrop.bokeh', label: 'Bokeh light color' },
+        { path: 'cocoon.color', label: 'Cobweb color' },
+        { path: 'card.web', label: 'End web color' },
+        { path: 'card.dew', label: 'Dew drop color' },
+        { path: 'card.icons', label: 'Social icons' },
+        {
+          path: 'intro.labelColor',
+          label: 'Opening brand label',
+          hint: 'Brand name and hexagon logo above the opening headline',
+        },
+        { path: 'brand.ink', label: 'End card brand name' },
+        { path: 'card.ink', label: 'End card text', hint: 'Statement and tagline' },
+        { path: 'brand.mark', label: 'End card logo', hint: 'The hexagon mark on the end card' },
+        {
+          path: 'brand.markShade',
+          label: 'Logo center',
+          hint: 'Inner hexagon of the logo at the opening and on the end card',
+        },
+        { path: 'backdrop.glow', label: 'Side glows' },
+        { path: 'backdrop.top', label: 'Top glow', hint: 'Fades out as the camera moves down' },
+        { path: 'backdrop.base', label: 'Background base' },
+        { path: 'backdrop.floor', label: 'End card floor' },
+        { path: 'backdrop.floorEdge', label: 'End card floor fade' },
+        { path: 'backdrop.grid', label: 'Dot grid color' },
+      ],
+    },
+    {
+      title: 'Titles',
+      fields: [
+        {
+          path: 'title.side',
+          label: 'Title 3D sides',
+          hint: 'Front edge of the extrusion; it darkens toward the back',
+        },
+      ],
+      more: [
+        { path: 'title.depth', label: '3D depth', hint: 'In pixels' },
+        {
+          path: 'title.face',
+          label: 'Title face top',
+          hint: 'The face fades down to its bottom color',
+        },
         {
           path: 'title.faceShade',
           label: 'Title face bottom',
-          hint: 'The face fades to this color',
+          hint: 'The face fades down to this color',
         },
         {
           path: 'title.sideShade',
@@ -102,12 +186,10 @@ export const spiderWebServicesControls = defineControls<SpiderWebServicesProps>(
           label: 'Show spiders',
           hint: 'The spider riding the thread and the ones crawling on each title',
         },
-        { path: 'spider.size', label: 'Spider size' },
-        { link: ['cocoon.color', 'card.web'], label: 'Web color' },
-        { path: 'cocoon.opacity', label: 'Cobweb opacity' },
       ],
       more: [
-        { path: 'cocoon.color', label: 'Cobweb color' },
+        { path: 'spider.size', label: 'Spider size' },
+        { path: 'cocoon.opacity', label: 'Cobweb opacity' },
         {
           path: 'cocoon.strands',
           label: 'Cobweb density',
@@ -115,56 +197,16 @@ export const spiderWebServicesControls = defineControls<SpiderWebServicesProps>(
         },
         { path: 'cocoon.width', label: 'Cobweb width', hint: 'In pixels' },
         { path: 'cocoon.height', label: 'Cobweb height', hint: 'In pixels' },
-        { path: 'card.web', label: 'End web color' },
-        { path: 'card.dew', label: 'Dew drop color' },
         { path: 'card.webWidth', label: 'End web size', hint: 'In pixels' },
         { path: 'card.webTilt', label: 'End web tilt', hint: 'Degrees it leans back' },
       ],
     },
     {
-      title: 'Brand colors',
-      fields: [
-        {
-          link: ['intro.labelColor', 'brand.ink', 'card.ink'],
-          label: 'Text color',
-          hint: 'Opening brand name and logo, end card brand name, statement and tagline',
-        },
-        {
-          link: ['intro.headlineColor', 'card.highlight', 'card.pill', 'backdrop.bokeh'],
-          label: 'Highlight color',
-          hint: 'Opening headline, statement highlight, website button and bokeh lights',
-        },
-        { path: 'brand.mark', label: 'Logo color', hint: 'The hexagon mark on the end card' },
-      ],
-      more: [
-        {
-          path: 'intro.labelColor',
-          label: 'Opening brand label',
-          hint: 'Brand name and hexagon logo above the opening headline',
-        },
-        { path: 'brand.ink', label: 'End card brand name' },
-        { path: 'card.ink', label: 'End card text', hint: 'Statement and tagline' },
-        { path: 'intro.headlineColor', label: 'Opening headline color' },
-        { path: 'card.highlight', label: 'Statement highlight and divider' },
-        { path: 'card.pill', label: 'Website button' },
-        { path: 'card.pillShade', label: 'Website button fade', hint: 'Right end of the gradient' },
-        { path: 'card.pillInk', label: 'Website button text' },
-        {
-          path: 'brand.markShade',
-          label: 'Logo center',
-          hint: 'Inner hexagon of the logo at the opening and on the end card',
-        },
-        { path: 'card.icons', label: 'Social icons' },
-      ],
-    },
-    {
       title: 'Hand and thread',
-      fields: [
+      fields: [{ path: 'intro.handScale', label: 'Hand size' }],
+      more: [
         { path: 'intro.glove', label: 'Glove color' },
         { path: 'thread.color', label: 'Thread color' },
-        { path: 'intro.handScale', label: 'Hand size' },
-      ],
-      more: [
         { path: 'intro.gloveShade', label: 'Glove shadow' },
         { path: 'intro.gloveSeam', label: 'Glove stitching' },
         { path: 'intro.cuff', label: 'Cuff color' },
@@ -182,35 +224,28 @@ export const spiderWebServicesControls = defineControls<SpiderWebServicesProps>(
       title: 'Background',
       fields: [
         { ...LOOK.showBackdrop, hint: 'Off leaves the frame transparent for use as an overlay' },
-        { path: 'backdrop.base', label: 'Background' },
-        { path: 'backdrop.glow', label: 'Side glows' },
       ],
       more: [
         { path: 'backdrop.glowStrength', label: 'Side glow strength' },
-        { path: 'backdrop.top', label: 'Top glow', hint: 'Fades out as the camera moves down' },
-        { path: 'backdrop.grid', label: 'Dot grid color' },
         { path: 'backdrop.gridOpacity', label: 'Dot grid strength' },
         { path: 'backdrop.gridSpacing', label: 'Dot grid spacing', hint: 'In pixels' },
-        { path: 'backdrop.floor', label: 'End card floor' },
-        { path: 'backdrop.floorEdge', label: 'End card floor fade' },
-        { path: 'backdrop.bokeh', label: 'Bokeh light color' },
       ],
     },
     {
       title: 'Timing',
       fields: [
-        { path: 'timing.panFrames', label: 'Pan length', hint: 'Frames per camera whip' },
-        {
-          path: 'timing.webDrawFrames',
-          label: 'End web draw length',
-          hint: 'In frames. It finishes as the camera settles',
-        },
         {
           ...MOTION.speed,
           hint: 'Scales the whole animation. The clip length stays the same, so faster ends on a held end card and slower cuts the ending',
         },
       ],
       more: [
+        { path: 'timing.panFrames', label: 'Pan length', hint: 'Frames per camera whip' },
+        {
+          path: 'timing.webDrawFrames',
+          label: 'End web draw length',
+          hint: 'In frames. It finishes as the camera settles',
+        },
         { path: 'timing.handFrames', label: 'Hand drop length', hint: 'In frames' },
         { path: 'timing.threadStart', label: 'Thread drop starts at', hint: 'Frame number' },
         { path: 'timing.threadFrames', label: 'Thread drop length', hint: 'In frames' },

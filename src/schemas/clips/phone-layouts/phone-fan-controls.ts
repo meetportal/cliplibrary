@@ -14,7 +14,6 @@ export const phoneFanControls = defineControls<PhoneFanProps>({
           items: { screen: 'Screen', customScreen: 'Custom screenshot', finish: 'Phone color' },
         },
         { path: 'scale', label: 'Phone size' },
-        { path: 'spacing', label: 'Gap between phones' },
         {
           path: 'fan',
           label: 'Fan angle',
@@ -22,6 +21,7 @@ export const phoneFanControls = defineControls<PhoneFanProps>({
         },
       ],
       more: [
+        { path: 'spacing', label: 'Gap between phones' },
         { path: 'position.x', label: 'Move left or right' },
         { path: 'position.y', label: 'Move up or down' },
         {
@@ -29,6 +29,30 @@ export const phoneFanControls = defineControls<PhoneFanProps>({
           label: 'Move closer or farther',
           hint: 'Higher brings the phones closer',
         },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Primary color',
+          hint: 'The backdrop behind the phones, center and corners together. A dark color also switches the 3D lighting to its dark setup',
+        },
+        {
+          path: 'look.paperLine',
+          label: 'Secondary color',
+          hint: 'Paper rule lines, when a paper pattern is on',
+        },
+        {
+          path: 'look.accent',
+          label: 'Accent color',
+          hint: 'Paper margin line, when the paper margin is on',
+        },
+      ],
+      more: [
+        { ...LOOK.background, label: 'Background center' },
+        { ...LOOK.backgroundEdge, label: 'Background corners' },
       ],
     },
     {
@@ -44,6 +68,8 @@ export const phoneFanControls = defineControls<PhoneFanProps>({
           label: 'Delay between phones',
           hint: 'In frames. Rise entrance only',
         },
+      ],
+      more: [
         {
           path: 'riseOrder',
           label: 'Rise order',
@@ -54,8 +80,6 @@ export const phoneFanControls = defineControls<PhoneFanProps>({
           label: 'Rise length',
           hint: 'Frames each phone takes to settle. Rise entrance only',
         },
-      ],
-      more: [
         {
           path: 'riseSpin',
           label: 'Twist while rising',
@@ -65,16 +89,14 @@ export const phoneFanControls = defineControls<PhoneFanProps>({
     },
     {
       title: 'Spread entrance',
-      fields: [
-        { path: 'spreadDelay', label: 'Side phones slide out at', hint: 'Frame number' },
+      fields: [{ path: 'spreadDelay', label: 'Side phones slide out at', hint: 'Frame number' }],
+      more: [
         { path: 'spreadFrames', label: 'Slide-out length', hint: 'In frames' },
         {
           path: 'flyFrom',
           label: 'Center phone flies in from',
           hint: 'Sideways start offset. Negative is left, 0 starts in place',
         },
-      ],
-      more: [
         { path: 'flyFrames', label: 'Fly-in length', hint: 'In frames' },
         {
           path: 'flyYaw',
@@ -91,6 +113,8 @@ export const phoneFanControls = defineControls<PhoneFanProps>({
           label: 'Orbit swing',
           hint: 'The fan turns from one side to the other across the whole clip, in radians. 0 holds it still',
         },
+      ],
+      more: [
         {
           path: 'dollyFrom',
           label: 'Start distance',
@@ -101,37 +125,30 @@ export const phoneFanControls = defineControls<PhoneFanProps>({
           label: 'End distance',
           hint: 'Multiplies the camera distance on the last frame. Lower than the start pushes in',
         },
+        STAGE.cameraDistance,
+        STAGE.fieldOfView,
+        STAGE.cameraDrift,
       ],
-      more: [STAGE.cameraDistance, STAGE.fieldOfView, STAGE.cameraDrift],
     },
     {
       title: 'Lighting',
-      fields: [
-        STAGE.keyLight,
+      fields: [STAGE.keyLight],
+      more: [
         { ...STAGE.reflections, hint: 'Glossy highlights on the phone bodies' },
         STAGE.shadow,
+        STAGE.shadowSoftness,
       ],
-      more: [STAGE.shadowSoftness],
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        {
-          ...LOOK.background,
-          hint: 'A dark color also switches the 3D lighting to its dark setup',
-        },
-        LOOK.grain,
-      ],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { ...LOOK.accent, label: 'Margin line color' },
       ],
     },
     {
@@ -139,13 +156,13 @@ export const phoneFanControls = defineControls<PhoneFanProps>({
       fields: [
         { ...MOTION.enter, label: 'Transition in' },
         { ...MOTION.exit, label: 'Transition out' },
+      ],
+      more: [
         {
           link: ['motion.enterFrames', 'motion.exitFrames'],
           label: 'Transition length',
           hint: 'In frames, for both the transition in and the transition out',
         },
-      ],
-      more: [
         {
           ...MOTION.speed,
           hint: 'Scales the phone animation timing. The camera move and the transitions keep their pace',

@@ -15,16 +15,31 @@ export const handwrittenNoteControls = defineControls<HandwrittenNoteProps>({
         },
         { path: 'font', label: 'Handwriting font' },
         { path: 'size', label: 'Text size', hint: 'In pixels' },
-        { ...LOOK.ink, label: 'Ink color' },
-        {
-          ...LOOK.accent,
-          label: 'Highlight color',
-          hint: 'Highlighted words, their underline and ticks, and the ghost behind each new letter',
-        },
       ],
       more: [
         { path: 'lineHeight', label: 'Line spacing', hint: 'Multiple of the text size' },
         { path: 'tilt', label: 'Tilt', hint: 'In degrees' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        { ...LOOK.ink, label: 'Primary color', hint: 'The handwritten note lettering' },
+        {
+          ...LOOK.accent,
+          label: 'Accent color',
+          hint: 'Highlighted words, their underline and ticks, the ghost behind each new letter and the paper margin line',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the paper together',
+        },
+      ],
+      more: [
+        { ...LOOK.background, label: 'Paper center color' },
+        { ...LOOK.backgroundEdge, label: 'Paper corner color' },
+        LOOK.paperLine,
       ],
     },
     {
@@ -35,15 +50,15 @@ export const handwrittenNoteControls = defineControls<HandwrittenNoteProps>({
           label: 'Frames between letters',
           hint: 'Lower writes the note faster',
         },
+        { path: 'erase', label: 'Break apart at the end' },
+      ],
+      more: [
         {
           path: 'charFrames',
           label: 'Letter ink-in length',
           hint: 'Frames each letter takes to settle in',
         },
         { path: 'delay', label: 'Start delay', hint: 'In frames' },
-        { path: 'erase', label: 'Break apart at the end' },
-      ],
-      more: [
         { path: 'wordPause', label: 'Pause between words', hint: 'In frames' },
         {
           path: 'eraseFrames',
@@ -64,8 +79,8 @@ export const handwrittenNoteControls = defineControls<HandwrittenNoteProps>({
     },
     {
       title: 'Marker',
-      fields: [
-        { path: 'underline', label: 'Underline highlighted words' },
+      fields: [{ path: 'underline', label: 'Underline highlighted words' }],
+      more: [
         {
           path: 'burst',
           label: 'Burst ticks',
@@ -76,8 +91,6 @@ export const handwrittenNoteControls = defineControls<HandwrittenNoteProps>({
           label: 'Marker roughness',
           hint: 'Rougher letter edges and wobblier marks',
         },
-      ],
-      more: [
         { path: 'ink.width', label: 'Mark thickness', hint: 'Underline and tick stroke width' },
         {
           path: 'ink.lead',
@@ -99,28 +112,19 @@ export const handwrittenNoteControls = defineControls<HandwrittenNoteProps>({
     },
     {
       title: 'Layout',
-      fields: [
-        { ...PLACEMENT.horizontal, hint: 'Also sets the text alignment' },
+      fields: [{ ...PLACEMENT.horizontal, hint: 'Also sets the text alignment' }],
+      more: [
         PLACEMENT.vertical,
         { ...PLACEMENT.width, label: 'Note width' },
+        PLACEMENT.insetX,
+        PLACEMENT.insetY,
       ],
-      more: [PLACEMENT.insetX, PLACEMENT.insetY],
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        {
-          link: ['look.background', 'look.backgroundEdge'],
-          label: 'Paper color',
-          hint: 'Sets the center and corner colors together',
-        },
-        LOOK.paper,
-      ],
+      fields: [LOOK.showBackdrop],
       more: [
-        { ...LOOK.background, label: 'Paper center color' },
-        { ...LOOK.backgroundEdge, label: 'Paper corner color' },
-        LOOK.paperLine,
+        LOOK.paper,
         LOOK.paperSpacing,
         { ...LOOK.paperMargin, hint: 'Drawn in the highlight color' },
         LOOK.spotlight,
@@ -136,9 +140,9 @@ export const handwrittenNoteControls = defineControls<HandwrittenNoteProps>({
           ...MOTION.speed,
           hint: 'Scales the writing, marks, break-apart and drift. Entrance and exit keep their length',
         },
-        { ...MOTION.float, hint: 'Gentle drift and sway while on screen' },
       ],
       more: [
+        { ...MOTION.float, hint: 'Gentle drift and sway while on screen' },
         MOTION.enterFrames,
         {
           ...MOTION.exit,
