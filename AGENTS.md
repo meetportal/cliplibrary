@@ -120,6 +120,10 @@ To add a clip:
 5. Add the scene file under `scenes/<category>/` (component + `<name>Scene`).
 6. Register the scene in `scenes/<category>/index.ts` (one line).
 7. Run `bun run render <id>` and commit its preview files in `public/previews`.
+8. Label it in `src/schemas/clip-labels.json` (`clipLabelSchema` in `src/schemas/clip-labels.ts`): what
+   is on screen, timed beats, motion, mood, the roles it plays in a video, use cases, what people
+   can edit, its palette and search keywords. Label from frames of the rendered preview, not from
+   the title. `tests/schemas/clip-labels.test.ts` fails when a clip has no label.
 
 ## Controls
 
@@ -261,10 +265,11 @@ paths go in `more`. At most 14 controls show at first glance across all sections
 ## MCP endpoint
 
 `src/app/mcp/route.ts` serves a stateless Streamable HTTP MCP server (`@modelcontextprotocol/sdk`,
-`src/mcp`) with open access and no storage. Tools: `search_clips` (MiniSearch over clip meta,
-filters by category, theme, orientation and role), `get_clip` (defaults, field guide and props
-schema), `create_video`, `add_clip` and `edit_video` (JSON Patch through the same `applyEdits`
-validation as the media agent). The agent passes the whole `{ title, project }` video into each
-call and gets the new one back with an `editorUrl`: `/video#<lz-string data>`
-(`src/mcp/video-link.ts`), opened by `SharedVideoEditor` in the clip timeline editor, which saves
-edits locally per link. `tests/mcp/mcp-route.test.ts` drives the route handler directly.
+`src/mcp`) with open access and no storage. Tools: `search_clips` (MiniSearch over clip meta and the
+labels in `src/schemas/clip-labels.json`, filters by category, theme, orientation and role),
+`get_clip` (labels, defaults, field guide and props schema), `create_video`, `add_clip` and
+`edit_video` (JSON Patch through the same `applyEdits` validation as the media agent). The agent
+passes the whole `{ title, project }` video into each call and gets the new one back with an
+`editorUrl`: `/video#<lz-string data>` (`src/mcp/video-link.ts`), opened by `SharedVideoEditor` in
+the clip timeline editor, which saves edits locally per link. `tests/mcp/mcp-route.test.ts` drives
+the route handler directly.
