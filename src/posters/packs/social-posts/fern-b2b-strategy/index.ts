@@ -1,15 +1,8 @@
 import { definePack } from '../../../pack';
 import { bigPercent, crossword, leadTrend, watchWebinar } from './posts';
 import { clientFeedback, stillMatters, whyChooseUs } from './posts-extra';
-import {
-  CORAL_GROW,
-  clipboardGoals,
-  GROW_POST,
-  growWithUs,
-  monthEvents,
-  mythPost,
-  mythStory,
-} from './posts-more';
+import { CORAL_GROW, clipboardGoals, GROW_POST, growWithUs, monthEvents } from './posts-more';
+import { mythPost, mythStory } from './posts-myth';
 
 const POSTS = [
   crossword,
