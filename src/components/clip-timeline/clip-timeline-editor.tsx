@@ -2,7 +2,7 @@
 
 import type { PlayerRef } from '@remotion/player';
 import dynamic from 'next/dynamic';
-import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AgentWorkspace } from '@/components/media-agent/agent-workspace';
 import { ClipPreviewSkeleton } from '@/components/skeletons';
 import { Timeline } from '@/components/timeline/timeline';
@@ -85,55 +85,13 @@ const toFileName = (title: string): string =>
 
 const ANIMATION_OPTIONS = CLIP_REGISTRY.map((meta) => ({ id: meta.id, title: meta.title }));
 
-interface ProjectSync {
-  remote: Project;
-  publish: (project: Project) => void;
-}
-
-const PUBLISH_DELAY_MS = 120;
-
-const useProjectSync = (
-  project: Project,
-  setProject: (next: Project) => void,
-  sync: ProjectSync | undefined,
-): void => {
-  const lastRemote = useRef<Project | null>(null);
-  const publish = useRef(sync?.publish);
-  publish.current = sync?.publish;
-  const remote = sync?.remote;
-
-  useEffect(() => {
-    if (remote === undefined || remote === lastRemote.current) {
-      return;
-    }
-    lastRemote.current = remote;
-    setProject(remote);
-  }, [remote, setProject]);
-
-  useEffect(() => {
-    if (lastRemote.current === null || project === lastRemote.current) {
-      return;
-    }
-    const timer = setTimeout(() => publish.current?.(project), PUBLISH_DELAY_MS);
-    return () => clearTimeout(timer);
-  }, [project]);
-};
-
 interface ClipTimelineEditorProps {
   title: string;
   initialProject: Project;
   demoSrc: string | null;
-  sync?: ProjectSync;
-  sidebar?: ReactNode;
 }
 
-export const ClipTimelineEditor = ({
-  title,
-  initialProject,
-  demoSrc,
-  sync,
-  sidebar,
-}: ClipTimelineEditorProps) => {
+export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimelineEditorProps) => {
   const editor = useUndoable<Project>(initialProject);
   const {
     value: project,
@@ -144,7 +102,6 @@ export const ClipTimelineEditor = ({
     redo,
   } = editor;
   useUndoRedoKeys(undo, redo);
-  useProjectSync(project, setProject, sync);
   const exporter = useProjectExport();
   const fileName = toFileName(title);
 
@@ -294,7 +251,6 @@ export const ClipTimelineEditor = ({
             )}
           >
             <ClipTimelineHeader title={title} />
-            {sidebar}
             <ClipPropertySidebar
               element={selectedElement}
               onChange={(next) => setProjectLive(replaceElement(project, next))}
