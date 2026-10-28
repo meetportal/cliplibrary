@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { designSchema, isDesignIcon, isKnownFont } from '@/design';
 import {
+  auditPosterControls,
   findPoster,
   POSTER_META,
   POSTER_PHOTOS,
@@ -54,6 +55,45 @@ describe('posters', () => {
       ]);
     const keys = designs.map((entry) => `${entry.meta.packId}:${signature(entry)}`);
     expect(new Set(keys).size).toBe(keys.length);
+  });
+
+  it('give every poster its own complete theme controls', () => {
+    const problems = designs
+      .filter(({ design }) => design.controls.length > 0)
+      .flatMap(({ meta, design }) =>
+        auditPosterControls(design).map((problem) => `${meta.id}: ${problem}`),
+      );
+    expect(problems).toEqual([]);
+  });
+
+  it('merge repeated decorative shapes into single pattern elements', () => {
+    const decorative = new Set(['rect', 'ellipse', 'polygon', 'star']);
+    const leftovers = designs.flatMap(({ meta, design }) => {
+      const runs: string[] = [];
+      let streak = 0;
+      design.elements.forEach((element, index) => {
+        const previous = design.elements[index - 1];
+        const repeats =
+          previous !== undefined &&
+          decorative.has(element.type) &&
+          previous.type === element.type &&
+          previous.name === element.name &&
+          'fill' in element &&
+          'fill' in previous &&
+          typeof element.fill === 'string' &&
+          element.fill === previous.fill &&
+          element.strokeWidth === 0 &&
+          element.rotation === 0 &&
+          element.shadow === undefined &&
+          element.opacity === 1;
+        streak = repeats ? streak + 1 : 0;
+        if (streak === 2) {
+          runs.push(`${meta.id}: ${element.name}`);
+        }
+      });
+      return runs;
+    });
+    expect(leftovers).toEqual([]);
   });
 
   it('only use bundled fonts, icons and photos', () => {
