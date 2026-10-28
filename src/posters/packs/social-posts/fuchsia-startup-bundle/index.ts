@@ -1,4 +1,3 @@
-import { linear } from '@/design';
 import { definePack } from '../../../pack';
 import { dosDonts, type ShiftTheme } from '../cobalt-before-after/posts';
 import { transformHook } from '../cobalt-before-after/posts-more';
@@ -6,10 +5,12 @@ import { type StatsCopy, statTemplates } from '../lagoon-saas-stats/posts';
 import type { PostTheme } from '../lagoon-saas-stats/theme';
 import { type EventTheme, monthCalendar } from '../violet-key-dates/posts';
 import { type AgendaCopy, agenda } from '../violet-key-dates/posts-more';
-import { benefitsDonut, clearProcess, employeeBadge, expertsFolder, hiringVertical } from './posts';
+import { benefitsDonut, clearProcess, hiringVertical } from './posts';
+import { employeeBadge, expertsFolder } from './posts-team';
 
 const FUCHSIA: PostTheme = {
-  background: linear(200, '#b0249f', '#1a0420'),
+  background: '#b0249f',
+  backgroundEnd: '#1a0420',
   surface: '#ffffff',
   ink: '#1a0420',
   text: '#ffffff',
@@ -24,7 +25,8 @@ const FUCHSIA: PostTheme = {
 
 const OCEAN: PostTheme = {
   ...FUCHSIA,
-  background: linear(200, '#0284c7', '#062033'),
+  background: '#0284c7',
+  backgroundEnd: '#062033',
   ink: '#062033',
   muted: '#bfe3f7',
   brand: '#facc15',
