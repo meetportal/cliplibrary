@@ -1,6 +1,21 @@
 import { definePack } from '../../../pack';
-import { creativeTeams, growMore, transforming } from './posts';
-import { messaging, messagingStory, POSTS } from './posts-more';
+import { creativeTeams, growMore, strategyMotion, targetGoals, transforming } from './posts';
+import { beYourself, chargedBolt, paceQuote, tagCloud, testimonial } from './posts-more';
+import { messaging, messagingStory } from './posts-story';
+
+const POSTS = [
+  transforming,
+  creativeTeams,
+  growMore,
+  strategyMotion,
+  targetGoals,
+  chargedBolt,
+  testimonial,
+  beYourself,
+  messaging,
+  tagCloud,
+  paceQuote,
+];
 
 export const harborB2bMarketingPack = definePack({
   id: 'harbor-b2b-marketing',

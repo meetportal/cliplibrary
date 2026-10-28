@@ -11,9 +11,15 @@ export const KEY = {
   white: '#ffffff',
 };
 
-export const SERIF = 'Playfair Display';
-export const SCRIPT = 'Satisfy';
-export const SANS = 'Montserrat';
+const SERIF = 'Playfair Display';
+const SCRIPT = 'Satisfy';
+const SANS = 'Montserrat';
+const DISPLAY = 'Oswald';
+
+export const HEADING = { label: 'Heading font', value: SERIF } as const;
+export const SCRIPT_FONT = { label: 'Script font', value: SCRIPT } as const;
+export const BODY = { label: 'Body font', value: SANS } as const;
+export const DISPLAY_FONT = { label: 'Display font', value: DISPLAY } as const;
 
 export const AGENT = {
   name: 'Dana Whitfield',
@@ -23,25 +29,39 @@ export const AGENT = {
   mail: 'dana@willowkey.homes',
 };
 
+export const SITE_COPY = { label: 'Website', value: AGENT.site } as const;
+
 export const { width: W, height: H } = POST_SIZE;
 
-export const footerBar = (y: number, height: number, content: string) =>
+export const footerBar = (
+  y: number,
+  height: number,
+  content: string,
+  fill: string,
+  color: string,
+  fontFamily: string,
+) =>
   group(
-    rect(0, y, W, height, KEY.forest, { name: 'Footer bar' }),
+    rect(0, y, W, height, fill, { name: 'Footer bar' }),
     text(content, 0, y + (height - 34) / 2, W, {
-      fontFamily: SERIF,
+      fontFamily,
       fontSize: 30,
       fontWeight: 500,
-      fill: KEY.cream,
+      fill: color,
       align: 'center',
     }),
   );
 
-export const contactRow = (y: number, color: string) =>
+export const contactRow = (
+  items: readonly string[],
+  y: number,
+  color: string,
+  fontFamily: string,
+) =>
   group(
-    [AGENT.name, AGENT.site, AGENT.phone].map((item, index) =>
+    items.map((item, index) =>
       text(item, 40 + index * 340, y, 320, {
-        fontFamily: SANS,
+        fontFamily,
         fontSize: 26,
         fontWeight: 600,
         fill: color,
@@ -56,11 +76,12 @@ export const contactLine = (
   x: number,
   y: number,
   color: string,
+  fontFamily: string,
 ) =>
   group(
     icon(name, x, y, 30, color, { strokeWidth: 2.2 }),
     text(content, x + 44, y + 1, 340, {
-      fontFamily: SANS,
+      fontFamily,
       fontSize: 26,
       fontWeight: 600,
       fill: color,

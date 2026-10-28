@@ -1,15 +1,7 @@
 import { definePack } from '../../../pack';
-import {
-  contentCalendar,
-  eventDay,
-  monthEvents,
-  ROSE,
-  SAFFRON,
-  SKY,
-  saveTheDate,
-  scheduleList,
-  scheduleStory,
-} from './posts';
+import { contentCalendar, eventDay, ROSE, SAFFRON, SKY } from './posts';
+import { monthEvents, saveTheDate } from './posts-month';
+import { scheduleList, scheduleStory } from './posts-schedule';
 
 const calendar = contentCalendar(SAFFRON);
 const launch = eventDay(SAFFRON);
