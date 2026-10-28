@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { clipControlsFor } from '@/core';
-import { designSchema, FONT_FAMILIES } from '@/design';
+import { type ControlEntry, clipControlsFor } from '@/core';
+import { type Design, type DesignControl, designSchema, FONT_FAMILIES } from '@/design';
 import { type Project, projectSchema } from '@/project';
 import { CLIP_SCHEMAS, getClipMeta, isClipId } from '@/schemas';
 import type { MediaKind } from './media';
@@ -18,14 +18,19 @@ const SHARED_RULES = `Rules:
 - Before calling editMedia, write one short plain sentence telling the user what you are changing. Once editMedia succeeds you are done, so do not add more text. Never paste JSON or patch operations into the reply.
 - If the request is unclear, make the most sensible change instead of asking. If the request cannot be done with this document, say so briefly.`;
 
+const fieldLine = (entry: ControlEntry): string => {
+  const hint = entry.hint === null ? '' : ` (${entry.hint})`;
+  const [lead, ...linked] = entry.targets.map((target) => `props/${target.join('/')}`);
+  if (entry.shades !== null && linked.length > 0) {
+    return `  - ${entry.descriptor.label}: set ${lead}; the editor recolours ${linked.join(', ')} to match, keeping their designed shades${hint}`;
+  }
+  return `  - ${entry.descriptor.label}: ${[lead, ...linked].join(', ')}${hint}`;
+};
+
 const clipFieldGuide = (clipId: string): string =>
   clipControlsFor(clipId)
     .map((section) => {
-      const fields = [...section.fields, ...section.more].map((entry) => {
-        const path = entry.targets.map((target) => target.join('/')).join(', ');
-        const hint = entry.hint === null ? '' : ` (${entry.hint})`;
-        return `  - ${entry.descriptor.label}: props/${path}${hint}`;
-      });
+      const fields = [...section.fields, ...section.more].map(fieldLine);
       return [`${section.title}:`, ...fields].join('\n');
     })
     .join('\n');
@@ -55,6 +60,7 @@ const clipInstructions = (title: string, document: unknown): string => {
   return `You are the editing agent for the animated video clip "${title}" in a browser video editor.
 The document is a Remotion project: fps, width x height in pixels, durationInFrames, and tracks of timed elements. The first track is the top visual layer. Element transform x/y are pixel offsets from the centre.
 Most of the clip's look lives in the props of its "composition" elements, for example /tracks/0/elements/0/props/headline.
+To recolour a clip, use the roles in its Colors section: replace only the role's first path and the linked paths follow. To change only the first path of a role, also replace its linked paths with their current values.
 
 ${SHARED_RULES}
 
@@ -63,16 +69,43 @@ Project JSON schema: ${jsonSchema(projectSchema)}
 ${parsed.success ? clipSections(parsed.data).join('\n\n') : ''}`;
 };
 
-const posterInstructions = (title: string): string =>
-  `You are the editing agent for the poster design "${title}" in a browser image editor.
+const controlLine = (control: DesignControl, index: number): string => {
+  const hint = control.hint === undefined ? '' : ` (${control.hint})`;
+  if (control.kind === 'list') {
+    const items = control.values
+      .map((value, at) => `/controls/${index}/values/${at} = ${JSON.stringify(value)}`)
+      .join(', ');
+    return `  - ${control.label}, a list: ${items}${hint}`;
+  }
+  return `  - ${control.label}: /controls/${index}/value = ${JSON.stringify(control.value)}${hint}`;
+};
+
+const themeGuide = (design: Design): string => {
+  if (design.controls.length === 0) {
+    return 'This poster has no theme controls.';
+  }
+  return `Theme controls (label: path = current value):
+${design.controls.map(controlLine).join('\n')}`;
+};
+
+const posterInstructions = (title: string, document: unknown): string => {
+  const parsed = designSchema.safeParse(document);
+  return `You are the editing agent for the poster design "${title}" in a browser image editor.
 The document is one page: width x height in pixels, a background fill, and elements painted in array order, so later elements sit on top. x and y are the top-left corner in pixels.
-Elements sharing a groupId move together. Locked elements should only change when the user asks for them by name.
+Elements sharing a groupId move together.
+The poster is styled through its theme controls. A colour role paints every element it targets, keeping each one's designed shade, a font role sets the font of its texts, and a copy control sets its texts.
 
 ${SHARED_RULES}
+- Change colours, fonts and the text of controlled elements only with "replace" on a theme control path. Writing those element properties directly is rejected.
+- Locked elements are the poster's shapes. Never change their properties; recolour them through the colour roles. You may remove one when the user asks.
+- Positions, sizes, photos, the title and new elements are edited with normal operations.
 - Fonts must be one of: ${FONT_FAMILIES.map((font) => font.family).join(', ')}.
 - Keep every element inside the page.
 
+${parsed.success ? themeGuide(parsed.data) : ''}
+
 Design JSON schema: ${jsonSchema(designSchema)}`;
+};
 
 export const mediaInstructions = (
   kind: MediaKind,
@@ -80,7 +113,8 @@ export const mediaInstructions = (
   document: unknown,
   focus: readonly string[],
 ): string => {
-  const base = kind === 'clip' ? clipInstructions(title, document) : posterInstructions(title);
+  const base =
+    kind === 'clip' ? clipInstructions(title, document) : posterInstructions(title, document);
   const selection =
     focus.length === 0 ? 'Nothing is selected.' : `Selected element ids: ${focus.join(', ')}.`;
   return `${base}

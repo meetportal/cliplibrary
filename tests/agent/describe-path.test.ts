@@ -28,6 +28,27 @@ describe('describePath', () => {
     );
   });
 
+  it('names the colour role when a path leads a role', () => {
+    expect(describePath('clip', clip, '/tracks/0/elements/0/props/look/background')).toEqual({
+      scope: 'Word Build',
+      section: 'Colors',
+      field: 'Background color',
+    });
+  });
+
+  it('names poster theme controls and list items', () => {
+    expect(describePath('poster', poster, '/controls/1/value')).toEqual({
+      scope: 'Theme',
+      section: 'Colors',
+      field: 'Primary color',
+    });
+    expect(describePath('poster', poster, '/controls/8/values/0')).toEqual({
+      scope: 'Theme',
+      section: 'Copy',
+      field: 'Reviewer 1',
+    });
+  });
+
   it('falls back to readable keys outside the control layout', () => {
     expect(describePath('clip', clip, '/tracks/0/elements/0/transform/x')).toEqual({
       scope: 'Composition element',
@@ -89,7 +110,7 @@ describe('buildAgentContext', () => {
     expect(context.documentBytes).toBe(JSON.stringify(clip).length);
   });
 
-  it('summarises a poster without timing or controls', () => {
+  it('summarises a poster with its theme controls and no timing', () => {
     const context = buildAgentContext({
       kind: 'poster',
       title: 'Amber',
@@ -105,7 +126,7 @@ describe('buildAgentContext', () => {
     expect(context).toMatchObject({
       canvas: `${poster.width}×${poster.height}`,
       timing: null,
-      controls: 0,
+      controls: poster.controls.length,
       elements: poster.elements.length,
       assets: 2,
       history: 3,

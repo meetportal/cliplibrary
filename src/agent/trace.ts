@@ -82,7 +82,7 @@ const posterFacts = (design: Design, focus: readonly string[]) => ({
   timing: null,
   layers: 1,
   elements: design.elements.length,
-  controls: 0,
+  controls: design.controls.length,
   selection: selectionNames('poster', design, focus),
 });
 

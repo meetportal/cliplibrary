@@ -19,9 +19,7 @@ export const ContextStep = ({ context }: { context: AgentContext }) => {
       'Elements',
       `${context.elements} on ${context.layers} layer${context.layers === 1 ? '' : 's'}`,
     ],
-    ...(context.kind === 'clip'
-      ? ([['Controls', `${context.controls} mapped`]] as [string, string][])
-      : []),
+    ['Controls', `${context.controls} ${context.kind === 'clip' ? 'mapped' : 'theme controls'}`],
     ['Selected', context.selection.length === 0 ? 'Nothing' : context.selection.join(', ')],
     ['History', `${context.history} message${context.history === 1 ? '' : 's'}`],
     ['Hidden media', `${context.assets} asset${context.assets === 1 ? '' : 's'}`],

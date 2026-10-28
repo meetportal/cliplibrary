@@ -1,6 +1,6 @@
 import { getValueByPointer } from 'fast-json-patch';
 import { clipControlsFor, humanizeKey } from '@/core';
-import type { Design } from '@/design';
+import type { Design, DesignControl } from '@/design';
 import type { Project } from '@/project';
 import { getClipMeta, isClipId } from '@/schemas';
 import type { MediaKind } from './media';
@@ -13,6 +13,14 @@ export interface PathTarget {
 
 const CLIP_ELEMENT = /^\/tracks\/(\d+)\/elements\/(\d+)(?:\/(.*))?$/;
 const POSTER_ELEMENT = /^\/elements\/(\d+|-)(?:\/(.*))?$/;
+const POSTER_CONTROL = /^\/controls\/(\d+)\/values?(?:\/(\d+))?$/;
+
+const CONTROL_SECTIONS: Record<DesignControl['kind'], string> = {
+  color: 'Colors',
+  font: 'Fonts',
+  text: 'Copy',
+  list: 'Copy',
+};
 
 const fieldName = (rest: string | undefined): string =>
   rest === undefined || rest === ''
@@ -33,6 +41,9 @@ const describeClipProp = (clipId: string, propPath: string): Omit<PathTarget, 's
     [...section.fields, ...section.more].map((entry) => ({ section: section.title, entry })),
   );
   const found =
+    entries.find(
+      ({ entry }) => entry.shades !== null && entry.targets[0]?.join('/') === propPath,
+    ) ??
     entries.find(
       ({ entry }) =>
         entry.targets.length === 1 &&
@@ -73,6 +84,16 @@ const describePosterPath = (design: Design, path: string): PathTarget => {
       scope: 'Page',
       section: null,
       field: path === '/background' ? 'Background' : `Background › ${fieldName(rest)}`,
+    };
+  }
+  const control = POSTER_CONTROL.exec(path);
+  const owner = design.controls[Number(control?.[1] ?? -1)];
+  if (owner !== undefined) {
+    const item = control?.[2];
+    return {
+      scope: 'Theme',
+      section: CONTROL_SECTIONS[owner.kind],
+      field: item === undefined ? owner.label : `${owner.label} ${Number(item) + 1}`,
     };
   }
   const match = POSTER_ELEMENT.exec(path);

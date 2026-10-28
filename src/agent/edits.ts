@@ -1,6 +1,8 @@
 import { applyPatch, type Operation } from 'fast-json-patch';
 import { z } from 'zod';
 import { checkMedia, type MediaCheck, type MediaKind } from './media';
+import { recolorLinkedShades } from './roles';
+import { applyThemeControls, isControlOperation, themeViolations } from './theme';
 
 export const editOperationSchema = z.object({
   op: z.enum(['add', 'remove', 'replace', 'move', 'copy']),
@@ -21,21 +23,63 @@ const toPatch = (operation: EditOperation): Operation => {
   return { op: operation.op, path: operation.path, value: operation.value };
 };
 
+type Patched = { ok: true; document: unknown } | { ok: false; error: string };
+
+const patchDocument = (document: unknown, operations: readonly EditOperation[]): Patched => {
+  try {
+    return {
+      ok: true,
+      document: applyPatch(structuredClone(document), operations.map(toPatch), true, false)
+        .newDocument,
+    };
+  } catch (error) {
+    return { ok: false, error: error instanceof Error ? error.message : String(error) };
+  }
+};
+
+const editClip = (document: unknown, operations: readonly EditOperation[]): MediaCheck<'clip'> => {
+  const patched = patchDocument(document, operations);
+  if (!patched.ok) {
+    return patched;
+  }
+  const checked = checkMedia('clip', patched.document);
+  return checked.ok
+    ? checkMedia('clip', recolorLinkedShades(checked.document, operations))
+    : checked;
+};
+
+const editPoster = (
+  document: unknown,
+  operations: readonly EditOperation[],
+): MediaCheck<'poster'> => {
+  const source = checkMedia('poster', document);
+  if (!source.ok) {
+    return source;
+  }
+  const themed = applyThemeControls(source.document, operations.filter(isControlOperation));
+  if (!themed.ok) {
+    return themed;
+  }
+  const patched = patchDocument(
+    themed.design,
+    operations.filter((operation) => !isControlOperation(operation)),
+  );
+  if (!patched.ok) {
+    return patched;
+  }
+  const checked = checkMedia('poster', patched.document);
+  if (!checked.ok) {
+    return checked;
+  }
+  const issues = themeViolations(themed.design, checked.document);
+  return issues.length === 0 ? checked : { ok: false, error: issues.join('\n') };
+};
+
 export const applyEdits = <K extends MediaKind>(
   kind: K,
   document: unknown,
   operations: readonly EditOperation[],
-): MediaCheck<K> => {
-  let patched: unknown;
-  try {
-    patched = applyPatch(
-      structuredClone(document),
-      operations.map(toPatch),
-      true,
-      false,
-    ).newDocument;
-  } catch (error) {
-    return { ok: false, error: error instanceof Error ? error.message : String(error) };
-  }
-  return checkMedia(kind, patched);
-};
+): MediaCheck<K> =>
+  (kind === 'clip'
+    ? editClip(document, operations)
+    : editPoster(document, operations)) as MediaCheck<K>;
