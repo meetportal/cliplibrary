@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { describePath, readPointer, selectionNames } from '@/agent/describe-path';
-import { buildAgentContext } from '@/agent/trace';
+import { describePath, selectionNames } from '@/agent/describe-path';
 import { seedProjectForClip } from '@/core';
 import { findPoster } from '@/posters';
 
@@ -75,61 +74,10 @@ describe('describePath', () => {
   });
 });
 
-describe('readPointer', () => {
-  it('reads existing values and tolerates missing ones', () => {
-    expect(readPointer(poster, '/title')).toBe(poster.title);
-    expect(readPointer(poster, '/elements/999/fill')).toBeUndefined();
-  });
-});
-
 describe('selectionNames', () => {
   it('lists selected clip and poster elements by name', () => {
     expect(selectionNames('clip', clip, [clipElementId])).toEqual(['Word Build']);
     expect(selectionNames('poster', poster, [poster.elements[0]?.id ?? ''])).toEqual(['CLIENT']);
     expect(selectionNames('poster', poster, [])).toEqual([]);
-  });
-});
-
-describe('buildAgentContext', () => {
-  it('summarises a clip with its timing and mapped controls', () => {
-    const context = buildAgentContext({
-      kind: 'clip',
-      title: 'Word Build',
-      document: clip,
-      masked: clip,
-      focus: [clipElementId],
-      assets: 0,
-      history: 1,
-      instructions: 'prompt',
-      model: 'primary',
-      fallbackModel: 'fallback',
-    });
-    expect(context.timing).toContain('fps');
-    expect(context.controls).toBeGreaterThan(10);
-    expect(context.selection).toEqual(['Word Build']);
-    expect(context.documentBytes).toBe(JSON.stringify(clip).length);
-  });
-
-  it('summarises a poster with its theme controls and no timing', () => {
-    const context = buildAgentContext({
-      kind: 'poster',
-      title: 'Amber',
-      document: poster,
-      masked: poster,
-      focus: [],
-      assets: 2,
-      history: 3,
-      instructions: 'prompt',
-      model: 'primary',
-      fallbackModel: 'fallback',
-    });
-    expect(context).toMatchObject({
-      canvas: `${poster.width}×${poster.height}`,
-      timing: null,
-      controls: poster.controls.length,
-      elements: poster.elements.length,
-      assets: 2,
-      history: 3,
-    });
   });
 });

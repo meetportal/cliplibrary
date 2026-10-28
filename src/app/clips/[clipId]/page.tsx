@@ -27,6 +27,7 @@ const ClipEditorPage = async ({ params }: { params: Promise<{ clipId: string }> 
   return (
     <ClipTimelineEditor
       title={getClipMeta(clipId).title}
+      storageKey={`cliplibrary-clip:${clipId}`}
       initialProject={seedProjectForClip(clipId)}
       demoSrc={clipPreviewVideo(clipId)}
     />

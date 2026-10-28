@@ -14,6 +14,7 @@ const renderEditor = () =>
   render(
     <ClipTimelineEditor
       title="Phone Spin In"
+      storageKey="cliplibrary-clip:phone-spin-in"
       initialProject={seedProjectForClip('phone-spin-in')}
       demoSrc={null}
     />,
@@ -44,9 +45,14 @@ describe('ClipTimelineEditor', () => {
     const remote = seedProjectForClip('phone-spin-in');
     const published: Project[] = [];
     const publish = (project: Project) => published.push(project);
+    localStorage.setItem(
+      'cliplibrary-live-test',
+      JSON.stringify(placeClip(remote, { clipId: 'word-build' })),
+    );
     const view = render(
       <ClipTimelineEditor
         title="Live"
+        storageKey="cliplibrary-live-test"
         initialProject={remote}
         demoSrc={null}
         sync={{ remote, publish }}
@@ -54,11 +60,14 @@ describe('ClipTimelineEditor', () => {
       />,
     );
     expect(screen.getByText('Agent activity')).toBeInTheDocument();
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(screen.getAllByRole('button', { name: 'Clip element' })).toHaveLength(1);
 
     const grown = placeClip(remote, { clipId: 'brand-reveal' });
     view.rerender(
       <ClipTimelineEditor
         title="Live"
+        storageKey="cliplibrary-live-test"
         initialProject={remote}
         demoSrc={null}
         sync={{ remote: grown, publish }}

@@ -3,6 +3,8 @@
 import type { PlayerRef } from '@remotion/player';
 import dynamic from 'next/dynamic';
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { dropObjectUrls } from '@/agent/assets';
+import { checkMedia } from '@/agent/media';
 import { AgentWorkspace } from '@/components/media-agent/agent-workspace';
 import { ClipPreviewSkeleton } from '@/components/skeletons';
 import { Timeline } from '@/components/timeline/timeline';
@@ -11,6 +13,7 @@ import { preloadProjectScenes } from '@/compositions/scene-loader';
 import { createFrameStore } from '@/lib/frame-store';
 import { clampPxPerFrame, DEFAULT_PX_PER_FRAME, fitPxPerFrame } from '@/lib/timeline-geometry';
 import { DEFAULT_EXPORT_SETTINGS, useProjectExport } from '@/lib/use-project-export';
+import { useSavedDocument } from '@/lib/use-saved-document';
 import { useUndoable, useUndoRedoKeys } from '@/lib/use-undoable';
 import { cn } from '@/lib/utils';
 import {
@@ -85,6 +88,14 @@ const toFileName = (title: string): string =>
 
 const ANIMATION_OPTIONS = CLIP_REGISTRY.map((meta) => ({ id: meta.id, title: meta.title }));
 
+const parseSavedProject = (value: unknown): Project | null => {
+  const checked = checkMedia('clip', dropObjectUrls(value));
+  return checked.ok ? checked.document : null;
+};
+
+const firstElementId = (project: Project): string | null =>
+  project.tracks[0]?.elements[0]?.id ?? null;
+
 interface ProjectSync {
   remote: Project;
   publish: (project: Project) => void;
@@ -121,6 +132,7 @@ const useProjectSync = (
 
 interface ClipTimelineEditorProps {
   title: string;
+  storageKey: string;
   initialProject: Project;
   demoSrc: string | null;
   sync?: ProjectSync;
@@ -129,6 +141,7 @@ interface ClipTimelineEditorProps {
 
 export const ClipTimelineEditor = ({
   title,
+  storageKey,
   initialProject,
   demoSrc,
   sync,
@@ -142,6 +155,7 @@ export const ClipTimelineEditor = ({
     seal: sealProject,
     undo,
     redo,
+    reset,
   } = editor;
   useUndoRedoKeys(undo, redo);
   useProjectSync(project, setProject, sync);
@@ -151,12 +165,29 @@ export const ClipTimelineEditor = ({
   const playerRef = useRef<PlayerRef | null>(null);
   const [frames] = useState(createFrameStore);
   const [playing, setPlaying] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(
-    () => project.tracks[0]?.elements[0]?.id ?? null,
-  );
+  const [selectedId, setSelectedId] = useState<string | null>(() => firstElementId(project));
   const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
   const [pxPerFrame, setPxPerFrame] = useState(DEFAULT_PX_PER_FRAME);
   const [mobilePanel, setMobilePanel] = useState<MobilePanel>('properties');
+
+  const loadProject = useCallback(
+    (next: Project) => {
+      reset(next);
+      setSelectedId(firstElementId(next));
+      setActiveTrackId(null);
+    },
+    [reset],
+  );
+  const forgetSaved = useSavedDocument({
+    key: storageKey,
+    value: project,
+    parse: parseSavedProject,
+    restore: (saved) => {
+      if (sync === undefined) {
+        loadProject(saved);
+      }
+    },
+  });
 
   const activeTrack = activeTrackId ?? project.tracks[0]?.id ?? null;
   const selectedElement =
@@ -265,6 +296,7 @@ export const ClipTimelineEditor = ({
   return (
     <AgentWorkspace
       kind="clip"
+      chatKey={storageKey}
       title={title}
       document={project}
       focus={selectedId === null ? [] : [selectedId]}
@@ -293,7 +325,13 @@ export const ClipTimelineEditor = ({
               mobilePanel === 'properties' ? 'flex flex-1' : 'hidden',
             )}
           >
-            <ClipTimelineHeader title={title} />
+            <ClipTimelineHeader
+              title={title}
+              onReset={() => {
+                forgetSaved();
+                loadProject(initialProject);
+              }}
+            />
             {sidebar}
             <ClipPropertySidebar
               element={selectedElement}

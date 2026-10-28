@@ -32,6 +32,7 @@ export const LiveSessionEditor = ({ sessionId }: { sessionId: string }) => {
     <ClipTimelineEditor
       key={session.id}
       title={session.title}
+      storageKey={`cliplibrary-live-${session.id}`}
       initialProject={project}
       demoSrc={null}
       sync={{ remote: project, publish }}
