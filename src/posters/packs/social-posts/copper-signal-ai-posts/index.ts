@@ -1,6 +1,21 @@
 import { definePack } from '../../../pack';
-import { mistakes, quotePost, statRows, toggles } from './posts';
-import { POSTS, workshopPost, workshopStory } from './posts-more';
+import { mistakes, statRows, toggles } from './posts';
+import { closeRate, whyUs, workshopPost, workshopStory } from './posts-extra';
+import { principles, uploadFile, velocityBars } from './posts-more';
+import { quotePost } from './posts-quote';
+
+const POSTS = [
+  quotePost,
+  principles,
+  uploadFile,
+  toggles,
+  mistakes,
+  statRows,
+  workshopPost,
+  velocityBars,
+  whyUs,
+  closeRate,
+];
 
 export const copperSignalAiPostsPack = definePack({
   id: 'copper-signal-ai-posts',
