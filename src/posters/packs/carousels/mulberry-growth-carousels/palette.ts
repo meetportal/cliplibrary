@@ -14,33 +14,42 @@ export const MULBERRY = {
 
 export const { width: W, height: H } = POST_SIZE;
 
-export const CONDENSED = 'Barlow Condensed';
-export const SCRIPT = 'Caveat';
-export const SANS = 'Outfit';
+export const HEADING = { label: 'Heading font', value: 'Outfit' } as const;
+export const BODY = { label: 'Body font', value: 'Outfit' } as const;
+export const CONDENSED = { label: 'Heading font', value: 'Barlow Condensed' } as const;
+export const SCRIPT = { label: 'Script font', value: 'Caveat' } as const;
+export const HANDLE = { label: 'Handle', value: 'fernway.studio' } as const;
+
+export const BACKGROUND = {
+  value: MULBERRY.berry,
+  hint: 'Page gradient; its darker shade is the bottom of the gradient',
+} as const;
 
 type TextStyle = NonNullable<Parameters<typeof text>[4]>;
 
-export const say = (
-  content: string,
-  x: number,
-  y: number,
-  width: number,
-  size: number,
-  fill: string,
-  weight = 400,
-  extra: TextStyle = {},
-) =>
-  text(content, x, y, width, {
-    fontFamily: SANS,
-    fontSize: size,
-    fontWeight: weight,
-    fill,
-    lineHeight: 1.3,
-    ...extra,
-  });
+export const say =
+  (fontFamily: string) =>
+  (
+    content: string,
+    x: number,
+    y: number,
+    width: number,
+    size: number,
+    fill: string,
+    weight = 400,
+    extra: TextStyle = {},
+  ) =>
+    text(content, x, y, width, {
+      fontFamily,
+      fontSize: size,
+      fontWeight: weight,
+      fill,
+      lineHeight: 1.3,
+      ...extra,
+    });
 
-export const backdrop = () =>
-  rect(0, 0, W, H, linear(180, MULBERRY.berry, MULBERRY.deep), { name: 'Background' });
+export const backdrop = (top: string, bottom: string) =>
+  rect(0, 0, W, H, linear(180, top, bottom), { name: 'Background' });
 
-export const nextArrow = (color: string = MULBERRY.white) =>
+export const nextArrow = (color: string) =>
   icon('arrow-right', 900, 1180, 96, color, { strokeWidth: 1.6 });
