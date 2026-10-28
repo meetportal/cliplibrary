@@ -174,11 +174,12 @@ editor.
 
 Every clip and poster page wraps its editor in `AgentWorkspace` (`src/components/media-agent`), which
 docks an "AI editor" column beside the editor on tablets and up and opens it as a bottom sheet on
-phones. It streams a chat with `useChat` from `@ai-sdk/react` and renders each turn as a live trace:
-the context the route read, the model's reasoning, its reply, every `editMedia` call with each
-operation named after the control it changes (`src/agent/describe-path.ts`) and its before and after
-values, the validation result or rejection, and the model, steps, tokens and time. The editor sends its current document with each
-message to `POST /api/agent` (`src/app/api/agent/route.ts`), which runs `streamText` on Gemini 3.7
+phones. It streams a chat with `useChat` from `@ai-sdk/react` and keeps each turn simple: a
+collapsible "Thinking" row that opens while the model reasons and animates shut when it is done,
+the reply, and one card per edit listing each changed control (`src/agent/describe-path.ts`) with
+its new value. Rejected attempts the model fixes stay hidden; no model names, tokens or raw JSON.
+New content fades in and the log sticks to the bottom with `use-stick-to-bottom`. The editor sends
+its current document and the chat's name with each message to `POST /api/agent` (`src/app/api/agent/route.ts`), which runs `streamText` on Gemini 3.7
 Flash through OpenRouter, with OpenRouter's `models` fallback to Gemini 3.5 Flash
 (`src/agent/model.ts`). The route needs `OPENROUTER_API_KEY` (see `.env.example`).
 
@@ -198,9 +199,10 @@ Flash through OpenRouter, with OpenRouter's `models` fallback to Gemini 3.5 Flas
   model and swaps them back in the returned operations.
 - `src/agent/instructions.ts` builds the system prompt: the document, its JSON schema, each
   clip composition's control layout as a field guide and each poster's theme controls.
-- The route streams a `data-context` part (`src/agent/trace.ts`, `buildAgentContext`) before the
-  model output and attaches `AgentMetadata` to the message. The client strips `data-context` parts
-  before sending history back.
+- Each clip and poster keeps its own chats in `localStorage` (`cliplibrary-agent-chats:<kind>:<key>`,
+  `chat-library.ts` and `use-chat-library.ts`). The header switches, renames and deletes chats and
+  starts a new one. The model names an unnamed chat, or renames it on request, with the
+  `renameChat` tool. Reloaded turns never re-apply their edits.
 - `e2e/media-agent.spec.ts` replays recorded streams, so CI never calls the model.
 
 ## Poster packs and the image editor

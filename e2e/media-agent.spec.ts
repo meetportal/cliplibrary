@@ -2,26 +2,6 @@ import { expect, type Page, test } from '@playwright/test';
 
 type Chunk = Record<string, unknown>;
 
-const context = (kind: 'clip' | 'poster', title: string): Chunk => ({
-  type: 'data-context',
-  data: {
-    model: 'google/gemini-3.7-flash',
-    fallbackModel: 'google/gemini-3.5-flash',
-    kind,
-    title,
-    canvas: '1080×1350',
-    timing: kind === 'clip' ? '3.0s at 30fps' : null,
-    layers: 1,
-    elements: 1,
-    controls: kind === 'clip' ? 62 : 0,
-    selection: [],
-    documentBytes: 2048,
-    assets: 0,
-    history: 1,
-    instructions: `You are the editing agent for "${title}".`,
-  },
-});
-
 const editCall = (id: string, summary: string, operations: unknown[], output: unknown): Chunk[] => [
   { type: 'start-step' },
   { type: 'tool-input-start', toolCallId: id, toolName: 'editMedia' },
@@ -33,6 +13,12 @@ const editCall = (id: string, summary: string, operations: unknown[], output: un
   },
   { type: 'tool-output-available', toolCallId: id, output },
   { type: 'finish-step' },
+];
+
+const renameCall = (id: string, title: string): Chunk[] => [
+  { type: 'tool-input-start', toolCallId: id, toolName: 'renameChat' },
+  { type: 'tool-input-available', toolCallId: id, toolName: 'renameChat', input: { title } },
+  { type: 'tool-output-available', toolCallId: id, output: { title } },
 ];
 
 const reply = (text: string): Chunk[] => [
@@ -49,29 +35,22 @@ const reply = (text: string): Chunk[] => [
 ];
 
 const sse = (chunks: Chunk[]): string =>
-  [
-    { type: 'start', messageId: 'agent', messageMetadata: { startedAt: 1000 } },
-    ...chunks,
-    {
-      type: 'finish',
-      messageMetadata: {
-        finishedAt: 3400,
-        model: 'google/gemini-3.7-flash',
-        steps: 1,
-        inputTokens: 5108,
-        outputTokens: 531,
-        reasoningTokens: 418,
-      },
-    },
-  ]
+  [{ type: 'start', messageId: 'agent' }, ...chunks, { type: 'finish' }]
     .map((chunk) => `data: ${JSON.stringify(chunk)}\n\n`)
     .concat('data: [DONE]\n\n')
     .join('');
 
-const mockAgent = async (page: Page, body: string): Promise<{ media: unknown[] }> => {
-  const seen: { media: unknown[] } = { media: [] };
+interface Seen {
+  media: unknown[];
+  titles: unknown[];
+}
+
+const mockAgent = async (page: Page, body: string): Promise<Seen> => {
+  const seen: Seen = { media: [], titles: [] };
   await page.route('**/api/agent', async (route) => {
-    seen.media.push(route.request().postDataJSON().media);
+    const request = route.request().postDataJSON();
+    seen.media.push(request.media);
+    seen.titles.push(request.chatTitle);
     await route.fulfill({
       status: 200,
       headers: { 'content-type': 'text/event-stream', 'x-vercel-ai-ui-message-stream': 'v1' },
@@ -89,15 +68,17 @@ const ask = async (page: Page, prompt: string): Promise<void> => {
   await panel.getByRole('button', { name: 'Send', exact: true }).click();
 };
 
-test('the agent traces how it edits a clip and the edit can be undone', async ({ page }) => {
+test('the agent edits a clip, names the chat and keeps it after a reload', async ({ page }) => {
   const operations = [
     { op: 'replace', path: '/tracks/0/elements/0/props/text', value: 'HELLO FROM THE AGENT' },
   ];
   const seen = await mockAgent(
     page,
     sse([
-      context('clip', 'Word Build'),
       ...reply('Changing the line text.'),
+      { type: 'start-step' },
+      ...renameCall('rename-1', 'Agent greeting'),
+      { type: 'finish-step' },
       ...editCall('edit-1', 'Rewrite the line', operations, { ok: true, operations }),
     ]),
   );
@@ -105,15 +86,17 @@ test('the agent traces how it edits a clip and the edit can be undone', async ({
   await ask(page, 'Change the text');
 
   const panel = page.getByRole('region', { name: 'AI editor' });
-  await expect(panel.getByText('Read the video')).toBeVisible();
   await expect(panel.getByText('Changing the line text.')).toBeVisible();
-  const operation = panel.getByTestId('agent-operation');
-  await expect(operation).toContainText('Word Build › Text › Line');
-  await expect(operation).toContainText('HELLO FROM THE AGENT');
-  await expect(panel.getByText('Passed schema validation, applied as one undo step')).toBeVisible();
-  await expect(panel.getByTestId('agent-summary')).toContainText('5,108 tokens in');
-  await expect(panel.getByTestId('agent-status')).toContainText('Done');
+  await expect(panel.getByTestId('agent-thinking')).toHaveAttribute('data-open', 'false');
+  const edit = panel.getByTestId('agent-edit');
+  await expect(edit).toHaveAttribute('data-state', 'applied');
+  await expect(edit).toContainText('Rewrite the line');
+  await expect(panel.getByTestId('agent-operation')).toContainText('Line');
+  await expect(panel.getByTestId('agent-operation')).toContainText('HELLO FROM THE AGENT');
+  await expect(panel.getByTestId('agent-chat-title')).toHaveText('Agent greeting');
+  await expect(panel.getByText('tokens')).toHaveCount(0);
   expect(seen.media[0]).toMatchObject({ kind: 'clip', title: 'Word Build' });
+  expect(seen.titles[0]).toBeNull();
 
   const editorBox = await page
     .locator('aside')
@@ -126,9 +109,30 @@ test('the agent traces how it edits a clip and the edit can be undone', async ({
   await expect(line).toHaveValue('HELLO FROM THE AGENT');
   await page.getByRole('button', { name: 'Undo' }).click();
   await expect(line).not.toHaveValue('HELLO FROM THE AGENT');
+
+  await page.reload();
+  await expect(panel.getByTestId('agent-chat-title')).toHaveText('Agent greeting');
+  await expect(panel.getByText('Changing the line text.')).toBeVisible();
+  await expect(page.locator('aside textarea').first()).not.toHaveValue('HELLO FROM THE AGENT');
+
+  await panel.getByRole('button', { name: 'New chat' }).click();
+  await expect(panel.getByTestId('agent-chat-title')).toHaveText('New chat');
+  await expect(panel.getByText('What should change in this video?')).toBeVisible();
+  await panel.getByRole('button', { name: 'Chats' }).click();
+  await page.getByRole('menuitem', { name: /Agent greeting/ }).click();
+  await expect(panel.getByText('Changing the line text.')).toBeVisible();
+
+  await panel.getByRole('button', { name: 'Chats' }).click();
+  await page.getByRole('menuitem', { name: 'Rename chat' }).click();
+  await panel.getByLabel('Chat name').fill('Line rewrite');
+  await panel.getByLabel('Chat name').press('Enter');
+  await expect(panel.getByTestId('agent-chat-title')).toHaveText('Line rewrite');
+  await panel.getByLabel('Message the AI editor').fill('Again');
+  await panel.getByRole('button', { name: 'Send', exact: true }).click();
+  await expect.poll(() => seen.titles.at(-1)).toBe('Line rewrite');
 });
 
-test('a rejected poster edit is shown, retried and applied on a phone', async ({ page }) => {
+test('a rejected poster edit is retried out of sight and applied on a phone', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   const rejected = [{ op: 'replace', path: '/elements/0/fontFamily', value: 'Nunito' }];
   const fixed = [
@@ -138,7 +142,6 @@ test('a rejected poster edit is shown, retried and applied on a phone', async ({
   await mockAgent(
     page,
     sse([
-      context('poster', 'Amber Client Reviews 1'),
       ...reply('Updating the poster.'),
       ...editCall('edit-1', 'Use Nunito', rejected, {
         ok: false,
@@ -153,19 +156,15 @@ test('a rejected poster edit is shown, retried and applied on a phone', async ({
   await ask(page, 'Rename it');
 
   const panel = page.getByRole('region', { name: 'AI editor' });
-  await expect(panel.getByText('Validation rejected this edit.', { exact: false })).toBeVisible();
-  await expect(
-    panel.getByText('driven by the "Heading font" control', { exact: false }).first(),
-  ).toBeVisible();
-  await expect(panel.getByText('· attempt 2')).toBeVisible();
-  await expect(panel.getByTestId('agent-operation').first()).toContainText(
-    'CLIENT › Text › Font family',
-  );
-  await expect(panel.getByTestId('agent-operation').first()).toContainText('“Figtree”');
-  const themed = panel.getByTestId('agent-operation').nth(1);
-  await expect(themed).toContainText('Theme › Fonts › Heading font');
+  const edit = panel.getByTestId('agent-edit');
+  await expect(edit).toHaveCount(1);
+  await expect(edit).toHaveAttribute('data-state', 'applied');
+  await expect(edit).toContainText('Use Nunito and rename');
+  await expect(panel.getByText('driven by the "Heading font" control')).toHaveCount(0);
+  const themed = panel.getByTestId('agent-operation').first();
+  await expect(themed).toContainText('Heading font');
   await expect(themed).toContainText('“Nunito”');
-  await expect(panel.getByText('Passed schema validation, applied as one undo step')).toBeVisible();
+  await expect(panel.getByTestId('agent-chat-title')).toHaveText('Rename it');
 
   const box = await panel.boundingBox();
   expect(box?.width).toBe(390);
