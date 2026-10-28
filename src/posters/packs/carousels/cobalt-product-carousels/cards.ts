@@ -1,69 +1,133 @@
 import type { DesignIconName } from '@/design';
-import { circle, icon, rect, type Template, template, text } from '../../../kit';
-import { BODY, brandLine, COBALT, glow, H, HEAD, inkBackground, SITE, W } from './palette';
+import { circle, icon, rect, type Template, type ThemeSpec, text, themed } from '../../../kit';
+import {
+  BODY_FONT,
+  BRAND,
+  brandLine,
+  COBALT,
+  glow,
+  H,
+  HEADING_FONT,
+  inkBackground,
+  SITE,
+  W,
+} from './palette';
 
-const planCover = template(W, H, () => [
-  inkBackground(),
-  brandLine(80, 160, COBALT.white),
-  text('How Product-\nLed Teams\nShip a Plan', 80, 380, 920, {
-    fontFamily: HEAD,
+const coverSpec = {
+  colors: {
+    background: { value: COBALT.ink, hint: 'Page' },
+    primary: {
+      value: COBALT.sky,
+      hint: 'Subline and the top of the button gradient; its deeper shade is the bottom of the button',
+    },
+    text: {
+      value: COBALT.white,
+      hint: 'Brand line, the headline, the button label, the dots and the arrow',
+    },
+  },
+  fonts: { heading: HEADING_FONT, body: BODY_FONT },
+  copy: {
+    brand: BRAND,
+    headline: { label: 'Headline', value: 'How Product-\nLed Teams\nShip a Plan' },
+    subline: {
+      label: 'Subline',
+      value: 'Where strategy aligns the team and\nexecution earns the results.',
+    },
+    button: { label: 'Button', value: 'GET STARTED' },
+  },
+} as const satisfies ThemeSpec;
+
+const planCover = themed(W, H, coverSpec, (t) => [
+  inkBackground(t.color('background')),
+  brandLine(t.copy('brand'), 80, 160, t.color('text'), t.font('heading')),
+  text(t.copy('headline'), 80, 380, 920, {
+    fontFamily: t.font('heading'),
     fontSize: 104,
     fontWeight: 800,
-    fill: COBALT.white,
+    fill: t.color('text'),
     lineHeight: 1.1,
   }),
-  text('Where strategy aligns the team and\nexecution earns the results.', 80, 770, 900, {
-    fontFamily: BODY,
+  text(t.copy('subline'), 80, 770, 900, {
+    fontFamily: t.font('body'),
     fontSize: 38,
     fontWeight: 500,
-    fill: COBALT.sky,
+    fill: t.color('primary'),
     lineHeight: 1.4,
   }),
-  rect(80, 1080, 340, 92, glow(), { cornerRadius: 46, name: 'Button' }),
-  text('GET STARTED', 80, 1106, 340, {
-    fontFamily: HEAD,
+  rect(80, 1080, 340, 92, glow(t.color('primary'), t.shade('primary', COBALT.deepBlue)), {
+    cornerRadius: 46,
+    name: 'Button',
+  }),
+  text(t.copy('button'), 80, 1106, 340, {
+    fontFamily: t.font('heading'),
     fontSize: 34,
     fontWeight: 800,
-    fill: COBALT.white,
+    fill: t.color('text'),
     align: 'center',
     letterSpacing: 2,
   }),
-  [0, 1, 2].map((index) => circle(812 + index * 30, 1126, 9, COBALT.white)),
-  icon('arrow-right', 900, 1080, 92, COBALT.white, { strokeWidth: 2.8 }),
+  [0, 1, 2].map((index) => circle(812 + index * 30, 1126, 9, t.color('text'))),
+  icon('arrow-right', 900, 1080, 92, t.color('text'), { strokeWidth: 2.8 }),
 ]);
 
 const glowCard = (name: DesignIconName, title: string, body: string) =>
-  template(W, H, () => [
-    inkBackground(),
-    rect(0, 420, 56, 480, glow(), { cornerRadius: 22, name: 'Side card' }),
-    rect(1024, 420, 56, 480, glow(), { cornerRadius: 22, name: 'Side card' }),
-    rect(130, 300, 820, 760, glow(), { cornerRadius: 56, name: 'Card' }),
-    circle(540, 300, 76, COBALT.white),
-    icon(name, 502, 262, 76, COBALT.ink, { strokeWidth: 2.2 }),
-    text(title, 170, 420, 740, {
-      fontFamily: HEAD,
-      fontSize: 64,
-      fontWeight: 800,
-      fill: COBALT.white,
-      align: 'center',
-      lineHeight: 1.12,
-    }),
-    text(body, 190, 690, 700, {
-      fontFamily: BODY,
-      fontSize: 38,
-      fontWeight: 500,
-      fill: COBALT.white,
-      align: 'center',
-      lineHeight: 1.5,
-    }),
-    text(SITE, 0, 1150, W, {
-      fontFamily: BODY,
-      fontSize: 32,
-      fontWeight: 600,
-      fill: COBALT.white,
-      align: 'center',
-    }),
-  ]);
+  themed(
+    W,
+    H,
+    {
+      colors: {
+        background: { value: COBALT.ink, hint: 'Page and the icon' },
+        primary: {
+          value: COBALT.sky,
+          hint: 'Top of the card gradients; its deeper shade is the bottom of the cards',
+        },
+        text: {
+          value: COBALT.white,
+          hint: 'Icon circle, the title, the body and the website',
+        },
+      },
+      fonts: { heading: HEADING_FONT, body: BODY_FONT },
+      copy: {
+        title: { label: 'Title', value: title },
+        body: { label: 'Body', value: body },
+        site: SITE,
+      },
+    } as const satisfies ThemeSpec,
+    (t) => {
+      const fill = glow(t.color('primary'), t.shade('primary', COBALT.deepBlue));
+      return [
+        inkBackground(t.color('background')),
+        rect(0, 420, 56, 480, fill, { cornerRadius: 22, name: 'Side card' }),
+        rect(1024, 420, 56, 480, fill, { cornerRadius: 22, name: 'Side card' }),
+        rect(130, 300, 820, 760, fill, { cornerRadius: 56, name: 'Card' }),
+        circle(540, 300, 76, t.color('text')),
+        icon(name, 502, 262, 76, t.color('background'), { strokeWidth: 2.2 }),
+        text(t.copy('title'), 170, 420, 740, {
+          fontFamily: t.font('heading'),
+          fontSize: 64,
+          fontWeight: 800,
+          fill: t.color('text'),
+          align: 'center',
+          lineHeight: 1.12,
+        }),
+        text(t.copy('body'), 190, 690, 700, {
+          fontFamily: t.font('body'),
+          fontSize: 38,
+          fontWeight: 500,
+          fill: t.color('text'),
+          align: 'center',
+          lineHeight: 1.5,
+        }),
+        text(t.copy('site'), 0, 1150, W, {
+          fontFamily: t.font('body'),
+          fontSize: 32,
+          fontWeight: 600,
+          fill: t.color('text'),
+          align: 'center',
+        }),
+      ];
+    },
+  );
 
 export const PLAN_SERIES: readonly Template[] = [
   planCover,

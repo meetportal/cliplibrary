@@ -1,5 +1,6 @@
 import { definePack } from '../../../pack';
-import { ERA_SERIES, SPARK_SERIES } from './posts';
+import { ERA_SERIES } from './era';
+import { SPARK_SERIES } from './posts';
 import { VOICE_SERIES } from './voice';
 
 export const coralTideCarouselsPack = definePack({

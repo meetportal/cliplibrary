@@ -1,53 +1,115 @@
 import type { DesignIconName } from '@/design';
-import { circle, icon, rect, type Template, template, text } from '../../../kit';
-import { BODY, bodyText, brandMark, H, HEAD, LEAF, leafBackground, titleLine, W } from './palette';
+import { circle, icon, rect, type Template, type ThemeSpec, text, themed } from '../../../kit';
+import {
+  BODY,
+  BRAND,
+  bodyText,
+  brandMark,
+  H,
+  HEAD,
+  LEAF,
+  leafBackground,
+  titleLine,
+  W,
+} from './palette';
 
 const LINE_Y = 300;
+const LINE = 'rgba(209,250,229,0.7)';
 
-const trustCover = template(W, H, () => [
-  leafBackground(),
-  text("Here's how to earn it", 300, 218, 630, {
-    fontFamily: BODY,
+const coverSpec = {
+  colors: {
+    background: {
+      value: LEAF.top,
+      hint: 'Backdrop gradient; its darker shade is the bottom of the gradient',
+    },
+    primary: {
+      value: LEAF.mint,
+      hint: 'Lasting Trust headline; its pale tints color the divider line and the faint backdrop swoosh',
+    },
+    text: {
+      value: LEAF.white,
+      hint: 'How to Build line, the earn it prompt and its arrow, the closing lines and the brand name',
+    },
+  },
+  fonts: { heading: HEAD, body: BODY },
+  copy: {
+    prompt: { label: 'Prompt', value: "Here's how to earn it" },
+    title: { label: 'Title', value: 'How to Build' },
+    highlight: { label: 'Highlight', value: 'Lasting Trust\nWith Readers' },
+    body: { label: 'Closing line', value: 'Because attention fades,\nbut trust compounds.' },
+    brand: BRAND,
+  },
+} as const satisfies ThemeSpec;
+
+const trustCover = themed(W, H, coverSpec, (t) => [
+  leafBackground(t),
+  text(t.copy('prompt'), 300, 218, 630, {
+    fontFamily: t.font('body'),
     fontSize: 42,
     fontWeight: 600,
-    fill: LEAF.white,
+    fill: t.color('text'),
     align: 'right',
   }),
-  icon('arrow-right', 944, 218, 52, LEAF.white, { strokeWidth: 2.6 }),
-  rect(0, LINE_Y - 2, W, 4, 'rgba(209,250,229,0.7)', { name: 'Line' }),
-  titleLine('How to Build', 90, 420, 88, LEAF.white),
-  titleLine('Lasting Trust\nWith Readers', 90, 521, 88, LEAF.mint),
-  bodyText('Because attention fades,\nbut trust compounds.', 90, 800, 800),
-  brandMark(90, 1170),
+  icon('arrow-right', 944, 218, 52, t.color('text'), { strokeWidth: 2.6 }),
+  rect(0, LINE_Y - 2, W, 4, t.shade('primary', LINE), { name: 'Line' }),
+  titleLine(t.copy('title'), t.font('heading'), 90, 420, 88, t.color('text')),
+  titleLine(t.copy('highlight'), t.font('heading'), 90, 521, 88, t.color('primary')),
+  bodyText(t.copy('body'), t.font('body'), t.color('text'), 90, 800, 800),
+  brandMark(t.copy('brand'), t.font('heading'), t.color('text'), 90, 1170),
 ]);
 
+const cardSpec = (lead: string, accent: string, body: string) =>
+  ({
+    colors: {
+      background: {
+        value: LEAF.top,
+        hint: 'Backdrop gradient; its darker shade is the bottom of the gradient and its mid shade colors the badge icon',
+      },
+      primary: {
+        value: LEAF.mint,
+        hint: 'Second headline line; its pale tints color the divider line, the card border and the faint backdrop swoosh',
+      },
+      surface: {
+        value: LEAF.white,
+        hint: 'Icon badge circle; its faint tint fills the card panel',
+      },
+      text: { value: LEAF.white, hint: 'First headline line and the description' },
+    },
+    fonts: { heading: HEAD, body: BODY },
+    copy: {
+      lead: { label: 'Headline', value: lead },
+      highlight: { label: 'Highlight', value: accent },
+      body: { label: 'Description', value: body },
+    },
+  }) as const satisfies ThemeSpec;
+
 const trustCard = (name: DesignIconName, lead: string, accent: string, body: string) =>
-  template(W, H, () => [
-    leafBackground(),
-    rect(0, LINE_Y - 2, W, 4, 'rgba(209,250,229,0.7)', { name: 'Line' }),
-    rect(150, 440, 780, 720, 'rgba(255,255,255,0.04)', {
+  themed(W, H, cardSpec(lead, accent, body), (t) => [
+    leafBackground(t),
+    rect(0, LINE_Y - 2, W, 4, t.shade('primary', LINE), { name: 'Line' }),
+    rect(150, 440, 780, 720, t.shade('surface', 'rgba(255,255,255,0.04)'), {
       cornerRadius: 40,
-      stroke: 'rgba(209,250,229,0.75)',
+      stroke: t.shade('primary', 'rgba(209,250,229,0.75)'),
       strokeWidth: 4,
       name: 'Panel',
     }),
-    circle(540, LINE_Y, 72, LEAF.white),
-    icon(name, 505, LINE_Y - 35, 70, LEAF.mid, { strokeWidth: 2 }),
-    text(lead, 150, 560, 780, {
-      fontFamily: HEAD,
+    circle(540, LINE_Y, 72, t.color('surface')),
+    icon(name, 505, LINE_Y - 35, 70, t.shade('background', LEAF.mid), { strokeWidth: 2 }),
+    text(t.copy('lead'), 150, 560, 780, {
+      fontFamily: t.font('heading'),
       fontSize: 66,
       fontWeight: 700,
-      fill: LEAF.white,
+      fill: t.color('text'),
       align: 'center',
     }),
-    text(accent, 150, 645, 780, {
-      fontFamily: HEAD,
+    text(t.copy('highlight'), 150, 645, 780, {
+      fontFamily: t.font('heading'),
       fontSize: 66,
       fontWeight: 700,
-      fill: LEAF.mint,
+      fill: t.color('primary'),
       align: 'center',
     }),
-    bodyText(body, 210, 790, 660, 'center'),
+    bodyText(t.copy('body'), t.font('body'), t.color('text'), 210, 790, 660, 'center'),
   ]);
 
 export const TRUST_SERIES: readonly Template[] = [

@@ -1,6 +1,6 @@
-import { template } from '../../../kit';
 import { definePack } from '../../../pack';
-import { COBALT, MINI_POSTS, PLUM, POST, spotlightBadge, verticalHiring } from './posts';
+import { COBALT, PLUM, spotlightBadge, verticalHiring } from './posts';
+import { MINI_POSTS } from './posts-more';
 
 export const hiringSpotlightPack = definePack({
   id: 'hiring-spotlight',
@@ -12,8 +12,8 @@ export const hiringSpotlightPack = definePack({
   theme: 'dark',
 
   designs: [
-    ...MINI_POSTS.map((build) => template(POST.width, POST.height, () => build(COBALT))),
-    template(POST.width, POST.height, () => verticalHiring(PLUM)),
-    template(POST.width, POST.height, () => spotlightBadge(PLUM)),
+    ...MINI_POSTS.map((build) => build(COBALT)),
+    verticalHiring(PLUM),
+    spotlightBadge(PLUM),
   ],
 });
