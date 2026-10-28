@@ -280,3 +280,14 @@ whose `fields` are 2 to 5 role controls labelled `Primary color`, `Secondary col
 paths that role should drive (the front text can share Primary with a shape). Individual colour
 paths go in `more`. At most 14 controls show at first glance across all sections.
 `auditClipStandard` in `src/core/clip-controls.ts` enforces this.
+
+## MCP endpoint
+
+`src/app/mcp/route.ts` serves a stateless Streamable HTTP MCP server (`@modelcontextprotocol/sdk`,
+`src/mcp`) with open access and no storage. Tools: `search_clips` (MiniSearch over clip meta,
+filters by category, theme, orientation and role), `get_clip` (defaults, field guide and props
+schema), `create_video`, `add_clip` and `edit_video` (JSON Patch through the same `applyEdits`
+validation as the media agent). The agent passes the whole `{ title, project }` video into each
+call and gets the new one back with an `editorUrl`: `/video#<lz-string data>`
+(`src/mcp/video-link.ts`), opened by `SharedVideoEditor` in the clip timeline editor, which saves
+edits locally per link. `tests/mcp/mcp-route.test.ts` drives the route handler directly.

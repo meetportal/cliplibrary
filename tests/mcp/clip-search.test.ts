@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { orientationOf, searchClips } from '@/live/clip-search';
+import { orientationOf, searchClips } from '@/mcp/clip-search';
 import { CLIP_REGISTRY } from '@/schemas';
 
 describe('searchClips', () => {
