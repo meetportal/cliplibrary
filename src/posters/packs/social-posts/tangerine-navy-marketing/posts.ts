@@ -7,8 +7,9 @@ import {
   rect,
   rotateNodes,
   shadow,
-  template,
+  type ThemeSpec,
   text,
+  themed,
 } from '../../../kit';
 
 export const TAN = {
@@ -22,13 +23,17 @@ export const TAN = {
   slate: '#55607a',
 };
 
-export const HEAD = 'Urbanist';
-export const BODY = 'Work Sans';
+const HEAD = 'Urbanist';
+const BODY = 'Work Sans';
 export const { width: W, height: H } = POST_SIZE;
 
-export const hashtag = (y: number, color: string = TAN.navy) =>
-  text('#BuildBoldly', 0, y, W, {
-    fontFamily: HEAD,
+export const HEADING_FONT = { label: 'Heading font', value: HEAD } as const;
+export const BODY_FONT = { label: 'Body font', value: BODY } as const;
+export const HASHTAG = { label: 'Hashtag', value: '#BuildBoldly' } as const;
+
+export const hashtag = (label: string, y: number, color: string, fontFamily: string) =>
+  text(label, 0, y, W, {
+    fontFamily,
     fontSize: 38,
     fontWeight: 800,
     fill: color,
@@ -64,13 +69,19 @@ const clipToCanvas = (points: readonly Point[]): Point[] => {
   );
 };
 
+interface TapeStyle {
+  fill: string;
+  color: string;
+  shade: string;
+  fontFamily: string;
+}
+
 const tape = (
   label: string,
   cx: number,
   cy: number,
   degrees: number,
-  fill: string,
-  color: string,
+  style: TapeStyle,
   shift = 0,
 ) => {
   const radians = (degrees * Math.PI) / 180;
@@ -85,13 +96,13 @@ const tape = (
     [cx - dx * half + dy * thick, cy - dy * half - dx * thick],
   ];
   return [
-    poly(clipToCanvas(corners), fill, { name: 'Tape', ...shadow(20, 6, 'rgba(10,17,40,0.25)') }),
+    poly(clipToCanvas(corners), style.fill, { name: 'Tape', ...shadow(20, 6, style.shade) }),
     rotateNodes(degrees, cx + dx * shift, cy + dy * shift, [
       text(label, cx + dx * shift - 300, cy + dy * shift - 27, 600, {
-        fontFamily: BODY,
+        fontFamily: style.fontFamily,
         fontSize: 44,
         fontWeight: 500,
-        fill: color,
+        fill: style.color,
         align: 'center',
         lineHeight: 1.2,
       }),
@@ -99,52 +110,130 @@ const tape = (
   ];
 };
 
-export const brandTraps = template(W, H, () => [
-  rect(0, 0, W, H, linear(160, TAN.peach, TAN.tangerine, '#e85d04'), { name: 'Background' }),
-  tape('No Clear Offer', 260, 640, -66, TAN.ink, TAN.white, -360),
-  tape('Mixed Messaging', 520, 300, 32, TAN.navy, TAN.white),
-  tape('Bland Visuals', 520, 560, -18, TAN.cream, TAN.navy),
-  tape('Slow Replies', 600, 800, 10, TAN.white, TAN.navy, 100),
-  text('Brand Traps', 380, 1010, 620, {
-    fontFamily: HEAD,
-    fontSize: 92,
-    fontWeight: 800,
-    fill: TAN.white,
-    align: 'right',
-    lineHeight: 1,
-  }),
-  text('to Dodge', 380, 1110, 620, {
-    fontFamily: HEAD,
-    fontSize: 92,
-    fontWeight: 800,
-    fill: TAN.navy,
-    align: 'right',
-    lineHeight: 1,
-  }),
-]);
+const trapsSpec = {
+  colors: {
+    background: {
+      value: TAN.tangerine,
+      hint: 'Orange backdrop gradient',
+    },
+    primary: {
+      value: TAN.navy,
+      hint: 'Dark tapes, the words on the light tapes and the to Dodge line',
+    },
+    surface: {
+      value: TAN.cream,
+      hint: 'Light tapes (the cream one and its white twin)',
+    },
+    text: {
+      value: TAN.white,
+      hint: 'Brand Traps title and the words on the dark tapes',
+    },
+  },
+  fonts: { heading: HEADING_FONT, body: BODY_FONT },
+  copy: {
+    traps: {
+      label: 'Trap',
+      value: ['No Clear Offer', 'Mixed Messaging', 'Bland Visuals', 'Slow Replies'],
+    },
+    title: { label: 'Title', value: 'Brand Traps' },
+    subtitle: { label: 'Second title line', value: 'to Dodge' },
+  },
+} as const satisfies ThemeSpec;
 
-export const insightImagination = template(W, H, () => [
-  rect(0, 0, W, H, linear(180, TAN.peach, TAN.tangerine), { name: 'Background' }),
-  circle(540, 450, 280, TAN.navy, { name: 'Top circle', ...shadow(40, 16, 'rgba(10,17,40,0.3)') }),
-  circle(540, 890, 280, TAN.cream, {
-    name: 'Bottom circle',
-    ...shadow(40, 16, 'rgba(10,17,40,0.25)'),
-  }),
-  text('Insight', 0, 330, W, {
-    fontFamily: HEAD,
-    fontSize: 76,
-    fontWeight: 800,
-    fill: TAN.white,
-    align: 'center',
-  }),
-  text('Imagination', 0, 900, W, {
-    fontFamily: HEAD,
-    fontSize: 68,
-    fontWeight: 800,
-    fill: TAN.navy,
-    align: 'center',
-  }),
-  circle(540, 660, 52, TAN.tangerine, { name: 'Bolt badge', stroke: TAN.cream, strokeWidth: 6 }),
-  icon('zap', 510, 630, 60, TAN.white, { strokeWidth: 2.4 }),
-  hashtag(1235, TAN.navy),
-]);
+export const brandTraps = themed(W, H, trapsSpec, (t) => {
+  const [offer = '', messaging = '', visuals = '', replies = ''] = t.list('traps');
+  const tapeShade = t.shade('primary', 'rgba(10,17,40,0.25)');
+  const fontFamily = t.font('body');
+  const dark = { color: t.color('text'), shade: tapeShade, fontFamily };
+  const light = { color: t.color('primary'), shade: tapeShade, fontFamily };
+  const title = (content: string, y: number, fill: string) =>
+    text(content, 380, y, 620, {
+      fontFamily: t.font('heading'),
+      fontSize: 92,
+      fontWeight: 800,
+      fill,
+      align: 'right',
+      lineHeight: 1,
+    });
+  return [
+    rect(
+      0,
+      0,
+      W,
+      H,
+      linear(
+        160,
+        t.shade('background', TAN.peach),
+        t.color('background'),
+        t.shade('background', '#e85d04'),
+      ),
+      { name: 'Background' },
+    ),
+    tape(offer, 260, 640, -66, { ...dark, fill: t.shade('primary', TAN.ink) }, -360),
+    tape(messaging, 520, 300, 32, { ...dark, fill: t.color('primary') }),
+    tape(visuals, 520, 560, -18, { ...light, fill: t.color('surface') }),
+    tape(replies, 600, 800, 10, { ...light, fill: t.shade('surface', TAN.white) }, 100),
+    title(t.copy('title'), 1010, t.color('text')),
+    title(t.copy('subtitle'), 1110, t.color('primary')),
+  ];
+});
+
+const insightSpec = {
+  colors: {
+    background: {
+      value: TAN.tangerine,
+      hint: 'Orange backdrop gradient and the bolt badge',
+    },
+    primary: {
+      value: TAN.navy,
+      hint: 'Top circle, the Imagination word and the hashtag',
+    },
+    surface: {
+      value: TAN.cream,
+      hint: 'Bottom circle and the ring around the bolt badge',
+    },
+    text: {
+      value: TAN.white,
+      hint: 'Insight word and the bolt icon',
+    },
+  },
+  fonts: { heading: HEADING_FONT },
+  copy: {
+    top: { label: 'Top word', value: 'Insight' },
+    bottom: { label: 'Bottom word', value: 'Imagination' },
+    hashtag: HASHTAG,
+  },
+} as const satisfies ThemeSpec;
+
+export const insightImagination = themed(W, H, insightSpec, (t) => {
+  const word = (content: string, y: number, size: number, fill: string) =>
+    text(content, 0, y, W, {
+      fontFamily: t.font('heading'),
+      fontSize: size,
+      fontWeight: 800,
+      fill,
+      align: 'center',
+    });
+  return [
+    rect(0, 0, W, H, linear(180, t.shade('background', TAN.peach), t.color('background')), {
+      name: 'Background',
+    }),
+    circle(540, 450, 280, t.color('primary'), {
+      name: 'Top circle',
+      ...shadow(40, 16, t.shade('primary', 'rgba(10,17,40,0.3)')),
+    }),
+    circle(540, 890, 280, t.color('surface'), {
+      name: 'Bottom circle',
+      ...shadow(40, 16, t.shade('primary', 'rgba(10,17,40,0.25)')),
+    }),
+    word(t.copy('top'), 330, 76, t.color('text')),
+    word(t.copy('bottom'), 900, 68, t.color('primary')),
+    circle(540, 660, 52, t.color('background'), {
+      name: 'Bolt badge',
+      stroke: t.color('surface'),
+      strokeWidth: 6,
+    }),
+    icon('zap', 510, 630, 60, t.color('text'), { strokeWidth: 2.4 }),
+    hashtag(t.copy('hashtag'), 1235, t.color('primary'), t.font('heading')),
+  ];
+});

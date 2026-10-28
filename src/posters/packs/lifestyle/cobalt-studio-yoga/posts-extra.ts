@@ -1,42 +1,53 @@
 import { linear } from '@/design';
-import { POST_SIZE, photo, rect, STORY_SIZE, type Template, template, text } from '../../../kit';
-import { CO, centeredMark, SANS, SERIF } from './palette';
+import { POST_SIZE, photo, rect, STORY_SIZE, type ThemeSpec, text, themed } from '../../../kit';
+import { BRAND, CO, centeredMark, HEADING, SCRIPT } from './palette';
 
 const { width: W, height: H } = POST_SIZE;
 
-const yogaLetters = (height: number): Template =>
-  template(W, height, () => {
+const lettersSpec = {
+  colors: {
+    background: { value: CO.cobalt, hint: 'Page gradient; its darker shade ends it' },
+    accent: { value: CO.lilac, hint: 'Find your flow' },
+    text: { value: CO.white, hint: 'Big YO GA letters and the brand mark' },
+  },
+  fonts: { heading: HEADING, script: SCRIPT },
+  copy: {
+    letters: { label: 'Big letters', value: ['YO', 'GA'] },
+    tagline: { label: 'Tagline', value: 'Find your flow' },
+    brand: BRAND,
+  },
+} as const satisfies ThemeSpec;
+
+const yogaLetters = (height: number) =>
+  themed(W, height, lettersSpec, (t) => {
     const mid = height / 2;
+    const [top = '', bottom = ''] = t.list('letters');
+    const letters = (content: string, y: number) =>
+      text(content, 0, y, W, {
+        fontFamily: t.font('heading'),
+        fontSize: 380,
+        fontWeight: 800,
+        fill: t.color('text'),
+        align: 'center',
+        lineHeight: 1,
+        letterSpacing: 140,
+      });
     return [
-      rect(0, 0, W, height, linear(180, CO.cobalt, CO.deep), { name: 'Background' }),
-      text('YO', 0, mid - 520, W, {
-        fontFamily: SANS,
-        fontSize: 380,
-        fontWeight: 800,
-        fill: CO.white,
-        align: 'center',
-        lineHeight: 1,
-        letterSpacing: 140,
+      rect(0, 0, W, height, linear(180, t.color('background'), t.shade('background', CO.deep)), {
+        name: 'Background',
       }),
-      text('GA', 0, mid - 120, W, {
-        fontFamily: SANS,
-        fontSize: 380,
-        fontWeight: 800,
-        fill: CO.white,
-        align: 'center',
-        lineHeight: 1,
-        letterSpacing: 140,
-      }),
+      letters(top, mid - 520),
+      letters(bottom, mid - 120),
       photo('woman-portrait-3', 400, mid - 440, 280, 760, { cornerRadius: 140 }),
-      text('Find your flow', 650, mid - 560, 380, {
-        fontFamily: SERIF,
+      text(t.copy('tagline'), 650, mid - 560, 380, {
+        fontFamily: t.font('script'),
         fontSize: 54,
         fontWeight: 500,
         italic: true,
-        fill: CO.lilac,
+        fill: t.color('accent'),
         rotation: 12,
       }),
-      centeredMark(540, mid + 400, CO.white),
+      centeredMark(540, mid + 400, t.color('text'), t.copy('brand'), t.font('heading')),
     ];
   });
 
