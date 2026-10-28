@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { maskAssets, restoreAssets } from '@/agent/assets';
+import { dropObjectUrls, maskAssets, restoreAssets } from '@/agent/assets';
 import { applyEdits } from '@/agent/edits';
 import { mediaInstructions } from '@/agent/instructions';
 import { checkMedia } from '@/agent/media';
@@ -176,6 +176,14 @@ describe('assets', () => {
 
   it('leaves unknown asset references alone', () => {
     expect(restoreAssets('asset://4', [])).toBe('asset://4');
+  });
+});
+
+describe('dropObjectUrls', () => {
+  it('empties object URLs that die with the page and keeps everything else', () => {
+    expect(
+      dropObjectUrls({ src: 'blob:http://localhost/1', poster: 'data:image/png;base64,x', n: 2 }),
+    ).toEqual({ src: '', poster: 'data:image/png;base64,x', n: 2 });
   });
 });
 

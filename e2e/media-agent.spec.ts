@@ -68,7 +68,7 @@ const ask = async (page: Page, prompt: string): Promise<void> => {
   await panel.getByRole('button', { name: 'Send', exact: true }).click();
 };
 
-test('the agent edits a clip, names the chat and keeps it after a reload', async ({ page }) => {
+test('the agent edits a clip, names the chat and keeps both after a reload', async ({ page }) => {
   const operations = [
     { op: 'replace', path: '/tracks/0/elements/0/props/text', value: 'HELLO FROM THE AGENT' },
   ];
@@ -109,11 +109,18 @@ test('the agent edits a clip, names the chat and keeps it after a reload', async
   await expect(line).toHaveValue('HELLO FROM THE AGENT');
   await page.getByRole('button', { name: 'Undo' }).click();
   await expect(line).not.toHaveValue('HELLO FROM THE AGENT');
+  await page.getByRole('button', { name: 'Redo' }).click();
+  await expect(line).toHaveValue('HELLO FROM THE AGENT');
 
+  await expect
+    .poll(() => page.evaluate(() => localStorage.getItem('cliplibrary-clip:word-build') ?? ''))
+    .toContain('HELLO FROM THE AGENT');
   await page.reload();
   await expect(panel.getByTestId('agent-chat-title')).toHaveText('Agent greeting');
   await expect(panel.getByText('Changing the line text.')).toBeVisible();
-  await expect(page.locator('aside textarea').first()).not.toHaveValue('HELLO FROM THE AGENT');
+  await expect(line).toHaveValue('HELLO FROM THE AGENT');
+  await page.getByRole('button', { name: 'Reset', exact: true }).click();
+  await expect(line).not.toHaveValue('HELLO FROM THE AGENT');
 
   await panel.getByRole('button', { name: 'New chat' }).click();
   await expect(panel.getByTestId('agent-chat-title')).toHaveText('New chat');

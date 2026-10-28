@@ -39,7 +39,7 @@ export const AgentWorkspace = <K extends MediaKind>({
   const panel = useRef<HTMLElement>(null);
   const latest = useRef(current);
   latest.current = current;
-  const [library, actions] = useChatLibrary(`${kind}:${chatKey}`);
+  const [library, actions] = useChatLibrary(chatKey);
 
   useEffect(() => {
     setSlot(window.document.getElementById(PAGE_ACTIONS_ID));
