@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "cliplibrary",
+      "name": "neuclip",
       "dependencies": {
         "@ai-sdk/react": "4.0.158",
         "@modelcontextprotocol/sdk": "1.32.2",

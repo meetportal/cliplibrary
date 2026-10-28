@@ -1,4 +1,4 @@
-title = "cliplibrary gitleaks config"
+title = "neuclip gitleaks config"
 
 [extend]
 useDefault = true

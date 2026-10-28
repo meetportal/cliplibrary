@@ -11,9 +11,9 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Clip Library',
+  title: 'Neuclip',
   description: 'A library of Remotion animation clips with a deep, schema-driven editor.',
-  appleWebApp: { title: 'Clip Library', statusBarStyle: 'black-translucent' },
+  appleWebApp: { title: 'Neuclip', statusBarStyle: 'black-translucent' },
 };
 
 export const viewport: Viewport = {
@@ -26,7 +26,7 @@ export const viewport: Viewport = {
   ],
 };
 
-const themeBootstrap = `(function(){try{var t=localStorage.getItem('cliplibrary-theme');var d=t==='dark'||((t===null||t==='system')&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.classList.add('dark');}}catch(e){}})();`;
+const themeBootstrap = `(function(){try{var t=localStorage.getItem('neuclip-theme');var d=t==='dark'||((t===null||t==='system')&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.classList.add('dark');}}catch(e){}})();`;
 
 const RootLayout = ({ children }: { children: ReactNode }) => (
   <html lang="en" className={inter.variable} suppressHydrationWarning>
@@ -39,7 +39,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
         <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 bg-background/70 px-4 backdrop-blur-md sm:px-5">
           <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
             <BrandMark className="size-6" />
-            clip library
+            neuclip
           </Link>
           <nav className="flex items-center gap-4 text-sm text-muted-foreground">
             <div id={PAGE_ACTIONS_ID} className="contents" />

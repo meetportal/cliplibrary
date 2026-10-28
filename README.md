@@ -1,4 +1,4 @@
-# cliplibrary
+# neuclip
 
 An open library of [Remotion](https://www.remotion.dev) animation clips with a
 schema-driven, in-browser editor. Browse the gallery, open any clip, tweak its

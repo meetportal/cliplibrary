@@ -15,7 +15,7 @@ export const PosterEditor = dynamic(
       const PosterDesignEditor = ({ posterId, design }: PosterEditorProps) => (
         <DesignEditor
           initialDesign={design}
-          storageKey={`cliplibrary-poster:${posterId}`}
+          storageKey={`neuclip-poster:${posterId}`}
           backHref="/?type=poster"
           initialPanel="theme"
         />

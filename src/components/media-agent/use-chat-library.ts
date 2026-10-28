@@ -13,7 +13,7 @@ import {
   startChat,
 } from './chat-library';
 
-const storageKeyFor = (mediaKey: string): string => `cliplibrary-agent-chats:${mediaKey}`;
+const storageKeyFor = (mediaKey: string): string => `neuclip-agent-chats:${mediaKey}`;
 
 const readLibrary = (key: string): ChatLibrary => {
   try {
