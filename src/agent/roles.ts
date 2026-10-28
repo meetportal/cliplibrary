@@ -6,7 +6,7 @@ import type { EditOperation } from './edits';
 
 const PROP_PATH = /^\/tracks\/(\d+)\/elements\/(\d+)\/props\/(.+)$/;
 
-export const linkedShades = (clipId: string) =>
+const linkedShades = (clipId: string) =>
   clipControlsFor(clipId).flatMap((section) =>
     [...section.fields, ...section.more].flatMap((entry) => {
       const [base, ...rest] = entry.shades ?? [];
