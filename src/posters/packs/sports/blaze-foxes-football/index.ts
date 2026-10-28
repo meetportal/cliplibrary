@@ -1,14 +1,7 @@
 import { definePack } from '../../../pack';
-import {
-  countdownPost,
-  countdownStory,
-  gameDay,
-  gameTimes,
-  matchups,
-  rivalNight,
-  rivalRemix,
-} from './posts';
+import { countdownPost, countdownStory, gameDay, matchups } from './posts';
 import { finalScore, gameStats, playerOfWeek, topFive } from './posts-more';
+import { gameTimes, rivalNight, rivalRemix } from './posts-schedule';
 
 const POSTS = [
   gameDay,
