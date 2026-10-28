@@ -1,4 +1,5 @@
 export * from './anniversary-common';
+export * from './clip-labels';
 export * from './clip-props';
 export * from './clip-updated-at';
 export * from './clips';

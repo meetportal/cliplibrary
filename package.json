@@ -19,6 +19,7 @@
     "dev": "next dev --port 3000",
     "build": "next build",
     "start": "next start --port 3000",
+    "live": "bun run src/live/main.ts",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "@ai-sdk/react": "4.0.158",
+    "@modelcontextprotocol/sdk": "1.32.2",
     "@openrouter/ai-sdk-provider": "3.1.0",
     "@react-three/drei": "10.7.9",
     "@react-three/fiber": "9.8.1",

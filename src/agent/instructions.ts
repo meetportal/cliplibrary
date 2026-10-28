@@ -5,7 +5,7 @@ import { type Project, projectSchema } from '@/project';
 import { CLIP_SCHEMAS, getClipMeta, isClipId } from '@/schemas';
 import type { MediaKind } from './media';
 
-const jsonSchema = (schema: z.ZodType): string =>
+export const jsonSchema = (schema: z.ZodType): string =>
   JSON.stringify(z.toJSONSchema(schema, { unrepresentable: 'any' }));
 
 const SHARED_RULES = `Rules:
@@ -27,7 +27,7 @@ const fieldLine = (entry: ControlEntry): string => {
   return `  - ${entry.descriptor.label}: ${[lead, ...linked].join(', ')}${hint}`;
 };
 
-const clipFieldGuide = (clipId: string): string =>
+export const clipFieldGuide = (clipId: string): string =>
   clipControlsFor(clipId)
     .map((section) => {
       const fields = [...section.fields, ...section.more].map(fieldLine);
