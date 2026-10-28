@@ -1,15 +1,6 @@
 import { definePack } from '../../../pack';
-import {
-  clientEnvelope,
-  clientStory,
-  LAGOON,
-  newspaper,
-  ORCHID,
-  photoQuote,
-  reviewWord,
-  TANGERINE,
-  typewriter,
-} from './posts';
+import { LAGOON, newspaper, ORCHID, reviewWord, TANGERINE } from './posts';
+import { clientEnvelope, clientStory, photoQuote, typewriter } from './posts-more';
 
 const word = reviewWord(TANGERINE);
 const paper = newspaper(TANGERINE);
