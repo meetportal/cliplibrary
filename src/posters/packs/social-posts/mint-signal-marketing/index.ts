@@ -1,6 +1,7 @@
 import { definePack } from '../../../pack';
-import { connectingTeams, starReviews, webinarNote } from './posts';
+import { starReviews, webinarNote } from './posts';
 import { POSTS, strugglingPost, strugglingStory } from './posts-more';
+import { connectingTeams } from './posts-team';
 
 export const mintSignalMarketingPack = definePack({
   id: 'mint-signal-marketing',
