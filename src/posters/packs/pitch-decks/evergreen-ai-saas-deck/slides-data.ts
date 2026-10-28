@@ -1,196 +1,244 @@
 import { linear } from '@/design';
-import { circle, icon, rect, template } from '../../../kit';
-import { body, darkBg, EV, glass, head, lightBg, SH, SW } from './theme';
+import { icon, rect, type ThemeSpec, themed } from '../../../kit';
+import { BODY, darkBg, EV, fonts, glass, HEADING, type Ink, lightBg, SH, SW } from './theme';
 
 const NODES = [
-  { icon: 'workflow', label: 'Data\nPipelines', cx: 560 },
-  { icon: 'cpu', label: 'Model\nOperations', cx: 960 },
-  { icon: 'handshake', label: 'Partner\nAPIs', cx: 1360 },
+  { icon: 'workflow', cx: 560 },
+  { icon: 'cpu', cx: 960 },
+  { icon: 'handshake', cx: 1360 },
 ] as const;
 
-const wire = (x: number, y: number, width: number, height: number) =>
-  rect(x, y, width, height, 'rgba(255,255,255,0.4)', { name: 'Connector' });
+const wire = (ink: Ink<'text'>, x: number, y: number, width: number, height: number) =>
+  rect(x, y, width, height, ink.shade('text', 'rgba(255,255,255,0.4)'), { name: 'Connector' });
 
-export const ecosystemSlide = template(SW, SH, () => [
-  darkBg(),
-  head('Integrated Platform Ecosystem', 0, 130, SW, 66, EV.white, { align: 'center' }),
-  body(
-    'A connected blueprint that turns scattered tools into one dependable system.',
-    0,
-    230,
-    SW,
-    30,
-    EV.soft,
-    {
-      align: 'center',
+export const ecosystemSlide = themed(
+  SW,
+  SH,
+  {
+    colors: {
+      background: { value: EV.forest, hint: 'Page' },
+      primary: { value: EV.mint, hint: 'Glass cards and the closing line' },
+      text: {
+        value: EV.white,
+        hint: 'Title, icons and card labels; its translucent shades color the intro, connectors, icon chips and card outlines',
+      },
     },
-  ),
-  wire(958, 330, 4, 90),
-  wire(560, 418, 804, 4),
-  NODES.map((node) => [
-    wire(node.cx - 2, 420, 4, 80),
-    glass(node.cx - 140, 500, 280, 300, 26),
-    rect(node.cx - 50, 540, 100, 100, 'rgba(255,255,255,0.14)', {
-      name: 'Icon chip',
-      cornerRadius: 24,
-    }),
-    icon(node.icon, node.cx - 30, 560, 60, EV.white, { strokeWidth: 2 }),
-    head(node.label, node.cx - 130, 680, 260, 34, EV.white, { align: 'center' }),
-  ]),
-  body('Connected by default, secured end to end.', 0, 880, SW, 26, EV.mint, { align: 'center' }),
-]);
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      title: { label: 'Title', value: 'Integrated Platform Ecosystem' },
+      intro: {
+        label: 'Intro',
+        value: 'A connected blueprint that turns scattered tools into one dependable system.',
+      },
+      nodes: {
+        label: 'Card label',
+        value: ['Data\nPipelines', 'Model\nOperations', 'Partner\nAPIs'],
+      },
+      closing: { label: 'Closing line', value: 'Connected by default, secured end to end.' },
+    },
+  } as const satisfies ThemeSpec,
+  (t) => {
+    const { head, body } = fonts(t);
+    const labels = t.list('nodes');
+    return [
+      darkBg(t),
+      head(t.copy('title'), 0, 130, SW, 66, t.color('text'), { align: 'center' }),
+      body(t.copy('intro'), 0, 230, SW, 30, t.shade('text', EV.soft), { align: 'center' }),
+      wire(t, 958, 330, 4, 90),
+      wire(t, 560, 418, 804, 4),
+      NODES.map((node, index) => [
+        wire(t, node.cx - 2, 420, 4, 80),
+        glass(t, node.cx - 140, 500, 280, 300, 26),
+        rect(node.cx - 50, 540, 100, 100, t.shade('text', 'rgba(255,255,255,0.14)'), {
+          name: 'Icon chip',
+          cornerRadius: 24,
+        }),
+        icon(node.icon, node.cx - 30, 560, 60, t.color('text'), { strokeWidth: 2 }),
+        head(labels[index] ?? '', node.cx - 130, 680, 260, 34, t.color('text'), {
+          align: 'center',
+        }),
+      ]),
+      body(t.copy('closing'), 0, 880, SW, 26, t.color('primary'), { align: 'center' }),
+    ];
+  },
+);
 
-export const legacySlide = template(SW, SH, () => [
-  lightBg(),
-  head('$120B+', 140, 380, 900, 200, EV.ink, { fontWeight: 800 }),
-  body('Lost every year to unplanned downtime', 150, 600, 760, 32, EV.muted),
-  rect(150, 680, 120, 8, EV.emerald, { name: 'Rule', cornerRadius: 4 }),
-  head('Legacy Systems', 1100, 170, 700, 60, EV.ink),
-  head('Compounding Cost', 1100, 240, 700, 60, EV.emerald, { fontWeight: 500 }),
-  body(
-    'Old maintenance models stay reactive, so teams firefight instead of building. By the time a critical machine fails, the damage has already spread across schedules, budgets and customer trust.',
-    1100,
-    370,
-    680,
-    26,
-    EV.muted,
-  ),
-  head('Fernbrook', 1100, 650, 680, 30, EV.ink),
-  body(
-    'flips the model from fixing to predicting, so every alert arrives before the outage does.',
-    1100,
-    695,
-    680,
-    26,
-    EV.muted,
-  ),
-]);
+export const legacySlide = themed(
+  SW,
+  SH,
+  {
+    colors: {
+      background: { value: EV.white, hint: 'Page; its mint shade colors the lower corner' },
+      primary: { value: EV.emerald, hint: 'Compounding Cost, the short rule and the dot grid' },
+      text: {
+        value: EV.ink,
+        hint: 'The big figure, titles and brand name; its grey shade colors the paragraphs',
+      },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      figure: { label: 'Big figure', value: '$120B+' },
+      caption: { label: 'Figure caption', value: 'Lost every year to unplanned downtime' },
+      title: { label: 'Title', value: 'Legacy Systems' },
+      subtitle: { label: 'Highlighted title', value: 'Compounding Cost' },
+      body: {
+        label: 'Paragraph',
+        value:
+          'Old maintenance models stay reactive, so teams firefight instead of building. By the time a critical machine fails, the damage has already spread across schedules, budgets and customer trust.',
+      },
+      brand: { label: 'Brand name', value: 'Fernbrook' },
+      answer: {
+        label: 'Brand answer',
+        value:
+          'flips the model from fixing to predicting, so every alert arrives before the outage does.',
+      },
+    },
+  } as const satisfies ThemeSpec,
+  (t) => {
+    const { head, body } = fonts(t);
+    const muted = t.shade('text', EV.muted);
+    return [
+      lightBg(t),
+      head(t.copy('figure'), 140, 380, 900, 200, t.color('text'), { fontWeight: 800 }),
+      body(t.copy('caption'), 150, 600, 760, 32, muted),
+      rect(150, 680, 120, 8, t.color('primary'), { name: 'Rule', cornerRadius: 4 }),
+      head(t.copy('title'), 1100, 170, 700, 60, t.color('text')),
+      head(t.copy('subtitle'), 1100, 240, 700, 60, t.color('primary'), { fontWeight: 500 }),
+      body(t.copy('body'), 1100, 370, 680, 26, muted),
+      head(t.copy('brand'), 1100, 650, 680, 30, t.color('text')),
+      body(t.copy('answer'), 1100, 695, 680, 26, muted),
+    ];
+  },
+);
 
 const AXIS = [450, 400, 350, 300, 250, 200, 150, 100, 50, 0];
-const BARS = [
-  { label: 'Pilot', value: 410 },
-  { label: 'Launch', value: 290 },
-  { label: 'Scale', value: 160 },
-  { label: 'Expand', value: 340 },
-];
+const BAR_VALUES = [410, 290, 160, 340];
 const BASE = 900;
 const UNIT = 740 / 450;
 
-export const accelerationSlide = template(SW, SH, () => [
-  darkBg(),
-  head('Product', 140, 150, 700, 72, EV.white),
-  head('Acceleration', 140, 232, 700, 72, EV.mint, { fontWeight: 500 }),
-  body(
-    'Automation is no longer a nice extra. Offloading routine work lets teams move faster, stay accurate and scale without adding headcount.',
-    140,
-    380,
-    640,
-    30,
-    EV.soft,
-  ),
-  AXIS.map((value) =>
-    body(String(value), 960, BASE - value * UNIT - 16, 100, 26, EV.soft, { align: 'right' }),
-  ),
-  rect(1090, 160, 2, 740, 'rgba(255,255,255,0.25)', { name: 'Axis' }),
-  BARS.map((bar, index) => {
-    const x = 1140 + index * 170;
-    const height = bar.value * UNIT;
-    return [
-      rect(x, BASE - height, 130, height, linear(180, EV.mint, 'rgba(47,158,124,0.12)'), {
-        name: 'Bar',
-        cornerRadius: 10,
-      }),
-      body(bar.label, x - 10, 925, 150, 24, EV.soft, { align: 'center' }),
-    ];
-  }),
-]);
-
-const QUADS = [
-  { title: 'Orchestration', text: 'Group, sort and route work automatically.', x: 180, y: 190 },
-  { title: 'Signals', text: 'Spot trends and risks before they land.', x: 1040, y: 190 },
-  { title: 'Autopilot', text: 'Hand repeat tasks to agents and refocus.', x: 180, y: 640 },
-  { title: 'Next Actions', text: 'Tailored suggestions for every team.', x: 1040, y: 640 },
-];
-
-export const quadrantSlide = template(SW, SH, () => [
-  rect(0, 0, SW, SH, linear(135, EV.emerald, EV.forestMid), { name: 'Background' }),
-  rect(958, 120, 4, 840, 'rgba(255,255,255,0.35)', { name: 'Divider' }),
-  rect(140, 538, 1640, 4, 'rgba(255,255,255,0.35)', { name: 'Divider' }),
-  QUADS.map((quad) => [
-    icon('arrow-up-right', quad.x, quad.y, 64, EV.white, { strokeWidth: 2.4 }),
-    head(quad.title, quad.x + 100, quad.y, 620, 54, EV.white),
-    body(quad.text, quad.x + 100, quad.y + 80, 600, 30, 'rgba(255,255,255,0.86)'),
-  ]),
-]);
-
-const QUARTERS = [
-  { q: 'Q1', title: 'Discovery', text: 'Baseline models and\naudit current tools.' },
-  { q: 'Q2', title: 'Build', text: 'Pilot automations with\ntwo core teams.' },
-  { q: 'Q3', title: 'Expansion', text: 'Roll out across regions\nand partners.' },
-  { q: 'Q4', title: 'Integration', text: 'Unify analytics into one\nlive command center.' },
-];
-
-export const quarterlySlide = template(SW, SH, () => [
-  darkBg(),
-  rect(960, 0, 420, SH, linear(180, EV.mint, EV.emerald), { name: 'Highlight column' }),
-  head('Quarterly', 140, 140, 700, 72, EV.white),
-  head('Roadmap', 140, 222, 700, 72, EV.mint, { fontWeight: 500 }),
-  head('You are here', 990, 150, 360, 46, EV.forest),
-  body('Scaling the rollout\nacross every region.', 990, 215, 360, 26, EV.forest),
-  rect(140, 558, 1640, 4, 'rgba(255,255,255,0.45)', { name: 'Timeline' }),
-  QUARTERS.map((quarter, index) => {
-    const here = index === 2;
-    const x = 140 + index * 420 + (here ? 20 : 0);
-    const ink = here ? EV.forest : EV.white;
-    return [
-      circle(x + 30, 560, 18, ink),
-      head(quarter.q, x, 620, 340, 80, ink, { fontWeight: 800 }),
-      head(quarter.title, x, 720, 340, 34, here ? EV.forest : EV.mint),
-      body(quarter.text, x, 775, 340, 24, here ? EV.forest : EV.soft),
-    ];
-  }),
-]);
-
-const MODULES = [
-  { title: 'Semantic Intake', text: 'Reads requests in plain language.', dark: true },
-  { title: 'Predictive Logic', text: 'Forecasts load before it peaks.', dark: false },
-  { title: 'Edge Intelligence', text: 'Runs models close to the data.', dark: false },
-  { title: 'Native API Mesh', text: 'Links every tool without glue code.', dark: false },
-  { title: 'Prescriptive Ops', text: 'Suggests the best next step.', dark: true },
-  { title: 'Closed-Loop Tuning', text: 'Learns from every outcome.', dark: false },
-];
-
-export const architectureSlide = template(SW, SH, () => [
-  lightBg(),
-  head('Intelligent Ecosystem Architecture', 0, 130, SW, 64, EV.ink, { align: 'center' }),
-  body(
-    'Six building blocks that keep intelligence and execution in step.',
-    0,
-    230,
-    SW,
-    30,
-    EV.muted,
-    {
-      align: 'center',
+export const accelerationSlide = themed(
+  SW,
+  SH,
+  {
+    colors: {
+      background: { value: EV.forest, hint: 'Page' },
+      primary: { value: EV.mint, hint: 'Acceleration and the chart bars' },
+      text: {
+        value: EV.white,
+        hint: 'Product; its translucent shades color the paragraph, axis numbers, axis line and bar labels',
+      },
     },
-  ),
-  MODULES.map((module, index) => {
-    const x = 200 + (index % 3) * 520;
-    const y = 390 + Math.floor(index / 3) * 290;
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      title: { label: 'Title', value: 'Product' },
+      subtitle: { label: 'Highlighted title', value: 'Acceleration' },
+      body: {
+        label: 'Paragraph',
+        value:
+          'Automation is no longer a nice extra. Offloading routine work lets teams move faster, stay accurate and scale without adding headcount.',
+      },
+      axis: {
+        label: 'Axis number',
+        value: ['450', '400', '350', '300', '250', '200', '150', '100', '50', '0'],
+      },
+      bars: { label: 'Bar label', value: ['Pilot', 'Launch', 'Scale', 'Expand'] },
+    },
+  } as const satisfies ThemeSpec,
+  (t) => {
+    const { head, body } = fonts(t);
+    const soft = t.shade('text', EV.soft);
+    const axis = t.list('axis');
     return [
-      rect(
-        x,
-        y,
-        480,
-        250,
-        module.dark ? linear(135, EV.emerald, EV.forestMid) : linear(160, '#e3f6ef', '#bfe9da'),
-        {
-          name: 'Module card',
-          cornerRadius: 22,
-        },
+      darkBg(t),
+      head(t.copy('title'), 140, 150, 700, 72, t.color('text')),
+      head(t.copy('subtitle'), 140, 232, 700, 72, t.color('primary'), { fontWeight: 500 }),
+      body(t.copy('body'), 140, 380, 640, 30, soft),
+      AXIS.map((value, index) =>
+        body(axis[index] ?? '', 960, BASE - value * UNIT - 16, 100, 26, soft, { align: 'right' }),
       ),
-      head(module.title, x + 36, y + 50, 410, 38, module.dark ? EV.white : EV.forest),
-      body(module.text, x + 36, y + 120, 410, 26, module.dark ? EV.soft : EV.ink),
+      rect(1090, 160, 2, 740, t.shade('text', 'rgba(255,255,255,0.25)'), { name: 'Axis' }),
+      t.list('bars').map((label, index) => {
+        const x = 1140 + index * 170;
+        const height = (BAR_VALUES[index] ?? 0) * UNIT;
+        return [
+          rect(
+            x,
+            BASE - height,
+            130,
+            height,
+            linear(180, t.color('primary'), t.shade('primary', 'rgba(47,158,124,0.12)')),
+            { name: 'Bar', cornerRadius: 10 },
+          ),
+          body(label, x - 10, 925, 150, 24, soft, { align: 'center' }),
+        ];
+      }),
     ];
-  }),
-]);
+  },
+);
+
+const QUAD_SPOTS = [
+  { x: 180, y: 190 },
+  { x: 1040, y: 190 },
+  { x: 180, y: 640 },
+  { x: 1040, y: 640 },
+];
+
+export const quadrantSlide = themed(
+  SW,
+  SH,
+  {
+    colors: {
+      background: {
+        value: EV.emerald,
+        hint: 'Page; its deeper shade colors the lower right corner',
+      },
+      text: {
+        value: EV.white,
+        hint: 'Arrows and titles; its translucent shades color the dividers and descriptions',
+      },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      titles: {
+        label: 'Title',
+        value: ['Orchestration', 'Signals', 'Autopilot', 'Next Actions'],
+      },
+      texts: {
+        label: 'Description',
+        value: [
+          'Group, sort and route work automatically.',
+          'Spot trends and risks before they land.',
+          'Hand repeat tasks to agents and refocus.',
+          'Tailored suggestions for every team.',
+        ],
+      },
+    },
+  } as const satisfies ThemeSpec,
+  (t) => {
+    const { head, body } = fonts(t);
+    const texts = t.list('texts');
+    const divider = t.shade('text', 'rgba(255,255,255,0.35)');
+    return [
+      rect(0, 0, SW, SH, linear(135, t.color('background'), t.shade('background', EV.forestMid)), {
+        name: 'Background',
+      }),
+      rect(958, 120, 4, 840, divider, { name: 'Divider' }),
+      rect(140, 538, 1640, 4, divider, { name: 'Divider' }),
+      t.list('titles').map((title, index) => {
+        const { x, y } = QUAD_SPOTS[index] ?? { x: 0, y: 0 };
+        return [
+          icon('arrow-up-right', x, y, 64, t.color('text'), { strokeWidth: 2.4 }),
+          head(title, x + 100, y, 620, 54, t.color('text')),
+          body(
+            texts[index] ?? '',
+            x + 100,
+            y + 80,
+            600,
+            30,
+            t.shade('text', 'rgba(255,255,255,0.86)'),
+          ),
+        ];
+      }),
+    ];
+  },
+);

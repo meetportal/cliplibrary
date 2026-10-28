@@ -1,12 +1,5 @@
 import { definePack } from '../../../pack';
-import {
-  accelerationSlide,
-  architectureSlide,
-  ecosystemSlide,
-  legacySlide,
-  quadrantSlide,
-  quarterlySlide,
-} from './slides-data';
+import { accelerationSlide, ecosystemSlide, legacySlide, quadrantSlide } from './slides-data';
 import {
   contentsSlide,
   coverSlide,
@@ -14,7 +7,9 @@ import {
   quoteSlide,
   welcomeSlide,
 } from './slides-intro';
-import { collaborationSlide, performanceSlide, teamSlide, worldwideSlide } from './slides-people';
+import { collaborationSlide, teamSlide } from './slides-people';
+import { architectureSlide, quarterlySlide } from './slides-roadmap';
+import { performanceSlide, worldwideSlide } from './slides-world';
 
 const INTRO = [coverSlide, contentsSlide, welcomeSlide, quoteSlide, empoweringSlide, teamSlide];
 const DATA = [
