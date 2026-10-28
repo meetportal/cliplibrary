@@ -5,37 +5,9 @@ import type { ReliefBackdropProps } from './relief-backdrop';
 export const reliefBackdropControls = defineControls<ReliefBackdropProps>({
   sections: [
     {
-      title: 'Clay',
-      fields: [
-        {
-          link: ['wallColor', 'ringColor'],
-          label: 'Clay color',
-          hint: 'Colors the wall and every ring together',
-        },
-        { path: 'roughness', label: 'Surface roughness', hint: 'Lower looks smoother and shinier' },
-        {
-          path: 'look.showBackdrop',
-          label: 'Show flat wall',
-          hint: 'Off leaves the rings floating on a transparent background',
-        },
-      ],
-      more: [
-        { path: 'wallColor', label: 'Wall color', hint: 'The flat wall behind the rings' },
-        { path: 'ringColor', label: 'Ring color', hint: 'The raised rings and the center block' },
-        { ...STAGE.reflections, hint: 'Strength of the soft studio reflections on the clay' },
-      ],
-    },
-    {
       title: 'Rings',
       fields: [
         { path: 'rings.count', label: 'Number of rings' },
-        {
-          path: 'rings.core',
-          label: 'Center size',
-          hint: 'Width of the square at the middle of the rings',
-        },
-        { path: 'rings.band', label: 'Ring width' },
-        { path: 'rings.gap', label: 'Gap between rings' },
         {
           path: 'rings.depthStep',
           label: 'Step height',
@@ -43,6 +15,13 @@ export const reliefBackdropControls = defineControls<ReliefBackdropProps>({
         },
       ],
       more: [
+        {
+          path: 'rings.core',
+          label: 'Center size',
+          hint: 'Width of the square at the middle of the rings',
+        },
+        { path: 'rings.band', label: 'Ring width' },
+        { path: 'rings.gap', label: 'Gap between rings' },
         {
           path: 'rings.growth',
           label: 'Ring width growth',
@@ -57,6 +36,38 @@ export const reliefBackdropControls = defineControls<ReliefBackdropProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['wallColor', 'ringColor'],
+          label: 'Primary color',
+          hint: 'The clay of the wall and every ring together',
+        },
+        {
+          path: 'ringColor',
+          label: 'Secondary color',
+          hint: 'The raised rings and the center block only',
+        },
+        {
+          path: 'wallColor',
+          label: 'Background color',
+          hint: 'The flat wall behind the rings only',
+        },
+      ],
+    },
+    {
+      title: 'Clay',
+      fields: [
+        {
+          path: 'look.showBackdrop',
+          label: 'Show flat wall',
+          hint: 'Off leaves the rings floating on a transparent background',
+        },
+        { path: 'roughness', label: 'Surface roughness', hint: 'Lower looks smoother and shinier' },
+      ],
+      more: [{ ...STAGE.reflections, hint: 'Strength of the soft studio reflections on the clay' }],
+    },
+    {
       title: 'Camera move',
       fields: [
         {
@@ -69,14 +80,14 @@ export const reliefBackdropControls = defineControls<ReliefBackdropProps>({
           label: 'Swing angle',
           hint: 'How far the view swings around the wall, in radians (1 is about 57 degrees); negative swings the other way',
         },
+      ],
+      more: [
         { path: 'camera.orbitAt', label: 'Swing starts at', hint: 'Frame number' },
         {
           path: 'camera.orbitFrames',
           label: 'Swing length',
           hint: 'In frames, turning out and back again',
         },
-      ],
-      more: [
         { path: 'camera.pushFrames', label: 'Push-in length', hint: 'In frames' },
         {
           path: 'camera.orbitPeak',
@@ -97,16 +108,14 @@ export const reliefBackdropControls = defineControls<ReliefBackdropProps>({
     },
     {
       title: 'Lighting',
-      fields: [
-        { ...STAGE.keyLight, label: 'Light strength' },
+      fields: [{ ...STAGE.keyLight, label: 'Light strength' }],
+      more: [
         {
           path: 'camera.lightX',
           label: 'Light left or right',
           hint: 'Negative lights from the left',
         },
         { path: 'camera.lightY', label: 'Light height', hint: 'Negative lights from below' },
-      ],
-      more: [
         {
           path: 'camera.lightZ',
           label: 'Light distance from wall',
@@ -126,7 +135,8 @@ export const reliefBackdropControls = defineControls<ReliefBackdropProps>({
     },
     {
       title: 'Framing',
-      fields: [
+      fields: [{ ...STAGE.cameraDistance, hint: 'Starting distance before the push-in' }],
+      more: [
         {
           path: 'camera.offsetX',
           label: 'Rings left or right',
@@ -137,9 +147,6 @@ export const reliefBackdropControls = defineControls<ReliefBackdropProps>({
           label: 'Rings up or down',
           hint: 'Positive moves them up',
         },
-        { ...STAGE.cameraDistance, hint: 'Starting distance before the push-in' },
-      ],
-      more: [
         {
           ...STAGE.fieldOfView,
           hint: 'Lens angle in degrees; lower zooms in and flattens the perspective',
@@ -151,14 +158,17 @@ export const reliefBackdropControls = defineControls<ReliefBackdropProps>({
       fields: [
         MOTION.enter,
         MOTION.exit,
+        { ...MOTION.speed, hint: 'Speeds up or slows down the push-in and the swing' },
+      ],
+      more: [
         {
           link: ['motion.exitFrames', 'motion.enterFrames'],
           label: 'Transition length',
           hint: 'In frames, for both the entrance and the exit',
         },
-        { ...MOTION.speed, hint: 'Speeds up or slows down the push-in and the swing' },
+        MOTION.enterFrames,
+        MOTION.exitFrames,
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: [

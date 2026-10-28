@@ -24,14 +24,14 @@ export const chalkBadgesReelControls = defineControls<ChalkBadgesReelProps>({
           label: 'Caption',
           hint: 'Typed across the top while the solo badges play; leave empty to hide it',
         },
+      ],
+      more: [
         { path: 'soloScale', label: 'Solo badge size' },
         {
           path: 'grid.columns',
           label: 'Grid columns',
           hint: 'Rows are added as needed to fit every badge',
         },
-      ],
-      more: [
         { path: 'grid.scale', label: 'Grid badge size' },
         {
           path: 'captionSize',
@@ -41,22 +41,78 @@ export const chalkBadgesReelControls = defineControls<ChalkBadgesReelProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['outro.color', 'title.badge.fill', 'look.accent'],
+          label: 'Primary color',
+          hint: 'The outro headline, the sparkles and solid shapes of the center title badge, and the board margin line when it is on',
+        },
+        {
+          link: [
+            'title.color',
+            'captionColor',
+            'outro.endTagColor',
+            'title.badge.line',
+            'title.badge.text',
+          ],
+          label: 'Text color',
+          hint: 'The chalk title words, the caption, the end tag and the center badge lines and word',
+        },
+        {
+          link: ['outro.barColor', 'outro.burstColor'],
+          label: 'Accent color',
+          hint: 'The outro underline bar and the giant burst glyph. Each badge keeps its own colors, set in Badges',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the chalkboard together',
+        },
+      ],
+      more: [
+        { path: 'outro.color', label: 'Outro headline color' },
+        {
+          path: 'title.badge.fill',
+          label: 'Center badge fill color',
+          hint: 'Sparkles and solid shapes of the center title badge',
+        },
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when Paper margin line is on' },
+        { path: 'title.color', label: 'Title word color' },
+        { path: 'captionColor', label: 'Caption color' },
+        { path: 'outro.endTagColor', label: 'End tag color' },
+        { path: 'title.badge.line', label: 'Center badge line color' },
+        { path: 'title.badge.text', label: 'Center badge word color' },
+        {
+          path: 'outro.barColor',
+          label: 'Underline color',
+          hint: 'The bar that grows under the fourth headline line, so it needs at least four lines',
+        },
+        { path: 'outro.burstColor', label: 'Burst glyph color' },
+        { ...LOOK.background, label: 'Board color' },
+        { ...LOOK.backgroundEdge, label: 'Board edge color' },
+        { ...LOOK.paperLine, label: 'Pattern line color', hint: 'Grid and ruled pattern lines' },
+        {
+          ...LOOK.ink,
+          label: 'Grid dot color',
+          hint: 'Chalk dots where the grid lines cross, shown with the grid pattern',
+        },
+      ],
+    },
+    {
       title: 'Title',
       fields: [
         { path: 'title.left', label: 'Left word' },
         { path: 'title.right', label: 'Right word' },
-        { path: 'title.badge.word', label: 'Center badge word' },
       ],
       more: [
+        { path: 'title.badge.word', label: 'Center badge word' },
         { path: 'title.size', label: 'Title word size', hint: 'In pixels' },
         {
           path: 'title.badge.variant',
           label: 'Center badge design',
           hint: 'The hand-drawn doodle between the two words',
         },
-        { path: 'title.badge.line', label: 'Center badge line color' },
-        { path: 'title.badge.fill', label: 'Center badge fill color' },
-        { path: 'title.badge.text', label: 'Center badge word color' },
       ],
     },
     {
@@ -72,33 +128,23 @@ export const chalkBadgesReelControls = defineControls<ChalkBadgesReelProps>({
             offset: 'Sideways shift',
           },
         },
+      ],
+      more: [
         {
           path: 'outro.endTag',
           label: 'End tag',
           hint: 'Pops in after the headline clears and the big glyph bursts past',
-        },
-        { path: 'outro.color', label: 'Headline color' },
-      ],
-      more: [
-        {
-          path: 'outro.barColor',
-          label: 'Underline color',
-          hint: 'The bar that grows under the fourth headline line, so it needs at least four lines',
         },
         {
           path: 'outro.burstText',
           label: 'Burst glyph',
           hint: 'The giant character that sweeps past the screen before the end tag',
         },
-        { path: 'outro.burstColor', label: 'Burst glyph color' },
       ],
     },
     {
       title: 'Sequence',
       fields: [
-        { path: 'title.show', label: 'Show title' },
-        { path: 'grid.show', label: 'Show badge grid' },
-        { path: 'outro.show', label: 'Show outro' },
         {
           path: 'soloFrames',
           label: 'Time per solo badge',
@@ -106,6 +152,9 @@ export const chalkBadgesReelControls = defineControls<ChalkBadgesReelProps>({
         },
       ],
       more: [
+        { path: 'title.show', label: 'Show title' },
+        { path: 'grid.show', label: 'Show badge grid' },
+        { path: 'outro.show', label: 'Show outro' },
         { path: 'title.frames', label: 'Title length', hint: 'In frames' },
         { path: 'grid.frames', label: 'Grid length', hint: 'In frames' },
         { path: 'outro.frames', label: 'Outro length', hint: 'In frames' },
@@ -120,25 +169,17 @@ export const chalkBadgesReelControls = defineControls<ChalkBadgesReelProps>({
       title: 'Chalk',
       fields: [
         {
-          link: ['title.color', 'captionColor', 'outro.endTagColor'],
-          label: 'Chalk text color',
-          hint: 'Sets the title words, caption and end tag together',
-        },
-        {
           path: 'chalk.width',
           label: 'Stroke width',
           hint: 'Line thickness of the hand-drawn badges',
         },
+      ],
+      more: [
         {
           path: 'chalk.dryness',
           label: 'Dry chalk texture',
           hint: 'Higher leaves more speckled gaps in the badges and title. The outro keeps its own texture',
         },
-      ],
-      more: [
-        { path: 'title.color', label: 'Title word color' },
-        { path: 'captionColor', label: 'Caption color' },
-        { path: 'outro.endTagColor', label: 'End tag color' },
         {
           path: 'chalk.roughness',
           label: 'Rough edges',
@@ -153,25 +194,14 @@ export const chalkBadgesReelControls = defineControls<ChalkBadgesReelProps>({
     },
     {
       title: 'Board',
-      fields: [
-        { ...LOOK.showBackdrop, label: 'Show chalkboard' },
-        { ...LOOK.background, label: 'Board color' },
-        { ...LOOK.paper, label: 'Board pattern' },
-      ],
+      fields: [{ ...LOOK.showBackdrop, label: 'Show chalkboard' }],
       more: [
-        { ...LOOK.backgroundEdge, label: 'Board edge color' },
+        { ...LOOK.paper, label: 'Board pattern' },
         LOOK.grain,
         LOOK.liveGrain,
         LOOK.spotlight,
-        { ...LOOK.paperLine, label: 'Pattern line color' },
         { ...LOOK.paperSpacing, label: 'Pattern spacing' },
-        {
-          ...LOOK.ink,
-          label: 'Grid dot color',
-          hint: 'Chalk dots where the grid lines cross, shown with the grid pattern',
-        },
         LOOK.paperMargin,
-        { ...LOOK.accent, label: 'Margin line color' },
       ],
     },
     {

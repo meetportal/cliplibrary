@@ -19,13 +19,13 @@ export const websiteFoundSpotlightControls = defineControls<WebsiteFoundSpotligh
           label: 'Website',
           hint: 'Shown in the top corner and on the end card',
         },
+      ],
+      more: [
         {
           link: ['copy.email', 'endCard.email'],
           label: 'Email',
           hint: 'Shown in the top corner and on the end card',
         },
-      ],
-      more: [
         {
           path: 'copy.markLetter',
           label: 'Logo letter',
@@ -44,6 +44,91 @@ export const websiteFoundSpotlightControls = defineControls<WebsiteFoundSpotligh
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: [
+            'palette.highlight',
+            'palette.contact',
+            'palette.heroPaper',
+            'palette.glow',
+            'endCard.accent',
+          ],
+          label: 'Primary color',
+          hint: 'The gold: highlight word and its side line, logo ring, top corner website, gold ball and its glow, and the end card accents',
+        },
+        {
+          link: ['palette.headline', 'endCard.brandInk'],
+          label: 'Secondary color',
+          hint: 'The headline and the end card brand name',
+        },
+        {
+          link: ['palette.body', 'palette.mark', 'endCard.ink', 'endCard.contactInk'],
+          label: 'Text color',
+          hint: 'Body text, top corner email, logo letter, and the end card headline and contacts',
+        },
+        {
+          link: ['palette.floor', 'palette.paper', 'endCard.band'],
+          label: 'Surface color',
+          hint: 'The floor, the paper balls and the end card contact band',
+        },
+        {
+          link: ['palette.sky', 'palette.skyEdge', 'endCard.backdrop', 'endCard.backdropEdge'],
+          label: 'Background color',
+          hint: 'The sky behind the scene and the end card background, center and edge together',
+        },
+      ],
+      more: [
+        {
+          path: 'palette.highlight',
+          label: 'Highlight word and logo ring color',
+          hint: 'Also the line beside the body text',
+        },
+        { path: 'palette.contact', label: 'Top corner website color' },
+        { path: 'palette.heroPaper', label: 'Gold ball color' },
+        { path: 'palette.glow', label: 'Gold ball glow color' },
+        {
+          path: 'endCard.accent',
+          label: 'End card accent color',
+          hint: 'Tagline, logo ring, code tile frame, brand second word and contact dot',
+        },
+        { path: 'palette.headline', label: 'Headline color' },
+        { path: 'endCard.brandInk', label: 'End card brand name color' },
+        { path: 'palette.body', label: 'Body text and email color' },
+        { path: 'palette.mark', label: 'Logo letter color' },
+        { path: 'endCard.ink', label: 'End card headline and logo letter color' },
+        { path: 'endCard.contactInk', label: 'End card contact text color' },
+        { path: 'palette.floor', label: 'Floor color' },
+        {
+          path: 'palette.paper',
+          label: 'Paper balls color',
+          hint: 'Every ball except the gold one',
+        },
+        { path: 'endCard.band', label: 'End card contact band color' },
+        { path: 'palette.sky', label: 'Sky color', hint: 'Also the haze the far floor fades into' },
+        { path: 'palette.skyEdge', label: 'Sky top color' },
+        { path: 'endCard.backdrop', label: 'End card background' },
+        {
+          path: 'endCard.backdropEdge',
+          label: 'End card background edge',
+          hint: 'Color the background fades to at the top and bottom',
+        },
+        { path: 'palette.lamp', label: 'Lamp color', hint: 'Also tints the ambient light' },
+        { path: 'palette.bulb', label: 'Bulb glow color' },
+        {
+          path: 'palette.beam',
+          label: 'Light beam color',
+          hint: 'Also colors the pool of light on the floor',
+        },
+        { path: 'palette.question', label: 'Question mark color' },
+        {
+          path: 'endCard.beam',
+          label: 'End card light beam color',
+          hint: 'Also colors the glow around the iris',
+        },
+      ],
+    },
+    {
       title: 'End card',
       fields: [
         {
@@ -51,12 +136,12 @@ export const websiteFoundSpotlightControls = defineControls<WebsiteFoundSpotligh
           label: 'Show end card',
           hint: 'Irises open from the gold ball into a contact card',
         },
-        { path: 'endCard.headline', label: 'End card headline' },
-        { path: 'endCard.subline', label: 'End card tagline' },
         { path: 'endCard.brand', label: 'Brand name' },
-        { path: 'endCard.phone', label: 'Phone number' },
       ],
       more: [
+        { path: 'endCard.headline', label: 'End card headline' },
+        { path: 'endCard.subline', label: 'End card tagline' },
+        { path: 'endCard.phone', label: 'Phone number' },
         {
           path: 'endCard.brandAccent',
           label: 'Brand name second word',
@@ -72,26 +157,6 @@ export const websiteFoundSpotlightControls = defineControls<WebsiteFoundSpotligh
           hint: 'Decorative QR-style tile; it cannot be scanned',
         },
         { path: 'endCard.codeSeed', label: 'Code tile pattern', hint: 'Picks a different pattern' },
-        { path: 'endCard.ink', label: 'Headline and logo letter color' },
-        {
-          path: 'endCard.accent',
-          label: 'Accent color',
-          hint: 'Tagline, logo ring, code tile frame, brand second word and contact dot',
-        },
-        { path: 'endCard.brandInk', label: 'Brand name color' },
-        { path: 'endCard.contactInk', label: 'Contact text color' },
-        { path: 'endCard.backdrop', label: 'Background' },
-        {
-          path: 'endCard.backdropEdge',
-          label: 'Background edge',
-          hint: 'Color the background fades to at the top and bottom',
-        },
-        { path: 'endCard.band', label: 'Contact band color' },
-        {
-          path: 'endCard.beam',
-          label: 'Light beam color',
-          hint: 'Also colors the glow around the iris',
-        },
         { path: 'endCard.beamOpacity', label: 'Light beam strength' },
         { path: 'endCard.irisFrames', label: 'Iris open length', hint: 'In frames' },
         {
@@ -108,58 +173,6 @@ export const websiteFoundSpotlightControls = defineControls<WebsiteFoundSpotligh
       ],
     },
     {
-      title: 'Colors',
-      fields: [
-        {
-          link: ['palette.highlight', 'palette.contact', 'endCard.accent'],
-          label: 'Gold accent',
-          hint: 'Highlight word, logo ring, top corner website and end card accents',
-        },
-        { path: 'palette.headline', label: 'Headline color' },
-        {
-          link: ['palette.body', 'palette.mark'],
-          label: 'Text color',
-          hint: 'Body text, top corner email and logo letter',
-        },
-        { path: 'palette.heroPaper', label: 'Gold ball color' },
-        { path: 'palette.floor', label: 'Floor color' },
-        {
-          path: 'palette.sky',
-          label: 'Sky color',
-          hint: 'Also the haze the far floor fades into',
-        },
-      ],
-      more: [
-        {
-          path: 'palette.highlight',
-          label: 'Highlight word and logo ring color',
-          hint: 'Also the line beside the body text',
-        },
-        { path: 'palette.contact', label: 'Top corner website color' },
-        { path: 'palette.body', label: 'Body text and email color' },
-        { path: 'palette.mark', label: 'Logo letter color' },
-        { path: 'palette.skyEdge', label: 'Sky top color' },
-        {
-          path: 'palette.paper',
-          label: 'Paper balls color',
-          hint: 'Every ball except the gold one',
-        },
-        { path: 'palette.lamp', label: 'Lamp color', hint: 'Also tints the ambient light' },
-        { path: 'palette.bulb', label: 'Bulb glow color' },
-        {
-          path: 'palette.beam',
-          label: 'Light beam color',
-          hint: 'Also colors the pool of light on the floor',
-        },
-        { path: 'palette.glow', label: 'Gold ball glow color' },
-        { path: 'palette.question', label: 'Question mark color' },
-        {
-          ...LOOK.showBackdrop,
-          hint: 'Off drops the sky, floor color, fog and lens effects, leaving only shadows',
-        },
-      ],
-    },
-    {
       title: 'Spotlight',
       fields: [
         {
@@ -167,10 +180,10 @@ export const websiteFoundSpotlightControls = defineControls<WebsiteFoundSpotligh
           label: 'Light brightness',
           hint: 'How strongly the lamp lights the floor',
         },
-        { path: 'lamp.coneAngle', label: 'Beam width' },
-        { path: 'lamp.showQuestion', label: 'Show question mark' },
       ],
       more: [
+        { path: 'lamp.coneAngle', label: 'Beam width' },
+        { path: 'lamp.showQuestion', label: 'Show question mark' },
         { path: 'lamp.beamOpacity', label: 'Visible beam strength' },
         {
           path: 'lamp.beamSoftness',
@@ -201,6 +214,14 @@ export const websiteFoundSpotlightControls = defineControls<WebsiteFoundSpotligh
       title: 'Timing',
       fields: [
         {
+          ...MOTION.speed,
+          hint: 'Speeds up the light flicker, camera drift and end card; the entrance and exit keep their own length',
+        },
+      ],
+      more: [
+        MOTION.enter,
+        MOTION.exit,
+        {
           path: 'timing.offStart1',
           label: 'Flicker starts at',
           hint: 'Frame number of the first blackout',
@@ -211,8 +232,6 @@ export const websiteFoundSpotlightControls = defineControls<WebsiteFoundSpotligh
           hint: 'Frame number of the final switch-on',
         },
         { path: 'timing.endCardStart', label: 'End card starts at', hint: 'Frame number' },
-      ],
-      more: [
         { path: 'timing.onStart1', label: 'First relight at', hint: 'Frame number' },
         { path: 'timing.offStart2', label: 'Second blackout at', hint: 'Frame number' },
         { path: 'timing.onStart2', label: 'Second relight at', hint: 'Frame number' },
@@ -229,20 +248,21 @@ export const websiteFoundSpotlightControls = defineControls<WebsiteFoundSpotligh
           label: 'Question mark grow length',
           hint: 'In frames, after each switch-on',
         },
-        MOTION.speed,
-        MOTION.enter,
         MOTION.enterFrames,
-        MOTION.exit,
         MOTION.exitFrames,
       ],
     },
     {
       title: 'Scene',
       fields: [
-        { path: 'paper.spread', label: 'Paper spread', hint: 'How far apart the paper balls sit' },
-        { path: 'paper.size', label: 'Paper ball size', hint: 'Includes the gold ball' },
+        {
+          ...LOOK.showBackdrop,
+          hint: 'Off drops the sky, floor color, fog and lens effects, leaving only shadows',
+        },
       ],
       more: [
+        { path: 'paper.spread', label: 'Paper spread', hint: 'How far apart the paper balls sit' },
+        { path: 'paper.size', label: 'Paper ball size', hint: 'Includes the gold ball' },
         { path: 'lamp.scale', label: 'Lamp size' },
         { path: 'lamp.x', label: 'Lamp left or right' },
         { path: 'lamp.z', label: 'Lamp near or far', hint: 'Higher is closer to the camera' },
@@ -260,11 +280,10 @@ export const websiteFoundSpotlightControls = defineControls<WebsiteFoundSpotligh
     },
     {
       title: 'Camera',
-      fields: [
+      fields: [],
+      more: [
         { path: 'camera.height', label: 'Camera height' },
         { path: 'camera.distance', label: 'Camera distance' },
-      ],
-      more: [
         { path: 'camera.fieldOfView', label: 'Field of view' },
         {
           path: 'camera.targetZ',

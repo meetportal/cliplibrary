@@ -13,23 +13,14 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
       fields: [
         { path: 'screen.wordmark', label: 'Brand name' },
         { path: 'screen.caption', label: 'Tagline', hint: 'Shown in capitals under the name' },
-        { path: 'screen.wordmarkColor', label: 'Brand name color' },
-        {
-          link: ['screen.accent', 'cloth.ink'],
-          label: 'Accent color',
-          hint: 'Colors the logo mark and the ink of the handwritten note together',
-        },
         {
           path: 'screen.size',
           label: 'Brand name size',
           hint: 'Also scales the logo mark and the tagline',
         },
+        { path: 'screen.showMark', label: 'Show logo mark' },
       ],
       more: [
-        { path: 'screen.showMark', label: 'Show logo mark' },
-        { path: 'screen.background', label: 'Screen color' },
-        { path: 'screen.accent', label: 'Logo mark color' },
-        { path: 'screen.captionColor', label: 'Tagline color' },
         {
           path: 'screen.brightness',
           label: 'Screen brightness',
@@ -43,11 +34,48 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['screen.accent', 'cloth.ink'],
+          label: 'Primary color',
+          hint: 'The logo mark on the screen and the ink of the handwritten note',
+        },
+        { path: 'screen.wordmarkColor', label: 'Text color', hint: 'The brand name on the screen' },
+        { path: 'screen.captionColor', label: 'Secondary color', hint: 'The tagline' },
+        {
+          link: ['screen.background', 'cloth.paper'],
+          label: 'Surface color',
+          hint: 'The cleared screen behind the brand name and the paper towel',
+        },
+        {
+          link: ['room.wall', 'look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'The wall behind the laptop, or the plain background when the room is hidden',
+        },
+      ],
+      more: [
+        { path: 'screen.accent', label: 'Logo mark color' },
+        { path: 'cloth.ink', label: 'Note ink color', hint: 'The note only, not the logo mark' },
+        {
+          path: 'screen.background',
+          label: 'Screen color',
+          hint: 'Also tints the light the screen casts',
+        },
+        { path: 'cloth.paper', label: 'Towel color' },
+        { path: 'room.wall', label: 'Wall color' },
+        { ...LOOK.background, hint: ROOM_HIDDEN },
+        {
+          ...LOOK.backgroundEdge,
+          hint: `Color the background fades to at the corners. ${ROOM_HIDDEN}`,
+        },
+        { path: 'room.desk', label: 'Desk color' },
+      ],
+    },
+    {
       title: 'Wipe',
       fields: [
-        { path: 'screen.cover', label: 'Mist color' },
         { path: 'wipe.radius', label: 'Wipe width', hint: 'Width of the cleared trail' },
-        { path: 'wipe.passes', label: 'Strokes', hint: 'Up and down waves across the screen' },
         {
           path: 'wipe.revealAll',
           label: 'Clear the whole screen',
@@ -55,6 +83,8 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
         },
       ],
       more: [
+        { path: 'screen.cover', label: 'Mist color' },
+        { path: 'wipe.passes', label: 'Strokes', hint: 'Up and down waves across the screen' },
         { path: 'screen.haze', label: 'Smudges', hint: 'How blotchy the mist looks' },
         { path: 'screen.smudge', label: 'Smudge color' },
         {
@@ -91,12 +121,10 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
       title: 'Towel',
       fields: [
         { path: 'cloth.note', label: 'Handwritten note', hint: 'Shown when the towel turns' },
-        { path: 'cloth.font', label: 'Handwriting' },
-        { path: 'cloth.noteSize', label: 'Note size' },
-        { path: 'cloth.paper', label: 'Towel color' },
       ],
       more: [
-        { path: 'cloth.ink', label: 'Note ink color', hint: 'The note only, not the logo mark' },
+        { path: 'cloth.font', label: 'Handwriting' },
+        { path: 'cloth.noteSize', label: 'Note size' },
         { path: 'cloth.noteTilt', label: 'Note tilt' },
         { path: 'cloth.bleed', label: 'Ink bleed', hint: 'Higher soaks the ink into the towel' },
         { path: 'cloth.show', label: 'Show towel', hint: 'Off wipes with the bare hand' },
@@ -135,6 +163,14 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
     {
       title: 'Timing',
       fields: [
+        {
+          ...MOTION.speed,
+          hint: 'Scales the wipe, turn and hand timing. Entrance and exit keep their length',
+        },
+      ],
+      more: [
+        MOTION.enter,
+        MOTION.exit,
         { path: 'timing.wipeStart', label: 'Wipe starts at', hint: 'Frame number' },
         { path: 'timing.wipeFrames', label: 'Wipe length', hint: 'In frames' },
         {
@@ -142,12 +178,6 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
           label: 'Towel turns at',
           hint: 'Frame number the hand lifts off and shows the note',
         },
-        {
-          ...MOTION.speed,
-          hint: 'Scales the wipe, turn and hand timing. Entrance and exit keep their length',
-        },
-      ],
-      more: [
         { path: 'timing.turnFrames', label: 'Turn length', hint: 'In frames' },
         {
           path: 'timing.enterFrames',
@@ -159,20 +189,17 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
           label: 'Full clear length',
           hint: 'In frames from the turn, when Clear the whole screen is on',
         },
-        MOTION.enter,
         MOTION.enterFrames,
-        MOTION.exit,
         MOTION.exitFrames,
       ],
     },
     {
       title: 'Hand',
-      fields: [
+      fields: [],
+      more: [
         { path: 'hand.skin', label: 'Skin tone' },
         { path: 'arm.style', label: 'Arm style', hint: 'Bare forearm or a knit sleeve' },
         { path: 'arm.sleeveColor', label: 'Sleeve color', hint: 'Sleeve arm style only' },
-      ],
-      more: [
         { path: 'arm.band', label: 'Show wristband' },
         { path: 'arm.bandColor', label: 'Wristband color' },
         {
@@ -221,15 +248,14 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
     },
     {
       title: 'Laptop',
-      fields: [
+      fields: [],
+      more: [
         { path: 'laptop.body', label: 'Body color' },
         {
           path: 'laptop.lidAngle',
           label: 'Lid tilt back',
           hint: 'In radians, 0 is upright. The wipe follows the screen',
         },
-      ],
-      more: [
         {
           path: 'laptop.turn',
           label: 'Turn',
@@ -251,8 +277,6 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
       title: 'Room',
       fields: [
         { path: 'room.show', label: 'Show room', hint: 'Off leaves the laptop on the background' },
-        { path: 'room.wall', label: 'Wall color' },
-        { path: 'room.desk', label: 'Desk color' },
       ],
       more: [
         { path: 'room.showPlant', label: 'Show plant' },
@@ -265,8 +289,6 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
         { path: 'room.plantZ', label: 'Plant depth', hint: 'Lower moves it further back' },
         { path: 'room.plantScale', label: 'Plant size' },
         { ...LOOK.showBackdrop, hint: ROOM_HIDDEN },
-        { ...LOOK.background, hint: ROOM_HIDDEN },
-        LOOK.backgroundEdge,
         LOOK.spotlight,
         { ...LOOK.grain, label: 'Background grain' },
         LOOK.liveGrain,
@@ -274,12 +296,17 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
         LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
+        {
+          path: 'look.accent',
+          label: 'Margin line color',
+          hint: `Shows when the paper has a margin. ${ROOM_HIDDEN}`,
+        },
       ],
     },
     {
       title: 'Camera',
-      fields: [
+      fields: [],
+      more: [
         { path: 'camera.fieldOfView', label: 'Field of view', hint: 'Lower zooms in' },
         { path: 'camera.handheld', label: 'Handheld shake' },
         {
@@ -287,8 +314,6 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
           label: 'Background blur',
           hint: `Focus follows the hand. ${ROOM_SHOWN}`,
         },
-      ],
-      more: [
         { path: 'camera.x', label: 'Camera left and right' },
         { path: 'camera.y', label: 'Camera height' },
         { path: 'camera.z', label: 'Camera distance' },
@@ -308,12 +333,11 @@ export const laptopWipeRevealControls = defineControls<LaptopWipeRevealProps>({
     },
     {
       title: 'Lighting',
-      fields: [
+      fields: [],
+      more: [
         { path: 'light.key', label: 'Key light' },
         { path: 'light.keyColor', label: 'Key light color' },
         { path: 'light.ambient', label: 'Fill light' },
-      ],
-      more: [
         { path: 'light.keyX', label: 'Key light from, left and right' },
         { path: 'light.keyY', label: 'Key light height' },
         { path: 'light.keyZ', label: 'Key light from, front and back' },

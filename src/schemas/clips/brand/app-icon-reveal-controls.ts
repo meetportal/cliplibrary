@@ -13,12 +13,22 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
           label: 'Icon artwork',
           hint: 'Shown on the tile face; leave empty for the sample scooter',
         },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
         {
           link: ['icon.color', 'icon.faceColor'],
-          label: 'Tile color',
-          hint: 'Sets the tile body and its face together',
+          label: 'Primary color',
+          hint: 'The icon tile: its body and the face plate behind the artwork',
         },
-        { path: 'wordmark.color', label: 'Name color' },
+        { path: 'wordmark.color', label: 'Text color', hint: 'The typed app name' },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
       ],
       more: [
         {
@@ -32,13 +42,19 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
           label: 'Artwork tint',
           hint: 'Multiplies the artwork colors; white keeps them unchanged',
         },
+        LOOK.background,
+        LOOK.backgroundEdge,
+        { ...LOOK.paperLine, hint: 'Shows when Paper pattern is not plain' },
+        {
+          path: 'look.accent',
+          label: 'Margin line color',
+          hint: 'Shows when Paper margin line is on',
+        },
       ],
     },
     {
-      title: 'Reveal',
+      title: 'Flip',
       fields: [
-        { path: 'reveal.flipAt', label: 'Flip starts at', hint: 'Frame number' },
-        { path: 'reveal.flipFrames', label: 'Flip length', hint: 'In frames' },
         {
           path: 'reveal.flipFrom',
           label: 'Face turns in from',
@@ -49,34 +65,27 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
           label: 'Extra spins',
           hint: 'Full turns added before the tile lands face forward',
         },
-        { path: 'reveal.typeAt', label: 'Name starts typing at', hint: 'Frame number' },
       ],
       more: [
+        { path: 'reveal.flipAt', label: 'Flip starts at', hint: 'Frame number' },
+        { path: 'reveal.flipFrames', label: 'Flip length', hint: 'In frames' },
         {
           path: 'reveal.lift',
           label: 'Flip lift',
           hint: 'How far the tile pops toward the camera and tips mid-flip',
         },
-        {
-          path: 'reveal.letterFrames',
-          label: 'Frames between letters',
-          hint: 'Lower types faster',
-        },
-        { path: 'reveal.letterFade', label: 'Letter fade-in', hint: 'In frames' },
       ],
     },
     {
       title: 'Icon',
-      fields: [
-        { path: 'icon.size', label: 'Icon size' },
+      fields: [{ path: 'icon.size', label: 'Icon size' }],
+      more: [
         { path: 'icon.artScale', label: 'Artwork size', hint: 'Relative to the tile' },
         {
           path: 'icon.depth',
           label: 'Tile thickness',
           hint: 'Thicker tiles also get a slightly smaller face',
         },
-      ],
-      more: [
         { path: 'icon.roughness', label: 'Face finish', hint: 'Higher is more matte' },
         { path: 'icon.y', label: 'Vertical position', hint: 'Moves the icon and name together' },
         {
@@ -89,22 +98,31 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
     },
     {
       title: 'Name',
-      fields: [
-        { path: 'wordmark.height', label: 'Name size' },
+      fields: [{ path: 'wordmark.height', label: 'Name size' }],
+      more: [
+        { path: 'reveal.typeAt', label: 'Name starts typing at', hint: 'Frame number' },
+        {
+          path: 'reveal.letterFrames',
+          label: 'Frames between letters',
+          hint: 'Lower types faster',
+        },
+        { path: 'reveal.letterFade', label: 'Letter fade-in', hint: 'In frames' },
         { path: 'wordmark.weight', label: 'Font weight' },
         { path: 'wordmark.gap', label: 'Gap below icon' },
+        { path: 'wordmark.tracking', label: 'Letter spacing' },
       ],
-      more: [{ path: 'wordmark.tracking', label: 'Letter spacing' }],
     },
     {
       title: 'Camera',
       fields: [
-        STAGE.cameraDistance,
         {
           path: 'camera.pushIn',
           label: 'Camera push in',
           hint: 'Share of the camera distance closed over the push length; 0 keeps the camera still',
         },
+      ],
+      more: [
+        STAGE.cameraDistance,
         {
           path: 'camera.orbitAngle',
           label: 'Swing angle',
@@ -115,8 +133,6 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
           label: 'Swing starts at',
           hint: 'Frame number; the clip is 120 frames long, so set this below 120 to see the swing',
         },
-      ],
-      more: [
         { ...STAGE.cameraDrift, hint: 'Slow handheld-style wander' },
         {
           path: 'camera.pushFrames',
@@ -139,8 +155,9 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
     },
     {
       title: 'Lighting',
-      fields: [STAGE.keyLight, STAGE.shadow],
+      fields: [STAGE.keyLight],
       more: [
+        STAGE.shadow,
         STAGE.reflections,
         STAGE.shadowSoftness,
         { path: 'camera.lightX', label: 'Key light left to right' },
@@ -154,9 +171,9 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         {
           path: 'camera.backdropSweep',
@@ -165,16 +182,14 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
         },
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
       ],
     },
     {
       title: 'Motion',
-      fields: [MOTION.enter, MOTION.exit, MOTION.speed],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
+      fields: [MOTION.enter, MOTION.exit],
+      more: [MOTION.speed, MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.ink', 'look.muted'],
