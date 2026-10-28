@@ -1,6 +1,7 @@
 import { definePack } from '../../../pack';
-import { blueprint, solutionsAmber, solutionsViolet } from './posts';
+import { solutionsAmber, solutionsViolet } from './posts';
 import { adsGrowth, fiveStages, POSTS, powerPost, powerStory } from './posts-more';
+import { blueprint } from './posts-power';
 
 export const solarFlareAiPostsPack = definePack({
   id: 'solar-flare-ai-posts',
