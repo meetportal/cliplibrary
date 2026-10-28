@@ -256,7 +256,12 @@ export const useDesignEditor = (initial: Design) => {
   const applyTemplate = useCallback(
     (source: Design) => {
       const scaled = resizeDesign(source, design.width, design.height);
-      commit({ ...design, background: scaled.background, elements: scaled.elements });
+      commit({
+        ...design,
+        background: scaled.background,
+        elements: scaled.elements,
+        controls: scaled.controls,
+      });
       setSelectedIds([]);
       setEditingId(null);
     },

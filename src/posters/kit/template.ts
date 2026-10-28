@@ -1,4 +1,4 @@
-import type { DesignElement, Fill } from '@/design';
+import type { DesignControl, DesignElement, Fill } from '@/design';
 import { place } from './blocks';
 import type { Nodes } from './elements';
 
@@ -6,6 +6,7 @@ export interface Template {
   width: number;
   height: number;
   build: () => Nodes[];
+  compose?: () => { elements: DesignElement[]; controls: DesignControl[] };
 }
 
 export const template = (width: number, height: number, build: () => Nodes[]): Template => ({

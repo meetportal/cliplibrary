@@ -360,7 +360,7 @@ export const ElementNode = ({
     rotation={element.rotation}
     opacity={editingText ? 0 : element.opacity}
     visible={!element.hidden}
-    listening={interaction.draggable !== undefined}
+    listening={interaction.draggable !== undefined && !element.locked}
     {...interaction}
   >
     <ShapeContent element={element} />

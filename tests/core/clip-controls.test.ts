@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 import { z } from 'zod';
-import { auditClipControls, humanizeKey, resolveClipControls } from '@/core';
+import { auditClipControls, auditClipStandard, humanizeKey, resolveClipControls } from '@/core';
 import { CLIP_MODULES, zColor, zSlider } from '@/schemas';
 
 const schema = z.object({
@@ -82,6 +82,40 @@ describe('auditClipControls', () => {
   });
 });
 
+describe('auditClipStandard', () => {
+  it('requires a near-top Colors section of colour roles and a short first glance', () => {
+    expect(
+      auditClipStandard(schema, {
+        sections: [
+          { title: 'Text', fields: ['title', 'size', 'gap'] },
+          { title: 'Colors', fields: [{ path: 'look.ink', label: 'Ink' }, 'size'] },
+        ],
+      }),
+    ).toEqual([
+      'Colors role "Ink" is not one of Primary color, Secondary color, Accent color, Text color, Background color, Surface color',
+      'Colors role "size" is not one of Primary color, Secondary color, Accent color, Text color, Background color, Surface color',
+      'Colors needs a Primary color role',
+      'Colors role field "size" is not a color',
+    ]);
+    expect(
+      auditClipStandard(schema, {
+        sections: [
+          {
+            title: 'Colors',
+            fields: [
+              { link: ['look.ink', 'look.accent'], label: 'Primary color' },
+              { path: 'look.accent', label: 'Accent color' },
+            ],
+          },
+        ],
+      }),
+    ).toEqual([]);
+    expect(auditClipStandard(schema, { sections: [{ title: 'A', fields: [] }] })).toEqual([
+      'needs a "Colors" section as the first or second section',
+    ]);
+  });
+});
+
 describe('clip control layouts', () => {
   for (const module of CLIP_MODULES) {
     it(`${module.id} covers every prop exactly once and resolves`, () => {
@@ -92,6 +126,17 @@ describe('clip control layouts', () => {
         repeatedTitles: [],
       });
       expect(() => resolveClipControls(module.schema, module.controls)).not.toThrow();
+    });
+
+    const reworked = module.controls.sections.some(
+      (section) =>
+        section.title === 'Colors' &&
+        section.fields.some(
+          (field) => typeof field !== 'string' && field.label === 'Primary color',
+        ),
+    );
+    it.if(reworked)(`${module.id} follows the standard Colors roles and first-glance limit`, () => {
+      expect(auditClipStandard(module.schema, module.controls)).toEqual([]);
     });
   }
 });

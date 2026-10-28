@@ -180,5 +180,6 @@ export const createDesign = (overrides: Partial<Design> = {}): Design => ({
   height: 1080,
   background: '#ffffff',
   elements: [],
+  controls: [],
   ...overrides,
 });

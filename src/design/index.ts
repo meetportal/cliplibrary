@@ -1,3 +1,4 @@
+export * from './controls';
 export * from './design';
 export * from './element';
 export * from './factories';
@@ -8,4 +9,5 @@ export * from './geometry';
 export * from './icons';
 export * from './image-fit';
 export * from './mutations';
+export * from './patterns';
 export * from './style';

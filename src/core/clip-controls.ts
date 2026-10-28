@@ -1,4 +1,5 @@
 import type { z } from 'zod';
+import { getAtPath } from '@/lib/value-path';
 import type { ClipControls, ControlField } from '@/schemas';
 import { describeSchema } from './schema-introspect';
 import type {
@@ -66,9 +67,21 @@ const withLabel = (
     ? { ...descriptor, label, item: relabelItems(descriptor.item, items) }
     : { ...descriptor, label };
 
+const defaultShades = (
+  descriptors: readonly AddressableDescriptor[],
+  defaults: unknown,
+): string[] | null => {
+  if (descriptors.length < 2 || descriptors[0]?.kind !== 'color') {
+    return null;
+  }
+  const shades = descriptors.map((descriptor) => getAtPath(defaults, descriptor.path));
+  return shades.every((shade): shade is string => typeof shade === 'string') ? shades : null;
+};
+
 export const resolveClipControls = (
   schema: z.ZodType,
   controls: ClipControls,
+  defaults?: unknown,
 ): ControlSectionView[] => {
   const byPath = describeControlPaths(schema);
   const lookup = (path: string): AddressableDescriptor => {
@@ -100,6 +113,7 @@ export const resolveClipControls = (
       descriptor: withLabel(primary, label, items),
       hint: typeof field === 'string' ? null : (field.hint ?? null),
       targets: descriptors.map((descriptor) => descriptor.path),
+      shades: defaultShades(descriptors, defaults),
     };
   };
 
@@ -142,4 +156,59 @@ export const auditClipControls = (schema: z.ZodType, controls: ClipControls): Co
     unknown: [...new Set([...singles, ...linked])].filter((path) => !known.has(path)),
     repeatedTitles: duplicates(controls.sections.map((section) => section.title)),
   };
+};
+
+export const CLIP_COLOR_ROLES = [
+  'Primary color',
+  'Secondary color',
+  'Accent color',
+  'Text color',
+  'Background color',
+  'Surface color',
+] as const;
+
+const MAX_FIRST_GLANCE = 14;
+const MAX_ROLES = 5;
+
+export const auditClipStandard = (schema: z.ZodType, controls: ClipControls): string[] => {
+  const known = describeControlPaths(schema);
+  const colorPaths = [...known.values()].filter((descriptor) => descriptor.kind === 'color');
+  const problems: string[] = [];
+  const firstGlance = controls.sections.reduce((sum, item) => sum + item.fields.length, 0);
+  if (firstGlance > MAX_FIRST_GLANCE) {
+    problems.push(`${firstGlance} controls at first glance; keep at most ${MAX_FIRST_GLANCE}`);
+  }
+  if (colorPaths.length === 0) {
+    return problems;
+  }
+  const index = controls.sections.findIndex((item) => item.title === 'Colors');
+  const section = controls.sections[index];
+  if (section === undefined || index > 1) {
+    return [...problems, 'needs a "Colors" section as the first or second section'];
+  }
+  const roles = section.fields.map((field) => (typeof field === 'string' ? field : field.label));
+  const minimum = Math.min(2, colorPaths.length);
+  if (roles.length < minimum || roles.length > MAX_ROLES) {
+    problems.push(`Colors has ${roles.length} role controls; use ${minimum} to ${MAX_ROLES}`);
+  }
+  const allowed: readonly (string | undefined)[] = CLIP_COLOR_ROLES;
+  for (const role of roles) {
+    if (!allowed.includes(role)) {
+      problems.push(`Colors role "${role}" is not one of ${CLIP_COLOR_ROLES.join(', ')}`);
+    }
+  }
+  if (new Set(roles).size !== roles.length) {
+    problems.push('Colors repeats a role');
+  }
+  if (!roles.includes('Primary color')) {
+    problems.push('Colors needs a Primary color role');
+  }
+  for (const field of section.fields) {
+    for (const path of fieldPaths(field)) {
+      if (known.get(path)?.kind !== 'color') {
+        problems.push(`Colors role field "${path}" is not a color`);
+      }
+    }
+  }
+  return problems;
 };

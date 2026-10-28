@@ -13,17 +13,33 @@ export const brandRevealControls = defineControls<BrandRevealProps>({
       ],
     },
     {
-      title: 'Logo mark',
+      title: 'Colors',
       fields: [
-        { path: 'showMark', label: 'Show ring mark' },
-        { path: 'markColor', label: 'Mark color' },
+        { path: 'markColor', label: 'Primary color', hint: 'The ring mark' },
+        { ...LOOK.ink, label: 'Text color', hint: 'The brand name' },
+        { ...LOOK.muted, label: 'Secondary color', hint: 'Eyebrow and tagline' },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        LOOK.background,
+        LOOK.backgroundEdge,
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when the paper has a margin' },
+        LOOK.paperLine,
+      ],
+    },
+    {
+      title: 'Logo mark',
+      fields: [{ path: 'showMark', label: 'Show ring mark' }],
+      more: [
         {
           path: 'markScale',
           label: 'Mark size',
           hint: 'Relative to the brand name size',
         },
-      ],
-      more: [
         {
           path: 'markGap',
           label: 'Gap to brand name',
@@ -33,18 +49,14 @@ export const brandRevealControls = defineControls<BrandRevealProps>({
     },
     {
       title: 'Style',
-      fields: [
-        { path: 'wordmarkSize', label: 'Brand name size' },
+      fields: [{ path: 'wordmarkSize', label: 'Brand name size' }],
+      more: [
         { path: 'wordmarkWeight', label: 'Brand name weight' },
-        { ...LOOK.ink, label: 'Brand name color' },
-        { ...LOOK.muted, label: 'Eyebrow and tagline color' },
         {
           link: ['eyebrowGap', 'taglineGap'],
           label: 'Space around brand name',
           hint: 'Gap above to the eyebrow and below to the tagline',
         },
-      ],
-      more: [
         {
           path: 'wordmarkTracking',
           label: 'Brand name letter spacing',
@@ -69,6 +81,8 @@ export const brandRevealControls = defineControls<BrandRevealProps>({
           label: 'Delay between letters',
           hint: 'In frames. 0 raises every letter together',
         },
+      ],
+      more: [
         {
           path: 'wordmarkStart',
           label: 'Letters start at',
@@ -79,8 +93,6 @@ export const brandRevealControls = defineControls<BrandRevealProps>({
           label: 'Tagline appears at',
           hint: 'Frame number at reveal speed 1',
         },
-      ],
-      more: [
         {
           path: 'letterRise',
           label: 'Letter rise length',
@@ -95,16 +107,14 @@ export const brandRevealControls = defineControls<BrandRevealProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { ...LOOK.accent, label: 'Margin line color' },
       ],
     },
     {
