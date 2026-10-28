@@ -1,15 +1,6 @@
 import { definePack } from '../../../pack';
-import {
-  allStar,
-  allStarPost,
-  CRIMSON_RECORD,
-  POSTS,
-  playerFeature,
-  record,
-  saveTheDate,
-  schedule,
-  startingFive,
-} from './posts';
+import { playerFeature, saveTheDate, schedule, startingFive } from './posts';
+import { allStar, allStarPost, CRIMSON_RECORD, POSTS, record } from './posts-more';
 
 export const courtKingsPack = definePack({
   id: 'court-kings',

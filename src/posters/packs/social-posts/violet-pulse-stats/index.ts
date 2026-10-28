@@ -1,15 +1,8 @@
 import { definePack } from '../../../pack';
-import {
-  aiUsage,
-  bigStat,
-  CORAL,
-  growProfit,
-  growStory,
-  leadersChart,
-  MIDNIGHT,
-  resultsNotes,
-  VIOLET,
-} from './posts';
+import { aiUsage, leadersChart } from './charts';
+import { growProfit, growStory } from './growth';
+import { bigStat, resultsNotes } from './posts';
+import { CORAL, MIDNIGHT, VIOLET } from './shared';
 
 const notes = resultsNotes(VIOLET);
 const stat = bigStat(VIOLET);
