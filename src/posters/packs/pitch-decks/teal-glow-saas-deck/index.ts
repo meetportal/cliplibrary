@@ -1,20 +1,12 @@
 import { definePack } from '../../../pack';
-import {
-  accelerationSlide,
-  growthSlide,
-  pricingSlide,
-  servicesSlide,
-  standardSlide,
-  timelineSlide,
-  worldwideSlide,
-} from './slides-data';
+import { accelerationSlide, growthSlide, servicesSlide, worldwideSlide } from './slides-data';
+import { pricingSlide, roadmapSlide, standardSlide, timelineSlide } from './slides-plan';
 import {
   adoptionSlide,
   contentsSlide,
   coverSlide,
   empoweringSlide,
   potentialSlide,
-  roadmapSlide,
   teamSlide,
 } from './slides-story';
 
