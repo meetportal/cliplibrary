@@ -13,6 +13,7 @@ import {
   Upload,
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { AgentWorkspace } from '@/components/media-agent/agent-workspace';
 import {
   createImage,
   type Design,
@@ -266,70 +267,78 @@ export const DesignEditor = ({
   ];
 
   return (
-    <div className="flex h-[calc(100dvh-3.5rem)] min-h-0 flex-col" data-testid="design-editor">
-      <EditorHeader
-        editor={editor}
-        zoom={zoom}
-        backHref={backHref}
-        onZoom={onZoom}
-        onOpen={(next) => editor.load(next)}
-        savedAt={savedAt}
-        view={view}
-        onViewChange={setView}
-        onHelp={() => setHelpOpen(true)}
-        onReset={() => {
-          forgetSaved(storageKey);
-          editor.load(initialDesign);
-        }}
-      />
-      <div className="flex min-h-0 flex-1 flex-col md:flex-row">
-        <EditorSidebar
-          panels={panels}
-          {...(initialPanel === undefined ? {} : { initial: initialPanel })}
+    <AgentWorkspace
+      kind="poster"
+      title={design.title}
+      document={design}
+      focus={editor.selectedIds}
+      onChange={(next) => editor.transform(() => next)}
+    >
+      <div className="flex h-full min-h-0 flex-col" data-testid="design-editor">
+        <EditorHeader
+          editor={editor}
+          zoom={zoom}
+          backHref={backHref}
+          onZoom={onZoom}
+          onOpen={(next) => editor.load(next)}
+          savedAt={savedAt}
+          view={view}
+          onViewChange={setView}
+          onHelp={() => setHelpOpen(true)}
+          onReset={() => {
+            forgetSaved(storageKey);
+            editor.load(initialDesign);
+          }}
         />
-        <div className="flex min-w-0 flex-1 flex-col">
-          <CanvasWorkspace
-            editor={editor}
-            zoom={zoom}
-            fontsVersion={fontsVersion}
-            onZoomChange={setUserZoom}
-            onViewportChange={setViewport}
-            onDropFiles={(files, point) => addImageFiles(files, point)}
-            onDropImage={(image, point) => editor.addMany([imageElement(image, point)])}
-            onContextMenu={setContextPoint}
-            snapEnabled={view.snap}
-            showGrid={view.grid}
+        <div className="flex min-h-0 flex-1 flex-col md:flex-row">
+          <EditorSidebar
+            panels={panels}
+            {...(initialPanel === undefined ? {} : { initial: initialPanel })}
           />
+          <div className="flex min-w-0 flex-1 flex-col">
+            <CanvasWorkspace
+              editor={editor}
+              zoom={zoom}
+              fontsVersion={fontsVersion}
+              onZoomChange={setUserZoom}
+              onViewportChange={setViewport}
+              onDropFiles={(files, point) => addImageFiles(files, point)}
+              onDropImage={(image, point) => editor.addMany([imageElement(image, point)])}
+              onContextMenu={setContextPoint}
+              snapEnabled={view.snap}
+              showGrid={view.grid}
+            />
+          </div>
+          <button
+            type="button"
+            onClick={() => setPropertiesOpen((open) => !open)}
+            aria-expanded={propertiesOpen}
+            className="fixed right-4 bottom-20 z-50 inline-flex items-center gap-2 rounded-full bg-violet-600 px-4 py-2 font-medium text-sm text-white shadow-lg md:bottom-6 lg:hidden"
+          >
+            <SlidersHorizontal className="size-4" /> {propertiesOpen ? 'Close' : 'Properties'}
+          </button>
+          <aside
+            className={cn(
+              'shrink-0 overflow-y-auto bg-background lg:static lg:block lg:w-[280px] xl:w-[320px] lg:border-l lg:shadow-none',
+              propertiesOpen
+                ? 'fixed inset-x-0 bottom-0 z-40 block h-[60dvh] rounded-t-2xl border-t shadow-2xl md:inset-x-auto md:top-28 md:right-0 md:h-auto md:w-[280px] md:rounded-none md:border-t-0 md:border-l'
+                : 'hidden',
+            )}
+            aria-label="Properties"
+          >
+            <DocumentColorsProvider design={design}>
+              <PropertiesPanel editor={editor} />
+            </DocumentColorsProvider>
+          </aside>
         </div>
-        <button
-          type="button"
-          onClick={() => setPropertiesOpen((open) => !open)}
-          aria-expanded={propertiesOpen}
-          className="fixed right-4 bottom-20 z-50 inline-flex items-center gap-2 rounded-full bg-violet-600 px-4 py-2 font-medium text-sm text-white shadow-lg md:bottom-6 lg:hidden"
-        >
-          <SlidersHorizontal className="size-4" /> {propertiesOpen ? 'Close' : 'Properties'}
-        </button>
-        <aside
-          className={cn(
-            'shrink-0 overflow-y-auto bg-background lg:static lg:block lg:w-[280px] xl:w-[320px] lg:border-l lg:shadow-none',
-            propertiesOpen
-              ? 'fixed inset-x-0 bottom-0 z-40 block h-[60dvh] rounded-t-2xl border-t shadow-2xl md:inset-x-auto md:top-28 md:right-0 md:h-auto md:w-[280px] md:rounded-none md:border-t-0 md:border-l'
-              : 'hidden',
-          )}
-          aria-label="Properties"
-        >
-          <DocumentColorsProvider design={design}>
-            <PropertiesPanel editor={editor} />
-          </DocumentColorsProvider>
-        </aside>
+        <ShortcutsDialog open={helpOpen} onOpenChange={setHelpOpen} />
+        <EditorContextMenu
+          point={contextPoint}
+          editor={editor}
+          actions={actions}
+          onClose={closeContextMenu}
+        />
       </div>
-      <ShortcutsDialog open={helpOpen} onOpenChange={setHelpOpen} />
-      <EditorContextMenu
-        point={contextPoint}
-        editor={editor}
-        actions={actions}
-        onClose={closeContextMenu}
-      />
-    </div>
+    </AgentWorkspace>
   );
 };

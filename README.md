@@ -17,11 +17,16 @@ text, colors, timing and layers on a timeline, and export the result to video.
   quality, rendered in your browser with `@remotion/web-renderer`. Use a
   recent Chrome, Edge or Firefox; the format list shows what your browser can
   encode.
+- An "Edit with AI" panel on every clip and poster: describe a change and
+  Gemini streams it straight into the editor as one undoable step.
 
-Edits live in the browser session. Nothing you change is written back to the
+Edits live in the browser session. Nothing you change is stored on the
 server, so reloading a clip starts from its defaults. Images and videos you
-pick are loaded locally and never uploaded. The app has no backend, so it runs
-on any static-friendly host such as Netlify.
+pick are loaded locally. When you message the AI editor, the current clip or
+poster is sent to the app's `/api/agent` route, which swaps embedded media
+for placeholders before it reaches Gemini through OpenRouter. Set
+`OPENROUTER_API_KEY` (see `.env.example`) to enable it; everything else runs on
+any Next.js host such as Netlify.
 
 ## Export fidelity
 
