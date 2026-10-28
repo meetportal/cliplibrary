@@ -130,18 +130,22 @@ test('the agent traces how it edits a clip and the edit can be undone', async ({
 
 test('a rejected poster edit is shown, retried and applied on a phone', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  const rejected = [{ op: 'replace', path: '/elements/0/fontFamily', value: 'Comic Sans MS' }];
-  const fixed = [{ op: 'replace', path: '/title', value: 'Agent Poster' }];
+  const rejected = [{ op: 'replace', path: '/elements/0/fontFamily', value: 'Nunito' }];
+  const fixed = [
+    { op: 'replace', path: '/controls/4/value', value: 'Nunito' },
+    { op: 'replace', path: '/title', value: 'Agent Poster' },
+  ];
   await mockAgent(
     page,
     sse([
       context('poster', 'Amber Client Reviews 1'),
       ...reply('Updating the poster.'),
-      ...editCall('edit-1', 'Use Comic Sans', rejected, {
+      ...editCall('edit-1', 'Use Nunito', rejected, {
         ok: false,
-        error: '/elements/0/fontFamily: "Comic Sans MS" is not a bundled font',
+        error:
+          'CLIENT fontFamily is driven by the "Heading font" control. Replace /controls/4/value instead',
       }),
-      ...editCall('edit-2', 'Rename the poster', fixed, { ok: true, operations: fixed }),
+      ...editCall('edit-2', 'Use Nunito and rename', fixed, { ok: true, operations: fixed }),
     ]),
   );
   await page.goto('/posters/amber-client-reviews-01');
@@ -150,12 +154,17 @@ test('a rejected poster edit is shown, retried and applied on a phone', async ({
 
   const panel = page.getByRole('region', { name: 'AI editor' });
   await expect(panel.getByText('Validation rejected this edit.', { exact: false })).toBeVisible();
-  await expect(panel.getByText('is not a bundled font', { exact: false }).first()).toBeVisible();
+  await expect(
+    panel.getByText('driven by the "Heading font" control', { exact: false }).first(),
+  ).toBeVisible();
   await expect(panel.getByText('· attempt 2')).toBeVisible();
   await expect(panel.getByTestId('agent-operation').first()).toContainText(
     'CLIENT › Text › Font family',
   );
   await expect(panel.getByTestId('agent-operation').first()).toContainText('“Figtree”');
+  const themed = panel.getByTestId('agent-operation').nth(1);
+  await expect(themed).toContainText('Theme › Fonts › Heading font');
+  await expect(themed).toContainText('“Nunito”');
   await expect(panel.getByText('Passed schema validation, applied as one undo step')).toBeVisible();
 
   const box = await panel.boundingBox();
@@ -163,4 +172,14 @@ test('a rejected poster edit is shown, retried and applied on a phone', async ({
   expect((box?.y ?? 0) > 844 / 3).toBe(true);
   await panel.getByRole('button', { name: 'Close AI editor' }).click();
   await expect(page.getByLabel('Design title')).toHaveValue('Agent Poster');
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const saved = JSON.parse(
+          localStorage.getItem('cliplibrary-poster:amber-client-reviews-01') ?? '{}',
+        );
+        return [saved.controls?.[4]?.value, saved.elements?.[0]?.fontFamily];
+      }),
+    )
+    .toEqual(['Nunito', 'Nunito']);
 });

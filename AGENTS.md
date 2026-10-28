@@ -186,12 +186,18 @@ Flash through OpenRouter, with OpenRouter's `models` fallback to Gemini 3.5 Flas
   (`src/agent/edits.ts`, `fast-json-patch`). Each patch is validated with `checkMedia`
   (`src/agent/media.ts`): the `Project` or `Design` schema, every composition's clip schema,
   unique ids, bundled fonts and icons. A failed patch goes back to the model as an error to fix.
+- Posters are edited through their theme controls (`src/agent/theme.ts`): a `replace` on
+  `/controls/N/value` or `/controls/N/values/I` runs `setControlValue` or `setListItem`. Writes to a
+  property a control owns, to a locked shape or to a control definition are rejected with the
+  control to use, so edits keep `auditPosterControls` bindings intact.
+- On clips, replacing the first path of a linked colour role recolours its other paths with
+  `recolor` relative to the clip defaults, like the properties panel (`src/agent/roles.ts`).
 - The browser applies each successful tool output with the same `applyEdits` as one undoable step,
   so the agent never owns state.
 - `src/agent/assets.ts` swaps data and object URLs for `asset://N` before the document reaches the
   model and swaps them back in the returned operations.
-- `src/agent/instructions.ts` builds the system prompt: the document, its JSON schema and, for
-  clips, each composition's control layout as a field guide.
+- `src/agent/instructions.ts` builds the system prompt: the document, its JSON schema, each
+  clip composition's control layout as a field guide and each poster's theme controls.
 - The route streams a `data-context` part (`src/agent/trace.ts`, `buildAgentContext`) before the
   model output and attaches `AgentMetadata` to the message. The client strips `data-context` parts
   before sending history back.
