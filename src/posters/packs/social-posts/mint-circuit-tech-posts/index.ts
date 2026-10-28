@@ -1,6 +1,7 @@
 import { definePack } from '../../../pack';
 import { amplifyBars, worldReach } from './posts';
-import { POSTS, quoteBox, rocketPost, rocketStory, teamRing } from './posts-more';
+import { POSTS, rocketPost, rocketStory } from './posts-extra';
+import { quoteBox, teamRing } from './posts-more';
 
 export const mintCircuitTechPostsPack = definePack({
   id: 'mint-circuit-tech-posts',

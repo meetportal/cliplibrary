@@ -1,16 +1,17 @@
 import { definePack } from '../../../pack';
 import { allInOne, COPPER, introNumber, LILAC, smartStrategy, systemsPost } from './posts';
-import { benefitsApp, bookDemo, fromZero, ourServices, quotePhone, statDonut } from './posts-more';
+import { benefitsApp, bookDemo, quotePhone, statDonut } from './posts-more';
+import { fromZero, ourServices } from './posts-words';
 
 const SERVICES = ourServices(COPPER, 'OUR SERVICES', [
-  'Connect',
-  'Better',
-  'Social media',
-  'Do the work',
-  'Branding',
-  'Optimize',
-  'Fast',
-  'Launch',
+  'CONNECT',
+  'BETTER',
+  'SOCIAL MEDIA',
+  'DO THE WORK',
+  'BRANDING',
+  'OPTIMIZE',
+  'FAST',
+  'LAUNCH',
 ]);
 const ZERO = fromZero(COPPER, {
   left: 'Start today',
@@ -51,14 +52,14 @@ export const copperSaasFoundersPack = definePack({
     SYSTEMS,
     ...TILES,
     ourServices(LILAC, 'OUR TOOLS', [
-      'Storage',
+      'STORAGE',
       'CRM',
-      'Search',
-      'Analytics',
-      'Hosting',
-      'Video',
-      'Maps',
-      'Billing',
+      'SEARCH',
+      'ANALYTICS',
+      'HOSTING',
+      'VIDEO',
+      'MAPS',
+      'BILLING',
     ]),
     fromZero(LILAC, {
       left: 'Fast and easy',
