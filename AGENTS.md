@@ -1,4 +1,4 @@
-# cliplibrary
+# neuclip
 
 A single Next.js project for a library of Remotion animation clips and editable poster packs,
 with a deep, schema-driven video editor and a canvas image editor in the browser.
@@ -11,7 +11,7 @@ Everything lives in one package. Modules import each other through the `@/` alia
 - `src/app`, `src/components`, `src/lib` - Next.js App Router UI: clip gallery and per-clip
   editor (live `@remotion/player` preview, schema-driven properties panel, timeline, in-memory
   undo/redo and export). The editor never writes project state to the server; each clip's project
-  autosaves to `localStorage` (`cliplibrary-clip:<id>`, `src/lib/use-saved-document.ts`, shared with
+  autosaves to `localStorage` (`neuclip-clip:<id>`, `src/lib/use-saved-document.ts`, shared with
   the poster editor) and the sidebar's Reset restores the original. Picked media are object URLs, so
   they come back empty after a reload.
 - `src/render` - Bun render scripts (`@remotion/bundler` + `@remotion/renderer`) for the
@@ -206,7 +206,7 @@ Flash through OpenRouter, with OpenRouter's `models` fallback to Gemini 3.5 Flas
   model and swaps them back in the returned operations.
 - `src/agent/instructions.ts` builds the system prompt: the document, its JSON schema, each
   clip composition's control layout as a field guide and each poster's theme controls.
-- Each clip and poster keeps its own chats in `localStorage` (`cliplibrary-agent-chats:<editor storage key>`,
+- Each clip and poster keeps its own chats in `localStorage` (`neuclip-agent-chats:<editor storage key>`,
   `chat-library.ts` and `use-chat-library.ts`). The header switches, renames and deletes chats and
   starts a new one. The model names an unnamed chat, or renames it on request, with the
   `renameChat` tool. Reloaded turns never re-apply their edits.

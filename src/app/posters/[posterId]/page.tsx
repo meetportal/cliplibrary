@@ -12,7 +12,7 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
   const { posterId } = await params;
   const poster = findPoster(posterId);
-  return { title: poster === undefined ? 'Poster' : `${poster.meta.title} · Clip Library` };
+  return { title: poster === undefined ? 'Poster' : `${poster.meta.title} · Neuclip` };
 };
 
 const PosterEditorPage = async ({ params }: { params: Promise<{ posterId: string }> }) => {

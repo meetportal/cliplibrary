@@ -113,7 +113,7 @@ test('the agent edits a clip, names the chat and keeps both after a reload', asy
   await expect(line).toHaveValue('HELLO FROM THE AGENT');
 
   await expect
-    .poll(() => page.evaluate(() => localStorage.getItem('cliplibrary-clip:word-build') ?? ''))
+    .poll(() => page.evaluate(() => localStorage.getItem('neuclip-clip:word-build') ?? ''))
     .toContain('HELLO FROM THE AGENT');
   await page.reload();
   await expect(panel.getByTestId('agent-chat-title')).toHaveText('Agent greeting');
@@ -182,7 +182,7 @@ test('a rejected poster edit is retried out of sight and applied on a phone', as
     .poll(() =>
       page.evaluate(() => {
         const saved = JSON.parse(
-          localStorage.getItem('cliplibrary-poster:amber-client-reviews-01') ?? '{}',
+          localStorage.getItem('neuclip-poster:amber-client-reviews-01') ?? '{}',
         );
         return [saved.controls?.[4]?.value, saved.elements?.[0]?.fontFamily];
       }),

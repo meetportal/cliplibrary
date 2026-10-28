@@ -33,7 +33,7 @@ export const AgentWorkspace = <K extends MediaKind>({
   onChange,
   children,
 }: AgentWorkspaceProps<K>) => {
-  const [open, setOpen] = usePersistedState('cliplibrary-agent-open', false);
+  const [open, setOpen] = usePersistedState('neuclip-agent-open', false);
   const [expanded, setExpanded] = useState(false);
   const [slot, setSlot] = useState<HTMLElement | null>(null);
   const panel = useRef<HTMLElement>(null);

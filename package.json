@@ -1,5 +1,5 @@
 {
-  "name": "cliplibrary",
+  "name": "neuclip",
   "version": "0.0.0",
   "description": "An open library of Remotion animation clips with a schema-driven in-browser editor.",
   "license": "MIT",

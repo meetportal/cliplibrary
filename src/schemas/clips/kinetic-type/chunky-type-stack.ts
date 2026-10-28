@@ -76,7 +76,7 @@ export const chunkyTypeStackDefaults: ChunkyTypeStackProps = {
   lineStagger: 4,
   exitLetterStagger: 0.5,
   burst: { text: '&', size: 1100, color: '#f4a9c0', frames: 20 },
-  endTag: 'CLIPLIBRARY',
+  endTag: 'NEUCLIP',
   endTagSize: 54,
   endTagColor: '#eef2e8',
   endTagSpacing: 0.06,
