@@ -915,7 +915,7 @@
     ]
   },
   "chunky-type-stack": {
-    "summary": "On a dark green chalkboard grid, chunky hand-cut yellow letters pop in one by one to build a staggered four-line headline \"SMALL WORDS / BIG MOVES / SKETCHED LIVE / MADE TO STACK UP.\" with a coral underline bar. The lines then shrink away, a giant pink ampersand punches through the frame, and a small white \"CLIPLIBRARY\" end tag pops in.",
+    "summary": "On a dark green chalkboard grid, chunky hand-cut yellow letters pop in one by one to build a staggered four-line headline \"SMALL WORDS / BIG MOVES / SKETCHED LIVE / MADE TO STACK UP.\" with a coral underline bar. The lines then shrink away, a giant pink ampersand punches through the frame, and a small white \"NEUCLIP\" end tag pops in.",
     "beats": [
       {
         "at": 0.2,
@@ -939,7 +939,7 @@
       },
       {
         "at": 6.0,
-        "what": "Small white \"CLIPLIBRARY\" end tag pops in and holds"
+        "what": "Small white \"NEUCLIP\" end tag pops in and holds"
       }
     ],
     "visuals": [
