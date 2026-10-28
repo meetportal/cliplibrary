@@ -1,14 +1,9 @@
 import { definePack } from '../../../pack';
-import {
-  doorHanger,
-  marketPortrait,
-  reviewWords,
-  seoChecklist,
-  TIDE,
-  TIME_WAITS,
-  timeWaits,
-} from './posts';
-import { consistencyPost, consistencyStory, POSTS } from './posts-more';
+import { TIDE } from './clay';
+import { doorHanger, marketPortrait, reviewWords } from './posts';
+import { POSTS } from './posts-crowd';
+import { seoChecklist, TIME_WAITS, timeWaits } from './posts-lists';
+import { consistencyPost, consistencyStory } from './posts-more';
 
 export const clayGrowthMarketingPack = definePack({
   id: 'clay-growth-marketing',
