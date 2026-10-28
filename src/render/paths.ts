@@ -19,4 +19,3 @@ export const posterPreviewEntry = fileURLToPath(
 export const posterUpdatedAtFile = fileURLToPath(
   new URL('../posters/poster-updated-at.json', import.meta.url),
 );
-export const liveExportsDir = fileURLToPath(new URL('../../out/live/', import.meta.url));

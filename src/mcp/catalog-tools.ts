@@ -13,7 +13,7 @@ import {
   isClipId,
 } from '@/schemas';
 import { ORIENTATIONS, orientationOf, searchClips } from './clip-search';
-import { failure, json } from './mcp-results';
+import { failure, json } from './results';
 
 const CATEGORY_IDS = CLIP_CATEGORIES.map((category) => category.id) as [string, ...string[]];
 

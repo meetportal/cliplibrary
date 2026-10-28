@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 import { checkMedia } from '@/agent/media';
-import { createVideoProject, mergeProps, placeClip } from '@/live/video-builder';
+import { createVideoProject, mergeProps, placeClip } from '@/mcp/video-builder';
 import { CLIP_DEFAULTS, getClipMeta } from '@/schemas';
 
 describe('mergeProps', () => {

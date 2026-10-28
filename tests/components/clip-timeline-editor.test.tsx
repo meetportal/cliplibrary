@@ -4,11 +4,9 @@ mock.module('@/components/clip-timeline/clip-preview', () => ({
   ClipPreview: () => null,
 }));
 
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { ClipTimelineEditor } from '@/components/clip-timeline/clip-timeline-editor';
 import { seedProjectForClip } from '@/core';
-import { placeClip } from '@/live/video-builder';
-import type { Project } from '@/project';
 
 const renderEditor = () =>
   render(
@@ -39,48 +37,5 @@ describe('ClipTimelineEditor', () => {
       target: { value: 'scene-transition' },
     });
     expect(screen.getAllByRole('button', { name: 'Clip element' })).toHaveLength(2);
-  });
-
-  it('follows remote projects and publishes local edits when synced', async () => {
-    const remote = seedProjectForClip('phone-spin-in');
-    const published: Project[] = [];
-    const publish = (project: Project) => published.push(project);
-    localStorage.setItem(
-      'cliplibrary-live-test',
-      JSON.stringify(placeClip(remote, { clipId: 'word-build' })),
-    );
-    const view = render(
-      <ClipTimelineEditor
-        title="Live"
-        storageKey="cliplibrary-live-test"
-        initialProject={remote}
-        demoSrc={null}
-        sync={{ remote, publish }}
-        sidebar={<p>Agent activity</p>}
-      />,
-    );
-    expect(screen.getByText('Agent activity')).toBeInTheDocument();
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    expect(screen.getAllByRole('button', { name: 'Clip element' })).toHaveLength(1);
-
-    const grown = placeClip(remote, { clipId: 'brand-reveal' });
-    view.rerender(
-      <ClipTimelineEditor
-        title="Live"
-        storageKey="cliplibrary-live-test"
-        initialProject={remote}
-        demoSrc={null}
-        sync={{ remote: grown, publish }}
-      />,
-    );
-    expect(screen.getAllByRole('button', { name: 'Clip element' })).toHaveLength(2);
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    expect(published).toHaveLength(0);
-
-    fireEvent.change(screen.getByLabelText('Add animation'), {
-      target: { value: 'scene-transition' },
-    });
-    await waitFor(() => expect(published).toHaveLength(1));
-    expect(published[0]?.tracks[0]?.elements).toHaveLength(3);
   });
 });

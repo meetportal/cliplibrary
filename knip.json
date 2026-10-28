@@ -8,8 +8,7 @@
     "playwright.config.ts",
     "e2e/**/*.spec.ts",
     "src/render/posters/preview-entry.tsx",
-    "src/posters/{kit/index,pack}.ts",
-    "tests/live/fixtures/*.ts"
+    "src/posters/{kit/index,pack}.ts"
   ],
   "project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}", "e2e/**/*.ts", "scripts/**/*.ts"],
   "ignore": ["src/components/ui/**"],
