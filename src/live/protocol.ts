@@ -33,7 +33,7 @@ const liveSessionSummarySchema = liveSessionSchema
 
 export type LiveSessionSummary = z.infer<typeof liveSessionSummarySchema>;
 
-const serverMessageSchema = z.discriminatedUnion('type', [
+export const serverMessageSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('sessions'), sessions: z.array(liveSessionSummarySchema) }),
   z.object({ type: z.literal('session'), session: liveSessionSchema }),
   z.object({ type: z.literal('ack'), version: z.number().int() }),

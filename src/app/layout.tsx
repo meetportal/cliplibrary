@@ -46,6 +46,9 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
             <Link href="/" className="hover:text-foreground">
               Library
             </Link>
+            <Link href="/live" className="hover:text-foreground">
+              Live
+            </Link>
             <ThemeToggle />
           </nav>
         </header>
