@@ -6,8 +6,9 @@ import {
   notesCover,
   notesRows,
 } from '../momentum-carousel-kit/notes';
-import { COMMENT_STEPS, commentsCover, STRATEGY_STEPS, searchCover } from './comment-cards';
+import { COMMENT_STEPS, commentsCover } from './comment-cards';
 import { NUMBER_STEPS, numbersCover, PILL_STEPS, pillsCover } from './pills-numbers';
+import { STRATEGY_STEPS, searchCover } from './strategy-cards';
 
 const NIGHT: NotesTheme = {
   paper: '#0c1211',

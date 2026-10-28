@@ -1,7 +1,8 @@
 import { definePack } from '../../../pack';
-import { FOLDER_STEPS, foldersCover, TIP_STEPS, tipsCover } from './focus-folders';
+import { FOLDER_STEPS, foldersCover } from './focus-folders';
 import { type NotesTheme, notesChecklist, notesCover, notesRows, notesSayTry } from './notes';
 import { PLANNER_STEPS, PROMPT_STEPS, plannerCover, promptCover } from './prompt-planner';
+import { TIP_STEPS, tipsCover } from './tips';
 
 const MINT: NotesTheme = {
   paper: '#eef3ee',

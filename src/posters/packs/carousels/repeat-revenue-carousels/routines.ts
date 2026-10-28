@@ -1,79 +1,96 @@
+import { type Fill, linear } from '@/design';
 import {
   circle,
-  ellipse,
   icon,
   type Nodes,
-  POST_SIZE,
   path,
   poly,
   rect,
   rotateNodes,
-  template,
-  text,
+  type ThemeSpec,
+  themed,
 } from '../../../kit';
 import { textWidth } from '../momentum-carousel-kit/text-width';
-import { BLUSH, DEEP, FONT, LEAF, MINT, SITE, WINE } from './levers';
+import {
+  BLUSH,
+  BODY,
+  CLEAR,
+  H,
+  HAZE,
+  HEADING,
+  INK,
+  LEAF,
+  MINT,
+  MIST,
+  NIGHT,
+  PLUM,
+  SITE,
+  STONE,
+  say,
+  W,
+  WHITE,
+  WINE,
+} from './style';
 
-const { width: W, height: H } = POST_SIZE;
+const pageDots = (active: number, on: string, off: string) =>
+  [0, 1, 2, 3, 4].map((index) => circle(460 + index * 40, 1190, 9, index === active ? on : off));
 
-const dots = (active: number, dark: boolean) =>
-  [0, 1, 2, 3, 4].map((index) =>
-    circle(
-      460 + index * 40,
-      1190,
-      9,
-      index === active ? (dark ? MINT : LEAF) : dark ? 'rgba(255,255,255,0.3)' : '#e7d5dd',
-    ),
-  );
-
-const stepTag = (label: string, y: number) => [
-  rect(540 - textWidth(label, 40) / 2 - 24, y, textWidth(label, 40) + 48, 76, MINT, {
+const stepTag = (
+  label: string,
+  y: number,
+  fontFamily: string,
+  colors: { fill: string; label: string },
+) => [
+  rect(540 - textWidth(label, 40) / 2 - 24, y, textWidth(label, 40) + 48, 76, colors.fill, {
     name: 'Step tag',
     cornerRadius: 10,
   }),
-  text(label, 0, y + 14, W, {
-    fontFamily: FONT,
-    fontSize: 40,
-    fontWeight: 700,
-    fill: WINE,
-    align: 'center',
-  }),
+  say(label, 0, y + 14, W, fontFamily, 40, 700, colors.label, { align: 'center' }),
 ];
 
-export const calendarCover = template(W, H, () => [
-  rect(0, 0, W, H, '#ffffff', { name: 'Background' }),
-  text(SITE, 0, 170, W, {
-    fontFamily: FONT,
-    fontSize: 32,
-    fontWeight: 500,
-    fill: '#57534e',
+const calendarCoverSpec = {
+  colors: {
+    background: { value: WHITE, hint: 'Page' },
+    primary: {
+      value: WINE,
+      hint: 'Title and the step tag label; its pale tint colors the inactive page dots',
+    },
+    secondary: { value: LEAF, hint: 'Curved arrow and the active page dot' },
+    accent: { value: MINT, hint: 'Step tag' },
+    text: { value: INK, hint: 'Swipe line; its grey shade colors the website' },
+  },
+  fonts: { heading: HEADING, body: BODY },
+  copy: {
+    site: SITE,
+    tag: { label: 'Tag', value: '3 Steps to' },
+    title: { label: 'Title', value: 'Own Your\nCalendar' },
+    cta: { label: 'Swipe line', value: 'Swipe for more' },
+  },
+} as const satisfies ThemeSpec;
+
+export const calendarCover = themed(W, H, calendarCoverSpec, (t) => [
+  rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+  say(t.copy('site'), 0, 170, W, t.font('body'), 32, 500, t.shade('text', STONE), {
     align: 'center',
   }),
-  stepTag('3 Steps to', 380),
-  text('Own Your\nCalendar', 0, 490, W, {
-    fontFamily: FONT,
-    fontSize: 116,
-    fontWeight: 800,
-    fill: WINE,
+  stepTag(t.copy('tag'), 380, t.font('body'), {
+    fill: t.color('accent'),
+    label: t.color('primary'),
+  }),
+  say(t.copy('title'), 0, 490, W, t.font('heading'), 116, 800, t.color('primary'), {
     align: 'center',
     lineHeight: 1.05,
   }),
-  text('Swipe for more', 0, 800, W, {
-    fontFamily: FONT,
-    fontSize: 38,
-    fontWeight: 700,
-    fill: '#1c1917',
-    align: 'center',
-  }),
+  say(t.copy('cta'), 0, 800, W, t.font('body'), 38, 700, t.color('text'), { align: 'center' }),
   path(
     'M8 12 Q 150 100 292 12',
     390,
     900,
     300,
     100,
-    'rgba(0,0,0,0)',
+    t.shade('secondary', CLEAR),
     { width: 300, height: 100 },
-    { name: 'Smile arrow', stroke: LEAF, strokeWidth: 14 },
+    { name: 'Smile arrow', stroke: t.color('secondary'), strokeWidth: 14 },
   ),
   poly(
     [
@@ -81,217 +98,220 @@ export const calendarCover = template(W, H, () => [
       [712, 902],
       [690, 940],
     ],
-    LEAF,
+    t.color('secondary'),
     { name: 'Arrow head' },
   ),
-  dots(0, false),
+  pageDots(0, t.color('secondary'), t.shade('primary', MIST)),
 ]);
 
-const BLOCKS = ['Focus', 'Calls', 'Admin', 'Write', 'Learn', 'Plan', 'Rest'];
+const blocksSpec = {
+  colors: {
+    background: {
+      value: PLUM,
+      hint: 'Page gradient; its darker shades color the bottom of the gradient and the step tag label',
+    },
+    accent: { value: MINT, hint: 'Step tag, block outlines and tints, and the active page dot' },
+    text: {
+      value: WHITE,
+      hint: 'Title and block labels; its translucent shade colors the inactive page dots',
+    },
+  },
+  fonts: { heading: HEADING, body: BODY },
+  copy: {
+    tag: { label: 'Tag', value: 'Step 1' },
+    title: { label: 'Title', value: 'Batch your week\ninto blocks' },
+    blocks: {
+      label: 'Block',
+      value: ['Focus', 'Calls', 'Admin', 'Write', 'Learn', 'Plan', 'Rest'],
+    },
+  },
+} as const satisfies ThemeSpec;
 
-export const blocksStep = template(W, H, () => [
-  rect(0, 0, W, H, DEEP, { name: 'Background' }),
-  stepTag('Step 1', 220),
-  text('Batch your week\ninto blocks', 0, 330, W, {
-    fontFamily: FONT,
-    fontSize: 80,
-    fontWeight: 800,
-    fill: '#ffffff',
+export const blocksStep = themed(W, H, blocksSpec, (t) => [
+  rect(0, 0, W, H, linear(180, t.color('background'), t.shade('background', NIGHT)), {
+    name: 'Background',
+  }),
+  stepTag(t.copy('tag'), 220, t.font('body'), {
+    fill: t.color('accent'),
+    label: t.shade('background', WINE),
+  }),
+  say(t.copy('title'), 0, 330, W, t.font('heading'), 80, 800, t.color('text'), {
     align: 'center',
     lineHeight: 1.1,
   }),
-  BLOCKS.map((label, index) => {
+  t.list('blocks').map((label, index) => {
     const row = index < 4 ? 0 : 1;
     const column = row === 0 ? index : index - 4;
     const x = (row === 0 ? 140 : 245) + column * 210;
     const y = 640 + row * 220;
     return rotateNodes(index % 2 === 0 ? -6 : 6, x + 80, y + 80, [
-      rect(x, y, 160, 160, 'rgba(167,243,208,0.06)', {
+      rect(x, y, 160, 160, t.shade('accent', 'rgba(167,243,208,0.06)'), {
         name: 'Block',
         cornerRadius: 10,
-        stroke: MINT,
+        stroke: t.color('accent'),
         strokeWidth: 4,
       }),
-      text(label, x, y + 60, 160, {
-        fontFamily: FONT,
-        fontSize: 32,
-        fontWeight: 600,
-        fill: '#ffffff',
-        align: 'center',
-      }),
+      say(label, x, y + 60, 160, t.font('body'), 32, 600, t.color('text'), { align: 'center' }),
     ]);
   }),
-  dots(1, true),
+  pageDots(1, t.color('accent'), t.shade('text', HAZE)),
 ]);
 
-const ritual = (
-  dark: boolean,
-  tag: string,
-  title: string,
-  items: readonly { head: string; note: string }[],
+interface RitualCopy {
+  tag: string;
+  title: string;
+  heads: readonly string[];
+  notes: readonly string[];
+}
+
+interface RitualPaint {
+  page: Fill;
+  tag: string;
+  tagLabel: string;
+  title: string;
+  check: string;
+  head: string;
+  note: string;
+  dotOn: string;
+  dotOff: string;
+}
+
+const ritualNodes = (
+  fonts: { heading: string; body: string },
+  paint: RitualPaint,
+  copy: RitualCopy,
   active: number,
-) =>
-  template(W, H, () => [
-    rect(0, 0, W, H, dark ? DEEP : '#ffffff', { name: 'Background' }),
-    stepTag(tag, 220),
-    text(title, 0, 330, W, {
-      fontFamily: FONT,
-      fontSize: 84,
-      fontWeight: 800,
-      fill: dark ? '#ffffff' : WINE,
-      align: 'center',
-      lineHeight: 1.1,
-    }),
-    items.map((item, index) => {
-      const y = 640 + index * 160;
-      return [
-        icon('square-check', 210, y, 62, dark ? MINT : LEAF, { strokeWidth: 2.25 }),
-        text(item.head, 300, y - 4, 600, {
-          fontFamily: FONT,
-          fontSize: 44,
-          fontWeight: 700,
-          fill: dark ? '#ffffff' : WINE,
-        }),
-        text(item.note, 300, y + 52, 640, {
-          fontFamily: FONT,
-          fontSize: 34,
-          fontWeight: 400,
-          fill: dark ? BLUSH : '#57534e',
-        }),
-      ];
-    }),
-    dots(active, dark),
-  ]);
+): Nodes[] => [
+  rect(0, 0, W, H, paint.page, { name: 'Background' }),
+  stepTag(copy.tag, 220, fonts.body, { fill: paint.tag, label: paint.tagLabel }),
+  say(copy.title, 0, 330, W, fonts.heading, 84, 800, paint.title, {
+    align: 'center',
+    lineHeight: 1.1,
+  }),
+  copy.heads.map((head, index) => {
+    const y = 640 + index * 160;
+    return [
+      icon('square-check', 210, y, 62, paint.check, { strokeWidth: 2.25 }),
+      say(head, 300, y - 4, 600, fonts.body, 44, 700, paint.head),
+      say(copy.notes[index] ?? '', 300, y + 52, 640, fonts.body, 34, 400, paint.note),
+    ];
+  }),
+  pageDots(active, paint.dotOn, paint.dotOff),
+];
 
-export const RITUAL_STEPS = [
-  ritual(
-    false,
-    'Step 2',
-    'Build a\nMorning Ritual',
-    [
-      { head: 'Morning', note: 'Set your top three tasks' },
-      { head: 'Midday', note: 'Reset with a short walk' },
-      { head: 'Evening', note: 'Prep the desk for tomorrow' },
-    ],
-    2,
-  ),
-  ritual(
-    true,
-    'Step 3',
-    'Protect One\nFocus Block',
-    [
-      { head: 'Pick a time', note: 'Ninety minutes, same slot daily' },
-      { head: 'Go offline', note: 'Silence chats and close tabs' },
-      { head: 'Ship something', note: 'End with one finished task' },
-    ],
-    3,
-  ),
-] as const;
+const ritualCopy = (copy: RitualCopy) => ({
+  tag: { label: 'Tag', value: copy.tag },
+  title: { label: 'Title', value: copy.title },
+  heads: { label: 'Row title', value: copy.heads },
+  notes: { label: 'Row note', value: copy.notes },
+});
 
-const texture = (): Nodes[] =>
-  Array.from({ length: 34 }, (_, index) =>
-    rect(0, 20 + index * 40, W, 2, 'rgba(255,255,255,0.035)', { name: 'Texture line' }),
+const lightRitual = (copy: RitualCopy, active: number) =>
+  themed(
+    W,
+    H,
+    {
+      colors: {
+        background: { value: WHITE, hint: 'Page' },
+        primary: {
+          value: WINE,
+          hint: 'Title, step tag label and row titles; its pale tint colors the inactive page dots',
+        },
+        secondary: { value: LEAF, hint: 'Check marks and the active page dot' },
+        accent: { value: MINT, hint: 'Step tag' },
+        text: { value: STONE, hint: 'Row notes' },
+      },
+      fonts: { heading: HEADING, body: BODY },
+      copy: ritualCopy(copy),
+    } satisfies ThemeSpec,
+    (t) =>
+      ritualNodes(
+        { heading: t.font('heading'), body: t.font('body') },
+        {
+          page: t.color('background'),
+          tag: t.color('accent'),
+          tagLabel: t.color('primary'),
+          title: t.color('primary'),
+          check: t.color('secondary'),
+          head: t.color('primary'),
+          note: t.color('text'),
+          dotOn: t.color('secondary'),
+          dotOff: t.shade('primary', MIST),
+        },
+        {
+          tag: t.copy('tag'),
+          title: t.copy('title'),
+          heads: t.list('heads'),
+          notes: t.list('notes'),
+        },
+        active,
+      ),
   );
 
-export const dropCover = template(W, H, () => [
-  rect(0, 0, W, H, DEEP, { name: 'Background' }),
-  texture(),
-  text(SITE, 90, 140, 600, {
-    fontFamily: FONT,
-    fontSize: 34,
-    fontWeight: 700,
-    fill: '#ffffff',
-  }),
-  text('Habits to', 90, 470, 900, {
-    fontFamily: FONT,
-    fontSize: 96,
-    fontWeight: 800,
-    fill: '#ffffff',
-  }),
-  ellipse(64, 586, textWidth('Drop', 96) + 64, 140, 'rgba(0,0,0,0)', {
-    name: 'Circle mark',
-    stroke: MINT,
-    strokeWidth: 6,
-  }),
-  text('Drop', 96, 594, 400, {
-    fontFamily: FONT,
-    fontSize: 96,
-    fontWeight: 800,
-    fill: '#ffffff',
-  }),
-  text('Today', 150 + textWidth('Drop', 96), 594, 600, {
-    fontFamily: FONT,
-    fontSize: 96,
-    fontWeight: 800,
-    fill: '#ffffff',
-  }),
-  text('Small habits add up. Are you\nslowing your own week down?', 90, 790, 900, {
-    fontFamily: FONT,
-    fontSize: 44,
-    fontWeight: 500,
-    fill: BLUSH,
-    lineHeight: 1.35,
-  }),
-  rect(90, 920, 260, 8, MINT, { name: 'Underline', cornerRadius: 4 }),
-  icon('arrow-right', 900, 1160, 96, MINT, { strokeWidth: 2.5 }),
-]);
+const darkRitual = (copy: RitualCopy, active: number) =>
+  themed(
+    W,
+    H,
+    {
+      colors: {
+        background: {
+          value: PLUM,
+          hint: 'Page gradient; its darker shades color the bottom of the gradient and the step tag label',
+        },
+        accent: { value: MINT, hint: 'Step tag, check marks and the active page dot' },
+        text: {
+          value: WHITE,
+          hint: 'Title and row titles; its shades color the row notes and the inactive page dots',
+        },
+      },
+      fonts: { heading: HEADING, body: BODY },
+      copy: ritualCopy(copy),
+    } satisfies ThemeSpec,
+    (t) =>
+      ritualNodes(
+        { heading: t.font('heading'), body: t.font('body') },
+        {
+          page: linear(180, t.color('background'), t.shade('background', NIGHT)),
+          tag: t.color('accent'),
+          tagLabel: t.shade('background', WINE),
+          title: t.color('text'),
+          check: t.color('accent'),
+          head: t.color('text'),
+          note: t.shade('text', BLUSH),
+          dotOn: t.color('accent'),
+          dotOff: t.shade('text', HAZE),
+        },
+        {
+          tag: t.copy('tag'),
+          title: t.copy('title'),
+          heads: t.list('heads'),
+          notes: t.list('notes'),
+        },
+        active,
+      ),
+  );
 
-const dropStep = (number: string, title: string, body: string) =>
-  template(W, H, () => [
-    rect(0, 0, W, H, DEEP, { name: 'Background' }),
-    texture(),
-    ellipse(90, 250, 180, 96, 'rgba(0,0,0,0)', {
-      name: 'Number ring',
-      stroke: MINT,
-      strokeWidth: 5,
-    }),
-    text(number, 90, 268, 180, {
-      fontFamily: FONT,
-      fontSize: 52,
-      fontWeight: 800,
-      fill: '#ffffff',
-      align: 'center',
-    }),
-    text(title, 90, 420, 900, {
-      fontFamily: FONT,
-      fontSize: 84,
-      fontWeight: 800,
-      fill: '#ffffff',
-      lineHeight: 1.1,
-    }),
-    text(body, 90, 660, 880, {
-      fontFamily: FONT,
-      fontSize: 40,
-      fontWeight: 400,
-      fill: BLUSH,
-      lineHeight: 1.45,
-    }),
-    path(
-      'M10 110 A100 100 0 0 0 110 10',
-      880,
-      1100,
-      120,
-      120,
-      'rgba(0,0,0,0)',
-      { width: 120, height: 120 },
-      { name: 'Arc', stroke: MINT, strokeWidth: 12 },
-    ),
-  ]);
-
-export const DROP_STEPS = [
-  dropStep(
-    '01',
-    'Opening Email\nFirst Thing',
-    'Starting the day in your inbox puts you in reactive mode. Guard the first hour for your most important task.',
+export const RITUAL_STEPS = [
+  lightRitual(
+    {
+      tag: 'Step 2',
+      title: 'Build a\nMorning Ritual',
+      heads: ['Morning', 'Midday', 'Evening'],
+      notes: ['Set your top three tasks', 'Reset with a short walk', 'Prep the desk for tomorrow'],
+    },
+    2,
   ),
-  dropStep(
-    '02',
-    'Switching Tasks\nAll Day',
-    'Jumping between jobs drains focus and adds mistakes. Finish one thing before you start the next.',
-  ),
-  dropStep(
-    '03',
-    'Scrolling\nBetween Tasks',
-    'Short scroll breaks quietly eat an hour a day. Set app limits and take real breaks instead.',
+  darkRitual(
+    {
+      tag: 'Step 3',
+      title: 'Protect One\nFocus Block',
+      heads: ['Pick a time', 'Go offline', 'Ship something'],
+      notes: [
+        'Ninety minutes, same slot daily',
+        'Silence chats and close tabs',
+        'End with one finished task',
+      ],
+    },
+    3,
   ),
 ] as const;
