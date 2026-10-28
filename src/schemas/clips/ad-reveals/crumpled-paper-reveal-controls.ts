@@ -13,10 +13,9 @@ export const crumpledPaperRevealControls = defineControls<CrumpledPaperRevealPro
           label: 'Footer line',
           hint: 'Small letter-spaced line near the bottom of the sheet; leave empty to hide',
         },
-        { path: 'print.ink', label: 'Ink color', hint: 'Headline and footer' },
-        { path: 'print.size', label: 'Headline size', hint: 'The footer scales with it' },
       ],
       more: [
+        { path: 'print.size', label: 'Headline size', hint: 'The footer scales with it' },
         { path: 'print.lineHeight', label: 'Line spacing', hint: 'Relative to the headline size' },
         {
           path: 'print.condense',
@@ -48,14 +47,34 @@ export const crumpledPaperRevealControls = defineControls<CrumpledPaperRevealPro
       ],
     },
     {
-      title: 'Timing',
+      title: 'Colors',
       fields: [
-        { path: 'timing.appearStart', label: 'Ball appears at', hint: 'Frame number' },
-        { path: 'timing.unfoldStart', label: 'Unfold starts at', hint: 'Frame number' },
-        { path: 'timing.unfoldFrames', label: 'Unfold length', hint: 'In frames' },
-        { path: 'timing.pushStart', label: 'Camera push-in starts at', hint: 'Frame number' },
+        { path: 'print.ink', label: 'Primary color', hint: 'Printed headline and footer' },
+        {
+          path: 'hands.sleeveColor',
+          label: 'Secondary color',
+          hint: 'Knit sleeves on the arms; shows when Arms is set to Sleeve',
+        },
+        {
+          path: 'hands.watchColor',
+          label: 'Accent color',
+          hint: 'Watch band; shows when Show watch is on',
+        },
+        { path: 'print.paper', label: 'Surface color', hint: 'The paper sheet' },
+        { path: 'room.wall', label: 'Background color', hint: 'Wall behind the sheet' },
       ],
       more: [
+        { path: 'hands.skin', label: 'Skin tone' },
+        { path: 'light.keyColor', label: 'Key light color' },
+      ],
+    },
+    {
+      title: 'Timing',
+      fields: [{ path: 'timing.unfoldStart', label: 'Unfold starts at', hint: 'Frame number' }],
+      more: [
+        { path: 'timing.appearStart', label: 'Ball appears at', hint: 'Frame number' },
+        { path: 'timing.unfoldFrames', label: 'Unfold length', hint: 'In frames' },
+        { path: 'timing.pushStart', label: 'Camera push-in starts at', hint: 'Frame number' },
         {
           path: 'timing.rubFrames',
           label: 'Clap length',
@@ -70,24 +89,17 @@ export const crumpledPaperRevealControls = defineControls<CrumpledPaperRevealPro
         { path: 'timing.regripFrames', label: 'Hands settle length', hint: 'In frames' },
         { path: 'timing.pushFrames', label: 'Push-in length', hint: 'In frames' },
         { ...MOTION.speed, hint: 'Higher plays the whole sequence faster' },
-        MOTION.enter,
-        MOTION.enterFrames,
-        MOTION.exit,
-        MOTION.exitFrames,
       ],
     },
     {
       title: 'Paper',
-      fields: [
-        { path: 'print.paper', label: 'Paper color' },
-        { path: 'paper.creases', label: 'Crease count' },
+      fields: [{ path: 'paper.creases', label: 'Crease count' }],
+      more: [
         {
           path: 'paper.leftoverWrinkles',
           label: 'Wrinkles after opening',
           hint: 'How creased the sheet stays once it is flat',
         },
-      ],
-      more: [
         { path: 'paper.creaseDepth', label: 'Crease depth' },
         {
           path: 'paper.crinkle',
@@ -113,15 +125,10 @@ export const crumpledPaperRevealControls = defineControls<CrumpledPaperRevealPro
     },
     {
       title: 'Hands',
-      fields: [
-        { path: 'hands.show', label: 'Show hands' },
-        { path: 'hands.skin', label: 'Skin tone' },
+      fields: [{ path: 'hands.show', label: 'Show hands' }],
+      more: [
         { path: 'hands.sleeve', label: 'Arms', hint: 'Bare forearms or knit sleeves' },
         { path: 'hands.watch', label: 'Show watch' },
-      ],
-      more: [
-        { path: 'hands.sleeveColor', label: 'Sleeve color' },
-        { path: 'hands.watchColor', label: 'Watch band color' },
         { path: 'hands.roughness', label: 'Skin roughness', hint: 'Lower looks shinier' },
         { path: 'hands.detail', label: 'Skin detail' },
         { path: 'hands.clap', label: 'Clap width', hint: 'How far the hands open during the clap' },
@@ -159,18 +166,18 @@ export const crumpledPaperRevealControls = defineControls<CrumpledPaperRevealPro
       title: 'Camera',
       fields: [
         {
-          link: ['camera.startDistance', 'camera.midDistance'],
-          label: 'Wide shot distance',
-          hint: 'Camera distance while the paper is balled and unfolding',
-        },
-        {
           path: 'camera.endDistance',
           label: 'Close-up distance',
           hint: 'Where the push-in ends; lower is closer',
         },
-        { path: 'lens.depthOfField', label: 'Background blur', hint: 'Focus stays on the sheet' },
       ],
       more: [
+        {
+          link: ['camera.startDistance', 'camera.midDistance'],
+          label: 'Wide shot distance',
+          hint: 'Camera distance while the paper is balled and unfolding',
+        },
+        { path: 'lens.depthOfField', label: 'Background blur', hint: 'Focus stays on the sheet' },
         { path: 'camera.startDistance', label: 'Opening distance' },
         { path: 'camera.midDistance', label: 'Unfold distance' },
         { path: 'camera.fieldOfView', label: 'Field of view' },
@@ -197,16 +204,14 @@ export const crumpledPaperRevealControls = defineControls<CrumpledPaperRevealPro
     {
       title: 'Room and light',
       fields: [
-        { path: 'room.wall', label: 'Wall color' },
+        { path: 'light.key', label: 'Key light', hint: 'Main light that casts the shadows' },
+      ],
+      more: [
         {
           path: 'room.glow',
           label: 'Wall glow',
           hint: 'Soft light patch on the wall, brightest above the sheet',
         },
-        { path: 'light.key', label: 'Key light', hint: 'Main light that casts the shadows' },
-        { path: 'light.keyColor', label: 'Key light color' },
-      ],
-      more: [
         { path: 'light.ambient', label: 'Fill light', hint: 'Lifts the shadows evenly' },
         { path: 'light.softness', label: 'Shadow softness' },
         { path: 'light.reflections', label: 'Reflections' },
@@ -218,16 +223,19 @@ export const crumpledPaperRevealControls = defineControls<CrumpledPaperRevealPro
     },
     {
       title: 'Finish',
-      fields: [
-        { path: 'camera.grain', label: 'Film grain' },
-        { path: 'camera.vignette', label: 'Vignette' },
-      ],
+      fields: [{ path: 'camera.grain', label: 'Film grain' }],
       more: [
+        { path: 'camera.vignette', label: 'Vignette' },
         { path: 'lens.contrast', label: 'Contrast' },
         { path: 'lens.bloom', label: 'Bloom', hint: 'Glow around the brightest highlights' },
         { path: 'lens.ambientOcclusion', label: 'Contact shadows' },
         { path: 'lens.occlusionRadius', label: 'Contact shadow reach' },
       ],
+    },
+    {
+      title: 'Entrance and exit',
+      fields: [MOTION.enter],
+      more: [MOTION.exit, MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: [

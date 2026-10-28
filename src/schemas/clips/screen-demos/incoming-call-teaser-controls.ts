@@ -9,7 +9,6 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
       fields: [
         { path: 'call.caller', label: 'Caller name' },
         { path: 'call.subtitle', label: 'Line under the name' },
-        { path: 'call.callerColor', label: 'Name color' },
       ],
       more: [
         { path: 'call.callerSize', label: 'Name size' },
@@ -33,27 +32,81 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
       ],
     },
     {
-      title: 'Swipe and hang-up',
+      title: 'Colors',
       fields: [
-        { path: 'call.sliderLabel', label: 'Slider text' },
         {
-          path: 'call.slideStart',
-          label: 'Swipe starts at',
-          hint: 'Frame number. The call pulses until then',
+          link: [
+            'call.answerColor',
+            'call.haloColor',
+            'wall.barFill',
+            'words.darkInk',
+            'outro.color',
+          ],
+          label: 'Primary color',
+          hint: 'Pick-up phone icon, halo rings, loading bar fill, words on dark slabs and the sign-off script',
         },
+        {
+          link: ['call.declineColor', 'words.glitchInk', 'outro.burnCore', 'outro.swashColor'],
+          label: 'Accent color',
+          hint: 'Hang-up button, glitching words, the film burn center and the swash under the sign-off',
+        },
+        {
+          link: ['call.callerColor', 'call.shimmerColor', 'call.knobColor', 'call.hangupIcon'],
+          label: 'Text color',
+          hint: 'Caller name, slider shimmer, the round button and the hang-up icon',
+        },
+        {
+          link: ['call.pillColor', 'words.darkBand', 'words.glitchBand', 'wall.shelf'],
+          label: 'Surface color',
+          hint: 'Slider, dark and glitch slabs, and the shelf around the loading screen',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge', 'wall.cabinet', 'wall.slot'],
+          label: 'Background color',
+          hint: 'Backdrop center and corners, the loading screen housing and the gap below the blind',
+        },
+      ],
+      more: [
+        { path: 'call.answerColor', label: 'Phone icon color', hint: 'Before the swipe' },
         { path: 'call.haloColor', label: 'Halo color' },
-        {
-          link: ['call.answerColor', 'wall.barFill'],
-          label: 'Pick-up color',
-          hint: 'The phone icon before the swipe and the loading bar fill',
-        },
+        { path: 'wall.barFill', label: 'Bar fill color' },
+        { path: 'words.darkInk', label: 'Text on dark slab' },
+        { path: 'outro.color', label: 'Sign-off text color' },
         {
           path: 'call.declineColor',
           label: 'Hang-up button color',
           hint: 'The button turns this color after the swipe',
         },
+        { path: 'words.glitchInk', label: 'Glitch text color' },
+        { path: 'outro.burnCore', label: 'Burn center color' },
+        { path: 'outro.swashColor', label: 'Swash color' },
+        { path: 'call.callerColor', label: 'Name color' },
+        { path: 'call.shimmerColor', label: 'Shimmer color' },
+        { path: 'call.knobColor', label: 'Button color', hint: 'Before the swipe' },
+        { path: 'call.hangupIcon', label: 'Hang-up icon color' },
+        { path: 'call.pillColor', label: 'Slider color', hint: 'Top of the slider gradient' },
+        { path: 'words.darkBand', label: 'Dark slab color' },
+        { path: 'words.glitchBand', label: 'Glitch slab color' },
+        { path: 'wall.shelf', label: 'Shelf color' },
+        LOOK.background,
+        LOOK.backgroundEdge,
+        { path: 'wall.cabinet', label: 'Housing color' },
+        {
+          path: 'wall.slot',
+          label: 'Slot color',
+          hint: 'Dark gap below the blind while it is still raised',
+        },
       ],
+    },
+    {
+      title: 'Swipe and hang-up',
+      fields: [{ path: 'call.sliderLabel', label: 'Slider text' }],
       more: [
+        {
+          path: 'call.slideStart',
+          label: 'Swipe starts at',
+          hint: 'Frame number. The call pulses until then',
+        },
         {
           path: 'call.centerY',
           label: 'Vertical position',
@@ -61,15 +114,10 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
         },
         { path: 'call.pillWidth', label: 'Slider width' },
         { path: 'call.pillHeight', label: 'Slider height', hint: 'Also sets the button size' },
-        { path: 'call.pillColor', label: 'Slider color', hint: 'Top of the slider gradient' },
         { path: 'call.pillShade', label: 'Slider shade', hint: 'Bottom of the slider gradient' },
         { path: 'call.ringColor', label: 'Slider outline', hint: 'Also rings the button' },
         { path: 'call.labelColor', label: 'Slider text color' },
-        { path: 'call.shimmerColor', label: 'Shimmer color' },
         { path: 'call.shimmerFrames', label: 'Shimmer length', hint: 'Frames per sweep' },
-        { path: 'call.knobColor', label: 'Button color' },
-        { path: 'call.answerColor', label: 'Phone icon color', hint: 'Before the swipe' },
-        { path: 'call.hangupIcon', label: 'Hang-up icon color' },
         {
           path: 'call.declineDim',
           label: 'Hang-up fade color',
@@ -103,20 +151,11 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
             glitchFrames: 'Glitch frames after',
           },
         },
-        { path: 'words.size', label: 'Word size' },
-        { path: 'words.lightBand', label: 'Light slab color' },
-        {
-          link: ['words.darkInk', 'outro.color'],
-          label: 'Highlight text color',
-          hint: 'Words on dark slabs and the sign-off script',
-        },
       ],
       more: [
-        { path: 'words.darkBand', label: 'Dark slab color' },
+        { path: 'words.size', label: 'Word size' },
+        { path: 'words.lightBand', label: 'Light slab color' },
         { path: 'words.lightInk', label: 'Text on light slab' },
-        { path: 'words.darkInk', label: 'Text on dark slab' },
-        { path: 'words.glitchBand', label: 'Glitch slab color' },
-        { path: 'words.glitchInk', label: 'Glitch text color' },
         {
           path: 'words.glitchPattern',
           label: 'Glitch pattern',
@@ -155,17 +194,14 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
     },
     {
       title: 'Loading screen',
-      fields: [
-        { path: 'wall.title', label: 'Title' },
+      fields: [{ path: 'wall.title', label: 'Title' }],
+      more: [
         { path: 'wall.label', label: 'Bar caption' },
         { path: 'wall.panel', label: 'Blind color' },
-      ],
-      more: [
         { path: 'wall.frames', label: 'Length', hint: 'In frames' },
         { path: 'wall.titleSize', label: 'Title size' },
         { path: 'wall.labelSize', label: 'Caption size' },
         { path: 'wall.ink', label: 'Text and bar outline color' },
-        { path: 'wall.barFill', label: 'Bar fill color' },
         {
           path: 'wall.progressFrom',
           label: 'Bar starts at',
@@ -179,14 +215,7 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
         { path: 'wall.showHandle', label: 'Show handle' },
         { path: 'wall.panelLight', label: 'Glow color', hint: 'Light pooled on the blind' },
         { path: 'wall.light', label: 'Glow strength' },
-        { path: 'wall.cabinet', label: 'Housing color' },
-        { path: 'wall.shelf', label: 'Shelf color' },
         { path: 'wall.rail', label: 'Rail color', hint: 'Bar along the bottom of the blind' },
-        {
-          path: 'wall.slot',
-          label: 'Slot color',
-          hint: 'Dark gap below the blind while it is still raised',
-        },
         { path: 'wall.pullFrames', label: 'Pull-down length', hint: 'In frames' },
         {
           path: 'wall.pullDistance',
@@ -206,18 +235,10 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
     },
     {
       title: 'Sign-off',
-      fields: [
-        { path: 'outro.text', label: 'Sign-off text' },
+      fields: [{ path: 'outro.text', label: 'Sign-off text' }],
+      more: [
         { path: 'outro.size', label: 'Text size' },
         { path: 'outro.burn', label: 'Film burn' },
-        {
-          link: ['outro.burnCore', 'outro.swashColor'],
-          label: 'Flash color',
-          hint: 'Hot center of the film burn and the swash under the text',
-        },
-      ],
-      more: [
-        { path: 'outro.color', label: 'Text color' },
         { path: 'outro.centerY', label: 'Vertical position', hint: 'Pixels from the top' },
         { path: 'outro.tilt', label: 'Text tilt', hint: 'In degrees' },
         {
@@ -231,7 +252,6 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
           hint: 'Frames after the sign-off appears',
         },
         { path: 'outro.burnColor', label: 'Burn color' },
-        { path: 'outro.burnCore', label: 'Burn center color' },
         { path: 'outro.burnStrength', label: 'Burn strength' },
         {
           path: 'outro.burnSeed',
@@ -239,7 +259,6 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
           hint: 'Changes where the flashes land',
         },
         { path: 'outro.swash', label: 'Underline swash' },
-        { path: 'outro.swashColor', label: 'Swash color' },
         {
           path: 'outro.swashStart',
           label: 'Swash starts at',
@@ -250,16 +269,16 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
         LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { ...LOOK.accent, label: 'Margin line color' },
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when Paper margin line is on' },
       ],
     },
     {
@@ -270,12 +289,15 @@ export const incomingCallTeaserControls = defineControls<IncomingCallTeaserProps
           hint: 'Scales every beat but not the entrance or exit. The video length stays fixed, so slower speeds cut off the sign-off and faster ones hold on it longer',
         },
         MOTION.enter,
+      ],
+      more: [
         {
           ...MOTION.exit,
-          hint: 'Starts at an exit length of 0, raise it under More options for the exit to show',
+          hint: 'Starts at an exit length of 0, raise Exit length for the exit to show',
         },
+        MOTION.enterFrames,
+        MOTION.exitFrames,
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.ink', 'look.muted', 'motion.float'],

@@ -12,13 +12,15 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
         {
           path: 'poster.image',
           label: 'Poster image',
-          hint: 'Replaces the designed poster on the billboard and the final card. Leave empty to use the text below',
+          hint: 'Replaces the designed poster on the billboard and the final card. Leave empty to use the poster text',
         },
         {
           path: 'poster.headline',
           label: 'Headline',
           hint: 'With two or more lines, the last line uses the accent color. Three or more lines set smaller',
         },
+      ],
+      more: [
         { path: 'poster.eyebrow', label: 'Top line', hint: 'Shown in capitals at the top' },
         { path: 'poster.subline', label: 'Subtitle' },
         {
@@ -26,8 +28,6 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
           label: 'Details',
           hint: 'One item per line, up to four, shown side by side with dots',
         },
-      ],
-      more: [
         { path: 'poster.footer', label: 'Footer', hint: 'Text in the dark strip along the bottom' },
       ],
     },
@@ -36,30 +36,42 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
       fields: [
         {
           link: ['cloth.color', 'helicopter.stripe'],
-          label: 'Brand color',
+          label: 'Primary color',
           hint: 'The cloth and the helicopter stripe together',
         },
         {
-          path: 'poster.paper',
-          label: 'Poster paper',
-          hint: `Also the footer text. ${BEHIND_IMAGE}`,
+          path: 'poster.accent',
+          label: 'Accent color',
+          hint: `Sun motif, last headline line and detail dots. ${BEHIND_IMAGE}`,
         },
         {
           path: 'poster.ink',
-          label: 'Poster text color',
-          hint: `Also the rules and the footer strip. ${BEHIND_IMAGE}`,
+          label: 'Text color',
+          hint: `Poster text, rules and the footer strip. ${BEHIND_IMAGE}`,
         },
         {
-          path: 'poster.accent',
-          label: 'Poster accent',
-          hint: `Sun motif, last headline line and detail dots. ${BEHIND_IMAGE}`,
+          path: 'poster.paper',
+          label: 'Surface color',
+          hint: `The poster paper, the inner sun bands and the footer text. ${BEHIND_IMAGE}`,
+        },
+        {
+          link: ['sky.horizon', 'sky.haze'],
+          label: 'Background color',
+          hint: 'The sky near the horizon and the distant haze together',
         },
       ],
       more: [
         { path: 'cloth.color', label: 'Cloth color' },
-        { path: 'cloth.sheen', label: 'Cloth sheen', hint: 'Soft satin highlight on the fabric' },
         { path: 'helicopter.stripe', label: 'Helicopter stripe' },
+        { path: 'sky.horizon', label: 'Sky horizon color' },
+        {
+          path: 'sky.haze',
+          label: 'Haze color',
+          hint: 'Distant fog and the band along the horizon',
+        },
+        { path: 'sky.zenith', label: 'Sky top color' },
         { path: 'poster.accentSoft', label: 'Sun outer band', hint: BEHIND_IMAGE },
+        { path: 'cloth.sheen', label: 'Cloth sheen', hint: 'Soft satin highlight on the fabric' },
         { path: 'helicopter.body', label: 'Helicopter body' },
         {
           path: 'helicopter.trim',
@@ -82,6 +94,8 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
           label: 'Lift-off frame',
           hint: 'Frame number where the helicopter starts to climb. The cables tighten 30 frames earlier',
         },
+      ],
+      more: [
         {
           path: 'timing.climb',
           label: 'Climb length',
@@ -93,8 +107,6 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
           label: 'Rotor downwash',
           hint: 'How hard the rotor blast pushes the cloth down and outward',
         },
-      ],
-      more: [
         { path: 'cloth.gusts', label: 'Gusts', hint: 'How much the wind varies and swirls' },
         {
           path: 'cloth.flutter',
@@ -123,14 +135,14 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
           label: 'Show final card',
           hint: 'The poster lands full screen over a blurred view of the scene',
         },
+      ],
+      more: [
         {
           path: 'timing.cardStart',
           label: 'Card lands at',
           hint: 'Frame number. The scene starts blurring 24 frames earlier',
         },
         { path: 'outro.cardWidth', label: 'Card width', hint: 'Share of the frame width' },
-      ],
-      more: [
         {
           path: 'timing.cardFrames',
           label: 'Card landing length',
@@ -149,14 +161,14 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
           label: 'Billboard angle',
           hint: 'Turns the billboard, cloth and helicopter relative to the camera',
         },
+      ],
+      more: [
         { path: 'camera.distance', label: 'Camera distance' },
         {
           path: 'camera.pushIn',
           label: 'Push-in',
           hint: 'How far the camera moves in over the clip',
         },
-      ],
-      more: [
         { path: 'camera.height', label: 'Camera height' },
         { path: 'camera.fieldOfView', label: 'Field of view', hint: 'In degrees' },
         { path: 'camera.drift', label: 'Camera drift', hint: 'Slow floating sway of the camera' },
@@ -164,17 +176,13 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
     },
     {
       title: 'Sky and light',
-      fields: [
-        { path: 'sky.zenith', label: 'Sky top color' },
-        { path: 'sky.horizon', label: 'Sky horizon color' },
-        { path: 'sky.clouds', label: 'Cloud cover' },
+      fields: [{ path: 'sky.clouds', label: 'Cloud cover' }],
+      more: [
         {
           path: 'sky.sun',
           label: 'Sunlight strength',
           hint: 'Brighter sunlit surfaces and more contrast against the shade',
         },
-      ],
-      more: [
         {
           path: 'sky.sunColor',
           label: 'Sunlight color',
@@ -189,11 +197,6 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
           path: 'sky.sunHeight',
           label: 'Sun height',
           hint: 'Lower casts longer, more raking shadows',
-        },
-        {
-          path: 'sky.haze',
-          label: 'Haze color',
-          hint: 'Distant fog and the band along the horizon',
         },
         {
           path: 'sky.fog',
@@ -227,9 +230,9 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
           label: 'Show highway',
           hint: 'The road, barriers, lamps and sign gantry',
         },
-        { path: 'ground.traffic', label: 'Show traffic', hint: 'Only when the highway is shown' },
       ],
       more: [
+        { path: 'ground.traffic', label: 'Show traffic', hint: 'Only when the highway is shown' },
         { path: 'ground.verge', label: 'Grass color' },
         { path: 'ground.road', label: 'Asphalt color' },
         {
@@ -247,9 +250,9 @@ export const helicopterUnveilControls = defineControls<HelicopterUnveilProps>({
       fields: [
         MOTION.enter,
         { ...MOTION.exit, hint: 'Needs an exit length above 0, which starts at 0 for this clip' },
-        MOTION.exitFrames,
       ],
       more: [
+        MOTION.exitFrames,
         MOTION.enterFrames,
         {
           ...MOTION.speed,

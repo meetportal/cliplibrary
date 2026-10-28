@@ -8,13 +8,45 @@ export const phonePedestalControls = defineControls<PhonePedestalProps>({
       title: 'Phone',
       fields: [
         { path: 'phone.screen', label: 'Screen' },
+        { path: 'phone.finish', label: 'Phone color' },
+        { path: 'scale', label: 'Phone size' },
+      ],
+      more: [
         {
           path: 'phone.customScreen',
           label: 'Custom screen image',
           hint: 'Replaces the built-in screen when set',
         },
-        { path: 'phone.finish', label: 'Phone color' },
-        { path: 'scale', label: 'Phone size' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          path: 'pedestal.color',
+          label: 'Primary color',
+          hint: 'The clay block the phone balances on',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'The wall behind the block, center and corners together. A dark color also switches to darker studio lighting',
+        },
+        {
+          link: ['look.paperLine', 'look.accent'],
+          label: 'Accent color',
+          hint: 'Paper pattern lines and the paper margin line on the wall. Shows only when the paper pattern or margin line is on',
+        },
+      ],
+      more: [
+        {
+          ...LOOK.background,
+          label: 'Background center',
+          hint: 'A dark color also switches to darker studio lighting',
+        },
+        LOOK.backgroundEdge,
+        LOOK.paperLine,
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when Paper margin line is on' },
       ],
     },
     {
@@ -30,14 +62,14 @@ export const phonePedestalControls = defineControls<PhonePedestalProps>({
           label: 'Rocking',
           hint: 'How far the phone sways once it lands; 0 holds it still',
         },
+      ],
+      more: [
         {
           path: 'entry.drop',
           label: 'Drop height',
           hint: 'How far above the block the phone starts; negative rises up from below',
         },
         { path: 'entry.frames', label: 'Landing length', hint: 'In frames' },
-      ],
-      more: [
         {
           path: 'rockSpeed',
           label: 'Rocking speed',
@@ -53,17 +85,14 @@ export const phonePedestalControls = defineControls<PhonePedestalProps>({
     },
     {
       title: 'Block',
-      fields: [
-        { path: 'pedestal.show', label: 'Show block' },
-        { path: 'pedestal.color', label: 'Block color' },
+      fields: [{ path: 'pedestal.show', label: 'Show block' }],
+      more: [
         { path: 'pedestal.size', label: 'Block size' },
         {
           path: 'pedestal.top',
           label: 'Peak height',
           hint: 'Raises or lowers the block and the phone together',
         },
-      ],
-      more: [
         {
           path: 'pedestal.turn',
           label: 'Block angle',
@@ -78,8 +107,16 @@ export const phonePedestalControls = defineControls<PhonePedestalProps>({
       ],
     },
     {
-      title: 'Camera',
+      title: 'Camera and light',
       fields: [
+        {
+          path: 'camera.orbit',
+          label: 'Camera orbit',
+          hint: 'How far the view swings around the phone over the clip; negative swings the other way',
+        },
+        STAGE.keyLight,
+      ],
+      more: [
         {
           path: 'camera.height',
           label: 'Camera height',
@@ -90,14 +127,7 @@ export const phonePedestalControls = defineControls<PhonePedestalProps>({
           label: 'Camera rise',
           hint: 'How far the camera climbs over the clip',
         },
-        {
-          path: 'camera.orbit',
-          label: 'Camera orbit',
-          hint: 'How far the view swings around the phone over the clip; negative swings the other way',
-        },
         { ...STAGE.cameraDistance, hint: 'Higher pulls the camera back from the phone' },
-      ],
-      more: [
         {
           path: 'entry.cameraTilt',
           label: 'Camera start lift',
@@ -106,15 +136,7 @@ export const phonePedestalControls = defineControls<PhonePedestalProps>({
         { path: 'camera.aimY', label: 'Aim height', hint: 'Where the camera points vertically' },
         STAGE.fieldOfView,
         { ...STAGE.cameraDrift, hint: 'Slow handheld wander' },
-      ],
-    },
-    {
-      title: 'Light',
-      fields: [
-        STAGE.keyLight,
         { ...STAGE.shadow, hint: 'Shadow cast on the wall behind the block' },
-      ],
-      more: [
         { ...STAGE.reflections, hint: 'Shine on the phone and the clay' },
         STAGE.shadowSoftness,
         { path: 'camera.lightX', label: 'Key light left to right' },
@@ -124,29 +146,27 @@ export const phonePedestalControls = defineControls<PhonePedestalProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.backgroundEdge],
+      fields: [LOOK.showBackdrop],
       more: [
         LOOK.spotlight,
         LOOK.grain,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
       ],
     },
     {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
         {
           ...MOTION.speed,
           hint: 'Scales the landing, rocking and camera move. Entrance, exit and camera drift keep their pace',
         },
+        MOTION.enterFrames,
+        MOTION.exitFrames,
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.ink', 'look.muted', 'motion.float'],

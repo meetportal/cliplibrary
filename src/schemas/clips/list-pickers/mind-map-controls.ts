@@ -15,21 +15,62 @@ export const mindMapControls = defineControls<MindMapProps>({
           hint: 'The topics that scroll along the arc, looping when they run out',
           items: { title: 'Title', subtitle: 'Subtitle' },
         },
-        { path: 'font', label: 'Font' },
-        {
-          link: ['type.ink', 'type.subtitleInk', 'style.iconColor'],
-          label: 'Text color',
-          hint: 'Titles, subtitles and sparkle icons together',
-        },
       ],
       more: [
+        { path: 'font', label: 'Font' },
         { path: 'weight', label: 'Font weight', hint: 'Subtitles use one step lighter' },
         { path: 'type.rootTitle', label: 'Main topic title size' },
         { path: 'type.rootSubtitle', label: 'Main topic subtitle size' },
         { path: 'type.title', label: 'Branch title size' },
         { path: 'type.subtitle', label: 'Branch subtitle size' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['style.rootFill', 'style.activeFill', 'look.accent'],
+          label: 'Primary color',
+          hint: 'The main topic pill, the lit branch and the paper margin line',
+        },
+        {
+          path: 'style.nodeFill',
+          label: 'Secondary color',
+          hint: 'The branch pills away from the middle',
+        },
+        {
+          link: ['lines.color', 'style.border'],
+          label: 'Accent color',
+          hint: 'The dashed arc, the line from the main topic and the pill borders',
+        },
+        {
+          link: ['type.ink', 'type.subtitleInk', 'style.iconColor'],
+          label: 'Text color',
+          hint: 'Titles, subtitles and sparkle icons',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        { path: 'style.rootFill', label: 'Main topic fill' },
+        { path: 'style.activeFill', label: 'Lit branch fill' },
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when Paper margin line is on' },
+        {
+          path: 'lines.color',
+          label: 'Line color',
+          hint: 'The dashed arc and the line from the main topic',
+        },
+        { path: 'style.border', label: 'Pill border color' },
         { path: 'type.ink', label: 'Title color' },
         { path: 'type.subtitleInk', label: 'Subtitle color' },
+        { path: 'style.iconColor', label: 'Sparkle icon color' },
+        LOOK.background,
+        LOOK.backgroundEdge,
+        { path: 'style.shadowColor', label: 'Pill shadow color' },
+        LOOK.paperLine,
       ],
     },
     {
@@ -41,18 +82,18 @@ export const mindMapControls = defineControls<MindMapProps>({
           hint: 'Frames from one scroll step to the next',
         },
         {
-          path: 'timing.moveFrames',
-          label: 'Scroll step length',
-          hint: 'In frames, capped at the time per branch',
-        },
-        { path: 'timing.delay', label: 'Start delay', hint: 'Frames before the first scroll' },
-        {
           path: 'style.activeScale',
           label: 'Lit branch zoom',
           hint: 'How much the branch in the middle grows',
         },
       ],
       more: [
+        {
+          path: 'timing.moveFrames',
+          label: 'Scroll step length',
+          hint: 'In frames, capped at the time per branch',
+        },
+        { path: 'timing.delay', label: 'Start delay', hint: 'Frames before the first scroll' },
         {
           path: 'timing.start',
           label: 'First lit branch',
@@ -82,24 +123,12 @@ export const mindMapControls = defineControls<MindMapProps>({
     },
     {
       title: 'Pills',
-      fields: [
-        {
-          link: ['style.rootFill', 'style.activeFill'],
-          label: 'Highlight fill',
-          hint: 'Main topic and the lit branch',
-        },
-        { path: 'style.nodeFill', label: 'Branch fill' },
-        { path: 'style.border', label: 'Border color' },
-        { path: 'style.showIcon', label: 'Show sparkle icons' },
-      ],
+      fields: [],
       more: [
-        { path: 'style.rootFill', label: 'Main topic fill' },
-        { path: 'style.activeFill', label: 'Lit branch fill' },
+        { path: 'style.showIcon', label: 'Show sparkle icons' },
         { path: 'style.nodeOpacity', label: 'Branch fill opacity' },
         { path: 'style.activeOpacity', label: 'Lit branch fill opacity' },
         { path: 'style.shadow', label: 'Shadow strength' },
-        { path: 'style.shadowColor', label: 'Shadow color' },
-        { path: 'style.iconColor', label: 'Sparkle icon color' },
         {
           path: 'layout.padding',
           label: 'Pill padding',
@@ -109,20 +138,14 @@ export const mindMapControls = defineControls<MindMapProps>({
     },
     {
       title: 'Arc',
-      fields: [
-        {
-          path: 'lines.color',
-          label: 'Line color',
-          hint: 'The dashed arc and the line from the main topic',
-        },
+      fields: [],
+      more: [
         {
           path: 'layout.pitch',
           label: 'Branch spacing',
           hint: 'Distance between branches along the arc, in pixels',
         },
         { path: 'layout.radius', label: 'Arc radius', hint: 'Higher flattens the arc' },
-      ],
-      more: [
         { path: 'lines.width', label: 'Line width', hint: 'In pixels' },
         { path: 'lines.opacity', label: 'Line opacity' },
         { path: 'lines.dash', label: 'Dash length', hint: 'Arc only, in pixels' },
@@ -136,7 +159,8 @@ export const mindMapControls = defineControls<MindMapProps>({
     },
     {
       title: 'Layout',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'layout.rootX',
           label: 'Main topic position',
@@ -152,9 +176,8 @@ export const mindMapControls = defineControls<MindMapProps>({
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        LOOK.background,
+      fields: [LOOK.showBackdrop],
+      more: [
         {
           path: 'aura.blobs',
           label: 'Color glows',
@@ -167,18 +190,13 @@ export const mindMapControls = defineControls<MindMapProps>({
             strength: 'Strength',
           },
         },
-      ],
-      more: [
-        LOOK.backgroundEdge,
         { path: 'aura.drift', label: 'Glow drift', hint: 'How much the glows wander' },
         LOOK.spotlight,
         LOOK.grain,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
       ],
     },
     {

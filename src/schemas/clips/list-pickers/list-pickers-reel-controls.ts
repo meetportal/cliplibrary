@@ -21,6 +21,16 @@ export const listPickersReelControls = defineControls<ListPickersReelProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          path: 'intro.background',
+          label: 'Primary color',
+          hint: 'The background that fills the gaps around the grid tiles and shows if the pickers end early',
+        },
+      ],
+    },
+    {
       title: 'Intro grid',
       fields: [
         { path: 'intro.show', label: 'Show intro grid' },
@@ -33,11 +43,6 @@ export const listPickersReelControls = defineControls<ListPickersReelProps>({
           path: 'intro.frames',
           label: 'Intro length',
           hint: 'In frames, including the zoom',
-        },
-        {
-          path: 'intro.background',
-          label: 'Background color',
-          hint: 'Fills the gaps around the grid tiles and shows if the pickers end early',
         },
       ],
       more: [

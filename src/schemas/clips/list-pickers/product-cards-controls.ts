@@ -19,23 +19,53 @@ export const productCardsControls = defineControls<ProductCardsProps>({
           },
         },
         { path: 'font', label: 'Font' },
+      ],
+      more: [
         { path: 'type.title', label: 'Name size' },
         { path: 'type.description', label: 'Description size' },
+        { path: 'type.titleWeight', label: 'Name weight' },
+        { path: 'type.descriptionWeight', label: 'Description weight' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['card.fill', 'card.border', 'tile.color'],
+          label: 'Primary color',
+          hint: 'The glass cards, their rims and glow, and the icon tiles',
+        },
         {
           link: ['type.ink', 'type.descriptionInk'],
           label: 'Text color',
-          hint: 'Colors the product names and descriptions together',
+          hint: 'Product names and descriptions',
+        },
+        {
+          path: 'tile.ink',
+          label: 'Accent color',
+          hint: 'Outlines and dark parts of the drawn icons',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
         },
       ],
       more: [
-        { path: 'type.titleWeight', label: 'Name weight' },
-        { path: 'type.descriptionWeight', label: 'Description weight' },
+        { path: 'card.fill', label: 'Card body color' },
+        { path: 'card.border', label: 'Rim color', hint: 'Also colors the rim glow' },
+        { path: 'tile.color', label: 'Icon tile color' },
         { path: 'type.ink', label: 'Name color' },
         {
           path: 'type.descriptionInk',
           label: 'Description color',
           hint: 'Drawn slightly see-through',
         },
+        LOOK.background,
+        LOOK.backgroundEdge,
+        { path: 'card.shadowColor', label: 'Drop shadow color' },
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when Paper margin line is on' },
+        LOOK.paperLine,
       ],
     },
     {
@@ -45,11 +75,6 @@ export const productCardsControls = defineControls<ProductCardsProps>({
           path: 'timing.interval',
           label: 'Time on each card',
           hint: 'In frames, counting the scroll to the next card',
-        },
-        {
-          path: 'timing.moveFrames',
-          label: 'Scroll duration',
-          hint: 'In frames, never longer than the time on each card',
         },
         {
           path: 'layout.sideScale',
@@ -63,6 +88,11 @@ export const productCardsControls = defineControls<ProductCardsProps>({
         },
       ],
       more: [
+        {
+          path: 'timing.moveFrames',
+          label: 'Scroll duration',
+          hint: 'In frames, never longer than the time on each card',
+        },
         {
           path: 'layout.sideOpacity',
           label: 'Side card opacity',
@@ -84,25 +114,18 @@ export const productCardsControls = defineControls<ProductCardsProps>({
       title: 'Glass',
       fields: [
         {
-          link: ['card.fill', 'card.border'],
-          label: 'Glass color',
-          hint: 'Tints the card body and its rim together',
-        },
-        {
           path: 'card.fillOpacity',
           label: 'Glass opacity',
           hint: 'Higher makes the cards more solid, a little stronger at the top',
         },
+      ],
+      more: [
         {
           path: 'card.blur',
           label: 'Frosted blur',
           hint: 'Blurs what shows through each card. Browser exports may skip it',
         },
         { path: 'card.radius', label: 'Corner radius' },
-      ],
-      more: [
-        { path: 'card.fill', label: 'Card body color' },
-        { path: 'card.border', label: 'Rim color', hint: 'Also colors the rim glow' },
         { path: 'card.borderWidth', label: 'Rim width', hint: 'In pixels, 0 removes the rim line' },
         {
           path: 'card.glow',
@@ -110,25 +133,17 @@ export const productCardsControls = defineControls<ProductCardsProps>({
           hint: 'Soft glow around and inside the rim, 0 turns it off',
         },
         { path: 'card.shadow', label: 'Drop shadow' },
-        { path: 'card.shadowColor', label: 'Drop shadow color' },
       ],
     },
     {
       title: 'Icons',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'tile.size',
           label: 'Icon tile size',
           hint: 'Also sets the space around the tile inside the card',
         },
-        { path: 'tile.color', label: 'Tile color' },
-        {
-          path: 'tile.ink',
-          label: 'Icon line color',
-          hint: 'Outlines and dark parts of the drawn icons',
-        },
-      ],
-      more: [
         { path: 'tile.radius', label: 'Tile corner radius' },
         {
           path: 'tile.iconScale',
@@ -139,7 +154,8 @@ export const productCardsControls = defineControls<ProductCardsProps>({
     },
     {
       title: 'Layout',
-      fields: [
+      fields: [],
+      more: [
         { path: 'card.width', label: 'Card width' },
         { path: 'card.height', label: 'Card height' },
         {
@@ -147,8 +163,6 @@ export const productCardsControls = defineControls<ProductCardsProps>({
           label: 'Card spacing',
           hint: 'Distance between card centers, in pixels',
         },
-      ],
-      more: [
         {
           path: 'layout.x',
           label: 'Horizontal position',
@@ -163,9 +177,8 @@ export const productCardsControls = defineControls<ProductCardsProps>({
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        LOOK.background,
+      fields: [LOOK.showBackdrop],
+      more: [
         {
           path: 'aura.blobs',
           label: 'Color glows',
@@ -177,18 +190,13 @@ export const productCardsControls = defineControls<ProductCardsProps>({
             strength: 'Strength',
           },
         },
-      ],
-      more: [
-        LOOK.backgroundEdge,
         { path: 'aura.drift', label: 'Glow drift', hint: 'How much the color glows wander' },
         LOOK.spotlight,
         LOOK.grain,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
       ],
     },
     {
