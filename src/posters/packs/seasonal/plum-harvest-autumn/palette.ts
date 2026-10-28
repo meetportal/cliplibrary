@@ -13,9 +13,10 @@ export const AUT = {
   line: '#e4dccd',
 };
 
-export const SERIF = 'Fraunces';
-export const HAND = 'Caveat';
-export const BODY = 'DM Sans';
+export const SERIF = { label: 'Heading font', value: 'Fraunces' } as const;
+export const HAND = { label: 'Script font', value: 'Caveat' } as const;
+export const BODY = { label: 'Body font', value: 'DM Sans' } as const;
+export const PACIFICO = { label: 'Title font', value: 'Pacifico' } as const;
 
 export const snap = (
   name: PosterPhotoName,
@@ -24,11 +25,13 @@ export const snap = (
   width: number,
   height: number,
   rotation: number,
+  border: string,
+  tint: string,
 ) =>
   rotateNodes(rotation, x + width / 2, y + height / 2, [
-    rect(x - 16, y - 16, width + 32, height + 32, AUT.white, {
+    rect(x - 16, y - 16, width + 32, height + 32, border, {
       name: 'Photo border',
-      ...shadow(24, 10, 'rgba(43,29,24,0.25)'),
+      ...shadow(24, 10, tint),
     }),
     photo(name, x, y, width, height),
   ]);
