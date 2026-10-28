@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import type { ControlDescriptor, ControlEntry, ControlSectionView } from '@/core';
+import { recolor } from '@/design';
 import { cn } from '@/lib/utils';
 import { getAtPath, setAtPath } from '@/lib/value-path';
 import { FieldControl } from './field-control';
@@ -104,7 +105,16 @@ const LeafRow = ({
   onChange,
 }: { entry: ControlEntry; descriptor: LeafDescriptor } & PanelProps) => {
   const current = getAtPath(values, descriptor.path);
-  const mixed = entry.targets.some((target) => getAtPath(values, target) !== current);
+  const { shades } = entry;
+  const mixed =
+    shades === null && entry.targets.some((target) => getAtPath(values, target) !== current);
+  const valueFor = (next: unknown, index: number): unknown => {
+    const [base] = shades ?? [];
+    const sample = shades?.[index];
+    return typeof next === 'string' && base !== undefined && sample !== undefined
+      ? recolor(next, base, sample)
+      : next;
+  };
   return (
     <FieldShell
       label={descriptor.label}
@@ -118,7 +128,8 @@ const LeafRow = ({
         onChange={(next) =>
           onChange(
             entry.targets.reduce<Values>(
-              (accumulated, target) => setAtPath(accumulated, target, next) as Values,
+              (accumulated, target, index) =>
+                setAtPath(accumulated, target, valueFor(next, index)) as Values,
               values,
             ),
           )
@@ -248,7 +259,9 @@ export const PropertiesPanel = ({
 }: { sections: ControlSectionView[] } & PanelProps) => (
   <Accordion
     type="multiple"
-    defaultValue={sections.slice(0, 1).map((section) => section.title)}
+    defaultValue={sections
+      .filter((section, index) => index === 0 || section.title === 'Colors')
+      .map((section) => section.title)}
     className="flex flex-col"
   >
     {sections.map((section) => (

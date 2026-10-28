@@ -29,7 +29,11 @@ export const chargeCompareControls = defineControls<ChargeCompareProps>({
           label: 'Highlighted words',
           hint: 'Painted with the highlight gradient; must appear exactly in the headline',
         },
-        { path: 'copy.leftLabel', label: 'Left phone label' },
+        {
+          path: 'copy.leftLabel',
+          label: 'Left phone label',
+          hint: 'Over the phone that stays empty',
+        },
         {
           path: 'copy.rightLabel',
           label: 'Right phone label',
@@ -53,13 +57,65 @@ export const chargeCompareControls = defineControls<ChargeCompareProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: [
+            'look.highlightFrom',
+            'look.chargedLabelInk',
+            'look.ring',
+            'look.pillEdge',
+            'look.glow',
+          ],
+          label: 'Primary color',
+          hint: 'Start of the headline highlight, the right phone label, the middle of the badge gradient, the button border and arrow circle, and the charge glow',
+        },
+        {
+          link: ['look.highlightTo', 'look.ringDeep'],
+          label: 'Secondary color',
+          hint: 'End of the headline highlight and the deep end of the badge gradient',
+        },
+        {
+          link: ['look.headlineInk', 'look.wordmarkInk', 'look.brandInk', 'look.pillInk'],
+          label: 'Text color',
+          hint: 'Headline, end card wordmark, badge brand name and small line, and button text',
+        },
+        {
+          link: ['look.badgeFill', 'look.pillFill', 'look.phoneBezel'],
+          label: 'Surface color',
+          hint: 'Inside of the badge, the button fill and arrow, and the phone bezels',
+        },
+        { path: 'look.background', label: 'Background color' },
+      ],
+      more: [
+        { ...LOOK.showBackdrop, hint: 'Off leaves the frame transparent behind the phones' },
+        { path: 'look.highlightFrom', label: 'Highlight gradient start' },
+        { path: 'look.highlightTo', label: 'Highlight gradient end' },
+        { path: 'look.chargedLabelInk', label: 'Right label color' },
+        { path: 'look.glow', label: 'Charge glow', hint: 'Grows behind the charging phone' },
+        { path: 'look.headlineInk', label: 'Headline color' },
+        { path: 'look.labelInk', label: 'Left label color' },
+        { path: 'look.wordmarkInk', label: 'Wordmark color' },
+        { path: 'look.taglineInk', label: 'Tagline color' },
+        { path: 'look.badgeFill', label: 'Badge fill' },
+        { path: 'look.ringLight', label: 'Badge gradient light end' },
+        { path: 'look.ring', label: 'Badge gradient middle' },
+        { path: 'look.ringDeep', label: 'Badge gradient deep end' },
+        { path: 'look.brandInk', label: 'Brand name color', hint: 'Also the small line' },
+        { path: 'look.pillFill', label: 'Button fill', hint: 'Also the arrow' },
+        { path: 'look.pillEdge', label: 'Button border color', hint: 'Also the arrow circle' },
+        { path: 'look.pillInk', label: 'Button text color' },
+        { path: 'look.phoneBezel', label: 'Bezel color' },
+      ],
+    },
+    {
       title: 'End card',
       fields: [
         { path: 'copy.wordmark', label: 'Wordmark' },
         { path: 'copy.tagline', label: 'Tagline' },
-        { path: 'copy.url', label: 'Button text', hint: 'Typed in letter by letter' },
       ],
       more: [
+        { path: 'copy.url', label: 'Button text', hint: 'Typed in letter by letter' },
         { path: 'timing.wordmarkAt', label: 'Wordmark appears at', hint: 'Frame number' },
         { path: 'timing.taglineAt', label: 'Tagline appears at', hint: 'Frame number' },
         { path: 'timing.pillAt', label: 'Button appears at', hint: 'Frame number' },
@@ -102,31 +158,19 @@ export const chargeCompareControls = defineControls<ChargeCompareProps>({
         { path: 'layout.pillX', label: 'Button horizontal position', hint: 'Center, in pixels' },
         { path: 'layout.pillY', label: 'Button vertical position', hint: 'Center, in pixels' },
         { path: 'layout.urlSize', label: 'Button text size' },
-        { path: 'look.wordmarkInk', label: 'Wordmark color' },
-        { path: 'look.taglineInk', label: 'Tagline color' },
-        { path: 'look.pillFill', label: 'Button fill', hint: 'Also the arrow' },
-        { path: 'look.pillEdge', label: 'Button border color', hint: 'Also the arrow circle' },
-        { path: 'look.pillInk', label: 'Button text color' },
       ],
     },
     {
       title: 'Badge',
-      fields: [
+      fields: [{ path: 'copy.brand', label: 'Brand name' }],
+      more: [
         { path: 'copy.monogram', label: 'Monogram' },
-        { path: 'copy.brand', label: 'Brand name' },
         {
           path: 'copy.brandAccent',
           label: 'Brand name accent',
           hint: 'Follows the brand name, painted with the badge gradient',
         },
-      ],
-      more: [
         { path: 'copy.badgeLine', label: 'Small line under the name' },
-        { path: 'look.badgeFill', label: 'Badge fill' },
-        { path: 'look.ringLight', label: 'Badge gradient light end' },
-        { path: 'look.ring', label: 'Badge gradient middle' },
-        { path: 'look.ringDeep', label: 'Badge gradient deep end' },
-        { path: 'look.brandInk', label: 'Brand name color', hint: 'Also the small line' },
         {
           path: 'layout.cornerLogoX',
           label: 'Corner badge horizontal position',
@@ -142,14 +186,13 @@ export const chargeCompareControls = defineControls<ChargeCompareProps>({
     },
     {
       title: 'Badge animation',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'logo.appear.frame',
           label: 'Big badge appears at',
           hint: 'Frame number; it fades in over the pop-in length, then rises, swings and lands on the end card',
         },
-      ],
-      more: [
         {
           path: 'timing.cornerFadeStart',
           label: 'Corner badge fades at',
@@ -181,11 +224,11 @@ export const chargeCompareControls = defineControls<ChargeCompareProps>({
           hint: 'Battery fill color as the charge rises; the left battery keeps the lowest stop',
           items: { color: 'Color', at: 'Charge progress' },
         },
+      ],
+      more: [
         { path: 'battery.segments', label: 'Battery bars' },
         { path: 'timing.chargeStart', label: 'Charging starts at', hint: 'Frame number' },
         { path: 'timing.chargeEnd', label: 'Fully charged at', hint: 'Frame number' },
-      ],
-      more: [
         {
           path: 'battery.emptyLevel',
           label: 'Empty level',
@@ -212,48 +255,18 @@ export const chargeCompareControls = defineControls<ChargeCompareProps>({
         { path: 'battery.segmentGap', label: 'Gap between bars' },
         { path: 'look.batteryOutline', label: 'Battery outline color' },
         { path: 'look.bolt', label: 'Bolt color' },
-      ],
-    },
-    {
-      title: 'Colors',
-      fields: [
-        LOOK.background,
         {
-          link: ['look.headlineInk', 'look.wordmarkInk'],
-          label: 'Text color',
-          hint: 'Headline and end card wordmark. The badge and button keep their own text colors',
+          path: 'layout.glowRadius',
+          label: 'Charge glow radius',
+          hint: 'In pixels',
         },
-        {
-          link: ['look.labelInk', 'look.taglineInk'],
-          label: 'Secondary text color',
-          hint: 'Left phone label and end card tagline',
-        },
-        {
-          link: ['look.highlightFrom', 'look.chargedLabelInk'],
-          label: 'Highlight color',
-          hint: 'Start of the headline gradient and the right phone label',
-        },
-        { path: 'look.highlightTo', label: 'Highlight gradient end' },
-        {
-          link: ['look.ring', 'look.pillEdge'],
-          label: 'Accent color',
-          hint: 'Middle of the badge gradient, the button border and the arrow circle',
-        },
-        { path: 'look.glow', label: 'Charge glow', hint: 'Grows behind the charging phone' },
-      ],
-      more: [
-        LOOK.showBackdrop,
-        { path: 'look.headlineInk', label: 'Headline color' },
-        { path: 'look.highlightFrom', label: 'Highlight gradient start' },
-        { path: 'look.labelInk', label: 'Left label color' },
-        { path: 'look.chargedLabelInk', label: 'Right label color' },
-        { path: 'layout.glowRadius', label: 'Glow radius', hint: 'In pixels' },
-        { path: 'layout.glowStrength', label: 'Glow strength' },
+        { path: 'layout.glowStrength', label: 'Charge glow strength' },
       ],
     },
     {
       title: 'Phones and chargers',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'layout.phoneSpread',
           label: 'Distance between phones',
@@ -261,14 +274,11 @@ export const chargeCompareControls = defineControls<ChargeCompareProps>({
         },
         { path: 'layout.phoneWidth', label: 'Phone width' },
         { path: 'layout.phoneHeight', label: 'Phone height' },
-      ],
-      more: [
         { path: 'layout.phoneTop', label: 'Phone top', hint: 'Top edge, in pixels from the top' },
         { path: 'layout.phoneRadius', label: 'Corner roundness' },
         { path: 'layout.edgeWidth', label: 'Frame thickness' },
         { path: 'layout.bezelWidth', label: 'Bezel thickness' },
         { path: 'look.phoneEdge', label: 'Frame color', hint: 'Also the side buttons' },
-        { path: 'look.phoneBezel', label: 'Bezel color' },
         { path: 'look.phoneScreen', label: 'Screen color', hint: 'Also fills the batteries' },
         { path: 'look.island', label: 'Camera island color' },
         {
@@ -290,15 +300,13 @@ export const chargeCompareControls = defineControls<ChargeCompareProps>({
     },
     {
       title: 'Motion',
-      fields: [
+      fields: [MOTION.speed],
+      more: [
         {
           path: 'timing.wipeStart',
           label: 'Wipe to end card at',
           hint: 'Frame number; the comparison clears from the center outward',
         },
-        MOTION.speed,
-      ],
-      more: [
         { path: 'timing.wipeFrames', label: 'Wipe length', hint: 'In frames' },
         { path: 'timing.wipeCenterY', label: 'Wipe center', hint: 'Pixels from the top' },
         { path: 'timing.wipeStretch', label: 'Wipe stretch', hint: 'Higher makes the wipe taller' },

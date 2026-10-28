@@ -1,6 +1,7 @@
 import { definePack } from '../../../pack';
-import { ideasFlight, leadTrend, portfolio, seoMagnifier } from './posts';
-import { POSTS, trendsPost, trendsStory, webinarDark, webinarNavy } from './posts-more';
+import { ideasFlight, leadTrend, portfolio } from './posts';
+import { POSTS, trendsPost, trendsStory, webinarDark, webinarNavy } from './posts-extra';
+import { seoMagnifier } from './posts-more';
 
 export const harborCoralMarketingPack = definePack({
   id: 'harbor-coral-marketing',

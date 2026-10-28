@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { designControlSchema } from './controls';
 import { designElementSchema } from './element';
 import { fillSchema } from './fill';
 
@@ -9,6 +10,7 @@ export const designSchema = z.object({
   height: z.number().int().positive(),
   background: fillSchema,
   elements: z.array(designElementSchema),
+  controls: z.array(designControlSchema),
 });
 
 export type Design = z.infer<typeof designSchema>;

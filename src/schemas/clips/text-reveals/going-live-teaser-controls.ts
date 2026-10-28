@@ -42,6 +42,65 @@ export const goingLiveTeaserControls = defineControls<GoingLiveTeaserProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.accent', 'wall.bokeh'],
+          label: 'Primary color',
+          hint: 'Highlighted words, tagline highlight, echo titles, glitch, wall ribbons, stat numbers and the bokeh lights',
+        },
+        {
+          link: ['look.echoTint', 'look.flash', 'look.underline', 'wall.rim'],
+          label: 'Secondary color',
+          hint: 'Alternate echo layers, the flash behind the echo titles, the tagline underline and the lines and edge glow on both walls',
+        },
+        {
+          link: ['look.ink', 'look.logo', 'wall.ink', 'look.muted'],
+          label: 'Text color',
+          hint: 'Headline words, URL, tagline, the front echo layer, the logo, the wall copy and the contact rows',
+        },
+        {
+          link: ['wall.panel', 'look.glow', 'look.smoke'],
+          label: 'Surface color',
+          hint: 'The top of the website and stats walls, the background glow and the smoke under the light up line',
+        },
+        {
+          link: ['look.background', 'wall.panelEdge', 'look.shadow', 'look.flashInk'],
+          label: 'Background color',
+          hint: 'The background, the bottom of both walls, the echo shadow and the text on the flash',
+        },
+      ],
+      more: [
+        LOOK.showBackdrop,
+        { ...LOOK.accent, label: 'Highlight color' },
+        { path: 'wall.bokeh', label: 'Bokeh color' },
+        { path: 'look.echoTint', label: 'Echo layer tint' },
+        { path: 'look.flash', label: 'Flash color' },
+        { path: 'look.underline', label: 'Tagline underline color' },
+        { path: 'wall.rim', label: 'Wall line and glow color' },
+        { ...LOOK.ink, label: 'Headline color' },
+        { path: 'look.logo', label: 'Logo color' },
+        { path: 'wall.ink', label: 'Wall text color' },
+        { path: 'look.muted', label: 'Contact text color' },
+        { path: 'wall.panel', label: 'Wall top color', hint: 'Both walls fade from this color' },
+        { path: 'look.glow', label: 'Background glow' },
+        { path: 'look.smoke', label: 'Smoke color' },
+        { ...LOOK.background, hint: 'Shown when the background is on' },
+        { path: 'wall.panelEdge', label: 'Wall bottom color' },
+        { path: 'look.shadow', label: 'Echo shadow color' },
+        { path: 'look.flashInk', label: 'Text color on flash' },
+        {
+          path: 'wall.beam',
+          label: 'Light sweep color',
+          hint: 'The bright bands of light that sweep across the website wall',
+        },
+        { path: 'look.glowStrength', label: 'Glow strength' },
+        { path: 'glitch.colorA', label: 'Glitch color 1', hint: GLITCH_COLOR },
+        { path: 'glitch.colorB', label: 'Glitch color 2', hint: GLITCH_COLOR },
+        { path: 'glitch.colorC', label: 'Glitch color 3', hint: GLITCH_COLOR },
+      ],
+    },
+    {
       title: 'End card',
       fields: [
         {
@@ -50,6 +109,8 @@ export const goingLiveTeaserControls = defineControls<GoingLiveTeaserProps>({
           hint: 'The blurred-in URL and the website contact row',
         },
         { path: 'copy.tagline', label: 'Tagline' },
+      ],
+      more: [
         {
           path: 'copy.taglineAccent',
           label: 'Tagline highlight',
@@ -62,8 +123,6 @@ export const goingLiveTeaserControls = defineControls<GoingLiveTeaserProps>({
           label: 'Show logo',
           hint: 'The arched monogram that draws itself above the tagline',
         },
-      ],
-      more: [
         { path: 'copy.url', label: 'URL reveal text' },
         { path: 'copy.website', label: 'Website contact row' },
         {
@@ -91,46 +150,9 @@ export const goingLiveTeaserControls = defineControls<GoingLiveTeaserProps>({
       ],
     },
     {
-      title: 'Colors',
-      fields: [
-        {
-          link: ['look.ink', 'look.logo'],
-          label: 'Text and logo color',
-          hint: 'Headline words, URL, tagline, the front echo layer and the logo',
-        },
-        {
-          ...LOOK.accent,
-          label: 'Highlight color',
-          hint: 'Highlighted words, tagline highlight, echo titles, glitch, wall ribbons and stat numbers',
-        },
-        {
-          link: ['look.echoTint', 'look.flash', 'look.underline'],
-          label: 'Second accent color',
-          hint: 'Alternate echo layers, the flash and the tagline underline',
-        },
-        { ...LOOK.background, hint: 'Shown when the background is on' },
-      ],
-      more: [
-        LOOK.showBackdrop,
-        { path: 'look.glow', label: 'Background glow' },
-        { path: 'look.glowStrength', label: 'Glow strength' },
-        LOOK.ink,
-        { path: 'look.logo', label: 'Logo color' },
-        { path: 'look.echoTint', label: 'Echo layer tint' },
-        { path: 'look.flash', label: 'Flash color' },
-        { path: 'look.flashInk', label: 'Text color on flash' },
-        { path: 'look.underline', label: 'Tagline underline color' },
-        { path: 'look.shadow', label: 'Echo shadow color' },
-        { path: 'look.smoke', label: 'Smoke color' },
-        { path: 'look.muted', label: 'Contact text color' },
-        { path: 'glitch.colorA', label: 'Glitch color 1', hint: GLITCH_COLOR },
-        { path: 'glitch.colorB', label: 'Glitch color 2', hint: GLITCH_COLOR },
-        { path: 'glitch.colorC', label: 'Glitch color 3', hint: GLITCH_COLOR },
-      ],
-    },
-    {
       title: 'Walls',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'wall.headline',
           label: 'Wall headline',
@@ -142,21 +164,13 @@ export const goingLiveTeaserControls = defineControls<GoingLiveTeaserProps>({
           hint: 'Comma separated, shown on the stats wall behind the approach line',
         },
         { path: 'wall.statLabels', label: 'Stat labels', hint: 'Comma separated, one per stat' },
-      ],
-      more: [
         {
           path: 'wall.body',
           label: 'Wall body text',
           hint: 'Small copy on both walls; on the stats wall its first line uses the highlight color',
         },
-        { path: 'wall.beam', label: 'Light sweep color' },
         { path: 'wall.coneSize', label: 'Light cone size' },
         { path: 'wall.beamBrightness', label: 'Light band brightness' },
-        { path: 'wall.panel', label: 'Wall top color', hint: 'Both walls fade from this color' },
-        { path: 'wall.panelEdge', label: 'Wall bottom color' },
-        { path: 'wall.ink', label: 'Wall text color' },
-        { path: 'wall.rim', label: 'Wall line and glow color' },
-        { path: 'wall.bokeh', label: 'Bokeh color' },
         {
           path: 'wall.scroll',
           label: 'Stats wall drift',
@@ -166,7 +180,8 @@ export const goingLiveTeaserControls = defineControls<GoingLiveTeaserProps>({
     },
     {
       title: 'Effects',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'zoom.fromScale',
           label: 'Zoom depth',
@@ -178,8 +193,6 @@ export const goingLiveTeaserControls = defineControls<GoingLiveTeaserProps>({
           hint: 'Copies stacked in the echo titles, rounded to an even number',
         },
         { path: 'smoke.puffs', label: 'Smoke puffs', hint: '0 turns the smoke off' },
-      ],
-      more: [
         { path: 'zoom.openerCurve', label: 'Opening zoom curve', hint: CURVE },
         { path: 'zoom.liveCurve', label: 'Light up zoom curve', hint: CURVE },
         { path: 'zoom.openerOriginX', label: 'Opening zoom point across', hint: ORIGIN_X },
@@ -221,7 +234,8 @@ export const goingLiveTeaserControls = defineControls<GoingLiveTeaserProps>({
     },
     {
       title: 'Type',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'type.weight',
           label: 'Font weight',
@@ -232,8 +246,6 @@ export const goingLiveTeaserControls = defineControls<GoingLiveTeaserProps>({
           label: 'Word size',
           hint: 'Opening word, bridge word, approach line and light up line',
         },
-      ],
-      more: [
         { path: 'type.stayBigSize', label: 'First echo title size' },
         { path: 'type.launchBigSize', label: 'Second echo title size' },
         {

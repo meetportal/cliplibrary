@@ -40,6 +40,68 @@ export const anniversaryKineticControls = defineControls<AnniversaryKineticProps
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['logo.numberColor', 'logo.initialColor', 'look.flash'],
+          label: 'Primary color',
+          hint: 'Seal number, dashed ring, divider lines, first letter of the name and the flash cut fill',
+        },
+        {
+          link: ['look.gradientFrom', 'look.gradientMid', 'look.gradientTo'],
+          label: 'Secondary color',
+          hint: 'Gradient words, the band edges and every third sparkle, set to one flat color',
+        },
+        {
+          link: ['logo.ringColor', 'logo.nameColor', 'logo.taglineColor'],
+          label: 'Text color',
+          hint: 'Logo seal ring, suffix, caption, name, founded line and tagline',
+        },
+        {
+          link: ['look.paper', 'logo.background'],
+          label: 'Surface color',
+          hint: 'Paper word backgrounds and the logo ending',
+        },
+        {
+          link: ['look.ink', 'look.night', 'look.dusk', 'look.textureShade'],
+          label: 'Background color',
+          hint: 'Ink, night and dusk word backgrounds and the texture shadow together. Ink also fills around the band and after a flash cut',
+        },
+      ],
+      more: [
+        {
+          path: 'logo.numberColor',
+          label: 'Seal number color',
+          hint: 'Also the dashed ring and divider lines',
+        },
+        { path: 'logo.initialColor', label: 'Name first letter color' },
+        {
+          path: 'look.flash',
+          label: 'Flash cut color',
+          hint: 'Fills the first frame of a flash cut word',
+        },
+        {
+          path: 'look.gradientFrom',
+          label: 'Gradient start',
+          hint: 'Also the band top edge and every third sparkle',
+        },
+        { path: 'look.gradientMid', label: 'Gradient middle' },
+        { path: 'look.gradientTo', label: 'Gradient end', hint: 'Also the band bottom edge' },
+        { path: 'logo.ringColor', label: 'Seal ring, suffix and caption color' },
+        { path: 'logo.nameColor', label: 'Name and founded line color' },
+        { path: 'logo.taglineColor', label: 'Tagline color' },
+        { path: 'look.paper', label: 'Paper background for words' },
+        { path: 'logo.background', label: 'Logo background' },
+        {
+          path: 'look.ink',
+          label: 'Ink background',
+          hint: 'Also around the band, after a flash cut, and the sparkles on paper',
+        },
+        { path: 'look.night', label: 'Night background' },
+        { path: 'look.dusk', label: 'Dusk background' },
+      ],
+    },
+    {
       title: 'Logo',
       fields: [
         {
@@ -47,17 +109,12 @@ export const anniversaryKineticControls = defineControls<AnniversaryKineticProps
           label: 'Anniversary number',
           hint: 'The seal number. The matching words in the sequence are edited under Words',
         },
-        { path: 'logo.ordinal', label: 'Number suffix', hint: 'For example th, st or nd' },
         { path: 'logo.name', label: 'Brand name' },
-        { path: 'logo.since', label: 'Founded line' },
-        { path: 'logo.tagline', label: 'Tagline' },
-        {
-          link: ['logo.numberColor', 'logo.initialColor'],
-          label: 'Logo accent color',
-          hint: 'Seal number, dashed ring, divider lines and the first letter of the name',
-        },
       ],
       more: [
+        { path: 'logo.ordinal', label: 'Number suffix', hint: 'For example th, st or nd' },
+        { path: 'logo.since', label: 'Founded line' },
+        { path: 'logo.tagline', label: 'Tagline' },
         { path: 'logo.caption', label: 'Seal caption' },
         {
           path: 'logo.start',
@@ -67,56 +124,50 @@ export const anniversaryKineticControls = defineControls<AnniversaryKineticProps
         { path: 'logo.size', label: 'Logo size' },
         { path: 'logo.blur', label: 'Blur-in strength', hint: 'In pixels' },
         { path: 'logo.blurFrames', label: 'Blur-in length', hint: 'In frames' },
-        {
-          path: 'logo.numberColor',
-          label: 'Seal number color',
-          hint: 'Also the dashed ring and divider lines',
-        },
-        { path: 'logo.initialColor', label: 'Name first letter color' },
-        { path: 'logo.ringColor', label: 'Seal ring, suffix and caption color' },
-        { path: 'logo.nameColor', label: 'Name and founded line color' },
-        { path: 'logo.taglineColor', label: 'Tagline color' },
       ],
     },
     {
-      title: 'Background',
+      title: 'Backgrounds and band',
       fields: [
         { ...LOOK.showBackdrop, label: 'Show backgrounds' },
         {
-          path: 'look.ink',
-          label: 'Ink background',
-          hint: 'Also around the band, after a flash cut, and the sparkles on paper',
+          path: 'look.bandHeight',
+          label: 'Band height',
+          hint: 'Share of the frame height covered by the slanted band',
         },
-        {
-          link: ['look.paper', 'logo.background'],
-          label: 'Paper background',
-          hint: 'Paper words and the logo ending',
-        },
-        { path: 'look.night', label: 'Night background' },
-        { path: 'look.dusk', label: 'Dusk background' },
       ],
       more: [
-        { path: 'look.paper', label: 'Paper background for words' },
-        { path: 'logo.background', label: 'Logo background' },
+        { path: 'band.tilt', label: 'Band tilt', hint: 'In degrees' },
+        { path: 'band.edge', label: 'Band edge thickness', hint: 'In pixels' },
+        { path: 'look.texture', label: 'Texture highlight' },
+        {
+          path: 'look.textureShade',
+          label: 'Texture shadow',
+          hint: 'Dark base of the grain texture backgrounds and the band',
+        },
+        { path: 'look.textureContrast', label: 'Texture contrast' },
+        {
+          path: 'look.textureDrift',
+          label: 'Texture drift speed',
+          hint: 'How fast the grain slides across the frame',
+        },
       ],
     },
     {
-      title: 'Word colors',
+      title: 'Word effects',
       fields: [
         {
-          path: 'look.gradientFrom',
-          label: 'Gradient start',
-          hint: 'Also the band top edge and every third sparkle',
+          path: 'look.glitchAmount',
+          label: 'Glitch strength',
+          hint: 'Scales every word glitch; 0 turns glitches off',
         },
-        { path: 'look.gradientMid', label: 'Gradient middle' },
-        { path: 'look.gradientTo', label: 'Gradient end', hint: 'Also the band bottom edge' },
+      ],
+      more: [
         {
           path: 'look.muted',
           label: 'Unlit letter color',
           hint: 'Letters fade from this color as they type, sweep or fill in',
         },
-      ],
-      more: [
         {
           path: 'look.stroke',
           label: 'Giant outline color',
@@ -125,11 +176,6 @@ export const anniversaryKineticControls = defineControls<AnniversaryKineticProps
         { path: 'look.strokeWidth', label: 'Giant outline width', hint: 'In pixels' },
         { path: 'look.shape', label: 'Giant outline fill flash color' },
         { path: 'look.slant', label: 'Slanted repeat color' },
-        {
-          path: 'look.flash',
-          label: 'Flash cut color',
-          hint: 'Fills the first frame of a flash cut word',
-        },
         { path: 'look.dim', label: 'Word color before the cut' },
         { path: 'chrome.topStart', label: 'Chrome top line, upper color' },
         { path: 'chrome.topEnd', label: 'Chrome top line, lower color' },
@@ -137,57 +183,6 @@ export const anniversaryKineticControls = defineControls<AnniversaryKineticProps
         { path: 'chrome.middleEnd', label: 'Chrome middle line, lower color' },
         { path: 'chrome.bottomStart', label: 'Chrome bottom line, upper color' },
         { path: 'chrome.bottomEnd', label: 'Chrome bottom line, lower color' },
-      ],
-    },
-    {
-      title: 'Texture and band',
-      fields: [
-        { path: 'look.texture', label: 'Texture highlight' },
-        { path: 'look.textureShade', label: 'Texture shadow' },
-        {
-          path: 'look.bandHeight',
-          label: 'Band height',
-          hint: 'Share of the frame height covered by the slanted band',
-        },
-        { path: 'band.tilt', label: 'Band tilt', hint: 'In degrees' },
-      ],
-      more: [
-        { path: 'look.textureContrast', label: 'Texture contrast' },
-        {
-          path: 'look.textureDrift',
-          label: 'Texture drift speed',
-          hint: 'How fast the grain slides across the frame',
-        },
-        { path: 'band.edge', label: 'Band edge thickness', hint: 'In pixels' },
-      ],
-    },
-    {
-      title: 'Effects',
-      fields: [
-        {
-          path: 'look.glitchAmount',
-          label: 'Glitch strength',
-          hint: 'Scales every word glitch; 0 turns glitches off',
-        },
-        { path: 'look.dustCount', label: 'Sparkle count' },
-        {
-          path: 'look.dust',
-          label: 'Sparkle color',
-          hint: 'Every third sparkle uses the gradient start, and all of them turn ink on paper',
-        },
-      ],
-      more: [
-        {
-          path: 'sparkles.size',
-          label: 'Sparkle size',
-          hint: 'Smallest sparkle in pixels; the largest are twice this',
-        },
-        { path: 'sparkles.opacity', label: 'Sparkle opacity' },
-        {
-          path: 'sparkles.speed',
-          label: 'Sparkle float speed',
-          hint: 'How fast the sparkles rise and sway. 0 holds them still',
-        },
         {
           path: 'look.drift',
           label: 'Word drift',
@@ -201,6 +196,28 @@ export const anniversaryKineticControls = defineControls<AnniversaryKineticProps
       ],
     },
     {
+      title: 'Sparkles',
+      fields: [{ path: 'look.dustCount', label: 'Sparkle count' }],
+      more: [
+        {
+          path: 'look.dust',
+          label: 'Sparkle color',
+          hint: 'Every third sparkle uses the gradient start, and all of them turn ink on paper',
+        },
+        {
+          path: 'sparkles.size',
+          label: 'Sparkle size',
+          hint: 'Smallest sparkle in pixels; the largest are twice this',
+        },
+        { path: 'sparkles.opacity', label: 'Sparkle opacity' },
+        {
+          path: 'sparkles.speed',
+          label: 'Sparkle float speed',
+          hint: 'How fast the sparkles rise and sway. 0 holds them still',
+        },
+      ],
+    },
+    {
       title: 'Motion',
       fields: [
         {
@@ -208,9 +225,8 @@ export const anniversaryKineticControls = defineControls<AnniversaryKineticProps
           hint: 'Higher plays the words and logo faster; the clip length, entrance and exit stay the same',
         },
         MOTION.enter,
-        MOTION.exit,
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
+      more: [MOTION.exit, MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['motion.float'],

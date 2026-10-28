@@ -9,16 +9,47 @@ export const outlineMarqueeControls = defineControls<OutlineMarqueeProps>({
       fields: [
         { path: 'text', label: 'Scrolling words', hint: 'Repeated along every outlined row' },
         { path: 'label', label: 'Label', hint: 'The solid line in front of the rows' },
+      ],
+      more: [
         { path: 'labelSize', label: 'Label size', hint: 'In pixels' },
         {
           link: ['weight', 'labelWeight'],
           label: 'Font weight',
           hint: 'Sets the outlined rows and the label together',
         },
-      ],
-      more: [
         { path: 'labelWeight', label: 'Label weight' },
         { path: 'labelTracking', label: 'Label letter spacing', hint: 'In em' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['outlineColor', 'look.ink'],
+          label: 'Primary color',
+          hint: 'The outlined rows and the label together',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and edges of the background, plus the soft halo behind the label',
+        },
+      ],
+      more: [
+        { path: 'outlineColor', label: 'Outline color' },
+        { path: 'outlineOpacity', label: 'Outline opacity' },
+        { path: 'look.ink', label: 'Label color' },
+        {
+          ...LOOK.background,
+          hint: 'Also tints the soft halo behind the label',
+        },
+        LOOK.backgroundEdge,
+        {
+          ...LOOK.accent,
+          label: 'Margin line color',
+          hint: 'Shows when Paper margin line is on',
+        },
+        LOOK.paperLine,
       ],
     },
     {
@@ -51,32 +82,17 @@ export const outlineMarqueeControls = defineControls<OutlineMarqueeProps>({
       ],
     },
     {
-      title: 'Colors',
-      fields: [
-        {
-          link: ['outlineColor', 'look.ink'],
-          label: 'Text color',
-          hint: 'Colors the outlines and the label together',
-        },
-        { path: 'outlineOpacity', label: 'Outline opacity' },
-      ],
-      more: [
-        { path: 'outlineColor', label: 'Outline color' },
-        { path: 'look.ink', label: 'Label color' },
-      ],
-    },
-    {
       title: 'Timing',
       fields: [
-        { path: 'delay', label: 'Start delay', hint: 'In frames, before the first row fades in' },
         { path: 'rowStagger', label: 'Row stagger', hint: 'Frames between each row fading in' },
+      ],
+      more: [
+        { path: 'delay', label: 'Start delay', hint: 'In frames, before the first row fades in' },
         {
           path: 'labelDelay',
           label: 'Label delay',
           hint: 'Frames after the start delay before the label rises in',
         },
-      ],
-      more: [
         {
           path: 'motion.speed',
           label: 'Reveal speed',
@@ -86,11 +102,9 @@ export const outlineMarqueeControls = defineControls<OutlineMarqueeProps>({
     },
     {
       title: 'Layout',
-      fields: [
-        { ...PLACEMENT.horizontal, label: 'Label horizontal align' },
-        { ...PLACEMENT.vertical, label: 'Label vertical align' },
-      ],
+      fields: [{ ...PLACEMENT.horizontal, label: 'Label horizontal align' }],
       more: [
+        { ...PLACEMENT.vertical, label: 'Label vertical align' },
         {
           ...PLACEMENT.width,
           label: 'Label box width',
@@ -102,23 +116,14 @@ export const outlineMarqueeControls = defineControls<OutlineMarqueeProps>({
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        {
-          ...LOOK.background,
-          hint: 'Also tints the soft halo behind the label',
-        },
-        LOOK.grain,
-      ],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { ...LOOK.accent, label: 'Margin line color' },
       ],
     },
     {

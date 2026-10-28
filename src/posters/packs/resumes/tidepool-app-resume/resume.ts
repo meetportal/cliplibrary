@@ -1,257 +1,287 @@
-import { type DesignIconName, type Fill, linear } from '@/design';
-import { circle, icon as iconNode, line, photo, rect, star, template, text } from '../../../kit';
+import { linear } from '@/design';
+import { circle, icon, line, rect, type ThemeSpec, text, themed } from '../../../kit';
+import {
+  appTile,
+  FONTS,
+  identity,
+  kicker,
+  LETTER,
+  stars,
+  statusBar,
+  TIDE,
+  tileFills,
+} from './parts';
 
-export const TIDE = {
-  ink: '#0f1f1c',
-  muted: '#5b6b68',
-  paper: '#ffffff',
-  card: '#eef5f3',
-  tint: '#dcf2ec',
-  edge: '#8fd3c3',
-  teal: '#0f9d8a',
-  deep: '#0b6b5e',
-  coral: '#ff7a59',
-  grey: '#c9d3d1',
-};
+const SKILL_ICONS = ['palette', 'layers', 'search', 'sparkles'] as const;
+const SKILL_LEVELS = [5, 4, 4, 5];
+const JOB_COUNT = 3;
+const REFERENCE_COUNT = 2;
 
-export const LETTER = { width: 1275, height: 1650 } as const;
-export const HEAD = 'Plus Jakarta Sans';
-export const BODY = 'Inter';
+const mainSpec = {
+  colors: {
+    background: { value: TIDE.paper, hint: 'Page and the references card' },
+    surface: {
+      value: TIDE.card,
+      hint: 'About card, job year pills and reference icon discs; its deeper tint fills the skills and education cards',
+    },
+    primary: {
+      value: TIDE.teal,
+      hint: 'Job title, contact bubbles, filled stars, education and job tiles, Read more and the battery; its shades color the card outlines, year pills and reference icons',
+    },
+    accent: {
+      value: TIDE.tile,
+      hint: 'Colorful skill tiles and the green end of the job tiles; each is a shade of this color',
+    },
+    secondary: { value: TIDE.white, hint: 'Contact text, tile icons and the education year' },
+    text: {
+      value: TIDE.ink,
+      hint: 'Status bar, name, headings and entries; its lighter shades color the section labels, about text, details, empty stars, rules and the references card outline',
+    },
+  },
+  fonts: FONTS,
+  copy: {
+    status: {
+      label: 'Status bar',
+      hint: 'Screen title, then the clock',
+      value: ['Resume', '9:41 AM'],
+    },
+    name: { label: 'Name', hint: 'First name, then last name', value: ['Maya', 'Linden'] },
+    role: { label: 'Job title', value: 'Product Designer' },
+    contacts: {
+      label: 'Contact',
+      value: ['(555) 210-4477', 'maya@linden.studio', '48 Harbor Lane'],
+    },
+    labels: {
+      label: 'Section label',
+      value: ['Expertise', 'Profile', 'Details', 'Highlights', 'Connections'],
+    },
+    titles: {
+      label: 'Section title',
+      value: [
+        "Let's Connect  >",
+        'Skills',
+        'About Me',
+        'Education',
+        'Work Experience',
+        'References',
+      ],
+    },
+    skills: {
+      label: 'Skill',
+      value: ['Interface Design', 'Prototyping', 'User Research', 'Motion Design'],
+    },
+    about: {
+      label: 'About',
+      value:
+        'I design calm, useful mobile products. Eight years of turning messy research into clear flows, friendly interfaces and design systems that teams love to build with.',
+    },
+    more: { label: 'Read more link', value: 'Read more  >' },
+    entries: {
+      label: 'Entry',
+      hint: 'School, jobs, then references',
+      value: [
+        'Westbrook Institute of Design',
+        'Senior Product Designer',
+        'Product Designer',
+        'UI Designer',
+        'Dana Ortiz',
+        'Leo Hartmann',
+      ],
+    },
+    details: {
+      label: 'Entry detail',
+      hint: 'Degree, employers, then reference roles and phones',
+      value: [
+        'BA, Interaction Design',
+        'Harbor Health',
+        'Quillwork Apps',
+        'Brightloop Labs',
+        'Design Director, Harbor\n(555) 310-2290',
+        'CPO, Quillwork Apps\n(555) 784-1123',
+      ],
+    },
+    years: { label: 'Years', value: ['2013-2017', '2022-2026', '2019-2022', '2017-2019'] },
+  },
+} as const satisfies ThemeSpec;
 
-export const TILE_FILLS: readonly Fill[] = [
-  linear(135, '#ff8a65', '#f43f5e'),
-  linear(135, '#6366f1', '#a855f7'),
-  linear(135, '#14b8a6', '#0ea5e9'),
-  linear(135, '#f59e0b', '#f97316'),
-  linear(135, '#22c55e', '#0f9d8a'),
-  linear(135, '#0ea5e9', '#2563eb'),
-];
-
-const appTile = (x: number, y: number, size: number, fill: Fill, name: DesignIconName) => [
-  rect(x, y, size, size, fill, { cornerRadius: size * 0.26, name: 'App tile' }),
-  iconNode(name, x + size * 0.22, y + size * 0.22, size * 0.56, '#ffffff', { strokeWidth: 2.2 }),
-];
-
-export const statusBar = (width: number, label: string) => [
-  text(label, 60, 36, 300, { fontFamily: BODY, fontSize: 24, fontWeight: 600, fill: TIDE.ink }),
-  text('9:41 AM', 0, 36, width, {
-    fontFamily: BODY,
-    fontSize: 24,
-    fontWeight: 600,
-    fill: TIDE.ink,
-    align: 'center',
-  }),
-  [10, 14, 18, 22].map((height, index) =>
-    rect(1060 + index * 12, 62 - height, 8, height, TIDE.ink, { cornerRadius: 2, name: 'Signal' }),
-  ),
-  iconNode('wifi', 1116, 36, 28, TIDE.ink, { strokeWidth: 2.6 }),
-  rect(1158, 40, 50, 24, 'rgba(0,0,0,0)', {
-    cornerRadius: 7,
-    stroke: TIDE.ink,
-    strokeWidth: 2,
-    name: 'Battery',
-  }),
-  rect(1162, 44, 36, 16, TIDE.teal, { cornerRadius: 4, name: 'Battery level' }),
-];
-
-export const kicker = (label: string, title: string, x: number, y: number, width = 600) => [
-  text(label, x, y, width, {
-    fontFamily: BODY,
-    fontSize: 20,
-    fontWeight: 700,
-    fill: TIDE.muted,
-    letterSpacing: 2,
-    uppercase: true,
-  }),
-  text(title, x, y + 30, width, {
-    fontFamily: HEAD,
-    fontSize: 40,
-    fontWeight: 700,
-    fill: TIDE.ink,
-  }),
-];
-
-const yearPill = (label: string, x: number, y: number, fill: string, color: string) => [
-  rect(x, y, 150, 40, fill, { cornerRadius: 20, name: 'Year pill' }),
-  text(label, x, y + 8, 150, {
-    fontFamily: BODY,
-    fontSize: 20,
-    fontWeight: 700,
-    fill: color,
-    align: 'center',
-  }),
-];
-
-const stars = (x: number, y: number, filled: number) =>
-  Array.from({ length: 5 }, (_, index) =>
-    star(5, x + index * 30, y, 24, index < filled ? TIDE.teal : TIDE.grey, { innerRatio: 0.46 }),
-  );
-
-export const identity = (x: number, y: number) => [
-  photo('woman-portrait-4', x, y, 380, 380, { cornerRadius: 36 }),
-  text('Maya', x, y + 400, 400, {
-    fontFamily: HEAD,
-    fontSize: 104,
-    fontWeight: 800,
-    fill: TIDE.ink,
-    lineHeight: 1,
-  }),
-  text('Linden', x, y + 505, 400, {
-    fontFamily: HEAD,
-    fontSize: 104,
-    fontWeight: 400,
-    fill: TIDE.ink,
-    lineHeight: 1,
-  }),
-  text('Product Designer', x, y + 625, 400, {
-    fontFamily: BODY,
-    fontSize: 34,
-    fontWeight: 500,
-    fill: TIDE.teal,
-  }),
-];
-
-const contactBubble = (label: string, x: number, y: number) => [
-  rect(x, y, 380, 56, linear(90, TIDE.teal, '#16b8a0'), { cornerRadius: 16, name: 'Contact' }),
-  text(label, x + 24, y + 14, 340, {
-    fontFamily: BODY,
-    fontSize: 24,
-    fontWeight: 600,
-    fill: '#ffffff',
-  }),
-];
-
-const skillRows = [
-  { name: 'Interface Design', icon: 'palette', level: 5 },
-  { name: 'Prototyping', icon: 'layers', level: 4 },
-  { name: 'User Research', icon: 'search', level: 4 },
-  { name: 'Motion Design', icon: 'sparkles', level: 5 },
-] as const;
-
-const jobs = [
-  { role: 'Senior Product Designer', company: 'Harbor Health', years: '2022-2026' },
-  { role: 'Product Designer', company: 'Quillwork Apps', years: '2019-2022' },
-  { role: 'UI Designer', company: 'Brightloop Labs', years: '2017-2019' },
-] as const;
-
-const references = [
-  { name: 'Dana Ortiz', role: 'Design Director, Harbor', phone: '(555) 310-2290' },
-  { name: 'Leo Hartmann', role: 'CPO, Quillwork Apps', phone: '(555) 784-1123' },
-] as const;
-
-export const resumeMain = template(LETTER.width, LETTER.height, () => [
-  rect(0, 0, LETTER.width, LETTER.height, TIDE.paper, { name: 'Background' }),
-  statusBar(LETTER.width, 'Resume'),
-  identity(60, 110),
-  text("Let's Connect  >", 60, 800, 400, {
-    fontFamily: HEAD,
-    fontSize: 34,
-    fontWeight: 700,
-    fill: TIDE.ink,
-  }),
-  contactBubble('(555) 210-4477', 60, 860),
-  contactBubble('maya@linden.studio', 60, 930),
-  contactBubble('48 Harbor Lane', 60, 1000),
-  rect(60, 1090, 380, 500, TIDE.tint, {
-    cornerRadius: 24,
-    stroke: TIDE.edge,
-    strokeWidth: 3,
-    name: 'Skills card',
-  }),
-  kicker('Expertise', 'Skills', 90, 1115, 330),
-  skillRows.map((skill, index) => [
-    appTile(90, 1230 + index * 88, 64, TILE_FILLS[index] ?? TIDE.teal, skill.icon),
-    text(skill.name, 172, 1232 + index * 88, 260, {
-      fontFamily: BODY,
-      fontSize: 22,
+export const resumeMain = themed(LETTER.width, LETTER.height, mainSpec, (t) => {
+  const [status = '', time = ''] = t.list('status');
+  const [expertise = '', profile = '', details = '', highlights = '', connections = ''] =
+    t.list('labels');
+  const [connect = '', skills = '', about = '', education = '', work = '', references = ''] =
+    t.list('titles');
+  const entries = t.list('entries');
+  const entryDetails = t.list('details');
+  const years = t.list('years');
+  const tiles = tileFills(t);
+  const body = t.font('body');
+  const yearPill = (label: string, x: number, y: number, fill: string, color: string) => [
+    rect(x, y, 150, 40, fill, { cornerRadius: 20, name: 'Year pill' }),
+    text(label, x, y + 8, 150, {
+      fontFamily: body,
+      fontSize: 20,
       fontWeight: 700,
-      fill: TIDE.ink,
+      fill: color,
+      align: 'center',
     }),
-    stars(172, 1268 + index * 88, skill.level),
-  ]),
-  rect(480, 110, 735, 360, TIDE.card, { cornerRadius: 28, name: 'About card' }),
-  kicker('Profile', 'About Me', 515, 140),
-  text(
-    'I design calm, useful mobile products. Eight years of turning messy research into clear flows, friendly interfaces and design systems that teams love to build with.',
-    515,
-    230,
-    665,
-    { fontFamily: BODY, fontSize: 25, fontWeight: 400, fill: TIDE.muted, lineHeight: 1.45 },
-  ),
-  text('Read more  >', 900, 420, 280, {
-    fontFamily: BODY,
-    fontSize: 22,
-    fontWeight: 600,
-    fill: TIDE.teal,
-    align: 'right',
-  }),
-  rect(480, 500, 735, 250, TIDE.tint, {
-    cornerRadius: 28,
-    stroke: TIDE.edge,
-    strokeWidth: 3,
-    name: 'Education card',
-  }),
-  kicker('Details', 'Education', 515, 530),
-  appTile(515, 630, 76, linear(135, TIDE.teal, '#0ea5e9'), 'graduation-cap'),
-  text('Westbrook Institute of Design', 610, 636, 420, {
-    fontFamily: BODY,
-    fontSize: 26,
-    fontWeight: 700,
-    fill: TIDE.ink,
-  }),
-  text('BA, Interaction Design', 610, 674, 420, {
-    fontFamily: BODY,
-    fontSize: 24,
-    fontWeight: 400,
-    fill: TIDE.muted,
-  }),
-  yearPill('2013-2017', 1040, 650, TIDE.deep, '#ffffff'),
-  kicker('Highlights', 'Work Experience', 495, 790),
-  jobs.map((job, index) => {
-    const y = 890 + index * 120;
-    return [
-      appTile(495, y, 72, linear(135, '#4ade80', TIDE.teal), 'briefcase'),
-      text(job.role, 590, y + 6, 440, {
-        fontFamily: BODY,
-        fontSize: 26,
-        fontWeight: 700,
-        fill: TIDE.ink,
-      }),
-      text(job.company, 590, y + 42, 440, {
-        fontFamily: BODY,
+  ];
+  const contactBubble = (label: string, x: number, y: number) => [
+    rect(x, y, 380, 56, linear(90, t.color('primary'), t.shade('primary', '#16b8a0')), {
+      cornerRadius: 16,
+      name: 'Contact',
+    }),
+    text(label, x + 24, y + 14, 340, {
+      fontFamily: body,
+      fontSize: 24,
+      fontWeight: 600,
+      fill: t.color('secondary'),
+    }),
+  ];
+  const tintCard = (
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    cornerRadius: number,
+    name: string,
+  ) =>
+    rect(x, y, width, height, t.shade('surface', TIDE.tint), {
+      cornerRadius,
+      stroke: t.shade('primary', TIDE.edge),
+      strokeWidth: 3,
+      name,
+    });
+  return [
+    rect(0, 0, LETTER.width, LETTER.height, t.color('background'), { name: 'Background' }),
+    statusBar(t, LETTER.width, status, time),
+    identity(t, 60, 110, t.list('name'), t.copy('role')),
+    text(connect, 60, 800, 400, {
+      fontFamily: t.font('heading'),
+      fontSize: 34,
+      fontWeight: 700,
+      fill: t.color('text'),
+    }),
+    t.list('contacts').map((contact, index) => contactBubble(contact, 60, 860 + index * 70)),
+    tintCard(60, 1090, 380, 500, 24, 'Skills card'),
+    kicker(t, expertise, skills, 90, 1115, 330),
+    t.list('skills').map((skill, index) => [
+      appTile(
+        90,
+        1230 + index * 88,
+        64,
+        tiles[index] ?? TIDE.teal,
+        SKILL_ICONS[index] ?? 'palette',
+        t.color('secondary'),
+      ),
+      text(skill, 172, 1232 + index * 88, 260, {
+        fontFamily: body,
         fontSize: 22,
-        fontWeight: 400,
-        fill: TIDE.muted,
-      }),
-      yearPill(job.years, 1050, y + 16, TIDE.card, TIDE.deep),
-      line(495, y + 96, 720, '#dbe3e1', 2),
-    ];
-  }),
-  rect(480, 1260, 735, 330, '#ffffff', {
-    cornerRadius: 28,
-    stroke: TIDE.grey,
-    strokeWidth: 3,
-    name: 'References card',
-  }),
-  kicker('Connections', 'References', 515, 1290),
-  references.map((person, index) => {
-    const x = 515 + index * 350;
-    return [
-      circle(x + 26, 1416, 26, TIDE.card),
-      iconNode('user-round', x + 8, 1398, 36, TIDE.deep),
-      text(person.name, x + 66, 1394, 270, {
-        fontFamily: BODY,
-        fontSize: 24,
         fontWeight: 700,
-        fill: TIDE.ink,
+        fill: t.color('text'),
       }),
-      text(`${person.role}\n${person.phone}`, x + 66, 1430, 270, {
-        fontFamily: BODY,
-        fontSize: 19,
-        fontWeight: 400,
-        fill: TIDE.muted,
-        lineHeight: 1.5,
-      }),
-    ];
-  }),
-]);
+      stars(t, 172, 1268 + index * 88, SKILL_LEVELS[index] ?? 5),
+    ]),
+    rect(480, 110, 735, 360, t.color('surface'), { cornerRadius: 28, name: 'About card' }),
+    kicker(t, profile, about, 515, 140),
+    text(t.copy('about'), 515, 230, 665, {
+      fontFamily: body,
+      fontSize: 25,
+      fontWeight: 400,
+      fill: t.shade('text', TIDE.muted),
+      lineHeight: 1.45,
+    }),
+    text(t.copy('more'), 900, 420, 280, {
+      fontFamily: body,
+      fontSize: 22,
+      fontWeight: 600,
+      fill: t.color('primary'),
+      align: 'right',
+    }),
+    tintCard(480, 500, 735, 250, 28, 'Education card'),
+    kicker(t, details, education, 515, 530),
+    appTile(
+      515,
+      630,
+      76,
+      linear(135, t.color('primary'), t.shade('primary', '#0ea5e9')),
+      'graduation-cap',
+      t.color('secondary'),
+    ),
+    text(entries[0] ?? '', 610, 636, 420, {
+      fontFamily: body,
+      fontSize: 26,
+      fontWeight: 700,
+      fill: t.color('text'),
+    }),
+    text(entryDetails[0] ?? '', 610, 674, 420, {
+      fontFamily: body,
+      fontSize: 24,
+      fontWeight: 400,
+      fill: t.shade('text', TIDE.muted),
+    }),
+    yearPill(years[0] ?? '', 1040, 650, t.shade('primary', TIDE.deep), t.color('secondary')),
+    kicker(t, highlights, work, 495, 790),
+    Array.from({ length: JOB_COUNT }, (_, index) => {
+      const y = 890 + index * 120;
+      const item = index + 1;
+      return [
+        appTile(
+          495,
+          y,
+          72,
+          linear(135, t.shade('accent', '#4ade80'), t.color('primary')),
+          'briefcase',
+          t.color('secondary'),
+        ),
+        text(entries[item] ?? '', 590, y + 6, 440, {
+          fontFamily: body,
+          fontSize: 26,
+          fontWeight: 700,
+          fill: t.color('text'),
+        }),
+        text(entryDetails[item] ?? '', 590, y + 42, 440, {
+          fontFamily: body,
+          fontSize: 22,
+          fontWeight: 400,
+          fill: t.shade('text', TIDE.muted),
+        }),
+        yearPill(
+          years[item] ?? '',
+          1050,
+          y + 16,
+          t.color('surface'),
+          t.shade('primary', TIDE.deep),
+        ),
+        line(495, y + 96, 720, t.shade('text', TIDE.rule), 2),
+      ];
+    }),
+    rect(480, 1260, 735, 330, t.color('background'), {
+      cornerRadius: 28,
+      stroke: t.shade('text', TIDE.grey),
+      strokeWidth: 3,
+      name: 'References card',
+    }),
+    kicker(t, connections, references, 515, 1290),
+    Array.from({ length: REFERENCE_COUNT }, (_, index) => {
+      const x = 515 + index * 350;
+      const item = index + 1 + JOB_COUNT;
+      return [
+        circle(x + 26, 1416, 26, t.color('surface')),
+        icon('user-round', x + 8, 1398, 36, t.shade('primary', TIDE.deep)),
+        text(entries[item] ?? '', x + 66, 1394, 270, {
+          fontFamily: body,
+          fontSize: 24,
+          fontWeight: 700,
+          fill: t.color('text'),
+        }),
+        text(entryDetails[item] ?? '', x + 66, 1430, 270, {
+          fontFamily: body,
+          fontSize: 19,
+          fontWeight: 400,
+          fill: t.shade('text', TIDE.muted),
+          lineHeight: 1.5,
+        }),
+      ];
+    }),
+  ];
+});

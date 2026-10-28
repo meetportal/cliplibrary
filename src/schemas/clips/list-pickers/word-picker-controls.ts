@@ -8,12 +8,12 @@ export const wordPickerControls = defineControls<WordPickerProps>({
       title: 'Words',
       fields: [
         { path: 'items', label: 'Words' },
-        { path: 'type.font', label: 'Font' },
         { path: 'type.activeSize', label: 'Selected word size' },
-        { path: 'type.size', label: 'Other words size' },
-        { path: 'type.activeWeight', label: 'Selected word weight' },
       ],
       more: [
+        { path: 'type.font', label: 'Font' },
+        { path: 'type.size', label: 'Other words size' },
+        { path: 'type.activeWeight', label: 'Selected word weight' },
         { path: 'type.weight', label: 'Other words weight' },
         { path: 'type.tracking', label: 'Letter spacing', hint: 'In em' },
         { path: 'type.pitch', label: 'Line spacing', hint: 'Pixels between words' },
@@ -27,6 +27,52 @@ export const wordPickerControls = defineControls<WordPickerProps>({
           label: 'Fade-out range',
           hint: 'Higher starts fading words closer to the selected one',
         },
+        {
+          path: 'offsetX',
+          label: 'Horizontal offset',
+          hint: 'Moves the list and frame from the center, in pixels',
+        },
+        {
+          path: 'offsetY',
+          label: 'Vertical offset',
+          hint: 'Moves the list and frame from the center, in pixels',
+        },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.accent', 'frame.fill'],
+          label: 'Primary color',
+          hint: 'The selected word, the frame fill and the paper margin line',
+        },
+        {
+          ...LOOK.ink,
+          label: 'Text color',
+          hint: 'Words one step above or below the selected one',
+        },
+        {
+          ...LOOK.muted,
+          label: 'Secondary color',
+          hint: 'Words two or more steps away. Words in between blend from the text color',
+        },
+        { path: 'frame.line', label: 'Accent color', hint: 'Frame corner lines and dots' },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        {
+          ...LOOK.accent,
+          label: 'Selected word color',
+          hint: 'Also colors the paper margin line',
+        },
+        { path: 'frame.fill', label: 'Frame fill color' },
+        { ...LOOK.background, label: 'Background center' },
+        LOOK.backgroundEdge,
       ],
     },
     {
@@ -59,42 +105,11 @@ export const wordPickerControls = defineControls<WordPickerProps>({
       ],
     },
     {
-      title: 'Colors',
-      fields: [
-        {
-          link: ['look.accent', 'frame.fill'],
-          label: 'Highlight color',
-          hint: 'The selected word and the frame fill',
-        },
-        {
-          ...LOOK.ink,
-          label: 'Next word color',
-          hint: 'Words one step above or below the selected one',
-        },
-        {
-          ...LOOK.muted,
-          label: 'Far word color',
-          hint: 'Words two or more steps away. Words in between blend from the next word color',
-        },
-        { path: 'frame.line', label: 'Frame line color', hint: 'Corner lines and dots' },
-      ],
-      more: [
-        {
-          ...LOOK.accent,
-          label: 'Selected word color',
-          hint: 'Also colors the paper margin line',
-        },
-        { path: 'frame.fill', label: 'Frame fill color' },
-      ],
-    },
-    {
       title: 'Frame',
-      fields: [
-        { path: 'frame.show', label: 'Show selection frame' },
+      fields: [{ path: 'frame.show', label: 'Show selection frame' }],
+      more: [
         { path: 'frame.width', label: 'Frame width' },
         { path: 'frame.height', label: 'Frame height' },
-      ],
-      more: [
         { path: 'frame.fillOpacity', label: 'Fill strength', hint: 'Opacity of the frame fill' },
         { path: 'frame.lineWidth', label: 'Line thickness' },
         {
@@ -112,29 +127,12 @@ export const wordPickerControls = defineControls<WordPickerProps>({
       ],
     },
     {
-      title: 'Layout',
-      fields: [
-        {
-          path: 'offsetX',
-          label: 'Horizontal offset',
-          hint: 'Moves the list and frame from the center, in pixels',
-        },
-        {
-          path: 'offsetY',
-          label: 'Vertical offset',
-          hint: 'Moves the list and frame from the center, in pixels',
-        },
-      ],
-    },
-    {
       title: 'Background',
       fields: [
         { ...LOOK.showBackdrop, hint: 'Off leaves a transparent background and hides the glows' },
-        LOOK.background,
-        LOOK.grain,
       ],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         {
@@ -158,21 +156,22 @@ export const wordPickerControls = defineControls<WordPickerProps>({
     },
     {
       title: 'Motion',
-      fields: [
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
         { path: 'entrance.rise', label: 'Words rise in from', hint: 'Pixels below their spot' },
         {
           path: 'entrance.stagger',
           label: 'Word entrance stagger',
-          hint: 'Frames between each word appearing, outward from the selected one',
+          hint: 'Frames between each word appearing, outward from the starting word',
         },
-        MOTION.speed,
-      ],
-      more: [
-        { path: 'entrance.delay', label: 'Words appear at', hint: 'Frame number' },
+        {
+          path: 'entrance.delay',
+          label: 'Words appear at',
+          hint: 'Frame number at animation speed 1',
+        },
         { path: 'entrance.frames', label: 'Word entrance length', hint: 'In frames' },
-        MOTION.enter,
+        MOTION.speed,
         MOTION.enterFrames,
-        MOTION.exit,
         MOTION.exitFrames,
       ],
     },

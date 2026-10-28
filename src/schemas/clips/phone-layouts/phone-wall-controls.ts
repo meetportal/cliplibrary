@@ -30,6 +30,31 @@ export const phoneWallControls = defineControls<PhoneWallProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Primary color',
+          hint: 'The background behind the wall, center and corners together. A dark color also switches the 3D lighting to its darker setup',
+        },
+        {
+          link: ['look.paperLine', 'look.accent'],
+          label: 'Accent color',
+          hint: 'Paper pattern lines and the paper margin line. Shows only when the paper pattern or margin line is on',
+        },
+      ],
+      more: [
+        {
+          ...LOOK.background,
+          label: 'Background center',
+          hint: 'A dark color also switches the 3D lighting to its darker setup',
+        },
+        LOOK.backgroundEdge,
+        LOOK.paperLine,
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when Paper margin line is on' },
+      ],
+    },
+    {
       title: 'Animation',
       fields: [
         {
@@ -42,13 +67,13 @@ export const phoneWallControls = defineControls<PhoneWallProps>({
           label: 'Fly-in length',
           hint: 'In frames, for the top center phone. Every phone starts together and the rest settle later',
         },
+      ],
+      more: [
         {
           path: 'stagger',
           label: 'Fly-in ripple',
           hint: 'Extra frames a phone takes to settle for each column away from the center and each row down. 0 lands them all at once',
         },
-      ],
-      more: [
         {
           path: 'arriveDrop',
           label: 'Fly-in rise',
@@ -69,15 +94,15 @@ export const phoneWallControls = defineControls<PhoneWallProps>({
           label: 'Tilt',
           hint: 'Lower values lean the top of the wall further away from the camera',
         },
+        { ...STAGE.cameraDistance, hint: 'Higher values pull back to show more of the wall' },
+      ],
+      more: [
         {
           path: 'turn',
           label: 'Turn',
           hint: 'Higher values swing the right side of the wall away from the camera',
         },
         { path: 'twist', label: 'Roll', hint: 'Higher values roll the wall counterclockwise' },
-        { ...STAGE.cameraDistance, hint: 'Higher values pull back to show more of the wall' },
-      ],
-      more: [
         {
           ...STAGE.fieldOfView,
           hint: 'In degrees. Lower values zoom in and flatten the perspective',
@@ -87,46 +112,37 @@ export const phoneWallControls = defineControls<PhoneWallProps>({
     },
     {
       title: 'Lighting',
-      fields: [
-        STAGE.keyLight,
+      fields: [STAGE.keyLight],
+      more: [
         { ...STAGE.reflections, label: 'Phone reflections' },
         { ...STAGE.shadow, hint: 'Shadow the phones cast on the background' },
+        STAGE.shadowSoftness,
       ],
-      more: [STAGE.shadowSoftness],
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        {
-          ...LOOK.background,
-          hint: 'A dark color also switches the 3D lighting to its darker setup',
-        },
-        LOOK.grain,
-      ],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { ...LOOK.accent, label: 'Margin line color' },
       ],
     },
     {
       title: 'Transitions',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
         {
           link: ['motion.enterFrames', 'motion.exitFrames'],
           label: 'Transition length',
           hint: 'In frames, for both the entrance and the exit',
         },
+        MOTION.enterFrames,
+        MOTION.exitFrames,
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.ink', 'look.muted', 'motion.float'],

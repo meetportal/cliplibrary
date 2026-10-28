@@ -1,5 +1,7 @@
 import { definePack } from '../../../pack';
-import { COBALT, eventDay, eventList, eventStory, POSTS } from './posts';
+import { COBALT } from './palette';
+import { POSTS } from './posts';
+import { eventDay, eventList, eventStory } from './posts-events';
 
 export const jadeEventCalendarPack = definePack({
   id: 'jade-event-calendar',

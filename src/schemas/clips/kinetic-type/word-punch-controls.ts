@@ -11,18 +11,44 @@ export const wordPunchControls = defineControls<WordPunchProps>({
         {
           path: 'highlight',
           label: 'Highlighted words',
-          hint: 'Words from the text to show in the highlight color, separated by spaces. Case and punctuation are ignored',
+          hint: 'Words from the text to show in the accent color, separated by spaces. Case and punctuation are ignored',
         },
         { path: 'size', label: 'Text size', hint: 'Size of the first word in pixels' },
-        { path: 'weight', label: 'Font weight' },
       ],
       more: [
+        { path: 'weight', label: 'Font weight' },
         {
           path: 'shrink',
           label: 'Shrink per word',
           hint: 'Each next word is this share smaller than the one before, so 0.3 makes it 30% smaller. 0 keeps every word the same size',
         },
         { path: 'tracking', label: 'Letter spacing', hint: 'In em' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        { ...LOOK.ink, label: 'Primary color', hint: 'The words' },
+        {
+          ...LOOK.accent,
+          label: 'Accent color',
+          hint: 'Highlighted words, word-ending punctuation when Punctuation in accent color is on, and the paper margin line',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        LOOK.background,
+        LOOK.backgroundEdge,
+        LOOK.paperLine,
+        {
+          path: 'accentPunctuation',
+          label: 'Punctuation in accent color',
+          hint: 'Colors the punctuation that ends a word, such as full stops, commas and question marks',
+        },
       ],
     },
     {
@@ -38,6 +64,8 @@ export const wordPunchControls = defineControls<WordPunchProps>({
           label: 'Time per word',
           hint: 'In frames, from when a word starts appearing until it starts leaving',
         },
+      ],
+      more: [
         {
           path: 'typeFrames',
           label: 'Frames per letter',
@@ -53,29 +81,11 @@ export const wordPunchControls = defineControls<WordPunchProps>({
           label: 'Punch overshoot',
           hint: 'Punch style only. How much bigger a word starts before it settles, so 0.14 starts it 14% bigger',
         },
-      ],
-      more: [
         { path: 'delay', label: 'Start delay', hint: 'In frames, before the first word' },
         {
           path: 'rise',
           label: 'Punch travel',
           hint: 'Punch style only. How far a word rises in and lifts out, as a share of its size',
-        },
-      ],
-    },
-    {
-      title: 'Colors',
-      fields: [
-        { ...LOOK.ink, label: 'Word color' },
-        {
-          ...LOOK.accent,
-          label: 'Highlight color',
-          hint: 'Highlighted words, accented punctuation and the paper margin line',
-        },
-        {
-          path: 'accentPunctuation',
-          label: 'Punctuation in highlight color',
-          hint: 'Colors the punctuation that ends a word, such as full stops, commas and question marks',
         },
       ],
     },
@@ -93,28 +103,27 @@ export const wordPunchControls = defineControls<WordPunchProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
       ],
     },
     {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
+        MOTION.enterFrames,
+        MOTION.exitFrames,
         {
           ...MOTION.speed,
           hint: 'Scales the word timing and start delay. Entrance and exit keep their length',
         },
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.muted', 'motion.float'],

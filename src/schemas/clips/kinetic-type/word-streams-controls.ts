@@ -25,14 +25,46 @@ export const wordStreamsControls = defineControls<WordStreamsProps>({
           label: 'Word size',
           hint: `In pixels, for the copies between swells. ${MAY_SHRINK}`,
         },
+      ],
+      more: [
         { path: 'word.weight', label: 'Font weight' },
         {
           path: 'word.spacing',
           label: 'Copy spacing',
           hint: 'Gap between neighboring copies, as a share of the word size. 0 lets them just touch at the tightest bend; the measured word height and width are always allowed for',
         },
+        { path: 'word.tracking', label: 'Letter spacing', hint: 'In em' },
       ],
-      more: [{ path: 'word.tracking', label: 'Letter spacing', hint: 'In em' }],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.ink', 'look.accent'],
+          label: 'Primary color',
+          hint: 'The words, plus the paper margin line when it is on. With Dark look on, this fills the background instead',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together. With Dark look on, this colors the words instead',
+        },
+      ],
+      more: [
+        {
+          ...LOOK.ink,
+          label: 'Word color',
+          hint: 'With Dark look on, this becomes the background',
+        },
+        {
+          ...LOOK.accent,
+          label: 'Margin line color',
+          hint: 'Shows when Paper margin line is on. In Dark look, a line matching the ink turns light with the type',
+        },
+        { ...LOOK.background, hint: 'With Dark look on, this colors the type instead' },
+        { ...LOOK.backgroundEdge, hint: LIGHT_ONLY_EDGE },
+        LOOK.paperLine,
+      ],
     },
     {
       title: 'Streams',
@@ -42,6 +74,8 @@ export const wordStreamsControls = defineControls<WordStreamsProps>({
           label: 'Streams',
           hint: 'Spread evenly across the frame between the side margins',
         },
+      ],
+      more: [
         {
           path: 'streams.margin',
           label: 'Side margins',
@@ -62,6 +96,8 @@ export const wordStreamsControls = defineControls<WordStreamsProps>({
           label: 'Curve width',
           hint: `How far each stream swings to the side, in pixels. 0 runs them straight. ${MAY_SHRINK}`,
         },
+      ],
+      more: [
         {
           path: 'wave.length',
           label: 'Curve length',
@@ -82,6 +118,8 @@ export const wordStreamsControls = defineControls<WordStreamsProps>({
           label: 'Swell size',
           hint: `Size of the biggest copy in each swell, in pixels. Set it to the word size for no swell. ${MAY_SHRINK}`,
         },
+      ],
+      more: [
         {
           path: 'swell.length',
           label: 'Copies per swell',
@@ -92,8 +130,6 @@ export const wordStreamsControls = defineControls<WordStreamsProps>({
           label: 'Swell offset',
           hint: 'Share of a swell between neighboring streams, mirrored around the center. 0.5 alternates big and small',
         },
-      ],
-      more: [
         {
           path: 'swell.sharpness',
           label: 'Swell sharpness',
@@ -134,6 +170,13 @@ export const wordStreamsControls = defineControls<WordStreamsProps>({
           label: 'Flow direction',
           hint: 'Which way the copies travel. The slide-in follows the same direction',
         },
+      ],
+      more: [
+        {
+          path: 'flow.alternate',
+          label: 'Alternate streams',
+          hint: 'Every second stream flows the opposite way',
+        },
         {
           path: 'flow.riseDistance',
           label: 'Slide-in distance',
@@ -143,13 +186,6 @@ export const wordStreamsControls = defineControls<WordStreamsProps>({
           path: 'flow.fadeFrames',
           label: 'Fade-in length',
           hint: 'In frames for each stream to fade in. 0 shows them at once',
-        },
-      ],
-      more: [
-        {
-          path: 'flow.alternate',
-          label: 'Alternate streams',
-          hint: 'Every second stream flows the opposite way',
         },
         {
           path: 'flow.riseFrames',
@@ -170,32 +206,14 @@ export const wordStreamsControls = defineControls<WordStreamsProps>({
         {
           path: 'tone.dark',
           label: 'Dark look',
-          hint: 'Swaps the background and ink colors for light type on a dark field',
+          hint: 'Swaps the background and word colors for light type on a dark field',
         },
-        { ...LOOK.background, hint: 'With Dark look on, this colors the type instead' },
-        {
-          link: ['look.ink', 'look.accent'],
-          label: 'Ink color',
-          hint: 'The words and the paper margin line. With Dark look on, this becomes the background',
-        },
-        LOOK.grain,
       ],
       more: [
-        {
-          ...LOOK.ink,
-          label: 'Word color',
-          hint: 'With Dark look on, this becomes the background',
-        },
-        {
-          ...LOOK.accent,
-          label: 'Margin line color',
-          hint: 'Shows when Paper margin line is on. In Dark look, a line matching the ink turns light with the type',
-        },
-        { ...LOOK.backgroundEdge, hint: LIGHT_ONLY_EDGE },
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
       ],
@@ -203,13 +221,14 @@ export const wordStreamsControls = defineControls<WordStreamsProps>({
     {
       title: 'Motion',
       fields: [
-        MOTION.exit,
         {
           ...MOTION.speed,
           hint: 'Speeds up the sway and the swell overtake. Flow speed, the slide-in and the fade-in keep their own pace, and so do the entrance and exit',
         },
+        MOTION.enter,
+        MOTION.exit,
       ],
-      more: [MOTION.exitFrames, MOTION.enter, MOTION.enterFrames],
+      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.muted', 'motion.float'],

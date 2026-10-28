@@ -6,6 +6,7 @@ import {
   Layers,
   LayoutTemplate,
   PaintBucket,
+  Palette,
   Shapes,
   SlidersHorizontal,
   Type,
@@ -38,6 +39,7 @@ import { LayersPanel } from './sidebar/layers-panel';
 import { PhotosPanel } from './sidebar/photos-panel';
 import { TemplatesPanel } from './sidebar/templates-panel';
 import { TextPanel } from './sidebar/text-panel';
+import { ThemePanel } from './sidebar/theme-panel';
 import { UploadsPanel } from './sidebar/uploads-panel';
 import { useDesignEditor } from './use-design-editor';
 import { useEditorShortcuts, type ZoomDirection } from './use-editor-shortcuts';
@@ -203,6 +205,7 @@ export const DesignEditor = ({
   });
 
   const panels: SidebarPanel[] = [
+    { id: 'theme', label: 'Theme', Icon: Palette, render: () => <ThemePanel editor={editor} /> },
     {
       id: 'templates',
       label: 'Templates',

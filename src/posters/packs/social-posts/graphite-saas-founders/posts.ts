@@ -1,6 +1,5 @@
 import { linear } from '@/design';
 import {
-  avatar,
   bars,
   checklist,
   circle,
@@ -8,13 +7,13 @@ import {
   line,
   POST_SIZE,
   path,
-  photo,
   pill,
-  rating,
   rect,
   shadow,
-  template,
+  type Theme,
+  type ThemeSpec,
   text,
+  themed,
 } from '../../../kit';
 
 export interface SaasPalette {
@@ -47,37 +46,79 @@ export const LILAC: SaasPalette = {
   onAccent: '#2e1065',
 };
 
-export const HEAD = 'Space Grotesk';
-export const BODY = 'Inter';
+export const HEADING = { label: 'Heading font', value: 'Space Grotesk' } as const;
+export const BODY = { label: 'Body font', value: 'Inter' } as const;
+export const BRAND = { label: 'Brand', value: 'Vectra Labs' } as const;
 export const { width: W, height: H } = POST_SIZE;
 
-export const base = (p: SaasPalette, label: string) => [
-  rect(0, 0, W, H, linear(170, p.deep, p.top), { name: 'Background' }),
-  rect(70, 70, label.length * 14 + 48, 52, 'rgba(0,0,0,0)', {
-    cornerRadius: 26,
-    stroke: p.soft,
-    strokeWidth: 2,
-    name: 'Section tag',
-  }),
-  text(label, 70, 83, label.length * 14 + 48, {
-    fontFamily: BODY,
-    fontSize: 22,
-    fontWeight: 600,
-    fill: p.paper,
-    align: 'center',
-  }),
-  line(label.length * 14 + 140, 96, 260, p.soft, 2),
-];
+export const page = (p: SaasPalette, hint: string) => ({
+  value: p.deep,
+  hint: `Page, with its ${hint}`,
+});
 
-export const brandMark = (p: SaasPalette, x: number, y: number) =>
-  text('Vectra Labs', x, y, 240, {
-    fontFamily: HEAD,
-    fontSize: 26,
-    fontWeight: 700,
-    fill: p.soft,
-  });
+interface CoreSpec {
+  colors: Record<'background' | 'text', { value: string; hint: string }>;
+  fonts: Record<'heading' | 'body', { label: string; value: string }>;
+  copy: Record<'tag', { label: string; value: string }>;
+}
 
-const globeDots = (p: SaasPalette) =>
+export type SaasTheme = Pick<Theme<CoreSpec>, 'color' | 'shade' | 'font' | 'copy'>;
+
+export const tagCopy = (value: string) => ({ label: 'Section tag', value });
+
+export const base = (t: SaasTheme, p: SaasPalette, tag: string) => {
+  const width = tag.length * 14 + 48;
+  return [
+    rect(0, 0, W, H, linear(170, t.color('background'), t.shade('background', p.top)), {
+      name: 'Background',
+    }),
+    rect(70, 70, width, 52, t.shade('text', 'rgba(0,0,0,0)'), {
+      cornerRadius: 26,
+      stroke: t.shade('text', p.soft),
+      strokeWidth: 2,
+      name: 'Section tag',
+    }),
+    text(t.copy('tag'), 70, 83, width, {
+      fontFamily: t.font('body'),
+      fontSize: 22,
+      fontWeight: 600,
+      fill: t.color('text'),
+      align: 'center',
+    }),
+    line(width + 92, 96, 260, t.shade('text', p.soft), 2),
+  ];
+};
+
+export const brandMark = (label: string, x: number, y: number, fill: string, fontFamily: string) =>
+  text(label, x, y, 240, { fontFamily, fontSize: 26, fontWeight: 700, fill });
+
+const COVERAGE_TAG = 'Product demo';
+
+const coverageSpec = (p: SaasPalette) =>
+  ({
+    colors: {
+      background: page(p, 'lighter bottom glow, and the base of the globe'),
+      surface: { value: p.card, hint: 'Start free today pill and the top of the globe' },
+      primary: {
+        value: p.accent,
+        hint: 'Local speed and its glow, the pill and globe outlines, and the globe dots',
+      },
+      text: {
+        value: p.paper,
+        hint: 'Section tag, Global reach and the pill label; its softer shade colors the tag outline, rule, brand and globe lines',
+      },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      tag: tagCopy(COVERAGE_TAG),
+      brand: BRAND,
+      headline: { label: 'Headline', value: 'Global reach,' },
+      title: { label: 'Highlighted line', value: 'Local speed' },
+      cta: { label: 'Button', value: 'Start free today' },
+    },
+  }) as const satisfies ThemeSpec;
+
+const globeDots = (fill: string) =>
   Array.from({ length: 30 * 15 }, (_, index) => {
     const column = index % 30;
     const row = Math.floor(index / 30);
@@ -85,228 +126,210 @@ const globeDots = (p: SaasPalette) =>
     const y = 935 + row * 28;
     const inside = (x - 540) ** 2 + (y - 1350) ** 2 < 420 ** 2 && y < 1335;
     const land = (column * 7 + row * 13 + Math.floor(column / 4) * 5) % 9 < 4;
-    return inside && land ? [circle(x, y, 6, p.accent, { opacity: 0.55 })] : [];
+    return inside && land ? [circle(x, y, 6, fill, { opacity: 0.55 })] : [];
   });
 
 export const globalCoverage = (p: SaasPalette) =>
-  template(W, H, () => [
-    base(p, 'Product demo'),
-    brandMark(p, 800, 82),
-    text('Global reach,', 0, 290, W, {
-      fontFamily: HEAD,
-      fontSize: 80,
-      fontWeight: 500,
-      fill: p.paper,
-      align: 'center',
-    }),
-    text('Local speed', 0, 385, W, {
-      fontFamily: HEAD,
-      fontSize: 92,
-      fontWeight: 700,
-      fill: p.accent,
-      align: 'center',
-      ...shadow(30, 0, p.accent),
-    }),
-    pill('Start free today', 370, 540, {
-      fill: p.card,
-      color: p.paper,
-      stroke: p.accent,
-      strokeWidth: 2,
-      fontSize: 32,
-      fontFamily: BODY,
-      width: 340,
-    }),
-    path(
-      'M 90 1350 A 450 450 0 0 1 990 1350 Z',
-      0,
-      0,
-      W,
-      H,
-      linear(180, p.card, p.deep),
-      { width: W, height: H },
-      { stroke: p.accent, strokeWidth: 4, name: 'Globe' },
-    ),
-    path(
-      'M 240 1350 A 300 450 0 0 1 840 1350',
-      0,
-      0,
-      W,
-      H,
-      'rgba(0,0,0,0)',
-      { width: W, height: H },
-      { stroke: p.soft, strokeWidth: 2, name: 'Meridian' },
-    ),
-    path(
-      'M 390 1350 A 150 450 0 0 1 690 1350',
-      0,
-      0,
-      W,
-      H,
-      'rgba(0,0,0,0)',
-      { width: W, height: H },
-      { stroke: p.soft, strokeWidth: 2, name: 'Meridian' },
-    ),
-    line(116, 1200, 848, p.soft, 2),
-    line(205, 1050, 670, p.soft, 2),
-    globeDots(p),
-  ]);
+  themed(W, H, coverageSpec(p), (t) => {
+    const soft = t.shade('text', p.soft);
+    const clear = t.shade('text', 'rgba(0,0,0,0)');
+    return [
+      base(t, p, COVERAGE_TAG),
+      brandMark(t.copy('brand'), 800, 82, soft, t.font('heading')),
+      text(t.copy('headline'), 0, 290, W, {
+        fontFamily: t.font('heading'),
+        fontSize: 80,
+        fontWeight: 500,
+        fill: t.color('text'),
+        align: 'center',
+      }),
+      text(t.copy('title'), 0, 385, W, {
+        fontFamily: t.font('heading'),
+        fontSize: 92,
+        fontWeight: 700,
+        fill: t.color('primary'),
+        align: 'center',
+        ...shadow(30, 0, t.color('primary')),
+      }),
+      pill(t.copy('cta'), 370, 540, {
+        fill: t.color('surface'),
+        color: t.color('text'),
+        stroke: t.color('primary'),
+        strokeWidth: 2,
+        fontSize: 32,
+        fontFamily: t.font('body'),
+        width: 340,
+      }),
+      path(
+        'M 90 1350 A 450 450 0 0 1 990 1350 Z',
+        0,
+        0,
+        W,
+        H,
+        linear(180, t.color('surface'), t.color('background')),
+        { width: W, height: H },
+        { stroke: t.color('primary'), strokeWidth: 4, name: 'Globe' },
+      ),
+      path(
+        'M 240 1350 A 300 450 0 0 1 840 1350',
+        0,
+        0,
+        W,
+        H,
+        clear,
+        { width: W, height: H },
+        { stroke: soft, strokeWidth: 2, name: 'Meridian' },
+      ),
+      path(
+        'M 390 1350 A 150 450 0 0 1 690 1350',
+        0,
+        0,
+        W,
+        H,
+        clear,
+        { width: W, height: H },
+        { stroke: soft, strokeWidth: 2, name: 'Meridian' },
+      ),
+      line(116, 1200, 848, soft, 2),
+      line(205, 1050, 670, soft, 2),
+      globeDots(t.color('primary')),
+    ];
+  });
+
+const ANALYTICS_TAG = 'Feature breakdown';
+
+const analyticsSpec = (p: SaasPalette) =>
+  ({
+    colors: {
+      background: page(p, 'lighter bottom glow, and the label on the change pill'),
+      surface: { value: p.card, hint: 'Dashboard card' },
+      primary: { value: p.accent, hint: 'Change pill, chart bars and the check icons' },
+      text: {
+        value: p.paper,
+        hint: 'Section tag, title, revenue figure and checklist; its softer shades color the tag outline, rule, subtitle, revenue label and card edge',
+      },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      tag: tagCopy(ANALYTICS_TAG),
+      title: { label: 'Title', value: 'AI Analytics' },
+      subtitle: { label: 'Subtitle', value: 'See what drives growth, in real time.' },
+      metric: { label: 'Metric label', value: 'Weekly revenue' },
+      value: { label: 'Metric value', value: '$48.2k' },
+      change: { label: 'Change', value: '+18%' },
+      points: {
+        label: 'Checklist item',
+        value: [
+          'Spot trends before they peak',
+          'Forecast with one click',
+          'Share reports with your team',
+        ],
+      },
+    },
+  }) as const satisfies ThemeSpec;
 
 export const aiAnalytics = (p: SaasPalette) =>
-  template(W, H, () => [
-    base(p, 'Feature breakdown'),
-    text('AI Analytics', 0, 200, W, {
-      fontFamily: HEAD,
+  themed(W, H, analyticsSpec(p), (t) => [
+    base(t, p, ANALYTICS_TAG),
+    text(t.copy('title'), 0, 200, W, {
+      fontFamily: t.font('heading'),
       fontSize: 96,
       fontWeight: 700,
-      fill: p.paper,
+      fill: t.color('text'),
       align: 'center',
     }),
-    text('See what drives growth, in real time.', 0, 330, W, {
-      fontFamily: BODY,
+    text(t.copy('subtitle'), 0, 330, W, {
+      fontFamily: t.font('body'),
       fontSize: 32,
       fontWeight: 500,
-      fill: p.soft,
+      fill: t.shade('text', p.soft),
       align: 'center',
     }),
-    rect(110, 430, 860, 560, p.card, {
+    rect(110, 430, 860, 560, t.color('surface'), {
       cornerRadius: 28,
-      stroke: 'rgba(255,255,255,0.1)',
+      stroke: t.shade('text', 'rgba(255,255,255,0.1)'),
       strokeWidth: 2,
       name: 'Dashboard',
     }),
-    text('Weekly revenue', 160, 475, 400, {
-      fontFamily: BODY,
+    text(t.copy('metric'), 160, 475, 400, {
+      fontFamily: t.font('body'),
       fontSize: 28,
       fontWeight: 500,
-      fill: p.soft,
+      fill: t.shade('text', p.soft),
     }),
-    text('$48.2k', 160, 515, 400, {
-      fontFamily: HEAD,
+    text(t.copy('value'), 160, 515, 400, {
+      fontFamily: t.font('heading'),
       fontSize: 64,
       fontWeight: 700,
-      fill: p.paper,
+      fill: t.color('text'),
     }),
-    pill('+18%', 790, 490, {
-      fill: p.accent,
-      color: p.onAccent,
+    pill(t.copy('change'), 790, 490, {
+      fill: t.color('primary'),
+      color: t.shade('background', p.onAccent),
       fontSize: 28,
-      fontFamily: BODY,
+      fontFamily: t.font('body'),
       fontWeight: 700,
       width: 130,
     }),
-    bars(160, 640, 760, 310, [40, 62, 48, 80, 66, 92, 74], p.accent, 0.4),
-    checklist(
-      ['Spot trends before they peak', 'Forecast with one click', 'Share reports with your team'],
-      150,
-      1050,
-      820,
-      { color: p.paper, iconColor: p.accent, fontSize: 32, gap: 62 },
-    ),
+    bars(160, 640, 760, 310, [40, 62, 48, 80, 66, 92, 74], t.color('primary'), 0.4),
+    checklist(t.list('points'), 150, 1050, 820, {
+      color: t.color('text'),
+      iconColor: t.color('primary'),
+      fontSize: 32,
+      gap: 62,
+      fontFamily: t.font('body'),
+    }),
   ]);
 
+const QUOTE_TAG = 'User reviews';
+
+const quoteSpec = (p: SaasPalette) =>
+  ({
+    colors: {
+      background: page(p, 'lighter bottom glow, and the squares behind the quote marks'),
+      primary: { value: p.accent, hint: 'Quote marks' },
+      text: {
+        value: p.paper,
+        hint: 'Section tag, quote frame and quote; its softer shade colors the tag outline, rule, author and brand',
+      },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      tag: tagCopy(QUOTE_TAG),
+      quote: {
+        label: 'Quote',
+        value: 'Time is money.\nWith Vectra we\nsave hours every\nweek and win\nmore customers.',
+      },
+      author: { label: 'Author', value: 'Maya Chen, founder at Brightpath' },
+      brand: BRAND,
+    },
+  }) as const satisfies ThemeSpec;
+
 export const quoteCard = (p: SaasPalette) =>
-  template(W, H, () => [
-    base(p, 'User reviews'),
-    rect(170, 330, 760, 760, 'rgba(0,0,0,0)', {
+  themed(W, H, quoteSpec(p), (t) => [
+    base(t, p, QUOTE_TAG),
+    rect(170, 330, 760, 760, t.shade('text', 'rgba(0,0,0,0)'), {
       cornerRadius: 24,
-      stroke: p.paper,
+      stroke: t.color('text'),
       strokeWidth: 3,
       name: 'Quote frame',
     }),
-    rect(110, 250, 150, 150, p.deep, { cornerRadius: 20, name: 'Quote backdrop' }),
-    icon('quote', 120, 260, 130, p.accent, { strokeWidth: 2.4 }),
-    text(
-      'Time is money.\nWith Vectra we\nsave hours every\nweek and win\nmore customers.',
-      230,
-      430,
-      660,
-      {
-        fontFamily: HEAD,
-        fontSize: 60,
-        fontWeight: 700,
-        fill: p.paper,
-        lineHeight: 1.22,
-      },
-    ),
-    text('Maya Chen, founder at Brightpath', 230, 900, 660, {
-      fontFamily: BODY,
+    rect(110, 250, 150, 150, t.color('background'), { cornerRadius: 20, name: 'Quote backdrop' }),
+    icon('quote', 120, 260, 130, t.color('primary'), { strokeWidth: 2.4 }),
+    text(t.copy('quote'), 230, 430, 660, {
+      fontFamily: t.font('heading'),
+      fontSize: 60,
+      fontWeight: 700,
+      fill: t.color('text'),
+      lineHeight: 1.22,
+    }),
+    text(t.copy('author'), 230, 900, 660, {
+      fontFamily: t.font('body'),
       fontSize: 28,
       fontWeight: 500,
-      fill: p.soft,
+      fill: t.shade('text', p.soft),
     }),
-    rect(820, 1020, 150, 150, p.deep, { cornerRadius: 20, name: 'Quote backdrop' }),
-    icon('quote', 830, 1030, 130, p.accent, { strokeWidth: 2.4 }),
-    brandMark(p, 80, 1260),
-  ]);
-
-export const feedbackWall = (p: SaasPalette) =>
-  template(W, H, () => [
-    base(p, 'User reviews'),
-    Array.from({ length: 5 }, (_, index) =>
-      text('Feedback', 40, 170 + index * 230, 1040, {
-        fontFamily: HEAD,
-        fontSize: 200,
-        fontWeight: 700,
-        fill: 'rgba(255,255,255,0.08)',
-        lineHeight: 1,
-      }),
-    ),
-    rect(250, 440, 620, 470, p.paper, {
-      cornerRadius: 26,
-      name: 'Review card',
-      ...shadow(40, 18, 'rgba(0,0,0,0.4)'),
-    }),
-    avatar('woman-portrait-4', 335, 530, 50),
-    text('Lena Ortiz', 405, 488, 400, {
-      fontFamily: HEAD,
-      fontSize: 34,
-      fontWeight: 700,
-      fill: '#111827',
-    }),
-    rating(405, 538, 28, 5, '#f59e0b'),
-    text(
-      'Clear, fast and easy to set\nup. Our reports now take\nminutes instead of days.\nA real time saver.',
-      295,
-      620,
-      540,
-      {
-        fontFamily: BODY,
-        fontSize: 30,
-        fontWeight: 500,
-        fill: '#374151',
-        lineHeight: 1.4,
-      },
-    ),
-    brandMark(p, 800, 1260),
-  ]);
-
-export const clientsCount = (p: SaasPalette) =>
-  template(W, H, () => [
-    base(p, 'Client stories'),
-    text('300+', 70, 250, 800, {
-      fontFamily: HEAD,
-      fontSize: 230,
-      fontWeight: 700,
-      fill: p.accent,
-      lineHeight: 1,
-    }),
-    text('happy clients use our\ngrowth services', 70, 520, 900, {
-      fontFamily: HEAD,
-      fontSize: 54,
-      fontWeight: 600,
-      fill: p.paper,
-      lineHeight: 1.15,
-    }),
-    pill('Let us talk', 70, 720, {
-      fill: p.accent,
-      color: p.onAccent,
-      fontSize: 34,
-      fontFamily: BODY,
-      fontWeight: 700,
-      width: 260,
-    }),
-    circle(380, 760, 40, p.paper),
-    icon('arrow-right', 358, 738, 44, p.onAccent, { strokeWidth: 2.5 }),
-    photo('man-portrait-2', 600, 780, 400, 500, { cornerRadius: 30 }),
-    brandMark(p, 80, 1260),
+    rect(820, 1020, 150, 150, t.color('background'), { cornerRadius: 20, name: 'Quote backdrop' }),
+    icon('quote', 830, 1030, 130, t.color('primary'), { strokeWidth: 2.4 }),
+    brandMark(t.copy('brand'), 80, 1260, t.shade('text', p.soft), t.font('heading')),
   ]);

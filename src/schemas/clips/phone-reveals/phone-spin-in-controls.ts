@@ -14,7 +14,34 @@ export const phoneSpinInControls = defineControls<PhoneSpinInProps>({
           hint: 'Replaces the preset screen when set',
         },
         { path: 'phone.finish', label: 'Phone finish' },
-        { path: 'scale', label: 'Phone size' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Primary color',
+          hint: 'The backdrop behind the phone, center and corners together. A dark color also switches the 3D lighting to a darker studio',
+        },
+        {
+          path: 'look.paperLine',
+          label: 'Secondary color',
+          hint: 'Paper rule lines, when a paper pattern is on',
+        },
+        {
+          path: 'look.accent',
+          label: 'Accent color',
+          hint: 'Paper margin line, when the paper margin is on',
+        },
+      ],
+      more: [
+        {
+          ...LOOK.background,
+          label: 'Background center',
+          hint: 'Dark colors also switch the 3D lighting to a darker studio',
+        },
+        { ...LOOK.backgroundEdge, label: 'Background corners' },
       ],
     },
     {
@@ -30,6 +57,8 @@ export const phoneSpinInControls = defineControls<PhoneSpinInProps>({
           label: 'Spin-in length',
           hint: 'In frames at normal speed; the phone rises, spins and settles over this time',
         },
+      ],
+      more: [
         {
           path: 'rise',
           label: 'Rise distance',
@@ -40,8 +69,6 @@ export const phoneSpinInControls = defineControls<PhoneSpinInProps>({
           label: 'Resting angle',
           hint: 'How far the phone stays turned once it settles. Positive faces the screen away from its side of the frame, to the left when centered',
         },
-      ],
-      more: [
         {
           path: 'slideIn',
           label: 'Sideways slide',
@@ -62,46 +89,28 @@ export const phoneSpinInControls = defineControls<PhoneSpinInProps>({
     {
       title: 'Position',
       fields: [
+        { path: 'scale', label: 'Phone size' },
         {
           path: 'position.x',
           label: 'Horizontal position',
           hint: 'Also sets which way the phone spins and leans, and where the spotlight sits',
         },
-        { path: 'position.y', label: 'Vertical position' },
       ],
       more: [
+        { path: 'position.y', label: 'Vertical position' },
         { path: 'position.z', label: 'Depth', hint: 'Higher brings the phone toward the camera' },
       ],
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        {
-          link: ['look.background', 'look.backgroundEdge'],
-          label: 'Background color',
-          hint: 'Sets the center and corner colors together for a flat background. Dark colors also switch the 3D lighting to a darker studio',
-        },
+      fields: [LOOK.showBackdrop],
+      more: [
         LOOK.spotlight,
         LOOK.grain,
-      ],
-      more: [
-        {
-          ...LOOK.background,
-          label: 'Background center',
-          hint: 'Dark colors also switch the 3D lighting to a darker studio',
-        },
-        LOOK.backgroundEdge,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        {
-          path: 'look.accent',
-          label: 'Margin line color',
-          hint: 'Shows when Paper margin line is on',
-        },
       ],
     },
     {
@@ -111,11 +120,11 @@ export const phoneSpinInControls = defineControls<PhoneSpinInProps>({
           ...STAGE.cameraDistance,
           hint: 'Higher pulls the camera back so the phone looks smaller',
         },
+      ],
+      more: [
         STAGE.keyLight,
         { ...STAGE.reflections, hint: 'Strength of the studio highlights on the glass and frame' },
         STAGE.shadow,
-      ],
-      more: [
         { ...STAGE.fieldOfView, hint: 'Lower flattens perspective like a longer lens' },
         STAGE.shadowSoftness,
         { ...STAGE.cameraDrift, hint: 'Slow wandering camera movement' },
@@ -123,19 +132,16 @@ export const phoneSpinInControls = defineControls<PhoneSpinInProps>({
     },
     {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
-        { ...MOTION.float, hint: 'Gentle up and down bob' },
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
         {
           ...MOTION.speed,
           hint: 'Speeds up or slows the spin, sway and float. Entrance, exit and camera drift keep their pace',
         },
-      ],
-      more: [
+        { ...MOTION.float, hint: 'Gentle up and down bob' },
+        { path: 'sway', label: 'Idle sway', hint: 'Gentle side to side turn of the phone' },
         MOTION.enterFrames,
         MOTION.exitFrames,
-        { path: 'sway', label: 'Idle sway', hint: 'Gentle side to side turn of the phone' },
       ],
     },
   ],

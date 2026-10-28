@@ -1,4 +1,5 @@
 import { definePack } from '../../../pack';
+import { iconSheet } from './icon-sheet';
 import {
   accountsSlide,
   contentsSlide,
@@ -7,22 +8,15 @@ import {
   offeringsSlide,
   realWorldSlide,
 } from './slides-a';
-import {
-  clientsSlide,
-  matrixSlide,
-  metricsSlide,
-  networkSlide,
-  pricingSlide,
-  teamSlide,
-} from './slides-b';
+import { matrixSlide, metricsSlide, networkSlide, pricingSlide, teamSlide } from './slides-b';
 import {
   caseStudySlide,
   customerSlide,
-  iconSheet,
   marketSizeSlide,
   roadmapSlide,
   wordsSlide,
 } from './slides-c';
+import { clientsSlide } from './slides-d';
 
 const SLIDES = [
   accountsSlide,

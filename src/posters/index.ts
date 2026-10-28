@@ -11,3 +11,4 @@ export const POSTER_META: readonly PosterMeta[] = POSTERS.map((poster) => poster
 
 export const findPoster = (id: string): Poster | undefined =>
   POSTERS.find((poster) => poster.meta.id === id);
+export * from './audit';

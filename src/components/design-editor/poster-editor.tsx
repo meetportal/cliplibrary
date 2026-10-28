@@ -17,7 +17,7 @@ export const PosterEditor = dynamic(
           initialDesign={design}
           storageKey={`cliplibrary-poster:${posterId}`}
           backHref="/?type=poster"
-          initialPanel="elements"
+          initialPanel="theme"
         />
       );
       return PosterDesignEditor;

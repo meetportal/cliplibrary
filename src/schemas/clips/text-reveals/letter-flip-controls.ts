@@ -9,10 +9,28 @@ export const letterFlipControls = defineControls<LetterFlipProps>({
       fields: [
         { path: 'text', label: 'Word', hint: 'Each character flips in on its own' },
         { path: 'size', label: 'Text size', hint: 'In pixels' },
-        { path: 'weight', label: 'Font weight' },
-        LOOK.ink,
       ],
-      more: [{ path: 'tracking', label: 'Letter spacing', hint: 'In em' }],
+      more: [
+        { path: 'weight', label: 'Font weight' },
+        { path: 'tracking', label: 'Letter spacing', hint: 'In em' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        { path: 'look.ink', label: 'Primary color', hint: 'The word and its burn-out glow' },
+        {
+          path: 'look.accent',
+          label: 'Accent color',
+          hint: 'The highlighted letter and the paper margin line',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [LOOK.background, LOOK.backgroundEdge, LOOK.paperLine],
     },
     {
       title: 'Flip',
@@ -22,19 +40,19 @@ export const letterFlipControls = defineControls<LetterFlipProps>({
           label: 'Flip angle',
           hint: 'Degrees each letter turns before it lands; 180 starts from its mirror image',
         },
-        { path: 'flipFrames', label: 'Flip length', hint: 'In frames per letter' },
         {
           path: 'stagger',
           label: 'Delay between letters',
           hint: 'In frames; 0 flips every letter at once',
         },
+      ],
+      more: [
+        { path: 'flipFrames', label: 'Flip length', hint: 'In frames per letter' },
         {
           path: 'slide',
           label: 'Sideways slide',
           hint: 'How far each letter travels as it flips, as a multiple of the text size',
         },
-      ],
-      more: [
         { path: 'delay', label: 'Start delay', hint: 'In frames before the first letter flips' },
         {
           path: 'depth',
@@ -49,9 +67,8 @@ export const letterFlipControls = defineControls<LetterFlipProps>({
         {
           path: 'highlight',
           label: 'Highlighted letter',
-          hint: 'Position of the letter drawn in the highlight color, counting from 1; 0 for none',
+          hint: 'Position of the letter drawn in the accent color, counting from 1; 0 for none',
         },
-        { ...LOOK.accent, label: 'Highlight color', hint: 'Also colors the paper margin line' },
       ],
     },
     {
@@ -73,8 +90,9 @@ export const letterFlipControls = defineControls<LetterFlipProps>({
     },
     {
       title: 'Layout',
-      fields: [PLACEMENT.horizontal, PLACEMENT.vertical],
+      fields: [PLACEMENT.horizontal],
       more: [
+        PLACEMENT.vertical,
         {
           ...PLACEMENT.width,
           hint: 'The word never wraps. Sets where left or right aligned text sits',
@@ -85,15 +103,14 @@ export const letterFlipControls = defineControls<LetterFlipProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
-        { ...LOOK.paperMargin, hint: 'Drawn in the highlight color' },
+        { ...LOOK.paperMargin, hint: 'Drawn in the accent color' },
       ],
     },
     {

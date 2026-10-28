@@ -12,21 +12,10 @@ export const problemStrikeoutControls = defineControls<ProblemStrikeoutProps>({
           label: 'Problems',
           hint: 'One per line, written in capitals in two columns and struck out in order',
         },
-        { path: 'page.font', label: 'Handwriting font' },
-        { path: 'page.size', label: 'Writing size', hint: 'Letter height in page pixels' },
-        {
-          link: ['page.graphite', 'page.strikeColor'],
-          label: 'Pencil mark color',
-          hint: 'Colors the handwriting and the strike lines together',
-        },
       ],
       more: [
-        { path: 'page.graphite', label: 'Writing color', hint: 'The handwritten problems only' },
-        {
-          path: 'page.strikeColor',
-          label: 'Strike color',
-          hint: 'The lines crossing out each problem, for example a red pen',
-        },
+        { path: 'page.font', label: 'Handwriting font' },
+        { path: 'page.size', label: 'Writing size', hint: 'Letter height in page pixels' },
         { path: 'page.strikeWidth', label: 'Strike thickness', hint: 'In page pixels' },
         { path: 'page.tilt', label: 'Writing slant', hint: 'Angle of every word, in radians' },
         {
@@ -38,18 +27,106 @@ export const problemStrikeoutControls = defineControls<ProblemStrikeoutProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['card.top', 'card.badgeInk', 'card.footerInk'],
+          label: 'Primary color',
+          hint: 'End card top color, the monogram and the contact text together',
+        },
+        {
+          path: 'card.bottom',
+          label: 'Secondary color',
+          hint: 'Bottom of the end card background gradient',
+        },
+        {
+          path: 'card.pieceAccent',
+          label: 'Accent color',
+          hint: 'The puzzle piece that drops in carrying the label',
+        },
+        {
+          link: ['page.graphite', 'page.strikeColor'],
+          label: 'Text color',
+          hint: 'The handwritten problems and the strike lines together',
+        },
+        { path: 'page.paper', label: 'Surface color', hint: 'The notebook page' },
+      ],
+      more: [
+        { path: 'card.top', label: 'Card top color' },
+        { path: 'card.badgeInk', label: 'Monogram color' },
+        { path: 'card.footerInk', label: 'Contact text color' },
+        { path: 'page.graphite', label: 'Writing color', hint: 'The handwritten problems only' },
+        {
+          path: 'page.strikeColor',
+          label: 'Strike color',
+          hint: 'The lines crossing out each problem, for example a red pen',
+        },
+        {
+          link: ['card.ink', 'card.labelInk'],
+          label: 'Card text color',
+          hint: 'Kicker, headline, brand name and the puzzle piece label together',
+        },
+        { path: 'card.ink', label: 'Card headline color', hint: 'Kicker, headline and brand name' },
+        {
+          path: 'card.labelInk',
+          label: 'Piece label color',
+          hint: 'Text on the snapping piece',
+        },
+        {
+          link: ['card.badgeFill', 'card.footerFill'],
+          label: 'Badge and contact pill color',
+          hint: 'The monogram circle and the contact pill behind the text together',
+        },
+        { path: 'card.badgeFill', label: 'Badge circle color' },
+        { path: 'card.footerFill', label: 'Contact pill color' },
+        { path: 'card.glow', label: 'Center glow' },
+        {
+          path: 'card.watermark',
+          label: 'Watermark strength',
+          hint: 'Opacity of the large monogram behind everything, 0 hides it',
+        },
+        { path: 'card.watermarkInk', label: 'Watermark color' },
+        {
+          path: 'card.pieceLight',
+          label: 'Base piece color',
+          hint: 'The puzzle piece that is already in place',
+        },
+        { path: 'card.arrow', label: 'Growth arrow color' },
+        { path: 'card.bar', label: 'Chart bar color' },
+        { path: 'page.rule', label: 'Rule line color' },
+      ],
+    },
+    {
+      title: 'End card',
+      fields: [
+        { path: 'card.headline', label: 'Headline', hint: 'Shown in capitals, one line per row' },
+        { path: 'card.brand', label: 'Brand name' },
+      ],
+      more: [
+        { path: 'card.kicker', label: 'Kicker', hint: 'Small line above the headline' },
+        { path: 'card.solution', label: 'Puzzle piece label' },
+        { path: 'card.contact', label: 'Phone or contact' },
+        { path: 'card.website', label: 'Website' },
+        {
+          path: 'card.monogram',
+          label: 'Monogram',
+          hint: 'Initials in the badge and the large watermark',
+        },
+        { path: 'card.headlineSize', label: 'Headline size', hint: 'In pixels' },
+        {
+          path: 'card.kickerSize',
+          label: 'Kicker size',
+          hint: 'In pixels. The headline moves down to make room',
+        },
+      ],
+    },
+    {
       title: 'Timing',
       fields: [
-        { path: 'timing.strikeStart', label: 'First strike at', hint: 'Frame number' },
         {
           path: 'timing.strikeFrames',
           label: 'Strike length',
           hint: 'Frames per strike, lower strikes faster',
-        },
-        {
-          path: 'timing.cutFrame',
-          label: 'End card at',
-          hint: 'Frame number where the notebook cuts to the card',
         },
         {
           ...MOTION.speed,
@@ -57,6 +134,12 @@ export const problemStrikeoutControls = defineControls<ProblemStrikeoutProps>({
         },
       ],
       more: [
+        { path: 'timing.strikeStart', label: 'First strike at', hint: 'Frame number' },
+        {
+          path: 'timing.cutFrame',
+          label: 'End card at',
+          hint: 'Frame number where the notebook cuts to the card',
+        },
         {
           path: 'timing.travelFrames',
           label: 'Move to next word',
@@ -84,77 +167,9 @@ export const problemStrikeoutControls = defineControls<ProblemStrikeoutProps>({
       ],
     },
     {
-      title: 'End card',
-      fields: [
-        { path: 'card.headline', label: 'Headline', hint: 'Shown in capitals, one line per row' },
-        { path: 'card.kicker', label: 'Kicker', hint: 'Small line above the headline' },
-        { path: 'card.solution', label: 'Puzzle piece label' },
-        { path: 'card.brand', label: 'Brand name' },
-        { path: 'card.contact', label: 'Phone or contact' },
-        { path: 'card.website', label: 'Website' },
-      ],
-      more: [
-        {
-          path: 'card.monogram',
-          label: 'Monogram',
-          hint: 'Initials in the badge and the large watermark',
-        },
-        { path: 'card.headlineSize', label: 'Headline size', hint: 'In pixels' },
-        {
-          path: 'card.kickerSize',
-          label: 'Kicker size',
-          hint: 'In pixels. The headline moves down to make room',
-        },
-      ],
-    },
-    {
-      title: 'Card colors',
-      fields: [
-        { path: 'card.top', label: 'Top color' },
-        { path: 'card.bottom', label: 'Bottom color' },
-        { path: 'card.ink', label: 'Text color', hint: 'Kicker, headline and brand name' },
-        {
-          path: 'card.pieceAccent',
-          label: 'Snapping piece color',
-          hint: 'The puzzle piece that drops in carrying the label',
-        },
-      ],
-      more: [
-        { link: ['card.badgeFill', 'card.footerFill'], label: 'Badge and contact pill color' },
-        { link: ['card.badgeInk', 'card.footerInk'], label: 'Monogram and contact text color' },
-        { path: 'card.glow', label: 'Center glow' },
-        {
-          path: 'card.watermark',
-          label: 'Watermark strength',
-          hint: 'Opacity of the large monogram behind everything, 0 hides it',
-        },
-        { path: 'card.watermarkInk', label: 'Watermark color' },
-        {
-          path: 'card.pieceLight',
-          label: 'Base piece color',
-          hint: 'The puzzle piece that is already in place',
-        },
-        { path: 'card.arrow', label: 'Growth arrow color' },
-        {
-          path: 'card.labelInk',
-          label: 'Piece label color',
-          hint: 'Text on the snapping piece',
-        },
-        { path: 'card.bar', label: 'Chart bar color' },
-        { path: 'card.badgeFill', label: 'Badge circle color' },
-        { path: 'card.badgeInk', label: 'Monogram color' },
-        { path: 'card.footerFill', label: 'Contact pill color' },
-        { path: 'card.footerInk', label: 'Contact text color' },
-      ],
-    },
-    {
       title: 'Notebook',
-      fields: [
-        { path: 'page.paper', label: 'Paper color' },
-        { path: 'notebook.cover', label: 'Cover color' },
-      ],
+      fields: [{ path: 'notebook.cover', label: 'Cover color' }],
       more: [
-        { path: 'page.rule', label: 'Rule line color' },
         { path: 'notebook.turn', label: 'Notebook rotation', hint: 'In radians' },
         { path: 'page.ruleSpacing', label: 'Rule line spacing' },
         {
@@ -175,8 +190,8 @@ export const problemStrikeoutControls = defineControls<ProblemStrikeoutProps>({
     },
     {
       title: 'Pencil and hand',
-      fields: [
-        { path: 'pencil.show', label: 'Show pencil' },
+      fields: [{ path: 'pencil.show', label: 'Show pencil' }],
+      more: [
         {
           path: 'hand.show',
           label: 'Show hand',
@@ -184,8 +199,6 @@ export const problemStrikeoutControls = defineControls<ProblemStrikeoutProps>({
         },
         { path: 'pencil.body', label: 'Pencil color' },
         { path: 'hand.skin', label: 'Skin tone' },
-      ],
-      more: [
         { path: 'pencil.wood', label: 'Sharpened wood color' },
         { path: 'pencil.lead', label: 'Lead tip color' },
         { path: 'pencil.lean', label: 'Pencil lean', hint: 'Tilt away from upright, in radians' },
@@ -218,17 +231,17 @@ export const problemStrikeoutControls = defineControls<ProblemStrikeoutProps>({
       title: 'Camera',
       fields: [
         {
-          path: 'camera.closeDistance',
-          label: 'Close-up distance',
-          hint: 'Camera distance while the pencil strikes',
-        },
-        {
           path: 'camera.follow',
           label: 'Follow the pencil',
           hint: 'How closely the camera tracks the pencil while striking',
         },
       ],
       more: [
+        {
+          path: 'camera.closeDistance',
+          label: 'Close-up distance',
+          hint: 'Camera distance while the pencil strikes',
+        },
         {
           path: 'camera.wideDistance',
           label: 'Final wide distance',
@@ -257,8 +270,6 @@ export const problemStrikeoutControls = defineControls<ProblemStrikeoutProps>({
     {
       title: 'Desk and light',
       fields: [
-        { path: 'desk.surface', label: 'Desk color' },
-        { path: 'light.key', label: 'Key light', hint: 'Brightness of the main light' },
         {
           path: 'lens.depthOfField',
           label: 'Background blur',
@@ -266,6 +277,8 @@ export const problemStrikeoutControls = defineControls<ProblemStrikeoutProps>({
         },
       ],
       more: [
+        { path: 'desk.surface', label: 'Desk color' },
+        { path: 'light.key', label: 'Key light', hint: 'Brightness of the main light' },
         { path: 'desk.roughness', label: 'Desk roughness' },
         { path: 'light.keyColor', label: 'Key light color' },
         { path: 'light.keyX', label: 'Key light left and right' },

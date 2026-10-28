@@ -21,6 +21,35 @@ export const phonePairControls = defineControls<PhonePairProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Primary color',
+          hint: 'The whole background, center and corners together. A dark color also switches the phone lighting to its dark setup, even with the background hidden',
+        },
+        {
+          link: ['look.paperLine', 'look.accent'],
+          label: 'Accent color',
+          hint: 'Paper pattern lines and the paper margin line. Shows only when the paper pattern or margin line is on',
+        },
+      ],
+      more: [
+        {
+          ...LOOK.background,
+          label: 'Background center',
+          hint: 'A dark color also switches the studio lighting on the phones to its dark setup, even with the background hidden',
+        },
+        LOOK.backgroundEdge,
+        LOOK.paperLine,
+        {
+          ...LOOK.accent,
+          label: 'Margin line color',
+          hint: 'Only shows when Paper margin line is on',
+        },
+      ],
+    },
+    {
       title: 'Entrance',
       fields: [
         {
@@ -29,9 +58,21 @@ export const phonePairControls = defineControls<PhonePairProps>({
           hint: 'Phones slide in from opposite sides, or the second phone slides out from behind the first',
         },
         {
+          path: 'angle',
+          label: 'Turn angle',
+          hint: 'How far the phones turn. In the sides entrance they turn to face each other',
+        },
+      ],
+      more: [
+        {
           path: 'arriveFrames',
           label: 'Slide-in length',
           hint: 'Sides entrance only. In frames',
+        },
+        {
+          path: 'arriveSwing',
+          label: 'Slide-in swing',
+          hint: 'Sides entrance only. Extra turn the phones unwind as they arrive',
         },
         {
           path: 'behindSide',
@@ -42,13 +83,6 @@ export const phonePairControls = defineControls<PhonePairProps>({
           path: 'slideFrames',
           label: 'Slide-out length',
           hint: 'Behind entrance only. In frames',
-        },
-      ],
-      more: [
-        {
-          path: 'arriveSwing',
-          label: 'Slide-in swing',
-          hint: 'Sides entrance only. Extra turn the phones unwind as they arrive',
         },
         {
           path: 'slideDelay',
@@ -65,11 +99,8 @@ export const phonePairControls = defineControls<PhonePairProps>({
           label: 'Space between phones',
           hint: 'In the behind entrance, how far the second phone slides out',
         },
-        {
-          path: 'angle',
-          label: 'Turn angle',
-          hint: 'How far the phones turn. In the sides entrance they turn to face each other',
-        },
+      ],
+      more: [
         {
           path: 'stagger',
           label: 'Height offset',
@@ -77,42 +108,33 @@ export const phonePairControls = defineControls<PhonePairProps>({
         },
         { path: 'position.x', label: 'Horizontal position' },
         { path: 'position.y', label: 'Vertical position' },
+        { path: 'position.z', label: 'Depth', hint: 'Higher values bring the pair closer' },
       ],
-      more: [{ path: 'position.z', label: 'Depth', hint: 'Higher values bring the pair closer' }],
     },
     {
       title: 'Camera and light',
       fields: [
         { ...STAGE.cameraDistance, hint: 'Higher values make the phones look smaller' },
         STAGE.keyLight,
+      ],
+      more: [
         { ...STAGE.reflections, label: 'Glass and metal reflections' },
         STAGE.shadow,
+        STAGE.fieldOfView,
+        STAGE.shadowSoftness,
+        STAGE.cameraDrift,
       ],
-      more: [STAGE.fieldOfView, STAGE.shadowSoftness, STAGE.cameraDrift],
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        {
-          ...LOOK.background,
-          hint: 'A dark color also switches the studio lighting on the phones to its dark setup, even with the background hidden',
-        },
-        LOOK.spotlight,
-      ],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.spotlight,
         LOOK.grain,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        {
-          ...LOOK.accent,
-          label: 'Margin line color',
-          hint: 'Only shows when Paper margin line is on',
-        },
       ],
     },
     {
@@ -124,6 +146,9 @@ export const phonePairControls = defineControls<PhonePairProps>({
           label: 'Outro transition',
           hint: 'How the whole frame leaves at the end',
         },
+        { ...MOTION.speed, hint: 'Speeds up or slows down the phone animation' },
+      ],
+      more: [
         {
           link: ['motion.exitFrames', 'motion.enterFrames'],
           label: 'Transition length',
@@ -133,9 +158,6 @@ export const phonePairControls = defineControls<PhonePairProps>({
           ...MOTION.float,
           hint: 'Gentle bob while the phones are on screen. In the behind entrance only the second phone bobs',
         },
-        { ...MOTION.speed, hint: 'Speeds up or slows down the phone animation' },
-      ],
-      more: [
         { ...MOTION.enterFrames, label: 'Intro length' },
         { ...MOTION.exitFrames, label: 'Outro length' },
       ],

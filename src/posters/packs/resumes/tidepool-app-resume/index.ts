@@ -1,6 +1,7 @@
 import { definePack } from '../../../pack';
 import { resumeWins } from './achievements';
-import { cardBack, cardFront, coverLetter } from './letter';
+import { cardBack, cardFront } from './cards';
+import { coverLetter } from './letter';
 import { resumeMain } from './resume';
 
 export const tidepoolAppResumePack = definePack({

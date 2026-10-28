@@ -17,6 +17,34 @@ export const phoneTurnaroundControls = defineControls<PhoneTurnaroundProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Primary color',
+          hint: 'The backdrop behind the phone, center and corners together. A dark color also switches to dark studio lighting',
+        },
+        {
+          path: 'look.paperLine',
+          label: 'Secondary color',
+          hint: 'Paper rule lines, when a paper pattern is on',
+        },
+        {
+          path: 'look.accent',
+          label: 'Accent color',
+          hint: 'Paper margin line, when the paper margin is on',
+        },
+      ],
+      more: [
+        {
+          ...LOOK.background,
+          label: 'Background center',
+          hint: 'A dark color also switches to dark studio lighting',
+        },
+        { ...LOOK.backgroundEdge, label: 'Background corners' },
+      ],
+    },
+    {
       title: 'Reveal',
       fields: [
         {
@@ -29,6 +57,8 @@ export const phoneTurnaroundControls = defineControls<PhoneTurnaroundProps>({
           label: 'Turn point',
           hint: 'Rise back only. Share of the clip, 0.5 is halfway. The turn finishes one turn length after this point',
         },
+      ],
+      more: [
         {
           path: 'turnFrames',
           label: 'Turn length',
@@ -39,8 +69,6 @@ export const phoneTurnaroundControls = defineControls<PhoneTurnaroundProps>({
           label: 'Rise distance',
           hint: 'Rise back only. How far below its resting spot the phone starts',
         },
-      ],
-      more: [
         {
           path: 'riseFrames',
           label: 'Rise length',
@@ -77,6 +105,8 @@ export const phoneTurnaroundControls = defineControls<PhoneTurnaroundProps>({
           label: 'Second screen',
           hint: 'Picking one adds a full spin that swaps to this screen',
         },
+      ],
+      more: [
         {
           path: 'secondCustomScreen',
           label: 'Second screen image',
@@ -92,8 +122,6 @@ export const phoneTurnaroundControls = defineControls<PhoneTurnaroundProps>({
           label: 'Slide while spinning',
           hint: 'Sideways move during the spin. Negative goes left',
         },
-      ],
-      more: [
         { path: 'secondTurnFrames', label: 'Spin length', hint: 'In frames' },
         {
           path: 'endYaw',
@@ -104,12 +132,10 @@ export const phoneTurnaroundControls = defineControls<PhoneTurnaroundProps>({
     },
     {
       title: 'Layout',
-      fields: [
-        { path: 'scale', label: 'Phone size' },
+      fields: [{ path: 'scale', label: 'Phone size' }],
+      more: [
         { path: 'position.x', label: 'Left and right' },
         { path: 'position.y', label: 'Up and down' },
-      ],
-      more: [
         { path: 'position.z', label: 'Toward the camera' },
         {
           path: 'pushIn',
@@ -120,8 +146,10 @@ export const phoneTurnaroundControls = defineControls<PhoneTurnaroundProps>({
     },
     {
       title: 'Camera',
-      fields: [STAGE.cameraDistance, STAGE.keyLight, STAGE.reflections],
+      fields: [STAGE.cameraDistance],
       more: [
+        STAGE.keyLight,
+        STAGE.reflections,
         STAGE.fieldOfView,
         STAGE.shadow,
         STAGE.shadowSoftness,
@@ -130,20 +158,14 @@ export const phoneTurnaroundControls = defineControls<PhoneTurnaroundProps>({
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        { ...LOOK.background, hint: 'A dark color also switches to dark studio lighting' },
-        LOOK.backgroundEdge,
-      ],
+      fields: [LOOK.showBackdrop],
       more: [
         LOOK.grain,
         LOOK.liveGrain,
         LOOK.spotlight,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
       ],
     },
     {

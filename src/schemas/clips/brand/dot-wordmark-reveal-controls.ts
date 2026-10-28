@@ -22,13 +22,13 @@ export const dotWordmarkRevealControls = defineControls<DotWordmarkRevealProps>(
           label: 'Badge letter',
           hint: 'Only the first character is drawn inside the badge, in lowercase',
         },
+      ],
+      more: [
         {
           path: 'copy.accentLetter',
           label: 'Accent letter',
           hint: 'Which letter flips to the accent color, counting from 0 with spaces included. Use -1 for none',
         },
-      ],
-      more: [
         { path: 'type.taglineSize', label: 'Tagline size' },
         { path: 'type.taglineWeight', label: 'Tagline weight' },
         { path: 'type.taglineTracking', label: 'Tagline letter spacing' },
@@ -44,31 +44,30 @@ export const dotWordmarkRevealControls = defineControls<DotWordmarkRevealProps>(
       title: 'Colors',
       fields: [
         {
-          link: ['look.brand', 'look.mark'],
-          label: 'Brand color',
-          hint: 'The dot, tagline, swelling field and finished wordmark',
+          link: ['look.brand', 'look.mark', 'look.flash'],
+          label: 'Primary color',
+          hint: 'The dot, tagline, swelling field, finished wordmark and the flash frames',
         },
         {
-          link: ['look.paper', 'look.onBrand'],
-          label: 'Light color',
-          hint: 'The background and the lettering drawn on the brand field',
+          link: ['look.onBrand', 'look.monogramInk'],
+          label: 'Text color',
+          hint: 'Wordmark and strokes written on the brand field, the badge letter, and the dot and tagline on flash hops',
         },
+        { path: 'look.paper', label: 'Background color', hint: 'The paper behind the logo' },
         {
           ...LOOK.accent,
           hint: 'Accent letter, the dot beside the badge letter and the tile pulse',
         },
-        LOOK.showBackdrop,
       ],
       more: [
         { path: 'look.brand', label: 'Dot, tagline and field color' },
         { path: 'look.mark', label: 'Finished wordmark color' },
-        { path: 'look.paper', label: 'Background' },
+        { path: 'look.flash', label: 'Flash color', hint: 'Frame color on alternate hops' },
         {
           path: 'look.onBrand',
           label: 'Lettering on the field',
-          hint: 'Also the tagline during flashes and the field glow',
+          hint: 'Wordmark and swoosh strokes on the field, also the dot and tagline during flashes and the field glow',
         },
-        { path: 'look.flash', label: 'Flash color', hint: 'Frame color on alternate hops' },
         {
           path: 'look.monogramInk',
           label: 'Badge letter color',
@@ -79,8 +78,8 @@ export const dotWordmarkRevealControls = defineControls<DotWordmarkRevealProps>(
     },
     {
       title: 'Logo',
-      fields: [
-        { path: 'type.wordmarkSize', label: 'Wordmark size' },
+      fields: [{ path: 'type.wordmarkSize', label: 'Wordmark size' }],
+      more: [
         {
           path: 'type.stroke',
           label: 'Stroke weight',
@@ -92,8 +91,6 @@ export const dotWordmarkRevealControls = defineControls<DotWordmarkRevealProps>(
           label: 'Badge roundness',
           hint: '0 is a square, 1 is a circle',
         },
-      ],
-      more: [
         {
           path: 'look.monogramDot',
           label: 'Badge dot',
@@ -127,16 +124,14 @@ export const dotWordmarkRevealControls = defineControls<DotWordmarkRevealProps>(
     },
     {
       title: 'Dot',
-      fields: [
-        { path: 'dot.size', label: 'Dot size' },
-        { path: 'dot.hopHeight', label: 'Hop height' },
+      fields: [{ path: 'dot.size', label: 'Dot size' }],
+      more: [
         {
           path: 'dot.invertOnLanding',
           label: 'Flash on alternate hops',
           hint: 'Every other hop turns the frame to the flash color with light text',
         },
-      ],
-      more: [
+        { path: 'dot.hopHeight', label: 'Hop height' },
         {
           path: 'dot.stretch',
           label: 'Motion stretch',
@@ -168,10 +163,10 @@ export const dotWordmarkRevealControls = defineControls<DotWordmarkRevealProps>(
           label: 'Roll badge away',
           hint: 'Off keeps the finished logo on screen',
         },
-        { path: 'timing.holdFrames', label: 'Hold before rolling', hint: 'In frames' },
-        { path: 'roll.streaks', label: 'Speed streaks' },
       ],
       more: [
+        { path: 'timing.holdFrames', label: 'Hold before rolling', hint: 'In frames' },
+        { path: 'roll.streaks', label: 'Speed streaks' },
         {
           path: 'roll.spin',
           label: 'Spin amount',
@@ -183,8 +178,8 @@ export const dotWordmarkRevealControls = defineControls<DotWordmarkRevealProps>(
     },
     {
       title: 'Timing',
-      fields: [
-        { path: 'timing.hopFrames', label: 'Frames per hop', hint: 'Lower hops faster' },
+      fields: [{ path: 'timing.hopFrames', label: 'Frames per hop', hint: 'Lower hops faster' }],
+      more: [
         {
           path: 'timing.writeFrames',
           label: 'Wordmark write length',
@@ -195,8 +190,6 @@ export const dotWordmarkRevealControls = defineControls<DotWordmarkRevealProps>(
           label: 'Badge forming length',
           hint: 'In frames, as the field shrinks into the badge',
         },
-      ],
-      more: [
         { path: 'timing.enterDelay', label: 'Start delay', hint: 'In frames' },
         { path: 'timing.approachFrames', label: 'Entry length', hint: 'In frames' },
         {
@@ -224,9 +217,13 @@ export const dotWordmarkRevealControls = defineControls<DotWordmarkRevealProps>(
       ],
     },
     {
+      title: 'Background',
+      fields: [{ ...LOOK.showBackdrop, hint: 'Off leaves the paper transparent behind the logo' }],
+    },
+    {
       title: 'Motion',
-      fields: [MOTION.enter, MOTION.exit, MOTION.speed],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
+      fields: [MOTION.enter, MOTION.exit],
+      more: [MOTION.speed, MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['motion.float'],

@@ -13,9 +13,10 @@ export const CRYPT = {
   stone: '#8e9997',
 };
 
-export const SPOOKY = 'Creepster';
-export const COND = 'Bebas Neue';
-export const BODY = 'Poppins';
+export const SPOOKY = { label: 'Spooky font', value: 'Creepster' } as const;
+export const COND = { label: 'Heading font', value: 'Bebas Neue' } as const;
+export const BODY = { label: 'Body font', value: 'Poppins' } as const;
+export const HANDLE = { label: 'Handle', value: 'nightshade.studio' } as const;
 
 const BAT: readonly (readonly [number, number])[] = [
   [0, 12],

@@ -7,56 +7,108 @@ import {
   STORY_SIZE,
   star,
   type Template,
-  template,
+  type ThemeSpec,
   text,
+  themed,
 } from '../../../kit';
-import { BODY, bat, COND, CRYPT, SPOOKY } from './palette';
+import { BODY, bat, COND, CRYPT, HANDLE, SPOOKY } from './palette';
 
 const { width: W, height: H } = POST_SIZE;
 
+const computerSpec = {
+  colors: {
+    background: {
+      value: CRYPT.mustard,
+      hint: 'Page gradient and the big number on the screen',
+    },
+    surface: {
+      value: '#ded6c4',
+      hint: 'Monitor case; its shades color the disk slot, badge and stand',
+    },
+    secondary: { value: CRYPT.night, hint: 'Screen and its teal glow' },
+    accent: { value: CRYPT.bone, hint: 'Ghost and the screen headline' },
+    text: {
+      value: CRYPT.ink,
+      hint: 'Bats and the handle; its shades color the keyboard and its keys',
+    },
+  },
+  fonts: { heading: COND, body: BODY },
+  copy: {
+    number: { label: 'Number', value: '3' },
+    headline: { label: 'Headline', value: 'Ways to\nRevive Cold\nLeads' },
+    handle: HANDLE,
+  },
+} as const satisfies ThemeSpec;
+
 const computer = (height: number): Template =>
-  template(W, height, () => {
+  themed(W, height, computerSpec, (t) => {
     const top = height / 2 - 420;
     return [
-      rect(0, 0, W, height, linear(180, CRYPT.mustard, CRYPT.amber), { name: 'Background' }),
-      bat(120, top + 10, 150, CRYPT.ink),
-      bat(820, top + 60, 120, CRYPT.ink),
-      icon('ghost', 450, top - 10, 180, CRYPT.bone, { strokeWidth: 1.6 }),
-      rect(170, top + 150, 740, 560, '#ded6c4', { cornerRadius: 44, name: 'Monitor' }),
-      rect(220, top + 200, 640, 400, CRYPT.night, { cornerRadius: 56, name: 'Screen' }),
-      rect(250, top + 230, 580, 340, linear(150, '#16454a', CRYPT.deep), {
-        cornerRadius: 46,
-        name: 'Screen glow',
-      }),
-      text('3', 270, top + 240, 220, {
-        fontFamily: COND,
+      rect(
+        0,
+        0,
+        W,
+        height,
+        linear(180, t.color('background'), t.shade('background', CRYPT.amber)),
+        {
+          name: 'Background',
+        },
+      ),
+      bat(120, top + 10, 150, t.color('text')),
+      bat(820, top + 60, 120, t.color('text')),
+      icon('ghost', 450, top - 10, 180, t.color('accent'), { strokeWidth: 1.6 }),
+      rect(170, top + 150, 740, 560, t.color('surface'), { cornerRadius: 44, name: 'Monitor' }),
+      rect(220, top + 200, 640, 400, t.color('secondary'), { cornerRadius: 56, name: 'Screen' }),
+      rect(
+        250,
+        top + 230,
+        580,
+        340,
+        linear(150, t.shade('secondary', '#16454a'), t.shade('secondary', CRYPT.deep)),
+        { cornerRadius: 46, name: 'Screen glow' },
+      ),
+      text(t.copy('number'), 270, top + 240, 220, {
+        fontFamily: t.font('heading'),
         fontSize: 300,
         fontWeight: 400,
-        fill: CRYPT.mustard,
+        fill: t.color('background'),
         align: 'center',
       }),
-      text('Ways to\nRevive Cold\nLeads', 480, top + 290, 340, {
-        fontFamily: BODY,
+      text(t.copy('headline'), 480, top + 290, 340, {
+        fontFamily: t.font('body'),
         fontSize: 54,
         fontWeight: 700,
-        fill: CRYPT.bone,
+        fill: t.color('accent'),
         lineHeight: 1.1,
       }),
-      rect(560, top + 630, 260, 24, '#b9b09c', { cornerRadius: 12, name: 'Disk slot' }),
-      rect(250, top + 628, 60, 30, '#b9b09c', { cornerRadius: 8, name: 'Badge' }),
-      rect(430, top + 710, 220, 60, '#c9c0ac', { name: 'Stand' }),
-      rect(130, top + 770, 820, 110, '#2a2a2a', { cornerRadius: 22, name: 'Keyboard' }),
+      rect(560, top + 630, 260, 24, t.shade('surface', '#b9b09c'), {
+        cornerRadius: 12,
+        name: 'Disk slot',
+      }),
+      rect(250, top + 628, 60, 30, t.shade('surface', '#b9b09c'), {
+        cornerRadius: 8,
+        name: 'Badge',
+      }),
+      rect(430, top + 710, 220, 60, t.shade('surface', '#c9c0ac'), { name: 'Stand' }),
+      rect(130, top + 770, 820, 110, t.shade('text', '#2a2a2a'), {
+        cornerRadius: 22,
+        name: 'Keyboard',
+      }),
       Array.from({ length: 36 }, (_, index) =>
-        rect(160 + (index % 18) * 43, top + 792 + Math.floor(index / 18) * 34, 34, 26, '#4a4a4a', {
-          cornerRadius: 6,
-          name: 'Key',
-        }),
+        rect(
+          160 + (index % 18) * 43,
+          top + 792 + Math.floor(index / 18) * 34,
+          34,
+          26,
+          t.shade('text', '#4a4a4a'),
+          { cornerRadius: 6, name: 'Key' },
+        ),
       ),
-      text('nightshade.studio', 0, height - 120, W, {
-        fontFamily: BODY,
+      text(t.copy('handle'), 0, height - 120, W, {
+        fontFamily: t.font('body'),
         fontSize: 32,
         fontWeight: 600,
-        fill: CRYPT.ink,
+        fill: t.color('text'),
         align: 'center',
       }),
     ];
@@ -95,56 +147,93 @@ const torn = (x: number, y: number, width: number, height: number, fill: string)
 interface ComicCopy {
   backdrop: string;
   panel: string;
-  burst: string;
+  burstRole: 'primary' | 'background';
   burstText: string;
   claw: string;
   presenter: string;
   subtitle: string;
 }
 
+const comicSpec = (copy: ComicCopy) =>
+  ({
+    colors: {
+      background: {
+        value: copy.backdrop,
+        hint:
+          copy.burstRole === 'background'
+            ? 'Page behind the torn paper and the date burst'
+            : 'Page behind the torn paper',
+      },
+      surface: { value: copy.panel, hint: 'Torn paper panel' },
+      primary: {
+        value: CRYPT.blood,
+        hint:
+          copy.burstRole === 'primary' ? 'Presenter strip and the date burst' : 'Presenter strip',
+      },
+      secondary: { value: copy.claw, hint: 'Claw marks' },
+      text: {
+        value: CRYPT.bone,
+        hint: 'Price box, presenter line, HALLOWEEN title and subtitle; its shades color the price box text and the burst date',
+      },
+    },
+    fonts: {
+      heading: COND,
+      spooky: SPOOKY,
+      marker: { label: 'Marker font', value: 'Permanent Marker' },
+    },
+    copy: {
+      issue: { label: 'Price box title', value: 'HALLO\nWEEN' },
+      price: { label: 'Price', value: '25¢  ·  No 1' },
+      presenter: { label: 'Presenter', value: copy.presenter },
+      date: { label: 'Date', value: 'OCT\n31' },
+      title: { label: 'Title', value: 'HALLO\nWEEN' },
+      subtitle: { label: 'Subtitle', value: copy.subtitle },
+    },
+  }) as const satisfies ThemeSpec;
+
 const comic = (copy: ComicCopy): Template =>
-  template(W, H, () => [
-    rect(0, 0, W, H, copy.backdrop, { name: 'Background' }),
-    torn(40, 40, 1000, 1270, copy.panel),
-    rect(80, 90, 170, 160, CRYPT.bone, { name: 'Price box' }),
-    text('HALLO\nWEEN', 80, 100, 170, {
-      fontFamily: COND,
+  themed(W, H, comicSpec(copy), (t) => [
+    rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+    torn(40, 40, 1000, 1270, t.color('surface')),
+    rect(80, 90, 170, 160, t.color('text'), { name: 'Price box' }),
+    text(t.copy('issue'), 80, 100, 170, {
+      fontFamily: t.font('heading'),
       fontSize: 34,
       fontWeight: 400,
-      fill: CRYPT.ink,
+      fill: t.shade('text', CRYPT.ink),
       align: 'center',
       lineHeight: 0.95,
     }),
-    text('25¢  ·  No 1', 80, 184, 170, {
-      fontFamily: COND,
+    text(t.copy('price'), 80, 184, 170, {
+      fontFamily: t.font('heading'),
       fontSize: 40,
       fontWeight: 400,
-      fill: CRYPT.ink,
+      fill: t.shade('text', CRYPT.ink),
       align: 'center',
     }),
-    rect(250, 90, 750, 72, CRYPT.blood, { name: 'Presenter strip' }),
-    text(copy.presenter, 250, 100, 750, {
-      fontFamily: COND,
+    rect(250, 90, 750, 72, t.color('primary'), { name: 'Presenter strip' }),
+    text(t.copy('presenter'), 250, 100, 750, {
+      fontFamily: t.font('heading'),
       fontSize: 56,
       fontWeight: 400,
-      fill: CRYPT.bone,
+      fill: t.color('text'),
       align: 'center',
       letterSpacing: 6,
     }),
-    star(18, 790, 190, 190, copy.burst, { innerRatio: 0.78 }),
-    text('OCT\n31', 790, 235, 190, {
-      fontFamily: COND,
+    star(18, 790, 190, 190, t.color(copy.burstRole), { innerRatio: 0.78 }),
+    text(t.copy('date'), 790, 235, 190, {
+      fontFamily: t.font('heading'),
       fontSize: 52,
       fontWeight: 400,
-      fill: copy.burstText,
+      fill: t.shade('text', copy.burstText),
       align: 'center',
       lineHeight: 0.95,
     }),
-    text('HALLO\nWEEN', 0, 330, W, {
-      fontFamily: SPOOKY,
+    text(t.copy('title'), 0, 330, W, {
+      fontFamily: t.font('spooky'),
       fontSize: 300,
       fontWeight: 400,
-      fill: CRYPT.bone,
+      fill: t.color('text'),
       align: 'center',
       lineHeight: 0.92,
     }),
@@ -156,15 +245,15 @@ const comic = (copy: ComicCopy): Template =>
           [x + 116, 980],
           [x + 92, 1000],
         ],
-        copy.claw,
+        t.color('secondary'),
         { name: 'Claw mark' },
       ),
     ),
-    text(copy.subtitle, 0, 1080, W, {
-      fontFamily: 'Permanent Marker',
+    text(t.copy('subtitle'), 0, 1080, W, {
+      fontFamily: t.font('marker'),
       fontSize: 92,
       fontWeight: 400,
-      fill: CRYPT.bone,
+      fill: t.color('text'),
       align: 'center',
     }),
   ]);
@@ -172,7 +261,7 @@ const comic = (copy: ComicCopy): Template =>
 export const comicCover = comic({
   backdrop: CRYPT.deep,
   panel: CRYPT.teal,
-  burst: CRYPT.blood,
+  burstRole: 'primary',
   burstText: CRYPT.bone,
   claw: CRYPT.ink,
   presenter: 'YOUR BRAND PRESENTS',
@@ -182,7 +271,7 @@ export const comicCover = comic({
 export const comicRemix = comic({
   backdrop: CRYPT.ink,
   panel: CRYPT.amber,
-  burst: CRYPT.ink,
+  burstRole: 'background',
   burstText: CRYPT.mustard,
   claw: CRYPT.wine,
   presenter: 'NIGHTSHADE PRESENTS',

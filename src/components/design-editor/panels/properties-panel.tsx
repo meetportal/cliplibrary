@@ -1,10 +1,10 @@
 'use client';
 
 import type { DesignElement } from '@/design';
+import { ColorControls } from '../sidebar/theme-panel';
 import type { DesignEditorState } from '../use-design-editor';
 import { ActionsBar, ArrangeSection } from './arrange-section';
 import { Section } from './fields';
-import { FillEditor } from './fill-editor';
 import { IconSection } from './icon-section';
 import { ImageSection } from './image-section';
 import { ShadowSection } from './shadow-section';
@@ -60,14 +60,11 @@ export const PropertiesPanel = ({ editor }: { editor: DesignEditorState }) => {
     return (
       <div className="flex flex-col">
         <div className="border-b px-4 py-3 font-medium text-sm">Design</div>
-        <Section title="Background">
-          <FillEditor
-            label="Background"
-            fill={design.background}
-            onChange={editor.setBackgroundFill}
-            onCommit={editor.seal}
-          />
-        </Section>
+        {design.controls.some((control) => control.kind === 'color') ? (
+          <Section title="Colors">
+            <ColorControls editor={editor} />
+          </Section>
+        ) : null}
         <Section title="Size">
           <p className="text-muted-foreground text-xs">
             {design.width} × {design.height} px

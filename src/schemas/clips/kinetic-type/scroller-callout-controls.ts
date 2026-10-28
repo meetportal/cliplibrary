@@ -14,21 +14,6 @@ export const scrollerCalloutControls = defineControls<ScrollerCalloutProps>({
         },
         { path: 'scroll.word', label: 'Scrolling word', hint: 'Stacks up in copies, then clears' },
         {
-          path: 'stack.lines',
-          label: 'Stacked lines',
-          hint: 'Built line by line from the top. Times are frame numbers. Dims at 0 never dims the line, Leaves at 0 keeps it until the stack ends',
-          items: {
-            text: 'Text',
-            size: 'Text size (px)',
-            weight: 'Font weight',
-            gap: 'Gap above',
-            accent: 'Use accent color',
-            at: 'Appears at',
-            dimAt: 'Dims at',
-            leaveAt: 'Leaves at',
-          },
-        },
-        {
           path: 'punch.words',
           label: 'Punch line',
           hint: 'Flashes one word at a time. A period ending a word becomes the accent dot, and the last word collapses into the two dots',
@@ -51,46 +36,56 @@ export const scrollerCalloutControls = defineControls<ScrollerCalloutProps>({
       title: 'Colors',
       fields: [
         {
-          link: ['palette.ink', 'palette.markInk'],
-          label: 'Text color',
-          hint: 'Every word, plus the badge letters',
+          link: ['palette.accent', 'palette.markFill'],
+          label: 'Primary color',
+          hint: 'Tile, dots, accent words, end card line and badge frame',
         },
         {
-          link: ['palette.accent', 'palette.markFill'],
-          label: 'Accent color',
-          hint: 'Tile, dots, accent words, end card line and badge',
+          link: ['palette.ink', 'palette.markInk'],
+          label: 'Text color',
+          hint: 'Every word on the paper, plus the badge letters',
+        },
+        {
+          link: ['palette.muted', 'palette.outline'],
+          label: 'Secondary color',
+          hint: 'Dimmed lines, the first punch line flash and the opening word outline',
         },
         {
           link: ['palette.paper', 'palette.markFace'],
           label: 'Background color',
           hint: 'The paper behind the words, plus the badge face',
         },
-        { path: 'palette.night', label: 'End card background' },
+        {
+          path: 'palette.night',
+          label: 'Surface color',
+          hint: 'The dark end card background',
+        },
       ],
       more: [
-        { path: 'palette.ink', label: 'Word color', hint: 'Every word, without the badge letters' },
         {
           path: 'palette.accent',
           label: 'Tile and dot color',
           hint: 'Tile, dots, accent words and end card line, without the badge frame',
         },
-        { path: 'palette.paper', label: 'Paper color', hint: 'Without the badge face' },
+        { path: 'palette.markFill', label: 'Badge frame color' },
+        { path: 'palette.ink', label: 'Word color', hint: 'Every word, without the badge letters' },
+        { path: 'palette.markInk', label: 'Badge letters color' },
         {
           path: 'palette.muted',
           label: 'Dimmed text color',
           hint: 'Stacked lines after they dim, and the first punch line flash',
         },
         { path: 'palette.outline', label: 'Outline color', hint: 'Opening word before it fills' },
+        { path: 'palette.paper', label: 'Paper color', hint: 'Without the badge face' },
+        { path: 'palette.markFace', label: 'Badge face color' },
         { path: 'palette.glow', label: 'End card glow color' },
         { path: 'palette.urlInk', label: 'Website color' },
-        { path: 'palette.markFill', label: 'Badge frame color' },
-        { path: 'palette.markFace', label: 'Badge face color' },
-        { path: 'palette.markInk', label: 'Badge letters color' },
       ],
     },
     {
       title: 'Opening tile',
-      fields: [
+      fields: [],
+      more: [
         { path: 'intro.cubeSize', label: 'Tile size', hint: 'In pixels' },
         { path: 'intro.size', label: 'Word size', hint: 'In pixels' },
         {
@@ -98,8 +93,6 @@ export const scrollerCalloutControls = defineControls<ScrollerCalloutProps>({
           label: 'Hop height',
           hint: 'How high the tile arcs between letters, in pixels',
         },
-      ],
-      more: [
         { path: 'intro.weight', label: 'Font weight' },
         { path: 'intro.outlineWidth', label: 'Outline thickness', hint: 'In pixels' },
         { path: 'intro.tracking', label: 'Letter spacing', hint: 'In em' },
@@ -165,11 +158,26 @@ export const scrollerCalloutControls = defineControls<ScrollerCalloutProps>({
     {
       title: 'Scroll and stack',
       fields: [
+        {
+          path: 'stack.lines',
+          label: 'Stacked lines',
+          hint: 'Built line by line from the top. Times are frame numbers. Dims at 0 never dims the line, Leaves at 0 keeps it until the stack ends',
+          items: {
+            text: 'Text',
+            size: 'Text size (px)',
+            weight: 'Font weight',
+            gap: 'Gap above',
+            accent: 'Use primary color',
+            at: 'Appears at',
+            dimAt: 'Dims at',
+            leaveAt: 'Leaves at',
+          },
+        },
+      ],
+      more: [
         { path: 'scroll.count', label: 'Scrolling copies' },
         { path: 'scroll.size', label: 'Scrolling word size', hint: 'In pixels' },
         { path: 'scroll.pitch', label: 'Copy spacing', hint: 'Pixels between stacked copies' },
-      ],
-      more: [
         { path: 'scroll.weight', label: 'Scrolling word weight' },
         { path: 'scroll.tracking', label: 'Scrolling word letter spacing', hint: 'In em' },
         {
@@ -201,13 +209,12 @@ export const scrollerCalloutControls = defineControls<ScrollerCalloutProps>({
     },
     {
       title: 'Punch line and call to action',
-      fields: [
+      fields: [],
+      more: [
         { path: 'punch.size', label: 'Punch line size', hint: 'In pixels' },
         { path: 'collapse.dotSize', label: 'Dot size', hint: 'Diameter in pixels' },
         { path: 'contact.size', label: 'Call to action size', hint: 'In pixels' },
         { path: 'punch.wordFrames', label: 'Frames per word', hint: 'Lower flashes faster' },
-      ],
-      more: [
         { path: 'punch.weight', label: 'Punch line weight' },
         { path: 'punch.tracking', label: 'Punch line letter spacing', hint: 'In em' },
         {
@@ -272,11 +279,11 @@ export const scrollerCalloutControls = defineControls<ScrollerCalloutProps>({
     {
       title: 'End card',
       fields: [
-        { path: 'end.monogram', label: 'Badge letters' },
         { path: 'end.url', label: 'Website' },
-        { path: 'end.markSize', label: 'Badge size', hint: 'In pixels' },
+        { path: 'end.monogram', label: 'Badge letters' },
       ],
       more: [
+        { path: 'end.markSize', label: 'Badge size', hint: 'In pixels' },
         { path: 'end.urlSize', label: 'Website size', hint: 'In pixels' },
         { path: 'end.glow', label: 'Glow strength', hint: 'Soft light at the top of the end card' },
         { path: 'end.urlWeight', label: 'Website weight' },
@@ -318,15 +325,17 @@ export const scrollerCalloutControls = defineControls<ScrollerCalloutProps>({
           ...LOOK.showBackdrop,
           hint: 'Off leaves the paper and the end card background transparent',
         },
+        MOTION.enter,
+      ],
+      more: [
+        MOTION.exit,
         {
           ...MOTION.speed,
           hint: 'Scales every beat. The clip length stays fixed, so below 1 the end is cut off and above 1 the end card holds longer',
         },
-        MOTION.enter,
-        MOTION.exit,
+        MOTION.enterFrames,
         { ...MOTION.exitFrames, hint: 'In frames. Starts at 0, so raise it for the exit to play' },
       ],
-      more: [MOTION.enterFrames],
     },
   ],
   hidden: ['motion.float'],

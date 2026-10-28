@@ -1,6 +1,8 @@
-import { IMAGE_FILTER_PRESETS, linear } from '@/design';
-import { photo, rect } from '../../../kit';
+import { type Fill, IMAGE_FILTER_PRESETS, linear } from '@/design';
+import { POST_SIZE, photo, rect, text } from '../../../kit';
 import type { PosterPhotoName } from '../../../photos';
+
+export const { width: W, height: H } = POST_SIZE;
 
 export const HAWKS = {
   navy: '#0a1631',
@@ -12,16 +14,40 @@ export const HAWKS = {
   amber: '#ffb81c',
   gold: '#e08e0b',
   white: '#ffffff',
+  rinkTop: '#f6fafd',
+  rinkBottom: '#d3e4f1',
+  skate: 'rgba(29,111,184,0.12)',
+  clear: 'rgba(0,0,0,0)',
 };
 
-export const DISPLAY = 'Bebas Neue';
-export const LABEL = 'Barlow Condensed';
-export const SCRIPT = 'Satisfy';
+export const HEADING = { label: 'Heading font', value: 'Bebas Neue' } as const;
+export const LABEL = { label: 'Label font', value: 'Barlow Condensed' } as const;
+export const SCRIPT = { label: 'Script font', value: 'Satisfy' } as const;
 
-export const iceBackground = (width: number, height: number) => [
-  rect(0, 0, width, height, linear(180, '#f6fafd', '#d3e4f1'), { name: 'Ice' }),
+export const RINK_HINT = 'Ice page gradient; its darker shade is the bottom of the gradient';
+
+type TextStyle = Parameters<typeof text>[4];
+
+export const say = (
+  content: string,
+  x: number,
+  y: number,
+  width: number,
+  fontFamily: string,
+  fontSize: number,
+  fontWeight: number,
+  fill: Fill,
+  style: TextStyle = {},
+) => text(content, x, y, width, { fontFamily, fontSize, fontWeight, fill, ...style });
+
+export const iceBackground = (
+  width: number,
+  height: number,
+  colors: { top: string; bottom: string; mark: string },
+) => [
+  rect(0, 0, width, height, linear(180, colors.top, colors.bottom), { name: 'Ice' }),
   [0.12, 0.31, 0.55, 0.78].map((ratio, index) =>
-    rect(width * ratio, height * (0.1 + index * 0.21), width * 0.18, 3, 'rgba(29,111,184,0.12)', {
+    rect(width * ratio, height * (0.1 + index * 0.21), width * 0.18, 3, colors.mark, {
       rotation: index % 2 === 0 ? 8 : -6,
       name: 'Skate mark',
     }),

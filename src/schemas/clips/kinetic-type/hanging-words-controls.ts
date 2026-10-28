@@ -33,19 +33,19 @@ export const hangingWordsControls = defineControls<HangingWordsProps>({
       fields: [
         {
           link: ['look.ink', 'palette.night'],
-          label: 'Dark color',
+          label: 'Primary color',
           hint: 'Opening words, string, bob, hanging bottom line and final word, plus the diamond burst and the backdrop behind the punch words',
         },
         {
-          link: ['look.background', 'palette.highlight'],
-          label: 'Bright color',
-          hint: 'The background field and the highlighted letter in the repeated word',
-        },
-        { ...LOOK.accent, label: 'Hanging top line color' },
-        {
           path: 'palette.light',
-          label: 'Punch word color',
-          hint: 'Also colors the repeated word',
+          label: 'Text color',
+          hint: 'The punch words and the repeated word',
+        },
+        { ...LOOK.accent, label: 'Accent color', hint: 'The hanging top line' },
+        {
+          link: ['look.background', 'palette.highlight'],
+          label: 'Background color',
+          hint: 'The background field and the highlighted letter in the repeated word',
         },
       ],
       more: [
@@ -64,15 +64,12 @@ export const hangingWordsControls = defineControls<HangingWordsProps>({
           path: 'palette.highlight',
           label: 'Highlighted letter color',
         },
-        {
-          ...LOOK.showBackdrop,
-          hint: 'Off leaves the background, diamond burst and dark flash backdrop transparent',
-        },
       ],
     },
     {
       title: 'Opening',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'greeting.lines',
           label: 'Repeated lines',
@@ -84,8 +81,6 @@ export const hangingWordsControls = defineControls<HangingWordsProps>({
           label: 'Opening typeface',
           hint: 'Opening words and the hanging line',
         },
-      ],
-      more: [
         { path: 'greeting.font', label: 'Opening words typeface' },
         { path: 'greeting.weight', label: 'Opening font weight' },
         { path: 'greeting.tracking', label: 'Letter spacing' },
@@ -125,12 +120,10 @@ export const hangingWordsControls = defineControls<HangingWordsProps>({
     },
     {
       title: 'Hanging line',
-      fields: [
+      fields: [{ path: 'hang.swing', label: 'Swing angle', hint: 'In degrees' }],
+      more: [
         { path: 'hang.topSize', label: 'Top line size' },
         { path: 'hang.bottomSize', label: 'Bottom line size' },
-        { path: 'hang.swing', label: 'Swing angle', hint: 'In degrees' },
-      ],
-      more: [
         { path: 'hang.font', label: 'Hanging line typeface' },
         { path: 'hang.weight', label: 'Font weight' },
         { path: 'hang.gap', label: 'Gap below the bob' },
@@ -159,6 +152,8 @@ export const hangingWordsControls = defineControls<HangingWordsProps>({
           label: 'Punch typeface',
           hint: 'Punch words, repeated word and final word',
         },
+      ],
+      more: [
         {
           path: 'flash.weight',
           label: 'Punch font weight',
@@ -169,8 +164,6 @@ export const hangingWordsControls = defineControls<HangingWordsProps>({
           label: 'Diamond width',
           hint: 'Relative to its height; 1 is a square diamond',
         },
-      ],
-      more: [
         {
           path: 'flash.baseline',
           label: 'Text baseline',
@@ -191,7 +184,8 @@ export const hangingWordsControls = defineControls<HangingWordsProps>({
     },
     {
       title: 'Finale',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'stack.highlightIndex',
           label: 'Highlighted letter',
@@ -203,8 +197,6 @@ export const hangingWordsControls = defineControls<HangingWordsProps>({
           hint: 'Position in the final word, counting from 0; the word grows out of it',
         },
         { path: 'stack.sideLines', label: 'Copies above and below' },
-      ],
-      more: [
         { path: 'stack.size', label: 'Repeated word size' },
         { path: 'outro.size', label: 'Final word size' },
         { path: 'stack.pitch', label: 'Stack line spacing', hint: 'Pixels between copies' },
@@ -231,17 +223,26 @@ export const hangingWordsControls = defineControls<HangingWordsProps>({
       ],
     },
     {
-      title: 'Motion',
+      title: 'Background',
       fields: [
-        MOTION.enter,
-        MOTION.exit,
+        {
+          ...LOOK.showBackdrop,
+          hint: 'Off leaves the background, diamond burst and dark flash backdrop transparent',
+        },
+      ],
+    },
+    {
+      title: 'Motion',
+      fields: [MOTION.enter],
+      more: [
+        { ...MOTION.exit, hint: 'Plays only once Exit length is raised above 0' },
         { ...MOTION.exitFrames, hint: 'In frames. 0 by default, so raise it for the exit to play' },
         {
           ...MOTION.speed,
           hint: 'Scales every timing in the clip. The clip length stays fixed, so below 1 the ending is cut off and above 1 the last frame holds',
         },
+        MOTION.enterFrames,
       ],
-      more: [MOTION.enterFrames],
     },
   ],
   hidden: [

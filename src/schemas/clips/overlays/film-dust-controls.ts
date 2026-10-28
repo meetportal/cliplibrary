@@ -23,7 +23,6 @@ export const filmDustControls = defineControls<FilmDustProps>({
           label: 'Vignette',
           hint: 'Darkens the edges of the frame like an old projector. 0 turns it off',
         },
-        { path: 'color', label: 'Dust color', hint: 'Shared by specks, hairs and scratches' },
       ],
       more: [
         {
@@ -31,6 +30,22 @@ export const filmDustControls = defineControls<FilmDustProps>({
           label: 'Random pattern',
           hint: 'Pick another number for a different arrangement of marks',
         },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        { path: 'color', label: 'Primary color', hint: 'Dust specks, hairs and scratches' },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        { ...LOOK.background, label: 'Background center' },
+        LOOK.backgroundEdge,
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when the paper has a margin' },
       ],
     },
     {
@@ -55,26 +70,18 @@ export const filmDustControls = defineControls<FilmDustProps>({
           ...LOOK.showBackdrop,
           hint: 'Turn off to lay the dust over other layers',
         },
-        {
-          link: ['look.background', 'look.backgroundEdge'],
-          label: 'Background color',
-          hint: 'Sets the center and the corners together',
-        },
+      ],
+      more: [
         {
           ...LOOK.grain,
           hint: 'Noise drawn over the background, so it disappears when the background is off',
         },
-      ],
-      more: [
-        { ...LOOK.background, label: 'Background center' },
-        LOOK.backgroundEdge,
         LOOK.liveGrain,
         LOOK.spotlight,
         LOOK.paper,
         LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { ...LOOK.accent, label: 'Margin line color' },
       ],
     },
     {

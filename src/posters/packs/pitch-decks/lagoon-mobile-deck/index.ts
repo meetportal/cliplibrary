@@ -1,8 +1,11 @@
 import { definePack } from '../../../pack';
 import { LAGOON, SUNSET } from './deck-kit';
-import { coverSlide, impactSlide, pillarsSlide, serviceSlide, spotlightSlide } from './slides-a';
-import { alertsSlide, matrixSlide, pricingSlide, revenueSlide, syncSlide } from './slides-b';
-import { audienceSlide, iconSheet, impactStorySlide, reviewsSlide, wordsSlide } from './slides-c';
+import { coverSlide, pillarsSlide, spotlightSlide } from './slides-a';
+import { alertsSlide, matrixSlide, pricingSlide } from './slides-b';
+import { audienceSlide, reviewsSlide } from './slides-c';
+import { iconSheet, impactStorySlide, wordsSlide } from './slides-d';
+import { impactSlide, serviceSlide } from './slides-service';
+import { revenueSlide, syncSlide } from './slides-sync';
 
 const service = serviceSlide(LAGOON);
 

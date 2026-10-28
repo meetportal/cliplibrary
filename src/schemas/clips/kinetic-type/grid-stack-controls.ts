@@ -15,8 +15,10 @@ export const gridStackControls = defineControls<GridStackProps>({
         {
           path: 'highlight',
           label: 'Big words',
-          hint: 'Words listed here are drawn large in the big word color; the rest stay small',
+          hint: 'Words listed here are drawn large in the primary color; the rest stay small',
         },
+      ],
+      more: [
         { path: 'face', label: 'Font' },
         { path: 'weight', label: 'Font weight' },
       ],
@@ -24,33 +26,28 @@ export const gridStackControls = defineControls<GridStackProps>({
     {
       title: 'Colors',
       fields: [
-        { ...LOOK.ink, label: 'Small word color' },
         {
           ...LOOK.accent,
-          label: 'Big word color',
-          hint: 'Also tints the corner glow once its strength is above 0',
+          label: 'Primary color',
+          hint: 'The big words, and the corner glow once its strength is above 0',
         },
-        { ...LOOK.background, hint: 'Color at the center of the background' },
-        LOOK.backgroundEdge,
+        { ...LOOK.ink, label: 'Text color', hint: 'The small words' },
+        { path: 'grid.color', label: 'Secondary color', hint: 'The warped grid lines' },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and edges of the background together',
+        },
       ],
       more: [
-        {
-          ...LOOK.showBackdrop,
-          hint: 'Off renders the words and grid over transparency',
-        },
-        {
-          path: 'lens.glow',
-          label: 'Corner glow',
-          hint: 'Washes the background with the big word color. 0 is off',
-        },
-        { path: 'lens.glowX', label: 'Glow position across', hint: '0 is left, 1 is right' },
-        { path: 'lens.glowY', label: 'Glow position up', hint: '0 is bottom, 1 is top' },
+        { ...LOOK.background, hint: 'Color at the center of the background' },
+        LOOK.backgroundEdge,
       ],
     },
     {
       title: 'Stack',
-      fields: [
-        { path: 'bigSize', label: 'Big word size' },
+      fields: [{ path: 'bigSize', label: 'Big word size' }],
+      more: [
         { path: 'smallSize', label: 'Small word size' },
         { path: 'maxWidth', label: 'Stack width', hint: 'Words shrink to fit inside this width' },
         {
@@ -58,8 +55,6 @@ export const gridStackControls = defineControls<GridStackProps>({
           label: 'Word curve',
           hint: 'Bends each word like a curved banner; negative values curve the other way',
         },
-      ],
-      more: [
         {
           path: 'gap',
           label: 'Line spacing',
@@ -76,6 +71,8 @@ export const gridStackControls = defineControls<GridStackProps>({
       title: 'Timing',
       fields: [
         { path: 'wordGap', label: 'Frames between words', hint: 'Lower builds each phrase faster' },
+      ],
+      more: [
         {
           path: 'holdFrames',
           label: 'Hold before exit',
@@ -86,8 +83,6 @@ export const gridStackControls = defineControls<GridStackProps>({
           label: 'Word move length',
           hint: 'Sets word arrival, stack settle and phrase exit together. In frames',
         },
-      ],
-      more: [
         { path: 'delay', label: 'Start delay', hint: 'In frames' },
         {
           path: 'arriveFrames',
@@ -114,6 +109,8 @@ export const gridStackControls = defineControls<GridStackProps>({
           label: 'Camera swing',
           hint: 'Degrees the camera turns to alternate sides between phrases',
         },
+      ],
+      more: [
         {
           path: 'tilt',
           label: 'Camera tilt',
@@ -129,8 +126,6 @@ export const gridStackControls = defineControls<GridStackProps>({
           label: 'Motion blur',
           hint: 'Shutter length in frames; 0 is sharp',
         },
-      ],
-      more: [
         { path: 'camera.drift', label: 'Camera drift', hint: 'Gentle handheld wobble' },
         { path: 'camera.distance', label: 'Camera distance' },
         { path: 'camera.fieldOfView', label: 'Field of view' },
@@ -145,21 +140,17 @@ export const gridStackControls = defineControls<GridStackProps>({
           label: 'Color split',
           hint: 'Red and blue shift sideways, in pixels at 1920 wide',
         },
-        { path: 'lens.grain', label: 'Film grain', hint: 'Only shows while the background is on' },
       ],
     },
     {
       title: 'Grid',
-      fields: [
-        { path: 'grid.show', label: 'Show grid' },
-        { path: 'grid.color', label: 'Grid color' },
+      fields: [{ path: 'grid.show', label: 'Show grid' }],
+      more: [
         {
           path: 'grid.bulge',
           label: 'Grid bulge',
           hint: 'How far the grid domes toward the camera at the center',
         },
-      ],
-      more: [
         { path: 'gridOpacity', label: 'Grid opacity' },
         { path: 'grid.spacing', label: 'Grid cell size' },
         { path: 'grid.lineWidth', label: 'Grid line width' },
@@ -168,6 +159,25 @@ export const gridStackControls = defineControls<GridStackProps>({
           label: 'Grid depth',
           hint: 'How far behind the words the grid sits; lower pushes it further back',
         },
+      ],
+    },
+    {
+      title: 'Background',
+      fields: [
+        {
+          ...LOOK.showBackdrop,
+          hint: 'Off renders the words and grid over transparency',
+        },
+      ],
+      more: [
+        {
+          path: 'lens.glow',
+          label: 'Corner glow',
+          hint: 'Washes the background with the primary color. 0 is off',
+        },
+        { path: 'lens.glowX', label: 'Glow position across', hint: '0 is left, 1 is right' },
+        { path: 'lens.glowY', label: 'Glow position up', hint: '0 is bottom, 1 is top' },
+        { path: 'lens.grain', label: 'Film grain', hint: 'Only shows while the background is on' },
       ],
     },
     {

@@ -1,5 +1,6 @@
 import { definePack } from '../../../pack';
-import { builtToBite, coffinWebinar, happyHalloween, tombstoneQuote, trickOrTreat } from './posts';
+import { coffinWebinar, happyHalloween, tombstoneQuote, trickOrTreat } from './posts';
+import { builtToBite } from './posts-bite';
 import { comicCover, comicRemix, computerPost, computerStory } from './posts-extra';
 import { frightNight, octoberChecklist, servicesTags, spookyDeal } from './posts-more';
 

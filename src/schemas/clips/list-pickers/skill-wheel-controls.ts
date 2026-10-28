@@ -14,14 +14,14 @@ export const skillWheelControls = defineControls<SkillWheelProps>({
           label: 'Wheel words',
           hint: 'The list repeats around the wheel, one word per notch',
         },
+      ],
+      more: [
         {
           link: ['heading.font', 'wheel.font'],
           label: 'Font',
-          hint: 'Sets the title and the wheel words together',
+          hint: 'Sets the title, the subtitle and the wheel words together',
         },
-      ],
-      more: [
-        { path: 'heading.font', label: 'Title font' },
+        { path: 'heading.font', label: 'Title and subtitle font' },
         { path: 'wheel.font', label: 'Wheel word font' },
         { path: 'heading.size', label: 'Title size' },
         { path: 'heading.weight', label: 'Title weight' },
@@ -34,29 +34,45 @@ export const skillWheelControls = defineControls<SkillWheelProps>({
       title: 'Colors',
       fields: [
         {
-          link: ['wheel.activeColor', 'pointer.color'],
-          label: 'Highlight color',
-          hint: 'The pointer and the word beside it',
+          link: ['wheel.activeColor', 'pointer.color', 'look.accent'],
+          label: 'Primary color',
+          hint: 'The pointer, the word beside it and the paper margin line',
         },
-        { path: 'wheel.color', label: 'Word color' },
         {
-          link: ['look.ink', 'look.muted', 'ticks.color'],
-          label: 'Ink color',
-          hint: 'The title, the subtitle and the tick ring',
+          path: 'wheel.color',
+          label: 'Secondary color',
+          hint: 'The wheel words away from the pointer',
+        },
+        {
+          link: ['look.ink', 'look.muted'],
+          label: 'Text color',
+          hint: 'The title and the subtitle',
+        },
+        {
+          path: 'ticks.color',
+          label: 'Accent color',
+          hint: 'The tick ring lines and their dots',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
         },
       ],
       more: [
         { path: 'wheel.activeColor', label: 'Highlighted word color' },
         { path: 'pointer.color', label: 'Pointer color' },
+        { ...LOOK.accent, label: 'Margin line color', hint: 'Shows when the paper has a margin' },
         { ...LOOK.ink, label: 'Title color' },
         { ...LOOK.muted, label: 'Subtitle color' },
-        { path: 'ticks.color', label: 'Tick color' },
+        { ...LOOK.background, label: 'Background center' },
+        LOOK.backgroundEdge,
       ],
     },
     {
       title: 'Turning',
-      fields: [
-        { path: 'steps.interval', label: 'Time on each word', hint: 'In frames' },
+      fields: [{ path: 'steps.interval', label: 'Time on each word', hint: 'In frames' }],
+      more: [
         {
           path: 'steps.moveFrames',
           label: 'Turn length',
@@ -67,8 +83,6 @@ export const skillWheelControls = defineControls<SkillWheelProps>({
           label: 'Turn direction',
           hint: 'Which way the words travel past the pointer',
         },
-      ],
-      more: [
         {
           path: 'steps.delay',
           label: 'Start delay',
@@ -93,8 +107,8 @@ export const skillWheelControls = defineControls<SkillWheelProps>({
     },
     {
       title: 'Wheel',
-      fields: [
-        { path: 'wheel.size', label: 'Word size' },
+      fields: [{ path: 'wheel.size', label: 'Word size' }],
+      more: [
         {
           path: 'wheel.activeScale',
           label: 'Highlighted word scale',
@@ -102,8 +116,6 @@ export const skillWheelControls = defineControls<SkillWheelProps>({
         },
         { path: 'wheel.spacing', label: 'Word spacing', hint: 'Degrees between words' },
         { path: 'wheel.radius', label: 'Wheel radius', hint: 'Pixels from the hub to the words' },
-      ],
-      more: [
         { path: 'wheel.weight', label: 'Word weight' },
         {
           path: 'wheel.fadeStart',
@@ -122,20 +134,33 @@ export const skillWheelControls = defineControls<SkillWheelProps>({
           label: 'Pointer position',
           hint: 'Pixels from the wheel hub to the pointer',
         },
+        {
+          path: 'center.x',
+          label: 'Wheel hub across',
+          hint: 'Pixels from the left edge; the title and pointer move with it',
+        },
+        {
+          path: 'center.y',
+          label: 'Wheel hub down',
+          hint: 'Pixels from the top edge; the title and pointer move with it',
+        },
+        {
+          path: 'heading.right',
+          label: 'Title position',
+          hint: 'Pixels from the wheel hub to the right edge of the title',
+        },
       ],
     },
     {
       title: 'Ticks',
-      fields: [
-        { path: 'ticks.show', label: 'Show tick ring' },
+      fields: [{ path: 'ticks.show', label: 'Show tick ring' }],
+      more: [
         { path: 'ticks.length', label: 'Tick length' },
         {
           path: 'ticks.speed',
           label: 'Tick turn amount',
           hint: 'Share of each word turn the tick ring follows. 0 leaves only the drift',
         },
-      ],
-      more: [
         { path: 'ticks.spacing', label: 'Tick spacing', hint: 'Degrees between ticks' },
         {
           path: 'ticks.radius',
@@ -157,30 +182,10 @@ export const skillWheelControls = defineControls<SkillWheelProps>({
       ],
     },
     {
-      title: 'Layout',
-      fields: [
-        {
-          path: 'center.x',
-          label: 'Wheel hub across',
-          hint: 'Pixels from the left edge; the title and pointer move with it',
-        },
-        {
-          path: 'center.y',
-          label: 'Wheel hub down',
-          hint: 'Pixels from the top edge; the title and pointer move with it',
-        },
-        {
-          path: 'heading.right',
-          label: 'Title position',
-          hint: 'Pixels from the wheel hub to the right edge of the title',
-        },
-      ],
-    },
-    {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         {
@@ -199,13 +204,12 @@ export const skillWheelControls = defineControls<SkillWheelProps>({
         LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { ...LOOK.accent, label: 'Margin line color' },
       ],
     },
     {
       title: 'Motion',
-      fields: [MOTION.enter, MOTION.exit, MOTION.speed],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
+      fields: [MOTION.enter, MOTION.exit],
+      more: [MOTION.speed, MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['motion.float'],

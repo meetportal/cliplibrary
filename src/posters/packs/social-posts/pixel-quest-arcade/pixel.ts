@@ -16,11 +16,11 @@ export const PX = {
   white: '#ffffff',
 };
 
-export const BLOCKY = 'Silkscreen';
-export const TERMINAL = 'Space Mono';
-export const CHUNKY = 'Bungee';
+const BLOCKY = 'Silkscreen';
+const TERMINAL = 'Space Mono';
+const CHUNKY = 'Bungee';
 
-export const SITE = 'pixelforge.studio';
+const SITE = 'pixelforge.studio';
 
 export const { width: W, height: H } = POST_SIZE;
 
@@ -94,16 +94,21 @@ export const ROBOT = [
 
 export const TREE = ['..GG..', '.GGGG.', 'GGGGGG', '.GGGG.', '..BB..', '..BB..'];
 
-export const siteFooter = (y: number, color: string) =>
-  text(SITE, 0, y, W, {
-    fontFamily: BLOCKY,
+export const PIXEL_FONT = { label: 'Pixel font', value: BLOCKY } as const;
+export const MONO_FONT = { label: 'Mono font', value: TERMINAL } as const;
+export const HEADING_FONT = { label: 'Heading font', value: CHUNKY } as const;
+export const WEBSITE = { label: 'Website', value: SITE } as const;
+
+export const siteFooter = (label: string, y: number, color: string, fontFamily: string) =>
+  text(label, 0, y, W, {
+    fontFamily,
     fontSize: 28,
     fontWeight: 400,
     fill: color,
     align: 'center',
   });
 
-export const scanlines = (height: number) =>
+export const scanlines = (height: number, color: string) =>
   Array.from({ length: Math.floor(height / 30) }, (_, index) =>
-    rect(0, index * 30 + 12, W, 3, 'rgba(255,255,255,0.035)', { name: 'Scanline' }),
+    rect(0, index * 30 + 12, W, 3, color, { name: 'Scanline' }),
   );

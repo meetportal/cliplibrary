@@ -10,7 +10,10 @@ export const clipControlsFor = (id: ClipId | string): ControlSectionView[] => {
     return cached;
   }
   const module = CLIP_MODULES.find((entry) => entry.id === id);
-  const sections = module === undefined ? [] : resolveClipControls(module.schema, module.controls);
+  const sections =
+    module === undefined
+      ? []
+      : resolveClipControls(module.schema, module.controls, module.defaults);
   resolved.set(id, sections);
   return sections;
 };

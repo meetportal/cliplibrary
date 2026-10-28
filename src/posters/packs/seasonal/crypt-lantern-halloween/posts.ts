@@ -10,110 +10,175 @@ import {
   rect,
   rotateNodes,
   shadow,
-  template,
+  type Theme,
+  type ThemeSpec,
   text,
+  themed,
 } from '../../../kit';
-import { BODY, bat, COND, CRYPT, SPOOKY } from './palette';
+import { BODY, bat, COND, CRYPT, HANDLE, SPOOKY } from './palette';
 
 const { width: W, height: H } = POST_SIZE;
 
-const tv = (y: number, glyph: 'ghost' | 'skull' | 'moon') => [
-  rect(600, y, 400, 300, CRYPT.ink, { cornerRadius: 34, name: 'TV body' }),
-  rect(630, y + 30, 280, 240, CRYPT.night, { cornerRadius: 46, name: 'TV screen' }),
-  icon(glyph, 700, y + 80, 140, CRYPT.bone, { strokeWidth: 1.6 }),
-  circle(955, y + 90, 18, CRYPT.mustard),
-  circle(955, y + 150, 18, CRYPT.stone),
-  rect(938, y + 200, 34, 60, CRYPT.stone, { cornerRadius: 8, name: 'Speaker' }),
+const happySpec = {
+  colors: {
+    background: { value: CRYPT.mustard, hint: 'Page and the top knob on each TV' },
+    text: {
+      value: CRYPT.ink,
+      hint: 'HAPPY HALLOWEEN, TV cabinets, antennas, the rule, handle and date',
+    },
+    surface: { value: CRYPT.night, hint: 'TV screens' },
+    secondary: { value: CRYPT.bone, hint: 'Moon, skull and ghost on the screens' },
+    accent: { value: CRYPT.stone, hint: 'Lower TV knob and speaker grille' },
+  },
+  fonts: { heading: COND, body: BODY },
+  copy: {
+    kicker: { label: 'Kicker', value: 'HAPPY' },
+    title: { label: 'Title', value: 'HAL\nLOW\nEEN' },
+    handle: HANDLE,
+    date: { label: 'Date', value: 'OCT 31' },
+  },
+} as const satisfies ThemeSpec;
+
+const tv = (t: Theme<typeof happySpec>, y: number, glyph: 'ghost' | 'skull' | 'moon') => [
+  rect(600, y, 400, 300, t.color('text'), { cornerRadius: 34, name: 'TV body' }),
+  rect(630, y + 30, 280, 240, t.color('surface'), { cornerRadius: 46, name: 'TV screen' }),
+  icon(glyph, 700, y + 80, 140, t.color('secondary'), { strokeWidth: 1.6 }),
+  circle(955, y + 90, 18, t.color('background')),
+  circle(955, y + 150, 18, t.color('accent')),
+  rect(938, y + 200, 34, 60, t.color('accent'), { cornerRadius: 8, name: 'Speaker' }),
 ];
 
-export const happyHalloween = template(W, H, () => [
-  rect(0, 0, W, H, CRYPT.mustard, { name: 'Background' }),
-  text('HAPPY', 70, 130, 500, {
-    fontFamily: COND,
+export const happyHalloween = themed(W, H, happySpec, (t) => [
+  rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+  text(t.copy('kicker'), 70, 130, 500, {
+    fontFamily: t.font('heading'),
     fontSize: 64,
     fontWeight: 400,
-    fill: CRYPT.ink,
+    fill: t.color('text'),
     letterSpacing: 22,
   }),
-  text('HAL\nLOW\nEEN', 64, 210, 540, {
-    fontFamily: COND,
+  text(t.copy('title'), 64, 210, 540, {
+    fontFamily: t.font('heading'),
     fontSize: 320,
     fontWeight: 400,
-    fill: CRYPT.ink,
+    fill: t.color('text'),
     lineHeight: 0.88,
   }),
-  line(720, 60, 120, CRYPT.ink, 6, { rotation: 60, name: 'Antenna' }),
-  line(880, 60, 120, CRYPT.ink, 6, { rotation: 120, name: 'Antenna' }),
-  tv(170, 'moon'),
-  tv(490, 'skull'),
-  tv(810, 'ghost'),
-  rect(70, 1180, 940, 4, CRYPT.ink, { name: 'Rule' }),
-  text('nightshade.studio', 70, 1220, 500, {
-    fontFamily: BODY,
+  line(720, 60, 120, t.color('text'), 6, { rotation: 60, name: 'Antenna' }),
+  line(880, 60, 120, t.color('text'), 6, { rotation: 120, name: 'Antenna' }),
+  tv(t, 170, 'moon'),
+  tv(t, 490, 'skull'),
+  tv(t, 810, 'ghost'),
+  rect(70, 1180, 940, 4, t.color('text'), { name: 'Rule' }),
+  text(t.copy('handle'), 70, 1220, 500, {
+    fontFamily: t.font('body'),
     fontSize: 34,
     fontWeight: 600,
-    fill: CRYPT.ink,
+    fill: t.color('text'),
   }),
-  text('OCT 31', 510, 1212, 500, {
-    fontFamily: COND,
+  text(t.copy('date'), 510, 1212, 500, {
+    fontFamily: t.font('heading'),
     fontSize: 52,
     fontWeight: 400,
-    fill: CRYPT.ink,
+    fill: t.color('text'),
     align: 'right',
     letterSpacing: 6,
   }),
 ]);
 
-export const trickOrTreat = template(W, H, () => [
-  rect(0, 0, W, H, linear(160, CRYPT.teal, CRYPT.deep), { name: 'Background' }),
-  circle(880, 210, 110, 'rgba(241,232,212,0.16)'),
-  circle(880, 210, 70, 'rgba(241,232,212,0.9)'),
-  bat(120, 180, 150, CRYPT.ink),
-  bat(260, 120, 90, CRYPT.ink),
-  text('nightshade.studio', 0, 80, W, {
-    fontFamily: BODY,
+const trickSpec = {
+  colors: {
+    background: { value: CRYPT.teal, hint: 'Night sky gradient' },
+    surface: { value: CRYPT.bone, hint: 'Moon and its halo, the tilted card and the handle' },
+    text: { value: CRYPT.ink, hint: 'Bats, TRICK OR TREAT and the code label' },
+    primary: { value: CRYPT.blood, hint: 'Card rule and the offer line' },
+    accent: { value: CRYPT.mustard, hint: 'Code pill' },
+  },
+  fonts: { spooky: SPOOKY, heading: COND, body: BODY },
+  copy: {
+    handle: HANDLE,
+    title: { label: 'Title', value: 'TRICK\nOR\nTREAT' },
+    offer: { label: 'Offer', value: 'SAVE 15% OFF\nSITEWIDE' },
+    code: { label: 'Code', value: 'CODE  BOO15' },
+  },
+} as const satisfies ThemeSpec;
+
+export const trickOrTreat = themed(W, H, trickSpec, (t) => [
+  rect(0, 0, W, H, linear(160, t.color('background'), t.shade('background', CRYPT.deep)), {
+    name: 'Background',
+  }),
+  circle(880, 210, 110, t.shade('surface', 'rgba(241,232,212,0.16)')),
+  circle(880, 210, 70, t.shade('surface', 'rgba(241,232,212,0.9)')),
+  bat(120, 180, 150, t.color('text')),
+  bat(260, 120, 90, t.color('text')),
+  text(t.copy('handle'), 0, 80, W, {
+    fontFamily: t.font('body'),
     fontSize: 32,
     fontWeight: 500,
-    fill: CRYPT.bone,
+    fill: t.color('surface'),
     align: 'center',
   }),
   rotateNodes(-6, 540, 640, [
-    rect(290, 320, 500, 640, CRYPT.bone, {
+    rect(290, 320, 500, 640, t.color('surface'), {
       cornerRadius: 18,
       name: 'Card',
       ...shadow(40, 20, 'rgba(0,0,0,0.45)'),
     }),
-    text('TRICK\nOR\nTREAT', 290, 380, 500, {
-      fontFamily: SPOOKY,
+    text(t.copy('title'), 290, 380, 500, {
+      fontFamily: t.font('spooky'),
       fontSize: 130,
       fontWeight: 400,
-      fill: CRYPT.ink,
+      fill: t.color('text'),
       align: 'center',
       lineHeight: 1,
     }),
-    rect(390, 800, 300, 4, CRYPT.blood, { name: 'Card rule' }),
-    text('SAVE 15% OFF\nSITEWIDE', 290, 830, 500, {
-      fontFamily: BODY,
+    rect(390, 800, 300, 4, t.color('primary'), { name: 'Card rule' }),
+    text(t.copy('offer'), 290, 830, 500, {
+      fontFamily: t.font('body'),
       fontSize: 34,
       fontWeight: 700,
-      fill: CRYPT.blood,
+      fill: t.color('primary'),
       align: 'center',
       lineHeight: 1.25,
     }),
   ]),
-  pill('CODE  BOO15', 380, 1110, {
+  pill(t.copy('code'), 380, 1110, {
     width: 320,
-    fill: CRYPT.mustard,
-    color: CRYPT.ink,
+    fill: t.color('accent'),
+    color: t.color('text'),
     fontSize: 36,
-    fontFamily: COND,
+    fontFamily: t.font('heading'),
     fontWeight: 400,
     letterSpacing: 4,
   }),
 ]);
 
-export const coffinWebinar = template(W, H, () => [
-  rect(0, 0, W, H, linear(180, '#16454a', CRYPT.deep), { name: 'Background' }),
+const coffinSpec = {
+  colors: {
+    background: {
+      value: '#16454a',
+      hint: 'Night sky gradient; its dark shade is the hill silhouette',
+    },
+    primary: {
+      value: CRYPT.blood,
+      hint: 'Coffin and the MARKET GOALS headline; its dark shade colors the coffin lid',
+    },
+    text: { value: CRYPT.bone, hint: 'Date on the coffin, ACHIEVE YOUR and the webinar details' },
+  },
+  fonts: { spooky: SPOOKY, heading: COND, body: BODY },
+  copy: {
+    month: { label: 'Month', value: 'OCT' },
+    day: { label: 'Day', value: '12' },
+    headline: { label: 'Headline', value: 'ACHIEVE YOUR' },
+    highlight: { label: 'Highlighted headline', value: 'MARKET GOALS' },
+    details: { label: 'Details', value: 'Live Webinar  |  Oct 12 at 8 PM ET' },
+  },
+} as const satisfies ThemeSpec;
+
+export const coffinWebinar = themed(W, H, coffinSpec, (t) => [
+  rect(0, 0, W, H, linear(180, t.color('background'), t.shade('background', CRYPT.deep)), {
+    name: 'Background',
+  }),
   poly(
     [
       [0, 820],
@@ -124,7 +189,7 @@ export const coffinWebinar = template(W, H, () => [
       [1080, 1350],
       [0, 1350],
     ],
-    'rgba(0,0,0,0.35)',
+    t.shade('background', 'rgba(0,0,0,0.35)'),
     { name: 'Hill' },
   ),
   rotateNodes(-8, 540, 420, [
@@ -137,7 +202,7 @@ export const coffinWebinar = template(W, H, () => [
         [390, 740],
         [310, 240],
       ],
-      CRYPT.blood,
+      t.color('primary'),
       { name: 'Coffin' },
     ),
     poly(
@@ -149,70 +214,95 @@ export const coffinWebinar = template(W, H, () => [
         [416, 710],
         [344, 248],
       ],
-      CRYPT.wine,
+      t.shade('primary', CRYPT.wine),
       { name: 'Coffin lid' },
     ),
-    text('OCT', 340, 230, 400, {
-      fontFamily: COND,
+    text(t.copy('month'), 340, 230, 400, {
+      fontFamily: t.font('heading'),
       fontSize: 90,
       fontWeight: 400,
-      fill: CRYPT.bone,
+      fill: t.color('text'),
       align: 'center',
       letterSpacing: 8,
     }),
-    text('12', 340, 320, 400, {
-      fontFamily: COND,
+    text(t.copy('day'), 340, 320, 400, {
+      fontFamily: t.font('heading'),
       fontSize: 280,
       fontWeight: 400,
-      fill: CRYPT.bone,
+      fill: t.color('text'),
       align: 'center',
     }),
   ]),
-  text('ACHIEVE YOUR', 0, 830, W, {
-    fontFamily: SPOOKY,
+  text(t.copy('headline'), 0, 830, W, {
+    fontFamily: t.font('spooky'),
     fontSize: 116,
     fontWeight: 400,
-    fill: CRYPT.bone,
+    fill: t.color('text'),
     align: 'center',
   }),
-  text('MARKET GOALS', 0, 960, W, {
-    fontFamily: SPOOKY,
+  text(t.copy('highlight'), 0, 960, W, {
+    fontFamily: t.font('spooky'),
     fontSize: 116,
     fontWeight: 400,
-    fill: CRYPT.blood,
+    fill: t.color('primary'),
     align: 'center',
   }),
-  text('Live Webinar  |  Oct 12 at 8 PM ET', 0, 1150, W, {
-    fontFamily: BODY,
+  text(t.copy('details'), 0, 1150, W, {
+    fontFamily: t.font('body'),
     fontSize: 36,
     fontWeight: 600,
-    fill: CRYPT.bone,
+    fill: t.color('text'),
     align: 'center',
   }),
 ]);
 
-export const tombstoneQuote = template(W, H, () => [
-  rect(0, 0, W, H, linear(180, '#1d4a4e', CRYPT.deep), { name: 'Background' }),
-  circle(880, 190, 90, CRYPT.bone, { opacity: 0.9 }),
-  bat(110, 150, 120, CRYPT.ink),
-  ellipse(220, 260, 640, 640, '#6f7a78', { name: 'Stone shade' }),
-  rect(220, 580, 640, 600, '#6f7a78', { name: 'Stone shade' }),
-  ellipse(240, 280, 600, 600, CRYPT.stone, { name: 'Stone top' }),
-  rect(240, 580, 600, 600, CRYPT.stone, { name: 'Stone body' }),
-  icon('quote', 500, 400, 80, CRYPT.ink, { strokeWidth: 2.4 }),
-  text("GOOD MARKETING\nISN'T ABOUT WHAT\nYOU SELL. IT'S THE\nSTORY YOU TELL.", 260, 520, 560, {
-    fontFamily: COND,
+const tombSpec = {
+  colors: {
+    background: {
+      value: '#1d4a4e',
+      hint: 'Night sky gradient; its darkest shade is the ground',
+    },
+    surface: { value: CRYPT.stone, hint: 'Tombstone; its darker shade is the stone edge' },
+    accent: { value: CRYPT.bone, hint: 'Moon' },
+    text: {
+      value: CRYPT.ink,
+      hint: 'Bat, quote mark and the quote; its shade colors the author',
+    },
+  },
+  fonts: { heading: COND, body: BODY },
+  copy: {
+    quote: {
+      label: 'Quote',
+      value: "GOOD MARKETING\nISN'T ABOUT WHAT\nYOU SELL. IT'S THE\nSTORY YOU TELL.",
+    },
+    author: { label: 'Author', value: '- MAREN VOSS' },
+  },
+} as const satisfies ThemeSpec;
+
+export const tombstoneQuote = themed(W, H, tombSpec, (t) => [
+  rect(0, 0, W, H, linear(180, t.color('background'), t.shade('background', CRYPT.deep)), {
+    name: 'Background',
+  }),
+  circle(880, 190, 90, t.color('accent'), { opacity: 0.9 }),
+  bat(110, 150, 120, t.color('text')),
+  ellipse(220, 260, 640, 640, t.shade('surface', '#6f7a78'), { name: 'Stone shade' }),
+  rect(220, 580, 640, 600, t.shade('surface', '#6f7a78'), { name: 'Stone shade' }),
+  ellipse(240, 280, 600, 600, t.color('surface'), { name: 'Stone top' }),
+  rect(240, 580, 600, 600, t.color('surface'), { name: 'Stone body' }),
+  icon('quote', 500, 400, 80, t.color('text'), { strokeWidth: 2.4 }),
+  text(t.copy('quote'), 260, 520, 560, {
+    fontFamily: t.font('heading'),
     fontSize: 70,
     fontWeight: 400,
-    fill: CRYPT.ink,
+    fill: t.color('text'),
     align: 'center',
     lineHeight: 1.08,
   }),
-  text('- MAREN VOSS', 260, 860, 560, {
-    fontFamily: BODY,
+  text(t.copy('author'), 260, 860, 560, {
+    fontFamily: t.font('body'),
     fontSize: 30,
     fontWeight: 600,
-    fill: CRYPT.night,
+    fill: t.shade('text', CRYPT.night),
     align: 'center',
     letterSpacing: 3,
   }),
@@ -225,63 +315,7 @@ export const tombstoneQuote = template(W, H, () => [
       [1080, 1350],
       [0, 1350],
     ],
-    '#051012',
+    t.shade('background', '#051012'),
     { name: 'Ground' },
   ),
-]);
-
-const fang = (x: number, flip: boolean) => {
-  const tip = flip ? x + 40 : x + 120;
-  return [
-    poly(
-      [
-        [x, 400],
-        [x + 160, 400],
-        [x + 156, 600],
-        [tip, 780],
-        [x + 4, 600],
-      ],
-      CRYPT.bone,
-      { name: 'Fang' },
-    ),
-    rect(tip - 5, 760, 10, 120, CRYPT.blood, { cornerRadius: 5, name: 'Drip' }),
-    circle(tip, 884, 12, CRYPT.blood),
-  ];
-};
-
-const bite = (label: string, x: number) =>
-  text(label, x + 30, 760, 480, {
-    fontFamily: COND,
-    fontSize: 58,
-    fontWeight: 400,
-    fill: CRYPT.bone,
-    letterSpacing: 4,
-    rotation: 90,
-  });
-
-export const builtToBite = template(W, H, () => [
-  rect(0, 0, W, H, linear(180, '#1c1c1c', CRYPT.ink), { name: 'Background' }),
-  text('BUILT TO BITE', 0, 90, W, {
-    fontFamily: COND,
-    fontSize: 120,
-    fontWeight: 400,
-    fill: CRYPT.bone,
-    align: 'center',
-    letterSpacing: 6,
-  }),
-  text('BETTER RESULTS', 0, 210, W, {
-    fontFamily: SPOOKY,
-    fontSize: 110,
-    fontWeight: 400,
-    fill: CRYPT.blood,
-    align: 'center',
-  }),
-  rect(120, 380, 840, 40, '#3a1016', { cornerRadius: 20, name: 'Gum' }),
-  fang(150, false),
-  rect(330, 400, 200, 250, CRYPT.bone, { cornerRadius: 70, name: 'Tooth' }),
-  rect(550, 400, 200, 250, CRYPT.bone, { cornerRadius: 70, name: 'Tooth' }),
-  fang(770, true),
-  bite('DATA DRIVEN', 365),
-  bite('ALWAYS ON SUPPORT', 545),
-  bite('DEDICATED CREW', 725),
 ]);

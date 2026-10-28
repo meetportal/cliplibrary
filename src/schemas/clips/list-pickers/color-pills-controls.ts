@@ -14,17 +14,10 @@ export const colorPillsControls = defineControls<ColorPillsProps>({
           items: { label: 'Name', color: 'Pill color', offset: 'Sideways offset' },
         },
         { path: 'font', label: 'Font' },
-        { path: 'size', label: 'Text size', hint: 'In pixels' },
-        {
-          link: ['textColor', 'dotColor'],
-          label: 'Text and dot color',
-          hint: 'Colors the names and the small dot inside every pill together',
-        },
       ],
       more: [
+        { path: 'size', label: 'Text size', hint: 'In pixels' },
         { path: 'weight', label: 'Font weight' },
-        { path: 'textColor', label: 'Text color', hint: 'The pill names only' },
-        { path: 'dotColor', label: 'Pill dot color', hint: 'The small dot inside each pill only' },
         {
           path: 'layout.dot',
           label: 'Pill dot size',
@@ -33,26 +26,59 @@ export const colorPillsControls = defineControls<ColorPillsProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        { path: 'cursor.color', label: 'Primary color', hint: 'The selector dot' },
+        {
+          path: 'cursor.halo',
+          label: 'Secondary color',
+          hint: 'The ring and soft glow around the selector dot',
+        },
+        {
+          link: ['textColor', 'dotColor'],
+          label: 'Text color',
+          hint: 'The names and the small dot inside every pill together',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        { path: 'textColor', label: 'Pill name color', hint: 'The pill names only' },
+        { path: 'dotColor', label: 'Pill dot color', hint: 'The small dot inside each pill only' },
+        LOOK.background,
+        LOOK.backgroundEdge,
+        {
+          ...LOOK.accent,
+          label: 'Margin line color',
+          hint: 'Shown when the paper margin line is on',
+        },
+        LOOK.paperLine,
+      ],
+    },
+    {
       title: 'Selection',
       fields: [
         { path: 'timing.interval', label: 'Time on each pill', hint: 'In frames' },
+        {
+          path: 'active.nudge',
+          label: 'Selected pill shift',
+          hint: 'How far the chosen pill slides right, in pixels',
+        },
+      ],
+      more: [
         {
           path: 'timing.moveFrames',
           label: 'Slide length',
           hint: 'In frames, never longer than the time on each pill',
         },
         {
-          path: 'active.nudge',
-          label: 'Selected pill shift',
-          hint: 'How far the chosen pill slides right, in pixels',
-        },
-        {
           path: 'active.grow',
           label: 'Selected pill grow',
           hint: 'Extra scale the chosen pill gains. 0.1 makes it 10% larger',
         },
-      ],
-      more: [
         {
           path: 'timing.delay',
           label: 'Start delay',
@@ -67,15 +93,7 @@ export const colorPillsControls = defineControls<ColorPillsProps>({
     },
     {
       title: 'Selector dot',
-      fields: [
-        { path: 'cursor.color', label: 'Selector color' },
-        {
-          path: 'cursor.halo',
-          label: 'Selector halo color',
-          hint: 'The ring and soft glow around the selector',
-        },
-        { path: 'cursor.size', label: 'Selector size', hint: 'Diameter in pixels' },
-      ],
+      fields: [{ path: 'cursor.size', label: 'Selector size', hint: 'Diameter in pixels' }],
       more: [
         {
           path: 'cursor.haloSize',
@@ -92,19 +110,19 @@ export const colorPillsControls = defineControls<ColorPillsProps>({
     {
       title: 'Style',
       fields: [
-        { path: 'layout.height', label: 'Pill height', hint: 'In pixels' },
         {
           path: 'layout.glow',
           label: 'Glow size',
           hint: 'Blur of the colored glow around each pill, also sizes the inner shine',
         },
+      ],
+      more: [
+        { path: 'layout.height', label: 'Pill height', hint: 'In pixels' },
         {
           path: 'layout.roundness',
           label: 'Corner roundness',
           hint: '1 is a full pill, 0 is square corners',
         },
-      ],
-      more: [
         {
           path: 'layout.glowStrength',
           label: 'Glow strength',
@@ -124,7 +142,8 @@ export const colorPillsControls = defineControls<ColorPillsProps>({
     },
     {
       title: 'Layout',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'layout.x',
           label: 'Horizontal position',
@@ -142,7 +161,6 @@ export const colorPillsControls = defineControls<ColorPillsProps>({
       title: 'Background',
       fields: [
         LOOK.showBackdrop,
-        LOOK.background,
         {
           path: 'aura.blobs',
           label: 'Color glows',
@@ -157,34 +175,27 @@ export const colorPillsControls = defineControls<ColorPillsProps>({
         },
       ],
       more: [
-        LOOK.backgroundEdge,
         { path: 'aura.drift', label: 'Glow drift', hint: 'How much the color glows wander' },
         LOOK.spotlight,
         LOOK.grain,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        {
-          path: 'look.accent',
-          label: 'Margin line color',
-          hint: 'Shown when the paper margin line is on',
-        },
       ],
     },
     {
       title: 'Motion',
       fields: [
+        { ...MOTION.enter, label: 'Scene entrance' },
+        { ...MOTION.exit, label: 'Scene exit' },
+      ],
+      more: [
         {
           path: 'entrance.stagger',
           label: 'Pill stagger',
           hint: 'Frames between each pill rising in',
         },
-        { ...MOTION.enter, label: 'Scene entrance' },
-        { ...MOTION.exit, label: 'Scene exit' },
-      ],
-      more: [
         {
           path: 'entrance.frames',
           label: 'Pill rise length',

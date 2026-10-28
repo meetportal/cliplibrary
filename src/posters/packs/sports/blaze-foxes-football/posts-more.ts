@@ -1,249 +1,351 @@
 import { linear } from '@/design';
-import { icon, POST_SIZE, photo, pill, rect, template, text } from '../../../kit';
-import { BLOCK, COND, crest, DISPLAY, FOX } from './palette';
+import { icon, photo, pill, rect, text, themed } from '../../../kit';
+import { BODY, crest, FOX, HEADING, TITLE } from './palette';
+import { H, W } from './posts';
 
-const { width: W, height: H } = POST_SIZE;
-
-const POLL = [
-  ['FOXES', '9-0'],
-  ['KNIGHTS', '8-1'],
-  ['RAMS', '7-1'],
-  ['OWLS', '7-2'],
-  ['WOLVES', '6-3'],
-];
-
-export const topFive = template(W, H, () => [
-  rect(0, 0, W, H, FOX.ink, { name: 'Background' }),
-  rect(0, 0, W, 16, FOX.blaze, { name: 'Top rule' }),
-  text('TOP 5', 0, 90, W, {
-    fontFamily: BLOCK,
-    fontSize: 170,
-    fontWeight: 400,
-    fill: FOX.blaze,
-    align: 'center',
-    lineHeight: 1,
-  }),
-  text('POWER POLL', 0, 270, W, {
-    fontFamily: BLOCK,
-    fontSize: 84,
-    fontWeight: 400,
-    fill: FOX.white,
-    align: 'center',
-    lineHeight: 1,
-  }),
-  POLL.map(([team, recordValue], index) => {
-    const y = 450 + index * 150;
-    const lead = index === 0;
+export const topFive = themed(
+  W,
+  H,
+  {
+    colors: {
+      background: {
+        value: FOX.ink,
+        hint: 'Page, and the rank, record and crown on the top row',
+      },
+      primary: {
+        value: FOX.blaze,
+        hint: 'Top rule, TOP 5, the top row and the other rank numbers',
+      },
+      surface: { value: FOX.smoke, hint: 'The other poll rows' },
+      text: {
+        value: FOX.white,
+        hint: 'POWER POLL, team names and shield icons; its grey shade colors the records and the footer',
+      },
+    },
+    fonts: { title: TITLE, heading: HEADING, body: BODY },
+    copy: {
+      title: { label: 'Title', value: 'TOP 5' },
+      subtitle: { label: 'Subtitle', value: 'POWER POLL' },
+      ranks: { label: 'Rank', value: ['1', '2', '3', '4', '5'] },
+      teams: { label: 'Team', value: ['FOXES', 'KNIGHTS', 'RAMS', 'OWLS', 'WOLVES'] },
+      records: { label: 'Record', value: ['9-0', '8-1', '7-1', '7-2', '6-3'] },
+      footer: { label: 'Footer', value: 'Week 9 standings  ·  Valley Conference' },
+    },
+  },
+  (t) => {
+    const ranks = t.list('ranks');
+    const records = t.list('records');
+    const grey = t.shade('text', FOX.grey);
     return [
-      rect(90, y, 900, 120, lead ? FOX.blaze : FOX.smoke, { cornerRadius: 20, name: 'Poll row' }),
-      text(String(index + 1), 120, y + 18, 90, {
-        fontFamily: DISPLAY,
-        fontSize: 72,
+      rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+      rect(0, 0, W, 16, t.color('primary'), { name: 'Top rule' }),
+      text(t.copy('title'), 0, 90, W, {
+        fontFamily: t.font('title'),
+        fontSize: 170,
         fontWeight: 400,
-        fill: lead ? FOX.ink : FOX.blaze,
+        fill: t.color('primary'),
         align: 'center',
+        lineHeight: 1,
       }),
-      text(team ?? '', 240, y + 24, 400, {
-        fontFamily: COND,
-        fontSize: 62,
-        fontWeight: 700,
-        fill: FOX.white,
+      text(t.copy('subtitle'), 0, 270, W, {
+        fontFamily: t.font('title'),
+        fontSize: 84,
+        fontWeight: 400,
+        fill: t.color('text'),
+        align: 'center',
+        lineHeight: 1,
+      }),
+      t.list('teams').map((team, index) => {
+        const y = 450 + index * 150;
+        const lead = index === 0;
+        return [
+          rect(90, y, 900, 120, lead ? t.color('primary') : t.color('surface'), {
+            cornerRadius: 20,
+            name: 'Poll row',
+          }),
+          text(ranks[index] ?? '', 120, y + 18, 90, {
+            fontFamily: t.font('heading'),
+            fontSize: 72,
+            fontWeight: 400,
+            fill: lead ? t.color('background') : t.color('primary'),
+            align: 'center',
+          }),
+          text(team, 240, y + 24, 400, {
+            fontFamily: t.font('body'),
+            fontSize: 62,
+            fontWeight: 700,
+            fill: t.color('text'),
+            letterSpacing: 2,
+          }),
+          text(records[index] ?? '', 640, y + 34, 160, {
+            fontFamily: t.font('body'),
+            fontSize: 44,
+            fontWeight: 600,
+            fill: lead ? t.color('background') : grey,
+            align: 'right',
+          }),
+          icon(
+            lead ? 'crown' : 'shield',
+            870,
+            y + 30,
+            60,
+            lead ? t.color('background') : t.color('text'),
+          ),
+        ];
+      }),
+      text(t.copy('footer'), 0, 1240, W, {
+        fontFamily: t.font('body'),
+        fontSize: 34,
+        fontWeight: 500,
+        fill: grey,
+        align: 'center',
         letterSpacing: 2,
       }),
-      text(recordValue ?? '', 640, y + 34, 160, {
-        fontFamily: COND,
-        fontSize: 44,
-        fontWeight: 600,
-        fill: lead ? FOX.ink : FOX.grey,
-        align: 'right',
-      }),
-      icon(lead ? 'crown' : 'shield', 870, y + 30, 60, lead ? FOX.ink : FOX.white),
     ];
-  }),
-  text('Week 9 standings  ·  Valley Conference', 0, 1240, W, {
-    fontFamily: COND,
-    fontSize: 34,
-    fontWeight: 500,
-    fill: FOX.grey,
-    align: 'center',
-    letterSpacing: 2,
-  }),
-]);
+  },
+);
 
-const STATS = [
-  ['418', 'TOTAL YARDS', '352'],
-  ['271', 'PASS YARDS', '230'],
-  ['147', 'RUSH YARDS', '122'],
-];
-
-export const gameStats = template(W, H, () => [
-  rect(0, 0, W, H, FOX.ink, { name: 'Background' }),
-  photo('football-1', 0, 0, W, 640, { name: 'Hero' }),
-  rect(0, 420, W, 230, linear(180, 'rgba(20,20,20,0)', FOX.ink), { name: 'Fade' }),
-  text('GAME STATS', 0, 640, W, {
-    fontFamily: DISPLAY,
-    fontSize: 120,
-    fontWeight: 400,
-    fill: FOX.white,
-    align: 'center',
-  }),
-  pill('FOXES', 250, 810, {
-    width: 260,
-    fill: FOX.blaze,
-    color: FOX.white,
-    fontSize: 34,
-    fontFamily: COND,
-    fontWeight: 700,
-    letterSpacing: 3,
-  }),
-  pill('RAMS', 570, 810, {
-    width: 260,
-    fill: FOX.rival,
-    color: FOX.white,
-    fontSize: 34,
-    fontFamily: COND,
-    fontWeight: 700,
-    letterSpacing: 3,
-  }),
-  STATS.map(([home, label, away], index) => {
-    const y = 920 + index * 120;
-    return [
-      rect(110, y, 860, 96, FOX.smoke, { cornerRadius: 16, name: 'Stat row' }),
-      text(home ?? '', 140, y + 16, 180, {
-        fontFamily: DISPLAY,
+export const gameStats = themed(
+  W,
+  H,
+  {
+    colors: {
+      background: { value: FOX.ink, hint: 'Page and the fade under the photo' },
+      primary: { value: FOX.blaze, hint: 'Foxes pill and the Foxes numbers' },
+      secondary: { value: FOX.rival, hint: 'Rams pill and the Rams numbers' },
+      surface: { value: FOX.smoke, hint: 'Stat rows' },
+      text: { value: FOX.white, hint: 'GAME STATS, the team pill labels and the stat names' },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      title: { label: 'Title', value: 'GAME STATS' },
+      teams: { label: 'Team', value: ['FOXES', 'RAMS'] },
+      home: { label: 'Foxes stat', value: ['418', '271', '147'] },
+      labels: { label: 'Stat name', value: ['TOTAL YARDS', 'PASS YARDS', 'RUSH YARDS'] },
+      away: { label: 'Rams stat', value: ['352', '230', '122'] },
+    },
+  },
+  (t) => {
+    const [home = '', away = ''] = t.list('teams');
+    const homeStats = t.list('home');
+    const awayStats = t.list('away');
+    const team = (label: string, x: number, fill: string) =>
+      pill(label, x, 810, {
+        width: 260,
+        fill,
+        color: t.color('text'),
+        fontSize: 34,
+        fontFamily: t.font('body'),
+        fontWeight: 700,
+        letterSpacing: 3,
+      });
+    const number = (value: string, x: number, y: number, fill: string) =>
+      text(value, x, y + 16, 180, {
+        fontFamily: t.font('heading'),
         fontSize: 58,
         fontWeight: 400,
-        fill: FOX.blaze,
+        fill,
+        align: 'center',
+      });
+    return [
+      rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+      photo('football-1', 0, 0, W, 640, { name: 'Hero' }),
+      rect(
+        0,
+        420,
+        W,
+        230,
+        linear(180, t.shade('background', 'rgba(20,20,20,0)'), t.color('background')),
+        { name: 'Fade' },
+      ),
+      text(t.copy('title'), 0, 640, W, {
+        fontFamily: t.font('heading'),
+        fontSize: 120,
+        fontWeight: 400,
+        fill: t.color('text'),
         align: 'center',
       }),
-      text(label ?? '', 340, y + 26, 400, {
-        fontFamily: COND,
+      team(home, 250, t.color('primary')),
+      team(away, 570, t.color('secondary')),
+      t.list('labels').map((label, index) => {
+        const y = 920 + index * 120;
+        return [
+          rect(110, y, 860, 96, t.color('surface'), { cornerRadius: 16, name: 'Stat row' }),
+          number(homeStats[index] ?? '', 140, y, t.color('primary')),
+          text(label, 340, y + 26, 400, {
+            fontFamily: t.font('body'),
+            fontSize: 40,
+            fontWeight: 700,
+            fill: t.color('text'),
+            align: 'center',
+            letterSpacing: 4,
+          }),
+          number(awayStats[index] ?? '', 760, y, t.color('secondary')),
+        ];
+      }),
+    ];
+  },
+);
+
+export const finalScore = themed(
+  W,
+  H,
+  {
+    colors: {
+      background: { value: FOX.ink, hint: 'Page behind the field photo' },
+      primary: { value: FOX.blaze, hint: 'Score panel, the crest icon and FINAL' },
+      text: {
+        value: FOX.ink,
+        hint: 'Crest, team names, the FINAL tag, the losing score and the date',
+      },
+      accent: { value: FOX.white, hint: 'Winning score' },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      teams: { label: 'Team', value: ['FOXES', 'RAMS'] },
+      scores: { label: 'Score', value: ['31', '24'] },
+      tag: { label: 'Tag', value: 'FINAL' },
+      date: { label: 'Date', value: 'OCT 10  ·  WEEK 6' },
+    },
+  },
+  (t) => {
+    const [home = '', away = ''] = t.list('teams');
+    const [win = '', lose = ''] = t.list('scores');
+    const team = (label: string, y: number) =>
+      text(label, 700, y, 380, {
+        fontFamily: t.font('body'),
+        fontSize: 48,
+        fontWeight: 700,
+        fill: t.color('text'),
+        align: 'center',
+        letterSpacing: 6,
+      });
+    const score = (value: string, y: number, fill: string) =>
+      text(value, 700, y, 380, {
+        fontFamily: t.font('heading'),
+        fontSize: 230,
+        fontWeight: 400,
+        fill,
+        align: 'center',
+      });
+    return [
+      rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+      photo('football-field', 0, 0, 700, H, { name: 'Field' }),
+      rect(700, 0, 380, H, t.color('primary'), { name: 'Score panel' }),
+      crest(830, 90, 120, t.color('text'), 'flame', t.color('primary')),
+      team(home, 260),
+      score(win, 310, t.color('accent')),
+      rect(760, 640, 260, 70, t.color('text'), { cornerRadius: 35, name: 'Final tag' }),
+      text(t.copy('tag'), 760, 652, 260, {
+        fontFamily: t.font('body'),
         fontSize: 40,
         fontWeight: 700,
-        fill: FOX.white,
+        fill: t.color('primary'),
         align: 'center',
-        letterSpacing: 4,
+        letterSpacing: 8,
       }),
-      text(away ?? '', 760, y + 16, 180, {
-        fontFamily: DISPLAY,
-        fontSize: 58,
-        fontWeight: 400,
-        fill: FOX.rival,
+      score(lose, 740, t.color('text')),
+      team(away, 1040),
+      text(t.copy('date'), 700, 1220, 380, {
+        fontFamily: t.font('body'),
+        fontSize: 30,
+        fontWeight: 600,
+        fill: t.color('text'),
         align: 'center',
+        letterSpacing: 3,
       }),
     ];
-  }),
-]);
+  },
+);
 
-export const finalScore = template(W, H, () => [
-  rect(0, 0, W, H, FOX.ink, { name: 'Background' }),
-  photo('football-field', 0, 0, 700, H, { name: 'Field' }),
-  rect(700, 0, 380, H, FOX.blaze, { name: 'Score panel' }),
-  crest(830, 90, 120, FOX.ink, 'flame', FOX.blaze),
-  text('FOXES', 700, 260, 380, {
-    fontFamily: COND,
-    fontSize: 48,
-    fontWeight: 700,
-    fill: FOX.ink,
-    align: 'center',
-    letterSpacing: 6,
-  }),
-  text('31', 700, 310, 380, {
-    fontFamily: DISPLAY,
-    fontSize: 230,
-    fontWeight: 400,
-    fill: FOX.white,
-    align: 'center',
-  }),
-  rect(760, 640, 260, 70, FOX.ink, { cornerRadius: 35, name: 'Final tag' }),
-  text('FINAL', 760, 652, 260, {
-    fontFamily: COND,
-    fontSize: 40,
-    fontWeight: 700,
-    fill: FOX.blaze,
-    align: 'center',
-    letterSpacing: 8,
-  }),
-  text('24', 700, 740, 380, {
-    fontFamily: DISPLAY,
-    fontSize: 230,
-    fontWeight: 400,
-    fill: FOX.ink,
-    align: 'center',
-  }),
-  text('RAMS', 700, 1040, 380, {
-    fontFamily: COND,
-    fontSize: 48,
-    fontWeight: 700,
-    fill: FOX.ink,
-    align: 'center',
-    letterSpacing: 6,
-  }),
-  text('OCT 10  ·  WEEK 6', 700, 1220, 380, {
-    fontFamily: COND,
-    fontSize: 30,
-    fontWeight: 600,
-    fill: FOX.ink,
-    align: 'center',
-    letterSpacing: 3,
-  }),
-]);
-
-export const playerOfWeek = template(W, H, () => [
-  rect(0, 0, W, H, FOX.cream, { name: 'Background' }),
-  photo('man-portrait-3', 600, 0, 480, H, { name: 'Player' }),
-  rect(600, 900, 480, 450, linear(180, 'rgba(20,20,20,0)', 'rgba(20,20,20,0.85)'), {
-    name: 'Fade',
-  }),
-  text('PLAYER', 60, 90, 540, {
-    fontFamily: DISPLAY,
-    fontSize: 190,
-    fontWeight: 400,
-    fill: FOX.ink,
-    lineHeight: 1,
-  }),
-  rect(60, 330, 250, 90, FOX.blaze, { name: 'Of the tag' }),
-  text('OF THE', 60, 344, 250, {
-    fontFamily: COND,
-    fontSize: 54,
-    fontWeight: 700,
-    fill: FOX.white,
-    align: 'center',
-    letterSpacing: 4,
-  }),
-  text('WEEK', 60, 440, 540, {
-    fontFamily: DISPLAY,
-    fontSize: 190,
-    fontWeight: 400,
-    fill: FOX.blaze,
-    lineHeight: 1,
-  }),
-  text('DANTE\nREYES', 60, 760, 500, {
-    fontFamily: BLOCK,
-    fontSize: 84,
-    fontWeight: 400,
-    fill: FOX.ink,
-    lineHeight: 1.05,
-  }),
-  text('#7  ·  RUNNING BACK', 60, 960, 500, {
-    fontFamily: COND,
-    fontSize: 36,
-    fontWeight: 600,
-    fill: FOX.deep,
-    letterSpacing: 2,
-  }),
-  text('186', 640, 1140, 200, {
-    fontFamily: DISPLAY,
-    fontSize: 110,
-    fontWeight: 400,
-    fill: FOX.white,
-  }),
-  text('RUSH\nYARDS', 830, 1160, 220, {
-    fontFamily: COND,
-    fontSize: 40,
-    fontWeight: 700,
-    fill: FOX.blaze,
-    lineHeight: 1.1,
-    letterSpacing: 3,
-  }),
-]);
+export const playerOfWeek = themed(
+  W,
+  H,
+  {
+    colors: {
+      background: { value: FOX.cream, hint: 'Page' },
+      primary: {
+        value: FOX.blaze,
+        hint: 'OF THE tag, WEEK and RUSH YARDS; its darker shade colors the position line',
+      },
+      text: {
+        value: FOX.ink,
+        hint: 'PLAYER, the player name and the dark fade over the photo',
+      },
+      surface: { value: FOX.white, hint: 'OF THE and the stat number' },
+    },
+    fonts: { heading: HEADING, title: TITLE, body: BODY },
+    copy: {
+      title: { label: 'Title', value: 'PLAYER' },
+      tag: { label: 'Tag', value: 'OF THE' },
+      week: { label: 'Second title line', value: 'WEEK' },
+      name: { label: 'Player', value: 'DANTE\nREYES' },
+      position: { label: 'Position', value: '#7  ·  RUNNING BACK' },
+      stat: { label: 'Stat', value: '186' },
+      statLabel: { label: 'Stat name', value: 'RUSH\nYARDS' },
+    },
+  },
+  (t) => [
+    rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+    photo('man-portrait-3', 600, 0, 480, H, { name: 'Player' }),
+    rect(
+      600,
+      900,
+      480,
+      450,
+      linear(180, t.shade('text', 'rgba(20,20,20,0)'), t.shade('text', 'rgba(20,20,20,0.85)')),
+      { name: 'Fade' },
+    ),
+    text(t.copy('title'), 60, 90, 540, {
+      fontFamily: t.font('heading'),
+      fontSize: 190,
+      fontWeight: 400,
+      fill: t.color('text'),
+      lineHeight: 1,
+    }),
+    rect(60, 330, 250, 90, t.color('primary'), { name: 'Of the tag' }),
+    text(t.copy('tag'), 60, 344, 250, {
+      fontFamily: t.font('body'),
+      fontSize: 54,
+      fontWeight: 700,
+      fill: t.color('surface'),
+      align: 'center',
+      letterSpacing: 4,
+    }),
+    text(t.copy('week'), 60, 440, 540, {
+      fontFamily: t.font('heading'),
+      fontSize: 190,
+      fontWeight: 400,
+      fill: t.color('primary'),
+      lineHeight: 1,
+    }),
+    text(t.copy('name'), 60, 760, 500, {
+      fontFamily: t.font('title'),
+      fontSize: 84,
+      fontWeight: 400,
+      fill: t.color('text'),
+      lineHeight: 1.05,
+    }),
+    text(t.copy('position'), 60, 960, 500, {
+      fontFamily: t.font('body'),
+      fontSize: 36,
+      fontWeight: 600,
+      fill: t.shade('primary', FOX.deep),
+      letterSpacing: 2,
+    }),
+    text(t.copy('stat'), 640, 1140, 200, {
+      fontFamily: t.font('heading'),
+      fontSize: 110,
+      fontWeight: 400,
+      fill: t.color('surface'),
+    }),
+    text(t.copy('statLabel'), 830, 1160, 220, {
+      fontFamily: t.font('body'),
+      fontSize: 40,
+      fontWeight: 700,
+      fill: t.color('primary'),
+      lineHeight: 1.1,
+      letterSpacing: 3,
+    }),
+  ],
+);

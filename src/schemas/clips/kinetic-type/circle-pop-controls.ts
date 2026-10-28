@@ -8,8 +8,8 @@ export const circlePopControls = defineControls<CirclePopProps>({
   sections: [
     {
       title: 'Word',
-      fields: [
-        { path: 'word.text', label: 'Word', hint: 'Stays on one line' },
+      fields: [{ path: 'word.text', label: 'Word', hint: 'Stays on one line' }],
+      more: [
         {
           path: 'word.startSize',
           label: 'Size on the disc',
@@ -18,42 +18,59 @@ export const circlePopControls = defineControls<CirclePopProps>({
         {
           path: 'word.endSize',
           label: 'Size after the flood',
-          hint: 'Largest font size in pixels once the frame is white. Longer words shrink to stay inside the frame width',
+          hint: 'Largest font size in pixels once the frame is flooded. Longer words shrink to stay inside the frame width',
         },
         { path: 'word.weight', label: 'Font weight' },
+        { path: 'word.tracking', label: 'Letter spacing', hint: 'In em' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          ...LOOK.ink,
+          label: 'Primary color',
+          hint: 'The disc and the color that floods the frame',
+        },
         {
           link: ['word.color', 'word.floodColor', 'subline.color'],
           label: 'Text color',
-          hint: 'Sets the word before and after the flood and the sub-line together',
+          hint: 'The word on the disc, the word after the flood and the sub-line',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Shows around the disc until the flood covers it. Sets the center and the corners together',
         },
       ],
       more: [
-        { path: 'word.tracking', label: 'Letter spacing', hint: 'In em' },
         { path: 'word.color', label: 'Word color on the disc' },
         {
           path: 'word.floodColor',
           label: 'Word color after the flood',
           hint: 'The word blends to this color while the frame floods',
         },
+        { path: 'subline.color', label: 'Sub-line color' },
+        { ...LOOK.background, label: 'Background center' },
+        LOOK.backgroundEdge,
       ],
     },
     {
       title: 'Disc',
       fields: [
-        { ...LOOK.ink, label: 'Disc color', hint: 'Also the color that floods the frame' },
         { path: 'disc.size', label: 'Disc size', hint: 'Diameter in pixels once it lands' },
         {
           path: 'pop.overshoot',
           label: 'Pop bounce',
           hint: 'How far the disc and word overshoot before they settle, so 0.08 is 8% bigger. 0 lands with no bounce',
         },
+      ],
+      more: [
         {
           path: 'pop.frames',
           label: 'Pop length',
           hint: 'In frames, from a point to resting size',
         },
-      ],
-      more: [
         { path: 'pop.delay', label: 'Start delay', hint: 'In frames before the disc appears' },
         {
           path: 'pop.fadeFrames',
@@ -80,12 +97,14 @@ export const circlePopControls = defineControls<CirclePopProps>({
           label: 'Edge shape',
           hint: 'Wobble rolls soft waves around the edge; starburst gives it sharp sticker points',
         },
-        { path: 'wobble.lobes', label: 'Wobble bumps', hint: 'Number of bumps around the edge' },
         {
           path: 'wobble.amount',
           label: 'Wobble depth',
           hint: 'Bump height as a share of the radius, so 0.06 is 6%. 0 keeps a clean circle',
         },
+      ],
+      more: [
+        { path: 'wobble.lobes', label: 'Wobble bumps', hint: 'Number of bumps around the edge' },
         {
           path: 'wobble.speed',
           label: 'Wobble spin',
@@ -106,6 +125,8 @@ export const circlePopControls = defineControls<CirclePopProps>({
           label: 'Flood length',
           hint: 'In frames, from the blob starting to swell until it is past every corner',
         },
+      ],
+      more: [
         {
           path: 'flood.wordFrames',
           label: 'Word grow length',
@@ -116,8 +137,6 @@ export const circlePopControls = defineControls<CirclePopProps>({
           label: 'Word grow delay',
           hint: `${AFTER_FLOOD_STARTS}. A few frames keep the word inside the swelling blob`,
         },
-      ],
-      more: [
         {
           path: 'flood.reach',
           label: 'Flood overshoot',
@@ -129,17 +148,17 @@ export const circlePopControls = defineControls<CirclePopProps>({
       title: 'Tilt',
       fields: [
         {
-          path: 'word.rotation',
-          label: 'Starting tilt',
-          hint: 'In degrees, while the word sits on the disc',
-        },
-        {
           path: 'tilt.angle',
           label: 'Final tilt',
           hint: 'In degrees, where the word lands after the flood',
         },
       ],
       more: [
+        {
+          path: 'word.rotation',
+          label: 'Starting tilt',
+          hint: 'In degrees, while the word sits on the disc',
+        },
         { path: 'tilt.delay', label: 'Tilt delay', hint: AFTER_FLOOD_STARTS },
         { path: 'tilt.frames', label: 'Tilt length', hint: 'In frames' },
       ],
@@ -152,14 +171,14 @@ export const circlePopControls = defineControls<CirclePopProps>({
           label: 'Sub-line',
           hint: 'A small line under the word that rises in after the flood. Leave empty to hide it',
         },
+      ],
+      more: [
         {
           path: 'subline.size',
           label: 'Sub-line size',
           hint: 'Largest font size in pixels. Longer lines shrink to stay inside the frame width',
         },
         { path: 'subline.delay', label: 'Sub-line delay', hint: AFTER_FLOOD_STARTS },
-      ],
-      more: [
         { path: 'subline.frames', label: 'Sub-line fade-in length', hint: 'In frames' },
         {
           path: 'subline.rise',
@@ -173,7 +192,6 @@ export const circlePopControls = defineControls<CirclePopProps>({
         },
         { path: 'subline.weight', label: 'Sub-line weight' },
         { path: 'subline.tracking', label: 'Sub-line letter spacing', hint: 'In em' },
-        { path: 'subline.color', label: 'Sub-line color' },
       ],
     },
     {
@@ -183,39 +201,32 @@ export const circlePopControls = defineControls<CirclePopProps>({
           ...LOOK.showBackdrop,
           hint: 'Off leaves only the disc, the flood and the word, so the clip can sit over another layer',
         },
+      ],
+      more: [
         {
           path: 'inverted',
           label: 'Invert colors',
           hint: 'Swaps the background, disc, word and sub-line colors for their opposites, so a dark disc floods a white frame. The spotlight glow stays white',
         },
         {
-          link: ['look.background', 'look.backgroundEdge'],
-          label: 'Background color',
-          hint: 'Shows around the disc until the flood covers it. Sets the center and the corners together',
-        },
-        {
           ...LOOK.grain,
           hint: 'Off by default for a clean black. Shows on the background only, never on the flood',
         },
-      ],
-      more: [
-        { ...LOOK.background, label: 'Background center' },
-        LOOK.backgroundEdge,
         LOOK.spotlight,
         { ...LOOK.liveGrain, hint: 'Film grain only. Off holds one grain pattern' },
       ],
     },
     {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
         {
           ...MOTION.speed,
           hint: 'Scales the pop, wobble, flood and tilt timing. If the word would not land and hold for 8 frames before the exit starts, the motion plays faster so it always does, which limits how far it can slow down. The entrance and exit keep their length',
         },
+        MOTION.enterFrames,
+        MOTION.exitFrames,
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: [

@@ -14,10 +14,10 @@ export const chalkBadgeControls = defineControls<ChalkBadgeProps>({
           hint: 'The hand-drawn frame, ribbon or doodle drawn around the word. Colors stay as set below',
         },
         { path: 'scale', label: 'Size' },
-        { path: 'x', label: 'Horizontal position', hint: 'Badge center, in percent of the width' },
-        { path: 'y', label: 'Vertical position', hint: 'Badge center, in percent of the height' },
       ],
       more: [
+        { path: 'x', label: 'Horizontal position', hint: 'Badge center, in percent of the width' },
+        { path: 'y', label: 'Vertical position', hint: 'Badge center, in percent of the height' },
         {
           path: 'tilt',
           label: 'Tilt',
@@ -30,18 +30,31 @@ export const chalkBadgeControls = defineControls<ChalkBadgeProps>({
       fields: [
         {
           link: ['badge.line', 'badge.text', 'captionColor'],
-          label: 'Chalk color',
-          hint: 'Sets the line, word and caption colors together',
+          label: 'Primary color',
+          hint: 'The chalk: badge lines, the word and the caption together',
         },
         {
           path: 'badge.fill',
-          label: 'Fill color',
+          label: 'Accent color',
           hint: 'Solid shapes such as sparkles, tape, ribbons and bursts. Their shading is a darker mix of it',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'The chalkboard, center and edges together',
+        },
+        {
+          ...LOOK.paperLine,
+          label: 'Secondary color',
+          hint: 'The board pattern lines',
         },
       ],
       more: [
         { path: 'badge.line', label: 'Line color', hint: 'The hand-drawn chalk strokes' },
         { path: 'badge.text', label: 'Word color' },
+        { path: 'captionColor', label: 'Caption color' },
+        { ...LOOK.background, label: 'Board color' },
+        { ...LOOK.backgroundEdge, label: 'Board edge color' },
       ],
     },
     {
@@ -67,13 +80,13 @@ export const chalkBadgeControls = defineControls<ChalkBadgeProps>({
       title: 'Chalk',
       fields: [
         { path: 'chalk.width', label: 'Stroke width', hint: 'Thickness of the chalk lines' },
+      ],
+      more: [
         {
           path: 'chalk.dryness',
           label: 'Dry chalk texture',
           hint: 'Higher leaves patchier, dustier strokes',
         },
-      ],
-      more: [
         { path: 'chalk.roughness', label: 'Edge wobble', hint: 'How much the edges warp' },
         {
           path: 'chalk.shadow',
@@ -84,16 +97,13 @@ export const chalkBadgeControls = defineControls<ChalkBadgeProps>({
     },
     {
       title: 'Caption',
-      fields: [
-        { path: 'caption', label: 'Caption', hint: 'Leave empty to hide it' },
+      fields: [{ path: 'caption', label: 'Caption', hint: 'Leave empty to hide it' }],
+      more: [
         {
           path: 'captionSize',
           label: 'Caption size',
           hint: 'In pixels. Larger also sits lower from the top edge',
         },
-      ],
-      more: [
-        { path: 'captionColor', label: 'Caption color' },
         {
           path: 'captionDelay',
           label: 'Caption start delay',
@@ -110,12 +120,9 @@ export const chalkBadgeControls = defineControls<ChalkBadgeProps>({
       title: 'Background',
       fields: [
         { ...LOOK.showBackdrop, label: 'Show chalkboard' },
-        { ...LOOK.background, label: 'Board color' },
         { ...LOOK.paper, label: 'Board pattern' },
       ],
       more: [
-        { ...LOOK.backgroundEdge, label: 'Board edge color' },
-        { ...LOOK.paperLine, label: 'Pattern line color' },
         { ...LOOK.paperSpacing, label: 'Pattern spacing', hint: 'In pixels' },
         {
           path: 'look.ink',
@@ -126,20 +133,28 @@ export const chalkBadgeControls = defineControls<ChalkBadgeProps>({
         LOOK.grain,
         LOOK.liveGrain,
         { ...LOOK.paperMargin, label: 'Show margin line' },
-        { path: 'look.accent', label: 'Margin line color' },
+        {
+          path: 'look.accent',
+          label: 'Margin line color',
+          hint: 'Shows when Show margin line is on',
+        },
       ],
     },
     {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter],
+      more: [
+        { ...MOTION.exit, hint: 'Plays only when Exit length is above 0' },
+        {
+          ...MOTION.exitFrames,
+          hint: 'In frames. The exit only plays when this is above 0, and it is 0 by default',
+        },
         {
           ...MOTION.speed,
           hint: 'Scales the badge drawing, erase and caption timing. Entrance and exit keep their length',
         },
+        MOTION.enterFrames,
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.muted', 'motion.float'],

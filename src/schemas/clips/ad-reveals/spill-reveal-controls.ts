@@ -6,21 +6,13 @@ export const spillRevealControls = defineControls<SpillRevealProps>({
   sections: [
     {
       title: 'Message',
-      fields: [
-        { path: 'message.text', label: 'Hidden message', hint: 'One line per row' },
-        { path: 'message.ink', label: 'Ink color' },
+      fields: [{ path: 'message.text', label: 'Hidden message', hint: 'One line per row' }],
+      more: [
         { path: 'message.size', label: 'Text size' },
         {
           path: 'message.strength',
           label: 'Ink strength',
           hint: 'How dark the message shows once the napkin is soaked',
-        },
-      ],
-      more: [
-        {
-          link: ['message.ink', 'cup.markColor'],
-          label: 'Brand ink',
-          hint: 'Sets the message ink and the cup logo to one color',
         },
         { path: 'message.lineSpacing', label: 'Line spacing', hint: 'Multiple of the text size' },
         { path: 'message.tilt', label: 'Text angle', hint: 'In radians' },
@@ -34,14 +26,40 @@ export const spillRevealControls = defineControls<SpillRevealProps>({
       ],
     },
     {
-      title: 'Cup',
+      title: 'Colors',
       fields: [
-        { path: 'cup.mark', label: 'Logo text' },
-        { path: 'cup.color', label: 'Cup color' },
-        { path: 'cup.badge', label: 'Badge color' },
+        { path: 'cup.color', label: 'Primary color', hint: 'The cup body' },
+        {
+          path: 'cup.badge',
+          label: 'Accent color',
+          hint: 'The two printed badges behind the cup logo',
+        },
+        {
+          link: ['message.ink', 'cup.markColor'],
+          label: 'Text color',
+          hint: 'The hidden message ink and the cup logo together',
+        },
+        {
+          link: ['napkin.paper', 'cup.band'],
+          label: 'Surface color',
+          hint: 'The dry napkin and the cup rim and inside together',
+        },
+        { path: 'table.wood', label: 'Background color', hint: 'The wooden tabletop' },
       ],
       more: [
+        { path: 'message.ink', label: 'Message ink color' },
         { path: 'cup.markColor', label: 'Logo color' },
+        { path: 'napkin.paper', label: 'Napkin color', hint: 'The dry napkin' },
+        { path: 'napkin.wet', label: 'Soaked napkin color' },
+        { path: 'table.wall', label: 'Wall color' },
+        { path: 'table.grain', label: 'Wood grain color' },
+        { path: 'table.highlight', label: 'Wood highlight color' },
+      ],
+    },
+    {
+      title: 'Cup',
+      fields: [{ path: 'cup.mark', label: 'Logo text' }],
+      more: [
         { path: 'cup.band', label: 'Rim and inside color' },
         {
           path: 'cup.water',
@@ -55,12 +73,10 @@ export const spillRevealControls = defineControls<SpillRevealProps>({
     },
     {
       title: 'Spill',
-      fields: [
-        { path: 'water.tint', label: 'Spill color', hint: 'Tints the wet patch on the wood' },
-        { path: 'water.length', label: 'Spill length' },
-        { path: 'water.width', label: 'Spill width' },
-      ],
+      fields: [{ path: 'water.length', label: 'Spill length' }],
       more: [
+        { path: 'water.tint', label: 'Spill color', hint: 'Tints the wet patch on the wood' },
+        { path: 'water.width', label: 'Spill width' },
         { path: 'water.angle', label: 'Spill direction', hint: 'In radians' },
         { path: 'water.opacity', label: 'Spill opacity' },
         { path: 'water.gloss', label: 'Spill shine' },
@@ -70,16 +86,14 @@ export const spillRevealControls = defineControls<SpillRevealProps>({
     {
       title: 'Napkin',
       fields: [
-        { path: 'napkin.paper', label: 'Napkin color' },
-        { path: 'napkin.wet', label: 'Soaked color' },
         {
           path: 'napkin.coverage',
           label: 'Soak spread',
           hint: 'How far the wet patch wicks across the napkin',
         },
-        { path: 'napkin.size', label: 'Napkin size' },
       ],
       more: [
+        { path: 'napkin.size', label: 'Napkin size' },
         { path: 'napkin.x', label: 'Napkin position left to right' },
         { path: 'napkin.z', label: 'Napkin position front to back' },
         { path: 'napkin.turn', label: 'Napkin rotation', hint: 'In radians' },
@@ -92,8 +106,6 @@ export const spillRevealControls = defineControls<SpillRevealProps>({
     {
       title: 'Timing',
       fields: [
-        { path: 'timing.reachStart', label: 'Hand reaches in at', hint: 'Frame number' },
-        { path: 'timing.dropStart', label: 'Napkin drops at', hint: 'Frame number' },
         {
           path: 'timing.soakFrames',
           label: 'Reveal length',
@@ -105,6 +117,8 @@ export const spillRevealControls = defineControls<SpillRevealProps>({
         },
       ],
       more: [
+        { path: 'timing.reachStart', label: 'Hand reaches in at', hint: 'Frame number' },
+        { path: 'timing.dropStart', label: 'Napkin drops at', hint: 'Frame number' },
         { path: 'timing.reachFrames', label: 'Reach length', hint: 'In frames' },
         {
           path: 'timing.tipFrames',
@@ -132,12 +146,10 @@ export const spillRevealControls = defineControls<SpillRevealProps>({
     },
     {
       title: 'Hand',
-      fields: [
-        { path: 'hand.show', label: 'Show hand' },
+      fields: [{ path: 'hand.show', label: 'Show hand' }],
+      more: [
         { path: 'hand.skin', label: 'Skin tone' },
         { path: 'arm.style', label: 'Arm style', hint: 'Bare forearm or a knit sleeve' },
-      ],
-      more: [
         { path: 'hand.curl', label: 'Finger curl' },
         {
           path: 'hand.contactHeight',
@@ -159,14 +171,8 @@ export const spillRevealControls = defineControls<SpillRevealProps>({
     },
     {
       title: 'Room',
-      fields: [
-        { path: 'table.wood', label: 'Wood color' },
-        { path: 'table.wall', label: 'Wall color' },
-        { path: 'light.key', label: 'Sunlight brightness' },
-      ],
+      fields: [{ path: 'light.key', label: 'Sunlight brightness' }],
       more: [
-        { path: 'table.grain', label: 'Wood grain color' },
-        { path: 'table.highlight', label: 'Wood highlight color' },
         { path: 'table.grainScale', label: 'Grain size' },
         { path: 'table.gloss', label: 'Varnish shine' },
         {
@@ -187,11 +193,11 @@ export const spillRevealControls = defineControls<SpillRevealProps>({
     {
       title: 'Camera',
       fields: [
-        { path: 'camera.fieldOfView', label: 'Field of view' },
         { path: 'camera.pushIn', label: 'Slow push-in', hint: 'Moves closer over the whole clip' },
-        { path: 'lens.depthOfField', label: 'Background blur' },
       ],
       more: [
+        { path: 'camera.fieldOfView', label: 'Field of view' },
+        { path: 'lens.depthOfField', label: 'Background blur' },
         {
           path: 'timing.moveStart',
           label: 'Camera move starts at',

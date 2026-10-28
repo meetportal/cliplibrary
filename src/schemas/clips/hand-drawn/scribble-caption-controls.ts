@@ -9,16 +9,37 @@ export const scribbleCaptionControls = defineControls<ScribbleCaptionProps>({
       fields: [
         { path: 'text', label: 'Caption' },
         { path: 'size', label: 'Text size', hint: 'In pixels' },
+      ],
+      more: [
         { path: 'weight', label: 'Font weight' },
+        { path: 'tracking', label: 'Letter spacing', hint: 'In em' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
         {
           link: ['look.ink', 'scribbleColor'],
-          label: 'Ink color',
-          hint: 'Colors the caption and the scribble together',
+          label: 'Primary color',
+          hint: 'The caption, the scribble stroke and their glow',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
         },
       ],
       more: [
-        { path: 'tracking', label: 'Letter spacing', hint: 'In em' },
         { ...LOOK.ink, label: 'Caption color', hint: 'The letters and their glow only' },
+        { path: 'scribbleColor', label: 'Scribble color', hint: 'The stroke and its glow only' },
+        LOOK.background,
+        LOOK.backgroundEdge,
+        LOOK.paperLine,
+        {
+          path: 'look.accent',
+          label: 'Margin line color',
+          hint: 'Shows when the paper has a margin',
+        },
       ],
     },
     {
@@ -30,6 +51,8 @@ export const scribbleCaptionControls = defineControls<ScribbleCaptionProps>({
           label: 'Scribble position',
           hint: 'Through: across the caption. Under: below the line. Around: enlarged to frame the caption, best with the Circle shape',
         },
+      ],
+      more: [
         { path: 'scribbleWidth', label: 'Scribble width', hint: 'In pixels' },
         { path: 'strokeWidth', label: 'Line thickness', hint: 'In pixels' },
         {
@@ -37,9 +60,6 @@ export const scribbleCaptionControls = defineControls<ScribbleCaptionProps>({
           label: 'Keep scribble on screen',
           hint: 'When off, the stroke wipes away after it draws',
         },
-      ],
-      more: [
-        { path: 'scribbleColor', label: 'Scribble color', hint: 'The stroke and its glow only' },
       ],
     },
     {
@@ -55,6 +75,8 @@ export const scribbleCaptionControls = defineControls<ScribbleCaptionProps>({
           label: 'Scribble timing',
           hint: 'Start: the scribble draws first and the caption follows. End: it draws over the finished caption just before the exit and scatters the letters away',
         },
+      ],
+      more: [
         {
           path: 'spread',
           label: 'Spread amount',
@@ -65,8 +87,6 @@ export const scribbleCaptionControls = defineControls<ScribbleCaptionProps>({
           label: 'Glow-out',
           hint: 'A glow that builds, fades and blurs the caption as the scribble draws. 0 turns it off',
         },
-      ],
-      more: [
         {
           path: 'typeFrames',
           label: 'Frames per letter',
@@ -99,29 +119,24 @@ export const scribbleCaptionControls = defineControls<ScribbleCaptionProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
       ],
     },
     {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
         {
           ...MOTION.speed,
           hint: 'Scales the reveal and scribble timing. Entrance and exit keep their length',
         },
-      ],
-      more: [
         MOTION.enterFrames,
         {
           ...MOTION.exitFrames,

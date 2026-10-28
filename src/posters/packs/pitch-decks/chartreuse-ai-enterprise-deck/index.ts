@@ -1,25 +1,10 @@
 import { definePack } from '../../../pack';
-import {
-  figuresSlide,
-  gaugeSlide,
-  legacySlide,
-  pricingSlide,
-  revenueSlide,
-} from './slides-figures';
-import {
-  contentsSlide,
-  coverSlide,
-  empoweringSlide,
-  messagingSlide,
-  quoteSlide,
-} from './slides-intro';
-import {
-  assistSlide,
-  auditSlide,
-  conversionsSlide,
-  numbersSlide,
-  velocitySlide,
-} from './slides-metrics';
+import { figuresSlide, gaugeSlide, legacySlide, revenueSlide } from './slides-figures';
+import { contentsSlide, coverSlide, empoweringSlide } from './slides-intro';
+import { assistSlide, auditSlide } from './slides-metrics';
+import { pricingSlide } from './slides-pricing';
+import { conversionsSlide, numbersSlide, velocitySlide } from './slides-stats';
+import { messagingSlide, quoteSlide } from './slides-story';
 
 const INTRO = [
   coverSlide,

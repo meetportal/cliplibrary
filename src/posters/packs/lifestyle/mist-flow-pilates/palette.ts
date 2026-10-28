@@ -10,6 +10,6 @@ export const MIST = {
   sand: '#d9b99b',
 };
 
-export const SERIF = 'Instrument Serif';
-export const TALL = 'Anton';
-export const BODY = 'Inter';
+export const SERIF = { label: 'Serif font', value: 'Instrument Serif' } as const;
+export const TALL = { label: 'Display font', value: 'Anton' } as const;
+export const BODY = { label: 'Body font', value: 'Inter' } as const;
