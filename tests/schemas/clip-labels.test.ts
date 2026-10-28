@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { searchClips } from '@/live/clip-search';
+import { searchClips } from '@/mcp/clip-search';
 import { CLIP_IDS, CLIP_LABELS, getClipMeta } from '@/schemas';
 
 describe('clip labels', () => {

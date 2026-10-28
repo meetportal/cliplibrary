@@ -212,25 +212,6 @@ Flash through OpenRouter, with OpenRouter's `models` fallback to Gemini 3.5 Flas
   `renameChat` tool. Reloaded turns never re-apply their edits.
 - `e2e/media-agent.spec.ts` replays recorded streams, so CI never calls the model.
 
-## Live MCP server
-
-`bun run live` starts a local Bun server (`src/live`, port `LIVE_PORT`, default 3210) that lets any
-MCP client build videos from the clip library while people watch in the browser. It is local-first:
-videos live in memory and there is no auth yet.
-
-- `POST /mcp` is a stateless Streamable HTTP MCP endpoint (`@modelcontextprotocol/sdk`). Tools:
-  `search_clips` (MiniSearch over clip meta and labels, filters by category, theme, orientation and
-  role), `get_clip` (labels, defaults, field guide, props schema), `create_video`, `add_clip`,
-  `edit_video` (JSON Patch through the same `applyEdits` validation as the media agent),
-  `get_video`, `list_videos`, `render_frame` (a JPEG through `@remotion/renderer`) and
-  `export_video` (mp4 into `out/live`).
-- `GET /ws` streams sessions to the editor: `/ws` pushes the session list, `/ws?session=<id>` pushes
-  that video on every change. The `/live/<id>` page (`src/components/live`, `src/lib/use-live.ts`)
-  renders it in the clip timeline editor and sends local edits back with the version they were
-  based on; the server rejects stale ones and resends the current video.
-- `LIVE_APP_URL` is the Next.js origin used in the links the tools return, and
-  `NEXT_PUBLIC_LIVE_SERVER_URL` is where the browser finds the live server.
-
 ## Poster packs and the image editor
 
 The home grid lists clips and poster packs together. A pack card shows a carousel of its pages,
@@ -284,10 +265,11 @@ paths go in `more`. At most 14 controls show at first glance across all sections
 ## MCP endpoint
 
 `src/app/mcp/route.ts` serves a stateless Streamable HTTP MCP server (`@modelcontextprotocol/sdk`,
-`src/mcp`) with open access and no storage. Tools: `search_clips` (MiniSearch over clip meta,
-filters by category, theme, orientation and role), `get_clip` (defaults, field guide and props
-schema), `create_video`, `add_clip` and `edit_video` (JSON Patch through the same `applyEdits`
-validation as the media agent). The agent passes the whole `{ title, project }` video into each
-call and gets the new one back with an `editorUrl`: `/video#<lz-string data>`
-(`src/mcp/video-link.ts`), opened by `SharedVideoEditor` in the clip timeline editor, which saves
-edits locally per link. `tests/mcp/mcp-route.test.ts` drives the route handler directly.
+`src/mcp`) with open access and no storage. Tools: `search_clips` (MiniSearch over clip meta and the
+labels in `src/schemas/clip-labels.json`, filters by category, theme, orientation and role),
+`get_clip` (labels, defaults, field guide and props schema), `create_video`, `add_clip` and
+`edit_video` (JSON Patch through the same `applyEdits` validation as the media agent). The agent
+passes the whole `{ title, project }` video into each call and gets the new one back with an
+`editorUrl`: `/video#<lz-string data>` (`src/mcp/video-link.ts`), opened by `SharedVideoEditor` in
+the clip timeline editor, which saves edits locally per link. `tests/mcp/mcp-route.test.ts` drives
+the route handler directly.
