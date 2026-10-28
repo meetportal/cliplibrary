@@ -1,116 +1,96 @@
 'use client';
 
-import { Brain, CircleCheck, CircleX, MessageSquareText } from 'lucide-react';
-import { Fragment, type ReactNode } from 'react';
+import { PenLine } from 'lucide-react';
 import type { MediaKind } from '@/agent/media';
 import type { MediaAgentMessage } from '@/agent/tools';
-import { ContextStep } from './context-step';
-import { EditStep } from './edit-step';
-import { TraceStep } from './trace-step';
+import { Appear } from './collapse';
+import { type EditPart, EditStep } from './edit-step';
+import { ThinkingStep } from './thinking-step';
 
-const withBold = (text: string): ReactNode[] =>
-  text.split(/\*\*(.+?)\*\*/g).map((chunk, index) =>
-    index % 2 === 1 ? (
-      <strong key={`${index}-${chunk}`} className="font-semibold text-foreground">
-        {chunk}
-      </strong>
-    ) : (
-      <Fragment key={`${index}-${chunk}`}>{chunk}</Fragment>
-    ),
-  );
+type Part = MediaAgentMessage['parts'][number];
 
-const formatTokens = (count: number): string => count.toLocaleString();
+const isEdit = (part: Part): part is EditPart => part.type === 'tool-editMedia';
 
-const Summary = ({ message }: { message: MediaAgentMessage }) => {
-  const meta = message.metadata;
-  if (meta?.finishedAt === undefined || meta.startedAt === undefined) {
-    return null;
+const isSuperseded = (part: EditPart, last: EditPart | undefined): boolean =>
+  part !== last && part.state === 'output-available' && !part.output.ok;
+
+export const isShowingProgress = (message: MediaAgentMessage | undefined): boolean => {
+  const part = message?.role === 'assistant' ? message.parts.at(-1) : undefined;
+  if (part === undefined) {
+    return false;
   }
-  const seconds = ((meta.finishedAt - meta.startedAt) / 1000).toFixed(1);
-  const steps = meta.steps ?? 1;
-  return (
-    <TraceStep
-      icon={CircleCheck}
-      tone="success"
-      title="Done"
-      meta={`${seconds}s · ${steps} step${steps === 1 ? '' : 's'}`}
-    >
-      <p className="text-[11px] text-muted-foreground" data-testid="agent-summary">
-        {formatTokens(meta.inputTokens ?? 0)} tokens in · {formatTokens(meta.outputTokens ?? 0)} out
-        {meta.reasoningTokens ? ` · ${formatTokens(meta.reasoningTokens)} thinking` : ''}
-        {meta.model === undefined ? '' : ` · ${meta.model.replace(/^google\//, '')}`}
-      </p>
-    </TraceStep>
-  );
+  if (part.type === 'reasoning' || part.type === 'text') {
+    return part.state === 'streaming' && part.text.trim() !== '';
+  }
+  return isEdit(part) && part.state !== 'output-error';
+};
+
+interface TurnPartProps {
+  part: Part;
+  lastEdit: EditPart | undefined;
+  kind: MediaKind;
+  document: unknown;
+  busy: boolean;
+}
+
+const TurnPart = ({ part, lastEdit, kind, document, busy }: TurnPartProps) => {
+  if (part.type === 'reasoning') {
+    return part.text.trim() === '' ? null : (
+      <Appear>
+        <ThinkingStep text={part.text} live={busy && part.state === 'streaming'} />
+      </Appear>
+    );
+  }
+  if (part.type === 'text') {
+    return part.text.trim() === '' ? null : (
+      <Appear>
+        <p className="whitespace-pre-wrap text-foreground text-sm leading-relaxed">
+          {part.text.trim()}
+        </p>
+      </Appear>
+    );
+  }
+  if (isEdit(part)) {
+    return isSuperseded(part, lastEdit) ? null : (
+      <Appear>
+        <EditStep part={part} busy={busy} kind={kind} document={document} />
+      </Appear>
+    );
+  }
+  if (part.type === 'tool-renameChat' && part.state === 'output-available') {
+    return (
+      <Appear>
+        <p className="flex items-center gap-1.5 text-muted-foreground text-xs">
+          <PenLine className="size-3.5" />
+          Named this chat “{part.output.title}”
+        </p>
+      </Appear>
+    );
+  }
+  return null;
 };
 
 interface AgentTurnProps {
   message: MediaAgentMessage;
   kind: MediaKind;
-  documentFor: (toolCallId: string) => unknown;
-  error: string | null;
+  document: unknown;
+  busy: boolean;
 }
 
-export const AgentTurn = ({ message, kind, documentFor, error }: AgentTurnProps) => {
-  let attempts = 0;
+export const AgentTurn = ({ message, kind, document, busy }: AgentTurnProps) => {
+  const lastEdit = message.parts.filter(isEdit).at(-1);
   return (
-    <ol className="w-full" aria-label="Agent activity">
-      {message.parts.map((part, index) => {
-        const key = `${message.id}-${index}`;
-        if (part.type === 'data-context') {
-          return <ContextStep key={key} context={part.data} />;
-        }
-        if (part.type === 'reasoning') {
-          return part.text.trim() === '' ? null : (
-            <TraceStep
-              key={key}
-              icon={Brain}
-              title="Thinking"
-              meta={part.state === 'streaming' ? 'live' : undefined}
-              live={part.state === 'streaming'}
-              collapsible
-              collapseWhenDone
-            >
-              <p className="max-h-56 overflow-y-auto whitespace-pre-wrap text-muted-foreground text-xs leading-relaxed">
-                {withBold(part.text.trim())}
-              </p>
-            </TraceStep>
-          );
-        }
-        if (part.type === 'text') {
-          return part.text.trim() === '' ? null : (
-            <TraceStep
-              key={key}
-              icon={MessageSquareText}
-              title="Reply"
-              live={part.state === 'streaming'}
-            >
-              <p className="whitespace-pre-wrap text-foreground text-sm leading-relaxed">
-                {part.text.trim()}
-              </p>
-            </TraceStep>
-          );
-        }
-        if (part.type === 'tool-editMedia') {
-          attempts += 1;
-          return (
-            <EditStep
-              key={key}
-              part={part}
-              attempt={attempts}
-              kind={kind}
-              document={documentFor(part.toolCallId)}
-            />
-          );
-        }
-        return null;
-      })}
-      <Summary message={message} />
-      {error === null ? null : (
-        <TraceStep icon={CircleX} tone="error" title="Stopped">
-          <p className="text-destructive text-xs">{error}</p>
-        </TraceStep>
-      )}
-    </ol>
+    <div className="flex w-full flex-col gap-2.5" data-testid="agent-turn">
+      {message.parts.map((part, index) => (
+        <TurnPart
+          key={`${message.id}-${index}`}
+          part={part}
+          lastEdit={lastEdit}
+          kind={kind}
+          document={document}
+          busy={busy}
+        />
+      ))}
+    </div>
   );
 };

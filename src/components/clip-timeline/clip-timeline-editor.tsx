@@ -3,6 +3,8 @@
 import type { PlayerRef } from '@remotion/player';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { dropObjectUrls } from '@/agent/assets';
+import { checkMedia } from '@/agent/media';
 import { AgentWorkspace } from '@/components/media-agent/agent-workspace';
 import { ClipPreviewSkeleton } from '@/components/skeletons';
 import { Timeline } from '@/components/timeline/timeline';
@@ -11,6 +13,7 @@ import { preloadProjectScenes } from '@/compositions/scene-loader';
 import { createFrameStore } from '@/lib/frame-store';
 import { clampPxPerFrame, DEFAULT_PX_PER_FRAME, fitPxPerFrame } from '@/lib/timeline-geometry';
 import { DEFAULT_EXPORT_SETTINGS, useProjectExport } from '@/lib/use-project-export';
+import { useSavedDocument } from '@/lib/use-saved-document';
 import { useUndoable, useUndoRedoKeys } from '@/lib/use-undoable';
 import { cn } from '@/lib/utils';
 import {
@@ -85,13 +88,27 @@ const toFileName = (title: string): string =>
 
 const ANIMATION_OPTIONS = CLIP_REGISTRY.map((meta) => ({ id: meta.id, title: meta.title }));
 
+const parseSavedProject = (value: unknown): Project | null => {
+  const checked = checkMedia('clip', dropObjectUrls(value));
+  return checked.ok ? checked.document : null;
+};
+
+const firstElementId = (project: Project): string | null =>
+  project.tracks[0]?.elements[0]?.id ?? null;
+
 interface ClipTimelineEditorProps {
   title: string;
+  storageKey: string;
   initialProject: Project;
   demoSrc: string | null;
 }
 
-export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimelineEditorProps) => {
+export const ClipTimelineEditor = ({
+  title,
+  storageKey,
+  initialProject,
+  demoSrc,
+}: ClipTimelineEditorProps) => {
   const editor = useUndoable<Project>(initialProject);
   const {
     value: project,
@@ -100,6 +117,7 @@ export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimel
     seal: sealProject,
     undo,
     redo,
+    reset,
   } = editor;
   useUndoRedoKeys(undo, redo);
   const exporter = useProjectExport();
@@ -108,12 +126,25 @@ export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimel
   const playerRef = useRef<PlayerRef | null>(null);
   const [frames] = useState(createFrameStore);
   const [playing, setPlaying] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(
-    () => project.tracks[0]?.elements[0]?.id ?? null,
-  );
+  const [selectedId, setSelectedId] = useState<string | null>(() => firstElementId(project));
   const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
   const [pxPerFrame, setPxPerFrame] = useState(DEFAULT_PX_PER_FRAME);
   const [mobilePanel, setMobilePanel] = useState<MobilePanel>('properties');
+
+  const loadProject = useCallback(
+    (next: Project) => {
+      reset(next);
+      setSelectedId(firstElementId(next));
+      setActiveTrackId(null);
+    },
+    [reset],
+  );
+  const forgetSaved = useSavedDocument({
+    key: storageKey,
+    value: project,
+    parse: parseSavedProject,
+    restore: loadProject,
+  });
 
   const activeTrack = activeTrackId ?? project.tracks[0]?.id ?? null;
   const selectedElement =
@@ -222,6 +253,7 @@ export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimel
   return (
     <AgentWorkspace
       kind="clip"
+      chatKey={storageKey}
       title={title}
       document={project}
       focus={selectedId === null ? [] : [selectedId]}
@@ -250,7 +282,13 @@ export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimel
               mobilePanel === 'properties' ? 'flex flex-1' : 'hidden',
             )}
           >
-            <ClipTimelineHeader title={title} />
+            <ClipTimelineHeader
+              title={title}
+              onReset={() => {
+                forgetSaved();
+                loadProject(initialProject);
+              }}
+            />
             <ClipPropertySidebar
               element={selectedElement}
               onChange={(next) => setProjectLive(replaceElement(project, next))}

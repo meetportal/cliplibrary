@@ -12,7 +12,7 @@ import {
   Type,
   Upload,
 } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { AgentWorkspace } from '@/components/media-agent/agent-workspace';
 import {
   createImage,
@@ -22,6 +22,7 @@ import {
   fitInside,
   type Point,
 } from '@/design';
+import { useSavedDocument } from '@/lib/use-saved-document';
 import { cn } from '@/lib/utils';
 import { CanvasWorkspace } from './canvas-workspace';
 import { EditorContextMenu } from './context-menu';
@@ -60,25 +61,9 @@ interface DesignEditorProps {
   initialPanel?: string;
 }
 
-const readSaved = (key: string): Design | null => {
-  try {
-    const raw = localStorage.getItem(key);
-    if (raw === null) {
-      return null;
-    }
-    const parsed = designSchema.safeParse(JSON.parse(raw));
-    return parsed.success ? parsed.data : null;
-  } catch {
-    return null;
-  }
-};
-
-const forgetSaved = (key: string): void => {
-  try {
-    localStorage.removeItem(key);
-  } catch {
-    return;
-  }
+const parseDesign = (value: unknown): Design | null => {
+  const parsed = designSchema.safeParse(value);
+  return parsed.success ? parsed.data : null;
 };
 
 export const DesignEditor = ({
@@ -92,7 +77,6 @@ export const DesignEditor = ({
   const [viewport, setViewport] = useState<Viewport>({ width: 0, height: 0 });
   const [userZoom, setUserZoom] = useState<number | null>(null);
   const [uploads, setUploads] = useState<LoadedImage[]>([]);
-  const restored = useRef(false);
 
   const fitMargin = viewport.width < 640 ? 32 : 96;
   const fitZoom =
@@ -114,27 +98,12 @@ export const DesignEditor = ({
   );
   const fontsVersion = useFontsVersion(fonts);
 
-  useEffect(() => {
-    if (restored.current) {
-      return;
-    }
-    restored.current = true;
-    const saved = readSaved(storageKey);
-    if (saved !== null) {
-      editor.load(saved);
-    }
-  }, [editor.load, storageKey]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      try {
-        localStorage.setItem(storageKey, JSON.stringify(design));
-      } catch {
-        return;
-      }
-    }, 600);
-    return () => clearTimeout(timer);
-  }, [design, storageKey]);
+  const forgetSaved = useSavedDocument({
+    key: storageKey,
+    value: design,
+    parse: parseDesign,
+    restore: editor.load,
+  });
 
   const imageElement = useCallback(
     (image: LoadedImage, point?: Point, index = 0): DesignElement => {
@@ -269,6 +238,7 @@ export const DesignEditor = ({
   return (
     <AgentWorkspace
       kind="poster"
+      chatKey={storageKey}
       title={design.title}
       document={design}
       focus={editor.selectedIds}
@@ -286,7 +256,7 @@ export const DesignEditor = ({
           onViewChange={setView}
           onHelp={() => setHelpOpen(true)}
           onReset={() => {
-            forgetSaved(storageKey);
+            forgetSaved();
             editor.load(initialDesign);
           }}
         />
