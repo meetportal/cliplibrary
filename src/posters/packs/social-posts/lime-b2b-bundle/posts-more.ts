@@ -1,175 +1,219 @@
 import {
-  avatar,
   circle,
+  group,
+  icon,
+  path,
   photo,
-  rating,
+  pill,
+  poly,
   rect,
-  rotateNodes,
-  star,
-  template,
+  type ThemeSpec,
   text,
+  themed,
 } from '../../../kit';
-import { footer, H, HEAD, heavy, LIME, W } from './posts';
+import { BODY, DISPLAY, H, HANDLE, HEADING, heavy, LIME, sparkle, W } from './posts';
 
-const EVENTS = [
-  ['04', 'Growth Breakfast', 'Founders meetup, 8:30 AM'],
-  ['12', 'Live Q&A', 'Pricing pages that convert'],
-  ['19', 'Partner Webinar', 'Scaling outbound in 2027'],
-  ['27', 'Client Awards', 'Celebrating our best launches'],
+const hiringSpec = {
+  colors: {
+    primary: { value: LIME.primary, hint: 'Page and the Apply now label' },
+    text: {
+      value: LIME.ink,
+      hint: 'Diagonal band, every headline and line of copy, the sparkles and the Apply now button',
+    },
+    surface: { value: LIME.paper, hint: 'Photo frame' },
+  },
+  fonts: { heading: HEADING, body: BODY },
+  copy: {
+    kicker: { label: 'Kicker', value: 'We are' },
+    title: { label: 'Title', value: 'Hiring' },
+    intro: { label: 'Intro line', value: 'Join our growth team as a' },
+    role: { label: 'Role', value: 'SEO STRATEGIST' },
+    button: { label: 'Button', value: 'Apply now' },
+  },
+} as const satisfies ThemeSpec;
+
+export const hiringPost = themed(W, H, hiringSpec, (t) => {
+  const title = heavy(t.font('heading'));
+  return [
+    rect(0, 0, W, H, t.color('primary'), { name: 'Background' }),
+    poly(
+      [
+        [0, 940],
+        [W, 600],
+        [W, 790],
+        [0, 1130],
+      ],
+      t.color('text'),
+      { name: 'Diagonal band' },
+    ),
+    title(t.copy('kicker'), 80, 110, 70, t.color('text')),
+    title(t.copy('title'), 80, 185, 200, t.color('text')),
+    text(t.copy('intro'), 80, 420, 600, {
+      fontFamily: t.font('body'),
+      fontSize: 38,
+      fontWeight: 500,
+      fill: t.color('text'),
+    }),
+    title(t.copy('role'), 80, 472, 64, t.color('text')),
+    photo('man-portrait-1', 600, 600, 400, 500, {
+      cornerRadius: 24,
+      stroke: t.color('surface'),
+      strokeWidth: 10,
+    }),
+    sparkle(890, 100, 110, t.color('text')),
+    sparkle(150, 820, 80, t.color('text')),
+    pill(t.copy('button'), 80, 1190, {
+      fill: t.color('text'),
+      color: t.color('primary'),
+      fontSize: 36,
+      fontFamily: t.font('heading'),
+      fontWeight: 800,
+    }),
+  ];
+});
+
+const TREND = [
+  [0, 260],
+  [160, 200],
+  [320, 220],
+  [480, 130],
+  [640, 150],
+  [800, 30],
 ] as const;
 
-export const eventsList = template(W, H, () => [
-  rect(0, 0, W, H, LIME.primary, { name: 'Background' }),
-  text('UPCOMING', 80, 90, 500, {
-    fontFamily: HEAD,
-    fontSize: 34,
-    fontWeight: 800,
-    fill: LIME.ink,
-    letterSpacing: 6,
-  }),
-  heavy('October Events', 80, 140, 100, LIME.ink),
-  EVENTS.map(([day, title, detail], index) => {
-    const y = 320 + index * 225;
-    return [
-      rect(80, y, 170, 180, LIME.ink, { cornerRadius: 20, name: 'Date box' }),
-      text(day, 80, y + 22, 170, {
-        fontFamily: HEAD,
-        fontSize: 90,
-        fontWeight: 900,
-        fill: LIME.primary,
-        align: 'center',
-        lineHeight: 1,
-      }),
-      text('OCT', 80, y + 124, 170, {
-        fontSize: 26,
-        fontWeight: 700,
-        fill: LIME.paper,
-        align: 'center',
-        letterSpacing: 4,
-      }),
-      text(title, 290, y + 34, 700, {
-        fontFamily: HEAD,
-        fontSize: 52,
-        fontWeight: 900,
-        fill: LIME.ink,
-      }),
-      text(detail, 290, y + 104, 700, { fontSize: 30, fontWeight: 500, fill: '#2f3a12' }),
-    ];
-  }),
-  footer(LIME.ink),
-]);
+const leadersSpec = {
+  colors: {
+    background: {
+      value: LIME.ink,
+      hint: 'Page; its lighter shade colors the chart card',
+    },
+    primary: { value: LIME.primary, hint: 'Invest in 2027, the third stat and the trend line' },
+    surface: { value: LIME.paper, hint: 'Where Leaders, the first two stats and the chart dots' },
+    text: { value: LIME.muted, hint: 'Handle, stat labels and the source line' },
+  },
+  fonts: { heading: HEADING, body: BODY },
+  copy: {
+    handle: HANDLE,
+    title: { label: 'Title', value: 'Where Leaders' },
+    highlight: { label: 'Highlight', value: 'Invest in 2027' },
+    values: { label: 'Stat', value: ['72%', '58%', '85%'] },
+    labels: { label: 'Stat label', value: ['AI tooling', 'Brand content', 'Data and insight'] },
+    source: { label: 'Source', value: 'Source: Kestrel B2B pulse survey' },
+  },
+} as const satisfies ThemeSpec;
 
-const OPTIONS = ['Search and SEO', 'LinkedIn content', 'Cold email', 'Referrals'];
-
-export const quizTime = template(W, H, () => [
-  rect(0, 0, W, H, LIME.paper, { name: 'Background' }),
-  heavy('Quick Quiz', 80, 100, 120, LIME.ink),
-  rotateNodes(-8, 760, 150, [
-    rect(700, 110, 260, 96, LIME.primary, { cornerRadius: 16, name: 'Time tag' }),
-    text('TIME!', 700, 124, 260, {
-      fontFamily: HEAD,
-      fontSize: 60,
-      fontWeight: 900,
-      fill: LIME.ink,
-      align: 'center',
+export const leadersStats = themed(W, H, leadersSpec, (t) => {
+  const title = heavy(t.font('heading'));
+  const labels = t.list('labels');
+  return [
+    rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+    text(t.copy('handle'), 80, 80, 500, {
+      fontFamily: t.font('body'),
+      fontSize: 26,
+      fontWeight: 600,
+      fill: t.color('text'),
     }),
-  ]),
-  text('Which channel brings you the most\nqualified B2B leads?', 80, 300, 920, {
-    fontFamily: HEAD,
-    fontSize: 50,
-    fontWeight: 800,
-    fill: LIME.ink,
-    lineHeight: 1.2,
-  }),
-  OPTIONS.map((option, index) => {
-    const y = 500 + index * 150;
-    const picked = index === 1;
-    return [
-      rect(80, y, 920, 120, picked ? LIME.primary : '#f1f2f4', {
-        cornerRadius: 22,
-        name: 'Option',
-      }),
-      rect(104, y + 20, 80, 80, LIME.ink, { cornerRadius: 16, name: 'Option number' }),
-      text(String(index + 1), 104, y + 34, 80, {
-        fontFamily: HEAD,
-        fontSize: 44,
-        fontWeight: 900,
-        fill: LIME.paper,
-        align: 'center',
-      }),
-      text(option, 220, y + 36, 740, {
-        fontSize: 40,
-        fontWeight: 600,
-        fill: LIME.ink,
-      }),
-    ];
-  }),
-  text('Drop your answer in the comments', 0, 1150, W, {
-    fontFamily: HEAD,
-    fontSize: 40,
-    fontWeight: 800,
-    fill: LIME.ink,
-    align: 'center',
-  }),
-  star(5, 880, 1200, 110, LIME.ink, { innerRatio: 0.42 }),
-  footer('#6b7280'),
-]);
-
-export const reviewWords = template(W, H, () => [
-  rect(0, 0, W, H, LIME.ink, { name: 'Background' }),
-  rotateNodes(-8, 540, 300, [
-    text('CLIENT', 140, 70, 900, {
-      fontFamily: 'Anton',
-      fontSize: 230,
-      fontWeight: 400,
-      fill: LIME.primary,
-      lineHeight: 1,
+    title(t.copy('title'), 80, 150, 88, t.color('surface')),
+    title(t.copy('highlight'), 80, 245, 88, t.color('primary')),
+    t.list('values').map((value, index) => {
+      const x = 80 + index * 320;
+      return group(
+        text(value, x, 440, 300, {
+          fontSize: 110,
+          fontWeight: 800,
+          fontFamily: t.font('heading'),
+          fill: index === 2 ? t.color('primary') : t.color('surface'),
+          align: 'left',
+          lineHeight: 1,
+        }),
+        text(labels[index] ?? '', x, 440 + 110 * 1.12, 300, {
+          fontFamily: t.font('body'),
+          fontSize: 30,
+          fontWeight: 500,
+          fill: t.color('text'),
+          align: 'left',
+          lineHeight: 1.3,
+        }),
+      );
     }),
-  ]),
-  rotateNodes(-8, 540, 1100, [
-    text('REVIEW', 120, 1010, 900, {
-      fontFamily: 'Anton',
-      fontSize: 230,
-      fontWeight: 400,
-      fill: 'rgba(0,0,0,0)',
-      stroke: LIME.primary,
-      strokeWidth: 4,
-      lineHeight: 1,
+    rect(80, 760, 920, 400, t.shade('background', '#1b1b22'), {
+      cornerRadius: 28,
+      name: 'Chart card',
     }),
-  ]),
-  rect(120, 470, 840, 470, LIME.paper, { cornerRadius: 30, name: 'Review card' }),
-  rating(180, 530, 46, 5, '#f5b400', 0.2),
-  text(
-    '"Kestrel rebuilt our content engine. Demo requests doubled in one quarter."',
-    180,
-    610,
-    720,
-    { fontFamily: HEAD, fontSize: 42, fontWeight: 700, fill: LIME.ink, lineHeight: 1.3 },
-  ),
-  avatar('woman-portrait-5', 230, 850, 50),
-  text('Lena Ortiz', 300, 812, 500, { fontSize: 32, fontWeight: 800, fill: LIME.ink }),
-  text('COO, Brightfold Labs', 300, 856, 500, { fontSize: 26, fontWeight: 500, fill: '#6b7280' }),
-]);
+    path(
+      'M0 260 L160 200 L320 220 L480 130 L640 150 L800 30',
+      140,
+      840,
+      800,
+      260,
+      t.shade('primary', 'rgba(0,0,0,0)'),
+      { width: 800, height: 260 },
+      { stroke: t.color('primary'), strokeWidth: 8, name: 'Trend line' },
+    ),
+    TREND.map(([x, y]) => circle(140 + x, 840 + y, 12, t.color('surface'))),
+    text(t.copy('source'), 80, 1240, 920, {
+      fontFamily: t.font('body'),
+      fontSize: 26,
+      fontWeight: 500,
+      fill: t.color('text'),
+    }),
+  ];
+});
 
-export const checkComments = template(W, H, () => [
-  rect(0, 0, W, H, LIME.primary, { name: 'Background' }),
-  text('CHECK THE COMMENTS', 70, 1270, 1180, {
-    fontFamily: 'Anton',
-    fontSize: 130,
+const saleSpec = {
+  colors: {
+    background: {
+      value: LIME.ink,
+      hint: 'Page, the percent sign and the offer pill text; its lighter shade colors the spotlight',
+    },
+    primary: { value: LIME.primary, hint: 'SALE, the percent badge and the offer pill' },
+    surface: { value: LIME.paper, hint: 'Megaphone, sparkle and Year-End Deals' },
+    text: { value: LIME.muted, hint: 'Offer end date' },
+  },
+  fonts: { display: DISPLAY, heading: HEADING, body: BODY },
+  copy: {
+    title: { label: 'Title', value: 'SALE' },
+    headline: { label: 'Headline', value: 'Year-End Deals' },
+    offer: { label: 'Offer', value: 'Up to 50% off every plan' },
+    note: { label: 'End date', value: 'Offer ends December 31' },
+  },
+} as const satisfies ThemeSpec;
+
+export const saleMegaphone = themed(W, H, saleSpec, (t) => [
+  rect(0, 0, W, H, t.color('background'), { name: 'Background' }),
+  text(t.copy('title'), 0, 60, W, {
+    fontFamily: t.font('display'),
+    fontSize: 300,
     fontWeight: 400,
-    fill: LIME.ink,
-    rotation: -90,
+    fill: t.color('primary'),
+    align: 'center',
     lineHeight: 1,
   }),
-  photo('woman-portrait-6', 300, 80, 700, 1000, { cornerRadius: 30 }),
-  rect(300, 1110, 700, 160, LIME.ink, { cornerRadius: 24, name: 'Caption card' }),
-  text('Tell us your biggest\nmarketing win this year', 340, 1135, 640, {
-    fontFamily: HEAD,
-    fontSize: 40,
-    fontWeight: 800,
-    fill: LIME.paper,
-    lineHeight: 1.2,
+  circle(540, 650, 230, t.shade('background', '#1b1b22'), { name: 'Spot' }),
+  icon('megaphone', 380, 490, 320, t.color('surface'), { strokeWidth: 1.6 }),
+  circle(780, 470, 64, t.color('primary')),
+  icon('percent', 744, 434, 72, t.color('background'), { strokeWidth: 2.6 }),
+  sparkle(150, 420, 100, t.color('surface')),
+  text(t.copy('headline'), 0, 930, W, {
+    fontFamily: t.font('heading'),
+    fontSize: 96,
+    fontWeight: 900,
+    fill: t.color('surface'),
+    align: 'center',
   }),
-  circle(930, 110, 70, LIME.ink),
-  star(5, 880, 60, 100, LIME.primary, { innerRatio: 0.42 }),
+  pill(t.copy('offer'), 255, 1080, {
+    fill: t.color('primary'),
+    color: t.color('background'),
+    fontSize: 40,
+    fontFamily: t.font('heading'),
+    fontWeight: 800,
+    width: 570,
+  }),
+  text(t.copy('note'), 0, 1250, W, {
+    fontFamily: t.font('body'),
+    fontSize: 30,
+    fontWeight: 500,
+    fill: t.color('text'),
+    align: 'center',
+  }),
 ]);
