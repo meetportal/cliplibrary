@@ -1,21 +1,29 @@
 import { type DesignIconName, linear } from '@/design';
-import { icon, path, photo, pill, rating, rect, template, text } from '../../../kit';
+import { path, pill, rating, rect, type ThemeSpec, text, themed } from '../../../kit';
 import {
   BODY,
+  CLEAR,
   copy,
-  darkBg,
-  dashboardScreen,
   device,
-  HEAD,
+  FRAME,
+  HEADING,
   iconTile,
   kicker,
   LAGOON,
-  lightBg,
-  profileScreen,
+  pageGradient,
   SH,
   SW,
   title,
+  WHITE,
 } from './deck-kit';
+import {
+  DASH_STATS,
+  dashboardScreen,
+  PROFILE_NAME,
+  PROFILE_STATS,
+  profileScreen,
+  SCREEN_TITLES,
+} from './deck-screens';
 
 const T = LAGOON;
 
@@ -31,6 +39,7 @@ const arc = (
   from: number,
   to: number,
   color: string,
+  clear: string,
   width: number,
 ) =>
   path(
@@ -39,236 +48,247 @@ const arc = (
     y,
     size,
     size,
-    'rgba(0,0,0,0)',
+    clear,
     { width: 200, height: 200 },
     { stroke: color, strokeWidth: width, name: 'Arc' },
   );
 
-const segments: readonly { share: string; label: string; body: string; icon: DesignIconName }[] = [
-  {
-    share: '58%',
-    label: 'Product Leaders',
-    body: 'Own roadmaps and need clear usage data.',
-    icon: 'briefcase',
+const SEGMENT_ICONS: readonly DesignIconName[] = ['briefcase', 'megaphone', 'rocket'];
+
+const audienceSpec = {
+  colors: {
+    background: {
+      value: T.surface,
+      hint: 'Page gradient; its shades are the white top and the mint bottom',
+    },
+    primary: { value: T.mid, hint: 'First arc and the first segment tile' },
+    accent: { value: T.glow, hint: 'Second arc and the second segment tile' },
+    secondary: { value: T.warm, hint: 'Third arc and the third segment tile' },
+    text: {
+      value: T.ink,
+      hint: 'Title, Key Segments and segment names; its muted shade colors the descriptions',
+    },
+    surface: { value: WHITE, hint: 'Segment icons' },
   },
-  {
-    share: '26%',
-    label: 'Growth Marketers',
-    body: 'Run lifecycle campaigns across channels.',
-    icon: 'megaphone',
+  fonts: { heading: HEADING, body: BODY },
+  copy: {
+    title: { label: 'Title', value: 'Target Audience' },
+    center: { label: 'Chart label', value: 'Key\nSegments' },
+    segments: {
+      label: 'Segment',
+      value: ['58%  Product Leaders', '26%  Growth Marketers', '16%  Startup Founders'],
+    },
+    details: {
+      label: 'Segment text',
+      value: [
+        'Own roadmaps and need clear usage data.',
+        'Run lifecycle campaigns across channels.',
+        'Want fast insight without a data team.',
+      ],
+    },
   },
-  {
-    share: '16%',
-    label: 'Startup Founders',
-    body: 'Want fast insight without a data team.',
-    icon: 'rocket',
-  },
-];
+} as const satisfies ThemeSpec;
 
-export const audienceSlide = template(SW, SH, () => [
-  lightBg(T),
-  title('Target Audience', 120, 100, 1000, 88, T.ink),
-  arc(220, 300, 620, 2, 207, T.mid, 34),
-  arc(220, 300, 620, 211, 299, T.glow, 34),
-  arc(220, 300, 620, 303, 358, T.warm, 34),
-  text('Key\nSegments', 220, 545, 620, {
-    fontFamily: HEAD,
-    fontSize: 54,
-    fontWeight: 800,
-    fill: T.ink,
-    align: 'center',
-    lineHeight: 1.1,
-  }),
-  segments.map((segment, index) => {
-    const y = 320 + index * 200;
-    const tint = [T.mid, T.glow, T.warm][index] ?? T.mid;
-    return [
-      iconTile(segment.icon, 960, y, 96, tint),
-      text(`${segment.share}  ${segment.label}`, 1090, y + 6, 720, {
-        fontFamily: HEAD,
-        fontSize: 40,
-        fontWeight: 800,
-        fill: T.ink,
-      }),
-      copy(segment.body, 1090, y + 60, 720, 26, T.muted),
-    ];
-  }),
-]);
-
-const review = (quote: string, name: string, role: string, y: number) => [
-  rect(900, y, 900, 270, '#ffffff', { cornerRadius: 28, name: 'Review card' }),
-  rating(940, y + 36, 30, 5, T.warm),
-  copy(quote, 940, y + 86, 820, 28, T.ink),
-  text(name, 940, y + 186, 500, { fontFamily: HEAD, fontSize: 28, fontWeight: 800, fill: T.ink }),
-  text(role, 940, y + 222, 500, { fontFamily: BODY, fontSize: 22, fontWeight: 500, fill: T.muted }),
-  pill('Read story', 1580, y + 196, {
-    fill: T.mid,
-    color: '#ffffff',
-    fontSize: 22,
-    fontFamily: BODY,
-  }),
-];
-
-export const reviewsSlide = template(SW, SH, () => [
-  lightBg(T),
-  device(T, dashboardScreen, 130, 140, 300, -6),
-  device(T, profileScreen, 400, 230, 300, 6),
-  rect(560, 760, 230, 200, linear(150, T.deep, T.mid), { cornerRadius: 32, name: 'Score badge' }),
-  text('App score', 560, 790, 230, {
-    fontFamily: BODY,
-    fontSize: 24,
-    fontWeight: 600,
-    fill: T.soft,
-    align: 'center',
-  }),
-  text('4.7', 560, 830, 230, {
-    fontFamily: HEAD,
-    fontSize: 88,
-    fontWeight: 800,
-    fill: '#ffffff',
-    align: 'center',
-  }),
-  kicker('User testimonials', 900, 110, T.mid),
-  title('Rave Reviews', 900, 150, 900, 96, T.ink),
-  review(
-    '"The dashboards finally made our weekly reviews fast. We cut prep time in half."',
-    'Priya Raman',
-    'VP Customer Success, Fernwell',
-    320,
-  ),
-  review(
-    '"Onboarding new teammates takes minutes now. The alerts alone paid for it."',
-    'Marcus Holt',
-    'Product Lead, Brightpath',
-    640,
-  ),
-]);
-
-export const wordsSlide = template(SW, SH, () => [
-  darkBg(T),
-  text('Plan.\nLaunch.\nGrow.', 120, 110, 1000, {
-    fontFamily: HEAD,
-    fontSize: 236,
-    fontWeight: 800,
-    fill: '#ffffff',
-    lineHeight: 0.98,
-  }),
-  photo('phone-hand-1', 1160, 90, 640, 900, { cornerRadius: 44 }),
-]);
-
-export const impactStorySlide = template(SW, SH, () => [
-  lightBg(T),
-  title('Real-World\nImpact', 120, 100, 800, 96, T.ink),
-  rect(120, 430, 720, 360, linear(150, T.deep, T.mid), { cornerRadius: 32, name: 'Quote card' }),
-  pill('Ana, Growth Lead', 160, 470, {
-    fill: T.glow,
-    color: T.deep,
-    fontSize: 22,
-    fontFamily: BODY,
-    fontWeight: 700,
-  }),
-  text('Spends 15+ hours a week on manual reports, which slows every launch.', 160, 560, 640, {
-    fontFamily: HEAD,
-    fontSize: 40,
-    fontWeight: 800,
-    fill: '#ffffff',
-    lineHeight: 1.2,
-  }),
-  photo('woman-portrait-6', 900, 110, 520, 860, { cornerRadius: 40 }),
-  pill('SOLUTION', 1480, 300, { fill: T.mid, color: '#ffffff', fontSize: 22, fontFamily: BODY }),
-  copy('Automate reports and asset prep so approvals stop stalling.', 1480, 370, 360, 26, T.ink),
-  pill('IMPACT', 1480, 600, { fill: T.ink, color: '#ffffff', fontSize: 22, fontFamily: BODY }),
-  copy('Kickoff time fell from 14 days to 3, and conversions rose.', 1480, 670, 360, 26, T.ink),
-]);
-
-const ICONS: readonly DesignIconName[] = [
-  'wifi',
-  'zap',
-  'cloud',
-  'code',
-  'monitor',
-  'database',
-  'refresh-cw',
-  'download',
-  'upload',
-  'phone',
-  'rocket',
-  'headphones',
-  'keyboard',
-  'laptop',
-  'play',
-  'cpu',
-  'mouse',
-  'gamepad-2',
-  'mic',
-  'message-square',
-  'share-2',
-  'git-branch',
-  'camera',
-  'layers',
-  'video',
-  'settings',
-  'chart-bar',
-  'radio-tower',
-  'server',
-  'brain',
-  'smartphone',
-  'printer',
-  'shield-check',
-  'lock',
-  'key',
-  'search',
-  'bell',
-  'calendar',
-  'clock',
-  'map-pin',
-  'mail',
-  'globe',
-  'link',
-  'user',
-  'users',
-  'briefcase',
-  'store',
-  'target',
-  'trending-up',
-  'chart-pie',
-  'dollar-sign',
-  'wallet',
-  'credit-card',
-  'shopping-cart',
-  'gift',
-  'tag',
-  'award',
-  'trophy',
-  'crown',
-  'flame',
-  'heart',
-  'star',
-  'bookmark',
-  'send',
-  'image',
-  'music',
-  'tablet',
-  'terminal',
-  'bot',
-  'puzzle',
-  'workflow',
-  'megaphone',
-  'lightbulb',
-  'sparkles',
-  'compass',
-  'qr-code',
-  'scan-face',
-  'wand-sparkles',
-];
-
-export const iconSheet = (start: number) =>
-  template(SW, SH, () => [
-    lightBg(T),
-    Array.from({ length: 78 }, (_, index) => {
-      const name = ICONS[(index + start) % ICONS.length] ?? 'star';
-      return icon(name, 170 + (index % 13) * 128, 170 + Math.floor(index / 13) * 128, 64, T.ink, {
-        strokeWidth: 2,
-      });
+export const audienceSlide = themed(SW, SH, audienceSpec, (t) => {
+  const f = { head: t.font('heading'), body: t.font('body') };
+  const details = t.list('details');
+  const tints = [t.color('primary'), t.color('accent'), t.color('secondary')];
+  return [
+    pageGradient(
+      t.shade('background', WHITE),
+      t.color('background'),
+      t.shade('background', T.soft),
+    ),
+    title(f.head)(t.copy('title'), 120, 100, 1000, 88, t.color('text')),
+    arc(220, 300, 620, 2, 207, t.color('primary'), t.shade('primary', CLEAR), 34),
+    arc(220, 300, 620, 211, 299, t.color('accent'), t.shade('accent', CLEAR), 34),
+    arc(220, 300, 620, 303, 358, t.color('secondary'), t.shade('secondary', CLEAR), 34),
+    text(t.copy('center'), 220, 545, 620, {
+      fontFamily: f.head,
+      fontSize: 54,
+      fontWeight: 800,
+      fill: t.color('text'),
+      align: 'center',
+      lineHeight: 1.1,
     }),
-  ]);
+    t.list('segments').map((segment, index) => {
+      const y = 320 + index * 200;
+      return [
+        iconTile(
+          SEGMENT_ICONS[index] ?? 'briefcase',
+          960,
+          y,
+          96,
+          tints[index] ?? t.color('primary'),
+          t.color('surface'),
+        ),
+        text(segment, 1090, y + 6, 720, {
+          fontFamily: f.head,
+          fontSize: 40,
+          fontWeight: 800,
+          fill: t.color('text'),
+        }),
+        copy(f.body)(details[index] ?? '', 1090, y + 60, 720, 26, t.shade('text', T.muted)),
+      ];
+    }),
+  ];
+});
+
+const reviewsSpec = {
+  colors: {
+    background: {
+      value: T.surface,
+      hint: 'Page gradient and the profile cards; its shades are the white top, the mint bottom and the profile lines',
+    },
+    primary: {
+      value: T.mid,
+      hint: 'Score badge, kicker, Read story buttons and profile numbers; its darker shades color the badge top, phone screens and frames',
+    },
+    accent: {
+      value: T.glow,
+      hint: 'Bright dashboard tile, the ring chart, the avatar ring and the profile dots',
+    },
+    secondary: { value: T.warm, hint: 'Stars and the amber dashboard tile' },
+    text: {
+      value: T.ink,
+      hint: 'Title, quotes, reviewer names and profile text; its muted shade colors the reviewer roles',
+    },
+    surface: {
+      value: WHITE,
+      hint: 'Review cards, profile screen, button labels, the score and dashboard text; its mint shade colors App score, its translucent shades the dashboard tiles and rows',
+    },
+  },
+  fonts: { heading: HEADING, body: BODY },
+  copy: {
+    screens: SCREEN_TITLES,
+    stats: DASH_STATS,
+    name: PROFILE_NAME,
+    profileStats: PROFILE_STATS,
+    scoreLabel: { label: 'Score label', value: 'App score' },
+    score: { label: 'Score', value: '4.7' },
+    kicker: { label: 'Kicker', value: 'User testimonials' },
+    title: { label: 'Title', value: 'Rave Reviews' },
+    quotes: {
+      label: 'Quote',
+      value: [
+        '"The dashboards finally made our weekly reviews fast. We cut prep time in half."',
+        '"Onboarding new teammates takes minutes now. The alerts alone paid for it."',
+      ],
+    },
+    names: { label: 'Reviewer', value: ['Priya Raman', 'Marcus Holt'] },
+    roles: {
+      label: 'Reviewer role',
+      value: ['VP Customer Success, Fernwell', 'Product Lead, Brightpath'],
+    },
+    button: { label: 'Button', value: 'Read story', hint: 'Shown on every review card' },
+  },
+} as const satisfies ThemeSpec;
+
+export const reviewsSlide = themed(SW, SH, reviewsSpec, (t) => {
+  const f = { head: t.font('heading'), body: t.font('body') };
+  const deep = t.shade('primary', T.deep);
+  const frame = t.shade('primary', FRAME);
+  const glass = t.shade('surface', 'rgba(255,255,255,0.14)');
+  const [dashTitle = '', profileTitle = ''] = t.list('screens');
+  const names = t.list('names');
+  const roles = t.list('roles');
+  const review = (quote: string, index: number) => {
+    const y = 320 + index * 320;
+    return [
+      rect(900, y, 900, 270, t.color('surface'), { cornerRadius: 28, name: 'Review card' }),
+      rating(940, y + 36, 30, 5, t.color('secondary')),
+      copy(f.body)(quote, 940, y + 86, 820, 28, t.color('text')),
+      text(names[index] ?? '', 940, y + 186, 500, {
+        fontFamily: f.head,
+        fontSize: 28,
+        fontWeight: 800,
+        fill: t.color('text'),
+      }),
+      text(roles[index] ?? '', 940, y + 222, 500, {
+        fontFamily: f.body,
+        fontSize: 22,
+        fontWeight: 500,
+        fill: t.shade('text', T.muted),
+      }),
+      pill(t.copy('button'), 1580, y + 196, {
+        fill: t.color('primary'),
+        color: t.color('surface'),
+        fontSize: 22,
+        fontFamily: f.body,
+      }),
+    ];
+  };
+  return [
+    pageGradient(
+      t.shade('background', WHITE),
+      t.color('background'),
+      t.shade('background', T.soft),
+    ),
+    device(
+      130,
+      140,
+      300,
+      -6,
+      deep,
+      frame,
+      dashboardScreen(
+        {
+          top: deep,
+          bottom: t.color('primary'),
+          text: t.color('surface'),
+          tiles: [glass, t.color('accent'), t.color('secondary'), glass],
+          ring: t.color('accent'),
+          hole: deep,
+          row: t.shade('surface', 'rgba(255,255,255,0.12)'),
+        },
+        f,
+        dashTitle,
+        t.list('stats'),
+      ),
+    ),
+    device(
+      400,
+      230,
+      300,
+      6,
+      deep,
+      frame,
+      profileScreen(
+        {
+          screen: t.color('surface'),
+          text: t.color('text'),
+          ring: t.color('accent'),
+          stat: t.color('primary'),
+          card: t.color('background'),
+          dot: t.color('accent'),
+          line: t.shade('background', T.soft),
+        },
+        f,
+        profileTitle,
+        t.copy('name'),
+        t.list('profileStats'),
+      ),
+    ),
+    rect(560, 760, 230, 200, linear(150, deep, t.color('primary')), {
+      cornerRadius: 32,
+      name: 'Score badge',
+    }),
+    text(t.copy('scoreLabel'), 560, 790, 230, {
+      fontFamily: f.body,
+      fontSize: 24,
+      fontWeight: 600,
+      fill: t.shade('surface', T.soft),
+      align: 'center',
+    }),
+    text(t.copy('score'), 560, 830, 230, {
+      fontFamily: f.head,
+      fontSize: 88,
+      fontWeight: 800,
+      fill: t.color('surface'),
+      align: 'center',
+    }),
+    kicker(f.body, t.copy('kicker'), 900, 110, t.color('primary')),
+    title(f.head)(t.copy('title'), 900, 150, 900, 96, t.color('text')),
+    t.list('quotes').map(review),
+  ];
+});
