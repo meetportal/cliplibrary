@@ -43,3 +43,6 @@ export const restoreAssets = (value: unknown, assets: readonly string[]): unknow
     const index = match?.[1] === undefined ? -1 : Number(match[1]);
     return assets[index] ?? text;
   });
+
+export const dropObjectUrls = (value: unknown): unknown =>
+  mapStrings(value, (text) => (text.startsWith('blob:') ? '' : text));
