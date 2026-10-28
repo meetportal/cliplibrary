@@ -13,6 +13,8 @@ export const brandingIsTickerControls = defineControls<BrandingIsTickerProps>({
           label: 'Ticker words',
           hint: 'One word per line; each word adds one ticker step, so more words start the end card later',
         },
+      ],
+      more: [
         {
           link: ['type.size', 'type.tickerSize'],
           label: 'Text size',
@@ -23,8 +25,6 @@ export const brandingIsTickerControls = defineControls<BrandingIsTickerProps>({
           label: 'Opening line font',
           hint: 'Italic serif, or the same rounded sans as the ticker',
         },
-      ],
-      more: [
         { path: 'copy.separator', label: 'Separator after each word' },
         {
           path: 'type.size',
@@ -44,6 +44,69 @@ export const brandingIsTickerControls = defineControls<BrandingIsTickerProps>({
       ],
     },
     {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['type.active', 'underline.color', 'card.accent'],
+          label: 'Primary color',
+          hint: 'Active word, its underline, and the end card logo tile, button and contact icons',
+        },
+        {
+          path: 'type.dim',
+          label: 'Secondary color',
+          hint: 'Outline, or fill when the outline width is 0, of the words around the active one',
+        },
+        {
+          link: ['type.lead', 'brand.label'],
+          label: 'Text color',
+          hint: 'Opening line and the brand name under the logo',
+        },
+        {
+          link: ['brand.mark', 'card.background'],
+          label: 'Surface color',
+          hint: 'Logo tile and the end card it opens into',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        { path: 'type.active', label: 'Active word color' },
+        { path: 'underline.color', label: 'Underline color' },
+        {
+          path: 'card.accent',
+          label: 'End card accent',
+          hint: 'Logo tile, button gradient start and contact icons',
+        },
+        {
+          path: 'card.accentDeep',
+          label: 'End card deep accent',
+          hint: 'Where the logo tile and button gradients end',
+        },
+        { path: 'type.lead', label: 'Opening line color' },
+        { path: 'brand.label', label: 'Brand name color' },
+        { path: 'brand.mark', label: 'Logo tile color' },
+        { path: 'brand.cutout', label: 'Logo symbol color' },
+        {
+          path: 'card.background',
+          label: 'End card background',
+          hint: 'Also the color the logo tile turns into as it opens',
+        },
+        { path: 'card.text', label: 'End card text color' },
+        { path: 'card.buttonText', label: 'Button text color' },
+        LOOK.background,
+        LOOK.backgroundEdge,
+        LOOK.paperLine,
+        {
+          path: 'look.accent',
+          label: 'Margin line color',
+          hint: 'Shows when the paper has a margin',
+        },
+      ],
+    },
+    {
       title: 'Ticker',
       fields: [
         {
@@ -51,14 +114,14 @@ export const brandingIsTickerControls = defineControls<BrandingIsTickerProps>({
           label: 'Frames per word',
           hint: 'How long each word takes to slide past; lower is faster and brings the end card sooner',
         },
+      ],
+      more: [
         {
           path: 'type.outline',
           label: 'Outline width',
           hint: 'Stroke of the words around the active one; 0 fills them solid',
         },
         { path: 'underline.show', label: 'Show underline' },
-      ],
-      more: [
         {
           path: 'type.edgeFade',
           label: 'Edge fade',
@@ -94,6 +157,8 @@ export const brandingIsTickerControls = defineControls<BrandingIsTickerProps>({
           label: 'Brand name',
           hint: 'Shown under the logo and on the end card',
         },
+      ],
+      more: [
         {
           path: 'brand.kicker',
           label: 'Small line above name',
@@ -105,8 +170,6 @@ export const brandingIsTickerControls = defineControls<BrandingIsTickerProps>({
           label: 'Logo corner roundness',
           hint: 'Also shapes the end card logo and the tile that opens into it; 0.5 is a circle',
         },
-      ],
-      more: [
         { path: 'brand.x', label: 'Logo center X', hint: 'In pixels from the left' },
         { path: 'brand.y', label: 'Logo center Y', hint: 'In pixels from the top' },
         { path: 'brand.labelSize', label: 'Brand name size' },
@@ -119,13 +182,11 @@ export const brandingIsTickerControls = defineControls<BrandingIsTickerProps>({
     },
     {
       title: 'End card',
-      fields: [
-        { path: 'card.show', label: 'Show end card' },
+      fields: [{ path: 'card.show', label: 'Show end card' }],
+      more: [
         { path: 'card.button', label: 'Button text', hint: 'Leave empty to hide the button' },
         { path: 'card.website', label: 'Website', hint: 'Leave empty to hide this row' },
         { path: 'card.phone', label: 'Phone', hint: 'Leave empty to hide this row' },
-      ],
-      more: [
         { path: 'card.buttonArrow', label: 'Show button arrow' },
         { path: 'card.logoSize', label: 'Logo size' },
         { path: 'card.nameSize', label: 'Brand name size' },
@@ -149,79 +210,28 @@ export const brandingIsTickerControls = defineControls<BrandingIsTickerProps>({
       ],
     },
     {
-      title: 'Colors',
-      fields: [
-        {
-          link: ['type.lead', 'brand.mark', 'brand.label', 'card.background'],
-          label: 'Light color',
-          hint: 'Opening line, logo tile, brand name and the end card the tile opens into',
-        },
-        {
-          link: ['type.active', 'underline.color'],
-          label: 'Highlight color',
-          hint: 'Active word and its underline',
-        },
-        {
-          path: 'type.dim',
-          label: 'Other words color',
-          hint: 'Outline, or fill when the outline width is 0, of the words around the active one',
-        },
-        {
-          path: 'card.accent',
-          label: 'End card accent',
-          hint: 'Logo tile, button gradient start and contact icons',
-        },
-      ],
-      more: [
-        { path: 'type.lead', label: 'Opening line color' },
-        { path: 'type.active', label: 'Active word color' },
-        { path: 'underline.color', label: 'Underline color' },
-        { path: 'brand.mark', label: 'Logo tile color' },
-        { path: 'brand.cutout', label: 'Logo symbol color' },
-        { path: 'brand.label', label: 'Brand name color' },
-        {
-          path: 'card.background',
-          label: 'End card background',
-          hint: 'Also the color the logo tile turns into as it opens',
-        },
-        {
-          path: 'card.accentDeep',
-          label: 'End card deep accent',
-          hint: 'Where the logo tile and button gradients end',
-        },
-        { path: 'card.text', label: 'End card text color' },
-        { path: 'card.buttonText', label: 'Button text color' },
-      ],
-    },
-    {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
-        LOOK.paperLine,
         LOOK.paperSpacing,
         LOOK.paperMargin,
-        { path: 'look.accent', label: 'Margin line color' },
       ],
     },
     {
-      title: 'Timing',
-      fields: [
-        MOTION.speed,
+      title: 'Timing and motion',
+      fields: [MOTION.speed, MOTION.enter, MOTION.exit],
+      more: [
         {
           path: 'card.delay',
           label: 'End card delay',
           hint: 'Frames after the last word before the logo tile opens',
         },
         { path: 'card.openFrames', label: 'Tile opening length', hint: 'In frames' },
-      ],
-      more: [
-        MOTION.enter,
         MOTION.enterFrames,
-        MOTION.exit,
         MOTION.exitFrames,
         {
           path: 'card.logoStart',

@@ -9,16 +9,40 @@ export const typewriterControls = defineControls<TypewriterProps>({
       fields: [
         { path: 'text', label: 'Line' },
         { path: 'size', label: 'Text size', hint: 'In pixels' },
+      ],
+      more: [
         { path: 'weight', label: 'Font weight' },
+        { path: 'tracking', label: 'Letter spacing', hint: 'In em' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
         {
           link: ['look.ink', 'caretColor', 'selectionColor'],
-          label: 'Text color',
-          hint: 'Also colors the caret, the opening block and the selection highlight',
+          label: 'Primary color',
+          hint: 'The typed letters, the caret, the opening block and the selection highlight together',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together. Selected letters also take the center color',
         },
       ],
       more: [
-        { path: 'tracking', label: 'Letter spacing', hint: 'In em' },
-        { ...LOOK.ink, label: 'Letter color', hint: 'The typed letters only' },
+        { ...LOOK.ink, label: 'Text color', hint: 'The typed letters only' },
+        { path: 'caretColor', label: 'Caret color', hint: 'The caret and the opening block' },
+        {
+          path: 'selectionColor',
+          label: 'Selection color',
+          hint: 'Highlight behind the selected line. The selected letters take the background color',
+        },
+        {
+          ...LOOK.background,
+          label: 'Background center color',
+          hint: 'Center of the background. Selected letters take this color',
+        },
+        { ...LOOK.backgroundEdge, label: 'Background corner color' },
       ],
     },
     {
@@ -27,7 +51,7 @@ export const typewriterControls = defineControls<TypewriterProps>({
         {
           path: 'intro',
           label: 'Intro style',
-          hint: 'Block: a block shrinks into the caret, then the line types. None: types straight away. Typed: the whole line rises in. Cut: the whole line appears at once',
+          hint: 'Block: a block shrinks into the caret, then the line types. None: no block, the caret blinks for the pause and then the line types. Typed: the whole line rises in. Cut: the whole line appears at once',
         },
         {
           path: 'charFrames',
@@ -35,13 +59,13 @@ export const typewriterControls = defineControls<TypewriterProps>({
           hint: 'Lower types faster. Also paces the erase outro',
         },
         { path: 'showCaret', label: 'Show caret' },
+      ],
+      more: [
         {
           path: 'zoom',
           label: 'Start zoom',
-          hint: 'The line eases from this scale down to full size until the outro begins. 1 keeps it still',
+          hint: 'The line eases from this scale down to full size, settling when the outro starts (after the erase for Erase). 1 keeps it still',
         },
-      ],
-      more: [
         { path: 'delay', label: 'Start delay', hint: 'In frames' },
         {
           path: 'caretHold',
@@ -49,7 +73,6 @@ export const typewriterControls = defineControls<TypewriterProps>({
           hint: 'In frames. Block and None intros only',
         },
         { path: 'caretPulse', label: 'Caret blink length', hint: 'Frames per blink' },
-        { path: 'caretColor', label: 'Caret color', hint: 'Also colors the opening block' },
       ],
     },
     {
@@ -63,21 +86,15 @@ export const typewriterControls = defineControls<TypewriterProps>({
         {
           path: 'outroAt',
           label: 'Outro starts at',
-          hint: 'Frame number. The start zoom finishes settling here too',
-        },
-      ],
-      more: [
-        {
-          path: 'selectionColor',
-          label: 'Selection color',
-          hint: 'Highlight behind the selected line. The selected letters take the background color',
+          hint: 'Frame number at speed 1',
         },
       ],
     },
     {
       title: 'Layout',
-      fields: [PLACEMENT.horizontal, PLACEMENT.vertical],
+      fields: [PLACEMENT.horizontal],
       more: [
+        PLACEMENT.vertical,
         {
           ...PLACEMENT.width,
           hint: 'The line never wraps. Sets where left or right aligned text sits',
@@ -88,9 +105,9 @@ export const typewriterControls = defineControls<TypewriterProps>({
     },
     {
       title: 'Background',
-      fields: [LOOK.showBackdrop, LOOK.background, LOOK.grain],
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.backgroundEdge,
+        LOOK.grain,
         LOOK.spotlight,
         LOOK.liveGrain,
         LOOK.paper,
@@ -102,15 +119,15 @@ export const typewriterControls = defineControls<TypewriterProps>({
     },
     {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
         {
           ...MOTION.speed,
           hint: 'Scales the typing, caret and outro timing. Entrance and exit keep their length',
         },
+        MOTION.enterFrames,
+        MOTION.exitFrames,
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: ['look.muted', 'motion.float'],

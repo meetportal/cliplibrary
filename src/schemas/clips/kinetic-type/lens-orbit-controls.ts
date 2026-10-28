@@ -20,8 +20,10 @@ export const lensOrbitControls = defineControls<LensOrbitProps>({
         {
           path: 'highlight',
           label: 'Highlighted words',
-          hint: 'Separated by spaces. Big words listed here use the highlight color',
+          hint: 'Separated by spaces. Big words listed here use the primary color',
         },
+      ],
+      more: [
         { path: 'face', label: 'Font' },
         { path: 'weight', label: 'Font weight' },
       ],
@@ -30,25 +32,32 @@ export const lensOrbitControls = defineControls<LensOrbitProps>({
       title: 'Colors',
       fields: [
         {
-          link: ['look.ink', 'satelliteColor'],
-          label: 'Word color',
-          hint: 'Big words and the upper orbiting word',
+          link: ['look.accent', 'satelliteAccent'],
+          label: 'Primary color',
+          hint: 'Highlighted big words, the lower orbiting word and the corner glow',
         },
         {
-          link: ['look.accent', 'satelliteAccent'],
-          label: 'Highlight color',
-          hint: 'Highlighted words, the lower orbiting word and the corner glow',
+          link: ['look.ink', 'satelliteColor'],
+          label: 'Text color',
+          hint: 'Big words that are not highlighted and the upper orbiting word',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and edges of the background together',
         },
       ],
       more: [
-        { ...LOOK.ink, label: 'Big word color', hint: 'Big words that are not highlighted' },
         {
           ...LOOK.accent,
           label: 'Highlight and glow color',
           hint: 'Highlighted big words and the corner glow',
         },
-        { path: 'satelliteColor', label: 'Upper orbiting word color' },
         { path: 'satelliteAccent', label: 'Lower orbiting word color' },
+        { ...LOOK.ink, label: 'Big word color', hint: 'Big words that are not highlighted' },
+        { path: 'satelliteColor', label: 'Upper orbiting word color' },
+        LOOK.background,
+        LOOK.backgroundEdge,
       ],
     },
     {
@@ -59,6 +68,8 @@ export const lensOrbitControls = defineControls<LensOrbitProps>({
           label: 'Sphere size',
           hint: 'Radius the words wrap around. Words are sized in degrees, so they grow with it',
         },
+      ],
+      more: [
         {
           path: 'wordHeight',
           label: 'Word size',
@@ -69,8 +80,6 @@ export const lensOrbitControls = defineControls<LensOrbitProps>({
           label: 'Orbiting word size',
           hint: 'Relative to the big words',
         },
-      ],
-      more: [
         {
           path: 'maxArc',
           label: 'Longest word width',
@@ -93,9 +102,9 @@ export const lensOrbitControls = defineControls<LensOrbitProps>({
       fields: [
         { path: 'holdFrames', label: 'Hold on each word', hint: 'In frames' },
         { path: 'turnFrames', label: 'Turn length', hint: 'In frames. Lower snaps faster' },
-        { path: 'introFrames', label: 'Intro length', hint: 'In frames' },
       ],
       more: [
+        { path: 'introFrames', label: 'Intro length', hint: 'In frames' },
         { path: 'delay', label: 'Start delay', hint: 'In frames' },
         {
           path: 'introSpin',
@@ -117,10 +126,10 @@ export const lensOrbitControls = defineControls<LensOrbitProps>({
           label: 'Motion blur',
           hint: 'Frames of movement blended into each frame. Higher smears the sphere more as it turns, 0 is sharp',
         },
-        { path: 'camera.distance', label: 'Camera distance', hint: 'Higher pulls the camera back' },
-        { path: 'camera.drift', label: 'Camera drift', hint: 'Slow handheld sway' },
       ],
       more: [
+        { path: 'camera.distance', label: 'Camera distance', hint: 'Higher pulls the camera back' },
+        { path: 'camera.drift', label: 'Camera drift', hint: 'Slow handheld sway' },
         { path: 'camera.fieldOfView', label: 'Field of view', hint: 'In degrees' },
         {
           path: 'lens.distortion',
@@ -144,15 +153,13 @@ export const lensOrbitControls = defineControls<LensOrbitProps>({
       title: 'Background',
       fields: [
         { ...LOOK.showBackdrop, hint: 'Off renders the words over transparency' },
-        LOOK.background,
         {
           path: 'lens.glow',
           label: 'Corner glow',
-          hint: 'Glow in the highlight color, shown with the background on',
+          hint: 'Glow in the primary color, shown with the background on',
         },
       ],
       more: [
-        LOOK.backgroundEdge,
         { path: 'lens.glowX', label: 'Glow position across', hint: '0 is left, 1 is right' },
         { path: 'lens.glowY', label: 'Glow position up', hint: '0 is bottom, 1 is top' },
         {
@@ -164,15 +171,15 @@ export const lensOrbitControls = defineControls<LensOrbitProps>({
     },
     {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
         {
           ...MOTION.speed,
           hint: 'Scales the intro, holds, turns, wobble and camera drift. Entrance and exit keep their length',
         },
+        MOTION.enterFrames,
+        MOTION.exitFrames,
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: [

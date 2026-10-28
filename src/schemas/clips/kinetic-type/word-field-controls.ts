@@ -17,8 +17,10 @@ export const wordFieldControls = defineControls<WordFieldProps>({
         {
           path: 'highlight',
           label: 'Highlighted words',
-          hint: 'Words from the list to paint in the accent color, separated by spaces. Case does not matter',
+          hint: 'Words from the list to paint in the primary color, separated by spaces. Case does not matter',
         },
+      ],
+      more: [
         { path: 'face', label: 'Font' },
         { path: 'weight', label: 'Font weight' },
       ],
@@ -26,25 +28,26 @@ export const wordFieldControls = defineControls<WordFieldProps>({
     {
       title: 'Colors',
       fields: [
-        { ...LOOK.ink, label: 'Word color' },
         {
           link: ['look.accent', 'glowColor'],
-          label: 'Accent color',
-          hint: 'Highlighted words and the background glow',
+          label: 'Primary color',
+          hint: `The highlighted words and the background glow together. The glow ${NEEDS_BACKGROUND.toLowerCase()}`,
         },
-        LOOK.background,
-        { path: 'lens.glow', label: 'Glow strength', hint: NEEDS_BACKGROUND },
-        { ...LOOK.showBackdrop, hint: 'Off leaves the words on a transparent background' },
+        { ...LOOK.ink, label: 'Text color', hint: 'Every word that is not highlighted' },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: `Center and corners of the background together. ${NEEDS_BACKGROUND}`,
+        },
       ],
       more: [
         { ...LOOK.accent, label: 'Highlight color', hint: 'The highlighted words only' },
         { path: 'glowColor', label: 'Glow color', hint: NEEDS_BACKGROUND },
+        { ...LOOK.background, hint: NEEDS_BACKGROUND },
         {
           ...LOOK.backgroundEdge,
           hint: `Color the background fades to at the corners. ${NEEDS_BACKGROUND}`,
         },
-        { path: 'lens.glowX', label: 'Glow position across', hint: '0 is left, 1 is right' },
-        { path: 'lens.glowY', label: 'Glow height', hint: '0 is bottom, 1 is top' },
       ],
     },
     {
@@ -52,14 +55,14 @@ export const wordFieldControls = defineControls<WordFieldProps>({
       fields: [
         { path: 'columns', label: 'Columns' },
         { path: 'rows', label: 'Rows' },
+      ],
+      more: [
         { path: 'minSize', label: 'Smallest word size' },
         {
           path: 'maxSize',
           label: 'Largest word size',
           hint: 'Long words still shrink to fit their spot',
         },
-      ],
-      more: [
         { path: 'width', label: 'Field width' },
         { path: 'depth', label: 'Field depth', hint: 'How far the field reaches front to back' },
         {
@@ -83,14 +86,14 @@ export const wordFieldControls = defineControls<WordFieldProps>({
           hint: 'Frames between each word rising, rippling out from the centre',
         },
         { path: 'riseFrames', label: 'Rise length', hint: 'In frames, per word' },
+      ],
+      more: [
         {
           path: 'rise',
           label: 'Rise depth',
           hint: 'How far below the field each word starts',
         },
         { path: 'float', label: 'Bob height', hint: 'How much each word bobs once it lands' },
-      ],
-      more: [
         { path: 'delay', label: 'Start delay', hint: 'In frames, before the first word rises' },
         {
           path: 'riseTip',
@@ -102,16 +105,14 @@ export const wordFieldControls = defineControls<WordFieldProps>({
     },
     {
       title: 'Camera',
-      fields: [
-        { path: 'tilt', label: 'Field tilt', hint: 'Degrees the field leans back' },
+      fields: [{ path: 'tilt', label: 'Field tilt', hint: 'Degrees the field leans back' }],
+      more: [
         {
           path: 'spin',
           label: 'Turn over the clip',
           hint: 'Degrees the field rotates from start to end',
         },
         { path: 'camera.distance', label: 'Camera distance' },
-      ],
-      more: [
         { path: 'turn', label: 'Field rotation', hint: 'Rotation in degrees at mid-clip' },
         {
           path: 'slide',
@@ -134,13 +135,13 @@ export const wordFieldControls = defineControls<WordFieldProps>({
           label: 'Motion blur',
           hint: 'Frames of movement blended into each frame',
         },
+      ],
+      more: [
         {
           path: 'lens.distortion',
           label: 'Lens bulge',
           hint: 'Barrel distortion toward the edges',
         },
-      ],
-      more: [
         { path: 'lens.grain', label: 'Film grain', hint: NEEDS_BACKGROUND },
         {
           path: 'lens.fringe',
@@ -160,16 +161,33 @@ export const wordFieldControls = defineControls<WordFieldProps>({
       ],
     },
     {
+      title: 'Background',
+      fields: [{ ...LOOK.showBackdrop, hint: 'Off leaves the words on a transparent background' }],
+      more: [
+        { path: 'lens.glow', label: 'Glow strength', hint: NEEDS_BACKGROUND },
+        {
+          path: 'lens.glowX',
+          label: 'Glow position across',
+          hint: `0 is left, 1 is right. ${NEEDS_BACKGROUND}`,
+        },
+        {
+          path: 'lens.glowY',
+          label: 'Glow height',
+          hint: `0 is bottom, 1 is top. ${NEEDS_BACKGROUND}`,
+        },
+      ],
+    },
+    {
       title: 'Motion',
-      fields: [
-        MOTION.enter,
-        MOTION.exit,
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
+        MOTION.enterFrames,
+        MOTION.exitFrames,
         {
           ...MOTION.speed,
           hint: 'Scales the rise, bob, turn and camera sway. Entrance and exit keep their length',
         },
       ],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: [

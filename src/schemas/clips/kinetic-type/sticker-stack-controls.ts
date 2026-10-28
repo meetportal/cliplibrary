@@ -14,9 +14,9 @@ export const stickerStackControls = defineControls<StickerStackProps>({
         },
         { path: 'size', label: 'Sticker size' },
         { path: 'face', label: 'Font' },
-        { path: 'weight', label: 'Font weight' },
       ],
       more: [
+        { path: 'weight', label: 'Font weight' },
         {
           path: 'badgeScale',
           label: 'Badge size',
@@ -30,23 +30,34 @@ export const stickerStackControls = defineControls<StickerStackProps>({
       fields: [
         {
           ...LOOK.accent,
-          label: 'Accent sticker color',
+          label: 'Primary color',
           hint: 'Fill of the accent stickers and the background glow',
         },
         {
           path: 'paper',
-          label: 'Light sticker color',
+          label: 'Surface color',
           hint: 'Fill of the light stickers, plus the outline and text of the outlined ones',
         },
         {
           link: ['paperInk', 'accentInk'],
-          label: 'Sticker text color',
+          label: 'Text color',
           hint: 'Text on the light and accent stickers',
+        },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together. The center also fills the outlined stickers',
         },
       ],
       more: [
         { path: 'paperInk', label: 'Text on light stickers' },
         { path: 'accentInk', label: 'Text on accent stickers' },
+        {
+          ...LOOK.background,
+          label: 'Background center',
+          hint: 'Center of the background, also the fill of the outlined stickers',
+        },
+        LOOK.backgroundEdge,
       ],
     },
     {
@@ -57,7 +68,6 @@ export const stickerStackControls = defineControls<StickerStackProps>({
           label: 'Time between stickers',
           hint: 'In frames. Lower stacks them faster',
         },
-        { path: 'popFrames', label: 'Pop length', hint: 'In frames' },
         {
           path: 'overshoot',
           label: 'Bounce',
@@ -65,6 +75,7 @@ export const stickerStackControls = defineControls<StickerStackProps>({
         },
       ],
       more: [
+        { path: 'popFrames', label: 'Pop length', hint: 'In frames' },
         { path: 'delay', label: 'Start delay', hint: 'In frames, before the first sticker' },
         {
           path: 'kick',
@@ -81,6 +92,8 @@ export const stickerStackControls = defineControls<StickerStackProps>({
           label: 'Trail direction',
           hint: 'Degrees. 0 runs left to right, positive climbs upward',
         },
+      ],
+      more: [
         {
           path: 'step',
           label: 'Spacing along the trail',
@@ -91,8 +104,6 @@ export const stickerStackControls = defineControls<StickerStackProps>({
           label: 'Side-to-side scatter',
           hint: 'How far stickers zigzag to either side of the trail. 0 lines them up',
         },
-      ],
-      more: [
         { path: 'spin', label: 'Tilt variation', hint: 'Maximum random tilt in degrees' },
         {
           path: 'seed',
@@ -109,6 +120,8 @@ export const stickerStackControls = defineControls<StickerStackProps>({
           label: 'Camera distance',
           hint: 'Higher shows more of the trail',
         },
+      ],
+      more: [
         {
           path: 'chase',
           label: 'Catch-up time',
@@ -124,8 +137,6 @@ export const stickerStackControls = defineControls<StickerStackProps>({
           label: 'End pull-back',
           hint: 'How much the camera widens as it settles on the last stickers. 0 holds the distance',
         },
-      ],
-      more: [
         { path: 'camera.fieldOfView', label: 'Field of view' },
         { path: 'camera.drift', label: 'Camera drift', hint: 'Gentle handheld sway' },
         {
@@ -149,19 +160,12 @@ export const stickerStackControls = defineControls<StickerStackProps>({
     },
     {
       title: 'Background',
-      fields: [
-        LOOK.showBackdrop,
-        {
-          ...LOOK.background,
-          hint: 'Center of the background, also the fill of the outlined stickers',
-        },
-        LOOK.backgroundEdge,
-      ],
+      fields: [LOOK.showBackdrop],
       more: [
         {
           path: 'lens.glow',
-          label: 'Accent glow',
-          hint: 'Strength of the accent color glow on the background. Only shows while the background is on',
+          label: 'Glow strength',
+          hint: 'Strength of the primary color glow on the background. Only shows while the background is on',
         },
         { path: 'lens.glowX', label: 'Glow position across', hint: '0 is left, 1 is right' },
         { path: 'lens.glowY', label: 'Glow height', hint: '0 is bottom, 1 is top' },
@@ -174,8 +178,8 @@ export const stickerStackControls = defineControls<StickerStackProps>({
     },
     {
       title: 'Motion',
-      fields: [MOTION.enter, MOTION.exit, MOTION.speed],
-      more: [MOTION.enterFrames, MOTION.exitFrames],
+      fields: [MOTION.enter, MOTION.exit],
+      more: [MOTION.speed, MOTION.enterFrames, MOTION.exitFrames],
     },
   ],
   hidden: [

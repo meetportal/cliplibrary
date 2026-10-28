@@ -13,37 +13,80 @@ export const dominoWordsControls = defineControls<DominoWordsProps>({
           hint: 'Each word stands as one domino, left to right. Gap before sets how far the previous word tips before it rests on this one, and is ignored on the first word',
           items: { text: 'Word', size: 'Size', gap: 'Gap before' },
         },
+      ],
+      more: [
         { path: 'type.weight', label: 'Font weight' },
         {
           path: 'type.outline',
           label: 'Outline width',
           hint: 'Standing words are hollow outlines that fill in as they tip. 0 makes them solid',
         },
-      ],
-      more: [
         {
           path: 'type.condense',
           label: 'Letter width',
           hint: 'Squeezes or stretches the words sideways, which also changes how far they reach',
         },
+        { path: 'type.colorFrames', label: 'Color change length', hint: 'In frames' },
+        { path: 'type.firstActive', label: 'First word starts lit' },
+      ],
+    },
+    {
+      title: 'Colors',
+      fields: [
+        {
+          link: ['orb.color', 'finale.color', 'brand.dotColor'],
+          label: 'Primary color',
+          hint: 'The orb, the landed final word with its glow and floor tint, and the ring mark beside the brand name',
+        },
+        {
+          link: ['type.activeColor', 'brand.color'],
+          label: 'Text color',
+          hint: 'Toppled words, and the brand name with its tagline',
+        },
+        {
+          link: ['type.idleColor', 'footer.color'],
+          label: 'Secondary color',
+          hint: 'Standing word outlines and the footer',
+        },
+        { path: 'floor.color', label: 'Accent color', hint: 'The glowing floor line' },
+        {
+          link: ['look.background', 'look.backgroundEdge'],
+          label: 'Background color',
+          hint: 'Center and corners of the background together',
+        },
+      ],
+      more: [
+        { path: 'orb.color', label: 'Orb color' },
+        { path: 'finale.color', label: 'Final word color' },
+        { path: 'brand.dotColor', label: 'Ring mark color' },
+        {
+          path: 'type.activeColor',
+          label: 'Toppled word color',
+          hint: 'Words turn this color as they are hit',
+        },
+        { path: 'brand.color', label: 'Brand text color', hint: 'The brand name and its tagline' },
+        { path: 'type.idleColor', label: 'Standing word color' },
+        { path: 'footer.color', label: 'Footer color' },
+        LOOK.background,
+        LOOK.backgroundEdge,
       ],
     },
     {
       title: 'Domino fall',
       fields: [
         {
-          path: 'orb.hitFrame',
-          label: 'First hit at',
-          hint: 'Frame number where the orb strikes the first word',
-        },
-        {
           path: 'fall.stepFrames',
           label: 'Frames between hits',
           hint: 'How long each word takes to tip into the next. Lower is a faster chain',
         },
-        { path: 'fall.lastFrames', label: 'Last word fall length', hint: 'In frames' },
       ],
       more: [
+        {
+          path: 'orb.hitFrame',
+          label: 'First hit at',
+          hint: 'Frame number where the orb strikes the first word',
+        },
+        { path: 'fall.lastFrames', label: 'Last word fall length', hint: 'In frames' },
         {
           path: 'layout.startX',
           label: 'First word position',
@@ -78,30 +121,9 @@ export const dominoWordsControls = defineControls<DominoWordsProps>({
       ],
     },
     {
-      title: 'Colors',
-      fields: [
-        {
-          link: ['orb.color', 'finale.color', 'brand.dotColor'],
-          label: 'Neon accent color',
-          hint: 'Orb, the landed final word with its glow and floor tint, and the brand dot',
-        },
-        {
-          link: ['type.activeColor', 'brand.color', 'orb.stripeColor'],
-          label: 'Light color',
-          hint: 'Toppled words, brand name and orb stripes',
-        },
-        { path: 'type.idleColor', label: 'Standing word color' },
-        { path: 'floor.color', label: 'Floor line color' },
-      ],
+      title: 'Final word glow',
+      fields: [],
       more: [
-        {
-          path: 'type.activeColor',
-          label: 'Toppled word color',
-          hint: 'Words turn this color as they are hit',
-        },
-        { path: 'type.colorFrames', label: 'Color change length', hint: 'In frames' },
-        { path: 'type.firstActive', label: 'First word starts lit' },
-        { path: 'finale.color', label: 'Final word color' },
         { path: 'finale.flashColor', label: 'Landing flash color' },
         {
           path: 'finale.flashFrames',
@@ -124,13 +146,10 @@ export const dominoWordsControls = defineControls<DominoWordsProps>({
     },
     {
       title: 'Orb',
-      fields: [
-        { path: 'orb.show', label: 'Show orb' },
+      fields: [{ path: 'orb.show', label: 'Show orb' }],
+      more: [
         { path: 'orb.radius', label: 'Orb size', hint: 'Radius in pixels' },
         { path: 'orb.speed', label: 'Roll-in speed', hint: 'Pixels per frame before the hit' },
-      ],
-      more: [
-        { path: 'orb.color', label: 'Orb color' },
         { path: 'orb.shade', label: 'Orb edge shade' },
         { path: 'orb.stripes', label: 'Show stripes' },
         { path: 'orb.stripeColor', label: 'Stripe color' },
@@ -144,16 +163,14 @@ export const dominoWordsControls = defineControls<DominoWordsProps>({
     },
     {
       title: 'Floor',
-      fields: [
+      fields: [{ path: 'floor.glow', label: 'Floor glow' }],
+      more: [
         {
           path: 'floor.y',
           label: 'Floor height',
           hint: 'Distance of the floor line from the top, in pixels',
         },
-        { path: 'floor.glow', label: 'Floor glow' },
         { path: 'floor.reflection', label: 'Reflection strength' },
-      ],
-      more: [
         { path: 'floor.thickness', label: 'Line thickness' },
         {
           path: 'floor.inset',
@@ -170,7 +187,8 @@ export const dominoWordsControls = defineControls<DominoWordsProps>({
     },
     {
       title: 'Camera',
-      fields: [
+      fields: [],
+      more: [
         {
           path: 'camera.landingX',
           label: 'Final word landing spot',
@@ -181,8 +199,6 @@ export const dominoWordsControls = defineControls<DominoWordsProps>({
           label: 'Pull back at',
           hint: 'Frame number where the camera zooms out to show the whole line',
         },
-      ],
-      more: [
         { path: 'camera.zoomFrames', label: 'Pull back length', hint: 'In frames' },
         {
           path: 'camera.fitPadding',
@@ -207,35 +223,25 @@ export const dominoWordsControls = defineControls<DominoWordsProps>({
     {
       title: 'Branding',
       fields: [
-        { path: 'brand.show', label: 'Show brand' },
         { path: 'brand.name', label: 'Brand name' },
-        { path: 'brand.tagline', label: 'Tagline' },
-        { path: 'footer.show', label: 'Show footer' },
         { path: 'footer.text', label: 'Footer text' },
       ],
       more: [
-        { path: 'brand.color', label: 'Brand text color' },
-        { path: 'brand.dotColor', label: 'Brand dot color' },
+        { path: 'brand.show', label: 'Show brand' },
+        { path: 'brand.tagline', label: 'Tagline' },
+        { path: 'footer.show', label: 'Show footer' },
         { path: 'brand.size', label: 'Brand size' },
         { path: 'brand.right', label: 'Brand right margin' },
         { path: 'brand.top', label: 'Brand top margin' },
-        { path: 'footer.color', label: 'Footer color' },
         { path: 'footer.lines', label: 'Footer side lines' },
         { path: 'footer.size', label: 'Footer text size' },
         { path: 'footer.bottom', label: 'Footer bottom margin' },
       ],
     },
     {
-      title: 'Scene',
-      fields: [
-        LOOK.background,
-        MOTION.enter,
-        MOTION.exit,
-        { ...MOTION.exitFrames, hint: 'In frames. Starts at 0, so raise it to see the exit' },
-      ],
+      title: 'Background',
+      fields: [LOOK.showBackdrop],
       more: [
-        LOOK.showBackdrop,
-        LOOK.backgroundEdge,
         LOOK.spotlight,
         LOOK.grain,
         LOOK.liveGrain,
@@ -244,6 +250,13 @@ export const dominoWordsControls = defineControls<DominoWordsProps>({
         LOOK.paperSpacing,
         LOOK.paperMargin,
         { path: 'look.accent', label: 'Margin line color' },
+      ],
+    },
+    {
+      title: 'Motion',
+      fields: [MOTION.enter, MOTION.exit],
+      more: [
+        { ...MOTION.exitFrames, hint: 'In frames. Starts at 0, so raise it to see the exit' },
         MOTION.enterFrames,
         {
           ...MOTION.speed,
