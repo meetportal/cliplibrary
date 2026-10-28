@@ -12,36 +12,49 @@ export const LOOP = {
   white: '#ffffff',
 };
 
-const CLEAR = 'rgba(0,0,0,0)';
+export const CLEAR = 'rgba(0,0,0,0)';
+export const GRID_LINE = 'rgba(255,255,255,0.05)';
 
-export const copy = (
-  content: string,
-  x: number,
-  y: number,
-  width: number,
-  fontSize: number,
-  fill: string,
-  style: Partial<TextElement> = {},
-) =>
-  text(content, x, y, width, {
-    fontFamily: 'Poppins',
-    fontSize,
-    fontWeight: 400,
-    fill,
-    lineHeight: 1.45,
-    ...style,
-  });
+export const HEADING_FONT = { label: 'Heading font', value: 'Poppins' } as const;
+export const BODY_FONT = { label: 'Body font', value: 'Poppins' } as const;
 
-export const grid = (width: number, height: number, step: number) => [
+export const copy =
+  (fontFamily: string) =>
+  (
+    content: string,
+    x: number,
+    y: number,
+    width: number,
+    fontSize: number,
+    fill: string,
+    style: Partial<TextElement> = {},
+  ) =>
+    text(content, x, y, width, {
+      fontFamily,
+      fontSize,
+      fontWeight: 400,
+      fill,
+      lineHeight: 1.45,
+      ...style,
+    });
+
+export const grid = (width: number, height: number, step: number, fill: string) => [
   Array.from({ length: Math.floor(width / step) }, (_, index) =>
-    rect((index + 1) * step, 0, 1.5, height, 'rgba(255,255,255,0.05)', { name: 'Grid line' }),
+    rect((index + 1) * step, 0, 1.5, height, fill, { name: 'Grid line' }),
   ),
   Array.from({ length: Math.floor(height / step) }, (_, index) =>
-    rect(0, (index + 1) * step, width, 1.5, 'rgba(255,255,255,0.05)', { name: 'Grid line' }),
+    rect(0, (index + 1) * step, width, 1.5, fill, { name: 'Grid line' }),
   ),
 ];
 
-export const swirl = (x: number, y: number, size: number, stroke: string, strokeWidth: number) =>
+export const swirl = (
+  x: number,
+  y: number,
+  size: number,
+  stroke: string,
+  strokeWidth: number,
+  clear: string,
+) =>
   group(
     path(
       'M10 30 C120 -10 250 30 240 130 C230 230 100 230 110 150 C120 70 290 50 320 190 C340 280 300 330 350 370',
@@ -49,14 +62,20 @@ export const swirl = (x: number, y: number, size: number, stroke: string, stroke
       y,
       size,
       size,
-      CLEAR,
+      clear,
       { width: 380, height: 390 },
       { stroke, strokeWidth, name: 'Swirl' },
     ),
     icon('pencil', x + size * 0.86, y + size * 0.9, size * 0.2, stroke, { strokeWidth: 2 }),
   );
 
-export const bezier = (x: number, y: number, width: number, height: number, stroke: string) =>
+export interface BezierStyle {
+  stroke: string;
+  anchor: string;
+  clear: string;
+}
+
+export const bezier = (x: number, y: number, width: number, height: number, style: BezierStyle) =>
   group(
     path(
       `M0 ${height} C${width * 0.7} ${height} ${width} ${height * 0.6} ${width} 0`,
@@ -64,9 +83,9 @@ export const bezier = (x: number, y: number, width: number, height: number, stro
       y,
       width,
       height,
-      CLEAR,
+      style.clear,
       { width, height },
-      { stroke, strokeWidth: 3, name: 'Bezier curve' },
+      { stroke: style.stroke, strokeWidth: 3, name: 'Bezier curve' },
     ),
     (
       [
@@ -75,41 +94,54 @@ export const bezier = (x: number, y: number, width: number, height: number, stro
         [x + width * 0.92 - 7, y + height * 0.4 - 7],
       ] as const
     ).map(([hx, hy]) =>
-      rect(hx, hy, 14, 14, LOOP.white, { stroke, strokeWidth: 2, name: 'Anchor' }),
+      rect(hx, hy, 14, 14, style.anchor, { stroke: style.stroke, strokeWidth: 2, name: 'Anchor' }),
     ),
-    icon('pen-tool', x + width - 20, y - 50, 44, stroke, { strokeWidth: 2 }),
+    icon('pen-tool', x + width - 20, y - 50, 44, style.stroke, { strokeWidth: 2 }),
   );
 
-export const swatches = (x: number, y: number, size: number) =>
+export interface SwatchStyle {
+  back: string;
+  front: string;
+  top: string;
+  edge: string;
+}
+
+export const swatches = (x: number, y: number, size: number, style: SwatchStyle) =>
   group(
-    rect(x, y + size * 0.1, size * 0.7, size * 0.9, LOOP.lilac, {
+    rect(x, y + size * 0.1, size * 0.7, size * 0.9, style.back, {
       cornerRadius: size * 0.08,
       rotation: -14,
-      stroke: LOOP.deep,
+      stroke: style.edge,
       strokeWidth: size * 0.04,
       name: 'Swatch',
     }),
-    rect(x + size * 0.22, y, size * 0.7, size * 0.9, LOOP.white, {
+    rect(x + size * 0.22, y, size * 0.7, size * 0.9, style.front, {
       cornerRadius: size * 0.08,
-      stroke: LOOP.deep,
+      stroke: style.edge,
       strokeWidth: size * 0.04,
       name: 'Swatch',
     }),
-    rect(x + size * 0.22, y, size * 0.7, size * 0.36, LOOP.lime, {
+    rect(x + size * 0.22, y, size * 0.7, size * 0.36, style.top, {
       cornerRadius: size * 0.08,
-      stroke: LOOP.deep,
+      stroke: style.edge,
       strokeWidth: size * 0.04,
       name: 'Swatch colour',
     }),
   );
+
+export interface RingStyle {
+  stroke: string;
+  track: string;
+  clear: string;
+}
 
 export const ring = (
   cx: number,
   cy: number,
   radius: number,
   share: number,
-  stroke: string,
   strokeWidth: number,
+  style: RingStyle,
 ) => {
   const box = radius * 2 + strokeWidth;
   const center = box / 2;
@@ -123,9 +155,9 @@ export const ring = (
       cy - center,
       box,
       box,
-      CLEAR,
+      style.clear,
       { width: box, height: box },
-      { stroke: 'rgba(255,255,255,0.14)', strokeWidth, name: 'Ring track' },
+      { stroke: style.track, strokeWidth, name: 'Ring track' },
     ),
     path(
       `M${center} ${center - radius} A${radius} ${radius} 0 ${share > 0.5 ? 1 : 0} 1 ${endX} ${endY}`,
@@ -133,21 +165,36 @@ export const ring = (
       cy - center,
       box,
       box,
-      CLEAR,
+      style.clear,
       { width: box, height: box },
-      { stroke, strokeWidth, name: 'Ring value' },
+      { stroke: style.stroke, strokeWidth, name: 'Ring value' },
     ),
   );
 };
 
-export const outlinePill = (label: string, x: number, y: number, width: number, size = 26) => [
-  rect(x, y, width, size * 2.4, CLEAR, {
+export interface PillStyle {
+  stroke: string;
+  ink: string;
+  clear: string;
+  fontFamily: string;
+}
+
+export const outlinePill = (
+  name: string,
+  label: string,
+  x: number,
+  y: number,
+  width: number,
+  style: PillStyle,
+  size = 26,
+) => [
+  rect(x, y, width, size * 2.4, style.clear, {
     cornerRadius: size * 1.2,
-    stroke: LOOP.lime,
+    stroke: style.stroke,
     strokeWidth: 3,
-    name: `${label} pill`,
+    name: `${name} pill`,
   }),
-  copy(label, x, y + size * 0.6, width, size, LOOP.white, {
+  copy(style.fontFamily)(label, x, y + size * 0.6, width, size, style.ink, {
     fontWeight: 600,
     align: 'center',
     lineHeight: 1.2,

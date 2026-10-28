@@ -1,5 +1,6 @@
 import { definePack } from '../../../pack';
-import { bigStat, growStory, leadersChart, POSTS, TEAL } from './posts';
+import { leadersChart, TEAL } from './posts';
+import { bigStat, growStory, POSTS } from './posts-more';
 
 export const rubyKeyStatsPack = definePack({
   id: 'ruby-key-stats',
