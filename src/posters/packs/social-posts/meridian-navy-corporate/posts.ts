@@ -9,8 +9,9 @@ import {
   poly,
   rect,
   shadow,
-  template,
+  type ThemeSpec,
   text,
+  themed,
 } from '../../../kit';
 
 export const MERIDIAN = {
@@ -25,19 +26,18 @@ export const MERIDIAN = {
   grey: '#5b6475',
 };
 
-export const HEAD = 'Outfit';
-export const BODY = 'DM Sans';
+export const HEAD = { label: 'Heading font', value: 'Outfit' } as const;
+export const BODY = { label: 'Body font', value: 'DM Sans' } as const;
+export const HANDLE = { label: 'Handle', value: 'meridian.co' } as const;
 
 const { width: W, height: H } = POST_SIZE;
 
-export const navyBackdrop = (height: number) =>
-  rect(0, 0, W, height, linear(165, MERIDIAN.mid, MERIDIAN.deep), { name: 'Background' });
-
-export const coralBackdrop = (height: number) =>
-  rect(0, 0, W, height, linear(160, MERIDIAN.coralSoft, MERIDIAN.coral), { name: 'Background' });
+export const backdrop = (height: number, from: string, to: string, angle: number) =>
+  rect(0, 0, W, height, linear(angle, from, to), { name: 'Background' });
 
 export const cta = (
   label: string,
+  fontFamily: string,
   x: number,
   y: number,
   style: { fill: string; color: string; dot: string; dotIcon: string },
@@ -48,7 +48,7 @@ export const cta = (
     circle(x + 34, y + 34, 24, style.dot),
     icon('arrow-up-right', x + 20, y + 20, 28, style.dotIcon, { strokeWidth: 2.6 }),
     text(label, x + 72, y + 19, width - 84, {
-      fontFamily: BODY,
+      fontFamily,
       fontSize: 26,
       fontWeight: 600,
       fill: style.color,
@@ -56,178 +56,292 @@ export const cta = (
   );
 };
 
-export const ideasHeights = template(W, H, () => [
-  rect(0, 0, W, H, linear(180, MERIDIAN.white, MERIDIAN.sand), { name: 'Background' }),
+const ideasSpec = {
+  colors: {
+    background: {
+      value: MERIDIAN.white,
+      hint: 'Page gradient and the button label; its sand shade is the bottom of the gradient',
+    },
+    primary: {
+      value: MERIDIAN.navy,
+      hint: 'Where Plans Become, the button and the arrow on the button',
+    },
+    accent: { value: MERIDIAN.coral, hint: 'Real Momentum and the dot on the button' },
+    text: { value: MERIDIAN.grey, hint: 'Handle at the bottom' },
+  },
+  fonts: { heading: HEAD, body: BODY },
+  copy: {
+    intro: { label: 'Headline', value: 'Where Plans\nBecome' },
+    highlight: { label: 'Highlight', value: 'Real\nMomentum' },
+    button: { label: 'Button', value: 'Scale with us' },
+    handle: HANDLE,
+  },
+} as const satisfies ThemeSpec;
+
+export const ideasHeights = themed(W, H, ideasSpec, (t) => [
+  backdrop(H, t.color('background'), t.shade('background', MERIDIAN.sand), 180),
   photo('city-night', 650, 90, 370, 1170, {
     cornerRadius: 185,
     filters: { ...IMAGE_FILTER_PRESETS.mono, brightness: 1.15 },
     crop: { zoom: 2, focusX: 0.5, focusY: 0.5 },
   }),
-  text('Where Plans\nBecome', 80, 380, 560, {
-    fontFamily: HEAD,
+  text(t.copy('intro'), 80, 380, 560, {
+    fontFamily: t.font('heading'),
     fontSize: 84,
     fontWeight: 400,
-    fill: MERIDIAN.navy,
+    fill: t.color('primary'),
     lineHeight: 1.08,
   }),
-  text('Real\nMomentum', 80, 562, 560, {
-    fontFamily: HEAD,
+  text(t.copy('highlight'), 80, 562, 560, {
+    fontFamily: t.font('heading'),
     fontSize: 92,
     fontWeight: 800,
-    fill: MERIDIAN.coral,
+    fill: t.color('accent'),
     lineHeight: 1.04,
   }),
-  cta('Scale with us', 80, 820, {
-    fill: MERIDIAN.navy,
-    color: MERIDIAN.white,
-    dot: MERIDIAN.coral,
-    dotIcon: MERIDIAN.navy,
+  cta(t.copy('button'), t.font('body'), 80, 820, {
+    fill: t.color('primary'),
+    color: t.color('background'),
+    dot: t.color('accent'),
+    dotIcon: t.color('primary'),
   }),
-  text('meridian.co', 80, 1220, 400, {
-    fontFamily: BODY,
+  text(t.copy('handle'), 80, 1220, 400, {
+    fontFamily: t.font('body'),
     fontSize: 26,
     fontWeight: 600,
-    fill: MERIDIAN.grey,
+    fill: t.color('text'),
     letterSpacing: 2,
   }),
 ]);
 
-const zigzag = (x: number, y: number, width: number, height: number) => {
-  const teeth = 12;
-  const step = width / teeth;
-  const bottom: [number, number][] = Array.from({ length: teeth * 2 + 1 }, (_, index) => [
-    x + width - (index * step) / 2,
-    y + height - (index % 2 === 0 ? 0 : 20),
-  ]);
-  return poly([[x, y], [x + width, y], ...bottom], MERIDIAN.white, {
-    name: 'Receipt',
-    ...shadow(30, 16, 'rgba(11,20,38,0.22)'),
-  });
-};
-
 const BARCODE = [6, 3, 9, 3, 4, 10, 3, 6, 3, 8, 4, 3, 10, 5, 3, 7, 3, 9, 4, 6, 3, 10, 3, 5, 8];
 
-export const receiptPartners = template(W, H, () => [
-  coralBackdrop(H),
-  rect(220, 260, 640, 70, linear(180, '#f8fafc', '#a3acb9'), {
-    cornerRadius: 18,
-    name: 'Slot',
-    ...shadow(24, 10, 'rgba(0,0,0,0.25)'),
-  }),
-  rect(260, 300, 560, 12, MERIDIAN.deep, { cornerRadius: 6, name: 'Slit' }),
-  zigzag(300, 306, 480, 760),
-  text('meridian.co', 300, 360, 480, {
-    fontFamily: BODY,
-    fontSize: 24,
-    fontWeight: 500,
-    fill: MERIDIAN.grey,
-    align: 'center',
-  }),
-  rect(350, 410, 380, 3, MERIDIAN.sand, { name: 'Rule' }),
-  text('We Craft', 300, 450, 480, {
-    fontFamily: HEAD,
-    fontSize: 56,
-    fontWeight: 400,
-    fill: MERIDIAN.navy,
-    align: 'center',
-  }),
-  text('Lasting', 300, 515, 480, {
-    fontFamily: HEAD,
-    fontSize: 66,
-    fontWeight: 800,
-    fill: MERIDIAN.coral,
-    align: 'center',
-  }),
-  text('Alliances', 300, 592, 480, {
-    fontFamily: HEAD,
-    fontSize: 56,
-    fontWeight: 400,
-    fill: MERIDIAN.navy,
-    align: 'center',
-  }),
-  rect(350, 700, 380, 3, MERIDIAN.sand, { name: 'Rule' }),
-  text('Partners who stay for years', 300, 726, 480, {
-    fontFamily: BODY,
-    fontSize: 26,
-    fontWeight: 500,
-    fill: MERIDIAN.grey,
-    align: 'center',
-  }),
-  rect(350, 790, 380, 3, MERIDIAN.sand, { name: 'Rule' }),
-  BARCODE.reduce<{ x: number; nodes: Nodes[] }>(
-    (state, size, index) => ({
-      x: state.x + size + 5,
-      nodes: [
-        ...state.nodes,
-        index % 2 === 0 ? rect(state.x, 830, size, 140, MERIDIAN.deep, { name: 'Bar' }) : [],
-      ],
-    }),
-    { x: 380, nodes: [] },
-  ).nodes,
-  text('Book a partner call this week', 0, 1180, W, {
-    fontFamily: BODY,
-    fontSize: 34,
-    fontWeight: 600,
-    fill: MERIDIAN.navy,
-    align: 'center',
-  }),
-]);
+const receiptSpec = {
+  colors: {
+    background: {
+      value: MERIDIAN.coral,
+      hint: 'Page gradient and the word Lasting; its soft shade is the top of the gradient',
+    },
+    surface: {
+      value: MERIDIAN.white,
+      hint: 'Receipt; its shades color the printer slot and the rules on the receipt',
+    },
+    primary: {
+      value: MERIDIAN.navy,
+      hint: 'We Craft, Alliances and the call line; its darker shade colors the slit and the barcode and tints the receipt shadow',
+    },
+    text: { value: MERIDIAN.grey, hint: 'Handle and the tagline on the receipt' },
+  },
+  fonts: { heading: HEAD, body: BODY },
+  copy: {
+    handle: HANDLE,
+    intro: { label: 'Headline', value: 'We Craft' },
+    highlight: { label: 'Highlight', value: 'Lasting' },
+    closing: { label: 'Headline end', value: 'Alliances' },
+    tagline: { label: 'Tagline', value: 'Partners who stay for years' },
+    call: { label: 'Call to action', value: 'Book a partner call this week' },
+  },
+} as const satisfies ThemeSpec;
 
-export const bigNumber = template(W, H, () => [
-  navyBackdrop(H),
+export const receiptPartners = themed(W, H, receiptSpec, (t) => {
+  const rule = (y: number) =>
+    rect(350, y, 380, 3, t.shade('surface', MERIDIAN.sand), { name: 'Rule' });
+  const teeth = 12;
+  const step = 480 / teeth;
+  const bottom: [number, number][] = Array.from({ length: teeth * 2 + 1 }, (_, index) => [
+    300 + 480 - (index * step) / 2,
+    306 + 760 - (index % 2 === 0 ? 0 : 20),
+  ]);
+  return [
+    backdrop(H, t.shade('background', MERIDIAN.coralSoft), t.color('background'), 160),
+    rect(
+      220,
+      260,
+      640,
+      70,
+      linear(180, t.shade('surface', '#f8fafc'), t.shade('surface', '#a3acb9')),
+      {
+        cornerRadius: 18,
+        name: 'Slot',
+        ...shadow(24, 10, 'rgba(0,0,0,0.25)'),
+      },
+    ),
+    rect(260, 300, 560, 12, t.shade('primary', MERIDIAN.deep), { cornerRadius: 6, name: 'Slit' }),
+    poly([[300, 306], [780, 306], ...bottom], t.color('surface'), {
+      name: 'Receipt',
+      ...shadow(30, 16, t.shade('primary', 'rgba(11,20,38,0.22)')),
+    }),
+    text(t.copy('handle'), 300, 360, 480, {
+      fontFamily: t.font('body'),
+      fontSize: 24,
+      fontWeight: 500,
+      fill: t.color('text'),
+      align: 'center',
+    }),
+    rule(410),
+    text(t.copy('intro'), 300, 450, 480, {
+      fontFamily: t.font('heading'),
+      fontSize: 56,
+      fontWeight: 400,
+      fill: t.color('primary'),
+      align: 'center',
+    }),
+    text(t.copy('highlight'), 300, 515, 480, {
+      fontFamily: t.font('heading'),
+      fontSize: 66,
+      fontWeight: 800,
+      fill: t.color('background'),
+      align: 'center',
+    }),
+    text(t.copy('closing'), 300, 592, 480, {
+      fontFamily: t.font('heading'),
+      fontSize: 56,
+      fontWeight: 400,
+      fill: t.color('primary'),
+      align: 'center',
+    }),
+    rule(700),
+    text(t.copy('tagline'), 300, 726, 480, {
+      fontFamily: t.font('body'),
+      fontSize: 26,
+      fontWeight: 500,
+      fill: t.color('text'),
+      align: 'center',
+    }),
+    rule(790),
+    BARCODE.reduce<{ x: number; nodes: Nodes[] }>(
+      (state, size, index) => ({
+        x: state.x + size + 5,
+        nodes: [
+          ...state.nodes,
+          index % 2 === 0
+            ? rect(state.x, 830, size, 140, t.shade('primary', MERIDIAN.deep), { name: 'Bar' })
+            : [],
+        ],
+      }),
+      { x: 380, nodes: [] },
+    ).nodes,
+    text(t.copy('call'), 0, 1180, W, {
+      fontFamily: t.font('body'),
+      fontSize: 34,
+      fontWeight: 600,
+      fill: t.color('primary'),
+      align: 'center',
+    }),
+  ];
+});
+
+const bigNumberSpec = {
+  colors: {
+    background: {
+      value: MERIDIAN.mid,
+      hint: 'Page gradient; its darker shades color the bottom of the gradient and the fade over the photo',
+    },
+    accent: {
+      value: MERIDIAN.coral,
+      hint: 'Big number and Next Decade; its soft shade is the top of the number gradient',
+    },
+    text: {
+      value: MERIDIAN.white,
+      hint: 'Moves That Define the; its sand shade colors the playbook line',
+    },
+  },
+  fonts: { heading: HEAD, body: BODY },
+  copy: {
+    number: { label: 'Number', value: '7' },
+    intro: { label: 'Headline', value: 'Moves That\nDefine the' },
+    highlight: { label: 'Highlight', value: 'Next Decade' },
+    link: { label: 'Link line', value: 'Read the full playbook' },
+  },
+} as const satisfies ThemeSpec;
+
+export const bigNumber = themed(W, H, bigNumberSpec, (t) => [
+  backdrop(H, t.color('background'), t.shade('background', MERIDIAN.deep), 165),
   photo('man-portrait-1', 0, 230, 560, 1120, { filters: IMAGE_FILTER_PRESETS.mono }),
-  rect(360, 230, 200, 1120, linear(90, 'rgba(14,25,48,0)', '#0f1a32'), { name: 'Fade' }),
-  text('7', 500, 90, 540, {
-    fontFamily: HEAD,
+  rect(
+    360,
+    230,
+    200,
+    1120,
+    linear(90, t.shade('background', 'rgba(14,25,48,0)'), t.shade('background', '#0f1a32')),
+    { name: 'Fade' },
+  ),
+  text(t.copy('number'), 500, 90, 540, {
+    fontFamily: t.font('heading'),
     fontSize: 640,
     fontWeight: 800,
-    fill: linear(180, MERIDIAN.coralSoft, MERIDIAN.coral),
+    fill: linear(180, t.shade('accent', MERIDIAN.coralSoft), t.color('accent')),
     align: 'center',
     lineHeight: 1,
   }),
-  text('Moves That\nDefine the', 580, 860, 460, {
-    fontFamily: HEAD,
+  text(t.copy('intro'), 580, 860, 460, {
+    fontFamily: t.font('heading'),
     fontSize: 60,
     fontWeight: 400,
-    fill: MERIDIAN.white,
+    fill: t.color('text'),
     lineHeight: 1.1,
   }),
-  text('Next Decade', 580, 992, 460, {
-    fontFamily: HEAD,
+  text(t.copy('highlight'), 580, 992, 460, {
+    fontFamily: t.font('heading'),
     fontSize: 60,
     fontWeight: 800,
-    fill: MERIDIAN.coral,
+    fill: t.color('accent'),
   }),
-  text('Read the full playbook', 580, 1120, 440, {
-    fontFamily: BODY,
+  text(t.copy('link'), 580, 1120, 440, {
+    fontFamily: t.font('body'),
     fontSize: 28,
     fontWeight: 500,
-    fill: MERIDIAN.sand,
+    fill: t.shade('text', MERIDIAN.sand),
   }),
 ]);
 
-const TABS = ['Audience Insight', 'Budget Planning', 'Workflow Design', 'Risk Review'];
+const tabsSpec = {
+  colors: {
+    background: {
+      value: MERIDIAN.mid,
+      hint: 'Page gradient; its darker shade is the bottom of the gradient',
+    },
+    surface: {
+      value: MERIDIAN.white,
+      hint: 'Our Plan and the white folders; its cream shade colors the other folders',
+    },
+    accent: {
+      value: MERIDIAN.coral,
+      hint: 'Powers Growth and the bottom strip; its soft shade is the end of the strip',
+    },
+    text: { value: MERIDIAN.navy, hint: 'Folder tab labels' },
+  },
+  fonts: { heading: HEAD },
+  copy: {
+    intro: { label: 'Headline', value: 'Our Plan' },
+    highlight: { label: 'Highlight', value: 'Powers Growth' },
+    tabs: {
+      label: 'Folder tab',
+      value: ['Audience Insight', 'Budget Planning', 'Workflow Design', 'Risk Review'],
+    },
+  },
+} as const satisfies ThemeSpec;
 
-export const strategyTabs = template(W, H, () => [
-  navyBackdrop(H),
-  text('Our Plan', 0, 150, W, {
-    fontFamily: HEAD,
+export const strategyTabs = themed(W, H, tabsSpec, (t) => [
+  backdrop(H, t.color('background'), t.shade('background', MERIDIAN.deep), 165),
+  text(t.copy('intro'), 0, 150, W, {
+    fontFamily: t.font('heading'),
     fontSize: 86,
     fontWeight: 400,
-    fill: MERIDIAN.white,
+    fill: t.color('surface'),
     align: 'center',
   }),
-  text('Powers Growth', 0, 248, W, {
-    fontFamily: HEAD,
+  text(t.copy('highlight'), 0, 248, W, {
+    fontFamily: t.font('heading'),
     fontSize: 86,
     fontWeight: 800,
-    fill: MERIDIAN.coral,
+    fill: t.color('accent'),
     align: 'center',
   }),
-  TABS.map((label, index) => {
+  t.list('tabs').map((label, index) => {
     const y = 560 + index * 150;
     const tabX = index % 2 === 0 ? 110 : 560;
-    const fill = index % 2 === 0 ? MERIDIAN.cream : MERIDIAN.white;
+    const fill = index % 2 === 0 ? t.shade('surface', MERIDIAN.cream) : t.color('surface');
     return [
       rect(tabX, y - 62, 410, 80, fill, { cornerRadius: 18, name: 'Tab' }),
       rect(70, y, 940, H - y, fill, {
@@ -236,61 +350,14 @@ export const strategyTabs = template(W, H, () => [
         ...shadow(24, -6, 'rgba(0,0,0,0.18)'),
       }),
       text(label, tabX + 30, y - 46, 360, {
-        fontFamily: HEAD,
+        fontFamily: t.font('heading'),
         fontSize: 36,
         fontWeight: 700,
-        fill: MERIDIAN.navy,
+        fill: t.color('text'),
       }),
     ];
   }),
-  rect(0, 1230, W, 120, linear(90, MERIDIAN.coral, MERIDIAN.coralSoft), { name: 'Strip' }),
-]);
-
-export const pocketOps = template(W, H, () => [
-  coralBackdrop(H),
-  rect(320, 120, 440, 800, MERIDIAN.navy, {
-    cornerRadius: 70,
-    name: 'Phone',
-    ...shadow(40, 20, 'rgba(11,20,38,0.35)'),
-  }),
-  rect(344, 144, 392, 752, MERIDIAN.cream, { cornerRadius: 52, name: 'Screen' }),
-  rect(480, 168, 120, 30, MERIDIAN.navy, { cornerRadius: 15, name: 'Island' }),
-  text('OPS', 344, 296, 392, {
-    fontFamily: HEAD,
-    fontSize: 112,
-    fontWeight: 800,
-    fill: MERIDIAN.navy,
-    align: 'center',
-    lineHeight: 1,
-  }),
-  text('ON\nTHE', 344, 408, 392, {
-    fontFamily: HEAD,
-    fontSize: 112,
-    fontWeight: 800,
-    fill: MERIDIAN.coral,
-    align: 'center',
-    lineHeight: 1,
-  }),
-  text('MOVE', 344, 632, 392, {
-    fontFamily: HEAD,
-    fontSize: 112,
-    fontWeight: 800,
-    fill: MERIDIAN.navy,
-    align: 'center',
-    lineHeight: 1,
-  }),
-  text('Lead your people', 0, 990, W, {
-    fontFamily: HEAD,
-    fontSize: 54,
-    fontWeight: 400,
-    fill: MERIDIAN.navy,
-    align: 'center',
-  }),
-  text('from anywhere', 0, 1060, W, {
-    fontFamily: HEAD,
-    fontSize: 60,
-    fontWeight: 800,
-    fill: MERIDIAN.white,
-    align: 'center',
+  rect(0, 1230, W, 120, linear(90, t.color('accent'), t.shade('accent', MERIDIAN.coralSoft)), {
+    name: 'Strip',
   }),
 ]);

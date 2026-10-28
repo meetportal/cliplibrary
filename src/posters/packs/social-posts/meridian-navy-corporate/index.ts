@@ -1,6 +1,21 @@
 import { definePack } from '../../../pack';
 import { bigNumber, ideasHeights, receiptPartners, strategyTabs } from './posts';
-import { doorAfter, doorBefore, POSTS, webinarPost, webinarStory } from './posts-more';
+import { doorAfter, doorBefore, stickyNote } from './posts-door';
+import { eventsCalendar, statsCards, webinarPost, webinarStory } from './posts-more';
+import { pocketOps } from './posts-ops';
+
+const POSTS = [
+  ideasHeights,
+  strategyTabs,
+  pocketOps,
+  eventsCalendar,
+  bigNumber,
+  doorBefore,
+  receiptPartners,
+  statsCards,
+  webinarPost,
+  stickyNote,
+];
 
 export const meridianNavyCorporatePack = definePack({
   id: 'meridian-navy-corporate',

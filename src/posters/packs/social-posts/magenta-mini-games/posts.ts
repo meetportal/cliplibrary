@@ -6,8 +6,9 @@ import {
   STORY_SIZE,
   star,
   type Template,
-  template,
+  type ThemeSpec,
   text,
+  themed,
 } from '../../../kit';
 import { maze } from './maze';
 
@@ -47,248 +48,279 @@ export const LILAC: GameTheme = {
   nightMuted: '#4b3a6b',
 };
 
-const HEAD = 'Montserrat';
-const BODY = 'Inter';
-const { width: PW, height: PH } = POST_SIZE;
+export const HEADING = { label: 'Heading font', value: 'Montserrat' } as const;
+const BODY = { label: 'Body font', value: 'Inter' } as const;
+export const PW = POST_SIZE.width;
+export const PH = POST_SIZE.height;
 
-const tile = (
-  theme: GameTheme,
+export const tile = (
   glyph: string,
   x: number,
   y: number,
   size: number,
   fill: string,
+  glyphFill: string,
+  fontFamily: string,
 ) => [
   rect(x, y, size, size, fill, { name: 'Tile', cornerRadius: size * 0.12 }),
   text(glyph, x, y + size * 0.16, size, {
-    fontFamily: HEAD,
+    fontFamily,
     fontSize: size * 0.55,
     fontWeight: 800,
-    fill: fill === theme.paper ? theme.ink : theme.paper,
+    fill: glyphFill,
     align: 'center',
     lineHeight: 1.2,
   }),
 ];
 
+const routeSpec = (theme: GameTheme) =>
+  ({
+    colors: {
+      background: { value: theme.brand, hint: 'Page' },
+      surface: { value: theme.paper, hint: 'Letter tiles above the maze' },
+      primary: { value: theme.ink, hint: 'Maze walls, the tile letters and the star' },
+      text: { value: theme.paper, hint: 'Headline and the comment line' },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      title: { label: 'Headline', value: 'FIND THE ROUTE TO\nYOUR SECRET DEAL' },
+      letters: { label: 'Route letter', value: ['A', 'B', 'C'] },
+      note: {
+        label: 'Comment line',
+        value: 'Comment the right letter and\ncheck your inbox for the deal',
+      },
+    },
+  }) as const satisfies ThemeSpec;
+
 export const routeMaze = (theme: GameTheme): Template =>
-  template(PW, PH, () => [
-    rect(0, 0, PW, PH, theme.brand, { name: 'Background' }),
-    text('FIND THE ROUTE TO\nYOUR SECRET DEAL', 0, 80, PW, {
-      fontFamily: HEAD,
+  themed(PW, PH, routeSpec(theme), (t) => [
+    rect(0, 0, PW, PH, t.color('background'), { name: 'Background' }),
+    text(t.copy('title'), 0, 80, PW, {
+      fontFamily: t.font('heading'),
       fontSize: 56,
       fontWeight: 800,
-      fill: theme.paper,
+      fill: t.color('text'),
       align: 'center',
       lineHeight: 1.15,
     }),
-    ['A', 'B', 'C'].map((glyph, index) =>
-      tile(theme, glyph, 160 + (1 + index * 4) * 63.33 - 2, 256, 68, theme.paper),
-    ),
-    maze(160, 340, 760, theme.ink, 9, {
+    t
+      .list('letters')
+      .map((glyph, index) =>
+        tile(
+          glyph,
+          160 + (1 + index * 4) * 63.33 - 2,
+          256,
+          68,
+          t.color('surface'),
+          t.color('primary'),
+          t.font('heading'),
+        ),
+      ),
+    maze(160, 340, 760, t.color('primary'), 9, {
       columns: 12,
       rows: 12,
       seed: 20260,
       entrances: [1, 5, 9],
       exit: 6,
     }),
-    text('Comment the right letter and\ncheck your inbox for the deal', 0, 1135, PW, {
-      fontFamily: BODY,
+    text(t.copy('note'), 0, 1135, PW, {
+      fontFamily: t.font('body'),
       fontSize: 30,
       fontWeight: 600,
-      fill: theme.paper,
+      fill: t.color('text'),
       align: 'center',
       lineHeight: 1.35,
     }),
-    star(5, 490, 1240, 100, theme.ink, { innerRatio: 0.42 }),
+    star(5, 490, 1240, 100, t.color('primary'), { innerRatio: 0.42 }),
   ]);
 
+const pickSpec = (theme: GameTheme) =>
+  ({
+    colors: {
+      background: { value: theme.night, hint: 'Page; its shade colors the tile numbers' },
+      surface: { value: theme.paper, hint: 'Number tiles and the callout text' },
+      primary: { value: theme.brand, hint: 'Big star, callout box and the bottom star' },
+      text: {
+        value: theme.nightText,
+        hint: "IT'S MONDAY, the small star and the answer bars; its shade colors the subtitle",
+      },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      title: { label: 'Headline', value: "IT'S\nMONDAY" },
+      subtitle: { label: 'Subtitle', value: 'Pick a number and find\nout what your week holds' },
+      callout: { label: 'Callout', value: 'Answers are waiting\nin the caption below' },
+      numbers: { label: 'Number', value: ['1', '2', '3', '4'] },
+    },
+  }) as const satisfies ThemeSpec;
+
 export const pickNumber = (theme: GameTheme): Template =>
-  template(PW, PH, () => [
-    rect(0, 0, PW, PH, theme.night, { name: 'Background' }),
-    star(5, 120, 70, 170, theme.brand, { innerRatio: 0.42 }),
-    star(5, 70, 110, 90, theme.nightText, { innerRatio: 0.42 }),
-    text("IT'S\nMONDAY", 90, 380, 560, {
-      fontFamily: HEAD,
+  themed(PW, PH, pickSpec(theme), (t) => [
+    rect(0, 0, PW, PH, t.color('background'), { name: 'Background' }),
+    star(5, 120, 70, 170, t.color('primary'), { innerRatio: 0.42 }),
+    star(5, 70, 110, 90, t.color('text'), { innerRatio: 0.42 }),
+    text(t.copy('title'), 90, 380, 560, {
+      fontFamily: t.font('heading'),
       fontSize: 100,
       fontWeight: 800,
-      fill: theme.nightText,
+      fill: t.color('text'),
       lineHeight: 1.05,
     }),
-    text('Pick a number and find\nout what your week holds', 90, 620, 560, {
-      fontFamily: BODY,
+    text(t.copy('subtitle'), 90, 620, 560, {
+      fontFamily: t.font('body'),
       fontSize: 32,
       fontWeight: 500,
-      fill: theme.nightMuted,
+      fill: t.shade('text', theme.nightMuted),
       lineHeight: 1.35,
     }),
-    rect(90, 760, 500, 130, theme.brand, { name: 'Callout' }),
-    text('Answers are waiting\nin the caption below', 120, 784, 460, {
-      fontFamily: HEAD,
+    rect(90, 760, 500, 130, t.color('primary'), { name: 'Callout' }),
+    text(t.copy('callout'), 120, 784, 460, {
+      fontFamily: t.font('heading'),
       fontSize: 30,
       fontWeight: 700,
-      fill: theme.paper,
+      fill: t.color('surface'),
       lineHeight: 1.25,
     }),
-    [1, 2, 3, 4].map((value, index) => [
-      tile(theme, String(value), 700, 250 + index * 220, 110, theme.paper),
-      rect(840, 290 + index * 220, 180, 30, theme.nightText, {
+    t.list('numbers').map((value, index) => [
+      tile(
+        value,
+        700,
+        250 + index * 220,
+        110,
+        t.color('surface'),
+        t.shade('background', theme.ink),
+        t.font('heading'),
+      ),
+      rect(840, 290 + index * 220, 180, 30, t.color('text'), {
         name: 'Answer bar',
         cornerRadius: 15,
       }),
     ]),
-    star(5, 880, 1200, 100, theme.brand, { innerRatio: 0.42 }),
+    star(5, 880, 1200, 100, t.color('primary'), { innerRatio: 0.42 }),
   ]);
 
-const OPTIONS = ['Fast shipping', 'Friendly support', 'Fair prices', 'Loyalty perks'];
+const quizSpec = (theme: GameTheme) =>
+  ({
+    colors: {
+      background: { value: theme.brand, hint: 'Page' },
+      surface: { value: theme.paper, hint: 'Answer boxes' },
+      primary: { value: theme.ink, hint: 'QUIZ tag, number tiles, answers and the star' },
+      text: { value: theme.paper, hint: 'TIME!, QUIZ, the question and the tile numbers' },
+    },
+    fonts: { heading: HEADING, body: BODY },
+    copy: {
+      title: { label: 'Title', value: 'TIME!' },
+      tag: { label: 'Tag', value: 'QUIZ' },
+      question: { label: 'Question', value: 'What keeps customers\ncoming back for more?' },
+      numbers: { label: 'Number', value: ['1', '2', '3', '4'] },
+      answers: {
+        label: 'Answer',
+        value: ['Fast shipping', 'Friendly support', 'Fair prices', 'Loyalty perks'],
+      },
+    },
+  }) as const satisfies ThemeSpec;
 
-const quiz = (theme: GameTheme, height: number, story: boolean): Nodes[] => {
+const storySpec = (theme: GameTheme) => {
+  const base = quizSpec(theme);
+  return {
+    ...base,
+    colors: {
+      ...base.colors,
+      text: {
+        value: theme.paper,
+        hint: 'TIME!, QUIZ, the question, the tile numbers and the poll line',
+      },
+    },
+    copy: {
+      ...base.copy,
+      poll: { label: 'Poll line', value: 'Vote in the poll and see the answer tomorrow' },
+    },
+  } as const satisfies ThemeSpec;
+};
+
+type QuizSpec = ReturnType<typeof quizSpec>;
+
+interface QuizTheme {
+  color: (key: keyof QuizSpec['colors']) => string;
+  font: (key: keyof QuizSpec['fonts']) => string;
+  copy: (key: keyof QuizSpec['copy']) => string;
+  list: (key: keyof QuizSpec['copy']) => string[];
+}
+
+const quiz = (t: QuizTheme, height: number, story: boolean, poll: Nodes): Nodes[] => {
   const shift = story ? 240 : 0;
   const gap = story ? 160 : 130;
+  const numbers = t.list('numbers');
   return [
-    rect(0, 0, PW, height, theme.brand, { name: 'Background' }),
-    text('TIME!', 0, 150 + shift, PW, {
-      fontFamily: HEAD,
+    rect(0, 0, PW, height, t.color('background'), { name: 'Background' }),
+    text(t.copy('title'), 0, 150 + shift, PW, {
+      fontFamily: t.font('heading'),
       fontSize: 180,
       fontWeight: 900,
-      fill: theme.paper,
+      fill: t.color('text'),
       align: 'center',
       lineHeight: 1,
     }),
     rotateNodes(-12, 650, 110 + shift, [
-      rect(650, 110 + shift, 230, 92, theme.ink, { name: 'Quiz tag', cornerRadius: 12 }),
-      text('QUIZ', 650, 122 + shift, 230, {
-        fontFamily: HEAD,
+      rect(650, 110 + shift, 230, 92, t.color('primary'), { name: 'Quiz tag', cornerRadius: 12 }),
+      text(t.copy('tag'), 650, 122 + shift, 230, {
+        fontFamily: t.font('heading'),
         fontSize: 60,
         fontWeight: 900,
-        fill: theme.paper,
+        fill: t.color('text'),
         align: 'center',
       }),
     ]),
-    text('What keeps customers\ncoming back for more?', 0, 400 + shift, PW, {
-      fontFamily: HEAD,
+    text(t.copy('question'), 0, 400 + shift, PW, {
+      fontFamily: t.font('heading'),
       fontSize: 46,
       fontWeight: 800,
-      fill: theme.paper,
+      fill: t.color('text'),
       align: 'center',
       lineHeight: 1.2,
     }),
-    OPTIONS.map((option, index) => {
+    t.list('answers').map((answer, index) => {
       const y = 600 + shift + index * gap;
       return [
-        tile(theme, String(index + 1), 170, y, 100, theme.ink),
-        rect(290, y, 620, 100, theme.paper, { name: 'Option', cornerRadius: 12 }),
-        text(option, 330, y + 28, 560, {
-          fontFamily: BODY,
+        tile(
+          numbers[index] ?? '',
+          170,
+          y,
+          100,
+          t.color('primary'),
+          t.color('text'),
+          t.font('heading'),
+        ),
+        rect(290, y, 620, 100, t.color('surface'), { name: 'Option', cornerRadius: 12 }),
+        text(answer, 330, y + 28, 560, {
+          fontFamily: t.font('body'),
           fontSize: 38,
           fontWeight: 600,
-          fill: theme.ink,
+          fill: t.color('primary'),
         }),
       ];
     }),
-    story
-      ? text('Vote in the poll and see the answer tomorrow', 140, 1520, 800, {
-          fontFamily: BODY,
-          fontSize: 34,
-          fontWeight: 600,
-          fill: theme.paper,
-          align: 'center',
-          lineHeight: 1.35,
-        })
-      : [],
-    star(5, 480, height - 150, 120, theme.ink, { innerRatio: 0.42 }),
+    poll,
+    star(5, 480, height - 150, 120, t.color('primary'), { innerRatio: 0.42 }),
   ];
 };
 
 export const quizTime = (theme: GameTheme): Template =>
-  template(PW, PH, () => quiz(theme, PH, false));
+  themed(PW, PH, quizSpec(theme), (t) => quiz(t, PH, false, []));
 
 export const quizStory = (theme: GameTheme): Template =>
-  template(STORY_SIZE.width, STORY_SIZE.height, () => quiz(theme, STORY_SIZE.height, true));
-
-const CROSSWORD: readonly (readonly [number, number, string, boolean])[] = [
-  ...[...'REFERRAL'].map((glyph, index): [number, number, string, boolean] => [
-    index,
-    1,
-    glyph,
-    index % 3 !== 1,
-  ]),
-  ...[...'BRAND'].map((glyph, index): [number, number, string, boolean] => [
-    4,
-    index,
-    glyph,
-    index !== 2 && index !== 3,
-  ]),
-  ...[...'EALS'].map((glyph, index): [number, number, string, boolean] => [
-    5 + index,
-    4,
-    glyph,
-    index === 1,
-  ]),
-];
-
-export const hiddenWords = (theme: GameTheme): Template =>
-  template(PW, PH, () => [
-    rect(0, 0, PW, PH, theme.night, { name: 'Background' }),
-    text('Can you spot the 3\nhidden words?', 90, 110, 900, {
-      fontFamily: HEAD,
-      fontSize: 62,
-      fontWeight: 800,
-      fill: theme.brand,
-      lineHeight: 1.15,
-    }),
-    CROSSWORD.map(([column, row, glyph, shown]) =>
-      tile(theme, shown ? glyph : '', 134 + column * 92, 380 + row * 92, 84, theme.paper),
-    ),
-    star(5, 900, 860, 90, theme.brand, { innerRatio: 0.42 }),
-    rect(0, 1010, PW, 340, theme.brand, { name: 'Answer panel' }),
-    text('Found all three?\nDrop them in the comments', 90, 1080, 760, {
-      fontFamily: HEAD,
-      fontSize: 44,
-      fontWeight: 800,
-      fill: theme.paper,
-      lineHeight: 1.2,
-    }),
-    star(5, 900, 1190, 110, theme.paper, { innerRatio: 0.42 }),
-  ]);
-
-export const unscramble = (theme: GameTheme): Template =>
-  template(PW, PH, () => [
-    rect(0, 0, PW, PH, theme.night, { name: 'Background' }),
-    text('CAN YOU\nUNSCRAMBLE THIS?', 0, 140, PW, {
-      fontFamily: HEAD,
-      fontSize: 66,
-      fontWeight: 800,
-      fill: theme.nightText,
-      align: 'center',
-      lineHeight: 1.15,
-    }),
-    [...'DKECBEFA'].map((glyph, index) =>
-      tile(
-        theme,
-        glyph,
-        150 + (index % 4) * 210,
-        420 + Math.floor(index / 4) * 210,
-        150,
-        theme.brand,
-      ),
-    ),
-    text('COMMENT BELOW:', 0, 880, PW, {
-      fontFamily: HEAD,
-      fontSize: 40,
-      fontWeight: 800,
-      fill: theme.nightText,
-      align: 'center',
-      letterSpacing: 2,
-    }),
-    Array.from({ length: 8 }, (_, index) => [
-      rect(150 + index * 100, 970, 80, 80, theme.paper, {
-        name: 'Answer box',
-        cornerRadius: 8,
-        stroke: theme.brand,
-        strokeWidth: 3,
+  themed(STORY_SIZE.width, STORY_SIZE.height, storySpec(theme), (t) =>
+    quiz(
+      t,
+      STORY_SIZE.height,
+      true,
+      text(t.copy('poll'), 140, 1520, 800, {
+        fontFamily: t.font('body'),
+        fontSize: 34,
+        fontWeight: 600,
+        fill: t.color('text'),
+        align: 'center',
+        lineHeight: 1.35,
       }),
-      rect(170 + index * 100, 1020, 40, 5, theme.ink, { name: 'Answer dash', cornerRadius: 2 }),
-    ]),
-    star(5, 900, 60, 100, theme.brand, { innerRatio: 0.42 }),
-    star(5, 90, 1180, 100, theme.nightText, { innerRatio: 0.42 }),
-  ]);
+    ),
+  );
