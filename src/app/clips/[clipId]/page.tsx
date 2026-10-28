@@ -15,7 +15,7 @@ export const generateMetadata = async ({
   params: Promise<{ clipId: string }>;
 }): Promise<Metadata> => {
   const { clipId } = await params;
-  return { title: isClipId(clipId) ? `${getClipMeta(clipId).title} · Clip Library` : 'Clip' };
+  return { title: isClipId(clipId) ? `${getClipMeta(clipId).title} · Neuclip` : 'Clip' };
 };
 
 const ClipEditorPage = async ({ params }: { params: Promise<{ clipId: string }> }) => {
@@ -27,7 +27,7 @@ const ClipEditorPage = async ({ params }: { params: Promise<{ clipId: string }> 
   return (
     <ClipTimelineEditor
       title={getClipMeta(clipId).title}
-      storageKey={`cliplibrary-clip:${clipId}`}
+      storageKey={`neuclip-clip:${clipId}`}
       initialProject={seedProjectForClip(clipId)}
       demoSrc={clipPreviewVideo(clipId)}
     />

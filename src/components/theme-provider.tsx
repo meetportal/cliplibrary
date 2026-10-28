@@ -13,7 +13,7 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
-const STORAGE_KEY = 'cliplibrary-theme';
+const STORAGE_KEY = 'neuclip-theme';
 
 const readStored = (): Theme => {
   try {

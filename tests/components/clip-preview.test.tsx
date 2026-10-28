@@ -34,7 +34,7 @@ describe('ClipPreview', () => {
   it('remembers the demo view as a preference for the next clip', async () => {
     renderPreview('/previews/phone-spin-in.mp4');
     await userEvent.click(screen.getByRole('tab', { name: 'Demo' }));
-    expect(localStorage.getItem('cliplibrary-preview-view')).toBe('"demo"');
+    expect(localStorage.getItem('neuclip-preview-view')).toBe('"demo"');
     cleanup();
     renderPreview('/previews/phone-spin-in.mp4');
     expect(await screen.findByLabelText('Demo video')).toBeInTheDocument();
