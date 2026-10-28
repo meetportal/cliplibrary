@@ -1,14 +1,20 @@
-import { CARD_SIZE, icon, rect, template, text } from '../../../kit';
+import { CARD_SIZE, rect, type ThemeSpec, text, themed } from '../../../kit';
 import {
   BODY,
-  contactItems,
+  CONTACT_LABELS,
+  CONTACT_VALUES,
+  contactBlock,
   GRID,
+  gridColors,
   gridPaper,
   HEAD,
   LETTER,
   monoPhoto,
+  NAME,
+  ROLE,
+  roleLine,
   selectionName,
-} from './resume';
+} from './grid';
 
 const LETTER_TEXT = [
   'Dear Hiring Team,',
@@ -18,97 +24,103 @@ const LETTER_TEXT = [
   'Sincerely,',
 ].join('\n\n');
 
-const contactBlock = (x: number, y: number, size: number) =>
-  contactItems.map((item, index) => {
-    const top = y + index * size * 3.2;
-    return [
-      icon(item.icon, x, top + size * 0.15, size * 1.5, GRID.accent, { strokeWidth: 2.4 }),
-      text(item.label.toUpperCase(), x + size * 2.3, top, 420, {
-        fontFamily: BODY,
-        fontSize: size,
-        fontWeight: 700,
-        fill: GRID.ink,
-        letterSpacing: 1,
-      }),
-      text(item.value, x + size * 2.3, top + size * 1.35, 420, {
-        fontFamily: BODY,
-        fontSize: size,
-        fontWeight: 400,
-        fill: GRID.muted,
-      }),
-    ];
-  });
+const MUTED = { value: GRID.muted, hint: 'Contact details' };
 
-export const coverLetter = template(LETTER.width, LETTER.height, () => [
-  gridPaper(LETTER.width, LETTER.height),
-  rect(0, 0, 400, 1110, GRID.accent, { name: 'Accent column' }),
+const letterSpec = {
+  colors: {
+    ...gridColors(
+      'Name, its box, role, contact heading, contact labels, date, letter and signature',
+      'Column behind the photo, the line under the date, contact icons and the rings of the corner handles',
+    ),
+    text: MUTED,
+  },
+  fonts: { heading: HEAD, body: BODY, script: { label: 'Signature font', value: 'Satisfy' } },
+  copy: {
+    name: { ...NAME, hint: 'Also the signature' },
+    role: ROLE,
+    contactTitle: { label: 'Contact heading', value: 'CONTACT' },
+    contactLabels: CONTACT_LABELS,
+    contactValues: CONTACT_VALUES,
+    date: { label: 'Date', value: 'APRIL 9, 2026' },
+    letter: { label: 'Letter', value: LETTER_TEXT },
+  },
+} as const satisfies ThemeSpec;
+
+export const coverLetter = themed(LETTER.width, LETTER.height, letterSpec, (t) => [
+  gridPaper(t, LETTER.width, LETTER.height),
+  rect(0, 0, 400, 1110, t.color('accent'), { name: 'Accent column' }),
   monoPhoto('man-portrait-3', 0, 130, 400, 560),
-  text('CONTACT', 60, 1170, 320, {
-    fontFamily: HEAD,
+  text(t.copy('contactTitle'), 60, 1170, 320, {
+    fontFamily: t.font('heading'),
     fontSize: 46,
     fontWeight: 800,
-    fill: GRID.ink,
+    fill: t.color('primary'),
   }),
-  contactBlock(60, 1260, 24),
-  selectionName('Theo Marlowe', 500, 110, 680, 140, 84),
-  text('BRAND DESIGNER', 500, 280, 680, {
-    fontFamily: HEAD,
-    fontSize: 40,
-    fontWeight: 800,
-    fill: GRID.ink,
-    align: 'center',
-    letterSpacing: 3,
-  }),
-  text('APRIL 9, 2026', 470, 390, 400, {
-    fontFamily: HEAD,
+  contactBlock(t, t.color('text'), t.list('contactLabels'), t.list('contactValues'), 60, 1260, 24),
+  selectionName(t, t.copy('name'), 500, 110, 680, 140, 84),
+  roleLine(t, t.copy('role'), 500, 280, 680, 40, 3),
+  text(t.copy('date'), 470, 390, 400, {
+    fontFamily: t.font('heading'),
     fontSize: 34,
     fontWeight: 800,
-    fill: GRID.ink,
+    fill: t.color('primary'),
   }),
-  rect(470, 446, 70, 8, GRID.accent, { name: 'Date rule' }),
-  text(LETTER_TEXT, 470, 500, 720, {
-    fontFamily: BODY,
+  rect(470, 446, 70, 8, t.color('accent'), { name: 'Date rule' }),
+  text(t.copy('letter'), 470, 500, 720, {
+    fontFamily: t.font('body'),
     fontSize: 25,
     fontWeight: 400,
-    fill: GRID.ink,
+    fill: t.color('primary'),
     lineHeight: 1.65,
   }),
-  text('Theo Marlowe', 470, 1340, 600, {
-    fontFamily: 'Satisfy',
+  text(t.copy('name'), 470, 1340, 600, {
+    fontFamily: t.font('script'),
     fontSize: 64,
     fontWeight: 400,
-    fill: GRID.ink,
+    fill: t.color('primary'),
   }),
 ]);
 
 const { width: CW, height: CH } = CARD_SIZE;
 
-export const cardFront = template(CW, CH, () => [
-  gridPaper(CW, CH, 40),
-  selectionName('Theo Marlowe', 150, 180, 750, 150, 92),
-  text('BRAND DESIGNER', 0, 380, CW, {
-    fontFamily: HEAD,
-    fontSize: 40,
-    fontWeight: 800,
-    fill: GRID.ink,
-    align: 'center',
-    letterSpacing: 3,
-  }),
-  rect(0, CH - 12, CW, 12, GRID.accent, { name: 'Edge' }),
+const cardFrontSpec = {
+  colors: gridColors(
+    'Name, its box and role',
+    'Strip along the bottom edge and the rings of the corner handles',
+  ),
+  fonts: { heading: HEAD },
+  copy: { name: NAME, role: ROLE },
+} as const satisfies ThemeSpec;
+
+export const cardFront = themed(CW, CH, cardFrontSpec, (t) => [
+  gridPaper(t, CW, CH, 40),
+  selectionName(t, t.copy('name'), 150, 180, 750, 150, 92),
+  roleLine(t, t.copy('role'), 0, 380, CW, 40, 3),
+  rect(0, CH - 12, CW, 12, t.color('accent'), { name: 'Edge' }),
 ]);
 
-export const cardBack = template(CW, CH, () => [
-  gridPaper(CW, CH, 40),
+const cardBackSpec = {
+  colors: {
+    ...gridColors(
+      'Name, its box, role and contact labels',
+      'Stripe beside the photo, contact icons and the rings of the corner handles',
+    ),
+    text: MUTED,
+  },
+  fonts: { heading: HEAD, body: BODY },
+  copy: {
+    name: NAME,
+    role: ROLE,
+    contactLabels: CONTACT_LABELS,
+    contactValues: CONTACT_VALUES,
+  },
+} as const satisfies ThemeSpec;
+
+export const cardBack = themed(CW, CH, cardBackSpec, (t) => [
+  gridPaper(t, CW, CH, 40),
   monoPhoto('man-portrait-3', 0, 0, 420, CH),
-  rect(420, 0, 22, CH, GRID.accent, { name: 'Accent stripe' }),
-  selectionName('Theo Marlowe', 490, 60, 510, 100, 48),
-  text('BRAND DESIGNER', 490, 182, 510, {
-    fontFamily: HEAD,
-    fontSize: 28,
-    fontWeight: 800,
-    fill: GRID.ink,
-    align: 'center',
-    letterSpacing: 2,
-  }),
-  contactBlock(520, 270, 24),
+  rect(420, 0, 22, CH, t.color('accent'), { name: 'Accent stripe' }),
+  selectionName(t, t.copy('name'), 490, 60, 510, 100, 48),
+  roleLine(t, t.copy('role'), 490, 182, 510, 28, 2),
+  contactBlock(t, t.color('text'), t.list('contactLabels'), t.list('contactValues'), 520, 270, 24),
 ]);
