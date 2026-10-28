@@ -52,7 +52,7 @@ export const SharedVideoEditor = () => {
     <ClipTimelineEditor
       key={linked.data}
       title={video.title}
-      storageKey={`cliplibrary-video:${videoKey(linked.data)}`}
+      storageKey={`neuclip-video:${videoKey(linked.data)}`}
       initialProject={video.project}
       demoSrc={null}
     />

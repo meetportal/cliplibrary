@@ -31,13 +31,13 @@ any Next.js host such as Netlify.
 ## Build videos from an AI agent (MCP)
 
 The site serves an open [MCP](https://modelcontextprotocol.io) endpoint at `/mcp`. An agent can
-search the clip library, read a clip's editable props, and assemble and edit a video from clips.
+search the Neuclip clips, read a clip's editable props, and assemble and edit a video from clips.
 Every result includes an `editorUrl` that opens the video in the browser editor. The video
 travels inside the link's `#` fragment, so nothing is stored on the server and browsers never
 send it.
 
 ```bash
-claude mcp add --transport http cliplibrary https://<your-site>/mcp
+claude mcp add --transport http neuclip https://<your-site>/mcp
 ```
 
 Then ask, for example, "make a 20 second launch video for my habit app".

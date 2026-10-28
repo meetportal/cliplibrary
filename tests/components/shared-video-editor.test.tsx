@@ -1,9 +1,4 @@
-import { afterEach, describe, expect, it, mock } from 'bun:test';
-
-mock.module('@/components/clip-timeline/clip-preview', () => ({
-  ClipPreview: () => null,
-}));
-
+import { afterEach, describe, expect, it } from 'bun:test';
 import { render, screen } from '@testing-library/react';
 import { SharedVideoEditor } from '@/components/video/shared-video-editor';
 import { seedProjectForClip } from '@/core';
