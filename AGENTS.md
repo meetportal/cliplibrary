@@ -117,6 +117,10 @@ To add a clip:
 5. Add the scene file under `scenes/<category>/` (component + `<name>Scene`).
 6. Register the scene in `scenes/<category>/index.ts` (one line).
 7. Run `bun run render <id>` and commit its preview files in `public/previews`.
+8. Label it in `src/schemas/clip-labels.json` (`clipLabelSchema` in `src/schemas/clip-labels.ts`): what
+   is on screen, timed beats, motion, mood, the roles it plays in a video, use cases, what people
+   can edit, its palette and search keywords. Label from frames of the rendered preview, not from
+   the title. `tests/schemas/clip-labels.test.ts` fails when a clip has no label.
 
 ## Controls
 
@@ -202,6 +206,25 @@ Flash through OpenRouter, with OpenRouter's `models` fallback to Gemini 3.5 Flas
   model output and attaches `AgentMetadata` to the message. The client strips `data-context` parts
   before sending history back.
 - `e2e/media-agent.spec.ts` replays recorded streams, so CI never calls the model.
+
+## Live MCP server
+
+`bun run live` starts a local Bun server (`src/live`, port `LIVE_PORT`, default 3210) that lets any
+MCP client build videos from the clip library while people watch in the browser. It is local-first:
+videos live in memory and there is no auth yet.
+
+- `POST /mcp` is a stateless Streamable HTTP MCP endpoint (`@modelcontextprotocol/sdk`). Tools:
+  `search_clips` (MiniSearch over clip meta and labels, filters by category, theme, orientation and
+  role), `get_clip` (labels, defaults, field guide, props schema), `create_video`, `add_clip`,
+  `edit_video` (JSON Patch through the same `applyEdits` validation as the media agent),
+  `get_video`, `list_videos`, `render_frame` (a JPEG through `@remotion/renderer`) and
+  `export_video` (mp4 into `out/live`).
+- `GET /ws` streams sessions to the editor: `/ws` pushes the session list, `/ws?session=<id>` pushes
+  that video on every change. The `/live/<id>` page (`src/components/live`, `src/lib/use-live.ts`)
+  renders it in the clip timeline editor and sends local edits back with the version they were
+  based on; the server rejects stale ones and resends the current video.
+- `LIVE_APP_URL` is the Next.js origin used in the links the tools return, and
+  `NEXT_PUBLIC_LIVE_SERVER_URL` is where the browser finds the live server.
 
 ## Poster packs and the image editor
 
