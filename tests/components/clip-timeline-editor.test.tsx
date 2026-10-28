@@ -12,7 +12,7 @@ const renderEditor = () =>
   render(
     <ClipTimelineEditor
       title="Phone Spin In"
-      storageKey="cliplibrary-clip:phone-spin-in"
+      storageKey="neuclip-clip:phone-spin-in"
       initialProject={seedProjectForClip('phone-spin-in')}
       demoSrc={null}
     />,

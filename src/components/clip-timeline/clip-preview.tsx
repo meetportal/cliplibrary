@@ -43,9 +43,9 @@ export const ClipPreview = ({
   onFrameChange,
   onPlayingChange,
 }: ClipPreviewProps) => {
-  const [device, setDevice] = usePersistedState<DeviceKey>('cliplibrary-device', 'desktop');
+  const [device, setDevice] = usePersistedState<DeviceKey>('neuclip-device', 'desktop');
   const active = DEVICES.find((entry) => entry.key === device) ?? DEVICES[2];
-  const [view, setView] = usePersistedState<PreviewView>('cliplibrary-preview-view', 'editor');
+  const [view, setView] = usePersistedState<PreviewView>('neuclip-preview-view', 'editor');
   const shownView: PreviewView = demoSrc === null ? 'editor' : view;
 
   useEffect(() => {
