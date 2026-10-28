@@ -58,11 +58,9 @@ describe('posters', () => {
   });
 
   it('give every poster its own complete theme controls', () => {
-    const problems = designs
-      .filter(({ design }) => design.controls.length > 0)
-      .flatMap(({ meta, design }) =>
-        auditPosterControls(design).map((problem) => `${meta.id}: ${problem}`),
-      );
+    const problems = designs.flatMap(({ meta, design }) =>
+      auditPosterControls(design).map((problem) => `${meta.id}: ${problem}`),
+    );
     expect(problems).toEqual([]);
   });
 
