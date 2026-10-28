@@ -12,6 +12,7 @@ const renderEditor = () =>
   render(
     <ClipTimelineEditor
       title="Phone Spin In"
+      chatKey="phone-spin-in"
       initialProject={seedProjectForClip('phone-spin-in')}
       demoSrc={null}
     />,

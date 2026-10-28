@@ -269,6 +269,7 @@ export const DesignEditor = ({
   return (
     <AgentWorkspace
       kind="poster"
+      chatKey={storageKey}
       title={design.title}
       document={design}
       focus={editor.selectedIds}

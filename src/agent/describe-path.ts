@@ -1,4 +1,3 @@
-import { getValueByPointer } from 'fast-json-patch';
 import { clipControlsFor, humanizeKey } from '@/core';
 import type { Design, DesignControl } from '@/design';
 import type { Project } from '@/project';
@@ -116,14 +115,6 @@ export const describePath = (kind: MediaKind, document: unknown, path: string): 
   return target.section?.toLowerCase() === target.scope.toLowerCase()
     ? { ...target, section: null }
     : target;
-};
-
-export const readPointer = (document: unknown, path: string): unknown => {
-  try {
-    return getValueByPointer(document, path);
-  } catch {
-    return undefined;
-  }
 };
 
 export const selectionNames = (

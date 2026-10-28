@@ -2,26 +2,19 @@
 
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
-import {
-  ArrowUp,
-  Crosshair,
-  Maximize2,
-  Minimize2,
-  RotateCcw,
-  Sparkles,
-  Square,
-  X,
-} from 'lucide-react';
+import { ArrowDown, ArrowUp, Crosshair, RotateCcw, Sparkles, Square } from 'lucide-react';
 import { type FormEvent, type KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { StickToBottom, useStickToBottomContext } from 'use-stick-to-bottom';
 import type { EditOperation } from '@/agent/edits';
-import type { MediaContext } from '@/agent/media';
+import type { MediaContext, MediaKind } from '@/agent/media';
 import type { MediaAgentMessage } from '@/agent/tools';
-import { agentContextSchema, agentMetadataSchema } from '@/agent/trace';
 import { Button } from '@/components/ui/button';
-import { AgentStatus } from './agent-status';
-import { AgentTurn } from './agent-turn';
+import { cn } from '@/lib/utils';
+import { AgentTurn, isShowingProgress } from './agent-turn';
+import type { StoredChat } from './chat-library';
+import { Appear } from './collapse';
 
-const SUGGESTIONS: Record<MediaContext['kind'], string[]> = {
+const SUGGESTIONS: Record<MediaKind, string[]> = {
   clip: [
     'Change the main line to SHIP FASTER WITH LESS STRESS',
     'Make the big words bright orange',
@@ -34,85 +27,126 @@ const SUGGESTIONS: Record<MediaContext['kind'], string[]> = {
   ],
 };
 
-const DEFAULT_MODEL = 'gemini-3.7-flash';
+const NOUNS: Record<MediaKind, string> = { clip: 'video', poster: 'poster' };
 
-const withoutTrace = (messages: MediaAgentMessage[]): MediaAgentMessage[] =>
-  messages.map((message) => ({
-    ...message,
-    parts: message.parts.filter((part) => part.type !== 'data-context'),
-  }));
+const handledCalls = (messages: readonly MediaAgentMessage[]): Set<string> =>
+  new Set(
+    messages.flatMap((message) =>
+      message.parts.flatMap((part) =>
+        part.type === 'tool-editMedia' || part.type === 'tool-renameChat' ? [part.toolCallId] : [],
+      ),
+    ),
+  );
+
+const userText = (message: MediaAgentMessage): string =>
+  message.parts.map((part) => (part.type === 'text' ? part.text : '')).join('');
+
+const JumpToLatest = () => {
+  const { isAtBottom, scrollToBottom } = useStickToBottomContext();
+  return (
+    <button
+      type="button"
+      onClick={() => scrollToBottom()}
+      aria-label="Jump to latest"
+      className={cn(
+        '-translate-x-1/2 absolute bottom-3 left-1/2 flex size-8 items-center justify-center rounded-full border bg-background shadow-md transition-all duration-200',
+        isAtBottom ? 'pointer-events-none translate-y-2 opacity-0' : 'opacity-100',
+      )}
+    >
+      <ArrowDown className="size-4" />
+    </button>
+  );
+};
+
+const Working = () => (
+  <Appear>
+    <p className="flex items-center gap-2 text-xs" data-testid="agent-working">
+      <Sparkles className="size-3.5 animate-pulse text-violet-500" />
+      <span className="text-shimmer">Thinking</span>
+    </p>
+  </Appear>
+);
 
 interface AgentChatProps {
+  chat: StoredChat;
+  kind: MediaKind;
+  document: unknown;
   readMedia: () => MediaContext;
   selection: readonly string[];
-  onEdit: (toolCallId: string, operations: readonly EditOperation[]) => void;
-  onToolCall: (toolCallId: string) => void;
-  documentFor: (toolCallId: string) => unknown;
-  expanded: boolean;
-  onToggleExpanded: () => void;
-  onClose: () => void;
+  onEdit: (operations: readonly EditOperation[]) => void;
+  onRename: (title: string) => void;
+  onSave: (messages: MediaAgentMessage[]) => void;
 }
 
 export const AgentChat = ({
+  chat,
+  kind,
+  document,
   readMedia,
   selection,
   onEdit,
-  onToolCall,
-  documentFor,
-  expanded,
-  onToggleExpanded,
-  onClose,
+  onRename,
+  onSave,
 }: AgentChatProps) => {
-  const media = useRef(readMedia);
-  media.current = readMedia;
-  const edit = useRef(onEdit);
-  edit.current = onEdit;
-  const seen = useRef(onToolCall);
-  seen.current = onToolCall;
+  const latest = useRef({ readMedia, onEdit, onRename, onSave, title: chat.title });
+  latest.current = { readMedia, onEdit, onRename, onSave, title: chat.title };
   const [transport] = useState(
     () =>
       new DefaultChatTransport<MediaAgentMessage>({
         api: '/api/agent',
         prepareSendMessagesRequest: (request) => ({
-          body: { messages: withoutTrace(request.messages), media: media.current() },
+          body: {
+            messages: request.messages,
+            chatTitle: latest.current.title,
+            media: latest.current.readMedia(),
+          },
         }),
       }),
   );
-  const { messages, sendMessage, status, stop, error, regenerate, setMessages, clearError } =
+  const { messages, sendMessage, status, stop, error, regenerate, clearError } =
     useChat<MediaAgentMessage>({
+      id: chat.id,
+      messages: chat.messages,
       transport,
-      messageMetadataSchema: agentMetadataSchema,
-      dataPartSchemas: { context: agentContextSchema },
+      onFinish: ({ messages: finished }) => latest.current.onSave(finished),
     });
   const [input, setInput] = useState('');
-  const applied = useRef(new Set<string>());
-  const scroller = useRef<HTMLDivElement>(null);
+  const [handled] = useState(() => handledCalls(chat.messages));
   const busy = status === 'submitted' || status === 'streaming';
-  const { kind, title } = readMedia();
-  const last = messages.at(-1);
-  const model =
-    [...messages].reverse().find((message) => message.metadata?.model !== undefined)?.metadata
-      ?.model ?? DEFAULT_MODEL;
+  const noun = NOUNS[kind];
 
   useEffect(() => {
     for (const message of messages) {
       for (const part of message.parts) {
-        if (part.type === 'tool-editMedia') {
-          seen.current(part.toolCallId);
-        }
         if (
           part.type === 'tool-editMedia' &&
           part.state === 'output-available' &&
           part.output.ok &&
-          !applied.current.has(part.toolCallId)
+          !handled.has(part.toolCallId)
         ) {
-          applied.current.add(part.toolCallId);
-          edit.current(part.toolCallId, part.output.operations);
+          handled.add(part.toolCallId);
+          latest.current.onEdit(part.output.operations);
+        }
+        if (
+          part.type === 'tool-renameChat' &&
+          part.state === 'output-available' &&
+          !handled.has(part.toolCallId)
+        ) {
+          handled.add(part.toolCallId);
+          latest.current.onRename(part.output.title);
         }
       }
     }
-    scroller.current?.scrollTo({ top: scroller.current.scrollHeight, behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, handled]);
+
+  const stopOnLeave = useRef(stop);
+  stopOnLeave.current = stop;
+  useEffect(
+    () => () => {
+      stopOnLeave.current().catch(() => undefined);
+    },
+    [],
+  );
 
   const send = (text: string) => {
     const trimmed = text.trim();
@@ -136,128 +170,88 @@ export const AgentChat = ({
     }
   };
 
-  const reset = () => {
-    stop().catch(() => undefined);
-    clearError();
-    setMessages([]);
-  };
-
-  const errorText = error === undefined ? null : error.message;
+  const last = messages.at(-1);
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
-      <div className="flex items-center gap-2 border-b px-4 py-2.5">
-        <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-violet-600 text-white">
-          <Sparkles className="size-4" />
-        </span>
-        <div className="min-w-0 flex-1">
-          <h2 className="font-semibold text-sm leading-tight">AI editor</h2>
-          <p className="truncate text-muted-foreground text-xs">{title}</p>
-        </div>
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          onClick={reset}
-          disabled={messages.length === 0}
-          aria-label="New chat"
-          title="New chat"
-        >
-          <RotateCcw />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="md:hidden"
-          onClick={onToggleExpanded}
-          aria-label={expanded ? 'Shrink AI editor' : 'Expand AI editor'}
-        >
-          {expanded ? <Minimize2 /> : <Maximize2 />}
-        </Button>
-        <Button variant="ghost" size="icon-sm" onClick={onClose} aria-label="Close AI editor">
-          <X />
-        </Button>
-      </div>
-      <AgentStatus status={status} last={last} model={model.replace(/^google\//, '')} />
-      <div
-        ref={scroller}
-        className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto overscroll-contain px-4 py-4"
+    <div className="flex min-h-0 flex-1 flex-col">
+      <StickToBottom
+        className="relative min-h-0 flex-1"
+        initial="instant"
+        resize="smooth"
+        role="log"
+        aria-label="Conversation"
       >
-        {messages.length === 0 ? (
-          <div className="my-auto flex flex-col gap-4">
-            <div className="space-y-1 text-center">
-              <p className="font-medium text-sm">
-                Describe a change to this {kind === 'clip' ? 'video' : 'poster'}
-              </p>
-              <p className="text-muted-foreground text-xs">
-                You will see what the agent reads, how it thinks, which controls it picks and
-                whether each edit passes validation. Every edit can be undone.
-              </p>
-            </div>
-            <div className="flex flex-col gap-2">
-              {SUGGESTIONS[kind].map((suggestion) => (
-                <button
-                  key={suggestion}
-                  type="button"
-                  onClick={() => send(suggestion)}
-                  className="rounded-lg border bg-muted/30 px-3 py-2 text-left text-sm transition-colors hover:border-violet-500/50 hover:bg-violet-500/5"
-                >
-                  {suggestion}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          messages.map((message, index) =>
-            message.role === 'user' ? (
-              <div key={message.id} className="flex justify-end">
-                <p className="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md bg-violet-600 px-3.5 py-2 text-sm text-white">
-                  {message.parts.map((part) => (part.type === 'text' ? part.text : '')).join('')}
+        <StickToBottom.Content
+          className="flex min-h-full flex-col gap-5 px-4 py-4"
+          scrollClassName="overscroll-contain"
+        >
+          {messages.length === 0 ? (
+            <Appear className="my-auto flex flex-col gap-4">
+              <div className="space-y-1 text-center">
+                <p className="font-medium text-sm">What should change in this {noun}?</p>
+                <p className="text-muted-foreground text-xs">
+                  Describe it in your own words. Every edit can be undone.
                 </p>
               </div>
-            ) : (
-              <AgentTurn
-                key={message.id}
-                message={message}
-                kind={kind}
-                documentFor={documentFor}
-                error={index === messages.length - 1 ? errorText : null}
-              />
-            ),
-          )
-        )}
-        {errorText !== null && last?.role !== 'assistant' ? (
-          <p className="rounded-lg border border-destructive/40 bg-destructive/5 px-3 py-2 text-sm">
-            {errorText}
-          </p>
-        ) : null}
-        {errorText === null ? null : (
-          <Button
-            size="sm"
-            variant="outline"
-            className="self-start"
-            onClick={() => regenerate().catch(() => undefined)}
-          >
-            <RotateCcw /> Retry
-          </Button>
-        )}
-      </div>
+              <div className="flex flex-col gap-2">
+                {SUGGESTIONS[kind].map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    type="button"
+                    onClick={() => send(suggestion)}
+                    className="rounded-lg border bg-muted/30 px-3 py-2 text-left text-sm transition-colors hover:border-violet-500/50 hover:bg-violet-500/5"
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            </Appear>
+          ) : (
+            messages.map((message, index) =>
+              message.role === 'user' ? (
+                <Appear key={message.id} className="flex justify-end">
+                  <p className="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md bg-violet-600 px-3.5 py-2 text-sm text-white">
+                    {userText(message)}
+                  </p>
+                </Appear>
+              ) : (
+                <AgentTurn
+                  key={message.id}
+                  message={message}
+                  kind={kind}
+                  document={document}
+                  busy={busy && index === messages.length - 1}
+                />
+              ),
+            )
+          )}
+          {busy && !isShowingProgress(last) ? <Working /> : null}
+          {error === undefined ? null : (
+            <Appear className="flex flex-col items-start gap-2">
+              <p className="text-destructive text-sm">{error.message}</p>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => regenerate().catch(() => undefined)}
+              >
+                <RotateCcw /> Try again
+              </Button>
+            </Appear>
+          )}
+        </StickToBottom.Content>
+        <JumpToLatest />
+      </StickToBottom>
       <form
         onSubmit={onSubmit}
         className="border-t p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
       >
-        <p className="mb-2 flex items-center gap-1.5 truncate text-[11px] text-muted-foreground">
-          <Crosshair className="size-3 shrink-0" />
-          {selection.length === 0
-            ? `Editing the whole ${kind === 'clip' ? 'video' : 'poster'}`
-            : `Selected: ${selection.join(', ')}`}
-        </p>
-        <div className="flex items-end gap-2 rounded-xl border bg-background px-3 py-2 focus-within:border-violet-500/60 focus-within:ring-2 focus-within:ring-violet-500/20">
+        <div className="flex items-end gap-2 rounded-xl border bg-background px-3 py-2 transition-[border-color,box-shadow] focus-within:border-violet-500/60 focus-within:ring-2 focus-within:ring-violet-500/20">
           <textarea
             value={input}
             onChange={(event) => setInput(event.target.value)}
             onKeyDown={onKeyDown}
             rows={1}
-            placeholder={`Ask for a change to this ${kind === 'clip' ? 'video' : 'poster'}`}
+            placeholder={`Ask for a change to this ${noun}`}
             aria-label="Message the AI editor"
             className="field-sizing-content max-h-32 min-h-6 flex-1 resize-none bg-transparent text-base outline-none placeholder:text-muted-foreground sm:text-sm"
           />
@@ -283,6 +277,10 @@ export const AgentChat = ({
             </Button>
           )}
         </div>
+        <p className="mt-2 flex items-center gap-1.5 truncate text-[11px] text-muted-foreground">
+          <Crosshair className="size-3 shrink-0" />
+          {selection.length === 0 ? `Editing the whole ${noun}` : `Editing ${selection.join(', ')}`}
+        </p>
       </form>
     </div>
   );

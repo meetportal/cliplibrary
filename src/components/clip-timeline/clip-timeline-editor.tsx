@@ -87,11 +87,17 @@ const ANIMATION_OPTIONS = CLIP_REGISTRY.map((meta) => ({ id: meta.id, title: met
 
 interface ClipTimelineEditorProps {
   title: string;
+  chatKey: string;
   initialProject: Project;
   demoSrc: string | null;
 }
 
-export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimelineEditorProps) => {
+export const ClipTimelineEditor = ({
+  title,
+  chatKey,
+  initialProject,
+  demoSrc,
+}: ClipTimelineEditorProps) => {
   const editor = useUndoable<Project>(initialProject);
   const {
     value: project,
@@ -222,6 +228,7 @@ export const ClipTimelineEditor = ({ title, initialProject, demoSrc }: ClipTimel
   return (
     <AgentWorkspace
       kind="clip"
+      chatKey={chatKey}
       title={title}
       document={project}
       focus={selectedId === null ? [] : [selectedId]}

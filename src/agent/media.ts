@@ -11,6 +11,7 @@ export type MediaDocument<K extends MediaKind> = K extends 'clip' ? Project : De
 
 export const agentRequestSchema = z.object({
   messages: z.array(z.unknown()),
+  chatTitle: z.string().nullable(),
   media: z.object({
     kind: z.enum(MEDIA_KINDS),
     title: z.string(),

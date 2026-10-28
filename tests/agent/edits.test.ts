@@ -181,15 +181,29 @@ describe('assets', () => {
 
 describe('mediaInstructions', () => {
   it('describes clip fields with their prop paths and the selection', () => {
-    const text = mediaInstructions('clip', 'Word Build', clip, ['element-1']);
+    const text = mediaInstructions({
+      kind: 'clip',
+      title: 'Word Build',
+      document: clip,
+      focus: ['element-1'],
+      chatTitle: 'Brighter words',
+    });
     expect(text).toContain('props/text');
+    expect(text).toContain('This chat is named "Brighter words".');
     expect(text).toContain('set props/look/ink; the editor recolours props/bigColor');
     expect(text).toContain('Selected element ids: element-1.');
   });
 
   it('lists the bundled fonts and the theme controls for posters', () => {
-    const text = mediaInstructions('poster', 'Amber', poster, []);
+    const text = mediaInstructions({
+      kind: 'poster',
+      title: 'Amber',
+      document: poster,
+      focus: [],
+      chatTitle: null,
+    });
     expect(text).toContain('Bebas Neue');
+    expect(text).toContain('also call renameChat');
     expect(text).toContain('Primary color: /controls/1/value = "#ffb703"');
     expect(text).toContain('/controls/8/values/2 = "Nia Brooks"');
     expect(text).toContain('Nothing is selected.');
@@ -219,6 +233,17 @@ describe('createMediaTools', () => {
       ok: true,
       operations: [{ op: 'replace', path: '/elements/0/name', value: 'data:image/png;base64,x' }],
     });
+  });
+
+  it('renames the chat with a trimmed title', () => {
+    const execute = createMediaTools('poster', poster, []).renameChat.execute;
+    expect(
+      execute?.({ title: '  Gold stars ' }, {
+        toolCallId: 'call',
+        messages: [],
+        context: {},
+      } as never),
+    ).toEqual({ title: 'Gold stars' });
   });
 
   it('stops the loop only after a successful edit', () => {

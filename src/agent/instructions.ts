@@ -16,7 +16,8 @@ const SHARED_RULES = `Rules:
 - If editMedia returns an error, read it, fix the operations and call editMedia again.
 - When the user says "this", "it" or "the selected one", they mean the selected elements.
 - Before calling editMedia, write one short plain sentence telling the user what you are changing. Once editMedia succeeds you are done, so do not add more text. Never paste JSON or patch operations into the reply.
-- If the request is unclear, make the most sensible change instead of asking. If the request cannot be done with this document, say so briefly.`;
+- If the request is unclear, make the most sensible change instead of asking. If the request cannot be done with this document, say so briefly.
+- The user may ask to rename this chat. Do that with the renameChat tool, then confirm in one short sentence without editing the media.`;
 
 const fieldLine = (entry: ControlEntry): string => {
   const hint = entry.hint === null ? '' : ` (${entry.hint})`;
@@ -107,17 +108,33 @@ ${parsed.success ? themeGuide(parsed.data) : ''}
 Design JSON schema: ${jsonSchema(designSchema)}`;
 };
 
-export const mediaInstructions = (
-  kind: MediaKind,
-  title: string,
-  document: unknown,
-  focus: readonly string[],
-): string => {
+const chatLine = (chatTitle: string | null): string =>
+  chatTitle === null
+    ? 'This chat has no name yet. In your first step, also call renameChat with a short title for what the user wants.'
+    : `This chat is named "${chatTitle}". Call renameChat only when the user asks to rename it.`;
+
+interface InstructionInput {
+  kind: MediaKind;
+  title: string;
+  document: unknown;
+  focus: readonly string[];
+  chatTitle: string | null;
+}
+
+export const mediaInstructions = ({
+  kind,
+  title,
+  document,
+  focus,
+  chatTitle,
+}: InstructionInput): string => {
   const base =
     kind === 'clip' ? clipInstructions(title, document) : posterInstructions(title, document);
   const selection =
     focus.length === 0 ? 'Nothing is selected.' : `Selected element ids: ${focus.join(', ')}.`;
   return `${base}
+
+${chatLine(chatTitle)}
 
 ${selection}
 
