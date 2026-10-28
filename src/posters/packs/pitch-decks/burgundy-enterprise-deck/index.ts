@@ -1,19 +1,10 @@
 import { definePack } from '../../../pack';
-import {
-  contentsSlide,
-  coreFocusSlide,
-  coverSlide,
-  empoweringSlide,
-  welcomeSlide,
-} from './slides-intro';
-import { benchmarksSlide, feedbackSlide, quarterlySlide, worldMarketSlide } from './slides-market';
-import {
-  ecosystemSlide,
-  growthSlide,
-  performanceSlide,
-  quoteSlide,
-  spotlightSlide,
-} from './slides-proof';
+import { coreFocusSlide } from './slides-focus';
+import { growthSlide } from './slides-growth';
+import { contentsSlide, coverSlide, empoweringSlide, welcomeSlide } from './slides-intro';
+import { benchmarksSlide, feedbackSlide } from './slides-market';
+import { ecosystemSlide, performanceSlide, quoteSlide, spotlightSlide } from './slides-proof';
+import { quarterlySlide, worldMarketSlide } from './slides-world';
 
 const INTRO = [
   coverSlide,
