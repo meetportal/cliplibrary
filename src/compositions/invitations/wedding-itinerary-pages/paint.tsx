@@ -122,8 +122,6 @@ export const Radial = ({ id, stops }: { id: string; stops: readonly Stop[] }) =>
   </radialGradient>
 );
 
-export const url = (id: string): string => `url(#${id})`;
-
 const pathCache = new Map<string, unknown>();
 
 export const memo = <T,>(key: string, build: () => T): T => {

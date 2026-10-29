@@ -2,7 +2,7 @@ import type { ItineraryPageLook, WeddingItineraryPagesProps } from '@/schemas';
 
 type Props = WeddingItineraryPagesProps;
 
-export type RowStyle = 'title' | 'names' | 'script' | 'joiner' | 'bold' | 'regular' | 'small';
+type RowStyle = 'title' | 'names' | 'script' | 'joiner' | 'bold' | 'regular' | 'small';
 
 export type Row = { text: string; style: RowStyle; block: number; accent: boolean };
 
@@ -21,7 +21,7 @@ export type ScenePage = { key: string; start: number; end: number; look: Itinera
 
 const OPEN_LIMIT = 1_000_000;
 
-export const splitLines = (text: string): string[] =>
+const splitLines = (text: string): string[] =>
   text.split('\n').filter((line) => line.trim().length > 0);
 
 const SCRIPT_STYLES: readonly RowStyle[] = ['title', 'names', 'script', 'joiner'];

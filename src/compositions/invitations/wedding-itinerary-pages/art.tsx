@@ -47,7 +47,7 @@ export const resolveArt = (
   },
 });
 
-export const BUSH_TONES = ['deep', 'dark', 'mid', 'olive', 'light'] as const;
+const BUSH_TONES = ['deep', 'dark', 'mid', 'olive', 'light'] as const;
 
 export type BushTone = (typeof BUSH_TONES)[number];
 

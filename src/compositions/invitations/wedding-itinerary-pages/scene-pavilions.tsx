@@ -11,7 +11,7 @@ const TOP_ROSES = [
   { x: 250, y: 18, r: 14 },
 ] as const;
 
-export const EdgeLeaves = ({ stage, order }: { stage: Stage; order: number }) => {
+const EdgeLeaves = ({ stage, order }: { stage: Stage; order: number }) => {
   const { art } = stage;
   const tones = [art.leaf.mid, mix(art.leaf.mid, art.leaf.light, 0.5), art.leaf.dark];
   return (
@@ -84,7 +84,7 @@ export const EdgeLeaves = ({ stage, order }: { stage: Stage; order: number }) =>
   );
 };
 
-export const RoseCorner = ({ stage, order }: { stage: Stage; order: number }) => {
+const RoseCorner = ({ stage, order }: { stage: Stage; order: number }) => {
   const { art } = stage;
   return (
     <Layer stage={stage} order={order} from="top" distance={280}>

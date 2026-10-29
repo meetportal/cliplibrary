@@ -1,6 +1,6 @@
 import { between, circlePath, f, leafPath, type Random } from './paint';
 
-export const BUSH_KINDS = ['rosette', 'scales', 'cone', 'leafy'] as const;
+const BUSH_KINDS = ['rosette', 'scales', 'cone', 'leafy'] as const;
 
 export type BushKind = (typeof BUSH_KINDS)[number];
 
