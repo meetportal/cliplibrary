@@ -9,7 +9,7 @@ export const CENTER_X = FRAME_WIDTH / 2;
 
 export const NEAREST_DEPTH = 0.09;
 
-const dolly = Easing.bezier(0.33, 0.16, 0.3, 1);
+const dolly = Easing.bezier(0.2, 0.32, 0.3, 1);
 
 export interface View {
   remaining: number;
