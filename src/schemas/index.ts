@@ -85,6 +85,7 @@ export * from './control-layout';
 export * from './control-presets';
 export * from './doodle-common';
 export * from './easing';
+export * from './invite-common';
 export * from './picker-common';
 export * from './promo-common';
 export * from './registry';

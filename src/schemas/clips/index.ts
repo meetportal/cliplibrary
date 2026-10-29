@@ -6,6 +6,7 @@ import { backgroundsClips } from './backgrounds';
 import { brandClips } from './brand';
 import { deskScenesClips } from './desk-scenes';
 import { handDrawnClips } from './hand-drawn';
+import { invitationsClips } from './invitations';
 import { kineticTypeClips } from './kinetic-type';
 import { listPickersClips } from './list-pickers';
 import { overlaysClips } from './overlays';
@@ -29,6 +30,7 @@ export const CLIP_MODULES: ClipModule[] = [
   ...adRevealsClips,
   ...backgroundsClips,
   ...transitionsClips,
+  ...invitationsClips,
 ];
 
 export const CLIP_IDS: readonly ClipId[] = CLIP_MODULES.map((module) => module.id);

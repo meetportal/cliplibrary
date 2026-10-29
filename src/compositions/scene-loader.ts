@@ -20,6 +20,7 @@ const CATEGORY_LOADERS: Record<ClipCategory, () => Promise<SceneModule[]>> = {
   'ad-reveals': () => import('./scenes/ad-reveals').then((module) => module.adRevealsScenes),
   backgrounds: () => import('./scenes/backgrounds').then((module) => module.backgroundsScenes),
   transitions: () => import('./scenes/transitions').then((module) => module.transitionsScenes),
+  invitations: () => import('./scenes/invitations').then((module) => module.invitationsScenes),
 };
 
 const loadedScenes = new Map<string, SceneComponent>();
