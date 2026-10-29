@@ -2,8 +2,9 @@ import type { GoldMonogramInviteProps } from '@/schemas';
 import { settle, smooth, tween } from '../../promo/timing';
 import { DamaskFill } from './damask';
 import { Embossed, GoldGradients, paint, useGoldIds, useSvgId, withAlpha } from './gold';
+import { Dust } from './sparks';
 import { BlurFilter, RevealText } from './text-fx';
-import { blurOut, fadeOut, progress, TITLE } from './timeline';
+import { fadeOut, TITLE } from './timeline';
 
 const SWASH =
   'M -250 78 C -360 92 -452 34 -428 -38 C -404 -110 -302 -96 -316 -30 C -330 34 -420 70 -470 118 C -522 168 -420 214 -296 182 C -150 144 96 138 252 166 C 372 188 478 160 486 92 C 494 30 424 2 384 40 C 350 74 398 116 452 104';
@@ -71,8 +72,8 @@ export const TitleAct = ({
     return null;
   }
   const scale = 1.42 - 0.42 * enter;
-  const haze = (1 - enter) * 14 + blurOut(frame, TITLE.exit, 12);
-  const draw = progress(frame, TITLE.flourish);
+  const haze = Math.max(1 - enter, tween(frame, TITLE.exit, [0, 1], smooth));
+  const draw = tween(frame, TITLE.flourish, [0, 1], (t) => smooth(t) * 0.5 + t * 0.5);
   const glint = tween(frame, [TITLE.eyebrow + 20, TITLE.eyebrow + 80], [-0.2, 1.2], smooth);
   const size = title.size;
   const s = size / 190;
@@ -120,30 +121,33 @@ export const TitleAct = ({
         <GoldGradients ids={ids} gold={gold} sheen={[-500, -200, 500, 200]} glint={glint} />
         <BlurFilter id={blurId} radius={6} />
         <filter id={softId} x="-20%" y="-40%" width="140%" height="180%">
-          <feGaussianBlur stdDeviation={haze.toFixed(2)} />
+          <feGaussianBlur stdDeviation={9} />
         </filter>
       </defs>
       {background.show ? (
         <g opacity={backdrop}>
-          <rect width={1920} height={1080} fill={background.night} />
-          <DamaskFill gold={gold} size={150} strength={0.07} />
+          <DamaskFill gold={gold} size={150} strength={0.09} offset={frame * 0.6} />
           <EdgeShade color={background.night} reach={0.42} />
+          <Dust frame={frame} count={40} color={gold.light} seed="title-dust" />
         </g>
       ) : null}
-      <g opacity={presence}>
+      {[false, true].map((soft) => (
         <g
-          transform={`translate(960 520) scale(${scale.toFixed(4)})`}
-          filter={haze > 0.05 ? `url(#${softId})` : undefined}
+          key={soft ? 'soft' : 'sharp'}
+          opacity={presence * (soft ? haze : 1 - haze)}
+          filter={soft ? `url(#${softId})` : undefined}
         >
-          <g transform="translate(2 4)">{swash(withAlpha(gold.deep, 0.9), 6)}</g>
-          {swash(paint(ids.sheen), 5.5)}
-          {swash(withAlpha(gold.highlight, 0.7), 1.6)}
-          <Embossed depth={3} gold={gold} fill={paint(ids.band)}>
-            {word}
-          </Embossed>
-          {word(paint(ids.glint))}
+          <g transform={`translate(960 520) scale(${scale.toFixed(4)})`}>
+            <g transform="translate(2 4)">{swash(withAlpha(gold.deep, 0.9), 6)}</g>
+            {swash(paint(ids.sheen), 5.5)}
+            {swash(withAlpha(gold.highlight, 0.7), 1.6)}
+            <Embossed depth={3} gold={gold} fill={paint(ids.band)}>
+              {word}
+            </Embossed>
+            {word(paint(ids.glint))}
+          </g>
         </g>
-      </g>
+      ))}
       <RevealText
         text={title.eyebrow}
         x={960 - size * 1.15}

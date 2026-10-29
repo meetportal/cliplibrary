@@ -1,7 +1,7 @@
 import { accelerate, settle, smooth, tween } from '../../promo/timing';
 
 export const QUOTE = {
-  fadeIn: [0, 20] as [number, number],
+  fadeIn: [0, 24] as [number, number],
   firstStart: 18,
   firstOut: [224, 248] as [number, number],
   secondStart: 258,
@@ -13,19 +13,19 @@ export const QUOTE = {
 export const TITLE = {
   enter: [540, 612] as [number, number],
   backdrop: [556, 626] as [number, number],
-  flourish: [560, 650] as [number, number],
+  flourish: [552, 690] as [number, number],
   eyebrow: 622,
   tail: 640,
   exit: [722, 756] as [number, number],
 };
 
 export const STAGE = {
-  enter: [752, 812] as [number, number],
-  push: [752, 1040] as [number, number],
-  lift: [870, 1000] as [number, number],
+  enter: [736, 800] as [number, number],
+  push: [736, 1004] as [number, number],
+  lift: [866, 1010] as [number, number],
   burstsFrom: 905,
   sparklersFrom: 960,
-  plaque: 1000,
+  plaque: 1012,
   glint: [1070, 1124] as [number, number],
   exit: [1196, 1234] as [number, number],
 };
@@ -39,18 +39,18 @@ export const LOTUS = {
 };
 
 export const RING = {
-  vine: [1452, 1512] as [number, number],
-  text: 1462,
-  ring: [1496, 1546] as [number, number],
-  couple: [1504, 1556] as [number, number],
+  vine: [1432, 1496] as [number, number],
+  text: 1446,
+  ring: [1464, 1520] as [number, number],
+  couple: [1472, 1530] as [number, number],
   wipe: [1616, 1664] as [number, number],
 };
 
 export const BAND = {
-  open: [1660, 1700] as [number, number],
+  open: [1654, 1700] as [number, number],
   content: 1700,
-  contentOut: [1792, 1816] as [number, number],
-  save: [1808, 1850] as [number, number],
+  contentOut: [1782, 1804] as [number, number],
+  save: [1810, 1852] as [number, number],
 };
 
 export const fadeIn = (frame: number, start: number, length = 30): number =>

@@ -81,7 +81,10 @@ export const Veil = ({ frame, lift, gold }: { frame: number; lift: number; gold:
   ];
   const path = curve(outline, true);
   return (
-    <g transform={`rotate(${(lift * 7).toFixed(3)} 960 ${(TOP - lift * 1500).toFixed(1)})`}>
+    <g
+      transform={`rotate(${(lift * 7).toFixed(3)} 960 ${(TOP - lift * 1500).toFixed(1)})`}
+      opacity={Math.min(1, (1 - lift) / 0.3)}
+    >
       <defs>
         <linearGradient
           id={satinId}

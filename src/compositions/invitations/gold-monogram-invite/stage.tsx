@@ -1,5 +1,5 @@
 import type { GoldMonogramInviteProps } from '@/schemas';
-import { accelerate, settle, smooth, tween } from '../../promo/timing';
+import { land, settle, smooth, tween } from '../../promo/timing';
 import { type Gold, GoldGradients, paint, useGoldIds, useSvgId, withAlpha } from './gold';
 import { MonogramLetters, Plaque } from './monogram';
 import { Bursts, Dust, Sparklers } from './sparks';
@@ -79,10 +79,10 @@ export const StageAct = ({
   if (presence <= 0) {
     return null;
   }
-  const push = tween(frame, STAGE.push, [0, 1], (t) => smooth(t) * 0.7 + settle(t) * 0.3);
-  const scale = 0.44 + 0.56 * push;
+  const scale = land(frame, STAGE.push, [0.44, 1], 0.0012);
+  const push = (scale - 0.44) / 0.56;
   const focusY = 640 - 120 * push;
-  const lift = stage.veil ? progress(frame, STAGE.lift, accelerate) : 1;
+  const lift = stage.veil ? progress(frame, STAGE.lift, (t) => t * t) : 1;
   const reveal = stage.veil
     ? tween(frame, [STAGE.lift[0] + 20, STAGE.lift[0] + 90], [0, 1], smooth)
     : 1;

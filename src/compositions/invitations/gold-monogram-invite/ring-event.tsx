@@ -8,6 +8,7 @@ import { Embossed, GoldGradients, paint, useGoldIds, useSvgId, withAlpha } from 
 import { vine } from './ornament';
 import { OrnamentArt } from './ornament-art';
 import { Ring } from './ring';
+import { Dust } from './sparks';
 import { BlurFilter } from './text-fx';
 import { fadeOut, progress, RING } from './timeline';
 
@@ -62,7 +63,11 @@ export const RingAct = ({
         <GoldGradients ids={ids} gold={gold} sheen={[-300, -100, 300, 200]} />
         <BlurFilter id={blurId} radius={6} />
       </defs>
-      <g transform={`translate(1330 846) scale(${(0.94 + 0.06 * ring).toFixed(4)})`} opacity={ring}>
+      <Dust frame={frame} count={44} color={gold.light} seed="ring-dust" />
+      <g
+        transform={`translate(1330 846) scale(${(0.94 + 0.06 * ring + (frame - RING.ring[0]) * 0.0004).toFixed(4)})`}
+        opacity={ring}
+      >
         <Ring
           frame={frame}
           gold={gold}

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { GoldMonogramInviteProps } from '@/schemas';
-import { settle, tween } from '../../promo/timing';
+import { smooth, tween } from '../../promo/timing';
 import { Couple, type FigureLook, FloorShadow } from './figure';
 import { DANCE_MAN, DANCE_WOMAN, MAN, WOMAN } from './figure-poses';
 import { Embossed, GoldGradients, paint, useGoldIds, useSvgId, withAlpha } from './gold';
@@ -68,7 +68,7 @@ export const QuoteAct = ({
   const panelId = useSvgId('quote-panel');
   const blurId = useSvgId('quote-blur');
   const layers = useMemo(quarterMandala, []);
-  const presence = Math.min(tween(frame, QUOTE.fadeIn, [0, 1], settle), fadeOut(frame, QUOTE.end));
+  const presence = Math.min(tween(frame, QUOTE.fadeIn, [0, 1], smooth), fadeOut(frame, QUOTE.end));
   if (presence <= 0) {
     return null;
   }

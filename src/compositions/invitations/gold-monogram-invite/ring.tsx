@@ -56,7 +56,11 @@ export const Ring = ({
       {Array.from({ length: 16 }, (_, index) => (
         <circle
           key={index.toString()}
-          cx={-560 + random(`bokeh-x-${index}`) * 1100}
+          cx={
+            -560 +
+            random(`bokeh-x-${index}`) * 1100 -
+            frame * 0.7 * (0.5 + random(`bokeh-s-${index}`))
+          }
           cy={-200 + random(`bokeh-y-${index}`) * 260}
           r={14 + random(`bokeh-r-${index}`) * 30}
           fill={index % 3 === 0 ? gold.highlight : gold.mid}

@@ -56,7 +56,7 @@ export const Sparklers = ({
           (190 + random(`${seed}-h`) * 90) *
           depth *
           grow *
-          (0.92 + 0.08 * Math.sin(frame * 0.9 + index));
+          (0.97 + 0.03 * Math.sin(frame * 0.3 + index));
         return (
           <g key={seed}>
             <rect

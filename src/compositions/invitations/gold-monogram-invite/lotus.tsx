@@ -11,7 +11,7 @@ import { OrnamentArt } from './ornament-art';
 import { Dust } from './sparks';
 import { LightStreak } from './streak';
 import { BlurFilter } from './text-fx';
-import { blurOut, fadeOut, LOTUS, progress } from './timeline';
+import { fadeOut, LOTUS, progress } from './timeline';
 
 const SOLO_BEAT = 64;
 
@@ -33,7 +33,6 @@ export const LotusAct = ({
 }) => {
   const ids = useGoldIds('lotus-gold');
   const blurId = useSvgId('lotus-blur');
-  const softId = useSvgId('lotus-soft');
   const shadowId = useSvgId('lotus-shadow');
   const layers = useMemo(lotusMandala, []);
   const head = tween(frame, LOTUS.streak, [0, 1.36], (t) => smooth(t) * 0.6 + t * 0.4);
@@ -43,7 +42,6 @@ export const LotusAct = ({
   }
   const mandala = tween(frame, LOTUS.mandala, [0, 1], settle) * out;
   const draw = progress(frame, LOTUS.dancer);
-  const haze = blurOut(frame, LOTUS.exit, 10);
   const beat = ((frame - LOTUS.dancer[0]) / SOLO_BEAT) * sketch.danceSpeed;
   const spin = (frame - LOTUS.mandala[0]) * 0.03;
   return (
@@ -57,14 +55,11 @@ export const LotusAct = ({
       <defs>
         <GoldGradients ids={ids} gold={gold} sheen={[-430, -430, 430, 430]} />
         <BlurFilter id={blurId} radius={6} />
-        <filter id={softId} x="-10%" y="-10%" width="120%" height="120%">
-          <feGaussianBlur stdDeviation={haze.toFixed(2)} />
-        </filter>
         <filter id={shadowId} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation={50} />
         </filter>
       </defs>
-      <g opacity={out} filter={haze > 0.05 ? `url(#${softId})` : undefined}>
+      <g opacity={out}>
         <g
           transform={`translate(1312 540) rotate(${spin.toFixed(3)}) scale(${(0.92 + 0.08 * mandala).toFixed(4)})`}
           opacity={mandala * 0.82}

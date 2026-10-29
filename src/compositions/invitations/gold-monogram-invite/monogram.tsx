@@ -46,7 +46,7 @@ export const MonogramLetters = ({
         <tspan dy={-size * 0.04}>{monogram.second}</tspan>
       </text>
       {monogram.showHeart ? (
-        <path d={heartPath([cx - size * 0.07, cy - size * 0.43], 0, size * 0.07)} />
+        <path d={heartPath([cx - size * 0.06, cy - size * 0.6], 0, size * 0.1)} />
       ) : null}
     </g>
   );

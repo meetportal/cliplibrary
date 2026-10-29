@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { accelerate, settle, smooth, tween } from '../../promo/timing';
+import { settle, smooth, tween } from '../../promo/timing';
 import { Embossed, type Gold } from './gold';
 
 export type TextStyle = {
@@ -15,7 +15,7 @@ const WORD_IN = 28;
 const wordLevels = (frame: number, start: number, out: [number, number]) => {
   const sharpIn = tween(frame, [start + 8, start + 8 + WORD_IN], [0, 1], settle);
   const hazeIn = tween(frame, [start, start + 14], [0, 1], smooth);
-  const leaving = tween(frame, out, [0, 1], accelerate);
+  const leaving = tween(frame, out, [0, 1], smooth);
   const fading = tween(frame, [out[0] + (out[1] - out[0]) * 0.35, out[1]], [0, 1], smooth);
   const sharp = sharpIn * (1 - leaving);
   const haze = Math.max(0, Math.min(hazeIn - sharpIn, 1) + leaving * sharpIn) * (1 - fading);

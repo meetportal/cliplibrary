@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { GoldMonogramInviteProps } from '@/schemas';
-import { settle, smooth, tween } from '../../promo/timing';
+import { smooth, tween } from '../../promo/timing';
 import { DamaskFill } from './damask';
 import { EventText } from './event-text';
 import { Couple } from './figure';
@@ -8,6 +8,7 @@ import { BAND_MAN, BAND_WOMAN, MAN, WOMAN } from './figure-poses';
 import { Embossed, GoldGradients, paint, useGoldIds, useSvgId, withAlpha } from './gold';
 import { circleAt, corner, flower, polar, teardrop } from './ornament';
 import { OrnamentArt } from './ornament-art';
+import { Dust } from './sparks';
 import { BlurFilter, RevealText } from './text-fx';
 import { BAND, fadeIn, fadeOut, RING } from './timeline';
 
@@ -55,7 +56,7 @@ export const BandAct = ({
     return null;
   }
   const wipe = tween(frame, RING.wipe, [-0.3, 1.3], smooth);
-  const open = tween(frame, BAND.open, [0, 1], settle);
+  const open = tween(frame, BAND.open, [0, 1], smooth);
   const height = BAND_HEIGHT * open;
   const top = 540 - height / 2;
   const contentOut: [number, number] = BAND.contentOut;
@@ -106,7 +107,12 @@ export const BandAct = ({
       </defs>
       <g mask={`url(#${maskId})`}>
         <rect width={1920} height={1080} fill={background.night} />
-        <DamaskFill gold={gold} size={210} strength={1} offset={-40} />
+        <DamaskFill
+          gold={gold}
+          size={210}
+          strength={1}
+          offset={-40 + (frame - RING.wipe[0]) * 0.5}
+        />
       </g>
       {height > 0.5 ? (
         <>
@@ -115,6 +121,7 @@ export const BandAct = ({
           <rect x={0} y={top - 5} width={1920} height={5} fill={paint(ids.sheen)} />
           <rect x={0} y={top + height} width={1920} height={5} fill={paint(ids.sheen)} />
           <g clipPath={`url(#${clipId})`}>
+            <Dust frame={frame} count={46} color={gold.light} seed="band-dust" />
             <g transform="translate(540 790) scale(0.56)" opacity={couple}>
               <Couple
                 beat={Math.max(0, ((frame - BAND.content) / BEAT) * sketch.danceSpeed)}
