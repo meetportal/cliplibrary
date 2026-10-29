@@ -25,7 +25,12 @@ const CAPABILITIES = [
   },
 ] as const;
 
-const snippets = (endpoint: string, key: string) => ({
+const oauthSnippets = (endpoint: string) => ({
+  claude: `claude mcp add --transport http neuclip ${endpoint}`,
+  cursor: JSON.stringify({ mcpServers: { neuclip: { url: endpoint } } }, null, 2),
+});
+
+const keySnippets = (endpoint: string, key: string) => ({
   claude: `claude mcp add --transport http neuclip ${endpoint} \\\n  --header "Authorization: Bearer ${key}"`,
   cursor: JSON.stringify(
     { mcpServers: { neuclip: { url: endpoint, headers: { Authorization: `Bearer ${key}` } } } },
@@ -62,7 +67,8 @@ export const McpSetup = ({ approved }: { approved: boolean }) => {
     setOrigin(window.location.origin);
   }, []);
   const endpoint = `${origin}/mcp`;
-  const code = snippets(endpoint, secret ?? KEY_PLACEHOLDER);
+  const oauth = oauthSnippets(endpoint);
+  const code = keySnippets(endpoint, secret ?? KEY_PLACEHOLDER);
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-10 px-4 py-10 sm:px-6">
@@ -95,10 +101,35 @@ export const McpSetup = ({ approved }: { approved: boolean }) => {
           id="mcp-endpoint"
           label="Server URL"
           value={endpoint}
-          hint="Streamable HTTP. Every request needs one of your API keys."
+          hint="Streamable HTTP. Sign in with your neuclip account, or send one of your API keys."
         />
       </Section>
-      <Section step={2} title="Create an API key">
+      <Section step={2} title="Add it and sign in">
+        <p className="text-muted-foreground text-sm">
+          Clients that support OAuth open a neuclip sign-in page the first time they connect. No key
+          to copy.
+        </p>
+        <Tabs defaultValue="claude">
+          <TabsList>
+            <TabsTrigger value="claude">Claude Code</TabsTrigger>
+            <TabsTrigger value="cursor">Cursor and others</TabsTrigger>
+          </TabsList>
+          <TabsContent value="claude" className="mt-3 flex flex-col gap-2">
+            <CodeBlock label="Claude Code command" code={oauth.claude} />
+            <p className="text-muted-foreground text-sm">
+              Then run <code>/mcp</code> in Claude Code and choose Authenticate.
+            </p>
+          </TabsContent>
+          <TabsContent value="cursor" className="mt-3 flex flex-col gap-2">
+            <p className="text-muted-foreground text-sm">Add this to your client's mcp.json.</p>
+            <CodeBlock label="MCP config" code={oauth.cursor} />
+          </TabsContent>
+        </Tabs>
+      </Section>
+      <Section step={3} title="Or use an API key">
+        <p className="text-muted-foreground text-sm">
+          For scripts and clients without OAuth, send a key as a bearer token instead.
+        </p>
         {approved ? (
           <ApiKeysPanel onSecret={setSecret} />
         ) : (
@@ -106,8 +137,6 @@ export const McpSetup = ({ approved }: { approved: boolean }) => {
             You can create keys once your account is approved.
           </p>
         )}
-      </Section>
-      <Section step={3} title="Add it to your client">
         <Tabs defaultValue="claude">
           <TabsList>
             <TabsTrigger value="claude">Claude Code</TabsTrigger>
@@ -115,11 +144,11 @@ export const McpSetup = ({ approved }: { approved: boolean }) => {
             <TabsTrigger value="other">Raw HTTP</TabsTrigger>
           </TabsList>
           <TabsContent value="claude" className="mt-3">
-            <CodeBlock label="Claude Code command" code={code.claude} />
+            <CodeBlock label="Claude Code command with an API key" code={code.claude} />
           </TabsContent>
           <TabsContent value="cursor" className="mt-3 flex flex-col gap-2">
             <p className="text-muted-foreground text-sm">Add this to your client's mcp.json.</p>
-            <CodeBlock label="MCP config" code={code.cursor} />
+            <CodeBlock label="MCP config with an API key" code={code.cursor} />
           </TabsContent>
           <TabsContent value="other" className="mt-3">
             <CodeBlock label="HTTP headers" code={code.other} />
