@@ -2,6 +2,7 @@ import 'server-only';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import type { VideoGalleryItem } from '@/components/gallery/clip-gallery';
+import { firstFrameFileName } from '@/lib/preview-files';
 import { videoMeta } from '@/lib/video-meta';
 import { CLIP_REGISTRY, type ClipId } from '@/schemas';
 import { repoRoot } from './repo-root';
@@ -16,7 +17,7 @@ export const listClips = (): VideoGalleryItem[] =>
     kind: 'video',
     meta: videoMeta(meta),
     video: clipPreviewVideo(meta.id),
-    firstFrame: previewUrl(`${meta.id}.first-frame.jpg`),
+    firstFrame: previewUrl(firstFrameFileName(meta.id)),
     width: meta.width,
     height: meta.height,
   }));

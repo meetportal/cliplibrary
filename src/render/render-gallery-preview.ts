@@ -1,6 +1,7 @@
 import { rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { renderStill, selectComposition } from '@remotion/renderer';
+import { firstFrameFileName, stillFileName } from '@/lib/preview-files';
 import type { Project } from '@/project';
 import {
   BROWSER_RENDER_OPTIONS,
@@ -19,10 +20,6 @@ const GALLERY_PREVIEW_OPTIONS: RenderOptions = {
 
 const FIRST_FRAME_WIDTH = 48;
 const STILL_BOX = 800;
-
-const firstFrameFileName = (name: string): string => `${name}.first-frame.jpg`;
-
-export const stillFileName = (name: string): string => `${name}.still.jpg`;
 
 export const galleryPreviewFileNames = (name: string): string[] => [
   `${name}.${outputExtension(GALLERY_PREVIEW_OPTIONS.codec)}`,
