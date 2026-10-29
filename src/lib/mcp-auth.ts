@@ -1,20 +1,16 @@
 import 'server-only';
 import { clerkClient } from '@clerk/nextjs/server';
-import { apiKeyOwner } from '@/lib/api-keys';
 
 export const MCP_SCOPES = ['profile', 'email'];
 
-const oauthTokenOwner = async (token: string): Promise<string | null> => {
-  if (token === '') {
-    return null;
-  }
+export const mcpTokenOwner = async (request: Request): Promise<string | null> => {
   try {
-    const verified = await (await clerkClient()).idPOAuthAccessToken.verify(token);
-    return verified.revoked || verified.expired ? null : verified.subject;
+    const state = await (await clerkClient()).authenticateRequest(request, {
+      acceptsToken: ['api_key', 'oauth_token'],
+    });
+    const auth = state.toAuth();
+    return auth?.isAuthenticated === true ? auth.subject : null;
   } catch {
     return null;
   }
 };
-
-export const mcpTokenOwner = async (token: string): Promise<string | null> =>
-  (await apiKeyOwner(token)) ?? (await oauthTokenOwner(token));

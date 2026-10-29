@@ -4,29 +4,37 @@ const API_KEY = 'ak_valid';
 const OAUTH_TOKEN = 'oat_valid';
 const PENDING_TOKEN = 'oat_pending';
 
-const owners: Record<string, { subject: string; kind: 'api_key' | 'oauth' }> = {
-  [API_KEY]: { subject: 'user_key', kind: 'api_key' },
-  [OAUTH_TOKEN]: { subject: 'user_oauth', kind: 'oauth' },
-  [PENDING_TOKEN]: { subject: 'user_pending', kind: 'oauth' },
+const owners: Record<string, string> = {
+  [API_KEY]: 'user_key',
+  [OAUTH_TOKEN]: 'user_oauth',
+  [PENDING_TOKEN]: 'user_pending',
 };
 
-const verifier = (kind: 'api_key' | 'oauth') => (token: string) => {
-  const owner = owners[token];
-  return owner?.kind === kind
-    ? Promise.resolve({ subject: owner.subject, revoked: false, expired: false })
-    : Promise.reject(new Error('invalid token'));
+const acceptedTypes: unknown[] = [];
+
+const authenticateRequest = (request: Request, options: { acceptsToken: unknown }) => {
+  acceptedTypes.push(options.acceptsToken);
+  const token = /^Bearer (\S+)$/.exec(request.headers.get('authorization') ?? '')?.[1] ?? '';
+  const subject = owners[token];
+  return Promise.resolve({
+    toAuth: () =>
+      subject === undefined
+        ? { isAuthenticated: false, subject: null }
+        : { isAuthenticated: true, subject },
+  });
 };
 
 mock.module('@clerk/nextjs/server', () => ({
-  auth: async () => ({ userId: null }),
-  currentUser: async () => null,
-  clerkClient: async () => ({
-    apiKeys: { verify: verifier('api_key') },
-    idPOAuthAccessToken: { verify: verifier('oauth') },
-    users: {
-      getUser: async (id: string) => ({ publicMetadata: { approved: id !== 'user_pending' } }),
-    },
-  }),
+  auth: () => Promise.resolve({ userId: null }),
+  currentUser: () => Promise.resolve(null),
+  clerkClient: () =>
+    Promise.resolve({
+      authenticateRequest,
+      users: {
+        getUser: (id: string) =>
+          Promise.resolve({ publicMetadata: { approved: id !== 'user_pending' } }),
+      },
+    }),
 }));
 
 const { POST } = await import('@/app/mcp/route');
@@ -62,6 +70,7 @@ describe('/mcp auth', () => {
 
   it('still serves a request signed with an API key', async () => {
     expect((await listTools(API_KEY)).status).toBe(200);
+    expect(acceptedTypes.at(-1)).toEqual(['api_key', 'oauth_token']);
   });
 
   it('points unauthenticated clients at the protected resource metadata', async () => {

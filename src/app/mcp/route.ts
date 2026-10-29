@@ -1,5 +1,4 @@
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
-import { bearerToken } from '@/auth/bearer';
 import { mcpChallenge } from '@/auth/mcp-metadata';
 import { mcpTokenOwner } from '@/lib/mcp-auth';
 import { isApprovedUser } from '@/lib/session';
@@ -13,7 +12,7 @@ const refuse = (origin: string, status: number, message: string): Response =>
 
 const handle = async (request: Request): Promise<Response> => {
   const { origin } = new URL(request.url);
-  const userId = await mcpTokenOwner(bearerToken(request));
+  const userId = await mcpTokenOwner(request);
   if (userId === null) {
     return refuse(
       origin,

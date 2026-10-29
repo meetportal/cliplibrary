@@ -98,15 +98,3 @@ export const revokeApiKey = async (userId: string, keyId: string): Promise<KeyRe
     return failure(error);
   }
 };
-
-export const apiKeyOwner = async (secret: string): Promise<string | null> => {
-  if (secret === '') {
-    return null;
-  }
-  try {
-    const key = await (await keys()).verify(secret);
-    return key.revoked || key.expired ? null : key.subject;
-  } catch {
-    return null;
-  }
-};
