@@ -271,21 +271,18 @@ paths go in `more`. At most 14 controls show at first glance across all sections
 ## Website templates
 
 The home grid also lists website templates (gallery type `site`, categories `SITE_CATEGORIES`).
-A card opens `/sites/<templateId>`, an editor with a live phone or desktop preview (Tailwind
-container queries, so the frame width drives the layout) and the shared properties panel, driven by
-the template's `defineControls` layout. The draft autosaves to `localStorage`
-(`neuclip-site-draft:<id>`). `/preview/<templateId>` shows the template with its defaults.
+A card opens `/sites/<templateId>`, an editor with a browser-style live preview (phone or desktop,
+Tailwind container queries, a reload button that replays the intro), the shared properties panel
+driven by the template's `defineControls` layout, and the AI editor (media kind `site`, document
+`{ templateId, content }`, edits only under `/content`, `src/agent/site.ts`). Drafts autosave to
+`localStorage`. `/preview/<templateId>` shows a template with its defaults.
 
-- Publish picks a slug (`src/sites/slug.ts`) and `POST /api/sites` stores
-  `{ slug, templateId, content }` with a hashed edit key. Guests open `/s/<slug>`, outside the
-  `(library)` route group so it has no app header. The owner edits at `/s/<slug>/edit`, which
-  autosaves with `PUT /api/sites/<slug>` and the `x-edit-key` header. The key lives in
-  `localStorage` (`neuclip-site-key:<slug>`) and in the private edit link's `#key=` fragment.
-- Picked photos are uploaded to `POST /api/site-assets` and served from
-  `/api/site-assets/<id>`; content holding `blob:` URLs is rejected. RSVP replies go to
-  `POST /api/sites/<slug>/rsvp`; the owner lists them with the edit key.
-- `src/lib/site-store.ts` uses the `unstorage` filesystem driver under `.data/sites` (git-ignored).
-  Swap the driver for a hosted one (Redis, Vercel KV, S3) before deploying.
+Websites are static and nothing is stored on the server. Publishing (`POST /api/sites/publish`)
+validates `{ slug, templateId, content }` (`checkSharedSite` in `src/sites/site-link.ts`), compresses
+it with lz-string and signs it with HMAC (`SITE_LINK_SECRET`, `src/lib/site-signing.ts`). The whole
+website lives in its link: guests open `/s/<slug>?d=…&sig=…`, and `/sites/<templateId>?d=…&sig=…`
+reopens it in the editor; every change publishes a new link. Photos are bundled files or image
+links; photos picked from the device cannot be published. RSVP is a button to the couple's own form.
 
 To add a template:
 
@@ -298,10 +295,27 @@ To add a template:
    `bun run render:sites <id> --base http://localhost:3201`, then commit
    `public/site-previews/<id>.jpg` (`tests/sites/previews.test.ts` fails without it).
 
+## Accounts and approval
+
+Sign-in uses Clerk through our own screens only (`src/components/auth`): email and password with an
+emailed code, and Google, whose redirect finishes in place on the returning page (`AuthReturn` with
+the `auth_return` param). `src/proxy.ts` runs `clerkMiddleware` on everything except `/mcp` and
+static files. Env: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`,
+`NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL` and `SITE_LINK_SECRET`.
+
+Only approved users can use the AI editor, publish websites, manage API keys or call the MCP
+endpoint. Approve a user in the Clerk dashboard by setting their public metadata to
+`{ "approved": true }` (`src/auth/approval.ts`, `currentAccess` in `src/lib/session.ts`). The
+header shows the account and its approval state; `/account` is the profile and `/integrations` is
+the MCP setup page, where users create and revoke Clerk API keys (`src/lib/api-keys.ts`, the API
+keys feature must be enabled in the Clerk dashboard).
+
 ## MCP endpoint
 
 `src/app/mcp/route.ts` serves a stateless Streamable HTTP MCP server (`@modelcontextprotocol/sdk`,
-`src/mcp`) with open access and no storage. Tools: `search_clips` (MiniSearch over clip meta and the
+`src/mcp`) with no storage. Every request needs `Authorization: Bearer <API key>` from an approved
+user. Website tools: `list_site_templates`, `get_site_template`, `create_site` and `edit_site`
+(`src/mcp/site-tools.ts`), which return the site plus its signed `siteUrl` and `editorUrl`. Tools: `search_clips` (MiniSearch over clip meta and the
 labels in `src/schemas/clip-labels.json`, filters by category, theme, orientation and role),
 `get_clip` (labels, defaults, field guide and props schema), `create_video`, `add_clip` and
 `edit_video` (JSON Patch through the same `applyEdits` validation as the media agent). The agent
