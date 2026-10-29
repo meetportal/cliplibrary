@@ -18,6 +18,7 @@ export const sites = pgTable(
     ownerId: text('owner_id').notNull(),
     templateId: text('template_id').notNull(),
     content: jsonb('content').$type<Record<string, unknown>>().notNull(),
+    draft: jsonb('draft').$type<Record<string, unknown>>(),
     ...timestamps,
   },
   (table) => [index('sites_owner_updated_idx').on(table.ownerId, table.updatedAt)],

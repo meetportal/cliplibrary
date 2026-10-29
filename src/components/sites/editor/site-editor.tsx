@@ -1,10 +1,12 @@
 'use client';
 
+import { compare } from 'fast-json-patch';
 import { Globe, RotateCcw, Share2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAccessGate } from '@/components/auth/access-gate';
 import { Button } from '@/components/ui/button';
-import { publishSite, publishSiteChanges, type SavedSite } from '@/lib/site-api';
+import { publishSite, publishSiteChanges, type SavedSite, saveSiteDraft } from '@/lib/site-api';
+import { useAutosave } from '@/lib/use-autosave';
 import { useSavedDocument } from '@/lib/use-saved-document';
 import { useUndoable } from '@/lib/use-undoable';
 import {
@@ -28,6 +30,7 @@ export interface OpenedSite {
   id: string;
   slug: string;
   content: Values;
+  draft: Values | null;
   updatedAt: string;
 }
 
@@ -48,9 +51,30 @@ const statusText = (localPhoto: boolean, problem: string | null, unpublished: bo
   return problem ?? (unpublished ? 'Unpublished changes' : null);
 };
 
+const PrimaryLabel = ({ published, dirty }: { published: boolean; dirty: boolean }) => {
+  if (!published) {
+    return (
+      <>
+        <Globe />
+        Publish
+      </>
+    );
+  }
+  return dirty ? (
+    <>
+      <Globe />
+      Publish changes
+    </>
+  ) : (
+    <>
+      <Share2 />
+      Share
+    </>
+  );
+};
+
 const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSite | null }) => {
-  const start = opened?.content ?? template.defaults;
-  const history = useUndoable<Values>(start);
+  const history = useUndoable<Values>(opened?.draft ?? opened?.content ?? template.defaults);
   const [published, setPublished] = useState<Published | null>(
     opened === null ? null : { site: opened, content: opened.content },
   );
@@ -65,18 +89,26 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
     setHost(window.location.host);
   }, []);
 
-  const clearDraft = useSavedDocument<Values>({
-    key:
-      published === null
-        ? `neuclip-site-draft:${template.id}`
-        : `neuclip-site:${published.site.id}:${published.site.updatedAt}`,
+  const clearLocalDraft = useSavedDocument<Values>({
+    key: published === null ? `neuclip-site-draft:${template.id}` : null,
     value: values,
     parse: (saved) => (isValues(saved) && template.schema.safeParse(saved).success ? saved : null),
     restore: history.reset,
   });
 
+  const siteId = published?.site.id ?? null;
+  const saveDraft = useCallback(
+    (content: Values) => {
+      if (siteId !== null) {
+        saveSiteDraft(siteId, content).catch(() => undefined);
+      }
+    },
+    [siteId],
+  );
+  useAutosave(values, siteId === null ? undefined : saveDraft);
+
   const markPublished = (site: SavedSite) => {
-    clearDraft();
+    clearLocalDraft();
     setProblem(null);
     setPublished({ site, content: values });
   };
@@ -106,7 +138,10 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
     }
   };
 
-  const dirty = published === null || published.content !== values;
+  const dirty = useMemo(
+    () => published === null || compare(published.content, values).length > 0,
+    [published, values],
+  );
   const addressSlug = published?.site.slug ?? slugify(template.headline(values));
   const localPhoto = holdsLocalPhoto(values);
 
@@ -142,17 +177,19 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
               type="button"
               size="sm"
               variant="ghost"
+              disabled={published !== null && !dirty}
               onClick={() => {
-                clearDraft();
+                clearLocalDraft();
                 history.set(published?.content ?? template.defaults);
               }}
             >
               <RotateCcw />
-              <span className="sr-only sm:not-sr-only">Reset</span>
+              <span className="sr-only sm:not-sr-only">
+                {published === null ? 'Reset' : 'Discard changes'}
+              </span>
             </Button>
             <Button type="button" size="sm" disabled={localPhoto || !ready} onClick={onPrimary}>
-              {published !== null && !dirty ? <Share2 /> : <Globe />}
-              {published === null ? 'Publish' : dirty ? 'Publish changes' : 'Share'}
+              <PrimaryLabel published={published !== null} dirty={dirty} />
             </Button>
           </>
         }

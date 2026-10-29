@@ -2,9 +2,12 @@ import { beforeEach, describe, expect, it } from 'bun:test';
 import {
   createSite,
   deleteSite,
+  editingContent,
+  findLatestOwnedSite,
   findOwnedSite,
   findSiteBySlug,
   listOwnedSites,
+  saveSiteDraft,
   updateSite,
 } from '@/db/sites';
 import { resetTestDatabase } from '../test-database';
@@ -47,5 +50,28 @@ describe('site store', () => {
     expect(
       await updateSite('user_a', created.site.id, { slug: 'taken-address', content: {} }),
     ).toEqual({ ok: false, reason: 'taken' });
+  });
+
+  it('keeps unpublished edits in a draft until they are published', async () => {
+    const created = await createSite('user_a', site);
+    if (!created.ok) {
+      throw new Error('not created');
+    }
+    const { id } = created.site;
+    expect(await saveSiteDraft('user_b', id, { title: 'Stolen' })).toBe(false);
+    expect(await saveSiteDraft('user_a', id, { title: 'Draft' })).toBe(true);
+    const drafted = await findOwnedSite('user_a', id);
+    expect(drafted?.content).toEqual({ title: 'M & D' });
+    expect(drafted === null ? null : editingContent(drafted)).toEqual({ title: 'Draft' });
+    expect((await findLatestOwnedSite('user_a', 'emerald-rose'))?.id).toBe(id);
+    expect(await findLatestOwnedSite('user_a', 'other-template')).toBeNull();
+    const published = await updateSite('user_a', id, {
+      slug: site.slug,
+      content: { title: 'Draft' },
+    });
+    expect(published.ok && published.site).toMatchObject({
+      content: { title: 'Draft' },
+      draft: null,
+    });
   });
 });

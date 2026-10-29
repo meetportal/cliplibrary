@@ -62,6 +62,7 @@ const WebsitesPage = async () => {
                   <span className="truncate text-muted-foreground text-sm">{address}</span>
                   <span className="text-muted-foreground text-xs">
                     {template?.meta.title ?? site.templateId} · Updated {formatDate(site.updatedAt)}
+                    {site.draft === null ? null : ' · Unpublished changes'}
                   </span>
                 </div>
                 <div className="flex shrink-0 items-center gap-1">

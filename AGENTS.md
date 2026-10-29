@@ -287,8 +287,11 @@ content. Publishing (`POST /api/sites`) validates `{ slug, templateId, content }
 `DELETE /api/sites/<id>` let the owner publish changes, move the address or delete it. Guests open
 `/s/<slug>`, which reads the row on each request, so changes go live at the same link. The owner
 edits a published website at `/websites/<id>` and finds every website they published at
-`/websites`. Unpublished edits autosave to `localStorage` under a key that includes the row's
-`updatedAt`, so a newer server version (for example from the MCP) wins over a stale draft. Photos are bundled files or image
+`/websites`. A website has one draft: once published, every edit autosaves to the row's `draft`
+column (`PATCH /api/sites/<id>`), "Publish changes" copies it to `content` and clears it, and
+"Discard changes" goes back to the live version. Opening a template you already published
+(`/sites/<templateId>`) redirects to your latest website from it. Before the first publish the draft
+lives in `localStorage`. Photos are bundled files or image
 links; photos picked from the device cannot be published. RSVP is a button to the couple's own form.
 
 To add a template:
@@ -324,7 +327,7 @@ keys feature must be enabled in the Clerk dashboard).
 website and video it makes belongs to that user. Website tools (`src/mcp/site-tools.ts`):
 `list_site_templates`, `get_site_template`, `create_site`, `edit_site`, `get_site` and
 `list_sites`, which work on `sites` rows by `siteId` and return `siteUrl` (`/s/<slug>`) and
-`editorUrl` (`/websites/<id>`). Clip and video tools: `search_clips` (MiniSearch over clip meta and
+`editorUrl` (`/websites/<id>`). `edit_site` applies on top of the owner's draft and publishes. Clip and video tools: `search_clips` (MiniSearch over clip meta and
 the labels in `src/schemas/clip-labels.json`, filters by category, theme, orientation and role),
 `get_clip` (labels, defaults, field guide and props schema), `create_video`, `add_clip`,
 `edit_video` (JSON Patch through the same `applyEdits` validation as the media agent), `get_video`

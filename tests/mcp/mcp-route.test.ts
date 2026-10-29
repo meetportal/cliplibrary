@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'bun:test';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { POST } from '@/app/mcp/route';
-import { findSiteBySlug } from '@/db/sites';
+import { findSiteBySlug, saveSiteDraft } from '@/db/sites';
 import { findVideo } from '@/db/videos';
 import { createMcpServer } from '@/mcp/server';
 import { resetTestDatabase } from '../test-database';
@@ -126,9 +126,23 @@ describe('/mcp', () => {
     expect((await findSiteBySlug('maya-daniel-2027'))?.content).toMatchObject({
       event: { venue: 'Villa Cimbrone', startsAt: '2027-06-12T16:00' },
     });
-    expect(
-      jsonOf<SiteResult>(await call('get_site', { siteId: created.siteId })).content,
-    ).toMatchObject({ couple: { firstName: 'Maya' } });
+    const { couple, ...live } = (await findSiteBySlug('maya-daniel-2027'))?.content ?? {};
+    await saveSiteDraft(ownerId, created.siteId, {
+      ...live,
+      couple: { ...(couple as object), greeting: 'Join us' },
+    });
+    expect(jsonOf<SiteResult>(await call('get_site', { siteId: created.siteId }))).toMatchObject({
+      hasUnpublishedChanges: true,
+      content: { couple: { greeting: 'Join us' } },
+    });
+    await call('edit_site', {
+      siteId: created.siteId,
+      operations: [{ op: 'replace', path: '/content/event/venue', value: 'Ravello' }],
+    });
+    expect(await findSiteBySlug('maya-daniel-2027')).toMatchObject({
+      draft: null,
+      content: { couple: { greeting: 'Join us' }, event: { venue: 'Ravello' } },
+    });
     expect(
       jsonOf<{ sites: SiteResult[] }>(await call('list_sites', {})).sites.map(
         (site) => site.siteId,

@@ -22,6 +22,7 @@ const WebsiteEditorPage = async ({ params }: Props) => {
         id: site.id,
         slug: site.slug,
         content: site.content,
+        draft: site.draft,
         updatedAt: site.updatedAt.toISOString(),
       }}
     />

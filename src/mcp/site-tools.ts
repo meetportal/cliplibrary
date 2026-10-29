@@ -6,6 +6,7 @@ import { jsonSchema } from '@/agent/instructions';
 import { siteFieldGuide } from '@/agent/site';
 import {
   createSite,
+  editingContent,
   findOwnedSite,
   listOwnedSites,
   type SiteRow,
@@ -31,7 +32,8 @@ export const registerSiteTools = (server: McpServer, origin: string, ownerId: st
     siteUrl: `${origin}${publicSitePath(site.slug)}`,
     editorUrl: `${origin}${siteEditorPath(site.id)}`,
     updatedAt: site.updatedAt.toISOString(),
-    ...(withContent ? { content: site.content } : {}),
+    hasUnpublishedChanges: site.draft !== null,
+    ...(withContent ? { content: editingContent(site) } : {}),
   });
 
   const written = (write: SiteWrite): CallToolResult =>
@@ -127,7 +129,7 @@ export const registerSiteTools = (server: McpServer, origin: string, ownerId: st
     {
       title: 'Edit a website',
       description:
-        'Change a published website with RFC 6902 JSON Patch operations against { templateId, content } (paths start with /content/, see get_site and get_site_template). Batch related changes in one call. Guests see the change at the same siteUrl right away. Set slug to move it to a new address.',
+        'Change a website with RFC 6902 JSON Patch operations against { templateId, content } (paths start with /content/, see get_site and get_site_template) and publish it. The edits apply on top of any unpublished changes the owner made in the browser, and guests see the result at the same siteUrl right away. Batch related changes in one call. Set slug to move it to a new address.',
       inputSchema: {
         siteId: siteIdInput,
         operations: z.array(editOperationSchema).optional(),
@@ -142,7 +144,7 @@ export const registerSiteTools = (server: McpServer, origin: string, ownerId: st
       }
       const edited = applyEdits(
         'site',
-        { templateId: site.templateId, content: site.content },
+        { templateId: site.templateId, content: editingContent(site) },
         operations,
       );
       if (!edited.ok) {
@@ -160,7 +162,7 @@ export const registerSiteTools = (server: McpServer, origin: string, ownerId: st
     {
       title: 'Get a website',
       description:
-        'The current state of a published website, including changes the owner made in the browser editor, with its full content.',
+        'The current content of a website as the owner is editing it, including unpublished changes from the browser editor (hasUnpublishedChanges).',
       inputSchema: { siteId: siteIdInput },
       annotations: { readOnlyHint: true },
     },

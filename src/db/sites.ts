@@ -29,7 +29,7 @@ export const updateSite = async (
   try {
     const [row] = await database()
       .update(sites)
-      .set({ ...change, updatedAt: new Date() })
+      .set({ ...change, draft: null, updatedAt: new Date() })
       .where(and(eq(sites.id, id), eq(sites.ownerId, ownerId)))
       .returning();
     return row === undefined ? { ok: false, reason: 'missing' } : { ok: true, site: row };
@@ -41,6 +41,22 @@ export const updateSite = async (
   }
 };
 
+export const saveSiteDraft = async (
+  ownerId: string,
+  id: string,
+  draft: Record<string, unknown>,
+): Promise<boolean> =>
+  (
+    await database()
+      .update(sites)
+      .set({ draft, updatedAt: new Date() })
+      .where(and(eq(sites.id, id), eq(sites.ownerId, ownerId)))
+      .returning({ id: sites.id })
+  ).length > 0;
+
+export const editingContent = (site: SiteRow): Record<string, unknown> =>
+  site.draft ?? site.content;
+
 const findSite = async (id: string): Promise<SiteRow | null> =>
   (await database().select().from(sites).where(eq(sites.id, id)))[0] ?? null;
 
@@ -51,6 +67,19 @@ export const findOwnedSite = async (ownerId: string, id: string): Promise<SiteRo
 
 export const findSiteBySlug = async (slug: string): Promise<SiteRow | null> =>
   (await database().select().from(sites).where(eq(sites.slug, slug)))[0] ?? null;
+
+export const findLatestOwnedSite = async (
+  ownerId: string,
+  templateId: string,
+): Promise<SiteRow | null> =>
+  (
+    await database()
+      .select()
+      .from(sites)
+      .where(and(eq(sites.ownerId, ownerId), eq(sites.templateId, templateId)))
+      .orderBy(desc(sites.updatedAt))
+      .limit(1)
+  )[0] ?? null;
 
 export const listOwnedSites = (ownerId: string): Promise<SiteRow[]> =>
   database().select().from(sites).where(eq(sites.ownerId, ownerId)).orderBy(desc(sites.updatedAt));

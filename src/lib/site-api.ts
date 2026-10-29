@@ -26,7 +26,7 @@ const call = async <T>(request: Promise<Response>, schema: z.ZodType<T>): Promis
   }
 };
 
-const send = (method: 'POST' | 'PUT', url: string, body: unknown) =>
+const send = (method: 'POST' | 'PUT' | 'PATCH', url: string, body: unknown) =>
   fetch(url, {
     method,
     headers: { 'content-type': 'application/json' },
@@ -45,6 +45,9 @@ export const publishSite = (site: PublishedSite) => call(post('/api/sites', site
 
 export const publishSiteChanges = (id: string, change: Pick<PublishedSite, 'slug' | 'content'>) =>
   call(send('PUT', `/api/sites/${id}`, change), savedSiteSchema);
+
+export const saveSiteDraft = (id: string, content: Record<string, unknown>) =>
+  call(send('PATCH', `/api/sites/${id}`, { content }), z.null());
 
 export const deleteSite = (id: string) =>
   call(fetch(`/api/sites/${id}`, { method: 'DELETE' }), z.null());
