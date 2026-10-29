@@ -102,12 +102,12 @@ export const inkAndLaceDefaults: InkAndLaceContent = {
     rsvpBy: 'July 1st, 2027',
   },
   photos: {
-    cover: photo('cover-bride'),
+    cover: photo('cover-hands'),
     hero: photo('couple-portrait'),
-    storyOne: photo('story-hands'),
-    storyTwo: photo('story-bouquet'),
+    storyOne: photo('story-veil'),
+    storyTwo: photo('story-rings'),
     venue: photo('venue-hall'),
-    closing: photo('closing-veil'),
+    closing: photo('closing-gown'),
     blackAndWhite: true,
   },
   story: {
