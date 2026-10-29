@@ -248,19 +248,41 @@ export const POSTER_TAGS = [
 
 export type PosterTag = (typeof POSTER_TAGS)[number] | ClipTag;
 
-export const GALLERY_CATEGORIES = [...CLIP_CATEGORIES, ...POSTER_CATEGORIES];
+export const SITE_CATEGORIES = [
+  {
+    id: 'weddings',
+    label: 'Weddings',
+    keywords: ['website', 'wedding', 'invitation', 'invite', 'rsvp', 'save the date', 'marriage'],
+  },
+] as const;
 
-export type GalleryCategory = ClipCategory | PosterCategory;
+export type SiteCategory = (typeof SITE_CATEGORIES)[number]['id'];
+
+export const SITE_TAGS = [
+  'website',
+  'invitation',
+  'rsvp',
+  'countdown',
+  'wedding',
+  'floral',
+  'elegant',
+] as const;
+
+export type SiteTag = (typeof SITE_TAGS)[number];
+
+export const GALLERY_CATEGORIES = [...CLIP_CATEGORIES, ...POSTER_CATEGORIES, ...SITE_CATEGORIES];
+
+export type GalleryCategory = ClipCategory | PosterCategory | SiteCategory;
 
 export const GALLERY_CATEGORY_IDS: readonly GalleryCategory[] = GALLERY_CATEGORIES.map(
   (category) => category.id,
 );
 
-export const GALLERY_TAGS: readonly (ClipTag | PosterTag)[] = [
-  ...new Set<ClipTag | PosterTag>([...CLIP_TAGS, ...POSTER_TAGS]),
-];
+export type GalleryTag = ClipTag | PosterTag | SiteTag;
 
-export type GalleryTag = ClipTag | PosterTag;
+export const GALLERY_TAGS: readonly GalleryTag[] = [
+  ...new Set<GalleryTag>([...CLIP_TAGS, ...POSTER_TAGS, ...SITE_TAGS]),
+];
 
 const categoryById = (id: GalleryCategory) =>
   GALLERY_CATEGORIES.find((category) => category.id === id);

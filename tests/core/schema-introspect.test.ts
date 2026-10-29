@@ -18,7 +18,7 @@ describe('describeSchema control kinds', () => {
       kind: 'text',
       path: ['title'],
       label: 'title',
-      multiline: false,
+      format: 'line',
       maxLength: null,
     });
   });
@@ -30,7 +30,7 @@ describe('describeSchema control kinds', () => {
 
   it('treats a textarea-tagged string as multiline', () => {
     const [control] = describeSchema(z.object({ body: zMultiline() }));
-    expect(control).toMatchObject({ kind: 'text', multiline: true });
+    expect(control).toMatchObject({ kind: 'text', format: 'multiline' });
   });
 
   it('treats a color-tagged string as a color control', () => {
@@ -90,7 +90,7 @@ describe('describeSchema control kinds', () => {
 
   it('falls back to a text control for an unhandled kind', () => {
     const [control] = describeSchema(z.object({ when: z.date() }));
-    expect(control).toMatchObject({ kind: 'text', multiline: false, maxLength: null });
+    expect(control).toMatchObject({ kind: 'text', format: 'line', maxLength: null });
   });
 });
 
@@ -114,7 +114,7 @@ describe('describeSchema wrappers', () => {
 
   it('unwraps an optional default stack and keeps metadata', () => {
     const [control] = describeSchema(z.object({ body: zMultiline().default('x').optional() }));
-    expect(control).toMatchObject({ kind: 'text', multiline: true });
+    expect(control).toMatchObject({ kind: 'text', format: 'multiline' });
   });
 });
 

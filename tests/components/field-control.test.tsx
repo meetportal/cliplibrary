@@ -20,7 +20,7 @@ describe('FieldControl text', () => {
     kind: 'text',
     path: ['title'],
     label: 'Title',
-    multiline: false,
+    format: 'line',
     maxLength: 12,
   };
 
@@ -38,7 +38,7 @@ describe('FieldControl text', () => {
   });
 
   it('renders a textarea when multiline', () => {
-    renderControl({ ...descriptor, multiline: true, maxLength: null }, 'Body');
+    renderControl({ ...descriptor, format: 'multiline', maxLength: null }, 'Body');
     const textarea = screen.getByDisplayValue('Body');
     expect(textarea.tagName).toBe('TEXTAREA');
   });

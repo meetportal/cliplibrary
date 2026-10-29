@@ -1,5 +1,13 @@
+export type TextFormat = 'line' | 'multiline' | 'datetime';
+
 export type ControlDescriptor =
-  | { kind: 'text'; path: string[]; label: string; multiline: boolean; maxLength: number | null }
+  | {
+      kind: 'text';
+      path: string[];
+      label: string;
+      format: TextFormat;
+      maxLength: number | null;
+    }
   | { kind: 'color'; path: string[]; label: string }
   | {
       kind: 'number';

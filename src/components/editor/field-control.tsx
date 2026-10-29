@@ -132,11 +132,11 @@ const TextField = ({
   value: string;
   onChange: (next: string) => void;
 }) =>
-  descriptor.multiline ? (
+  descriptor.format === 'multiline' ? (
     <Textarea value={value} rows={3} onChange={(event) => onChange(event.target.value)} />
   ) : (
     <Input
-      type="text"
+      type={descriptor.format === 'datetime' ? 'datetime-local' : 'text'}
       value={value}
       maxLength={descriptor.maxLength ?? undefined}
       onChange={(event) => onChange(event.target.value)}
