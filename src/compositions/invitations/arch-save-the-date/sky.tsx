@@ -59,40 +59,42 @@ const Cloud = ({
   sky: Sky;
   seed: number;
 }) => {
-  const puffs = 6;
+  const puffs = 7;
   return (
     <g>
       <ellipse
         cx={fixed(x)}
-        cy={fixed(y + width * 0.06)}
-        rx={fixed(width * 0.75)}
-        ry={fixed(width * 0.07)}
+        cy={fixed(y + width * 0.04)}
+        rx={fixed(width * 0.8)}
+        ry={fixed(width * 0.08)}
         fill={sky.cloud}
-        opacity={0.55}
+        opacity={0.6}
         filter={`url(#${ids.wisp})`}
       />
-      <g filter={`url(#${ids.soft})`} opacity={0.92}>
+      <g filter={`url(#${ids.soft})`} opacity={0.9}>
+        <ellipse
+          cx={fixed(x)}
+          cy={fixed(y - width * 0.02)}
+          rx={fixed(width * 0.44)}
+          ry={fixed(width * 0.08)}
+          fill={sky.cloudShade}
+          opacity={0.7}
+        />
         {Array.from({ length: puffs }, (_, index) => {
-          const share = index / (puffs - 1) - 0.5;
-          const radius =
-            width * (0.1 + 0.11 * (1 - Math.abs(share) * 1.6) + seeded(index, seed) * 0.05);
+          const share = index / (puffs - 1) - 0.5 + (seeded(index, seed + 3) - 0.5) * 0.08;
+          const swell = 1 - Math.abs(share) * 1.5;
+          const radius = width * (0.07 + 0.12 * swell + seeded(index, seed) * 0.06);
+          const lift = width * swell * seeded(index, seed + 5) * 0.12;
           return (
             <circle
               key={index}
-              cx={fixed(x + share * width * 0.8)}
-              cy={fixed(y - radius * 0.55)}
+              cx={fixed(x + share * width * 0.85)}
+              cy={fixed(y - radius * 0.6 - lift)}
               r={fixed(radius)}
               fill={`url(#${ids.cloud})`}
             />
           );
         })}
-        <ellipse
-          cx={fixed(x)}
-          cy={fixed(y)}
-          rx={fixed(width * 0.5)}
-          ry={fixed(width * 0.09)}
-          fill={sky.cloudShade}
-        />
       </g>
     </g>
   );
