@@ -1,4 +1,10 @@
 import type { SiteTemplate } from '../types';
+import {
+  pumpkinPatchDefaults,
+  pumpkinPatchMeta,
+  pumpkinPatchSchema,
+} from './baby-showers/pumpkin-patch';
+import { pumpkinPatchControls } from './baby-showers/pumpkin-patch-controls';
 import { snowDayOneDefaults, snowDayOneMeta, snowDayOneSchema } from './birthdays/snow-day-one';
 import { snowDayOneControls } from './birthdays/snow-day-one-controls';
 import {
@@ -63,6 +69,19 @@ export const SITE_TEMPLATES: readonly SiteTemplate[] = [
       return parsed.success
         ? `${parsed.data.celebrant.firstName}'s ${parsed.data.celebrant.years}`
         : midnightCrownMeta.title;
+    },
+  },
+  {
+    id: pumpkinPatchMeta.id,
+    meta: pumpkinPatchMeta,
+    schema: pumpkinPatchSchema,
+    defaults: pumpkinPatchDefaults,
+    controls: pumpkinPatchControls,
+    headline: (content) => {
+      const parsed = pumpkinPatchSchema.safeParse(content);
+      return parsed.success
+        ? `${parsed.data.family.parentOne} & ${parsed.data.family.parentTwo}'s baby shower`
+        : pumpkinPatchMeta.title;
     },
   },
 ];
