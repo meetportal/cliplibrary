@@ -14,14 +14,14 @@ const CAPABILITIES = [
   {
     icon: Clapperboard,
     title: 'Videos',
-    tools: 'search_clips, get_clip, create_video, add_clip, edit_video',
-    detail: 'Find labelled animation clips and assemble them into an editable video.',
+    tools: 'search_clips, get_clip, create_video, add_clip, edit_video, get_video, list_videos',
+    detail: 'Find labelled animation clips and assemble them into a video saved to your account.',
   },
   {
     icon: Globe,
     title: 'Websites',
-    tools: 'list_site_templates, get_site_template, create_site, edit_site',
-    detail: 'Fill a template and publish it as a shareable website link.',
+    tools: 'list_site_templates, get_site_template, create_site, edit_site, get_site, list_sites',
+    detail: 'Fill a template and publish it at its own address, then keep editing it.',
   },
 ] as const;
 
