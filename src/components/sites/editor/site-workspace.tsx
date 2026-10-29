@@ -1,6 +1,6 @@
 'use client';
 
-import { Monitor, Smartphone } from 'lucide-react';
+import { ExternalLink, Lock, Monitor, RotateCw, Smartphone } from 'lucide-react';
 import { type ReactNode, useMemo, useRef, useState } from 'react';
 import { PropertiesPanel } from '@/components/editor/properties-panel';
 import { Button } from '@/components/ui/button';
@@ -19,7 +19,8 @@ interface SiteWorkspaceProps {
   onChange: (next: Record<string, unknown>) => void;
   toolbar: ReactNode;
   status: ReactNode;
-  introRun: number;
+  address: string;
+  liveUrl: string | null;
 }
 
 const previewRsvp: SubmitRsvp = () => Promise.resolve();
@@ -33,15 +34,79 @@ const useLastValidSite = (templateId: string, values: unknown): BoundSite | null
   return site ?? last.current;
 };
 
+const BrowserBar = ({
+  address,
+  liveUrl,
+  device,
+  onDevice,
+  onReload,
+}: {
+  address: string;
+  liveUrl: string | null;
+  device: Device;
+  onDevice: (device: Device) => void;
+  onReload: () => void;
+}) => (
+  <div className="flex h-11 shrink-0 items-center gap-2 border-border border-b bg-muted/70 px-3">
+    <div className={cn('hidden gap-1.5', device === 'desktop' && 'sm:flex')}>
+      <span className="size-3 rounded-full bg-[#ff5f57]" />
+      <span className="size-3 rounded-full bg-[#febc2e]" />
+      <span className="size-3 rounded-full bg-[#28c840]" />
+    </div>
+    <Button
+      type="button"
+      size="icon-xs"
+      variant="ghost"
+      aria-label="Reload website"
+      onClick={onReload}
+      className="text-muted-foreground"
+    >
+      <RotateCw />
+    </Button>
+    <div className="flex h-7 min-w-0 flex-1 items-center gap-1.5 rounded-full bg-background px-3 text-muted-foreground text-xs">
+      <Lock className="size-3 shrink-0" />
+      <span className="truncate">{address}</span>
+    </div>
+    {liveUrl === null ? null : (
+      <Button asChild size="icon-xs" variant="ghost" className="text-muted-foreground">
+        <a href={liveUrl} target="_blank" rel="noreferrer" aria-label="Open website in a new tab">
+          <ExternalLink />
+        </a>
+      </Button>
+    )}
+    <div className="hidden items-center sm:flex">
+      {(['phone', 'desktop'] as const).map((option) => (
+        <Button
+          key={option}
+          type="button"
+          size="icon-xs"
+          variant="ghost"
+          aria-label={option === 'phone' ? 'Phone size' : 'Desktop size'}
+          aria-pressed={device === option}
+          onClick={() => onDevice(option)}
+          className={cn(
+            'text-muted-foreground',
+            device === option && 'bg-background text-foreground',
+          )}
+        >
+          {option === 'phone' ? <Smartphone /> : <Monitor />}
+        </Button>
+      ))}
+    </div>
+  </div>
+);
+
 export const SiteWorkspace = ({
   template,
   values,
   onChange,
   toolbar,
   status,
-  introRun,
+  address,
+  liveUrl,
 }: SiteWorkspaceProps) => {
   const [device, setDevice] = useState<Device>('phone');
+  const [reloads, setReloads] = useState(0);
   const sections = useMemo(
     () => resolveClipControls(template.schema, template.controls, template.defaults),
     [template],
@@ -49,42 +114,41 @@ export const SiteWorkspace = ({
   const site = useLastValidSite(template.id, values);
 
   return (
-    <div className="flex flex-col lg:h-[calc(100dvh-3.5rem)] lg:flex-row">
-      <div className="flex h-[82dvh] flex-col gap-3 bg-muted/40 p-3 sm:p-4 lg:h-auto lg:min-h-0 lg:flex-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="hidden rounded-lg bg-muted p-0.5 sm:flex">
-            {(['phone', 'desktop'] as const).map((option) => (
-              <Button
-                key={option}
-                type="button"
-                size="sm"
-                variant="ghost"
-                aria-pressed={device === option}
-                onClick={() => setDevice(option)}
-                className={cn(device === option && 'bg-background shadow-sm hover:bg-background')}
-              >
-                {option === 'phone' ? <Smartphone /> : <Monitor />}
-                {option === 'phone' ? 'Phone' : 'Desktop'}
-              </Button>
-            ))}
-          </div>
+    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:flex-row lg:overflow-hidden">
+      <div className="flex h-[82dvh] shrink-0 flex-col gap-3 bg-muted/40 p-3 sm:p-4 lg:h-auto lg:min-h-0 lg:flex-1">
+        <div className="flex min-h-8 flex-wrap items-center gap-2">
           <div className="text-muted-foreground text-xs">{status}</div>
           <div className="ml-auto flex flex-wrap items-center gap-2">{toolbar}</div>
         </div>
         <div className="flex min-h-0 flex-1 justify-center">
           <div
             className={cn(
-              'h-full overflow-hidden bg-background shadow-xl ring-1 ring-foreground/10 transition-[width] duration-300',
-              device === 'phone' ? 'w-[390px] max-w-full rounded-[28px]' : 'w-full rounded-xl',
+              'flex h-full flex-col overflow-hidden bg-background shadow-xl ring-1 ring-foreground/10 transition-[width] duration-300',
+              device === 'phone' ? 'w-[390px] max-w-full rounded-[22px]' : 'w-full rounded-xl',
             )}
           >
-            {site === null ? (
-              <p className="p-8 text-center text-muted-foreground text-sm">
-                Some values are not valid yet.
-              </p>
-            ) : (
-              <SiteCanvas site={site} layout="frame" introRun={introRun} onRsvp={previewRsvp} />
-            )}
+            <BrowserBar
+              address={address}
+              liveUrl={liveUrl}
+              device={device}
+              onDevice={setDevice}
+              onReload={() => setReloads(reloads + 1)}
+            />
+            <div className="min-h-0 flex-1">
+              {site === null ? (
+                <p className="p-8 text-center text-muted-foreground text-sm">
+                  Some values are not valid yet.
+                </p>
+              ) : (
+                <SiteCanvas
+                  key={reloads}
+                  site={site}
+                  layout="frame"
+                  introRun={reloads}
+                  onRsvp={previewRsvp}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

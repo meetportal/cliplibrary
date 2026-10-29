@@ -3,6 +3,7 @@ import type { Design, DesignControl } from '@/design';
 import type { Project } from '@/project';
 import { getClipMeta, isClipId } from '@/schemas';
 import type { MediaKind } from './media';
+import { checkSiteDocument, describeSitePath } from './site';
 
 export interface PathTarget {
   scope: string;
@@ -107,11 +108,19 @@ const describePosterPath = (design: Design, path: string): PathTarget => {
   };
 };
 
+const describeWebsitePath = (document: unknown, path: string): PathTarget => {
+  const checked = checkSiteDocument(document);
+  const templateId = checked.ok ? checked.document.templateId : '';
+  return { scope: 'Website', ...describeSitePath(templateId, path) };
+};
+
 export const describePath = (kind: MediaKind, document: unknown, path: string): PathTarget => {
   const target =
-    kind === 'clip'
-      ? describeClipPath(document as Project, path)
-      : describePosterPath(document as Design, path);
+    kind === 'site'
+      ? describeWebsitePath(document, path)
+      : kind === 'clip'
+        ? describeClipPath(document as Project, path)
+        : describePosterPath(document as Design, path);
   return target.section?.toLowerCase() === target.scope.toLowerCase()
     ? { ...target, section: null }
     : target;
@@ -122,6 +131,9 @@ export const selectionNames = (
   document: unknown,
   focus: readonly string[],
 ): string[] => {
+  if (kind === 'site') {
+    return [];
+  }
   if (kind === 'poster') {
     return (document as Design).elements
       .filter((element) => focus.includes(element.id))

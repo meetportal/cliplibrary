@@ -75,11 +75,24 @@ const editPoster = (
   return issues.length === 0 ? checked : { ok: false, error: issues.join('\n') };
 };
 
+const editSite = (document: unknown, operations: readonly EditOperation[]): MediaCheck<'site'> => {
+  if (operations.some((operation) => !operation.path.startsWith('/content/'))) {
+    return { ok: false, error: 'Only paths under /content can change; the template stays fixed.' };
+  }
+  const patched = patchDocument(document, operations);
+  return patched.ok ? checkMedia('site', patched.document) : patched;
+};
+
+const EDITORS: {
+  [K in MediaKind]: (document: unknown, operations: readonly EditOperation[]) => MediaCheck<K>;
+} = {
+  clip: editClip,
+  poster: editPoster,
+  site: editSite,
+};
+
 export const applyEdits = <K extends MediaKind>(
   kind: K,
   document: unknown,
   operations: readonly EditOperation[],
-): MediaCheck<K> =>
-  (kind === 'clip'
-    ? editClip(document, operations)
-    : editPoster(document, operations)) as MediaCheck<K>;
+): MediaCheck<K> => EDITORS[kind](document, operations);

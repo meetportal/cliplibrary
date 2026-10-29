@@ -1,6 +1,6 @@
 'use client';
 
-import { ExternalLink, Inbox, Share2 } from 'lucide-react';
+import { ExternalLink, Share2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useUndoable } from '@/lib/use-undoable';
@@ -8,8 +8,8 @@ import { findSiteTemplate } from '@/sites/templates';
 import type { SiteTemplate } from '@/sites/types';
 import { recallEditKey, rememberEditKey } from './edit-keys';
 import { HistoryActions } from './editor-actions';
-import { RepliesDialog } from './replies-dialog';
 import { ShareDialog } from './share-dialog';
+import { SiteAgent } from './site-agent';
 import { SiteWorkspace } from './site-workspace';
 import { type SaveState, useAutosave } from './use-autosave';
 import { usePhotoUploads } from './use-photo-uploads';
@@ -78,9 +78,7 @@ const Editor = ({
   const history = useUndoable<Values>(content);
   const latest = useRef(history.value);
   latest.current = history.value;
-  const [introRun, setIntroRun] = useState(0);
   const [sharing, setSharing] = useState(justPublished);
-  const [showReplies, setShowReplies] = useState(false);
 
   const { set } = history;
   const apply = useCallback(
@@ -97,7 +95,12 @@ const Editor = ({
   });
 
   return (
-    <>
+    <SiteAgent
+      chatKey={`neuclip-site:${slug}`}
+      template={template}
+      values={history.value}
+      onChange={history.set}
+    >
       <SiteWorkspace
         template={template}
         values={history.value}
@@ -105,15 +108,12 @@ const Editor = ({
           history.set(next);
           photos.upload(next);
         }}
-        introRun={introRun}
+        address={`${window.location.host}/s/${slug}`}
+        liveUrl={`/s/${slug}`}
         status={describeSave(save, photos.uploading, photos.problem)}
         toolbar={
           <>
-            <HistoryActions history={history} onPlayIntro={() => setIntroRun(introRun + 1)} />
-            <Button type="button" size="sm" variant="ghost" onClick={() => setShowReplies(true)}>
-              <Inbox />
-              <span className="sr-only sm:not-sr-only">Replies</span>
-            </Button>
+            <HistoryActions history={history} />
             <Button type="button" size="sm" onClick={() => setSharing(true)}>
               <Share2 />
               Share
@@ -128,13 +128,7 @@ const Editor = ({
         editKey={editKey}
         justPublished={justPublished}
       />
-      <RepliesDialog
-        open={showReplies}
-        onOpenChange={setShowReplies}
-        slug={slug}
-        editKey={editKey}
-      />
-    </>
+    </SiteAgent>
   );
 };
 

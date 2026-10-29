@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { rsvpReplySchema, type StoredRsvp } from '@/sites/rsvp';
 
 export const EDIT_KEY_HEADER = 'x-edit-key';
 
@@ -50,12 +49,6 @@ export const saveSite = (slug: string, editKey: string, content: unknown) =>
     fetch(`/api/sites/${slug}`, json('PUT', { content }, { [EDIT_KEY_HEADER]: editKey })),
     z.object({ updatedAt: z.string() }),
   );
-
-export const listReplies = (slug: string, editKey: string): Promise<ApiResult<StoredRsvp[]>> =>
-  call(
-    fetch(`/api/sites/${slug}/rsvp`, { headers: { [EDIT_KEY_HEADER]: editKey } }),
-    z.object({ replies: z.array(rsvpReplySchema.extend({ receivedAt: z.string() })) }),
-  ).then((result) => (result.ok ? { ok: true, value: result.value.replies } : result));
 
 export const uploadAsset = (blob: Blob) =>
   call(

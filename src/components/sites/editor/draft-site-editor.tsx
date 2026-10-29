@@ -11,6 +11,7 @@ import type { SiteTemplate } from '@/sites/types';
 import { rememberEditKey } from './edit-keys';
 import { HistoryActions } from './editor-actions';
 import { PublishDialog } from './publish-dialog';
+import { SiteAgent } from './site-agent';
 import { SiteWorkspace } from './site-workspace';
 import { usePhotoUploads } from './use-photo-uploads';
 
@@ -24,7 +25,6 @@ const DraftEditor = ({ template }: { template: SiteTemplate }) => {
   const history = useUndoable<Values>(template.defaults);
   const latest = useRef(history.value);
   latest.current = history.value;
-  const [introRun, setIntroRun] = useState(0);
   const [publishing, setPublishing] = useState(false);
 
   const clearDraft = useSavedDocument<Values>({
@@ -53,18 +53,24 @@ const DraftEditor = ({ template }: { template: SiteTemplate }) => {
   };
 
   return (
-    <>
+    <SiteAgent
+      chatKey={`neuclip-site-draft:${template.id}`}
+      template={template}
+      values={history.value}
+      onChange={history.set}
+    >
       <SiteWorkspace
         template={template}
         values={history.value}
         onChange={onChange}
-        introRun={introRun}
+        address={`${template.id}.preview`}
+        liveUrl={null}
         status={
           photos.uploading ? 'Uploading photo' : (photos.problem ?? 'Draft, saved in this browser')
         }
         toolbar={
           <>
-            <HistoryActions history={history} onPlayIntro={() => setIntroRun(introRun + 1)} />
+            <HistoryActions history={history} />
             <Button
               type="button"
               size="sm"
@@ -93,7 +99,7 @@ const DraftEditor = ({ template }: { template: SiteTemplate }) => {
         disabled={photos.uploading}
         onPublished={onPublished}
       />
-    </>
+    </SiteAgent>
   );
 };
 

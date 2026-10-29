@@ -25,9 +25,14 @@ const SUGGESTIONS: Record<MediaKind, string[]> = {
     'Switch to a deep navy background and keep the text readable',
     'Make all the review stars gold',
   ],
+  site: [
+    'We are getting married on 12 June 2027 at 4 pm at Villa Cimbrone, Ravello',
+    'Write a warmer love story about meeting at a bookshop in Lisbon',
+    'Switch to a dusty blue and silver palette',
+  ],
 };
 
-const NOUNS: Record<MediaKind, string> = { clip: 'video', poster: 'poster' };
+const NOUNS: Record<MediaKind, string> = { clip: 'video', poster: 'poster', site: 'website' };
 
 const handledCalls = (messages: readonly MediaAgentMessage[]): Set<string> =>
   new Set(

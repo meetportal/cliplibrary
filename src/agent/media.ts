@@ -2,12 +2,17 @@ import { z } from 'zod';
 import { type Design, designSchema, FONT_FAMILIES, isDesignIcon } from '@/design';
 import { type Project, projectSchema } from '@/project';
 import { CLIP_SCHEMAS, isClipId } from '@/schemas';
+import { checkSiteDocument, type SiteDocument } from './site';
 
-const MEDIA_KINDS = ['clip', 'poster'] as const;
+const MEDIA_KINDS = ['clip', 'poster', 'site'] as const;
 
 export type MediaKind = (typeof MEDIA_KINDS)[number];
 
-export type MediaDocument<K extends MediaKind> = K extends 'clip' ? Project : Design;
+export type MediaDocument<K extends MediaKind> = K extends 'clip'
+  ? Project
+  : K extends 'poster'
+    ? Design
+    : SiteDocument;
 
 export const agentRequestSchema = z.object({
   messages: z.array(z.unknown()),
@@ -62,6 +67,9 @@ const duplicateIds = (ids: string[]): string[] =>
 const failure = (issues: string[]): MediaCheck => ({ ok: false, error: issues.join('\n') });
 
 const checkAny = (kind: MediaKind, value: unknown): MediaCheck => {
+  if (kind === 'site') {
+    return checkSiteDocument(value);
+  }
   if (kind === 'clip') {
     const parsed = projectSchema.safeParse(value);
     if (!parsed.success) {
