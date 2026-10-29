@@ -15,6 +15,12 @@ Everything lives in one package. Modules import each other through the `@/` alia
   autosaves to `localStorage` (`neuclip-clip:<id>`, `src/lib/use-saved-document.ts`, shared with
   the poster editor) and the sidebar's Reset restores the original. Picked media are object URLs, so
   they come back empty after a reload.
+- `src/og` - the share cards behind each route's `opengraph-image.tsx`, drawn with `next/og` and
+  prerendered at build time from committed previews: a cinematic player for clips (the still in a
+  frame over an ambient blur of its first frame), a fan of neighbouring pages for posters, a phone
+  mockup with its publish link for website templates, and a wall of the newest clip stills for every
+  other page. Each card takes its accent and swatches from the item's own colour roles. Fonts come
+  from `@fontsource` woff files; Satori needs flex layout and plain `<img>` with data URLs.
 - `src/render` - Bun render scripts (`@remotion/bundler` + `@remotion/renderer`) for the
   committed gallery previews. They run locally only. The app's one API route is the media agent.
 - Editor export runs in the browser (`src/lib/use-project-export.ts`, `renderMediaOnWeb`), and
@@ -66,8 +72,8 @@ Everything lives in one package. Modules import each other through the `@/` alia
 - `bun run lint` / `bun run lint:fix` - Biome.
 - `bun run typecheck` - `tsc --noEmit`.
 - `bun run test` / `bun run test:e2e` - unit/component / Playwright.
-- `bun run render [clipId...]` - gallery previews: a half-size mp4 plus a 48px first-frame jpg per
-  clip in `public/previews`. The previews are committed, so the deployed build never renders:
+- `bun run render [clipId...]` - gallery previews: a half-size mp4, a 48px first-frame jpg and an
+  800px `<id>.still.jpg` of the clip's `posterFrame` per clip in `public/previews`. The previews are committed, so the deployed build never renders:
   the homepage is prerendered at build time with the first screen of cards server-rendered, then
   lays the cards out as a virtualized masonry grid (`@tanstack/react-virtual` lanes, each card at its
   clip or poster aspect ratio, only cards near the viewport stay mounted), lazily
@@ -82,6 +88,7 @@ Everything lives in one package. Modules import each other through the `@/` alia
   `tests/schemas/clip-updated-at.test.ts` fails when a clip has no timestamp.
 - `bun run render --new` - same, but only clips whose preview files are missing from
   `public/previews` (`-new` also works).
+  `bun run render --stills [clipId...]` renders only the stills.
 - `bun run render:posters [packId...]` - renders poster previews (480px jpgs, one per page) into
   `public/poster-previews/<pack>/` with the editor's own renderer in headless Chromium, and stamps
   the pack in `src/posters/poster-updated-at.json` when it is named or has no entry yet, so the
