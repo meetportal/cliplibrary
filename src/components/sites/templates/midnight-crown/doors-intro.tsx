@@ -73,7 +73,7 @@ export const DoorsIntro = ({
     <div
       className={cn(
         position,
-        'inset-0 z-40 flex flex-col items-center justify-center gap-6 overflow-hidden bg-(--mc-bg) px-6 text-(--mc-text) transition-opacity duration-700',
+        'inset-0 z-40 flex flex-col items-center justify-center gap-12 overflow-hidden bg-(--mc-bg) px-6 text-(--mc-text) transition-opacity duration-700',
         phase === 'leaving' && 'opacity-0',
       )}
     >
@@ -95,7 +95,7 @@ export const DoorsIntro = ({
         disabled={opened}
         className="group relative w-[min(72%,300px)] cursor-pointer focus-visible:outline-none"
       >
-        <Sunburst className="-top-[22%] -translate-x-1/2 absolute left-1/2 w-[150%]" />
+        <Sunburst className="-top-[13%] -translate-x-1/2 absolute left-1/2 w-[150%]" />
         <span className="relative block aspect-[3/5] rounded-t-full border-(--mc-gold) border-2 p-2 shadow-[0_0_60px_-10px_var(--mc-glow)]">
           <span className="relative block size-full overflow-hidden rounded-t-full border border-(--mc-gold)/60 perspective-[1100px]">
             <span className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,var(--mc-gold-light),var(--mc-glow)_35%,var(--mc-bg)_80%)]" />

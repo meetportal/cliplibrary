@@ -9,7 +9,7 @@ import { SitePhoto } from '../../kit/site-photo';
 import { BODY, DECO, DISPLAY, FOIL } from './fonts';
 import { DecoCorners, SectionTitle } from './ornaments';
 
-export const GoldLink = ({
+const GoldLink = ({
   href,
   children,
   className,
@@ -91,7 +91,7 @@ export const Celebration = ({ content }: { content: MidnightCrownContent }) => {
             <PlaceCard
               kicker="Misa"
               title={mass.title}
-              time={when?.time ?? ''}
+              time={when?.time.toLowerCase() ?? ''}
               place={mass.place}
               address={mass.address}
               photo={photos.chapel}

@@ -17,18 +17,18 @@ export const Program = ({ content }: { content: MidnightCrownContent }) => (
         <SectionTitle kicker="Programa" title="Program of the night" />
       </Reveal>
       <ol className="relative flex w-full flex-col">
-        <span className="absolute top-3 bottom-3 left-[6.25rem] w-px bg-linear-to-b from-transparent via-(--mc-gold)/70 to-transparent @md:left-1/2" />
+        <span className="absolute top-3 bottom-3 left-[6.75rem] w-px bg-linear-to-b from-transparent via-(--mc-gold)/70 to-transparent @md:left-1/2" />
         {content.schedule.map((moment, index) => (
           <li key={index}>
             <Reveal
               delay={index * 80}
-              className="relative grid grid-cols-[5rem_1.5rem_minmax(0,1fr)] items-center gap-2 py-4 @md:grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] @md:gap-6"
+              className="relative grid grid-cols-[5.5rem_1.5rem_minmax(0,1fr)] items-center gap-2 py-4 @md:grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] @md:gap-6"
             >
               <span
                 className={cn(
                   DISPLAY,
                   FOIL,
-                  'text-right text-2xl italic leading-none @md:text-3xl',
+                  'whitespace-nowrap text-right text-xl italic leading-none @md:text-3xl',
                 )}
               >
                 {moment.time}
