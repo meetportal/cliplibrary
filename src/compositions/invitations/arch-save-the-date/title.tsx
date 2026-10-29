@@ -95,7 +95,7 @@ export const TitleLockup = ({
     smooth,
   );
   const draw = tween(time, [timing.titleAt + timing.titleFrames * 0.25, end + 20], [0, 1], smooth);
-  const blur = (1 - focus) * type.titleSize * 0.1;
+  const blur = Math.round(type.titleSize * 0.08);
   const family = inviteScriptFonts[type.scriptFont];
   const words = [
     { text: copy.titleFirst, size: type.titleSize, dy: -0.54, dx: -0.08 },
@@ -105,37 +105,38 @@ export const TitleLockup = ({
   return (
     <>
       {type.flourish ? <Flourish type={type} progress={draw} /> : null}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          opacity,
-          filter: blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : undefined,
-        }}
-      >
-        {words.map((word) =>
-          word.text.trim().length === 0 ? null : (
-            <div
-              key={word.dy}
-              style={{
-                position: 'absolute',
-                left: Math.round(word.dx * type.titleSize),
-                width: FRAME_WIDTH,
-                top: Math.round(type.titleY + word.dy * type.titleSize - word.size * 0.65),
-                height: Math.round(word.size * 1.3),
-                lineHeight: `${Math.round(word.size * 1.3)}px`,
-                textAlign: 'center',
-                fontFamily: family,
-                fontSize: word.size,
-                color: type.titleColor,
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {word.text}
-            </div>
-          ),
-        )}
-      </div>
+      {[
+        { key: 'soft', alpha: opacity * (1 - focus), filter: `blur(${blur}px)` },
+        { key: 'sharp', alpha: opacity * focus, filter: undefined },
+      ].map((layer) => (
+        <div
+          key={layer.key}
+          style={{ position: 'absolute', inset: 0, opacity: layer.alpha, filter: layer.filter }}
+        >
+          {words.map((word) =>
+            word.text.trim().length === 0 ? null : (
+              <div
+                key={word.dy}
+                style={{
+                  position: 'absolute',
+                  left: Math.round(word.dx * type.titleSize),
+                  width: FRAME_WIDTH,
+                  top: Math.round(type.titleY + word.dy * type.titleSize - word.size * 0.65),
+                  height: Math.round(word.size * 1.3),
+                  lineHeight: `${Math.round(word.size * 1.3)}px`,
+                  textAlign: 'center',
+                  fontFamily: family,
+                  fontSize: word.size,
+                  color: type.titleColor,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {word.text}
+              </div>
+            ),
+          )}
+        </div>
+      ))}
     </>
   );
 };

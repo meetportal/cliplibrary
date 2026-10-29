@@ -100,7 +100,7 @@ export const archSaveTheDateSchema = z.object({
     horizon: zColor(),
     cloud: zColor(),
     cloudShade: zColor(),
-    clouds: count(0, 12),
+    clouds: count(0, 20),
     cloudSpeed: share(0, 3, 0.05),
     glow: zColor(),
     glowAt: frames(0, DURATION),
