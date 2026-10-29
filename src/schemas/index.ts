@@ -25,6 +25,7 @@ export * from './clips/hand-drawn/chalk-title';
 export * from './clips/hand-drawn/doodle-arrows';
 export * from './clips/hand-drawn/handwritten-note';
 export * from './clips/hand-drawn/scribble-caption';
+export * from './clips/invitations/wedding-itinerary-pages';
 export * from './clips/kinetic-type/anniversary-kinetic';
 export * from './clips/kinetic-type/branding-is-ticker';
 export * from './clips/kinetic-type/chunky-type-stack';

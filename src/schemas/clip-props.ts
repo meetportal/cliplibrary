@@ -20,6 +20,7 @@ import type { ChalkTitleProps } from './clips/hand-drawn/chalk-title';
 import type { DoodleArrowsProps } from './clips/hand-drawn/doodle-arrows';
 import type { HandwrittenNoteProps } from './clips/hand-drawn/handwritten-note';
 import type { ScribbleCaptionProps } from './clips/hand-drawn/scribble-caption';
+import type { WeddingItineraryPagesProps } from './clips/invitations/wedding-itinerary-pages';
 import type { AnniversaryKineticProps } from './clips/kinetic-type/anniversary-kinetic';
 import type { BrandingIsTickerProps } from './clips/kinetic-type/branding-is-ticker';
 import type { ChunkyTypeStackProps } from './clips/kinetic-type/chunky-type-stack';
@@ -76,6 +77,7 @@ import type { TypewriterProps } from './clips/text-reveals/typewriter';
 import type { SceneTransitionProps } from './clips/transitions/scene-transition';
 
 export interface ClipPropsMap {
+  'wedding-itinerary-pages': WeddingItineraryPagesProps;
   'neon-sign-flicker': NeonSignFlickerProps;
   'word-picker': WordPickerProps;
   'pill-fan': PillFanProps;

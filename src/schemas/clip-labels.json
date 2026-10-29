@@ -5711,5 +5711,88 @@
       "journey",
       "milestone"
     ]
+  },
+  "wedding-itinerary-pages": {
+    "summary": "A vertical, multi-page Indian wedding invite. A pale sage cover draws a thin hand-drawn gold ring with leaf sprigs around an \"A | K\" monogram, fades in \"Anaya & Kabir\" in script and types the dates and a wedding hashtag, over rolling paper-cut hills with a domed chhatri. The pages then turn with soft color crossfades to a butter yellow Haldi page with a marigold garland frame and a low seat with bolsters, a night teal Sangeet page with string lights, stars, diyas and a dhol, a blush Wedding and Reception page with a gold four-pillar mandap under a floral arch, and a warm cream RSVP page back in the garden. Every detail line types on with a thin blinking caret.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Garden hills and a chhatri rise in from below while the gold ring draws itself around the A | K monogram"
+      },
+      {
+        "at": 1.4,
+        "what": "Anaya & Kabir fades up in script, a divider grows, then the dates and #KabirFoundHisAnaya type on with a caret"
+      },
+      {
+        "at": 4.0,
+        "what": "The page eases to butter yellow; marigold strands and a cushioned seat rise in, Haldi fades up and its date, venue and schedule type on"
+      },
+      {
+        "at": 8.0,
+        "what": "Night teal Sangeet page: twinkling string lights, stars, diyas and a dhol rise in as the details type"
+      },
+      {
+        "at": 12.0,
+        "what": "Blush Wedding & Reception page with a gold mandap, floral arch and aisle; date, venue and timings type on"
+      },
+      {
+        "at": 16.0,
+        "what": "Warm cream closing page back in the garden: We can't wait to celebrate with you, then RSVP by 1 October and Ritu & Vikram Mehra type on"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 invitation pages",
+      "hand-drawn gold monogram ring with leaf sprigs",
+      "script couple names and event titles",
+      "small caps serif detail lines with a thin caret",
+      "flat layered paper-cut scenes with soft shadows",
+      "marigold garlands and a low seat with bolsters",
+      "string lights, stars and a dhol at night",
+      "four-pillar mandap under a floral arch",
+      "rolling hills and a domed chhatri"
+    ],
+    "motion": [
+      "typewriter reveal with blinking caret",
+      "script titles fading up",
+      "background color crossfades between pages",
+      "paper-cut layers rising from the bottom with parallax",
+      "swaying garlands and twinkling lights"
+    ],
+    "mood": ["festive", "elegant", "warm", "romantic"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "indian wedding e-invite",
+      "wedding itinerary reel for instagram or whatsapp",
+      "save the date with event schedule",
+      "haldi, sangeet and reception announcement",
+      "rsvp reminder story"
+    ],
+    "editable": [
+      "couple names, monogram, dates and hashtag",
+      "list of event pages with title, date, venue, schedule and scene",
+      "each page color, title, text, accent, greenery and structure colors",
+      "closing message, rsvp line and hosts",
+      "script and serif fonts and text sizes",
+      "page length, typing speed and caret timing",
+      "scene size, paper shadow, drift and sway"
+    ],
+    "palette": ["#edf0e2", "#f8e5a6", "#14393f", "#f6dcd5", "#b08a4f", "#ee8f22"],
+    "keywords": [
+      "wedding",
+      "invitation",
+      "e-invite",
+      "indian wedding",
+      "haldi",
+      "sangeet",
+      "mandap",
+      "itinerary",
+      "rsvp",
+      "monogram",
+      "typewriter",
+      "caret",
+      "paper cut",
+      "vertical",
+      "story"
+    ]
   }
 }
