@@ -3,8 +3,7 @@ import type { MiniaturePanoramaProps } from '@/schemas';
 import { glowShadow } from '../../promo/glow';
 import { pixelTween, settle, tween } from '../../promo/timing';
 import { inviteScriptFonts, inviteSerifFonts } from '../fonts';
-import { mix, smoothstep } from './palette';
-import { FRAME_WIDTH } from './strip';
+import { FRAME_WIDTH } from './camera';
 
 type Invite = MiniaturePanoramaProps['invite'];
 
@@ -14,34 +13,7 @@ const STAGGER = 9;
 
 const BOX_HEIGHT = 1200;
 
-const FLIP_FROM = 0.3;
-
-const FLIP_TO = 0.4;
-
-const BAND_MARGIN = 44;
-
 const TEXT_WIDTH = FRAME_WIDTH - 96;
-
-export const inviteBand = (invite: Invite): readonly [number, number] | null => {
-  if (!invite.show) {
-    return null;
-  }
-  const height =
-    invite.namesSize * 1.15 + invite.lineSize * 1.2 + invite.dateSize * 1.2 + invite.gap * 2;
-  return [invite.centerY - height / 2 - BAND_MARGIN, invite.centerY + height / 2 + BAND_MARGIN];
-};
-
-const inviteColor = (invite: Invite, phase: number): string =>
-  phase <= 1
-    ? mix(invite.dayColor, invite.duskColor, phase)
-    : mix(
-        invite.duskColor,
-        invite.nightColor,
-        smoothstep((phase - 1 - FLIP_FROM) / (FLIP_TO - FLIP_FROM)),
-      );
-
-const haloAmount = (invite: Invite, phase: number): number =>
-  smoothstep((phase - 1 - FLIP_FROM) / ((FLIP_TO - FLIP_FROM) / 2)) * invite.haloStrength;
 
 const Line = ({
   text,
@@ -79,21 +51,11 @@ const Line = ({
   );
 };
 
-export const InviteText = ({
-  invite,
-  frame,
-  phase,
-}: {
-  invite: Invite;
-  frame: number;
-  phase: number;
-}) => {
-  if (!invite.show) {
+export const InviteText = ({ invite, frame }: { invite: Invite; frame: number }) => {
+  if (!invite.show || frame < invite.start) {
     return null;
   }
-  const color = inviteColor(invite, phase);
-  const halo = haloAmount(invite, phase);
-  const shadow = (size: number) => glowShadow(invite.halo, halo, size);
+  const shadow = (size: number) => glowShadow(invite.glow, invite.glowStrength, size);
   const caps: CSSProperties = {
     fontFamily: inviteSerifFonts[invite.serifFont],
     fontWeight: 500,
@@ -101,7 +63,7 @@ export const InviteText = ({
     letterSpacing: `${invite.tracking}em`,
     marginRight: `-${invite.tracking}em`,
     lineHeight: 1.2,
-    color,
+    color: invite.color,
   };
   return (
     <div
@@ -128,7 +90,7 @@ export const InviteText = ({
           fontSize: invite.namesSize,
           lineHeight: 1.15,
           padding: '0 0.2em',
-          color,
+          color: invite.color,
           textShadow: shadow(invite.namesSize),
         }}
       />

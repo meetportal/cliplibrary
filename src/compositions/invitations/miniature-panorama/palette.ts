@@ -1,22 +1,10 @@
-import type { MiniaturePanoramaProps, TimeOfDay } from '@/schemas';
-import { glide } from '../../promo/timing';
+import type { MiniaturePanoramaProps } from '@/schemas';
 
 type Rgb = readonly [number, number, number];
 
-const HOLD_PHASE: Record<TimeOfDay, number> = { day: 0, dusk: 1, night: 2 };
-
-const LIGHT_FADE = 0.5;
-
-const STARS_FROM = 1.3;
-
-const STARS_FADE = 0.55;
+const INK = '#1b150f';
 
 const clamp01 = (value: number): number => Math.min(1, Math.max(0, value));
-
-export const smoothstep = (value: number): number => {
-  const t = clamp01(value);
-  return t * t * (3 - 2 * t);
-};
 
 const parsed = new Map<string, Rgb>();
 
@@ -42,41 +30,74 @@ export const mix = (from: string, to: string, amount: number): string => {
   const t = clamp01(amount);
   const a = parse(from);
   const b = parse(to);
-  const channel = (index: 0 | 1 | 2) => (a[index] + (b[index] - a[index]) * t).toFixed(1);
+  const channel = (index: 0 | 1 | 2) => Math.round(a[index] + (b[index] - a[index]) * t);
   return `rgb(${channel(0)},${channel(1)},${channel(2)})`;
 };
 
-export const acrossDay = (day: string, dusk: string, night: string, phase: number): string =>
-  phase <= 1 ? mix(day, dusk, phase) : mix(dusk, night, phase - 1);
+export const darken = (color: string, amount: number): string => mix(color, INK, amount);
 
-export const dayPhase = (frame: number, timelapse: MiniaturePanoramaProps['timelapse']): number => {
-  if (!timelapse.enabled) {
-    return HOLD_PHASE[timelapse.hold];
-  }
-  const dusk = Math.max(timelapse.dusk, timelapse.start + 1);
-  const night = Math.max(timelapse.night, dusk + 1);
-  if (frame <= dusk) {
-    return glide(clamp01((frame - timelapse.start) / (dusk - timelapse.start)));
-  }
-  return 1 + glide(clamp01((frame - dusk) / (night - dusk)));
+export const lighten = (color: string, amount: number): string => mix(color, '#ffffff', amount);
+
+type Props = MiniaturePanoramaProps;
+
+export type Paint = Pick<
+  Props,
+  | 'sky'
+  | 'stars'
+  | 'birds'
+  | 'petals'
+  | 'hills'
+  | 'lake'
+  | 'swans'
+  | 'peacocks'
+  | 'railing'
+  | 'canopies'
+  | 'pavilions'
+  | 'trees'
+  | 'flowers'
+  | 'garden'
+  | 'chandeliers'
+  | 'garlands'
+  | 'procession'
+>;
+
+const toneGroup = <Group extends Record<string, unknown>>(
+  group: Group,
+  tone: (color: string) => string,
+): Group => {
+  const entries = Object.entries(group).map(([key, value]) => [
+    key,
+    typeof value === 'string' && value.startsWith('#') ? tone(value) : value,
+  ]);
+  return Object.fromEntries(entries) as Group;
 };
 
-export type Shade = (color: string, weight?: number) => string;
+export const paintFrom = (props: Props): Paint => ({
+  sky: props.sky,
+  stars: props.stars,
+  birds: props.birds,
+  petals: props.petals,
+  hills: props.hills,
+  lake: props.lake,
+  swans: props.swans,
+  peacocks: props.peacocks,
+  railing: props.railing,
+  canopies: props.canopies,
+  pavilions: props.pavilions,
+  trees: props.trees,
+  flowers: props.flowers,
+  garden: props.garden,
+  chandeliers: props.chandeliers,
+  garlands: props.garlands,
+  procession: props.procession,
+});
 
-export const makeShade = (phase: number, shade: MiniaturePanoramaProps['shade']): Shade => {
-  const dusk = phase <= 1 ? phase : 2 - phase;
-  const night = clamp01(phase - 1);
-  return (color, weight = 1) =>
-    mix(
-      mix(color, shade.duskTint, dusk * shade.duskStrength * weight),
-      shade.nightTint,
-      night * shade.nightStrength * weight,
-    );
+export const nightPaint = (paint: Paint, night: Props['night']): Paint => {
+  const tone = (color: string) => mix(color, night.tint, night.strength);
+  const keep = new Set(['sky', 'stars', 'chandeliers']);
+  const entries = Object.entries(paint).map(([key, group]) => [
+    key,
+    keep.has(key) ? group : toneGroup(group as Record<string, unknown>, tone),
+  ]);
+  return Object.fromEntries(entries) as Paint;
 };
-
-export const lightAmount = (phase: number, onAt: number): number =>
-  smoothstep((phase - onAt) / LIGHT_FADE);
-
-export const starAmount = (phase: number): number => smoothstep((phase - STARS_FROM) / STARS_FADE);
-
-export const nightAmount = (phase: number): number => clamp01(phase - 1);
