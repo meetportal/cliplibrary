@@ -6,7 +6,8 @@ import { SITE_TEMPLATES } from '@/sites/templates';
 import { publicDir } from './paths';
 
 const SCALE = 1.2;
-const INTRO_SETTLE_MS = 3200;
+const INTRO_TIMEOUT_MS = 15_000;
+const SETTLE_MS = 1200;
 
 const args = process.argv.slice(2);
 const baseIndex = args.indexOf('--base');
@@ -24,10 +25,12 @@ for (const template of templates) {
   const intro = page.locator('[data-site-intro] button').first();
   if ((await intro.count()) > 0) {
     await intro.click();
-    await page.waitForTimeout(INTRO_SETTLE_MS);
+    await page
+      .locator('[data-site-intro]')
+      .waitFor({ state: 'detached', timeout: INTRO_TIMEOUT_MS });
   }
   await page.addStyleTag({ content: 'nextjs-portal { display: none !important; }' });
-  await page.waitForTimeout(600);
+  await page.waitForTimeout(SETTLE_MS);
   const out = join(publicDir, sitePreviewPath(template.id));
   await page.screenshot({ path: out, type: 'jpeg', quality: 82 });
   console.info(`rendered ${template.id} -> ${out}`);

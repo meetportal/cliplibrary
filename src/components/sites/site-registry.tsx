@@ -1,10 +1,12 @@
 import type { CSSProperties, ReactNode } from 'react';
 import type { z } from 'zod';
+import { snowDayOneSchema } from '@/sites/templates/birthdays/snow-day-one';
 import { emeraldRoseSchema } from '@/sites/templates/weddings/emerald-rose';
 import { inkAndLaceSchema } from '@/sites/templates/weddings/ink-and-lace';
 import type { SiteView } from './site-view';
 import { emeraldRoseView } from './templates/emerald-rose';
 import { inkAndLaceView } from './templates/ink-and-lace';
+import { snowDayOneView } from './templates/snow-day-one';
 
 export interface BoundSite {
   scope: { className: string; style: CSSProperties };
@@ -37,6 +39,7 @@ const bind =
 const BINDERS: Record<string, Binder> = {
   'emerald-rose': bind(emeraldRoseSchema, emeraldRoseView),
   'ink-and-lace': bind(inkAndLaceSchema, inkAndLaceView),
+  'snow-day-one': bind(snowDayOneSchema, snowDayOneView),
 };
 
 export const bindSite = (templateId: string, content: unknown): BoundSite | null =>
