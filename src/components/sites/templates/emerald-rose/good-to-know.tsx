@@ -3,8 +3,8 @@ import { cn } from '@/lib/utils';
 import type { EmeraldRoseContent } from '@/sites/templates/weddings/emerald-rose';
 import { CAPS, SCRIPT, SERIF } from './fonts';
 import { RingsBand } from './ornaments';
+import { PillLink } from './pill-link';
 import { Reveal } from './reveal';
-import { PillLink } from './section-title';
 
 const Detail = ({
   title,

@@ -81,7 +81,7 @@ export const FloralCluster = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const Rings = ({ className }: { className?: string }) => (
+const Rings = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 48 28" aria-hidden className={className}>
     <circle cx="18" cy="15" r="10" fill="none" stroke="var(--er-accent)" strokeWidth="2.6" />
     <circle cx="30" cy="13" r="10" fill="none" stroke="var(--er-accent)" strokeWidth="2.6" />

@@ -45,9 +45,11 @@ export const SiteCanvas = ({ site, layout, introRun, onRsvp }: SiteCanvasProps) 
       ) : (
         body
       )}
-      {introOpen && site.hasIntro
-        ? site.intro(layout === 'frame' ? 'absolute' : 'fixed', closeIntro)
-        : null}
+      {introOpen && site.hasIntro ? (
+        <div data-site-intro className="contents">
+          {site.intro(layout === 'frame' ? 'absolute' : 'fixed', closeIntro)}
+        </div>
+      ) : null}
     </div>
   );
 };

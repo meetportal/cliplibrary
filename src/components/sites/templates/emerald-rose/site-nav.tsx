@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { CAPS, SCRIPT } from './fonts';
 
-export const SECTIONS = [
+const SECTIONS = [
   { id: 'er-invitation', label: 'Invitation' },
   { id: 'er-story', label: 'Our story' },
   { id: 'er-venue', label: 'The venue' },

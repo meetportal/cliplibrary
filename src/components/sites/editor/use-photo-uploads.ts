@@ -38,7 +38,7 @@ const swapStrings = (value: unknown, swaps: ReadonlyMap<string, string>): unknow
 
 type Values = Record<string, unknown>;
 
-export const swapValues = (values: Values, swaps: ReadonlyMap<string, string>): Values =>
+const swapValues = (values: Values, swaps: ReadonlyMap<string, string>): Values =>
   Object.fromEntries(Object.entries(values).map(([key, item]) => [key, swapStrings(item, swaps)]));
 
 const shrink = async (blob: Blob): Promise<Blob> => {

@@ -2,10 +2,10 @@ import { z } from 'zod';
 
 const RESERVED = new Set(['new', 'edit', 'api', 'admin', 'demo', 'preview', 'sites', 'templates']);
 
-export const SLUG_MIN = 3;
-export const SLUG_MAX = 48;
+const SLUG_MIN = 3;
+const SLUG_MAX = 48;
 
-export const slugSchema = z
+const slugSchema = z
   .string()
   .min(SLUG_MIN, `Use at least ${SLUG_MIN} characters.`)
   .max(SLUG_MAX, `Use at most ${SLUG_MAX} characters.`)

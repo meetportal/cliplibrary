@@ -7,7 +7,7 @@ import { findSiteTemplate } from './templates';
 
 const MAX_CONTENT_BYTES = 1_500_000;
 export const MAX_ASSET_BYTES = 8_000_000;
-export const ASSET_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'] as const;
+const ASSET_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'] as const;
 
 const recordSchema = z.object({
   slug: z.string(),
@@ -208,5 +208,3 @@ export const createSiteStore = (storage: Storage, now: () => Date = () => new Da
     },
   };
 };
-
-export type SiteStore = ReturnType<typeof createSiteStore>;

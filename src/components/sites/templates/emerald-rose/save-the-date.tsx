@@ -8,15 +8,7 @@ import { FloralCluster, WaxSeal } from './ornaments';
 import { Reveal } from './reveal';
 import { scrollToSection } from './site-nav';
 
-export const ArchPhoto = ({
-  src,
-  alt,
-  className,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-}) => (
+const ArchPhoto = ({ src, alt, className }: { src: string; alt: string; className?: string }) => (
   <div
     className={cn(
       'overflow-hidden rounded-t-[999px] border-(--er-paper) border-[6px] bg-(--er-paper) shadow-[0_20px_40px_-24px_rgba(0,0,0,0.6)]',
