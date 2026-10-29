@@ -57,8 +57,8 @@ export const PublishDialog = ({
         <DialogHeader>
           <DialogTitle>Publish your website</DialogTitle>
           <DialogDescription>
-            Pick the address for your link. The whole website lives in the link, so nothing is
-            stored and you can publish a new version any time.
+            Pick the address for your website. It is saved to your account, and changes you publish
+            later appear at the same address.
           </DialogDescription>
         </DialogHeader>
         <form

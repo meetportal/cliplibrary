@@ -2,7 +2,6 @@ import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/
 import { bearerToken } from '@/auth/bearer';
 import { apiKeyOwner } from '@/lib/api-keys';
 import { isApprovedUser } from '@/lib/session';
-import { signSite } from '@/lib/site-signing';
 import { createMcpServer } from '@/mcp/server';
 
 const refuse = (status: number, message: string): Response =>
@@ -24,7 +23,7 @@ const handle = async (request: Request): Promise<Response> => {
     return refuse(403, 'This account is waiting for approval.');
   }
   const transport = new WebStandardStreamableHTTPServerTransport({ enableJsonResponse: true });
-  await createMcpServer(origin, { sign: signSite }).connect(transport);
+  await createMcpServer(origin, userId).connect(transport);
   return transport.handleRequest(request);
 };
 

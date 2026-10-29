@@ -22,7 +22,7 @@ const writeSaved = (key: string, value: unknown): void => {
 };
 
 interface SavedDocumentOptions<T> {
-  key: string;
+  key: string | null;
   value: T;
   parse: (value: unknown) => T | null;
   restore: (saved: T) => void;
@@ -39,7 +39,7 @@ export const useSavedDocument = <T>({
   latest.current = { parse, restore };
 
   useEffect(() => {
-    if (restored.current) {
+    if (restored.current || key === null) {
       return;
     }
     restored.current = true;
@@ -50,11 +50,17 @@ export const useSavedDocument = <T>({
   }, [key]);
 
   useEffect(() => {
+    if (key === null) {
+      return;
+    }
     const timer = setTimeout(() => writeSaved(key, value), SAVE_DELAY_MS);
     return () => clearTimeout(timer);
   }, [key, value]);
 
   return useCallback(() => {
+    if (key === null) {
+      return;
+    }
     try {
       localStorage.removeItem(key);
     } catch {

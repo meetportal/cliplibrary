@@ -1,28 +1,39 @@
 'use client';
 
 import { Globe, RotateCcw, Share2 } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAccessGate } from '@/components/auth/access-gate';
 import { Button } from '@/components/ui/button';
-import { publishSite } from '@/lib/site-api';
+import { publishSite, publishSiteChanges, type SavedSite } from '@/lib/site-api';
 import { useSavedDocument } from '@/lib/use-saved-document';
 import { useUndoable } from '@/lib/use-undoable';
-import { checkSharedSite, LOCAL_PHOTO_PROBLEM } from '@/sites/site-link';
+import {
+  checkPublishedSite,
+  LOCAL_PHOTO_PROBLEM,
+  publicSitePath,
+  siteEditorPath,
+} from '@/sites/published-site';
 import { slugify } from '@/sites/slug';
 import { findSiteTemplate } from '@/sites/templates';
 import type { SiteTemplate } from '@/sites/types';
 import { HistoryActions } from './editor-actions';
 import { PublishDialog } from './publish-dialog';
-import { type PublishedLinks, ShareDialog } from './share-dialog';
+import { ShareDialog } from './share-dialog';
 import { SiteAgent } from './site-agent';
 import { SiteWorkspace } from './site-workspace';
 
 type Values = Record<string, unknown>;
 
 export interface OpenedSite {
+  id: string;
   slug: string;
   content: Values;
-  links: PublishedLinks;
+  updatedAt: string;
+}
+
+interface Published {
+  site: SavedSite;
+  content: Values;
 }
 
 const isValues = (value: unknown): value is Values =>
@@ -30,14 +41,22 @@ const isValues = (value: unknown): value is Values =>
 
 const holdsLocalPhoto = (values: Values): boolean => /"(blob|data):/.test(JSON.stringify(values));
 
+const statusText = (localPhoto: boolean, problem: string | null, unpublished: boolean) => {
+  if (localPhoto) {
+    return LOCAL_PHOTO_PROBLEM;
+  }
+  return problem ?? (unpublished ? 'Unpublished changes' : null);
+};
+
 const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSite | null }) => {
   const start = opened?.content ?? template.defaults;
   const history = useUndoable<Values>(start);
-  const [published, setPublished] = useState<{ links: PublishedLinks; content: Values } | null>(
-    opened === null ? null : { links: opened.links, content: opened.content },
+  const [published, setPublished] = useState<Published | null>(
+    opened === null ? null : { site: opened, content: opened.content },
   );
   const [publishing, setPublishing] = useState(false);
   const [sharing, setSharing] = useState(false);
+  const [problem, setProblem] = useState<string | null>(null);
   const [host, setHost] = useState('');
   const { ready, guard, dialog } = useAccessGate();
   const values = history.value;
@@ -48,53 +67,63 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
 
   const clearDraft = useSavedDocument<Values>({
     key:
-      opened === null
+      published === null
         ? `neuclip-site-draft:${template.id}`
-        : `neuclip-site-link:${opened.links.editPath.slice(-24)}`,
+        : `neuclip-site:${published.site.id}:${published.site.updatedAt}`,
     value: values,
     parse: (saved) => (isValues(saved) && template.schema.safeParse(saved).success ? saved : null),
     restore: history.reset,
   });
 
-  const publish = useCallback(
-    async (slug: string): Promise<string | null> => {
-      const site = { slug, templateId: template.id, content: values };
-      const checked = checkSharedSite(site);
-      if (!checked.ok) {
-        return checked.error;
-      }
-      const result = await publishSite(checked.site);
-      if (!result.ok) {
-        return result.problem;
-      }
-      const links = { slug, ...result.value };
-      setPublished({ links, content: values });
-      setPublishing(false);
-      setSharing(true);
-      window.history.replaceState(null, '', links.editPath);
-      return null;
-    },
-    [template.id, values],
-  );
+  const markPublished = (site: SavedSite) => {
+    clearDraft();
+    setProblem(null);
+    setPublished({ site, content: values });
+  };
+
+  const publish = async (slug: string): Promise<string | null> => {
+    const checked = checkPublishedSite({ slug, templateId: template.id, content: values });
+    if (!checked.ok) {
+      return checked.error;
+    }
+    const result = await publishSite(checked.site);
+    if (!result.ok) {
+      return result.problem;
+    }
+    markPublished(result.value.site);
+    setPublishing(false);
+    setSharing(true);
+    window.history.replaceState(null, '', siteEditorPath(result.value.site.id));
+    return null;
+  };
+
+  const publishChanges = async ({ site }: Published) => {
+    const result = await publishSiteChanges(site.id, { slug: site.slug, content: values });
+    if (result.ok) {
+      markPublished(result.value.site);
+    } else {
+      setProblem(result.problem);
+    }
+  };
 
   const dirty = published === null || published.content !== values;
-  const addressSlug = published?.links.slug ?? slugify(template.headline(values));
+  const addressSlug = published?.site.slug ?? slugify(template.headline(values));
   const localPhoto = holdsLocalPhoto(values);
 
   const onPrimary = () =>
     guard(() => {
-      if (published !== null && !dirty) {
-        setSharing(true);
-      } else if (published === null) {
+      if (published === null) {
         setPublishing(true);
+      } else if (dirty) {
+        publishChanges(published).catch(() => setProblem('Could not reach the server.'));
       } else {
-        publish(published.links.slug).catch(() => undefined);
+        setSharing(true);
       }
     });
 
   return (
     <SiteAgent
-      chatKey={`neuclip-site:${template.id}`}
+      chatKey={`neuclip-site:${opened?.id ?? template.id}`}
       template={template}
       values={values}
       onChange={history.set}
@@ -104,14 +133,8 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
         values={values}
         onChange={history.set}
         address={`${host}/s/${addressSlug}`}
-        liveUrl={published !== null && !dirty ? published.links.sitePath : null}
-        status={
-          localPhoto
-            ? LOCAL_PHOTO_PROBLEM
-            : dirty && published !== null
-              ? 'Unpublished changes'
-              : null
-        }
+        liveUrl={published !== null && !dirty ? publicSitePath(published.site.slug) : null}
+        status={statusText(localPhoto, problem, dirty && published !== null)}
         toolbar={
           <>
             <HistoryActions history={history} />
@@ -141,7 +164,7 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
         onPublish={publish}
       />
       {published === null ? null : (
-        <ShareDialog open={sharing} onOpenChange={setSharing} links={published.links} />
+        <ShareDialog open={sharing} onOpenChange={setSharing} site={published.site} />
       )}
       {dialog}
     </SiteAgent>

@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import type { SharedSite } from '@/sites/site-link';
+import type { Project } from '@/project';
+import type { PublishedSite } from '@/sites/published-site';
 
 const problemSchema = z.object({ problem: z.string() });
 
@@ -25,15 +26,31 @@ const call = async <T>(request: Promise<Response>, schema: z.ZodType<T>): Promis
   }
 };
 
-const post = (url: string, body: unknown) =>
+const send = (method: 'POST' | 'PUT', url: string, body: unknown) =>
   fetch(url, {
-    method: 'POST',
+    method,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body),
   });
 
-export const publishSite = (site: SharedSite) =>
-  call(post('/api/sites/publish', site), z.object({ sitePath: z.string(), editPath: z.string() }));
+const post = (url: string, body: unknown) => send('POST', url, body);
+
+const savedSiteSchema = z.object({
+  site: z.object({ id: z.string(), slug: z.string(), updatedAt: z.string() }),
+});
+
+export type SavedSite = z.infer<typeof savedSiteSchema>['site'];
+
+export const publishSite = (site: PublishedSite) => call(post('/api/sites', site), savedSiteSchema);
+
+export const publishSiteChanges = (id: string, change: Pick<PublishedSite, 'slug' | 'content'>) =>
+  call(send('PUT', `/api/sites/${id}`, change), savedSiteSchema);
+
+export const deleteSite = (id: string) =>
+  call(fetch(`/api/sites/${id}`, { method: 'DELETE' }), z.null());
+
+export const saveVideo = (id: string, project: Project) =>
+  call(send('PUT', `/api/videos/${id}`, { project }), z.object({ updatedAt: z.string() }));
 
 const keySchema = z.object({
   id: z.string(),
