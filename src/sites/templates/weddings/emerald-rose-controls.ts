@@ -8,7 +8,11 @@ export const emeraldRoseControls = defineControls<EmeraldRoseContent>({
       fields: [
         { path: 'couple.firstName', label: 'First name' },
         { path: 'couple.secondName', label: 'Second name' },
-        { path: 'couple.monogram', label: 'Monogram', hint: 'Shown on the wax seal and footer.' },
+        {
+          path: 'couple.monogram',
+          label: 'Monogram',
+          hint: 'Shown on the gate lock, the menu bar and the footer.',
+        },
         { path: 'couple.greeting', label: 'Greeting', hint: 'The small line above your names.' },
       ],
     },
@@ -18,20 +22,20 @@ export const emeraldRoseControls = defineControls<EmeraldRoseContent>({
         {
           path: 'colors.primary',
           label: 'Primary color',
-          hint: 'The envelope, banners, buttons and the order of the day.',
+          hint: 'The garden around the gate, the venue and countdown bands and the buttons.',
         },
         {
           path: 'colors.secondary',
           label: 'Secondary color',
-          hint: 'Wax seal, hearts and ribbons.',
+          hint: 'Roses behind the gate, the photo shadow, the dress code panel and the RSVP section.',
         },
         {
           path: 'colors.accent',
           label: 'Accent color',
-          hint: 'Gold rings, dividers and timeline dots.',
+          hint: 'The gilded gate, rose line drawings, timeline and fine rules.',
         },
-        { path: 'colors.background', label: 'Background color', hint: 'The page and card paper.' },
-        { path: 'colors.text', label: 'Text color', hint: 'Body copy and headings on paper.' },
+        { path: 'colors.background', label: 'Background color', hint: 'The ivory page.' },
+        { path: 'colors.text', label: 'Text color', hint: 'Headings and body copy on the page.' },
       ],
     },
     {
@@ -40,7 +44,7 @@ export const emeraldRoseControls = defineControls<EmeraldRoseContent>({
         {
           path: 'event.startsAt',
           label: 'Date and time',
-          hint: 'Drives the countdown and calendar.',
+          hint: 'Written out under your names and drives the countdown and calendar.',
         },
         { path: 'event.venue', label: 'Venue' },
         { path: 'event.address', label: 'Address', hint: 'Used for the map and directions.' },
@@ -54,22 +58,26 @@ export const emeraldRoseControls = defineControls<EmeraldRoseContent>({
     {
       title: 'Photos',
       fields: [
-        { path: 'photos.hero', label: 'Save the date photo' },
-        { path: 'photos.storyThen', label: 'Love story, then' },
-        { path: 'photos.storyNow', label: 'Love story, now' },
+        { path: 'photos.hero', label: 'Opening portrait' },
+        { path: 'photos.storyThen', label: 'Story, first chapter' },
+        { path: 'photos.storyNow', label: 'Story, last chapter' },
         { path: 'photos.venue', label: 'Venue photo' },
       ],
       more: [
-        { path: 'photos.schedule', label: 'Order of the day backdrop' },
-        { path: 'photos.reception', label: 'Details banner' },
+        { path: 'photos.reception', label: 'Venue detail photo', hint: 'The smaller inset photo.' },
+        { path: 'photos.schedule', label: 'Programme portrait', hint: 'Shown in an oval frame.' },
       ],
     },
     {
       title: 'Love story',
       fields: [
-        { path: 'story.text', label: 'Story' },
-        { path: 'story.thenLabel', label: 'First photo caption' },
-        { path: 'story.nowLabel', label: 'Second photo caption' },
+        {
+          path: 'story.text',
+          label: 'Story',
+          hint: 'Leave a blank line between paragraphs: each one becomes a chapter.',
+        },
+        { path: 'story.thenLabel', label: 'Where it starts', hint: 'Caption on the first photo.' },
+        { path: 'story.nowLabel', label: 'Where it is now', hint: 'Caption on the last photo.' },
       ],
     },
     {
@@ -79,17 +87,17 @@ export const emeraldRoseControls = defineControls<EmeraldRoseContent>({
       ],
     },
     {
-      title: 'Good to know',
+      title: 'Guest notes',
       fields: [
         {
           path: 'details',
-          label: 'Details',
-          hint: 'Ceremony, children, hotels, registry. Leave the link empty to hide the button.',
+          label: 'Notes',
+          hint: 'Ceremony, children, hotels, gifts. Leave the link empty to hide it.',
           items: {
             title: 'Title',
             text: 'Text',
-            linkLabel: 'Button label',
-            linkUrl: 'Button link',
+            linkLabel: 'Link label',
+            linkUrl: 'Link',
           },
         },
         { path: 'dressCode.text', label: 'Dress code' },
@@ -115,10 +123,10 @@ export const emeraldRoseControls = defineControls<EmeraldRoseContent>({
       ],
     },
     {
-      title: 'Envelope',
+      title: 'Garden gate',
       fields: [
-        { path: 'intro.show', label: 'Open with an envelope' },
-        { path: 'intro.prompt', label: 'Envelope prompt' },
+        { path: 'intro.show', label: 'Open with a garden gate' },
+        { path: 'intro.prompt', label: 'Gate prompt' },
       ],
     },
   ],

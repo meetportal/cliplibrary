@@ -1,18 +1,23 @@
-import { Cinzel, Cormorant_Garamond, Pinyon_Script } from 'next/font/google';
+import { Bodoni_Moda, EB_Garamond, Jost } from 'next/font/google';
 
-const script = Pinyon_Script({ weight: '400', subsets: ['latin'], variable: '--font-er-script' });
-
-const serif = Cormorant_Garamond({
-  weight: ['400', '500', '600'],
+const display = Bodoni_Moda({
+  weight: ['400', '500'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
-  variable: '--font-er-serif',
+  variable: '--font-er-display',
 });
 
-const caps = Cinzel({ weight: ['400', '500'], subsets: ['latin'], variable: '--font-er-caps' });
+const body = EB_Garamond({
+  weight: ['400', '500'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  variable: '--font-er-body',
+});
 
-export const FONT_VARIABLES = `${script.variable} ${serif.variable} ${caps.variable}`;
+const label = Jost({ weight: ['400', '500'], subsets: ['latin'], variable: '--font-er-label' });
 
-export const SCRIPT = 'font-[family-name:var(--font-er-script)]';
-export const SERIF = 'font-[family-name:var(--font-er-serif)]';
-export const CAPS = 'font-[family-name:var(--font-er-caps)] uppercase tracking-[0.18em]';
+export const FONT_VARIABLES = `${display.variable} ${body.variable} ${label.variable}`;
+
+export const DISPLAY = 'font-[family-name:var(--font-er-display)]';
+export const BODY = 'font-[family-name:var(--font-er-body)]';
+export const LABEL = 'font-[family-name:var(--font-er-label)] uppercase tracking-[0.28em]';
