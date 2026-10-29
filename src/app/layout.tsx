@@ -4,13 +4,18 @@ import { Inter } from 'next/font/google';
 import { type ReactNode, Suspense } from 'react';
 import { AuthReturn } from '@/components/auth/auth-return';
 import { ThemeProvider } from '@/components/theme-provider';
+import { shareMetadata } from '@/lib/share-metadata';
+import { SITE_URL } from '@/lib/site-url';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Neuclip',
-  description: 'A library of Remotion animation clips with a deep, schema-driven editor.',
+  ...shareMetadata(
+    'Neuclip',
+    'Editable motion clips, poster packs and websites. Change anything in the browser, then export or publish.',
+  ),
+  metadataBase: SITE_URL,
   appleWebApp: { title: 'Neuclip', statusBarStyle: 'black-translucent' },
 };
 
