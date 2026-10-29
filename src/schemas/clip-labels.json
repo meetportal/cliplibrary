@@ -5794,5 +5794,90 @@
       "vertical",
       "story"
     ]
+  },
+  "miniature-panorama": {
+    "summary": "A vertical, flat paper-cut Rajasthani lakeside pans sideways in slow parallax behind a wedding invitation: domed chhatri pavilions, cypress and palm trees, a lake with swans and lotus, a marble railing with a peacock, a sandy path and front hedges under swaying marigold strings. The sky eases from pale blue day through an apricot sunset to deep indigo night, diyas and pavilion lamps light up and stars appear, then a small baraat procession with a decorated elephant and lantern bearers walks along the path. Script names \"Tara & Vihaan\" with \"are getting married\" and the date sit in the sky and turn from dark ink to cream as night falls.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Daytime lakeside pans left in parallax under hanging marigold strings, birds drifting across a pale blue sky"
+      },
+      {
+        "at": 2.0,
+        "what": "The names, the line and the date fade in and rise one after another in the sky"
+      },
+      {
+        "at": 4.0,
+        "what": "The sky warms to an apricot and rose sunset and the scenery takes a warm tint"
+      },
+      {
+        "at": 7.0,
+        "what": "Diyas on the railing and lamps in the pavilions glow on"
+      },
+      {
+        "at": 9.0,
+        "what": "Night falls to deep indigo, stars come out and the text turns cream; the baraat procession walks in from the left"
+      },
+      {
+        "at": 12.3,
+        "what": "The elephant with its golden canopy and lantern bearers cross the path as the clip fades out"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "flat paper-cut gouache illustration",
+      "domed chhatri pavilions",
+      "cypress and palm trees",
+      "lake with swans and lotus",
+      "white marble railing with a peacock",
+      "hanging marigold strings",
+      "decorated elephant with a howdah",
+      "lantern bearers",
+      "script names over spaced serif capitals"
+    ],
+    "motion": [
+      "continuous sideways parallax pan",
+      "day to sunset to night time-lapse",
+      "lanterns fading on",
+      "walking procession with bobbing steps",
+      "gently swaying marigold strings",
+      "rise and fade text entrance"
+    ],
+    "mood": ["festive", "romantic", "warm", "calm", "traditional"],
+    "roles": ["background", "opener"],
+    "useCases": [
+      "indian wedding invitation video",
+      "save the date story",
+      "sangeet or mehndi invite",
+      "baraat announcement",
+      "wedding website hero loop"
+    ],
+    "editable": [
+      "names, line and date with script and serif fonts",
+      "text size, spacing, height and entrance",
+      "day, sunset and night sky colours",
+      "time-lapse on or off and its timing",
+      "pan speed, direction and depth",
+      "procession timing, speed, size and walkers",
+      "lantern, star, bird and cloud amounts and colours",
+      "every scenery colour"
+    ],
+    "palette": ["#86bfe0", "#fbc48a", "#0e1534", "#efd7bd", "#2f5d3a", "#f08a1c"],
+    "keywords": [
+      "wedding",
+      "invitation",
+      "indian wedding",
+      "rajasthani",
+      "palace lake",
+      "baraat",
+      "elephant",
+      "marigold",
+      "diya",
+      "peacock",
+      "day to night",
+      "parallax pan",
+      "save the date",
+      "shaadi"
+    ]
   }
 }
