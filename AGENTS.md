@@ -37,7 +37,9 @@ Everything lives in one package. Modules import each other through the `@/` alia
   `public/design-assets/photos`.
 - `src/sites` - website templates: per-template Zod content schemas, defaults, metadata and control
   layouts (`templates/<category>/<id>.ts`), slugs, event dates, `.ics` files and the published-site
-  store. Pure apart from `store.ts`, which takes an `unstorage` `Storage`.
+  check and paths (`published-site.ts`). Pure.
+- `src/db` - Postgres through Drizzle ORM: the `sites` and `videos` tables (`schema.ts`), the Neon
+  client (`client.ts`, `DATABASE_URL`) and the server-only stores (`sites.ts`, `videos.ts`).
 - `src/components/sites` - each template's React website (`templates/<id>/`), the shared canvas
   and the website editor (`editor/`).
 - `src/core` - domain types, the clip project seed and the Zod-schema-to-control introspection.
@@ -55,6 +57,8 @@ Everything lives in one package. Modules import each other through the `@/` alia
 ## Commands
 
 - `bun run dev` - Next.js dev server.
+- `bun run db:generate` - write a migration in `drizzle/` after changing `src/db/schema.ts`
+  (commit it). `bun run db:migrate` applies pending migrations to `DATABASE_URL`.
 - `bun run build` - production Next.js build.
 - `bun run verify` - Biome, no-comments, no em-dashes, repository hygiene (files at most 400 lines,
   kebab-case paths), knip, typecheck and tests. CI also runs coverage, build, e2e, audit and the
@@ -277,11 +281,14 @@ driven by the template's `defineControls` layout, and the AI editor (media kind 
 `{ templateId, content }`, edits only under `/content`, `src/agent/site.ts`). Drafts autosave to
 `localStorage`. `/preview/<templateId>` shows a template with its defaults.
 
-Websites are static and nothing is stored on the server. Publishing (`POST /api/sites/publish`)
-validates `{ slug, templateId, content }` (`checkSharedSite` in `src/sites/site-link.ts`), compresses
-it with lz-string and signs it with HMAC (`SITE_LINK_SECRET`, `src/lib/site-signing.ts`). The whole
-website lives in its link: guests open `/s/<slug>?d=…&sig=…`, and `/sites/<templateId>?d=…&sig=…`
-reopens it in the editor; every change publishes a new link. Photos are bundled files or image
+Published websites live in the `sites` table, one row per slug with its owner, template and
+content. Publishing (`POST /api/sites`) validates `{ slug, templateId, content }`
+(`checkPublishedSite` in `src/sites/published-site.ts`) and refuses a taken slug; `PUT` and
+`DELETE /api/sites/<id>` let the owner publish changes, move the address or delete it. Guests open
+`/s/<slug>`, which reads the row on each request, so changes go live at the same link. The owner
+edits a published website at `/websites/<id>` and finds every website they published at
+`/websites`. Unpublished edits autosave to `localStorage` under a key that includes the row's
+`updatedAt`, so a newer server version (for example from the MCP) wins over a stale draft. Photos are bundled files or image
 links; photos picked from the device cannot be published. RSVP is a button to the couple's own form.
 
 To add a template:
@@ -301,7 +308,7 @@ Sign-in uses Clerk through our own screens only (`src/components/auth`): email a
 emailed code, and Google, whose redirect finishes in place on the returning page (`AuthReturn` with
 the `auth_return` param). `src/proxy.ts` runs `clerkMiddleware` on everything except `/mcp` and
 static files. Env: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`,
-`NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL` and `SITE_LINK_SECRET`.
+`NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL` and `DATABASE_URL`.
 
 Only approved users can use the AI editor, publish websites, manage API keys or call the MCP
 endpoint. Approve a user in the Clerk dashboard by setting their public metadata to
@@ -313,13 +320,25 @@ keys feature must be enabled in the Clerk dashboard).
 ## MCP endpoint
 
 `src/app/mcp/route.ts` serves a stateless Streamable HTTP MCP server (`@modelcontextprotocol/sdk`,
-`src/mcp`) with no storage. Every request needs `Authorization: Bearer <API key>` from an approved
-user. Website tools: `list_site_templates`, `get_site_template`, `create_site` and `edit_site`
-(`src/mcp/site-tools.ts`), which return the site plus its signed `siteUrl` and `editorUrl`. Tools: `search_clips` (MiniSearch over clip meta and the
-labels in `src/schemas/clip-labels.json`, filters by category, theme, orientation and role),
-`get_clip` (labels, defaults, field guide and props schema), `create_video`, `add_clip` and
-`edit_video` (JSON Patch through the same `applyEdits` validation as the media agent). The agent
-passes the whole `{ title, project }` video into each call and gets the new one back with an
-`editorUrl`: `/video#<lz-string data>` (`src/mcp/video-link.ts`), opened by `SharedVideoEditor` in
-the clip timeline editor, which saves edits locally per link. `tests/mcp/mcp-route.test.ts` drives
-the route handler directly.
+`src/mcp`). Every request needs `Authorization: Bearer <API key>` from an approved user, and every
+website and video it makes belongs to that user. Website tools (`src/mcp/site-tools.ts`):
+`list_site_templates`, `get_site_template`, `create_site`, `edit_site`, `get_site` and
+`list_sites`, which work on `sites` rows by `siteId` and return `siteUrl` (`/s/<slug>`) and
+`editorUrl` (`/websites/<id>`). Clip and video tools: `search_clips` (MiniSearch over clip meta and
+the labels in `src/schemas/clip-labels.json`, filters by category, theme, orientation and role),
+`get_clip` (labels, defaults, field guide and props schema), `create_video`, `add_clip`,
+`edit_video` (JSON Patch through the same `applyEdits` validation as the media agent), `get_video`
+and `list_videos` (`src/mcp/video-tools.ts`). Videos are `videos` rows addressed by `videoId`; the
+`editorUrl` is `/video/<id>`, which opens `SavedVideoEditor` in the clip timeline editor and
+autosaves the owner's edits back to the row (`PUT /api/videos/<id>`), so `get_video` sees them.
+Anyone else with the link edits a local copy. `tests/mcp/mcp-route.test.ts` drives the route
+handler directly.
+
+## Database
+
+Postgres (Neon in production) through Drizzle ORM. `src/db/schema.ts` is the source of truth;
+after changing it run `bun run db:generate` and commit the migration in `drizzle/`, then
+`bun run db:migrate` against each environment's `DATABASE_URL`. Ids are 12-character lowercase
+nanoids. Tests never reach a real database: `tests-preload.ts` swaps `@/db/client` for an
+in-memory PGlite (`tests/test-database.ts`), and suites that touch it call `resetTestDatabase` in
+`beforeEach`, which applies the migrations once and truncates the tables.
