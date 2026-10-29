@@ -213,32 +213,15 @@ const comparator = (sort: SortId, scores: SearchScores): Comparator => {
   return (left, right) => (scores.get(right.id) ?? 0) - (scores.get(left.id) ?? 0);
 };
 
-const interleaveKinds = <Item extends { meta: GalleryMeta }>(sorted: readonly Item[]): Item[] => {
-  const totals = new Map<GalleryKind, number>();
-  for (const item of sorted) {
-    totals.set(item.meta.kind, (totals.get(item.meta.kind) ?? 0) + 1);
-  }
-  const seen = new Map<GalleryKind, number>();
-  return sorted
-    .map((item) => {
-      const position = seen.get(item.meta.kind) ?? 0;
-      seen.set(item.meta.kind, position + 1);
-      return { item, spread: (position + 0.5) / (totals.get(item.meta.kind) ?? 1) };
-    })
-    .sort((left, right) => left.spread - right.spread)
-    .map(({ item }) => item);
-};
-
 export const filterClips = <Item extends { meta: GalleryMeta }>(
   items: readonly Item[],
   filters: GalleryFilters,
 ): Item[] => {
   const scores = searchScores(items, filters.query);
   const compare = comparator(filters.sort, scores);
-  const sorted = items
+  return items
     .filter((item) => matches(item.meta, filters, scores))
     .sort((left, right) => compare(left.meta, right.meta));
-  return filters.sort === 'relevance' && scores === null ? interleaveKinds(sorted) : sorted;
 };
 
 export const facetCounts = <Key extends string>(

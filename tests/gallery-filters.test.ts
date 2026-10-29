@@ -51,9 +51,11 @@ describe('gallery filters', () => {
     expect(ids(filterClips(mixed, { ...DEFAULT_FILTERS, sort: 'updated' }))[0]).toBe(
       'hiring-spotlight',
     );
-    const mixedOrder = filterClips(mixed, DEFAULT_FILTERS).map((item) => item.meta.kind);
-    expect(mixedOrder.indexOf('poster')).toBeGreaterThan(0);
-    expect(mixedOrder.indexOf('poster')).toBeLessThan(mixedOrder.length - 1);
+    expect(ids(filterClips(mixed, DEFAULT_FILTERS))[0]).toBe('hiring-spotlight');
+    const stale = {
+      meta: { ...poster, id: 'stale-poster', updatedAt: '2000-01-01T00:00:00.000Z' },
+    };
+    expect(ids(filterClips([stale, ...mixed], DEFAULT_FILTERS)).at(-1)).toBe('stale-poster');
     expect(ids(filterClips(mixed, { ...DEFAULT_FILTERS, query: 'hiring' }))).toContain(
       'hiring-spotlight',
     );
