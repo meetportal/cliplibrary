@@ -5881,86 +5881,96 @@
     ]
   },
   "botanical-save-the-date": {
-    "summary": "A vertical wedding save the date on warm ivory paper inside a fine gold border. Line-drawn eucalyptus and olive sprigs grow in from the corners and sway for the whole clip while the invitation plays in calm beats: a four-line poem alternating spaced serif capitals and terracotta script, a stacked SAVE the DATE with 18 . 04 . 2027 under a short gold rule, \"for the wedding of\" Ishita and Rohan, three event cards whose gold frames draw themselves (a leaf-cornered rectangle for the Mehendi, a hexagon for the Ring Ceremony, a tall arch for the Wedding) and a closing \"Your presence is the greatest gift\" signed by The Khanna Family in script.",
+    "summary": "A vertical blush wedding save the date in calm typed beats. Watercolour leaf sprays with pale blossoms and gold line leaves fly in from opposite corners, one after the other, around each beat: two four-line verses over a peach watercolour wash, alternating spaced serif capitals and plum script, a bold stacked SAVE the DATE with 18 April 2027, \"for the wedding of\" Ishita and Rohan beside a willow sprig, a family invitation whose names are revealed by a dark block cursor, then three event cards: Mehendi inside growing eucalyptus vines, Ring Ceremony inside a gold hexagon that draws on over a blooming peach peony garland, and the Wedding inside a cream arch with curved small capitals and tropical leaves with pink lilies, before a closing note from the Khanna family.",
     "beats": [
       {
         "at": 0.0,
-        "what": "Gold border draws from the top center while eucalyptus and olive sprigs grow in from the corners, leaves opening one by one"
+        "what": "Peach watercolour wash fades in; the upper spray flies in from its corner, the lower one follows"
       },
       {
-        "at": 0.5,
-        "what": "Poem rises in line by line: serif capitals alternating with terracotta script"
+        "at": 0.4,
+        "what": "Opening verse types in letter by letter, capitals and script lines in parallel, then erases left to right"
       },
       {
-        "at": 3.4,
-        "what": "SAVE, script the, DATE stack in, a gold rule grows and the date 18 . 04 . 2027 appears"
+        "at": 4.9,
+        "what": "Sprays fly out and back in for the second verse, which types and erases"
       },
       {
-        "at": 6.3,
-        "what": "\"For the wedding of\" Ishita, script and, Rohan"
+        "at": 9.9,
+        "what": "Bold SAVE the DATE fades in with 18 April 2027 between two sprays"
       },
       {
-        "at": 9.1,
-        "what": "A gold rectangle with leaf corners draws on around the Mehendi card: title, date and time, venue, address"
+        "at": 14.7,
+        "what": "\"for the wedding of\" Ishita and Rohan types in, right aligned, beside a willow sprig"
       },
       {
-        "at": 11.5,
-        "what": "A gold hexagon draws on for the Ring Ceremony card"
+        "at": 19.7,
+        "what": "Invitation types in while a dark block cursor reveals each name over its family line"
       },
       {
-        "at": 14.0,
-        "what": "A tall gold arch draws on for the Wedding card"
+        "at": 28.6,
+        "what": "Eucalyptus vines grow around a pale card; Mehendi and its details type in"
       },
       {
-        "at": 16.5,
-        "what": "Closing: \"Your presence is the greatest gift\", a gold rule, \"with love from\" and The Khanna Family in script, then holds"
+        "at": 34.7,
+        "what": "A gold hexagon draws on, peonies bloom along its base and the Ring Ceremony details type in"
+      },
+      {
+        "at": 41.7,
+        "what": "A cream arch with curved small capitals, tropical leaves and pink lilies holds the Wedding details"
+      },
+      {
+        "at": 50.6,
+        "what": "Closing note from the Khanna family types in between two sprays and holds"
       }
     ],
     "visuals": [
       "vertical 9:16 frame",
-      "warm ivory paper with soft grain",
-      "fine gold page border",
-      "line-art eucalyptus and olive sprigs with sage leaves",
-      "terracotta berries",
-      "spaced serif capitals",
-      "terracotta script lettering",
-      "gold line frames: leaf rectangle, hexagon, arch"
+      "blush pink page",
+      "peach watercolour wash",
+      "watercolour leaf sprays with pale blossoms",
+      "gold line leaves and flecks",
+      "spaced serif capitals and plum script",
+      "eucalyptus vine frame",
+      "gold hexagon with peach peony garland",
+      "cream arch with tropical leaves and pink lilies"
     ],
     "motion": [
-      "stems drawing on with leaves popping open",
-      "gentle continuous sway",
-      "text rising and fading line by line",
-      "frames drawing themselves as a line",
-      "soft overlapping fades between beats"
+      "sprays flying in and out from the corners one after the other",
+      "letter by letter typing and erasing",
+      "dark block cursor reveals",
+      "vines growing and a gold line drawing on",
+      "peonies blooming open",
+      "gentle continuous sway"
     ],
-    "mood": ["elegant", "romantic", "calm", "botanical"],
+    "mood": ["elegant", "romantic", "soft", "botanical"],
     "roles": ["opener", "feature", "closer"],
     "useCases": [
       "wedding save the date reel",
       "whatsapp or instagram wedding invitation",
-      "engagement or mehendi event announcement",
-      "multi-event wedding itinerary"
+      "mehendi, ring ceremony and wedding itinerary",
+      "indian wedding invitation video"
     ],
     "editable": [
-      "poem, date, names and family name",
-      "one to four event cards with title, time, venue, address and frame shape",
-      "script and serif fonts",
-      "greenery, gold, accent, text and paper colors",
-      "sprig count, size, sway and grow timing",
-      "beat timing and hand-off overlap"
+      "both verses, closing note, names, families and date",
+      "each event's name, details and last line",
+      "capitals, display and script fonts and every text size",
+      "leaf, petal, gold, text and page colors",
+      "spray size, slide, stagger, sway and wash",
+      "the start frame of every beat, typing and erase length"
     ],
-    "palette": ["#faf6ee", "#7d9779", "#b8955a", "#bd7457", "#3c4a3d"],
+    "palette": ["#fae8e7", "#6f9078", "#f0c3ae", "#c9a265", "#3f2a3a"],
     "keywords": [
       "save the date",
       "wedding invitation",
       "botanical",
+      "watercolour",
       "eucalyptus",
-      "olive",
-      "line art",
-      "gold frame",
+      "peony",
       "mehendi",
       "ring ceremony",
       "shaadi",
+      "typing",
       "vertical"
     ]
   },
