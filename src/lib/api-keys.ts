@@ -44,12 +44,29 @@ export const listApiKeys = async (userId: string): Promise<KeyResult<ApiKeySumma
   }
 };
 
+const MAX_NAME_ATTEMPTS = 20;
+
+const isNameTaken = (error: unknown): boolean =>
+  typeof error === 'object' && error !== null && 'status' in error && error.status === 409;
+
+const createUniquelyNamed = async (userId: string, name: string, attempt = 1) => {
+  const candidate = attempt === 1 ? name : `${name} ${attempt}`;
+  try {
+    return await (await keys()).create({ name: candidate, subject: userId, createdBy: userId });
+  } catch (error) {
+    if (isNameTaken(error) && attempt < MAX_NAME_ATTEMPTS) {
+      return createUniquelyNamed(userId, name, attempt + 1);
+    }
+    throw error;
+  }
+};
+
 export const createApiKey = async (
   userId: string,
   name: string,
 ): Promise<KeyResult<{ secret: string; key: ApiKeySummary }>> => {
   try {
-    const created = await (await keys()).create({ name, subject: userId, createdBy: userId });
+    const created = await createUniquelyNamed(userId, name);
     const { secret } =
       created.secret === undefined ? await (await keys()).getSecret(created.id) : created;
     return {
