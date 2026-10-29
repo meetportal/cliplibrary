@@ -6048,91 +6048,95 @@
     ]
   },
   "arch-save-the-date": {
-    "summary": "A vertical wedding save the date. The camera slowly pushes in from a cream sandstone wall with a scalloped eave, pilasters and a carved jharokha window until the cusped Mughal arch fills the frame. Through it a peach, dusty rose and lilac sunset glows over a hazy lakeside palace, two brass lanterns sway from the arch, a marigold-garlanded balustrade with potted plants lines the sill and petals drift down. Inside the arch \"Save the Date\", \"FOR THE WEDDING OF\", \"Meera & Arjun\", the date, the venue, \"with love\" and \"The Sharma Family\" rise in line by line, then hold.",
+    "summary": "A vertical wedding save the date. The camera dollies forward through a rose pink palace colonnade of cusped, carved arches with fluted columns, rosettes, crystal chandeliers and curtains of jasmine and lotus garlands, the arches sliding past on both sides with real depth, until the last arch frames a painted blue sky with drifting clouds and birds over a garden of banana leaves, shrubs and blossom, a white balustrade with roses and a marble floor. A large calligraphic \"Save the Date\" focuses in from a blur as swirls draw around it, then \"FOR THE WEDDING OF\", \"MEERA & ARJUN\", the date, the venue, \"WITH LOVE\" and \"The Sharma Family\" write in letter by letter, and the sky warms with a soft glow in the hold.",
     "beats": [
       {
         "at": 0,
-        "what": "Wide view of the sandstone wall, eave and carved arch window with the sunset, palace, lanterns and marigold balustrade inside"
+        "what": "Deep view down a pink colonnade of five cusped arches with chandeliers and jasmine garlands, sky and garden at the far end"
       },
       {
-        "at": 1,
-        "what": "The camera pushes in smoothly as clouds drift, lanterns sway and petals fall"
+        "at": 0.5,
+        "what": "The camera dollies forward, arches, chandeliers and garlands sliding past on both sides with parallax"
       },
       {
-        "at": 2.1,
-        "what": "\"Save the Date\" rises in large plum script below the lanterns"
+        "at": 1.5,
+        "what": "\"Save the Date\" focuses in from a blur in the last arch while swirls draw around it"
       },
       {
-        "at": 2.8,
-        "what": "\"FOR THE WEDDING OF\" and then \"Meera & Arjun\" rise in, the arch now filling the frame"
+        "at": 2.3,
+        "what": "Birds cross the sky behind the balustrade"
       },
       {
-        "at": 4.1,
-        "what": "A gold diamond divider and the date, then \"Rajmahal Gardens, Jaipur\""
+        "at": 7.7,
+        "what": "The dolly settles and the invitation lines write in letter by letter, from \"FOR THE WEDDING OF\" to \"The Sharma Family\""
       },
       {
-        "at": 5.5,
-        "what": "\"with love\" and \"The Sharma Family\" write in, and the full invitation holds"
+        "at": 11,
+        "what": "The full invitation holds as clouds drift, garlands and chandeliers sway, crystals glint and a warm glow rises and fades in the sky"
       },
       {
-        "at": 9.5,
+        "at": 23.5,
         "what": "The whole scene fades out"
       }
     ],
     "visuals": [
       "vertical 9:16 frame",
-      "carved cream sandstone jharokha window",
-      "cusped Mughal arch with gold trim and beaded border",
-      "peach, dusty rose and lilac sunset sky",
-      "distant domed palace silhouette over a lake",
-      "two hanging brass lanterns with a warm glow",
-      "balustrade with marigold garlands and potted plants",
-      "script and serif invitation lettering"
+      "rose pink palace colonnade of cusped Mughal arches",
+      "fluted columns with lotus capitals and carved rosettes",
+      "crystal chandeliers",
+      "jasmine and lotus garland curtains",
+      "painted blue sky with soft clouds and birds",
+      "banana leaves, palms, shrubs and blossom",
+      "white balustrade with rose bushes and urns",
+      "marble floor",
+      "calligraphic script title with swirls"
     ],
     "motion": [
-      "slow eased camera push-in",
-      "line by line rise and fade text",
-      "swaying lanterns",
+      "slow eased camera dolly through arches",
+      "parallax between arch layers",
+      "blur to focus title reveal",
+      "drawn swirl flourishes",
+      "letter by letter writing",
       "drifting clouds",
-      "falling petals",
+      "swaying garlands and chandeliers",
+      "crystal glints",
+      "sky glow drift",
       "fade out"
     ],
-    "mood": ["elegant", "romantic", "warm", "calm"],
+    "mood": ["elegant", "romantic", "dreamy", "regal"],
     "roles": ["opener", "closer"],
     "useCases": [
       "indian wedding save the date",
       "wedding invitation reel",
       "instagram or whatsapp story invite",
       "engagement announcement",
-      "destination wedding teaser"
+      "destination palace wedding teaser"
     ],
     "editable": [
-      "title, couple names, date, venue, sign-off and family name",
-      "script and serif fonts",
+      "title words, couple names, date, venue, sign-off and family name",
+      "script and serif fonts and every text size",
       "primary, secondary, accent, text and surface colours",
-      "camera push amount and length",
-      "lantern count, size and sway",
-      "petal count, size and fall speed",
-      "arch width, height, scallops and border",
-      "sun, clouds, palace and balustrade"
+      "dolly distance, length and eye level",
+      "number of arches, spacing, depth, width, scallops and columns",
+      "chandeliers, garlands, clouds, birds and sky glow",
+      "garden plants and balustrade"
     ],
-    "palette": ["#f2e6cf", "#c7b5dc", "#eab6bd", "#fbd2a8", "#c29243", "#7d2f4c"],
+    "palette": ["#e59aa1", "#f4c7c6", "#7fb0da", "#8dbb78", "#d95c84", "#7b2840"],
     "keywords": [
       "save the date",
       "wedding",
       "invitation",
       "indian wedding",
-      "jharokha",
-      "arch",
-      "mughal",
       "palace",
-      "sunset",
-      "lanterns",
-      "marigold",
-      "petals",
-      "camera push",
-      "vertical",
-      "story"
+      "arches",
+      "colonnade",
+      "pink city",
+      "jaipur",
+      "chandelier",
+      "jasmine garland",
+      "dolly",
+      "calligraphy",
+      "rajasthani"
     ]
   }
 }
