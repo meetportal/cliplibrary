@@ -107,11 +107,11 @@ export const midnightCrownDefaults: MidnightCrownContent = {
     website: 'https://www.example.com',
   },
   photos: {
-    hero: photo('gown-twirl'),
-    portrait: photo('portrait'),
+    hero: photo('ball-gown'),
+    portrait: photo('gown-waiting'),
     chapel: photo('chapel'),
     ballroom: photo('ballroom'),
-    court: photo('dance'),
+    court: photo('waltz'),
   },
   letter: {
     text: 'Fifteen years ago my story began, and every chapter since has been written by the people I love most.\n\nOn this night I step from childhood into a new season of my life, and I could not imagine taking that first step without you beside me.\n\nCome dance beneath the stars with me, raise a glass, and help me make memories that will shine for a lifetime.',
