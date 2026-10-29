@@ -102,7 +102,7 @@ export const SiteWorkspace = ({
   address,
   liveUrl,
 }: SiteWorkspaceProps) => {
-  const [device, setDevice] = useState<Device>('phone');
+  const [device, setDevice] = useState<Device>('desktop');
   const [reloads, setReloads] = useState(0);
   const sections = useMemo(
     () => resolveClipControls(template.schema, template.controls, template.defaults),
