@@ -6,6 +6,7 @@
       "name": "neuclip",
       "dependencies": {
         "@ai-sdk/react": "4.0.158",
+        "@clerk/mcp-tools": "0.7.0",
         "@clerk/nextjs": "7.9.22",
         "@modelcontextprotocol/sdk": "1.32.2",
         "@neondatabase/serverless": "1.2.0",
@@ -123,6 +124,8 @@
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.5.15", "", { "os": "win32", "cpu": "x64" }, "sha512-yAzh4UqEImV6Hcy0zjUqNfJAsUhoD64FBQCdTG8Md/Z2wQeVP/ZmJ3XRYAs1g8J9fjTFyl2fCtc5FB5til47+g=="],
 
     "@clerk/backend": ["@clerk/backend@3.26.4", "", { "dependencies": { "@clerk/shared": "^4.43.0", "standardwebhooks": "^1.0.0", "tslib": "2.8.1" } }, "sha512-zvXqCfOKhgkY7LonpE1p8tLO+XOciHKTJ9K3e3KykxuiSPwnxKeKVltJMO8xu4LPhF/joFRY/B1cPQM06/f6AQ=="],
+
+    "@clerk/mcp-tools": ["@clerk/mcp-tools@0.7.0", "", { "dependencies": { "@modelcontextprotocol/sdk": "^1.29.0" }, "peerDependencies": { "@clerk/express": "^2.1.5", "@clerk/hono": "^0.1.0", "@clerk/nextjs": "^7.2.3", "better-sqlite3": "^8.7.0", "express": "^5.0.0", "hono": "^4.0.0", "next": "^15.2.8 || ^15.3.8 || ^15.4.10 || ^15.5.9 || ^15.6.0-0 || ^16.0.10 || ^16.1.0-0", "pg": "^8.11.0", "redis": "^4.0.0", "zod": "^3.25 || ^4.0" }, "optionalPeers": ["@clerk/express", "@clerk/hono", "@clerk/nextjs", "better-sqlite3", "express", "hono", "next", "pg", "redis"] }, "sha512-WVmU/sbrQptdVEQUlUEWmsIkQifCB68ypJi4C1joPrBecjT/b9LyfxDLHOKZ4CGzx2rYSsOsxm2awpL6fzupFQ=="],
 
     "@clerk/nextjs": ["@clerk/nextjs@7.9.22", "", { "dependencies": { "@clerk/backend": "^3.26.4", "@clerk/react": "^6.18.3", "@clerk/shared": "^4.43.0", "server-only": "0.0.1", "tslib": "2.8.1" }, "peerDependencies": { "next": "^15.2.8 || ^15.3.8 || ^15.4.10 || ^15.5.9 || ^15.6.0-0 || ^16.0.10 || ^16.1.0-0", "react": "^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0", "react-dom": "^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0" } }, "sha512-xyD6YqJCPanzngXJNjjtvRZykLVZMkNARiIcXGIi2rzLYKJQtstQ9YcuWVCid9tguD20YhFnagp507VIphVx+Q=="],
 

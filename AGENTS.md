@@ -323,8 +323,14 @@ keys feature must be enabled in the Clerk dashboard).
 ## MCP endpoint
 
 `src/app/mcp/route.ts` serves a stateless Streamable HTTP MCP server (`@modelcontextprotocol/sdk`,
-`src/mcp`). Every request needs `Authorization: Bearer <API key>` from an approved user, and every
-website and video it makes belongs to that user. Website tools (`src/mcp/site-tools.ts`):
+`src/mcp`). Every request needs `Authorization: Bearer <token>` from an approved user, where the
+token is a Clerk API key or a Clerk OAuth access token (`mcpTokenOwner` in `src/lib/mcp-auth.ts`),
+and every website and video it makes belongs to that user. A 401 carries
+`WWW-Authenticate: Bearer resource_metadata=...` pointing at
+`/.well-known/oauth-protected-resource/mcp` (RFC 9728), which names the Clerk instance as the
+authorization server, and `/.well-known/oauth-authorization-server` mirrors Clerk's metadata for
+older clients (`@clerk/mcp-tools`). MCP clients register themselves through Clerk's dynamic client
+registration, which must be enabled under OAuth applications in the Clerk dashboard. Website tools (`src/mcp/site-tools.ts`):
 `list_site_templates`, `get_site_template`, `create_site`, `edit_site`, `get_site` and
 `list_sites`, which work on `sites` rows by `siteId` and return `siteUrl` (`/s/<slug>`) and
 `editorUrl` (`/websites/<id>`). `edit_site` applies on top of the owner's draft and publishes. Clip and video tools: `search_clips` (MiniSearch over clip meta and

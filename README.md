@@ -40,6 +40,10 @@ back so the agent picks them up. Websites are published at `/s/<slug>`.
 claude mcp add --transport http neuclip https://<your-site>/mcp
 ```
 
+Clients that support OAuth open a neuclip sign-in page the first time they connect (in Claude Code,
+run `/mcp` and choose Authenticate). Scripts and other clients can send an API key from
+`/integrations` as `Authorization: Bearer <key>` instead.
+
 Then ask, for example, "make a 20 second launch video for my habit app".
 
 ## Export fidelity

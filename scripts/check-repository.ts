@@ -35,6 +35,7 @@ const BINARY_EXTENSIONS = new Set([
 const KEBAB_SEGMENT = /^[a-z0-9]+(?:-[a-z0-9]+)*(?:\.[a-z0-9]+(?:-[a-z0-9]+)*)*$/;
 const NEXT_DYNAMIC_SEGMENT = /^\[\[?\.{0,3}[a-zA-Z0-9]+\]?\]$/;
 const NEXT_GROUP_SEGMENT = /^\([a-z0-9-]+\)$/;
+const WELL_KNOWN_SEGMENT = '.well-known';
 
 type Report = { name: string; scope: string; violations: string[] };
 
@@ -51,7 +52,8 @@ const REPORTS: Report[] = [
   { name: 'ds-store', scope: 'no .DS_Store files', violations: [] },
   {
     name: 'kebab-case-paths',
-    scope: 'segments under src/ are kebab-case (exempt: Next.js [dynamic] and (group) segments)',
+    scope:
+      'segments under src/ are kebab-case (exempt: Next.js [dynamic], (group) and .well-known segments)',
     violations: [],
   },
 ];
@@ -74,7 +76,8 @@ const isSizeExempt = (file: string): boolean =>
 const isSegmentAllowed = (segment: string): boolean =>
   KEBAB_SEGMENT.test(segment) ||
   NEXT_DYNAMIC_SEGMENT.test(segment) ||
-  NEXT_GROUP_SEGMENT.test(segment);
+  NEXT_GROUP_SEGMENT.test(segment) ||
+  segment === WELL_KNOWN_SEGMENT;
 
 const trackedFiles = async (): Promise<string[]> => {
   const output = await $`git ls-files`.text();

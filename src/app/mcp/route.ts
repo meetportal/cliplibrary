@@ -1,26 +1,27 @@
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
-import { bearerToken } from '@/auth/bearer';
-import { apiKeyOwner } from '@/lib/api-keys';
+import { mcpChallenge, publicOrigin } from '@/auth/mcp-metadata';
+import { mcpTokenOwner } from '@/lib/mcp-auth';
 import { isApprovedUser } from '@/lib/session';
 import { createMcpServer } from '@/mcp/server';
 
-const refuse = (status: number, message: string): Response =>
+const refuse = (origin: string, status: number, message: string): Response =>
   Response.json(
     { error: status === 401 ? 'unauthorized' : 'forbidden', message },
-    { status, headers: status === 401 ? { 'www-authenticate': 'Bearer realm="neuclip"' } : {} },
+    { status, headers: status === 401 ? { 'www-authenticate': mcpChallenge(origin) } : {} },
   );
 
 const handle = async (request: Request): Promise<Response> => {
-  const { origin } = new URL(request.url);
-  const userId = await apiKeyOwner(bearerToken(request));
+  const origin = publicOrigin(request);
+  const userId = await mcpTokenOwner(request);
   if (userId === null) {
     return refuse(
+      origin,
       401,
-      `Create an API key at ${origin}/integrations and send it as "Authorization: Bearer <key>".`,
+      `Sign in with OAuth from your MCP client, or create an API key at ${origin}/integrations and send it as "Authorization: Bearer <key>".`,
     );
   }
   if (!(await isApprovedUser(userId))) {
-    return refuse(403, 'This account is waiting for approval.');
+    return refuse(origin, 403, 'This account is waiting for approval.');
   }
   const transport = new WebStandardStreamableHTTPServerTransport({ enableJsonResponse: true });
   await createMcpServer(origin, userId).connect(transport);
