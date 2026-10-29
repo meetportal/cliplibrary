@@ -13,6 +13,7 @@ import {
 export const GALLERY_KINDS = [
   { id: 'video', label: 'Videos' },
   { id: 'poster', label: 'Posters' },
+  { id: 'site', label: 'Websites' },
 ] as const;
 
 export type GalleryKind = (typeof GALLERY_KINDS)[number]['id'];

@@ -1,6 +1,6 @@
 import type { z } from 'zod';
 import { readControlMeta } from '@/schemas';
-import type { ControlDescriptor } from './types';
+import type { ControlDescriptor, TextFormat } from './types';
 
 type ZodCheckDef =
   | { check: 'greater_than'; value: number; inclusive: boolean }
@@ -43,6 +43,13 @@ const findCheck = <Kind extends ZodCheckDef['check']>(
 ): Extract<ZodCheckDef, { check: Kind }> | undefined =>
   checks.find((check): check is Extract<ZodCheckDef, { check: Kind }> => check.check === kind);
 
+const textFormat = (meta: ControlMeta): TextFormat => {
+  if (meta?.control === 'textarea') {
+    return 'multiline';
+  }
+  return meta?.control === 'datetime' ? 'datetime' : 'line';
+};
+
 const describeString = (
   checks: ZodCheckDef[],
   meta: ControlMeta,
@@ -63,7 +70,7 @@ const describeString = (
     kind: 'text',
     path,
     label,
-    multiline: meta?.control === 'textarea',
+    format: textFormat(meta),
     maxLength: maxCheck?.maximum ?? null,
   };
 };
@@ -123,7 +130,7 @@ const describeField = (schema: unknown, path: string[], label: string): ControlD
         ),
       };
     default:
-      return { kind: 'text', path, label, multiline: false, maxLength: null };
+      return { kind: 'text', path, label, format: 'line', maxLength: null };
   }
 };
 

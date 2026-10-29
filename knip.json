@@ -6,6 +6,7 @@
     "src/{schemas,project,core,compositions,design}/index.ts",
     "src/compositions/entry.ts",
     "playwright.config.ts",
+    "e2e/global-setup.ts",
     "e2e/**/*.spec.ts",
     "src/render/posters/preview-entry.tsx",
     "src/posters/{kit/index,pack}.ts"

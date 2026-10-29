@@ -3,7 +3,9 @@ import { type ControlEntry, clipControlsFor } from '@/core';
 import { type Design, type DesignControl, designSchema, FONT_FAMILIES } from '@/design';
 import { type Project, projectSchema } from '@/project';
 import { CLIP_SCHEMAS, getClipMeta, isClipId } from '@/schemas';
+import { findSiteTemplate } from '@/sites/templates';
 import type { MediaKind } from './media';
+import { siteFieldGuide } from './site';
 
 export const jsonSchema = (schema: z.ZodType): string =>
   JSON.stringify(z.toJSONSchema(schema, { unrepresentable: 'any' }));
@@ -108,6 +110,35 @@ ${parsed.success ? themeGuide(parsed.data) : ''}
 Design JSON schema: ${jsonSchema(designSchema)}`;
 };
 
+const siteInstructions = (title: string, document: unknown): string => {
+  const templateId =
+    typeof document === 'object' && document !== null && 'templateId' in document
+      ? String(document.templateId)
+      : '';
+  const template = findSiteTemplate(templateId);
+  if (template === undefined) {
+    return `You are the editing agent for the website "${title}". Its template is unknown, so explain that you cannot edit it.`;
+  }
+  return `You are the editing agent for the website "${title}", built from the "${template.meta.title}" template (${template.meta.description}).
+The document is { templateId, content }. Only content changes: every path starts with /content/. The template decides the layout, so you change words, dates, places, photos, lists and colours, never the structure.
+Write warm, natural copy that fits the occasion. Keep names, monogram, dates and venue consistent everywhere they appear: when names change, update the monogram to the new initials, and when the date changes, update the RSVP deadline and any FAQ answers that mention dates or times.
+Dates and times like event.startsAt are local time written YYYY-MM-DDTHH:mm. Photos are image URLs; keep the current ones or asset://N values unless the user gives a new https image URL.
+Lists such as the schedule, details and FAQs can grow or shrink within their schema limits; to add an item use "add" with a path ending in /-.
+
+${SHARED_RULES}
+
+Field guide (label: path, with hints):
+${siteFieldGuide(template)}
+
+Content JSON schema: ${jsonSchema(template.schema)}`;
+};
+
+const INSTRUCTION_BUILDERS: Record<MediaKind, (title: string, document: unknown) => string> = {
+  clip: clipInstructions,
+  poster: posterInstructions,
+  site: siteInstructions,
+};
+
 const chatLine = (chatTitle: string | null): string =>
   chatTitle === null
     ? 'This chat has no name yet. In your first step, also call renameChat with a short title for what the user wants.'
@@ -128,8 +159,7 @@ export const mediaInstructions = ({
   focus,
   chatTitle,
 }: InstructionInput): string => {
-  const base =
-    kind === 'clip' ? clipInstructions(title, document) : posterInstructions(title, document);
+  const base = INSTRUCTION_BUILDERS[kind](title, document);
   const selection =
     focus.length === 0 ? 'Nothing is selected.' : `Selected element ids: ${focus.join(', ')}.`;
   return `${base}

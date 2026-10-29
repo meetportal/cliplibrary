@@ -144,7 +144,7 @@ export const FilterBar = ({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Videos & posters</SelectItem>
+              <SelectItem value="all">Videos, posters & websites</SelectItem>
               {GALLERY_KINDS.map((kind) => (
                 <SelectItem key={kind.id} value={kind.id}>
                   {kind.label}

@@ -6,6 +6,8 @@ import { createPortal } from 'react-dom';
 import { selectionNames } from '@/agent/describe-path';
 import { applyEdits, type EditOperation } from '@/agent/edits';
 import type { MediaContext, MediaDocument, MediaKind } from '@/agent/media';
+import { useAccessGate } from '@/components/auth/access-gate';
+import { useAccount } from '@/components/auth/use-account';
 import { usePersistedState } from '@/lib/use-persisted-state';
 import { cn } from '@/lib/utils';
 import { AgentChat } from './agent-chat';
@@ -33,7 +35,10 @@ export const AgentWorkspace = <K extends MediaKind>({
   onChange,
   children,
 }: AgentWorkspaceProps<K>) => {
-  const [open, setOpen] = usePersistedState('neuclip-agent-open', false);
+  const [wantsOpen, setOpen] = usePersistedState('neuclip-agent-open', false);
+  const { user } = useAccount();
+  const { ready, guard, dialog } = useAccessGate();
+  const open = wantsOpen && user?.approved === true;
   const [expanded, setExpanded] = useState(false);
   const [slot, setSlot] = useState<HTMLElement | null>(null);
   const panel = useRef<HTMLElement>(null);
@@ -73,11 +78,12 @@ export const AgentWorkspace = <K extends MediaKind>({
   const trigger = (
     <button
       type="button"
-      onClick={() => setOpen(!open)}
+      disabled={!ready}
+      onClick={() => (open ? setOpen(false) : guard(() => setOpen(true)))}
       aria-pressed={open}
       aria-controls="media-agent-panel"
       className={cn(
-        'inline-flex h-8 items-center gap-1.5 rounded-full px-3 font-medium text-xs transition-colors',
+        'inline-flex h-8 items-center gap-1.5 rounded-full px-3 font-medium text-xs transition-colors disabled:opacity-60',
         open
           ? 'bg-violet-600 text-white shadow-sm hover:bg-violet-600/90'
           : 'border border-violet-500/40 text-violet-700 hover:bg-violet-500/10 dark:text-violet-300',
@@ -92,6 +98,7 @@ export const AgentWorkspace = <K extends MediaKind>({
     <div className="flex h-[calc(100dvh-3.5rem)] min-h-0">
       <div className="flex min-w-0 flex-1 flex-col">{children}</div>
       {slot === null ? null : createPortal(trigger, slot)}
+      {dialog}
       <section
         ref={panel}
         id="media-agent-panel"

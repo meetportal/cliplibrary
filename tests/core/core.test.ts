@@ -31,7 +31,7 @@ describe('describeSchema', () => {
     expect(byPath(controls, 'title').kind).toBe('text');
     expect(byPath(controls, 'bg').kind).toBe('color');
     const notes = byPath(controls, 'notes');
-    expect(notes.kind === 'text' && notes.multiline).toBe(true);
+    expect(notes.kind === 'text' && notes.format === 'multiline').toBe(true);
     const speed = byPath(controls, 'speed');
     expect(speed).toMatchObject({ kind: 'number', min: 0, max: 2, step: 0.1 });
     expect(byPath(controls, 'flag').kind).toBe('boolean');

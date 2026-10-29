@@ -1,7 +1,8 @@
 # neuclip
 
-A single Next.js project for a library of Remotion animation clips and editable poster packs,
-with a deep, schema-driven video editor and a canvas image editor in the browser.
+A single Next.js project for a library of Remotion animation clips, editable poster packs and
+website templates, with a deep, schema-driven video editor, a canvas image editor and a website
+editor in the browser.
 
 ## Layout
 
@@ -34,6 +35,11 @@ Everything lives in one package. Modules import each other through the `@/` alia
   `Design` built with the authoring kit in `src/posters/kit` (elements, blocks, devices,
   templates and shared listing slides). `photos.ts` lists the bundled Unsplash photos in
   `public/design-assets/photos`.
+- `src/sites` - website templates: per-template Zod content schemas, defaults, metadata and control
+  layouts (`templates/<category>/<id>.ts`), slugs, event dates, `.ics` files and the published-site
+  store. Pure apart from `store.ts`, which takes an `unstorage` `Storage`.
+- `src/components/sites` - each template's React website (`templates/<id>/`), the shared canvas
+  and the website editor (`editor/`).
 - `src/core` - domain types, the clip project seed and the Zod-schema-to-control introspection.
 - `tests` - `bun test` suites, mirroring `src` (`tests/schemas`, `tests/core`, ...); top-level
   files and `tests/components` cover the UI. `e2e` holds the Playwright suite.
@@ -262,10 +268,54 @@ paths that role should drive (the front text can share Primary with a shape). In
 paths go in `more`. At most 14 controls show at first glance across all sections.
 `auditClipStandard` in `src/core/clip-controls.ts` enforces this.
 
+## Website templates
+
+The home grid also lists website templates (gallery type `site`, categories `SITE_CATEGORIES`).
+A card opens `/sites/<templateId>`, an editor with a browser-style live preview (phone or desktop,
+Tailwind container queries, a reload button that replays the intro), the shared properties panel
+driven by the template's `defineControls` layout, and the AI editor (media kind `site`, document
+`{ templateId, content }`, edits only under `/content`, `src/agent/site.ts`). Drafts autosave to
+`localStorage`. `/preview/<templateId>` shows a template with its defaults.
+
+Websites are static and nothing is stored on the server. Publishing (`POST /api/sites/publish`)
+validates `{ slug, templateId, content }` (`checkSharedSite` in `src/sites/site-link.ts`), compresses
+it with lz-string and signs it with HMAC (`SITE_LINK_SECRET`, `src/lib/site-signing.ts`). The whole
+website lives in its link: guests open `/s/<slug>?d=…&sig=…`, and `/sites/<templateId>?d=…&sig=…`
+reopens it in the editor; every change publishes a new link. Photos are bundled files or image
+links; photos picked from the device cannot be published. RSVP is a button to the couple's own form.
+
+To add a template:
+
+1. Add `src/sites/templates/<category>/<id>.ts` (`<name>Schema`, `<name>Defaults`, `<name>Meta`)
+   and `<id>-controls.ts`, and register it with a `headline` in `src/sites/templates/index.ts`.
+   `tests/sites/templates.test.ts` requires every content path in the layout exactly once.
+2. Build the website in `src/components/sites/templates/<id>/` as a `SiteView` (`scope`, `Body`,
+   `Intro`, `hasIntro`) and bind it in `src/components/sites/site-registry.tsx`.
+3. Put bundled photos in `public/site-assets/<id>/`, run `bunx next dev --port 3201` and
+   `bun run render:sites <id> --base http://localhost:3201`, then commit
+   `public/site-previews/<id>.jpg` (`tests/sites/previews.test.ts` fails without it).
+
+## Accounts and approval
+
+Sign-in uses Clerk through our own screens only (`src/components/auth`): email and password with an
+emailed code, and Google, whose redirect finishes in place on the returning page (`AuthReturn` with
+the `auth_return` param). `src/proxy.ts` runs `clerkMiddleware` on everything except `/mcp` and
+static files. Env: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`,
+`NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL` and `SITE_LINK_SECRET`.
+
+Only approved users can use the AI editor, publish websites, manage API keys or call the MCP
+endpoint. Approve a user in the Clerk dashboard by setting their public metadata to
+`{ "approved": true }` (`src/auth/approval.ts`, `currentAccess` in `src/lib/session.ts`). The
+header shows the account and its approval state; `/account` is the profile and `/integrations` is
+the MCP setup page, where users create and revoke Clerk API keys (`src/lib/api-keys.ts`, the API
+keys feature must be enabled in the Clerk dashboard).
+
 ## MCP endpoint
 
 `src/app/mcp/route.ts` serves a stateless Streamable HTTP MCP server (`@modelcontextprotocol/sdk`,
-`src/mcp`) with open access and no storage. Tools: `search_clips` (MiniSearch over clip meta and the
+`src/mcp`) with no storage. Every request needs `Authorization: Bearer <API key>` from an approved
+user. Website tools: `list_site_templates`, `get_site_template`, `create_site` and `edit_site`
+(`src/mcp/site-tools.ts`), which return the site plus its signed `siteUrl` and `editorUrl`. Tools: `search_clips` (MiniSearch over clip meta and the
 labels in `src/schemas/clip-labels.json`, filters by category, theme, orientation and role),
 `get_clip` (labels, defaults, field guide and props schema), `create_video`, `add_clip` and
 `edit_video` (JSON Patch through the same `applyEdits` validation as the media agent). The agent

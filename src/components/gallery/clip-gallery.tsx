@@ -30,7 +30,15 @@ export interface PosterGalleryItem {
   height: number;
 }
 
-export type GalleryItem = VideoGalleryItem | PosterGalleryItem;
+export interface SiteGalleryItem {
+  kind: 'site';
+  meta: GalleryMeta;
+  preview: string;
+  width: number;
+  height: number;
+}
+
+export type GalleryItem = VideoGalleryItem | PosterGalleryItem | SiteGalleryItem;
 
 type GalleryTile = ComponentType<GalleryItem>;
 

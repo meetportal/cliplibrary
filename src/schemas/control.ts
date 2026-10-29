@@ -4,6 +4,7 @@ export type ControlMeta =
   | { control: 'color' }
   | { control: 'slider'; step: number }
   | { control: 'textarea' }
+  | { control: 'datetime' }
   | { control: 'image' }
   | { control: 'video' };
 
@@ -24,6 +25,12 @@ export const zSlider = (options: { min: number; max: number; step?: number }) =>
 
 export const zMultiline = () => z.string().meta({ control: 'textarea' } satisfies ControlMeta);
 
+export const zDateTime = () =>
+  z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/)
+    .meta({ control: 'datetime' } satisfies ControlMeta);
+
 export const zImage = () => z.string().meta({ control: 'image' } satisfies ControlMeta);
 
 export const zVideo = () => z.string().meta({ control: 'video' } satisfies ControlMeta);
@@ -37,6 +44,7 @@ export const readControlMeta = (schema: z.core.$ZodType): ControlMeta | undefine
   if (
     candidate.control === 'color' ||
     candidate.control === 'textarea' ||
+    candidate.control === 'datetime' ||
     candidate.control === 'image' ||
     candidate.control === 'video'
   ) {

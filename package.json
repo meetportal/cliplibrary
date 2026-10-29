@@ -29,6 +29,7 @@
     "render": "bun run src/render/render-all.ts",
     "render-one": "bun run src/render/render-one.ts",
     "render:posters": "bun run src/render/render-posters.ts",
+    "render:sites": "bun run src/render/render-sites.ts",
     "check:comments": "bun run scripts/strip-comments.ts --check",
     "check:em-dashes": "bun run scripts/check-em-dashes.ts",
     "check:repository": "bun run scripts/check-repository.ts",
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "@ai-sdk/react": "4.0.158",
+    "@clerk/nextjs": "7.9.22",
     "@modelcontextprotocol/sdk": "1.32.2",
     "@openrouter/ai-sdk-provider": "3.1.0",
     "@react-three/drei": "10.7.9",
@@ -80,6 +82,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
+    "@clerk/backend": "3.26.4",
+    "@clerk/testing": "2.2.52",
     "@happy-dom/global-registrator": "21.0.4",
     "@playwright/test": "^1.63.0",
     "@testing-library/dom": "^10.4.2",

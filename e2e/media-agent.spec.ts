@@ -1,4 +1,6 @@
+import { clerk, setupClerkTestingToken } from '@clerk/testing/playwright';
 import { expect, type Page, test } from '@playwright/test';
+import { E2E_USER_EMAIL } from './global-setup';
 
 type Chunk = Record<string, unknown>;
 
@@ -59,6 +61,12 @@ const mockAgent = async (page: Page, body: string): Promise<Seen> => {
   });
   return seen;
 };
+
+test.beforeEach(async ({ page }) => {
+  await setupClerkTestingToken({ page });
+  await page.goto('/sign-in');
+  await clerk.signIn({ page, emailAddress: E2E_USER_EMAIL });
+});
 
 const ask = async (page: Page, prompt: string): Promise<void> => {
   await page.getByRole('button', { name: 'Edit with AI' }).click();
