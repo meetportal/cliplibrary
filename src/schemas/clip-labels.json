@@ -6046,5 +6046,93 @@
       "initials",
       "luxury"
     ]
+  },
+  "arch-save-the-date": {
+    "summary": "A vertical wedding save the date. The camera slowly pushes in from a cream sandstone wall with a scalloped eave, pilasters and a carved jharokha window until the cusped Mughal arch fills the frame. Through it a peach, dusty rose and lilac sunset glows over a hazy lakeside palace, two brass lanterns sway from the arch, a marigold-garlanded balustrade with potted plants lines the sill and petals drift down. Inside the arch \"Save the Date\", \"FOR THE WEDDING OF\", \"Meera & Arjun\", the date, the venue, \"with love\" and \"The Sharma Family\" rise in line by line, then hold.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Wide view of the sandstone wall, eave and carved arch window with the sunset, palace, lanterns and marigold balustrade inside"
+      },
+      {
+        "at": 1,
+        "what": "The camera pushes in smoothly as clouds drift, lanterns sway and petals fall"
+      },
+      {
+        "at": 2.1,
+        "what": "\"Save the Date\" rises in large plum script below the lanterns"
+      },
+      {
+        "at": 2.8,
+        "what": "\"FOR THE WEDDING OF\" and then \"Meera & Arjun\" rise in, the arch now filling the frame"
+      },
+      {
+        "at": 4.1,
+        "what": "A gold diamond divider and the date, then \"Rajmahal Gardens, Jaipur\""
+      },
+      {
+        "at": 5.5,
+        "what": "\"with love\" and \"The Sharma Family\" write in, and the full invitation holds"
+      },
+      {
+        "at": 9.5,
+        "what": "The whole scene fades out"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "carved cream sandstone jharokha window",
+      "cusped Mughal arch with gold trim and beaded border",
+      "peach, dusty rose and lilac sunset sky",
+      "distant domed palace silhouette over a lake",
+      "two hanging brass lanterns with a warm glow",
+      "balustrade with marigold garlands and potted plants",
+      "script and serif invitation lettering"
+    ],
+    "motion": [
+      "slow eased camera push-in",
+      "line by line rise and fade text",
+      "swaying lanterns",
+      "drifting clouds",
+      "falling petals",
+      "fade out"
+    ],
+    "mood": ["elegant", "romantic", "warm", "calm"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "indian wedding save the date",
+      "wedding invitation reel",
+      "instagram or whatsapp story invite",
+      "engagement announcement",
+      "destination wedding teaser"
+    ],
+    "editable": [
+      "title, couple names, date, venue, sign-off and family name",
+      "script and serif fonts",
+      "primary, secondary, accent, text and surface colours",
+      "camera push amount and length",
+      "lantern count, size and sway",
+      "petal count, size and fall speed",
+      "arch width, height, scallops and border",
+      "sun, clouds, palace and balustrade"
+    ],
+    "palette": ["#f2e6cf", "#c7b5dc", "#eab6bd", "#fbd2a8", "#c29243", "#7d2f4c"],
+    "keywords": [
+      "save the date",
+      "wedding",
+      "invitation",
+      "indian wedding",
+      "jharokha",
+      "arch",
+      "mughal",
+      "palace",
+      "sunset",
+      "lanterns",
+      "marigold",
+      "petals",
+      "camera push",
+      "vertical",
+      "story"
+    ]
   }
 }
