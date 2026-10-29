@@ -27,6 +27,7 @@ export interface BranchSpec {
   count: number;
   girth?: number;
   spread?: number;
+  jitter?: number;
 }
 
 export interface Branch {
@@ -50,7 +51,8 @@ export const growBranch = (origin: Point, spec: BranchSpec, seed: number): Branc
   const leaves: LeafSpec[] = Array.from({ length: spec.count }, (_, index) => {
     const t = 0.16 + (index / Math.max(1, spec.count - 1)) * 0.8;
     const side = index % 2 === 0 ? 1 : -1;
-    const length = spec.leaf * (1.05 - 0.45 * t) * (0.86 + random() * 0.28);
+    const jitter = spec.jitter ?? 0.28;
+    const length = spec.leaf * (1.05 - 0.45 * t) * (1 - jitter / 2 + random() * jitter);
     return {
       at: quadPoint(origin, control, tip, t),
       angle: quadAngle(origin, control, tip, t) + side * ((spec.spread ?? 38) + random() * 22),
@@ -88,12 +90,13 @@ const Stem = ({ d, color, weight }: { d: string; color: string; weight: number }
 
 const CORNER = {
   front: [
-    { angle: -24, length: 600, curve: -0.12, leaf: 205, count: 8, girth: 1.3 },
-    { angle: 162, length: 500, curve: 0.1, leaf: 190, count: 6, girth: 1.3 },
+    { angle: -24, length: 600, curve: -0.12, leaf: 205, count: 8, girth: 1.3, jitter: 0.6 },
+    { angle: 162, length: 500, curve: 0.1, leaf: 190, count: 6, girth: 1.3, jitter: 0.6 },
+    { angle: -64, length: 300, curve: 0.14, leaf: 175, count: 4, girth: 1.35, jitter: 0.5 },
   ],
   back: [
-    { angle: 172, length: 250, curve: 0.08, leaf: 120, count: 4, girth: 1.1 },
-    { angle: -34, length: 280, curve: -0.08, leaf: 120, count: 4, girth: 1.1 },
+    { angle: 172, length: 330, curve: 0.08, leaf: 170, count: 5, girth: 1.15 },
+    { angle: -34, length: 360, curve: -0.08, leaf: 170, count: 5, girth: 1.15 },
   ],
   lines: [
     { angle: -118, length: 260, curve: 0.1, leaf: 150, count: 3 },
@@ -121,7 +124,7 @@ export const CornerSpray = ({
   const back = CORNER.back.map((spec, index) => growBranch(origin, spec, seed + 40 + index * 7));
   const lines = CORNER.lines.map((spec, index) => growBranch(origin, spec, seed + 80 + index));
   const stemColor = shade(inks.greens.base, 0.4);
-  const [first, second] = front;
+  const [first, second, third] = front;
   return (
     <g>
       <defs>
@@ -159,6 +162,9 @@ export const CornerSpray = ({
       {inks.goldLines ? (
         <Flecks center={[150, -150]} spread={[90, 120]} count={46} color={inks.gold} seed={seed} />
       ) : null}
+      {third === undefined ? null : (
+        <BranchLeaves branch={third} greens={inks.greens} stemColor={stemColor} />
+      )}
       {second === undefined ? null : (
         <BranchLeaves branch={second} greens={inks.greens} stemColor={stemColor} />
       )}
