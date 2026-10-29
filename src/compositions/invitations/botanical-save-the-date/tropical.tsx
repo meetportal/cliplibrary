@@ -116,8 +116,10 @@ const Anthurium = ({
   angle,
   size,
   color,
+  spadix,
 }: {
   id: string;
+  spadix: string;
   at: Point;
   angle: number;
   size: number;
@@ -136,8 +138,8 @@ const Anthurium = ({
     <g transform={`translate(${fixed(at[0])} ${fixed(at[1])}) rotate(${fixed(angle)})`}>
       <defs>
         <linearGradient id={`${id}-spathe`} x1="0" x2="1">
-          <stop offset="0" stopColor={mix(color, '#c97f8c', 0.55)} />
-          <stop offset="0.45" stopColor={mix(color, '#d9a0a6', 0.2)} />
+          <stop offset="0" stopColor={shade(color, 0.24)} />
+          <stop offset="0.45" stopColor={shade(color, 0.08)} />
           <stop offset="1" stopColor={tint(color, 0.6)} />
         </linearGradient>
       </defs>
@@ -161,7 +163,7 @@ const Anthurium = ({
       <path
         d={`M${k(0.08)} ${k(-0.02)} Q${k(0.2)} ${k(-0.42)} ${k(0.5)} ${k(-0.66)}`}
         fill="none"
-        stroke={mix(color, '#e8d29c', 0.55)}
+        stroke={mix(color, spadix, 0.6)}
         strokeWidth={size * 0.11}
         strokeLinecap="round"
       />
@@ -174,11 +176,13 @@ export const TropicalBouquet = ({
   leaf,
   flower,
   stem,
+  spadix,
 }: {
   id: string;
   leaf: string;
   flower: string;
   stem: string;
+  spadix: string;
 }) => (
   <g>
     <BananaLeaf
@@ -205,8 +209,29 @@ export const TropicalBouquet = ({
       width={220}
       color={shade(leaf, 0.08)}
     />
-    <Anthurium id={`${id}-f1`} at={[250, 1250]} angle={34} size={120} color={flower} />
-    <Anthurium id={`${id}-f2`} at={[262, 1460]} angle={16} size={132} color={flower} />
-    <Anthurium id={`${id}-f3`} at={[236, 1690]} angle={40} size={122} color={flower} />
+    <Anthurium
+      id={`${id}-f1`}
+      at={[250, 1250]}
+      angle={34}
+      size={120}
+      color={flower}
+      spadix={spadix}
+    />
+    <Anthurium
+      id={`${id}-f2`}
+      at={[262, 1460]}
+      angle={16}
+      size={132}
+      color={flower}
+      spadix={spadix}
+    />
+    <Anthurium
+      id={`${id}-f3`}
+      at={[236, 1690]}
+      angle={40}
+      size={122}
+      color={flower}
+      spadix={spadix}
+    />
   </g>
 );

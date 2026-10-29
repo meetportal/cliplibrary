@@ -98,7 +98,14 @@ export const TypedLine = ({
   const characters = Array.from(text);
   const states = glyphStates(frame, characters.length, cue, reveal);
   return (
-    <div style={{ whiteSpace: 'pre', ...style }}>
+    <div
+      style={{
+        whiteSpace: 'pre',
+        fontVariantLigatures: 'none',
+        fontFeatureSettings: '"liga" 0, "clig" 0, "calt" 0',
+        ...style,
+      }}
+    >
       {characters.map((character, index) => {
         const state = states[index] ?? { glyph: 0, cover: 0 };
         return (

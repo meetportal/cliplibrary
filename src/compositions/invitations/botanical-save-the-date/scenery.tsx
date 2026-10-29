@@ -193,6 +193,7 @@ export const Scenery = ({
             leaf={frames.tropical}
             flower={frames.anthurium}
             stem={shade(frames.anthurium, 0.45)}
+            spadix={florals.gold}
           />
         </g>
       </Placed>

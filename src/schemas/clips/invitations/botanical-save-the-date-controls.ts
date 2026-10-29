@@ -64,7 +64,7 @@ export const botanicalSaveTheDateControls = defineControls<BotanicalSaveTheDateP
         {
           path: 'florals.gold',
           label: 'Accent color',
-          hint: 'Gold flecks and fine lines, the gold berries and the hexagon frame',
+          hint: 'Gold flecks and fine lines, the gold berries, the hexagon frame and the lily centers',
         },
         {
           link: ['look.ink', 'look.muted', 'look.accent'],
