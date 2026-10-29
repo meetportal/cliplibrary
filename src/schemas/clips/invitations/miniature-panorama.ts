@@ -140,7 +140,7 @@ export const miniaturePanoramaDefaults: MiniaturePanoramaProps = {
     dateSize: 44,
     tracking: 0.28,
     gap: 22,
-    centerY: 650,
+    centerY: 600,
     start: 1100,
     rise: 40,
     color: '#4a2c1d',
@@ -201,7 +201,7 @@ export const miniaturePanoramaDefaults: MiniaturePanoramaProps = {
   chandeliers: {
     show: true,
     night: '#d8b25e',
-    finale: '#a3a39d',
+    finale: '#7d7a72',
     crystal: '#f4f1e6',
     flame: '#ffd479',
   },
