@@ -57,7 +57,8 @@ export const emeraldRoseSchema = z.object({
   faqs: z.array(z.object({ question: z.string().max(80), answer: zMultiline() })).max(8),
   rsvp: z.object({
     message: zMultiline(),
-    thanks: zMultiline(),
+    buttonLabel: z.string().max(30),
+    link: z.string(),
   }),
   colors: z.object({
     primary: zColor(),
@@ -164,7 +165,8 @@ export const emeraldRoseDefaults: EmeraldRoseContent = {
   rsvp: {
     message:
       'It would mean the world to us to celebrate this day surrounded by you. Please let us know if you can make it.',
-    thanks: 'Thank you for replying. We cannot wait to celebrate with you!',
+    buttonLabel: 'Reply now',
+    link: 'https://docs.google.com/forms',
   },
   colors: {
     primary: '#1f3a2d',

@@ -7,7 +7,7 @@ import { CAPS, SCRIPT } from './fonts';
 import { GoodToKnow } from './good-to-know';
 import { LoveStory } from './love-story';
 import { RingsBand, WaxSeal } from './ornaments';
-import { RsvpForm } from './rsvp-form';
+import { RsvpCard } from './rsvp-card';
 import { SaveTheDate } from './save-the-date';
 import { Schedule } from './schedule';
 import { SiteNav } from './site-nav';
@@ -30,7 +30,7 @@ const Footer = ({ content }: { content: EmeraldRoseContent }) => {
   );
 };
 
-export const EmeraldRoseBody = ({ content, onRsvp }: SiteBodyProps<EmeraldRoseContent>) => (
+export const EmeraldRoseBody = ({ content }: SiteBodyProps<EmeraldRoseContent>) => (
   <div className="@container min-h-full bg-(--er-bg) text-(--er-text) antialiased">
     <SiteNav monogram={content.couple.monogram} />
     <SaveTheDate content={content} />
@@ -41,7 +41,7 @@ export const EmeraldRoseBody = ({ content, onRsvp }: SiteBodyProps<EmeraldRoseCo
     <GoodToKnow content={content} />
     <RingsBand />
     <Countdown content={content} />
-    <RsvpForm content={content} onRsvp={onRsvp} />
+    <RsvpCard content={content} />
     <Footer content={content} />
   </div>
 );

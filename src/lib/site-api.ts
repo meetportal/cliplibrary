@@ -1,23 +1,22 @@
 import { z } from 'zod';
-
-export const EDIT_KEY_HEADER = 'x-edit-key';
+import type { SharedSite } from '@/sites/site-link';
 
 const problemSchema = z.object({ problem: z.string() });
-
-const readProblem = async (response: Response): Promise<string> => {
-  const parsed = problemSchema.safeParse(await response.json().catch(() => null));
-  return parsed.success ? parsed.data.problem : `Request failed with ${response.status}.`;
-};
 
 export type ApiResult<T> = { ok: true; value: T } | { ok: false; problem: string };
 
 const call = async <T>(request: Promise<Response>, schema: z.ZodType<T>): Promise<ApiResult<T>> => {
   try {
     const response = await request;
+    const body: unknown = response.status === 204 ? null : await response.json().catch(() => null);
     if (!response.ok) {
-      return { ok: false, problem: await readProblem(response) };
+      const parsed = problemSchema.safeParse(body);
+      return {
+        ok: false,
+        problem: parsed.success ? parsed.data.problem : `Request failed with ${response.status}.`,
+      };
     }
-    const parsed = schema.safeParse(await response.json());
+    const parsed = schema.safeParse(body);
     return parsed.success
       ? { ok: true, value: parsed.data }
       : { ok: false, problem: 'Unexpected response.' };
@@ -26,36 +25,30 @@ const call = async <T>(request: Promise<Response>, schema: z.ZodType<T>): Promis
   }
 };
 
-const json = (method: string, body: unknown, headers: Record<string, string> = {}) => ({
-  method,
-  headers: { 'content-type': 'application/json', ...headers },
-  body: JSON.stringify(body),
+const post = (url: string, body: unknown) =>
+  fetch(url, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+export const publishSite = (site: SharedSite) =>
+  call(post('/api/sites/publish', site), z.object({ sitePath: z.string(), editPath: z.string() }));
+
+const keySchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  createdAt: z.string(),
+  lastUsedAt: z.string().nullable(),
 });
 
-export const checkSlug = (slug: string) =>
-  call(
-    fetch(`/api/sites?slug=${encodeURIComponent(slug)}`),
-    z.object({ available: z.boolean(), problem: z.string().nullable() }),
-  );
+export type ApiKeyRow = z.infer<typeof keySchema>;
 
-export const createSite = (slug: string, templateId: string, content: unknown) =>
-  call(
-    fetch('/api/sites', json('POST', { slug, templateId, content })),
-    z.object({ slug: z.string(), editKey: z.string() }),
-  );
+export const listApiKeys = () =>
+  call(fetch('/api/api-keys'), z.object({ keys: z.array(keySchema) }));
 
-export const saveSite = (slug: string, editKey: string, content: unknown) =>
-  call(
-    fetch(`/api/sites/${slug}`, json('PUT', { content }, { [EDIT_KEY_HEADER]: editKey })),
-    z.object({ updatedAt: z.string() }),
-  );
+export const createApiKey = (name: string) =>
+  call(post('/api/api-keys', { name }), z.object({ secret: z.string(), key: keySchema }));
 
-export const uploadAsset = (blob: Blob) =>
-  call(
-    fetch('/api/site-assets', {
-      method: 'POST',
-      headers: { 'content-type': blob.type },
-      body: blob,
-    }),
-    z.object({ url: z.string() }),
-  );
+export const revokeApiKey = (id: string) =>
+  call(fetch(`/api/api-keys/${id}`, { method: 'DELETE' }), z.null());

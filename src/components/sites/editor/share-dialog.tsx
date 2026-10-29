@@ -10,46 +10,46 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { CopyField } from './copy-field';
-import { editSiteUrl, publicSiteUrl } from './edit-keys';
 
-interface ShareDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+export interface PublishedLinks {
   slug: string;
-  editKey: string;
-  justPublished: boolean;
+  sitePath: string;
+  editPath: string;
 }
 
 export const ShareDialog = ({
   open,
   onOpenChange,
-  slug,
-  editKey,
-  justPublished,
-}: ShareDialogProps) => (
+  links,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  links: PublishedLinks;
+}) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>{justPublished ? 'Your website is live' : 'Share your website'}</DialogTitle>
+        <DialogTitle>Your website is live</DialogTitle>
         <DialogDescription>
-          Send the website link to your guests. Keep the edit link for yourself.
+          Send the website link to your guests. Keep the edit link to change it later; each change
+          gives you a new link.
         </DialogDescription>
       </DialogHeader>
       <div className="flex flex-col gap-5">
         <CopyField
           id="share-public"
           label="Website link"
-          value={publicSiteUrl(slug)}
-          hint="Anyone with this link can view the website and RSVP."
+          value={`${window.location.origin}${links.sitePath}`}
+          hint="Anyone with this link can open the website."
         />
         <CopyField
           id="share-edit"
-          label="Private edit link"
-          value={editSiteUrl(slug, editKey)}
-          hint="Opens this editor on any device. Do not share it with guests."
+          label="Edit link"
+          value={`${window.location.origin}${links.editPath}`}
+          hint="Opens this website in the editor so you can publish a new version."
         />
         <Button asChild variant="outline" className="self-start">
-          <a href={`/s/${slug}`} target="_blank" rel="noreferrer">
+          <a href={links.sitePath} target="_blank" rel="noreferrer">
             <ExternalLink />
             Open website
           </a>

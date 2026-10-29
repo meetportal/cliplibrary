@@ -9,7 +9,6 @@ import { cn } from '@/lib/utils';
 import type { SiteTemplate } from '@/sites/types';
 import { SiteCanvas } from '../site-canvas';
 import { type BoundSite, bindSite } from '../site-registry';
-import type { SubmitRsvp } from '../site-view';
 
 type Device = 'phone' | 'desktop';
 
@@ -22,8 +21,6 @@ interface SiteWorkspaceProps {
   address: string;
   liveUrl: string | null;
 }
-
-const previewRsvp: SubmitRsvp = () => Promise.resolve();
 
 const useLastValidSite = (templateId: string, values: unknown): BoundSite | null => {
   const last = useRef<BoundSite | null>(null);
@@ -140,13 +137,7 @@ export const SiteWorkspace = ({
                   Some values are not valid yet.
                 </p>
               ) : (
-                <SiteCanvas
-                  key={reloads}
-                  site={site}
-                  layout="frame"
-                  introRun={reloads}
-                  onRsvp={previewRsvp}
-                />
+                <SiteCanvas key={reloads} site={site} layout="frame" introRun={reloads} />
               )}
             </div>
           </div>

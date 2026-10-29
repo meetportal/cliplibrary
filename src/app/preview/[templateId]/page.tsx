@@ -22,7 +22,7 @@ const TemplatePreviewPage = async ({ params }: { params: Promise<{ templateId: s
   if (template === undefined) {
     notFound();
   }
-  return <PublicSite templateId={template.id} content={template.defaults} slug={null} />;
+  return <PublicSite templateId={template.id} content={template.defaults} />;
 };
 
 export default TemplatePreviewPage;

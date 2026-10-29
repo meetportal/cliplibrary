@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, Globe, Loader2 } from 'lucide-react';
+import { Globe, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,62 +13,31 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { checkSlug, createSite } from '@/lib/site-api';
 import { slugify, slugProblem } from '@/sites/slug';
-
-type SlugCheck = { slug: string; problem: string | null } | null;
 
 interface PublishDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  templateId: string;
   suggestion: string;
-  content: unknown;
-  disabled: boolean;
-  onPublished: (slug: string, editKey: string) => void;
+  onPublish: (slug: string) => Promise<string | null>;
 }
-
-const useSlugCheck = (slug: string): SlugCheck => {
-  const [check, setCheck] = useState<SlugCheck>(null);
-  useEffect(() => {
-    const local = slugProblem(slug);
-    if (local !== null) {
-      setCheck({ slug, problem: local });
-      return;
-    }
-    setCheck(null);
-    const timer = setTimeout(() => {
-      checkSlug(slug)
-        .then((result) =>
-          setCheck({ slug, problem: result.ok ? result.value.problem : result.problem }),
-        )
-        .catch(() => undefined);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [slug]);
-  return check?.slug === slug ? check : null;
-};
 
 export const PublishDialog = ({
   open,
   onOpenChange,
-  templateId,
   suggestion,
-  content,
-  disabled,
-  onPublished,
+  onPublish,
 }: PublishDialogProps) => {
   const [slug, setSlug] = useState(() => slugify(suggestion));
   const [touched, setTouched] = useState(false);
-  const [publishing, setPublishing] = useState(false);
-  const [failure, setFailure] = useState<string | null>(null);
   const [host, setHost] = useState('');
-  const check = useSlugCheck(slug);
+  const [busy, setBusy] = useState(false);
+  const [failure, setFailure] = useState<string | null>(null);
+  const problem = slugProblem(slug);
 
   useEffect(() => {
     setHost(window.location.host);
   }, []);
-  const ready = check !== null && check.problem === null && !publishing && !disabled;
 
   useEffect(() => {
     if (open && !touched) {
@@ -77,15 +46,9 @@ export const PublishDialog = ({
   }, [open, suggestion, touched]);
 
   const publish = async () => {
-    setPublishing(true);
-    setFailure(null);
-    const result = await createSite(slug, templateId, content);
-    setPublishing(false);
-    if (result.ok) {
-      onPublished(result.value.slug, result.value.editKey);
-    } else {
-      setFailure(result.problem);
-    }
+    setBusy(true);
+    setFailure(await onPublish(slug));
+    setBusy(false);
   };
 
   return (
@@ -94,15 +57,16 @@ export const PublishDialog = ({
         <DialogHeader>
           <DialogTitle>Publish your website</DialogTitle>
           <DialogDescription>
-            Pick the address guests will open. You can keep editing after it is live.
+            Pick the address for your link. The whole website lives in the link, so nothing is
+            stored and you can publish a new version any time.
           </DialogDescription>
         </DialogHeader>
         <form
           className="flex flex-col gap-2"
           onSubmit={(event) => {
             event.preventDefault();
-            if (ready) {
-              publish().catch(() => undefined);
+            if (problem === null && !busy) {
+              publish().catch(() => setBusy(false));
             }
           }}
         >
@@ -121,30 +85,13 @@ export const PublishDialog = ({
               className="rounded-none bg-transparent pl-0.5 shadow-none focus-visible:ring-0"
             />
           </div>
-          <p className="flex min-h-5 items-center gap-1.5 text-xs" aria-live="polite">
-            {check === null ? (
-              <span className="flex items-center gap-1.5 text-muted-foreground">
-                <Loader2 className="size-3.5 animate-spin" />
-                Checking
-              </span>
-            ) : check.problem === null ? (
-              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-                <Check className="size-3.5" />
-                This address is free
-              </span>
-            ) : (
-              <span className="text-destructive">{check.problem}</span>
-            )}
+          <p className="min-h-5 text-destructive text-xs" aria-live="polite">
+            {slug === '' ? null : problem}
           </p>
           {failure === null ? null : <p className="text-destructive text-sm">{failure}</p>}
-          {disabled ? (
-            <p className="text-muted-foreground text-sm">
-              Wait for your photos to finish uploading.
-            </p>
-          ) : null}
           <DialogFooter className="mt-2">
-            <Button type="submit" disabled={!ready}>
-              {publishing ? <Loader2 className="animate-spin" /> : <Globe />}
+            <Button type="submit" disabled={problem !== null || busy}>
+              {busy ? <Loader2 className="animate-spin" /> : <Globe />}
               Publish
             </Button>
           </DialogFooter>

@@ -39,3 +39,20 @@ const { cleanup } = await import('@testing-library/react');
 afterEach(() => {
   cleanup();
 });
+
+mock.module('server-only', () => ({}));
+
+const signedInUser = {
+  id: 'user_test',
+  fullName: 'Test User',
+  imageUrl: '',
+  createdAt: new Date('2026-01-01T00:00:00Z'),
+  primaryEmailAddress: { emailAddress: 'test@example.com' },
+  publicMetadata: { approved: true },
+};
+
+mock.module('@clerk/nextjs', () => ({
+  useAuth: () => ({ isLoaded: true, isSignedIn: true, userId: signedInUser.id }),
+  useUser: () => ({ isLoaded: true, isSignedIn: true, user: signedInUser }),
+  useClerk: () => ({ loaded: true, signOut: () => Promise.resolve() }),
+}));

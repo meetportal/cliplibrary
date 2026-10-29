@@ -1,11 +1,7 @@
 import type { ComponentType, CSSProperties } from 'react';
-import type { RsvpReply } from '@/sites/rsvp';
-
-export type SubmitRsvp = (reply: RsvpReply) => Promise<void>;
 
 export interface SiteBodyProps<Content> {
   content: Content;
-  onRsvp: SubmitRsvp;
 }
 
 export interface SiteIntroProps<Content> {

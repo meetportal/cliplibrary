@@ -1,13 +1,13 @@
 import type { CSSProperties, ReactNode } from 'react';
 import type { z } from 'zod';
 import { emeraldRoseSchema } from '@/sites/templates/weddings/emerald-rose';
-import type { SiteView, SubmitRsvp } from './site-view';
+import type { SiteView } from './site-view';
 import { emeraldRoseView } from './templates/emerald-rose';
 
 export interface BoundSite {
   scope: { className: string; style: CSSProperties };
   hasIntro: boolean;
-  body: (onRsvp: SubmitRsvp) => ReactNode;
+  body: () => ReactNode;
   intro: (position: 'fixed' | 'absolute', onOpened: () => void) => ReactNode;
 }
 
@@ -25,7 +25,7 @@ const bind =
     return {
       scope: view.scope(content),
       hasIntro: view.hasIntro(content),
-      body: (onRsvp) => <Body content={content} onRsvp={onRsvp} />,
+      body: () => <Body content={content} />,
       intro: (position, onOpened) => (
         <Intro content={content} position={position} onOpened={onOpened} />
       ),

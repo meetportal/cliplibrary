@@ -106,7 +106,12 @@ export const emeraldRoseControls = defineControls<EmeraldRoseContent>({
       title: 'RSVP',
       fields: [
         { path: 'rsvp.message', label: 'Invitation to reply' },
-        { path: 'rsvp.thanks', label: 'After replying' },
+        {
+          path: 'rsvp.link',
+          label: 'RSVP form link',
+          hint: 'Where guests reply, for example a Google Form. Leave empty to hide the button.',
+        },
+        { path: 'rsvp.buttonLabel', label: 'Button label' },
       ],
     },
     {

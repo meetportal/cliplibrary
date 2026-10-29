@@ -1,25 +1,49 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { PublicSite } from '@/components/sites/public-site';
-import { loadPublishedSite } from '@/lib/published-sites';
+import { openSignedSite } from '@/lib/site-signing';
+import { findSiteTemplate } from '@/sites/templates';
 
-type Params = Promise<{ slug: string }>;
-
-export const generateMetadata = async ({ params }: { params: Params }): Promise<Metadata> => {
-  const site = await loadPublishedSite((await params).slug);
-  if (site === null) {
-    return { title: 'Website not found' };
-  }
-  const title = site.template.headline(site.content);
-  return { title, openGraph: { title, description: site.template.meta.description } };
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ d?: string; sig?: string }>;
 };
 
-const PublishedSitePage = async ({ params }: { params: Params }) => {
-  const site = await loadPublishedSite((await params).slug);
-  if (site === null) {
-    notFound();
+const openPage = async ({ params, searchParams }: Props) => {
+  const { slug } = await params;
+  const { d = '', sig = '' } = await searchParams;
+  const opened = openSignedSite({ d, sig });
+  const template = opened.ok ? findSiteTemplate(opened.site.templateId) : undefined;
+  return opened.ok && opened.site.slug === slug && template !== undefined
+    ? { site: opened.site, template }
+    : null;
+};
+
+export const generateMetadata = async (props: Props): Promise<Metadata> => {
+  const page = await openPage(props);
+  if (page === null) {
+    return { title: 'Website not found' };
   }
-  return <PublicSite templateId={site.template.id} content={site.content} slug={site.slug} />;
+  const title = page.template.headline(page.site.content);
+  return { title, openGraph: { title, description: page.template.meta.description } };
+};
+
+const PublishedSitePage = async (props: Props) => {
+  const page = await openPage(props);
+  if (page === null) {
+    return (
+      <div className="flex min-h-dvh flex-col items-center justify-center gap-3 px-6 text-center">
+        <h1 className="font-semibold text-xl">This website link does not work</h1>
+        <p className="max-w-sm text-muted-foreground text-sm">
+          Ask the person who sent it for the latest link.
+        </p>
+        <Link href="/" className="text-sm underline underline-offset-4">
+          Go to neuclip
+        </Link>
+      </div>
+    );
+  }
+  return <PublicSite templateId={page.site.templateId} content={page.site.content} />;
 };
 
 export default PublishedSitePage;

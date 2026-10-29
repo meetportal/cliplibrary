@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { AccountMenu } from '@/components/auth/account-menu';
 import { BrandMark } from '@/components/brand-mark';
 import { PAGE_ACTIONS_ID } from '@/components/media-agent/page-actions';
+import { SiteNavLinks } from '@/components/site-nav-links';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const LibraryLayout = ({ children }: { children: ReactNode }) => (
@@ -11,12 +13,11 @@ const LibraryLayout = ({ children }: { children: ReactNode }) => (
         <BrandMark className="size-6" />
         neuclip
       </Link>
-      <nav className="flex items-center gap-4 text-sm text-muted-foreground">
+      <nav className="flex items-center gap-4 text-muted-foreground text-sm">
         <div id={PAGE_ACTIONS_ID} className="contents" />
-        <Link href="/" className="hover:text-foreground">
-          Library
-        </Link>
+        <SiteNavLinks />
         <ThemeToggle />
+        <AccountMenu />
       </nav>
     </header>
     <main className="flex min-h-0 flex-1 flex-col">{children}</main>

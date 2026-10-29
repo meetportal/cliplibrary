@@ -1,6 +1,8 @@
+import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
-import type { ReactNode } from 'react';
+import { type ReactNode, Suspense } from 'react';
+import { AuthReturn } from '@/components/auth/auth-return';
 import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 
@@ -31,7 +33,12 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
       <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
     </head>
     <body className="flex min-h-screen flex-col bg-background text-foreground antialiased">
-      <ThemeProvider>{children}</ThemeProvider>
+      <ClerkProvider signInUrl="/sign-in" signUpUrl="/sign-up">
+        <ThemeProvider>{children}</ThemeProvider>
+        <Suspense fallback={null}>
+          <AuthReturn />
+        </Suspense>
+      </ClerkProvider>
     </body>
   </html>
 );

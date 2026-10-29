@@ -3,16 +3,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { BoundSite } from './site-registry';
-import type { SubmitRsvp } from './site-view';
 
 interface SiteCanvasProps {
   site: BoundSite;
   layout: 'page' | 'frame';
   introRun: number;
-  onRsvp: SubmitRsvp;
 }
 
-export const SiteCanvas = ({ site, layout, introRun, onRsvp }: SiteCanvasProps) => {
+export const SiteCanvas = ({ site, layout, introRun }: SiteCanvasProps) => {
   const [introOpen, setIntroOpen] = useState(introRun > 0);
   const closeIntro = useCallback(() => setIntroOpen(false), []);
 
@@ -32,7 +30,7 @@ export const SiteCanvas = ({ site, layout, introRun, onRsvp }: SiteCanvasProps) 
     };
   }, [layout, introOpen]);
 
-  const body = site.body(onRsvp);
+  const body = site.body();
   return (
     <div
       className={cn(site.scope.className, layout === 'frame' && 'relative h-full')}

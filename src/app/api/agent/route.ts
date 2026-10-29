@@ -10,6 +10,7 @@ import { mediaInstructions } from '@/agent/instructions';
 import { agentRequestSchema, checkMedia } from '@/agent/media';
 import { agentModel, describeAgentError } from '@/agent/model';
 import { createMediaTools, editSucceeded, type MediaAgentMessage } from '@/agent/tools';
+import { accessDenied, currentAccess } from '@/lib/session';
 
 export const maxDuration = 60;
 
@@ -17,6 +18,10 @@ const badRequest = (message: string): Response =>
   Response.json({ error: message }, { status: 400 });
 
 export const POST = async (request: Request): Promise<Response> => {
+  const access = await currentAccess();
+  if (access.kind !== 'approved') {
+    return accessDenied(access);
+  }
   const parsed = agentRequestSchema.safeParse(await request.json());
   if (!parsed.success) {
     return badRequest('Malformed agent request.');
