@@ -126,7 +126,7 @@ export const TypedLine = ({
 
 export const fadeCue = (frame: number, cue: Cue, delay = 0): number =>
   tween(frame, [cue.start + delay, cue.start + delay + 16], [0, 1], smooth) *
-  tween(frame, [cue.end + delay * 0.5, cue.end + delay * 0.5 + 14], [1, 0], smooth);
+  tween(frame, [cue.end, cue.end + 14], [1, 0], smooth);
 
 export const lineCue = (cue: Cue, index: number, stagger: number): Cue => ({
   ...cue,

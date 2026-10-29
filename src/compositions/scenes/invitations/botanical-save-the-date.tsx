@@ -85,7 +85,7 @@ const BotanicalSaveTheDate = (props: BotanicalSaveTheDateProps) => {
           />
         ) : null}
         {show(beats.mehendi.cue) ? (
-          <EventWords {...shared} cue={beats.mehendi.cue} top={y(650)} event={props.mehendi} />
+          <EventWords {...shared} cue={beats.mehendi.cue} top={y(720)} event={props.mehendi} />
         ) : null}
         {show(beats.ring.cue) ? (
           <EventWords {...shared} cue={beats.ring.cue} top={y(520)} event={props.ring} />
