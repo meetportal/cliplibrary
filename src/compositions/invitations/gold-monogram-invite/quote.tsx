@@ -101,119 +101,121 @@ export const QuoteAct = ({
       height={1080}
       viewBox="0 0 1920 1080"
       role="presentation"
-      style={{ position: 'absolute', opacity: presence }}
+      style={{ position: 'absolute' }}
     >
-      <defs>
-        <GoldGradients ids={ids} gold={gold} sheen={[-200, -400, 900, 700]} />
-        <linearGradient id={panelId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor={background.panel} />
-          <stop offset="0.55" stopColor={background.panel} />
-          <stop offset="1" stopColor={background.panelEdge} />
-        </linearGradient>
-        <BlurFilter id={blurId} radius={7} />
-        <clipPath id={clipId}>
-          <rect x={0} y={0} width={PANEL} height={1080} />
-        </clipPath>
-      </defs>
-      <Paper paper={paper} panelEdge={background.panelEdge} />
-      <g transform="translate(1590 978) scale(1.04)">
-        <FloorShadow x={-150} width={130} color={sketch.pencil} />
-        <FloorShadow x={150} width={120} color={sketch.pencil} />
-        <Couple
-          beat={beat}
-          man={DANCE_MAN}
-          woman={DANCE_WOMAN}
-          builds={{ man: MAN, woman: WOMAN }}
-          manLook={figureLook(paper.floor)}
-          womanLook={figureLook(paper.floor)}
+      <g opacity={presence}>
+        <defs>
+          <GoldGradients ids={ids} gold={gold} sheen={[-200, -400, 900, 700]} />
+          <linearGradient id={panelId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor={background.panel} />
+            <stop offset="0.55" stopColor={background.panel} />
+            <stop offset="1" stopColor={background.panelEdge} />
+          </linearGradient>
+          <BlurFilter id={blurId} radius={7} />
+          <clipPath id={clipId}>
+            <rect x={0} y={0} width={PANEL} height={1080} />
+          </clipPath>
+        </defs>
+        <Paper paper={paper} panelEdge={background.panelEdge} />
+        <g transform="translate(1590 978) scale(1.04)">
+          <FloorShadow x={-150} width={130} color={sketch.pencil} />
+          <FloorShadow x={150} width={120} color={sketch.pencil} />
+          <Couple
+            beat={beat}
+            man={DANCE_MAN}
+            woman={DANCE_WOMAN}
+            builds={{ man: MAN, woman: WOMAN }}
+            manLook={figureLook(paper.floor)}
+            womanLook={figureLook(paper.floor)}
+          />
+        </g>
+        <RevealText
+          text={quote.paperLead}
+          x={1118}
+          y={470}
+          style={{ fontFamily: script, fontSize: quote.paperScriptSize * 0.5 }}
+          color={text.ink}
+          frame={frame}
+          start={QUOTE.paperLead}
+          stagger={quote.wordStagger}
+          out={[lastFrame, lastFrame + 1]}
+          blurId={blurId}
+        />
+        <PaperScript
+          frame={frame}
+          text={quote.paperScript}
+          size={quote.paperScriptSize}
+          font={script}
+          color={text.ink}
+        />
+        <rect x={0} y={0} width={PANEL} height={1080} fill={`url(#${panelId})`} />
+        <g clipPath={`url(#${clipId})`}>
+          <g
+            transform={`translate(${PANEL * 0.69} -36) rotate(${(frame * 0.012).toFixed(3)}) scale(1.06)`}
+          >
+            <Embossed depth={2.4} gold={gold} fill={paint(ids.sheen)}>
+              {(color) => <OrnamentArt layers={layers} color={color} />}
+            </Embossed>
+            <SheenSweep sweep={sweep} highlight={gold.highlight} layers={layers} />
+          </g>
+        </g>
+        <RevealText
+          text={quote.firstCaps}
+          x={center}
+          y={848}
+          style={caps}
+          color={paint(ids.band)}
+          gold={gold}
+          depth={1.6}
+          frame={frame}
+          start={QUOTE.firstStart}
+          stagger={quote.wordStagger}
+          out={QUOTE.firstOut}
+          blurId={blurId}
+        />
+        <RevealText
+          text={quote.firstScript}
+          x={center}
+          y={848 + quote.scriptSize * 1.1}
+          style={scriptStyle}
+          color={paint(ids.band)}
+          gold={gold}
+          depth={1.4}
+          frame={frame}
+          start={firstScriptStart}
+          stagger={quote.wordStagger * 0.6}
+          out={[QUOTE.firstOut[0] + 4, QUOTE.firstOut[1] + 4]}
+          blurId={blurId}
+        />
+        <RevealText
+          text={quote.secondScript}
+          x={center}
+          y={858}
+          style={{ ...scriptStyle, fontSize: quote.scriptSize * 1.25 }}
+          color={paint(ids.band)}
+          gold={gold}
+          depth={1.6}
+          frame={frame}
+          start={QUOTE.secondStart}
+          stagger={quote.wordStagger}
+          out={[lastFrame, lastFrame + 1]}
+          blurId={blurId}
+        />
+        <RevealText
+          text={quote.secondCaps}
+          x={center}
+          y={858 + quote.capsSize * 2.1}
+          style={caps}
+          color={paint(ids.band)}
+          gold={gold}
+          depth={1.6}
+          frame={frame}
+          start={secondCapsStart}
+          stagger={quote.wordStagger}
+          out={[lastFrame, lastFrame + 1]}
+          blurId={blurId}
         />
       </g>
-      <RevealText
-        text={quote.paperLead}
-        x={1118}
-        y={470}
-        style={{ fontFamily: script, fontSize: quote.paperScriptSize * 0.5 }}
-        color={text.ink}
-        frame={frame}
-        start={QUOTE.paperLead}
-        stagger={quote.wordStagger}
-        out={[lastFrame, lastFrame + 1]}
-        blurId={blurId}
-      />
-      <PaperScript
-        frame={frame}
-        text={quote.paperScript}
-        size={quote.paperScriptSize}
-        font={script}
-        color={text.ink}
-      />
-      <rect x={0} y={0} width={PANEL} height={1080} fill={`url(#${panelId})`} />
-      <g clipPath={`url(#${clipId})`}>
-        <g
-          transform={`translate(${PANEL * 0.69} -36) rotate(${(frame * 0.012).toFixed(3)}) scale(1.06)`}
-        >
-          <Embossed depth={2.4} gold={gold} fill={paint(ids.sheen)}>
-            {(color) => <OrnamentArt layers={layers} color={color} />}
-          </Embossed>
-          <SheenSweep sweep={sweep} highlight={gold.highlight} layers={layers} />
-        </g>
-      </g>
-      <RevealText
-        text={quote.firstCaps}
-        x={center}
-        y={848}
-        style={caps}
-        color={paint(ids.band)}
-        gold={gold}
-        depth={1.6}
-        frame={frame}
-        start={QUOTE.firstStart}
-        stagger={quote.wordStagger}
-        out={QUOTE.firstOut}
-        blurId={blurId}
-      />
-      <RevealText
-        text={quote.firstScript}
-        x={center}
-        y={848 + quote.scriptSize * 1.1}
-        style={scriptStyle}
-        color={paint(ids.band)}
-        gold={gold}
-        depth={1.4}
-        frame={frame}
-        start={firstScriptStart}
-        stagger={quote.wordStagger * 0.6}
-        out={[QUOTE.firstOut[0] + 4, QUOTE.firstOut[1] + 4]}
-        blurId={blurId}
-      />
-      <RevealText
-        text={quote.secondScript}
-        x={center}
-        y={858}
-        style={{ ...scriptStyle, fontSize: quote.scriptSize * 1.25 }}
-        color={paint(ids.band)}
-        gold={gold}
-        depth={1.6}
-        frame={frame}
-        start={QUOTE.secondStart}
-        stagger={quote.wordStagger}
-        out={[lastFrame, lastFrame + 1]}
-        blurId={blurId}
-      />
-      <RevealText
-        text={quote.secondCaps}
-        x={center}
-        y={858 + quote.capsSize * 2.1}
-        style={caps}
-        color={paint(ids.band)}
-        gold={gold}
-        depth={1.6}
-        frame={frame}
-        start={secondCapsStart}
-        stagger={quote.wordStagger}
-        out={[lastFrame, lastFrame + 1]}
-        blurId={blurId}
-      />
     </svg>
   );
 };

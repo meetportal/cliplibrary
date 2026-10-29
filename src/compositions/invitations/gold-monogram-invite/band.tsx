@@ -66,7 +66,7 @@ export const BandAct = ({
   const size = saveTheDate.size;
   const step = size * 0.74;
   const first = 540 - ((lines.length - 1) * step) / 2 + size * 0.28;
-  const ornamentHalf = Math.max(size * 1.55, 260);
+  const ornamentHalf = Math.max(size * 1.95, 300);
   return (
     <svg
       width={1920}
@@ -166,7 +166,7 @@ export const BandAct = ({
               {[-1, 1].map((side) => (
                 <g
                   key={side}
-                  transform={`translate(${960 + side * ornamentHalf} ${540 - size * 1.2}) scale(${-side} 1)`}
+                  transform={`translate(${960 + side * ornamentHalf} ${540 - size * 1.45}) scale(${-side} 1)`}
                 >
                   <Embossed depth={1.2} gold={gold} fill={paint(ids.sheen)}>
                     {(color) => <OrnamentArt layers={cornerLayers} color={color} />}

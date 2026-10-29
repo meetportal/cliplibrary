@@ -96,96 +96,105 @@ export const StageAct = ({
       height={1080}
       viewBox="0 0 1920 1080"
       role="presentation"
-      style={{ position: 'absolute', opacity: presence }}
+      style={{ position: 'absolute' }}
     >
-      <defs>
-        <GoldGradients ids={ids} gold={gold} sheen={[500, 300, 1420, 900]} glint={glint} />
-        <linearGradient
-          id={reflectId}
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={FLOOR}
-          x2={0}
-          y2={FLOOR + 420}
+      <g opacity={presence}>
+        <defs>
+          <GoldGradients ids={ids} gold={gold} sheen={[500, 300, 1420, 900]} glint={glint} />
+          <linearGradient
+            id={reflectId}
+            gradientUnits="userSpaceOnUse"
+            x1={0}
+            y1={FLOOR}
+            x2={0}
+            y2={FLOOR + 420}
+          >
+            <stop offset="0" stopColor="#ffffff" stopOpacity={stage.reflection} />
+            <stop offset="0.4" stopColor="#ffffff" stopOpacity={stage.reflection * 0.35} />
+            <stop offset="1" stopColor="#ffffff" stopOpacity={0} />
+          </linearGradient>
+          <mask
+            id={maskId}
+            maskUnits="userSpaceOnUse"
+            x={-2000}
+            y={FLOOR}
+            width={6000}
+            height={2000}
+          >
+            <rect x={-2000} y={FLOOR} width={6000} height={2000} fill={`url(#${reflectId})`} />
+          </mask>
+          <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation={60} />
+          </filter>
+        </defs>
+        {background.show ? <rect width={1920} height={1080} fill={background.night} /> : null}
+        <g
+          transform={`translate(960 600) scale(${scale.toFixed(5)}) translate(-960 ${-focusY.toFixed(3)})`}
         >
-          <stop offset="0" stopColor="#ffffff" stopOpacity={stage.reflection} />
-          <stop offset="0.4" stopColor="#ffffff" stopOpacity={stage.reflection * 0.35} />
-          <stop offset="1" stopColor="#ffffff" stopOpacity={0} />
-        </linearGradient>
-        <mask id={maskId} maskUnits="userSpaceOnUse" x={-2000} y={FLOOR} width={6000} height={2000}>
-          <rect x={-2000} y={FLOOR} width={6000} height={2000} fill={`url(#${reflectId})`} />
-        </mask>
-        <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation={60} />
-        </filter>
-      </defs>
-      {background.show ? <rect width={1920} height={1080} fill={background.night} /> : null}
-      <g
-        transform={`translate(960 600) scale(${scale.toFixed(5)}) translate(-960 ${-focusY.toFixed(3)})`}
-      >
-        <ellipse
-          cx={960}
-          cy={FLOOR + 10}
-          rx={900}
-          ry={120}
-          fill={withAlpha(gold.mid, 0.16)}
-          filter={`url(#${glowId})`}
-        />
-        <ellipse
-          cx={960}
-          cy={500}
-          rx={520}
-          ry={420}
-          fill={withAlpha(gold.deep, 0.22 * reveal)}
-          filter={`url(#${glowId})`}
-        />
-        <g id={contentId}>
-          <Pedestal gold={gold} rim={paint(ids.sheen)} night={background.night} />
-          <g opacity={reveal}>
-            <circle
-              cx={center[0]}
-              cy={center[1]}
-              r={ring}
-              fill="none"
-              stroke={withAlpha(gold.light, 0.28)}
-              strokeWidth={2}
-            />
-            <path
-              d={`M ${center[0] - ring * 0.94} ${center[1] - ring * 0.34} A ${ring} ${ring} 0 0 1 ${center[0] + ring * 0.5} ${center[1] - ring * 0.866}`}
-              fill="none"
-              stroke={withAlpha(gold.highlight, 0.7)}
-              strokeWidth={3}
-              strokeLinecap="round"
-            />
-            <MonogramLetters
+          <ellipse
+            cx={960}
+            cy={FLOOR + 10}
+            rx={900}
+            ry={120}
+            fill={withAlpha(gold.mid, 0.16)}
+            filter={`url(#${glowId})`}
+          />
+          <ellipse
+            cx={960}
+            cy={500}
+            rx={520}
+            ry={420}
+            fill={withAlpha(gold.deep, 0.22 * reveal)}
+            filter={`url(#${glowId})`}
+          />
+          <g id={contentId}>
+            <Pedestal gold={gold} rim={paint(ids.sheen)} night={background.night} />
+            <g opacity={reveal}>
+              <circle
+                cx={center[0]}
+                cy={center[1]}
+                r={ring}
+                fill="none"
+                stroke={withAlpha(gold.light, 0.28)}
+                strokeWidth={2}
+              />
+              <path
+                d={`M ${center[0] - ring * 0.94} ${center[1] - ring * 0.34} A ${ring} ${ring} 0 0 1 ${center[0] + ring * 0.5} ${center[1] - ring * 0.866}`}
+                fill="none"
+                stroke={withAlpha(gold.highlight, 0.7)}
+                strokeWidth={3}
+                strokeLinecap="round"
+              />
+              <MonogramLetters
+                monogram={monogram}
+                gold={gold}
+                ids={ids}
+                serif={serif}
+                center={center}
+                glint={monogram.glint && glint > -0.2 && glint < 1.2}
+              />
+            </g>
+            <Plaque
               monogram={monogram}
               gold={gold}
               ids={ids}
               serif={serif}
-              center={center}
-              glint={monogram.glint && glint > -0.2 && glint < 1.2}
+              y={792}
+              opacity={plaque}
+              backing={background.night}
             />
+            {stage.veil ? <Veil frame={frame} lift={lift} gold={gold} /> : null}
           </g>
-          <Plaque
-            monogram={monogram}
-            gold={gold}
-            ids={ids}
-            serif={serif}
-            y={792}
-            opacity={plaque}
-            backing={background.night}
-          />
-          {stage.veil ? <Veil frame={frame} lift={lift} gold={gold} /> : null}
+          {stage.reflection > 0 ? (
+            <g mask={`url(#${maskId})`}>
+              <use href={`#${contentId}`} transform={`translate(0 ${FLOOR * 2}) scale(1 -1)`} />
+            </g>
+          ) : null}
+          <Sparklers frame={frame} from={STAGE.sparklersFrom} count={stage.sparklers} gold={gold} />
         </g>
-        {stage.reflection > 0 ? (
-          <g mask={`url(#${maskId})`}>
-            <use href={`#${contentId}`} transform={`translate(0 ${FLOOR * 2}) scale(1 -1)`} />
-          </g>
-        ) : null}
-        <Sparklers frame={frame} from={STAGE.sparklersFrom} count={stage.sparklers} gold={gold} />
+        <Bursts frame={frame} from={STAGE.burstsFrom} count={stage.bursts} gold={gold} />
+        <Dust frame={frame} count={stage.dust} color={gold.light} seed="stage-dust" />
       </g>
-      <Bursts frame={frame} from={STAGE.burstsFrom} count={stage.bursts} gold={gold} />
-      <Dust frame={frame} count={stage.dust} color={gold.light} seed="stage-dust" />
     </svg>
   );
 };
