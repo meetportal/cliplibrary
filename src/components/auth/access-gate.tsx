@@ -22,7 +22,11 @@ export const PendingNotice = ({ className }: { className?: string }) => (
   </div>
 );
 
-export const useAccessGate = (): { guard: (action: () => void) => void; dialog: ReactNode } => {
+export const useAccessGate = (): {
+  ready: boolean;
+  guard: (action: () => void) => void;
+  dialog: ReactNode;
+} => {
   const { loaded, user } = useAccount();
   const [pending, setPending] = useState(false);
 
@@ -50,5 +54,5 @@ export const useAccessGate = (): { guard: (action: () => void) => void; dialog: 
     </Dialog>
   );
 
-  return { guard, dialog };
+  return { ready: loaded, guard, dialog };
 };

@@ -39,7 +39,7 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
   const [publishing, setPublishing] = useState(false);
   const [sharing, setSharing] = useState(false);
   const [host, setHost] = useState('');
-  const { guard, dialog } = useAccessGate();
+  const { ready, guard, dialog } = useAccessGate();
   const values = history.value;
 
   useEffect(() => {
@@ -127,7 +127,7 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
               <RotateCcw />
               <span className="sr-only sm:not-sr-only">Reset</span>
             </Button>
-            <Button type="button" size="sm" disabled={localPhoto} onClick={onPrimary}>
+            <Button type="button" size="sm" disabled={localPhoto || !ready} onClick={onPrimary}>
               {published !== null && !dirty ? <Share2 /> : <Globe />}
               {published === null ? 'Publish' : dirty ? 'Publish changes' : 'Share'}
             </Button>

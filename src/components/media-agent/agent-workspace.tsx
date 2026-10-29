@@ -37,7 +37,7 @@ export const AgentWorkspace = <K extends MediaKind>({
 }: AgentWorkspaceProps<K>) => {
   const [wantsOpen, setOpen] = usePersistedState('neuclip-agent-open', false);
   const { user } = useAccount();
-  const { guard, dialog } = useAccessGate();
+  const { ready, guard, dialog } = useAccessGate();
   const open = wantsOpen && user?.approved === true;
   const [expanded, setExpanded] = useState(false);
   const [slot, setSlot] = useState<HTMLElement | null>(null);
@@ -78,11 +78,12 @@ export const AgentWorkspace = <K extends MediaKind>({
   const trigger = (
     <button
       type="button"
+      disabled={!ready}
       onClick={() => (open ? setOpen(false) : guard(() => setOpen(true)))}
       aria-pressed={open}
       aria-controls="media-agent-panel"
       className={cn(
-        'inline-flex h-8 items-center gap-1.5 rounded-full px-3 font-medium text-xs transition-colors',
+        'inline-flex h-8 items-center gap-1.5 rounded-full px-3 font-medium text-xs transition-colors disabled:opacity-60',
         open
           ? 'bg-violet-600 text-white shadow-sm hover:bg-violet-600/90'
           : 'border border-violet-500/40 text-violet-700 hover:bg-violet-500/10 dark:text-violet-300',
