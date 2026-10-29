@@ -32,9 +32,9 @@ any Next.js host such as Netlify.
 
 The site serves an open [MCP](https://modelcontextprotocol.io) endpoint at `/mcp`. An agent can
 search the Neuclip clips, read a clip's editable props, and assemble and edit a video from clips.
-Every result includes an `editorUrl` that opens the video in the browser editor. The video
-travels inside the link's `#` fragment, so nothing is stored on the server and browsers never
-send it.
+Videos and websites the agent makes are saved to your account in Postgres. Each video has one
+`editorUrl` (`/video/<id>`) that opens it in the browser editor, and edits you make there are saved
+back so the agent picks them up. Websites are published at `/s/<slug>`.
 
 ```bash
 claude mcp add --transport http neuclip https://<your-site>/mcp
@@ -61,8 +61,13 @@ token as `HTML_IN_CANVAS_ORIGIN_TRIAL_TOKEN` at build time; it is sent as an
 
 ```bash
 bun install
+bun run db:migrate
 bun run dev
 ```
+
+Publishing websites and saving MCP videos needs a Postgres database: set `DATABASE_URL` in
+`.env.local` (see `.env.example`) and run `bun run db:migrate` once, and again after pulling a new
+migration in `drizzle/`.
 
 Open the printed URL, pick a clip and start editing. Gallery previews are
 committed under `public/previews`, so the gallery works without rendering

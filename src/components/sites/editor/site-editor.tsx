@@ -1,28 +1,42 @@
 'use client';
 
+import { compare } from 'fast-json-patch';
 import { Globe, RotateCcw, Share2 } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAccessGate } from '@/components/auth/access-gate';
 import { Button } from '@/components/ui/button';
-import { publishSite } from '@/lib/site-api';
+import { publishSite, publishSiteChanges, type SavedSite, saveSiteDraft } from '@/lib/site-api';
+import { useAutosave } from '@/lib/use-autosave';
 import { useSavedDocument } from '@/lib/use-saved-document';
 import { useUndoable } from '@/lib/use-undoable';
-import { checkSharedSite, LOCAL_PHOTO_PROBLEM } from '@/sites/site-link';
+import {
+  checkPublishedSite,
+  LOCAL_PHOTO_PROBLEM,
+  publicSitePath,
+  siteEditorPath,
+} from '@/sites/published-site';
 import { slugify } from '@/sites/slug';
 import { findSiteTemplate } from '@/sites/templates';
 import type { SiteTemplate } from '@/sites/types';
 import { HistoryActions } from './editor-actions';
 import { PublishDialog } from './publish-dialog';
-import { type PublishedLinks, ShareDialog } from './share-dialog';
+import { ShareDialog } from './share-dialog';
 import { SiteAgent } from './site-agent';
 import { SiteWorkspace } from './site-workspace';
 
 type Values = Record<string, unknown>;
 
 export interface OpenedSite {
+  id: string;
   slug: string;
   content: Values;
-  links: PublishedLinks;
+  draft: Values | null;
+  updatedAt: string;
+}
+
+interface Published {
+  site: SavedSite;
+  content: Values;
 }
 
 const isValues = (value: unknown): value is Values =>
@@ -30,14 +44,43 @@ const isValues = (value: unknown): value is Values =>
 
 const holdsLocalPhoto = (values: Values): boolean => /"(blob|data):/.test(JSON.stringify(values));
 
+const statusText = (localPhoto: boolean, problem: string | null, unpublished: boolean) => {
+  if (localPhoto) {
+    return LOCAL_PHOTO_PROBLEM;
+  }
+  return problem ?? (unpublished ? 'Unpublished changes' : null);
+};
+
+const PrimaryLabel = ({ published, dirty }: { published: boolean; dirty: boolean }) => {
+  if (!published) {
+    return (
+      <>
+        <Globe />
+        Publish
+      </>
+    );
+  }
+  return dirty ? (
+    <>
+      <Globe />
+      Publish changes
+    </>
+  ) : (
+    <>
+      <Share2 />
+      Share
+    </>
+  );
+};
+
 const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSite | null }) => {
-  const start = opened?.content ?? template.defaults;
-  const history = useUndoable<Values>(start);
-  const [published, setPublished] = useState<{ links: PublishedLinks; content: Values } | null>(
-    opened === null ? null : { links: opened.links, content: opened.content },
+  const history = useUndoable<Values>(opened?.draft ?? opened?.content ?? template.defaults);
+  const [published, setPublished] = useState<Published | null>(
+    opened === null ? null : { site: opened, content: opened.content },
   );
   const [publishing, setPublishing] = useState(false);
   const [sharing, setSharing] = useState(false);
+  const [problem, setProblem] = useState<string | null>(null);
   const [host, setHost] = useState('');
   const { ready, guard, dialog } = useAccessGate();
   const values = history.value;
@@ -46,55 +89,76 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
     setHost(window.location.host);
   }, []);
 
-  const clearDraft = useSavedDocument<Values>({
-    key:
-      opened === null
-        ? `neuclip-site-draft:${template.id}`
-        : `neuclip-site-link:${opened.links.editPath.slice(-24)}`,
+  const clearLocalDraft = useSavedDocument<Values>({
+    key: published === null ? `neuclip-site-draft:${template.id}` : null,
     value: values,
     parse: (saved) => (isValues(saved) && template.schema.safeParse(saved).success ? saved : null),
     restore: history.reset,
   });
 
-  const publish = useCallback(
-    async (slug: string): Promise<string | null> => {
-      const site = { slug, templateId: template.id, content: values };
-      const checked = checkSharedSite(site);
-      if (!checked.ok) {
-        return checked.error;
+  const siteId = published?.site.id ?? null;
+  const saveDraft = useCallback(
+    (content: Values) => {
+      if (siteId !== null) {
+        saveSiteDraft(siteId, content).catch(() => undefined);
       }
-      const result = await publishSite(checked.site);
-      if (!result.ok) {
-        return result.problem;
-      }
-      const links = { slug, ...result.value };
-      setPublished({ links, content: values });
-      setPublishing(false);
-      setSharing(true);
-      window.history.replaceState(null, '', links.editPath);
-      return null;
     },
-    [template.id, values],
+    [siteId],
   );
+  useAutosave(values, siteId === null ? undefined : saveDraft);
 
-  const dirty = published === null || published.content !== values;
-  const addressSlug = published?.links.slug ?? slugify(template.headline(values));
+  const markPublished = (site: SavedSite) => {
+    clearLocalDraft();
+    setProblem(null);
+    setPublished({ site, content: values });
+  };
+
+  const publish = async (slug: string): Promise<string | null> => {
+    const checked = checkPublishedSite({ slug, templateId: template.id, content: values });
+    if (!checked.ok) {
+      return checked.error;
+    }
+    const result = await publishSite(checked.site);
+    if (!result.ok) {
+      return result.problem;
+    }
+    markPublished(result.value.site);
+    setPublishing(false);
+    setSharing(true);
+    window.history.replaceState(null, '', siteEditorPath(result.value.site.id));
+    return null;
+  };
+
+  const publishChanges = async ({ site }: Published) => {
+    const result = await publishSiteChanges(site.id, { slug: site.slug, content: values });
+    if (result.ok) {
+      markPublished(result.value.site);
+    } else {
+      setProblem(result.problem);
+    }
+  };
+
+  const dirty = useMemo(
+    () => published === null || compare(published.content, values).length > 0,
+    [published, values],
+  );
+  const addressSlug = published?.site.slug ?? slugify(template.headline(values));
   const localPhoto = holdsLocalPhoto(values);
 
   const onPrimary = () =>
     guard(() => {
-      if (published !== null && !dirty) {
-        setSharing(true);
-      } else if (published === null) {
+      if (published === null) {
         setPublishing(true);
+      } else if (dirty) {
+        publishChanges(published).catch(() => setProblem('Could not reach the server.'));
       } else {
-        publish(published.links.slug).catch(() => undefined);
+        setSharing(true);
       }
     });
 
   return (
     <SiteAgent
-      chatKey={`neuclip-site:${template.id}`}
+      chatKey={`neuclip-site:${opened?.id ?? template.id}`}
       template={template}
       values={values}
       onChange={history.set}
@@ -104,14 +168,8 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
         values={values}
         onChange={history.set}
         address={`${host}/s/${addressSlug}`}
-        liveUrl={published !== null && !dirty ? published.links.sitePath : null}
-        status={
-          localPhoto
-            ? LOCAL_PHOTO_PROBLEM
-            : dirty && published !== null
-              ? 'Unpublished changes'
-              : null
-        }
+        liveUrl={published !== null && !dirty ? publicSitePath(published.site.slug) : null}
+        status={statusText(localPhoto, problem, dirty && published !== null)}
         toolbar={
           <>
             <HistoryActions history={history} />
@@ -119,17 +177,19 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
               type="button"
               size="sm"
               variant="ghost"
+              disabled={published !== null && !dirty}
               onClick={() => {
-                clearDraft();
+                clearLocalDraft();
                 history.set(published?.content ?? template.defaults);
               }}
             >
               <RotateCcw />
-              <span className="sr-only sm:not-sr-only">Reset</span>
+              <span className="sr-only sm:not-sr-only">
+                {published === null ? 'Reset' : 'Discard changes'}
+              </span>
             </Button>
             <Button type="button" size="sm" disabled={localPhoto || !ready} onClick={onPrimary}>
-              {published !== null && !dirty ? <Share2 /> : <Globe />}
-              {published === null ? 'Publish' : dirty ? 'Publish changes' : 'Share'}
+              <PrimaryLabel published={published !== null} dirty={dirty} />
             </Button>
           </>
         }
@@ -141,7 +201,7 @@ const Editor = ({ template, opened }: { template: SiteTemplate; opened: OpenedSi
         onPublish={publish}
       />
       {published === null ? null : (
-        <ShareDialog open={sharing} onOpenChange={setSharing} links={published.links} />
+        <ShareDialog open={sharing} onOpenChange={setSharing} site={published.site} />
       )}
       {dialog}
     </SiteAgent>

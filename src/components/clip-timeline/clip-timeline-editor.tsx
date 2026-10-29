@@ -12,6 +12,7 @@ import { TimelineToolbar } from '@/components/timeline/timeline-toolbar';
 import { preloadProjectScenes } from '@/compositions/scene-loader';
 import { createFrameStore } from '@/lib/frame-store';
 import { clampPxPerFrame, DEFAULT_PX_PER_FRAME, fitPxPerFrame } from '@/lib/timeline-geometry';
+import { useAutosave } from '@/lib/use-autosave';
 import { DEFAULT_EXPORT_SETTINGS, useProjectExport } from '@/lib/use-project-export';
 import { useSavedDocument } from '@/lib/use-saved-document';
 import { useUndoable, useUndoRedoKeys } from '@/lib/use-undoable';
@@ -101,6 +102,7 @@ interface ClipTimelineEditorProps {
   storageKey: string;
   initialProject: Project;
   demoSrc: string | null;
+  onSave?: ((project: Project) => void) | undefined;
 }
 
 export const ClipTimelineEditor = ({
@@ -108,6 +110,7 @@ export const ClipTimelineEditor = ({
   storageKey,
   initialProject,
   demoSrc,
+  onSave,
 }: ClipTimelineEditorProps) => {
   const editor = useUndoable<Project>(initialProject);
   const {
@@ -140,11 +143,12 @@ export const ClipTimelineEditor = ({
     [reset],
   );
   const forgetSaved = useSavedDocument({
-    key: storageKey,
+    key: onSave === undefined ? storageKey : null,
     value: project,
     parse: parseSavedProject,
     restore: loadProject,
   });
+  useAutosave(project, onSave);
 
   const activeTrack = activeTrackId ?? project.tracks[0]?.id ?? null;
   const selectedElement =

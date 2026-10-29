@@ -1,6 +1,6 @@
 'use client';
 
-import { Hourglass, LogOut, Plug, UserRound } from 'lucide-react';
+import { Globe, Hourglass, LogOut, Plug, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signInHref } from '@/auth/links';
@@ -83,6 +83,12 @@ export const AccountMenu = () => {
           <Link href="/account">
             <UserRound />
             Profile
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/websites">
+            <Globe />
+            My websites
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>

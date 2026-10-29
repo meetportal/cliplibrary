@@ -9,47 +9,43 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import type { SavedSite } from '@/lib/site-api';
+import { publicSitePath, siteEditorPath } from '@/sites/published-site';
 import { CopyField } from './copy-field';
-
-export interface PublishedLinks {
-  slug: string;
-  sitePath: string;
-  editPath: string;
-}
 
 export const ShareDialog = ({
   open,
   onOpenChange,
-  links,
+  site,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  links: PublishedLinks;
+  site: SavedSite;
 }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Your website is live</DialogTitle>
         <DialogDescription>
-          Send the website link to your guests. Keep the edit link to change it later; each change
-          gives you a new link.
+          Send the website link to your guests. Changes you publish later show up at the same link,
+          and the website stays under Websites in your account.
         </DialogDescription>
       </DialogHeader>
       <div className="flex flex-col gap-5">
         <CopyField
           id="share-public"
           label="Website link"
-          value={`${window.location.origin}${links.sitePath}`}
+          value={`${window.location.origin}${publicSitePath(site.slug)}`}
           hint="Anyone with this link can open the website."
         />
         <CopyField
           id="share-edit"
           label="Edit link"
-          value={`${window.location.origin}${links.editPath}`}
-          hint="Opens this website in the editor so you can publish a new version."
+          value={`${window.location.origin}${siteEditorPath(site.id)}`}
+          hint="Opens this website in the editor. Only you can use it."
         />
         <Button asChild variant="outline" className="self-start">
-          <a href={links.sitePath} target="_blank" rel="noreferrer">
+          <a href={publicSitePath(site.slug)} target="_blank" rel="noreferrer">
             <ExternalLink />
             Open website
           </a>

@@ -1,18 +1,24 @@
-import { describe, expect, it } from 'bun:test';
+import { beforeEach, describe, expect, it } from 'bun:test';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { POST } from '@/app/mcp/route';
+import { findSiteBySlug, saveSiteDraft } from '@/db/sites';
+import { findVideo } from '@/db/videos';
 import { createMcpServer } from '@/mcp/server';
-import { decodeVideo, type SharedVideo } from '@/mcp/video-link';
-import { decodeSite, type SharedSite } from '@/sites/site-link';
+import { resetTestDatabase } from '../test-database';
 
-const sign = (site: SharedSite) => ({ d: JSON.stringify(site).length.toString(), sig: 'test' });
+let ownerId = 'user_test';
 
 const handler = async (request: Request): Promise<Response> => {
   const transport = new WebStandardStreamableHTTPServerTransport({ enableJsonResponse: true });
-  await createMcpServer('https://clips.test', { sign }).connect(transport);
+  await createMcpServer('https://clips.test', ownerId).connect(transport);
   return transport.handleRequest(request);
 };
+
+beforeEach(async () => {
+  ownerId = 'user_test';
+  await resetTestDatabase();
+});
 
 let requestId = 0;
 
@@ -40,9 +46,17 @@ const textOf = (result: CallToolResult): string =>
 const jsonOf = <T>(result: CallToolResult): T => JSON.parse(textOf(result)) as T;
 
 interface VideoResult {
+  videoId: string;
   editorUrl: string;
-  video: SharedVideo;
   timeline: { elements: { clip: string; from: number }[] }[];
+}
+
+interface SiteResult {
+  siteId: string;
+  siteUrl: string;
+  editorUrl: string;
+  title: string;
+  content: Record<string, unknown>;
 }
 
 describe('/mcp', () => {
@@ -55,8 +69,12 @@ describe('/mcp', () => {
       'edit_site',
       'edit_video',
       'get_clip',
+      'get_site',
       'get_site_template',
+      'get_video',
       'list_site_templates',
+      'list_sites',
+      'list_videos',
       'search_clips',
     ]);
   });
@@ -73,7 +91,7 @@ describe('/mcp', () => {
     expect(response.headers.get('www-authenticate')).toContain('Bearer');
   });
 
-  it('publishes a website and edits it into a new link', async () => {
+  it('publishes a website and edits it in place', async () => {
     const { templates } = jsonOf<{ templates: { id: string; demo: string }[] }>(
       await call('list_site_templates', {}),
     );
@@ -85,7 +103,7 @@ describe('/mcp', () => {
       await call('get_site_template', { templateId: 'emerald-rose' }),
     );
     expect(template.fieldGuide).toContain('/content/couple/firstName');
-    const created = jsonOf<{ siteUrl: string; editorUrl: string; title: string; site: SharedSite }>(
+    const created = jsonOf<SiteResult>(
       await call('create_site', {
         templateId: 'emerald-rose',
         slug: 'maya-and-daniel',
@@ -94,23 +112,46 @@ describe('/mcp', () => {
       }),
     );
     expect(created.title).toBe('Maya & Daniel');
-    expect(created.siteUrl).toStartWith('https://clips.test/s/maya-and-daniel?d=');
-    expect(created.editorUrl).toStartWith('https://clips.test/sites/emerald-rose?d=');
-    const edited = jsonOf<{ site: SharedSite; siteUrl: string }>(
+    expect(created.siteUrl).toBe('https://clips.test/s/maya-and-daniel');
+    expect(created.editorUrl).toBe(`https://clips.test/websites/${created.siteId}`);
+    const edited = jsonOf<SiteResult>(
       await call('edit_site', {
-        site: created.site,
+        siteId: created.siteId,
         slug: 'maya-daniel-2027',
         operations: [{ op: 'replace', path: '/content/event/startsAt', value: '2027-06-12T16:00' }],
       }),
     );
-    expect(edited.siteUrl).toStartWith('https://clips.test/s/maya-daniel-2027?');
-    expect(edited.site.content).toMatchObject({
+    expect(edited.siteUrl).toBe('https://clips.test/s/maya-daniel-2027');
+    expect(edited.editorUrl).toBe(created.editorUrl);
+    expect((await findSiteBySlug('maya-daniel-2027'))?.content).toMatchObject({
       event: { venue: 'Villa Cimbrone', startsAt: '2027-06-12T16:00' },
     });
+    const { couple, ...live } = (await findSiteBySlug('maya-daniel-2027'))?.content ?? {};
+    await saveSiteDraft(ownerId, created.siteId, {
+      ...live,
+      couple: { ...(couple as object), greeting: 'Join us' },
+    });
+    expect(jsonOf<SiteResult>(await call('get_site', { siteId: created.siteId }))).toMatchObject({
+      hasUnpublishedChanges: true,
+      content: { couple: { greeting: 'Join us' } },
+    });
+    await call('edit_site', {
+      siteId: created.siteId,
+      operations: [{ op: 'replace', path: '/content/event/venue', value: 'Ravello' }],
+    });
+    expect(await findSiteBySlug('maya-daniel-2027')).toMatchObject({
+      draft: null,
+      content: { couple: { greeting: 'Join us' }, event: { venue: 'Ravello' } },
+    });
+    expect(
+      jsonOf<{ sites: SiteResult[] }>(await call('list_sites', {})).sites.map(
+        (site) => site.siteId,
+      ),
+    ).toEqual([created.siteId]);
     expect(
       (
         await call('edit_site', {
-          site: created.site,
+          siteId: created.siteId,
           operations: [{ op: 'replace', path: '/templateId', value: 'other' }],
         })
       ).isError,
@@ -118,7 +159,25 @@ describe('/mcp', () => {
     expect(
       (await call('create_site', { templateId: 'emerald-rose', slug: 'Bad Slug' })).isError,
     ).toBe(true);
-    expect(decodeSite('nonsense').ok).toBe(false);
+    const taken = await call('create_site', {
+      templateId: 'emerald-rose',
+      slug: 'maya-daniel-2027',
+    });
+    expect(textOf(taken)).toContain('already taken');
+  });
+
+  it('keeps websites and videos private to their owner', async () => {
+    const site = jsonOf<SiteResult>(
+      await call('create_site', { templateId: 'emerald-rose', slug: 'private-site' }),
+    );
+    const video = jsonOf<VideoResult>(
+      await call('create_video', { title: 'Mine', clips: [{ clipId: 'brand-reveal' }] }),
+    );
+    ownerId = 'user_other';
+    expect((await call('get_site', { siteId: site.siteId })).isError).toBe(true);
+    expect((await call('edit_site', { siteId: site.siteId, slug: 'stolen' })).isError).toBe(true);
+    expect((await call('get_video', { videoId: video.videoId })).isError).toBe(true);
+    expect(jsonOf<{ videos: unknown[] }>(await call('list_videos', {})).videos).toEqual([]);
   });
 
   it('searches clips and describes one', async () => {
@@ -137,17 +196,17 @@ describe('/mcp', () => {
     expect((await call('get_clip', { clipId: 'nope' })).isError).toBe(true);
   });
 
-  it('builds a video across calls and links each version to the editor', async () => {
+  it('builds a saved video across calls at one editor link', async () => {
     const created = jsonOf<VideoResult>(
       await call('create_video', {
         title: 'Acme launch',
         clips: [{ clipId: 'brand-reveal', props: { brandName: 'Acme' } }],
       }),
     );
-    expect(created.editorUrl.startsWith('https://clips.test/video#')).toBe(true);
+    expect(created.editorUrl).toBe(`https://clips.test/video/${created.videoId}`);
 
     const added = jsonOf<VideoResult>(
-      await call('add_clip', { video: created.video, clipId: 'cta-end-card' }),
+      await call('add_clip', { videoId: created.videoId, clipId: 'cta-end-card' }),
     );
     expect(added.timeline[0]?.elements.map((element) => element.clip)).toEqual([
       'brand-reveal (Brand Reveal)',
@@ -156,26 +215,34 @@ describe('/mcp', () => {
 
     const edited = jsonOf<VideoResult>(
       await call('edit_video', {
-        video: added.video,
+        videoId: created.videoId,
         title: 'Acme is here',
         operations: [
           { op: 'replace', path: '/tracks/0/elements/0/props/tagline', value: 'Ship faster.' },
         ],
       }),
     );
-    const decoded = decodeVideo(edited.editorUrl.split('#')[1] ?? '');
-    expect(decoded.ok ? decoded.video.title : null).toBe('Acme is here');
-    expect(decoded.ok ? decoded.video.project.tracks[0]?.elements[0] : null).toMatchObject({
+    expect(edited.editorUrl).toBe(created.editorUrl);
+    const saved = await findVideo(created.videoId);
+    expect(saved?.title).toBe('Acme is here');
+    expect(saved?.project.tracks[0]?.elements[0]).toMatchObject({
       props: { brandName: 'Acme', tagline: 'Ship faster.' },
     });
+    const current = jsonOf<{ project: { tracks: unknown[] } }>(
+      await call('get_video', { videoId: created.videoId }),
+    );
+    expect(current.project.tracks).toHaveLength(1);
+    expect(
+      jsonOf<{ videos: { videoId: string }[] }>(await call('list_videos', {})).videos,
+    ).toMatchObject([{ videoId: created.videoId }]);
   });
 
   it('explains invalid input instead of changing anything', async () => {
-    const { video } = jsonOf<VideoResult>(
+    const { videoId } = jsonOf<VideoResult>(
       await call('create_video', { title: 'x', clips: [{ clipId: 'brand-reveal' }] }),
     );
     const broken = await call('edit_video', {
-      video,
+      videoId,
       operations: [{ op: 'replace', path: '/tracks/0/elements/0/props/markColor', value: 42 }],
     });
     expect(broken.isError).toBe(true);
@@ -183,9 +250,8 @@ describe('/mcp', () => {
     expect((await call('create_video', { title: 'x', clips: [{ clipId: 'nope' }] })).isError).toBe(
       true,
     );
-    expect(
-      (await call('add_clip', { video: { title: 'x', project: { fps: 0 } }, clipId: 'word-build' }))
-        .isError,
-    ).toBe(true);
+    expect((await call('add_clip', { videoId: 'missing', clipId: 'word-build' })).isError).toBe(
+      true,
+    );
   });
 });

@@ -1,23 +1,19 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { cache } from 'react';
 import { PublicSite } from '@/components/sites/public-site';
-import { openSignedSite } from '@/lib/site-signing';
+import { findSiteBySlug } from '@/db/sites';
 import { findSiteTemplate } from '@/sites/templates';
 
-type Props = {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ d?: string; sig?: string }>;
-};
+type Props = { params: Promise<{ slug: string }> };
 
-const openPage = async ({ params, searchParams }: Props) => {
-  const { slug } = await params;
-  const { d = '', sig = '' } = await searchParams;
-  const opened = openSignedSite({ d, sig });
-  const template = opened.ok ? findSiteTemplate(opened.site.templateId) : undefined;
-  return opened.ok && opened.site.slug === slug && template !== undefined
-    ? { site: opened.site, template }
-    : null;
-};
+const openSite = cache(async (slug: string) => {
+  const site = await findSiteBySlug(slug);
+  const template = site === null ? undefined : findSiteTemplate(site.templateId);
+  return site === null || template === undefined ? null : { site, template };
+});
+
+const openPage = async ({ params }: Props) => openSite((await params).slug);
 
 export const generateMetadata = async (props: Props): Promise<Metadata> => {
   const page = await openPage(props);
@@ -33,9 +29,9 @@ const PublishedSitePage = async (props: Props) => {
   if (page === null) {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-3 px-6 text-center">
-        <h1 className="font-semibold text-xl">This website link does not work</h1>
+        <h1 className="font-semibold text-xl">This website does not exist</h1>
         <p className="max-w-sm text-muted-foreground text-sm">
-          Ask the person who sent it for the latest link.
+          Check the address, or ask the person who sent it for the link.
         </p>
         <Link href="/" className="text-sm underline underline-offset-4">
           Go to neuclip
