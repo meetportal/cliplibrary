@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
 import type { EmeraldRoseContent } from '@/sites/templates/weddings/emerald-rose';
+import { Reveal } from '../../kit/reveal';
 import { CAPS, SCRIPT, SERIF } from './fonts';
 import { FloralCluster, WaxSeal } from './ornaments';
 import { PillLink } from './pill-link';
-import { Reveal } from './reveal';
 
 export const RsvpCard = ({ content }: { content: EmeraldRoseContent }) => {
   const { couple, rsvp, event } = content;

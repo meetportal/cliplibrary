@@ -274,6 +274,21 @@ export const SITE_CATEGORIES = [
     label: 'Weddings',
     keywords: ['website', 'wedding', 'invitation', 'invite', 'rsvp', 'save the date', 'marriage'],
   },
+  {
+    id: 'birthdays',
+    label: 'Birthdays',
+    keywords: ['website', 'birthday', 'party', 'first birthday', 'kids', 'invitation', 'rsvp'],
+  },
+  {
+    id: 'quinceaneras',
+    label: 'Quinceañeras',
+    keywords: ['website', 'quinceanera', 'quince', 'xv', 'sweet sixteen', 'invitation', 'rsvp'],
+  },
+  {
+    id: 'baby-showers',
+    label: 'Baby Showers',
+    keywords: ['website', 'baby shower', 'baby', 'gender reveal', 'sprinkle', 'invitation', 'rsvp'],
+  },
 ] as const;
 
 export type SiteCategory = (typeof SITE_CATEGORIES)[number]['id'];
@@ -286,6 +301,14 @@ export const SITE_TAGS = [
   'wedding',
   'floral',
   'elegant',
+  'editorial',
+  'birthday',
+  'quinceanera',
+  'baby-shower',
+  'winter',
+  'autumn',
+  'playful',
+  'royal',
 ] as const;
 
 export type SiteTag = (typeof SITE_TAGS)[number];

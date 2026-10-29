@@ -3,6 +3,7 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { scrollToSection } from '../../kit/scroll-to-section';
 import { CAPS, SCRIPT } from './fonts';
 
 const SECTIONS = [
@@ -13,12 +14,6 @@ const SECTIONS = [
   { id: 'er-details', label: 'Details & FAQs' },
   { id: 'er-rsvp', label: 'RSVP' },
 ] as const;
-
-export type SectionId = (typeof SECTIONS)[number]['id'];
-
-export const scrollToSection = (id: SectionId): void => {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-};
 
 export const SiteNav = ({ monogram }: { monogram: string }) => {
   const [open, setOpen] = useState(false);

@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils';
 import type { EmeraldRoseContent } from '@/sites/templates/weddings/emerald-rose';
+import { Reveal } from '../../kit/reveal';
 import { CAPS, SCRIPT, SERIF } from './fonts';
 import { FloralCluster, Heart } from './ornaments';
-import { Reveal } from './reveal';
 
 const Polaroid = ({
   src,

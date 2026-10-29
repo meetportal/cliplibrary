@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import type { EmeraldRoseContent } from '@/sites/templates/weddings/emerald-rose';
+import { Reveal } from '../../kit/reveal';
 import { CAPS, SCRIPT, SERIF } from './fonts';
 import { RingsBand } from './ornaments';
 import { PillLink } from './pill-link';
-import { Reveal } from './reveal';
 
 const Detail = ({
   title,

@@ -2,9 +2,9 @@ import { MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { directionsUrl, mapEmbedUrl } from '@/sites/calendar';
 import type { EmeraldRoseContent } from '@/sites/templates/weddings/emerald-rose';
+import { Reveal } from '../../kit/reveal';
 import { CAPS, SCRIPT, SERIF } from './fonts';
 import { PillLink } from './pill-link';
-import { Reveal } from './reveal';
 
 export const Venue = ({ content }: { content: EmeraldRoseContent }) => {
   const { event, photos } = content;

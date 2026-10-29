@@ -3,10 +3,11 @@
 import { cn } from '@/lib/utils';
 import { describeEventDate } from '@/sites/event-date';
 import type { EmeraldRoseContent } from '@/sites/templates/weddings/emerald-rose';
+import { Reveal } from '../../kit/reveal';
+import { scrollToSection } from '../../kit/scroll-to-section';
+import { SitePhoto } from '../../kit/site-photo';
 import { CAPS, SCRIPT, SERIF } from './fonts';
 import { FloralCluster, WaxSeal } from './ornaments';
-import { Reveal } from './reveal';
-import { scrollToSection } from './site-nav';
 
 const ArchPhoto = ({ src, alt, className }: { src: string; alt: string; className?: string }) => (
   <div
@@ -15,12 +16,7 @@ const ArchPhoto = ({ src, alt, className }: { src: string; alt: string; classNam
       className,
     )}
   >
-    {src === '' ? (
-      <div className="size-full bg-(--er-primary)/15" />
-    ) : (
-      // biome-ignore lint/performance/noImgElement: user photos come from arbitrary hosts and uploads
-      <img src={src} alt={alt} className="size-full object-cover" />
-    )}
+    <SitePhoto src={src} alt={alt} className="size-full" emptyClassName="bg-(--er-primary)/15" />
   </div>
 );
 

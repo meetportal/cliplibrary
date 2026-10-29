@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils';
 import { describeEventDate } from '@/sites/event-date';
 import type { EmeraldRoseContent } from '@/sites/templates/weddings/emerald-rose';
+import { Reveal } from '../../kit/reveal';
 import { CAPS, SCRIPT, SERIF } from './fonts';
-import { Reveal } from './reveal';
 
 export const Schedule = ({ content }: { content: EmeraldRoseContent }) => {
   const { schedule, photos, event } = content;

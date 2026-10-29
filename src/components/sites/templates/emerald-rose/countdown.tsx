@@ -1,67 +1,31 @@
 'use client';
 
 import { CalendarPlus } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { calendarFile } from '@/sites/calendar';
-import { type CountdownParts, countdownParts, parseLocalDateTime } from '@/sites/event-date';
-import { slugify } from '@/sites/slug';
 import type { EmeraldRoseContent } from '@/sites/templates/weddings/emerald-rose';
+import { downloadEventCalendar } from '../../kit/calendar-download';
+import { Reveal } from '../../kit/reveal';
+import { COUNTDOWN_UNITS, useCountdown } from '../../kit/use-countdown';
 import { CAPS, SCRIPT, SERIF } from './fonts';
-import { Reveal } from './reveal';
-
-const UNITS: { key: keyof CountdownParts; label: string }[] = [
-  { key: 'days', label: 'Days' },
-  { key: 'hours', label: 'Hours' },
-  { key: 'minutes', label: 'Minutes' },
-  { key: 'seconds', label: 'Seconds' },
-];
-
-const useNow = (): Date | null => {
-  const [now, setNow] = useState<Date | null>(null);
-  useEffect(() => {
-    setNow(new Date());
-    const timer = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-  return now;
-};
 
 const downloadCalendar = (content: EmeraldRoseContent): void => {
   const { couple, event } = content;
-  const title = `${couple.firstName} & ${couple.secondName}'s wedding`;
-  const file = calendarFile(
-    {
-      id: slugify(`${title} ${event.startsAt}`),
-      title,
-      startsAt: event.startsAt,
-      hours: 8,
-      location: `${event.venue}, ${event.address}`,
-      description: window.location.href,
-    },
-    new Date(),
-  );
-  if (file === null) {
-    return;
-  }
-  const url = URL.createObjectURL(new Blob([file], { type: 'text/calendar' }));
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `${slugify(title)}.ics`;
-  link.click();
-  URL.revokeObjectURL(url);
+  downloadEventCalendar({
+    title: `${couple.firstName} & ${couple.secondName}'s wedding`,
+    startsAt: event.startsAt,
+    hours: 8,
+    location: `${event.venue}, ${event.address}`,
+  });
 };
 
 export const Countdown = ({ content }: { content: EmeraldRoseContent }) => {
-  const now = useNow();
-  const target = parseLocalDateTime(content.event.startsAt);
-  const parts = now === null || target === null ? null : countdownParts(target, now);
+  const parts = useCountdown(content.event.startsAt);
   return (
     <section className="px-5 py-16">
       <Reveal className="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
         <span className={cn(SCRIPT, 'text-5xl')}>Counting down</span>
         <div className="flex items-start gap-2 @md:gap-4">
-          {UNITS.map((unit, index) => (
+          {COUNTDOWN_UNITS.map((unit, index) => (
             <div key={unit.key} className="flex items-start gap-2 @md:gap-4">
               {index === 0 ? null : (
                 <span className={cn(SERIF, 'text-(--er-accent) text-4xl leading-none')}>:</span>
