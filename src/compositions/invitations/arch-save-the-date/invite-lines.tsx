@@ -1,145 +1,99 @@
 import type { CSSProperties } from 'react';
 import type { ArchSaveTheDateProps } from '@/schemas';
-import { FadeIn } from '../../promo/typography';
+import { smooth, tween } from '../../promo/timing';
 import { inviteScriptFonts, inviteSerifFonts } from '../fonts';
+import { FRAME_WIDTH } from './camera';
 
 type Copy = ArchSaveTheDateProps['copy'];
 type Type = ArchSaveTheDateProps['type'];
+type Timing = ArchSaveTheDateProps['timing'];
 
 interface Line {
-  key: keyof Copy;
-  group: number;
+  key: 'intro' | 'names' | 'date' | 'venue' | 'closing' | 'family';
+  gap: number;
   style: CSSProperties;
-  size: number;
 }
 
 const linesFor = (type: Type): Line[] => {
-  const script = inviteScriptFonts[type.scriptFont];
   const serif = inviteSerifFonts[type.serifFont];
-  const scriptLine = (size: number, color: string): CSSProperties => ({
-    fontFamily: script,
-    fontSize: size,
-    lineHeight: 1.12,
-    fontWeight: 400,
-    color,
-  });
-  const serifLine = (
-    size: number,
-    color: string,
-    tracking: number,
-    weight: number,
-  ): CSSProperties => ({
+  const serifLine = (size: number, color: string, tracking: number): CSSProperties => ({
     fontFamily: serif,
     fontSize: size,
-    lineHeight: 1.12,
-    fontWeight: weight,
+    lineHeight: 1.25,
     letterSpacing: `${tracking}em`,
     color,
   });
   return [
-    {
-      key: 'title',
-      group: 0,
-      size: type.titleSize,
-      style: scriptLine(type.titleSize, type.scriptColor),
-    },
-    {
-      key: 'intro',
-      group: 1,
-      size: type.introSize,
-      style: serifLine(type.introSize, type.detailColor, 0.32, 500),
-    },
-    {
-      key: 'names',
-      group: 1,
-      size: type.namesSize,
-      style: serifLine(type.namesSize, type.inkColor, 0.01, 500),
-    },
-    {
-      key: 'date',
-      group: 2,
-      size: type.dateSize,
-      style: serifLine(type.dateSize, type.detailColor, 0.14, 600),
-    },
-    {
-      key: 'venue',
-      group: 2,
-      size: type.venueSize,
-      style: serifLine(type.venueSize, type.inkColor, 0.04, 500),
-    },
+    { key: 'intro', gap: 0, style: serifLine(type.introSize, type.detailColor, 0.06) },
+    { key: 'names', gap: type.gap * 0.7, style: serifLine(type.namesSize, type.inkColor, 0.03) },
+    { key: 'date', gap: type.gap * 0.5, style: serifLine(type.dateSize, type.inkColor, 0.02) },
+    { key: 'venue', gap: type.gap * 0.4, style: serifLine(type.venueSize, type.detailColor, 0.07) },
     {
       key: 'closing',
-      group: 3,
-      size: type.closingSize,
-      style: scriptLine(type.closingSize, type.detailColor),
+      gap: type.gap * 2.4,
+      style: serifLine(type.closingSize, type.inkColor, 0.14),
     },
     {
       key: 'family',
-      group: 3,
-      size: type.familySize,
-      style: scriptLine(type.familySize, type.scriptColor),
+      gap: type.gap * 0.2,
+      style: {
+        fontFamily: inviteScriptFonts[type.scriptFont],
+        fontSize: type.familySize,
+        lineHeight: 1.2,
+        color: type.titleColor,
+      },
     },
   ];
 };
-
-const Ornament = ({ color }: { color: string }) => (
-  <svg
-    aria-hidden="true"
-    width={240}
-    height={18}
-    viewBox="0 0 240 18"
-    style={{ display: 'block', margin: '0 auto 10px' }}
-  >
-    <line x1={8} y1={9} x2={100} y2={9} stroke={color} strokeWidth={1.5} />
-    <line x1={140} y1={9} x2={232} y2={9} stroke={color} strokeWidth={1.5} />
-    <path d="M 120 1 L 128 9 L 120 17 L 112 9 Z" fill={color} />
-    <circle cx={104} cy={9} r={2.5} fill={color} />
-    <circle cx={136} cy={9} r={2.5} fill={color} />
-  </svg>
-);
 
 export const InviteLines = ({
   copy,
   type,
   timing,
+  time,
 }: {
   copy: Copy;
   type: Type;
-  timing: ArchSaveTheDateProps['timing'];
+  timing: Timing;
+  time: number;
 }) => {
   const visible = linesFor(type).filter((line) => copy[line.key].trim().length > 0);
   return (
     <div
       style={{
         position: 'absolute',
-        left: 0,
-        right: 0,
-        top: type.centerY - 1200,
-        height: 2400,
+        top: type.linesY,
+        left: Math.round((FRAME_WIDTH - type.width) / 2),
+        width: type.width,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
       }}
     >
       {visible.map((line, index) => {
-        const previous = visible[index - 1];
-        const gap =
-          previous === undefined
-            ? 0
-            : previous.group === line.group
-              ? type.gap
-              : Math.round(type.gap * 2.5);
+        const start = timing.linesAt + index * timing.lineStagger;
         return (
-          <FadeIn
+          <div
             key={line.key}
-            start={timing.textAt + index * timing.stagger}
-            distance={Math.round(Math.min(40, Math.max(18, line.size * 0.3)))}
-            style={{ marginTop: gap, width: type.width, textAlign: 'center' }}
+            style={{
+              ...line.style,
+              marginTop: index === 0 ? 0 : Math.round(line.gap),
+              textAlign: 'center',
+              whiteSpace: 'pre-wrap',
+            }}
           >
-            {line.key === 'date' && type.ornament ? <Ornament color={type.detailColor} /> : null}
-            <div style={{ ...line.style, whiteSpace: 'pre-line' }}>{copy[line.key]}</div>
-          </FadeIn>
+            {Array.from(copy[line.key]).map((char, position) => {
+              const at = start + position * timing.charFrames;
+              return (
+                <span
+                  key={`${position}:${char}`}
+                  style={{ opacity: tween(time, [at, at + timing.charFade], [0, 1], smooth) }}
+                >
+                  {char}
+                </span>
+              );
+            })}
+          </div>
         );
       })}
     </div>
