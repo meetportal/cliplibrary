@@ -1,5 +1,11 @@
 import type { ClipModule } from '../../registry';
 import {
+  botanicalSaveTheDateDefaults,
+  botanicalSaveTheDateMeta,
+  botanicalSaveTheDateSchema,
+} from './botanical-save-the-date';
+import { botanicalSaveTheDateControls } from './botanical-save-the-date-controls';
+import {
   miniaturePanoramaDefaults,
   miniaturePanoramaMeta,
   miniaturePanoramaSchema,
@@ -13,6 +19,13 @@ import {
 import { weddingItineraryPagesControls } from './wedding-itinerary-pages-controls';
 
 export const invitationsClips: ClipModule[] = [
+  {
+    id: 'botanical-save-the-date',
+    schema: botanicalSaveTheDateSchema,
+    defaults: botanicalSaveTheDateDefaults,
+    meta: botanicalSaveTheDateMeta,
+    controls: botanicalSaveTheDateControls,
+  },
   {
     id: 'miniature-panorama',
     schema: miniaturePanoramaSchema,

@@ -1,0 +1,210 @@
+import { z } from 'zod';
+import { zColor, zMultiline, zSlider } from '../../control';
+import { inviteScriptFontSchema, inviteSerifFontSchema } from '../../invite-common';
+import { defaultMotion, lightLook, lookSchema, motionSchema, promoMeta } from '../../promo-common';
+import type { ClipMeta } from '../../registry';
+
+export const INVITE_FRAME_SHAPES = ['leaf-rectangle', 'hexagon', 'arch'] as const;
+
+export type InviteFrameShape = (typeof INVITE_FRAME_SHAPES)[number];
+
+const botanicalEventSchema = z.object({
+  title: z.string(),
+  time: z.string(),
+  venue: z.string(),
+  address: z.string(),
+  frame: z.enum(INVITE_FRAME_SHAPES),
+});
+
+export type BotanicalEvent = z.infer<typeof botanicalEventSchema>;
+
+const frameNumber = () => zSlider({ min: 0, max: 600 });
+
+export const botanicalSaveTheDateSchema = z.object({
+  poem: zMultiline(),
+  saveTop: z.string(),
+  saveJoiner: z.string(),
+  saveBottom: z.string(),
+  date: z.string(),
+  coupleIntro: z.string(),
+  partnerOne: z.string(),
+  partnerJoiner: z.string(),
+  partnerTwo: z.string(),
+  events: z.array(botanicalEventSchema).min(1).max(4),
+  closingLine: zMultiline(),
+  signoff: z.string(),
+  familyName: z.string(),
+  scriptFont: inviteScriptFontSchema,
+  serifFont: inviteSerifFontSchema,
+  greenery: zColor(),
+  gold: zColor(),
+  lettering: z.object({
+    poemSerifSize: zSlider({ min: 20, max: 90 }),
+    poemScriptSize: zSlider({ min: 40, max: 160 }),
+    saveSize: zSlider({ min: 80, max: 300 }),
+    saveWeight: zSlider({ min: 300, max: 700, step: 100 }),
+    saveScriptSize: zSlider({ min: 40, max: 220 }),
+    dateSize: zSlider({ min: 24, max: 100 }),
+    introSize: zSlider({ min: 20, max: 80 }),
+    nameSize: zSlider({ min: 50, max: 200 }),
+    partnerJoinerSize: zSlider({ min: 40, max: 200 }),
+    cardTitleSize: zSlider({ min: 28, max: 100 }),
+    cardTextSize: zSlider({ min: 18, max: 60 }),
+    closingSize: zSlider({ min: 24, max: 90 }),
+    signoffSize: zSlider({ min: 16, max: 60 }),
+    familySize: zSlider({ min: 50, max: 200 }),
+    capsTracking: zSlider({ min: 0, max: 0.4, step: 0.01 }),
+    textWidth: zSlider({ min: 500, max: 1000 }),
+    offsetY: zSlider({ min: -400, max: 400 }),
+  }),
+  sprigs: z.object({
+    count: zSlider({ min: 0, max: 4 }),
+    size: zSlider({ min: 0.5, max: 1.6, step: 0.01 }),
+    leafFill: zSlider({ min: 0, max: 1, step: 0.01 }),
+    lineWidth: zSlider({ min: 1, max: 6, step: 0.1 }),
+    berries: z.boolean(),
+    sway: zSlider({ min: 0, max: 8, step: 0.1 }),
+    swayPeriod: zSlider({ min: 90, max: 480 }),
+    at: frameNumber(),
+    stagger: zSlider({ min: 0, max: 60 }),
+    drawFrames: zSlider({ min: 20, max: 150 }),
+  }),
+  border: z.object({
+    show: z.boolean(),
+    inset: zSlider({ min: 0, max: 160 }),
+    width: zSlider({ min: 0.5, max: 6, step: 0.1 }),
+    drawFrames: zSlider({ min: 10, max: 150 }),
+  }),
+  cards: z.object({
+    width: zSlider({ min: 480, max: 960 }),
+    height: zSlider({ min: 600, max: 1300 }),
+    lineWidth: zSlider({ min: 1, max: 6, step: 0.1 }),
+    innerLine: z.boolean(),
+    leaves: z.boolean(),
+    drawFrames: zSlider({ min: 10, max: 90 }),
+  }),
+  timing: z.object({
+    poemAt: frameNumber(),
+    dateAt: frameNumber(),
+    coupleAt: frameNumber(),
+    eventsAt: frameNumber(),
+    closingAt: frameNumber(),
+    overlap: zSlider({ min: 0, max: 40 }),
+    lineStagger: zSlider({ min: 0, max: 20 }),
+  }),
+  look: lookSchema,
+  motion: motionSchema,
+});
+
+export type BotanicalSaveTheDateProps = z.infer<typeof botanicalSaveTheDateSchema>;
+
+export const botanicalSaveTheDateDefaults: BotanicalSaveTheDateProps = {
+  poem: 'As the flowers bloom\nand the seasons turn,\nwe are counting down\nto forever.',
+  saveTop: 'Save',
+  saveJoiner: 'the',
+  saveBottom: 'Date',
+  date: '18 . 04 . 2027',
+  coupleIntro: 'for the wedding of',
+  partnerOne: 'Ishita',
+  partnerJoiner: 'and',
+  partnerTwo: 'Rohan',
+  events: [
+    {
+      title: 'Mehendi',
+      time: '16 April at 4 pm',
+      venue: 'The Olive Courtyard',
+      address: 'Sunder Nagar, New Delhi',
+      frame: 'leaf-rectangle',
+    },
+    {
+      title: 'Ring Ceremony',
+      time: '17 April at 7 pm',
+      venue: 'Amaltas House',
+      address: 'Golf Links, New Delhi',
+      frame: 'hexagon',
+    },
+    {
+      title: 'Wedding',
+      time: '18 April at 6 pm',
+      venue: 'Neem Tree Farms',
+      address: 'Chhatarpur, New Delhi',
+      frame: 'arch',
+    },
+  ],
+  closingLine: 'Your presence is\nthe greatest gift',
+  signoff: 'with love from',
+  familyName: 'The Khanna Family',
+  scriptFont: 'great-vibes',
+  serifFont: 'cinzel',
+  greenery: '#7d9779',
+  gold: '#b8955a',
+  lettering: {
+    poemSerifSize: 50,
+    poemScriptSize: 96,
+    saveSize: 210,
+    saveWeight: 600,
+    saveScriptSize: 120,
+    dateSize: 54,
+    introSize: 40,
+    nameSize: 132,
+    partnerJoinerSize: 116,
+    cardTitleSize: 66,
+    cardTextSize: 38,
+    closingSize: 56,
+    signoffSize: 34,
+    familySize: 100,
+    capsTracking: 0.16,
+    textWidth: 860,
+    offsetY: 0,
+  },
+  sprigs: {
+    count: 3,
+    size: 1,
+    leafFill: 0.3,
+    lineWidth: 2.2,
+    berries: true,
+    sway: 2.4,
+    swayPeriod: 220,
+    at: 0,
+    stagger: 14,
+    drawFrames: 66,
+  },
+  border: { show: true, inset: 46, width: 1.5, drawFrames: 80 },
+  cards: { width: 640, height: 760, lineWidth: 2.4, innerLine: true, leaves: true, drawFrames: 36 },
+  timing: {
+    poemAt: 14,
+    dateAt: 102,
+    coupleAt: 188,
+    eventsAt: 272,
+    closingAt: 494,
+    overlap: 14,
+    lineStagger: 7,
+  },
+  look: {
+    ...lightLook('#bd7457'),
+    background: '#faf6ee',
+    backgroundEdge: '#f0e7d7',
+    ink: '#3c4a3d',
+    muted: '#7c8679',
+    grain: 0.07,
+    spotlight: 0.5,
+    paperLine: '#e3d9c6',
+  },
+  motion: defaultMotion({ exit: 'none', exitFrames: 0 }),
+};
+
+export const botanicalSaveTheDateMeta: ClipMeta = {
+  ...promoMeta,
+  width: 1080,
+  height: 1920,
+  id: 'botanical-save-the-date',
+  title: 'Botanical Save the Date',
+  description:
+    'A vertical wedding save the date on ivory paper: line-drawn sprigs grow in from the corners, a short poem, the date, the couple, three event cards in gold frames that draw themselves, and a closing note.',
+  category: 'invitations',
+  tags: ['wedding', 'invitation', 'floral', 'draw', 'text', 'minimal'],
+  theme: 'light',
+  source: 'src/compositions/scenes/invitations/botanical-save-the-date.tsx',
+  durationInFrames: 570,
+  posterFrame: 150,
+};
