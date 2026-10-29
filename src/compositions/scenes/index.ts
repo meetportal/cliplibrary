@@ -4,6 +4,7 @@ import { backgroundsScenes } from './backgrounds';
 import { brandScenes } from './brand';
 import { deskScenesScenes } from './desk-scenes';
 import { handDrawnScenes } from './hand-drawn';
+import { invitationsScenes } from './invitations';
 import { kineticTypeScenes } from './kinetic-type';
 import { listPickersScenes } from './list-pickers';
 import { overlaysScenes } from './overlays';
@@ -27,4 +28,5 @@ export const CLIP_SCENES: SceneModule[] = [
   ...adRevealsScenes,
   ...backgroundsScenes,
   ...transitionsScenes,
+  ...invitationsScenes,
 ];

@@ -86,6 +86,21 @@ export const CLIP_CATEGORIES = [
     label: 'Transitions',
     keywords: ['transition', 'cut', 'bridge', 'cover', 'between'],
   },
+  {
+    id: 'invitations',
+    label: 'Invitations',
+    keywords: [
+      'wedding',
+      'invite',
+      'invitation',
+      'save the date',
+      'marriage',
+      'ceremony',
+      'rsvp',
+      'event',
+      'shaadi',
+    ],
+  },
 ] as const;
 
 export type ClipCategory = (typeof CLIP_CATEGORIES)[number]['id'];
@@ -152,6 +167,11 @@ export const CLIP_TAGS = [
   'wheel',
   'badge',
   'chalkboard',
+  'wedding',
+  'invitation',
+  'floral',
+  'monogram',
+  'panorama',
 ] as const;
 
 export type ClipTag = (typeof CLIP_TAGS)[number];

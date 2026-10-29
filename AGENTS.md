@@ -103,7 +103,7 @@ Clips are pluggable, category-organized modules so that parallel authors rarely 
 file. Categories group clips by the type of animation and are defined once in
 `src/schemas/taxonomy.ts` (`CLIP_CATEGORIES`): `kinetic-type`, `text-reveals`, `hand-drawn`,
 `phone-reveals`, `phone-layouts`, `screen-demos`, `desk-scenes`, `overlays`, `list-pickers`, `brand`,
-`ad-reveals`, `backgrounds`, `transitions`.
+`ad-reveals`, `backgrounds`, `transitions`, `invitations`.
 Each category also lists search `keywords` (synonyms the gallery search matches). Every
 `ClipMeta` also carries `tags` (from `CLIP_TAGS`) and a `theme` (`light` or `dark`), which the
 gallery search and filters read.

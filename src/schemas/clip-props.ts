@@ -20,6 +20,11 @@ import type { ChalkTitleProps } from './clips/hand-drawn/chalk-title';
 import type { DoodleArrowsProps } from './clips/hand-drawn/doodle-arrows';
 import type { HandwrittenNoteProps } from './clips/hand-drawn/handwritten-note';
 import type { ScribbleCaptionProps } from './clips/hand-drawn/scribble-caption';
+import type { ArchSaveTheDateProps } from './clips/invitations/arch-save-the-date';
+import type { BotanicalSaveTheDateProps } from './clips/invitations/botanical-save-the-date';
+import type { GoldMonogramInviteProps } from './clips/invitations/gold-monogram-invite';
+import type { MiniaturePanoramaProps } from './clips/invitations/miniature-panorama';
+import type { WeddingItineraryPagesProps } from './clips/invitations/wedding-itinerary-pages';
 import type { AnniversaryKineticProps } from './clips/kinetic-type/anniversary-kinetic';
 import type { BrandingIsTickerProps } from './clips/kinetic-type/branding-is-ticker';
 import type { ChunkyTypeStackProps } from './clips/kinetic-type/chunky-type-stack';
@@ -76,6 +81,11 @@ import type { TypewriterProps } from './clips/text-reveals/typewriter';
 import type { SceneTransitionProps } from './clips/transitions/scene-transition';
 
 export interface ClipPropsMap {
+  'arch-save-the-date': ArchSaveTheDateProps;
+  'gold-monogram-invite': GoldMonogramInviteProps;
+  'botanical-save-the-date': BotanicalSaveTheDateProps;
+  'miniature-panorama': MiniaturePanoramaProps;
+  'wedding-itinerary-pages': WeddingItineraryPagesProps;
   'neon-sign-flicker': NeonSignFlickerProps;
   'word-picker': WordPickerProps;
   'pill-fan': PillFanProps;

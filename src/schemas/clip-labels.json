@@ -5711,5 +5711,428 @@
       "journey",
       "milestone"
     ]
+  },
+  "wedding-itinerary-pages": {
+    "summary": "A vertical, multi-page Indian wedding invite. A pale sage cover draws a thin hand-drawn gold ring with leaf sprigs around an \"A | K\" monogram, fades in \"Anaya & Kabir\" in script and types the dates and a wedding hashtag, over rolling paper-cut hills with a domed chhatri. The pages then turn with soft color crossfades to a butter yellow Haldi page with a marigold garland frame and a low seat with bolsters, a night teal Sangeet page with string lights, stars, diyas and a dhol, a blush Wedding and Reception page with a gold four-pillar mandap under a floral arch, and a warm cream RSVP page back in the garden. Every detail line types on with a thin blinking caret.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Garden hills and a chhatri rise in from below while the gold ring draws itself around the A | K monogram"
+      },
+      {
+        "at": 1.4,
+        "what": "Anaya & Kabir fades up in script, a divider grows, then the dates and #KabirFoundHisAnaya type on with a caret"
+      },
+      {
+        "at": 4.0,
+        "what": "The page eases to butter yellow; marigold strands and a cushioned seat rise in, Haldi fades up and its date, venue and schedule type on"
+      },
+      {
+        "at": 8.0,
+        "what": "Night teal Sangeet page: twinkling string lights, stars, diyas and a dhol rise in as the details type"
+      },
+      {
+        "at": 12.0,
+        "what": "Blush Wedding & Reception page with a gold mandap, floral arch and aisle; date, venue and timings type on"
+      },
+      {
+        "at": 16.0,
+        "what": "Warm cream closing page back in the garden: We can't wait to celebrate with you, then RSVP by 1 October and Ritu & Vikram Mehra type on"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 invitation pages",
+      "hand-drawn gold monogram ring with leaf sprigs",
+      "script couple names and event titles",
+      "small caps serif detail lines with a thin caret",
+      "flat layered paper-cut scenes with soft shadows",
+      "marigold garlands and a low seat with bolsters",
+      "string lights, stars and a dhol at night",
+      "four-pillar mandap under a floral arch",
+      "rolling hills and a domed chhatri"
+    ],
+    "motion": [
+      "typewriter reveal with blinking caret",
+      "script titles fading up",
+      "background color crossfades between pages",
+      "paper-cut layers rising from the bottom with parallax",
+      "swaying garlands and twinkling lights"
+    ],
+    "mood": ["festive", "elegant", "warm", "romantic"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "indian wedding e-invite",
+      "wedding itinerary reel for instagram or whatsapp",
+      "save the date with event schedule",
+      "haldi, sangeet and reception announcement",
+      "rsvp reminder story"
+    ],
+    "editable": [
+      "couple names, monogram, dates and hashtag",
+      "list of event pages with title, date, venue, schedule and scene",
+      "each page color, title, text, accent, greenery and structure colors",
+      "closing message, rsvp line and hosts",
+      "script and serif fonts and text sizes",
+      "page length, typing speed and caret timing",
+      "scene size, paper shadow, drift and sway"
+    ],
+    "palette": ["#edf0e2", "#f8e5a6", "#14393f", "#f6dcd5", "#b08a4f", "#ee8f22"],
+    "keywords": [
+      "wedding",
+      "invitation",
+      "e-invite",
+      "indian wedding",
+      "haldi",
+      "sangeet",
+      "mandap",
+      "itinerary",
+      "rsvp",
+      "monogram",
+      "typewriter",
+      "caret",
+      "paper cut",
+      "vertical",
+      "story"
+    ]
+  },
+  "miniature-panorama": {
+    "summary": "A vertical, flat paper-cut Rajasthani lakeside pans sideways in slow parallax behind a wedding invitation: domed chhatri pavilions, cypress and palm trees, a lake with swans and lotus, a marble railing with a peacock, a sandy path and front hedges under swaying marigold strings. The sky eases from pale blue day through an apricot sunset to deep indigo night, diyas and pavilion lamps light up and stars appear, then a small baraat procession with a decorated elephant and lantern bearers walks along the path. Script names \"Tara & Vihaan\" with \"are getting married\" and the date sit in the sky and turn from dark ink to cream as night falls.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Daytime lakeside pans left in parallax under hanging marigold strings, birds drifting across a pale blue sky"
+      },
+      {
+        "at": 2.0,
+        "what": "The names, the line and the date fade in and rise one after another in the sky"
+      },
+      {
+        "at": 4.0,
+        "what": "The sky warms to an apricot and rose sunset and the scenery takes a warm tint"
+      },
+      {
+        "at": 7.0,
+        "what": "Diyas on the railing and lamps in the pavilions glow on"
+      },
+      {
+        "at": 9.0,
+        "what": "Night falls to deep indigo, stars come out and the text turns cream; the baraat procession walks in from the left"
+      },
+      {
+        "at": 12.3,
+        "what": "The elephant with its golden canopy and lantern bearers cross the path as the clip fades out"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "flat paper-cut gouache illustration",
+      "domed chhatri pavilions",
+      "cypress and palm trees",
+      "lake with swans and lotus",
+      "white marble railing with a peacock",
+      "hanging marigold strings",
+      "decorated elephant with a howdah",
+      "lantern bearers",
+      "script names over spaced serif capitals"
+    ],
+    "motion": [
+      "continuous sideways parallax pan",
+      "day to sunset to night time-lapse",
+      "lanterns fading on",
+      "walking procession with bobbing steps",
+      "gently swaying marigold strings",
+      "rise and fade text entrance"
+    ],
+    "mood": ["festive", "romantic", "warm", "calm", "traditional"],
+    "roles": ["background", "opener"],
+    "useCases": [
+      "indian wedding invitation video",
+      "save the date story",
+      "sangeet or mehndi invite",
+      "baraat announcement",
+      "wedding website hero loop"
+    ],
+    "editable": [
+      "names, line and date with script and serif fonts",
+      "text size, spacing, height and entrance",
+      "day, sunset and night sky colours",
+      "time-lapse on or off and its timing",
+      "pan speed, direction and depth",
+      "procession timing, speed, size and walkers",
+      "lantern, star, bird and cloud amounts and colours",
+      "every scenery colour"
+    ],
+    "palette": ["#86bfe0", "#fbc48a", "#0e1534", "#efd7bd", "#2f5d3a", "#f08a1c"],
+    "keywords": [
+      "wedding",
+      "invitation",
+      "indian wedding",
+      "rajasthani",
+      "palace lake",
+      "baraat",
+      "elephant",
+      "marigold",
+      "diya",
+      "peacock",
+      "day to night",
+      "parallax pan",
+      "save the date",
+      "shaadi"
+    ]
+  },
+  "botanical-save-the-date": {
+    "summary": "A vertical wedding save the date on warm ivory paper inside a fine gold border. Line-drawn eucalyptus and olive sprigs grow in from the corners and sway for the whole clip while the invitation plays in calm beats: a four-line poem alternating spaced serif capitals and terracotta script, a stacked SAVE the DATE with 18 . 04 . 2027 under a short gold rule, \"for the wedding of\" Ishita and Rohan, three event cards whose gold frames draw themselves (a leaf-cornered rectangle for the Mehendi, a hexagon for the Ring Ceremony, a tall arch for the Wedding) and a closing \"Your presence is the greatest gift\" signed by The Khanna Family in script.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Gold border draws from the top center while eucalyptus and olive sprigs grow in from the corners, leaves opening one by one"
+      },
+      {
+        "at": 0.5,
+        "what": "Poem rises in line by line: serif capitals alternating with terracotta script"
+      },
+      {
+        "at": 3.4,
+        "what": "SAVE, script the, DATE stack in, a gold rule grows and the date 18 . 04 . 2027 appears"
+      },
+      {
+        "at": 6.3,
+        "what": "\"For the wedding of\" Ishita, script and, Rohan"
+      },
+      {
+        "at": 9.1,
+        "what": "A gold rectangle with leaf corners draws on around the Mehendi card: title, date and time, venue, address"
+      },
+      {
+        "at": 11.5,
+        "what": "A gold hexagon draws on for the Ring Ceremony card"
+      },
+      {
+        "at": 14.0,
+        "what": "A tall gold arch draws on for the Wedding card"
+      },
+      {
+        "at": 16.5,
+        "what": "Closing: \"Your presence is the greatest gift\", a gold rule, \"with love from\" and The Khanna Family in script, then holds"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "warm ivory paper with soft grain",
+      "fine gold page border",
+      "line-art eucalyptus and olive sprigs with sage leaves",
+      "terracotta berries",
+      "spaced serif capitals",
+      "terracotta script lettering",
+      "gold line frames: leaf rectangle, hexagon, arch"
+    ],
+    "motion": [
+      "stems drawing on with leaves popping open",
+      "gentle continuous sway",
+      "text rising and fading line by line",
+      "frames drawing themselves as a line",
+      "soft overlapping fades between beats"
+    ],
+    "mood": ["elegant", "romantic", "calm", "botanical"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "wedding save the date reel",
+      "whatsapp or instagram wedding invitation",
+      "engagement or mehendi event announcement",
+      "multi-event wedding itinerary"
+    ],
+    "editable": [
+      "poem, date, names and family name",
+      "one to four event cards with title, time, venue, address and frame shape",
+      "script and serif fonts",
+      "greenery, gold, accent, text and paper colors",
+      "sprig count, size, sway and grow timing",
+      "beat timing and hand-off overlap"
+    ],
+    "palette": ["#faf6ee", "#7d9779", "#b8955a", "#bd7457", "#3c4a3d"],
+    "keywords": [
+      "save the date",
+      "wedding invitation",
+      "botanical",
+      "eucalyptus",
+      "olive",
+      "line art",
+      "gold frame",
+      "mehendi",
+      "ring ceremony",
+      "shaadi",
+      "vertical"
+    ]
+  },
+  "gold-monogram-invite": {
+    "summary": "A royal black and gold wedding invitation: a thin gold mandala draws itself ring by ring, half off the left edge, and turns slowly while \"Two hearts, one promise, and a story we will write together, forever.\" rises in word by word with the last phrase in gold script. The quote fades for \"The wedding of\" and a gold S and R monogram joined by a heart, drawn as outlines inside a double ring, filled with gold and crossed by one glint of light, with \"Sana & Reyansh\" in script and gold dust rising. The monogram then shrinks to the left as three event rows (Mehendi, Sangeet, Wedding) with dates, times, venues and small gold dividers reveal on the right.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Gold mandala rings start drawing on at the left edge over a warm black backdrop"
+      },
+      {
+        "at": 0.6,
+        "what": "The quote rises in word by word on the right, ending in gold script"
+      },
+      {
+        "at": 5.0,
+        "what": "Quote fades; \"The wedding of\" appears and the double ring and S and R initials draw as gold outlines"
+      },
+      {
+        "at": 7.5,
+        "what": "Initials and heart fill with gold, Sana & Reyansh fades in and gold dust drifts up"
+      },
+      {
+        "at": 8.7,
+        "what": "A soft sweep of light glints once across the monogram"
+      },
+      {
+        "at": 10.6,
+        "what": "The monogram shrinks to the left while Mehendi, Sangeet and Wedding rows reveal one after another with dividers"
+      },
+      {
+        "at": 14.2,
+        "what": "Everything holds, then fades out"
+      }
+    ],
+    "visuals": [
+      "warm black backdrop with dark edges",
+      "thin line gold mandala half off the left edge",
+      "serif quote with a gold script phrase",
+      "gold serif monogram with a heart in a double ring",
+      "gold script couple names",
+      "event schedule with script titles and gold diamond dividers",
+      "tiny rising gold dust"
+    ],
+    "motion": [
+      "line art drawing on ring by ring",
+      "slow mandala rotation",
+      "word by word rise and fade",
+      "outline then fill letter reveal",
+      "single light glint sweep",
+      "monogram shrink and slide aside",
+      "staggered row reveals"
+    ],
+    "mood": ["luxurious", "elegant", "festive", "calm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "indian wedding video invitation",
+      "save the date with event schedule",
+      "mehendi sangeet and wedding invite",
+      "engagement or anniversary announcement",
+      "monogram reveal for a couple"
+    ],
+    "editable": [
+      "quote text and its script phrase",
+      "two initials, names and the line above",
+      "event list with name, date, time and venue",
+      "script and serif fonts",
+      "gold, text and background colours",
+      "mandala spin, size, position and line width",
+      "gold dust count, size and rise speed",
+      "beat timings and the monogram position beside the events"
+    ],
+    "palette": ["#140f0b", "#050403", "#f4e4b8", "#a9792f", "#f3ebdc", "#b8ab92"],
+    "keywords": [
+      "wedding invitation",
+      "gold monogram",
+      "mandala",
+      "royal invite",
+      "black and gold",
+      "mehendi",
+      "sangeet",
+      "event schedule",
+      "initials",
+      "luxury"
+    ]
+  },
+  "arch-save-the-date": {
+    "summary": "A vertical wedding save the date. The camera slowly pushes in from a cream sandstone wall with a scalloped eave, pilasters and a carved jharokha window until the cusped Mughal arch fills the frame. Through it a peach, dusty rose and lilac sunset glows over a hazy lakeside palace, two brass lanterns sway from the arch, a marigold-garlanded balustrade with potted plants lines the sill and petals drift down. Inside the arch \"Save the Date\", \"FOR THE WEDDING OF\", \"Meera & Arjun\", the date, the venue, \"with love\" and \"The Sharma Family\" rise in line by line, then hold.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Wide view of the sandstone wall, eave and carved arch window with the sunset, palace, lanterns and marigold balustrade inside"
+      },
+      {
+        "at": 1,
+        "what": "The camera pushes in smoothly as clouds drift, lanterns sway and petals fall"
+      },
+      {
+        "at": 2.1,
+        "what": "\"Save the Date\" rises in large plum script below the lanterns"
+      },
+      {
+        "at": 2.8,
+        "what": "\"FOR THE WEDDING OF\" and then \"Meera & Arjun\" rise in, the arch now filling the frame"
+      },
+      {
+        "at": 4.1,
+        "what": "A gold diamond divider and the date, then \"Rajmahal Gardens, Jaipur\""
+      },
+      {
+        "at": 5.5,
+        "what": "\"with love\" and \"The Sharma Family\" write in, and the full invitation holds"
+      },
+      {
+        "at": 9.5,
+        "what": "The whole scene fades out"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "carved cream sandstone jharokha window",
+      "cusped Mughal arch with gold trim and beaded border",
+      "peach, dusty rose and lilac sunset sky",
+      "distant domed palace silhouette over a lake",
+      "two hanging brass lanterns with a warm glow",
+      "balustrade with marigold garlands and potted plants",
+      "script and serif invitation lettering"
+    ],
+    "motion": [
+      "slow eased camera push-in",
+      "line by line rise and fade text",
+      "swaying lanterns",
+      "drifting clouds",
+      "falling petals",
+      "fade out"
+    ],
+    "mood": ["elegant", "romantic", "warm", "calm"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "indian wedding save the date",
+      "wedding invitation reel",
+      "instagram or whatsapp story invite",
+      "engagement announcement",
+      "destination wedding teaser"
+    ],
+    "editable": [
+      "title, couple names, date, venue, sign-off and family name",
+      "script and serif fonts",
+      "primary, secondary, accent, text and surface colours",
+      "camera push amount and length",
+      "lantern count, size and sway",
+      "petal count, size and fall speed",
+      "arch width, height, scallops and border",
+      "sun, clouds, palace and balustrade"
+    ],
+    "palette": ["#f2e6cf", "#c7b5dc", "#eab6bd", "#fbd2a8", "#c29243", "#7d2f4c"],
+    "keywords": [
+      "save the date",
+      "wedding",
+      "invitation",
+      "indian wedding",
+      "jharokha",
+      "arch",
+      "mughal",
+      "palace",
+      "sunset",
+      "lanterns",
+      "marigold",
+      "petals",
+      "camera push",
+      "vertical",
+      "story"
+    ]
   }
 }
