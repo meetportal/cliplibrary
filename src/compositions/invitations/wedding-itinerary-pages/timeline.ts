@@ -1,120 +1,151 @@
-import type { WeddingItineraryPagesProps } from '@/schemas';
-import { smooth, TAU, tween } from '../../promo/timing';
-import { mixOklab } from './oklab';
+import type { ItineraryPageLook, WeddingItineraryPagesProps } from '@/schemas';
 
-type Timing = WeddingItineraryPagesProps['timing'];
+type Props = WeddingItineraryPagesProps;
 
-export type TypedSlot = {
-  text: string;
+export type RowStyle = 'title' | 'names' | 'script' | 'joiner' | 'bold' | 'regular' | 'small';
+
+export type Row = { text: string; style: RowStyle; block: number; accent: boolean };
+
+export type TextPage = {
+  key: string;
   start: number;
   end: number;
-  last: boolean;
-  groupStart: boolean;
+  typeStart: number;
+  look: ItineraryPageLook;
+  rows: Row[];
+  cover: boolean;
 };
 
-const CARET_FADE = 3;
+export type ScenePage = { key: string; start: number; end: number; look: ItineraryPageLook };
 
-const CHAR_FADE = 6;
+const OPEN_LIMIT = 1_000_000;
 
 export const splitLines = (text: string): string[] =>
   text.split('\n').filter((line) => line.trim().length > 0);
 
-export const pageArrival = (index: number, timing: Timing): number => index * timing.pageFrames;
+const SCRIPT_STYLES: readonly RowStyle[] = ['title', 'names', 'script', 'joiner'];
 
-export const pageLeave = (frame: number, index: number, count: number, timing: Timing): number => {
-  if (index >= count - 1) {
-    return 0;
-  }
-  const next = pageArrival(index + 1, timing);
-  return tween(frame, [next, next + timing.transitionFrames * 0.8], [0, 1], smooth);
-};
+const rowsOf = (block: number, style: RowStyle, text: string, accent = false): Row[] =>
+  splitLines(text).map((line) => ({
+    text: line,
+    style,
+    block,
+    accent: accent || SCRIPT_STYLES.includes(style),
+  }));
 
-export const pageVisible = (
-  frame: number,
-  index: number,
-  count: number,
-  timing: Timing,
-): boolean => {
-  const arrive = pageArrival(index, timing);
-  const gone = pageArrival(index + 1, timing) + timing.transitionFrames;
-  return frame >= arrive - 1 && (index === count - 1 || frame <= gone + 1);
-};
-
-export const backgroundAt = (frame: number, colors: readonly string[], timing: Timing): string =>
-  colors.reduce<string>((current, color, index) => {
-    const previous = colors[index - 1];
-    if (previous === undefined) {
-      return color;
+const compact = (groups: Row[][]): Row[] => {
+  let block = 0;
+  return groups.flatMap((group) => {
+    if (group.length === 0) {
+      return [];
     }
-    const arrive = pageArrival(index, timing);
-    const mix = tween(frame, [arrive, arrive + timing.transitionFrames], [0, 1], smooth);
-    if (mix <= 0) {
-      return current;
-    }
-    return mix >= 1 ? color : mixOklab(previous, color, mix);
-  }, colors[0] ?? '#ffffff');
-
-export const typeSlots = (
-  groups: readonly string[][],
-  start: number,
-  timing: Timing,
-): TypedSlot[] => {
-  const lines = groups.flatMap((group, groupIndex) =>
-    group.map((text, index) => ({ text, groupStart: index === 0 && groupIndex > 0 })),
-  );
-  let cursor = start;
-  return lines.map((line, index) => {
-    const begin = cursor;
-    const end = begin + Math.max(0, Array.from(line.text).length - 1) * timing.charFrames;
-    cursor = end + timing.charFrames + timing.lineGap;
-    return { ...line, start: begin, end, last: index === lines.length - 1 };
+    const placed = group.map((row) => ({ ...row, block }));
+    block += 1;
+    return placed;
   });
 };
 
-export const charOpacity = (
-  frame: number,
-  slot: TypedSlot,
-  index: number,
-  timing: Timing,
-): number => {
-  const since = frame - slot.start - index * timing.charFrames;
-  return since < 0 ? 0 : Math.min(1, (since + 1) / CHAR_FADE);
+export const schedule = (props: Props): { scenes: ScenePage[]; texts: TextPage[] } => {
+  const { cover, families, events, closing, timing } = props;
+  const familyStart = timing.coverFrames;
+  const firstEvent = familyStart + timing.familyFrames;
+  const closingStart = firstEvent + events.length * timing.eventFrames;
+  const scenes: ScenePage[] = [
+    { key: 'cover', start: 0, end: firstEvent, look: cover },
+    ...events.map((event, index) => ({
+      key: `event-${index}`,
+      start: firstEvent + index * timing.eventFrames,
+      end: firstEvent + (index + 1) * timing.eventFrames,
+      look: event,
+    })),
+    { key: 'closing', start: closingStart, end: OPEN_LIMIT, look: closing },
+  ];
+  const coverRows = compact([
+    rowsOf(0, 'names', cover.names),
+    rowsOf(0, 'regular', cover.dates),
+    rowsOf(0, 'bold', cover.hashtag),
+  ]);
+  const familyRows = compact([
+    rowsOf(0, 'bold', families.hosts),
+    rowsOf(0, 'small', families.invite),
+    [
+      ...rowsOf(0, 'script', families.bride),
+      ...rowsOf(0, 'bold', families.brideParents),
+      ...rowsOf(0, 'joiner', families.joiner),
+      ...rowsOf(0, 'script', families.groom),
+      ...rowsOf(0, 'bold', families.groomParents),
+    ],
+  ]);
+  const texts: TextPage[] = [
+    {
+      key: 'cover',
+      start: 0,
+      end: familyStart,
+      typeStart: Math.round(timing.titleDelay * 0.6),
+      look: cover,
+      rows: coverRows,
+      cover: true,
+    },
+    {
+      key: 'families',
+      start: familyStart,
+      end: firstEvent,
+      typeStart: familyStart + 4,
+      look: cover,
+      rows: familyRows,
+      cover: false,
+    },
+    ...events.map((event, index) => {
+      const start = firstEvent + index * timing.eventFrames;
+      return {
+        key: `event-${index}`,
+        start,
+        end: start + timing.eventFrames,
+        typeStart: start + timing.typeDelay,
+        look: event,
+        rows: [
+          ...rowsOf(-1, 'title', event.name),
+          ...compact([
+            rowsOf(0, 'bold', event.date),
+            rowsOf(0, 'regular', event.venue),
+            rowsOf(0, 'bold', event.schedule),
+          ]),
+        ],
+        cover: false,
+      };
+    }),
+    {
+      key: 'closing',
+      start: closingStart,
+      end: OPEN_LIMIT,
+      typeStart: closingStart + timing.titleDelay,
+      look: closing,
+      rows: compact([
+        rowsOf(0, 'bold', closing.message, true),
+        rowsOf(0, 'regular', closing.visit),
+        rowsOf(0, 'regular', closing.rsvp),
+      ]),
+      cover: false,
+    },
+  ];
+  return { scenes, texts };
 };
 
-export const typedCount = (
-  frame: number,
-  slot: TypedSlot,
-  length: number,
-  timing: Timing,
-): number =>
-  frame < slot.start
-    ? 0
-    : Math.min(length, Math.floor((frame - slot.start) / timing.charFrames) + 1);
+export type RowTiming = { start: number; end: number };
 
-export const caretOpacity = (frame: number, slot: TypedSlot, timing: Timing): number => {
-  const appear = tween(frame, [slot.start - CARET_FADE, slot.start], [0, 1], smooth);
-  if (!slot.last) {
-    const away = slot.end + timing.charFrames;
-    return appear * tween(frame, [away, away + CARET_FADE], [1, 0], smooth);
-  }
-  const blink =
-    frame <= slot.end ? 1 : 0.5 + 0.5 * Math.cos(((frame - slot.end) / timing.caretBlink) * TAU);
-  const away = slot.end + timing.caretHold;
-  return appear * blink * tween(frame, [away, away + CARET_FADE + 2], [1, 0], smooth);
-};
-
-export type StackItem = { height: number; gap: number };
-
-export const stackTops = (items: readonly StackItem[], centerY: number): number[] => {
-  const total = items.reduce(
-    (sum, item, index) => sum + item.height + (index === 0 ? 0 : item.gap),
-    0,
-  );
-  let cursor = Math.round(centerY - total / 2);
-  return items.map((item, index) => {
-    cursor += index === 0 ? 0 : item.gap;
-    const top = cursor;
-    cursor += item.height;
-    return Math.round(top);
+export const rowTimings = (rows: readonly Row[], page: TextPage, timing: Props['timing']) => {
+  const cursors = new Map<number, number>();
+  return rows.map((row): RowTiming => {
+    if (row.style === 'title') {
+      const start = page.start + timing.titleDelay;
+      return { start, end: start + timing.blockFrames };
+    }
+    const begin = cursors.get(row.block) ?? page.typeStart + row.block * timing.blockStagger;
+    const end = begin + Math.max(0, Array.from(row.text).length - 1) * timing.charFrames;
+    cursors.set(row.block, end + timing.charFrames + 3);
+    return { start: begin, end };
   });
 };
+
+export const eraseStart = (page: TextPage, timing: Props['timing']): number =>
+  page.end - timing.eraseFrames - 6;
