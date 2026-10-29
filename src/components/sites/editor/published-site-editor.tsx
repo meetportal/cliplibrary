@@ -112,7 +112,7 @@ const Editor = ({
             <HistoryActions history={history} onPlayIntro={() => setIntroRun(introRun + 1)} />
             <Button type="button" size="sm" variant="ghost" onClick={() => setShowReplies(true)}>
               <Inbox />
-              Replies
+              <span className="sr-only sm:not-sr-only">Replies</span>
             </Button>
             <Button type="button" size="sm" onClick={() => setSharing(true)}>
               <Share2 />

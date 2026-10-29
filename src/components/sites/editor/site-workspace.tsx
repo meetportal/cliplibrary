@@ -49,10 +49,10 @@ export const SiteWorkspace = ({
   const site = useLastValidSite(template.id, values);
 
   return (
-    <div className="flex h-[calc(100dvh-3.5rem)] flex-col lg:flex-row">
-      <div className="flex min-h-0 flex-1 flex-col gap-3 bg-muted/40 p-3 sm:p-4">
+    <div className="flex flex-col lg:h-[calc(100dvh-3.5rem)] lg:flex-row">
+      <div className="flex h-[82dvh] flex-col gap-3 bg-muted/40 p-3 sm:p-4 lg:h-auto lg:min-h-0 lg:flex-1">
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex rounded-lg bg-muted p-0.5">
+          <div className="hidden rounded-lg bg-muted p-0.5 sm:flex">
             {(['phone', 'desktop'] as const).map((option) => (
               <Button
                 key={option}
@@ -88,7 +88,7 @@ export const SiteWorkspace = ({
           </div>
         </div>
       </div>
-      <aside className="h-[45dvh] shrink-0 overflow-y-auto border-border border-t px-4 lg:h-auto lg:w-[360px] lg:border-t-0 lg:border-l">
+      <aside className="shrink-0 border-border border-t px-4 lg:w-[360px] lg:overflow-y-auto lg:border-t-0 lg:border-l">
         <PropertiesPanel sections={sections} values={values} onChange={onChange} />
       </aside>
     </div>

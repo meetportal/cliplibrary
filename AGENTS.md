@@ -1,7 +1,8 @@
 # neuclip
 
-A single Next.js project for a library of Remotion animation clips and editable poster packs,
-with a deep, schema-driven video editor and a canvas image editor in the browser.
+A single Next.js project for a library of Remotion animation clips, editable poster packs and
+website templates, with a deep, schema-driven video editor, a canvas image editor and a website
+editor in the browser.
 
 ## Layout
 
@@ -34,6 +35,11 @@ Everything lives in one package. Modules import each other through the `@/` alia
   `Design` built with the authoring kit in `src/posters/kit` (elements, blocks, devices,
   templates and shared listing slides). `photos.ts` lists the bundled Unsplash photos in
   `public/design-assets/photos`.
+- `src/sites` - website templates: per-template Zod content schemas, defaults, metadata and control
+  layouts (`templates/<category>/<id>.ts`), slugs, event dates, `.ics` files and the published-site
+  store. Pure apart from `store.ts`, which takes an `unstorage` `Storage`.
+- `src/components/sites` - each template's React website (`templates/<id>/`), the shared canvas
+  and the website editor (`editor/`).
 - `src/core` - domain types, the clip project seed and the Zod-schema-to-control introspection.
 - `tests` - `bun test` suites, mirroring `src` (`tests/schemas`, `tests/core`, ...); top-level
   files and `tests/components` cover the UI. `e2e` holds the Playwright suite.
@@ -261,6 +267,36 @@ whose `fields` are 2 to 5 role controls labelled `Primary color`, `Secondary col
 paths that role should drive (the front text can share Primary with a shape). Individual colour
 paths go in `more`. At most 14 controls show at first glance across all sections.
 `auditClipStandard` in `src/core/clip-controls.ts` enforces this.
+
+## Website templates
+
+The home grid also lists website templates (gallery type `site`, categories `SITE_CATEGORIES`).
+A card opens `/sites/<templateId>`, an editor with a live phone or desktop preview (Tailwind
+container queries, so the frame width drives the layout) and the shared properties panel, driven by
+the template's `defineControls` layout. The draft autosaves to `localStorage`
+(`neuclip-site-draft:<id>`). `/preview/<templateId>` shows the template with its defaults.
+
+- Publish picks a slug (`src/sites/slug.ts`) and `POST /api/sites` stores
+  `{ slug, templateId, content }` with a hashed edit key. Guests open `/s/<slug>`, outside the
+  `(library)` route group so it has no app header. The owner edits at `/s/<slug>/edit`, which
+  autosaves with `PUT /api/sites/<slug>` and the `x-edit-key` header. The key lives in
+  `localStorage` (`neuclip-site-key:<slug>`) and in the private edit link's `#key=` fragment.
+- Picked photos are uploaded to `POST /api/site-assets` and served from
+  `/api/site-assets/<id>`; content holding `blob:` URLs is rejected. RSVP replies go to
+  `POST /api/sites/<slug>/rsvp`; the owner lists them with the edit key.
+- `src/lib/site-store.ts` uses the `unstorage` filesystem driver under `.data/sites` (git-ignored).
+  Swap the driver for a hosted one (Redis, Vercel KV, S3) before deploying.
+
+To add a template:
+
+1. Add `src/sites/templates/<category>/<id>.ts` (`<name>Schema`, `<name>Defaults`, `<name>Meta`)
+   and `<id>-controls.ts`, and register it with a `headline` in `src/sites/templates/index.ts`.
+   `tests/sites/templates.test.ts` requires every content path in the layout exactly once.
+2. Build the website in `src/components/sites/templates/<id>/` as a `SiteView` (`scope`, `Body`,
+   `Intro`, `hasIntro`) and bind it in `src/components/sites/site-registry.tsx`.
+3. Put bundled photos in `public/site-assets/<id>/`, run `bunx next dev --port 3201` and
+   `bun run render:sites <id> --base http://localhost:3201`, then commit
+   `public/site-previews/<id>.jpg` (`tests/sites/previews.test.ts` fails without it).
 
 ## MCP endpoint
 

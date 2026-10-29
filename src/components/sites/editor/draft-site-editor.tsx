@@ -75,7 +75,7 @@ const DraftEditor = ({ template }: { template: SiteTemplate }) => {
               }}
             >
               <RotateCcw />
-              Reset
+              <span className="sr-only sm:not-sr-only">Reset</span>
             </Button>
             <Button type="button" size="sm" onClick={() => setPublishing(true)}>
               <Globe />

@@ -36,7 +36,7 @@ export const HistoryActions = <T,>({
       </Button>
       <Button type="button" size="sm" variant="ghost" onClick={onPlayIntro}>
         <MailOpen />
-        Play intro
+        <span className="sr-only sm:not-sr-only">Play intro</span>
       </Button>
     </>
   );
