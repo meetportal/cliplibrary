@@ -85,7 +85,7 @@ export const archSaveTheDateControls = defineControls<ArchSaveTheDateProps>({
         {
           path: 'wall.shade',
           label: 'Wall shadow',
-          hint: 'Grooves, the inside of each arch and the ceiling',
+          hint: 'Grooves, the back face of each arch and the top of the wall',
         },
         {
           path: 'wall.relief',
@@ -256,7 +256,11 @@ export const archSaveTheDateControls = defineControls<ArchSaveTheDateProps>({
         { path: 'garlands.length', label: 'Strand length' },
         { path: 'garlands.sway', label: 'Sway', hint: 'In pixels at the strand tips' },
         { path: 'garlands.jasmine', label: 'Jasmine', hint: 'Also the light side of the buds' },
-        { path: 'garlands.bud', label: 'Lotus buds', hint: 'Also the bead shadows' },
+        {
+          path: 'garlands.bud',
+          label: 'Bud tint',
+          hint: 'The buds at the strand ends, the lotus centers and the bead shadows',
+        },
       ],
     },
     {
