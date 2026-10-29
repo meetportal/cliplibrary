@@ -3,7 +3,7 @@ import { settle, smooth, tween } from '../../promo/timing';
 import { EucalyptusFrame } from './eucalyptus';
 import { type Hexagon, PeonyGarland } from './garland';
 import { fixed, type Point, shade } from './paint';
-import { isStaying, Placed, type Stay, stayOpen } from './pose';
+import { isStaying, Placed, type Stay, stayOpen, swayAt } from './pose';
 import { CornerSpray } from './spray';
 import { WillowSprig } from './sprig';
 import type { Timeline } from './timeline';
@@ -157,6 +157,7 @@ export const Scenery = ({
           paper={props.look.background}
           frame={frame}
           start={beats.mehendi.stay.start}
+          swing={(index) => swayAt(frame, beats.mehendi.stay, drift, index * 1.7, 0.9)}
         />
       </Fading>
       <Fading frame={frame} stay={beats.ring.stay} props={props} origin={[540, 960]}>
@@ -171,6 +172,7 @@ export const Scenery = ({
           filler={florals.heart}
           frame={frame}
           start={beats.ring.stay.start}
+          swing={(index) => swayAt(frame, beats.ring.stay, drift, index * 1.3, 0.9)}
         />
       </Fading>
       {pair('ring', beats.ring.stay, 'ring')}

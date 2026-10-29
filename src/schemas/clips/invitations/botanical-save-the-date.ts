@@ -193,7 +193,7 @@ export const botanicalSaveTheDateDefaults: BotanicalSaveTheDateProps = {
     closingAt: 1518,
     typeFrames: 44,
     lineStagger: 5,
-    eraseFrames: 20,
+    eraseFrames: 24,
   },
   look: {
     ...lightLook('#4b3045'),

@@ -125,17 +125,39 @@ export const PeachWash = ({ id, color, gold }: { id: string; color: string; gold
         <stop offset="1" stopColor={tint(color, 0.4)} stopOpacity={0.2} />
       </linearGradient>
     </defs>
+    <filter id={`${id}-soft`} x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" />
+    </filter>
+    <g filter={`url(#${id}-soft)`} opacity={0.55}>
+      {RIBBONS.slice(0, 2).map((ribbon, index) => (
+        <path
+          key={ribbon.widths.join(':')}
+          d={ribbonPath(
+            ribbon.spine,
+            ribbon.widths.map((width) => width * 1.25),
+            7 + index * 5,
+          )}
+          fill={tint(color, 0.1)}
+        />
+      ))}
+    </g>
     {RIBBONS.map((ribbon, index) => {
       const d = ribbonPath(ribbon.spine, ribbon.widths, 31 + index * 17);
+      const inner = ribbonPath(
+        ribbon.spine.slice(1, -1),
+        ribbon.widths.slice(1, -1).map((width) => width * 0.45),
+        53 + index * 11,
+      );
       return (
-        <g key={d.slice(0, 24)} opacity={ribbon.opacity}>
+        <g key={d.slice(0, 24)} opacity={ribbon.opacity * 0.75}>
           <path d={d} fill={`url(#${id}-wash)`} />
+          <path d={inner} fill={tint(color, 0.45)} fillOpacity={0.4} />
           <path
             d={d}
             fill="none"
-            stroke={shade(color, 0.12)}
-            strokeOpacity={0.35}
-            strokeWidth={2.2}
+            stroke={shade(color, 0.16)}
+            strokeOpacity={0.4}
+            strokeWidth={2.4}
           />
         </g>
       );

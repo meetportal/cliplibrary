@@ -30,6 +30,7 @@ export interface BranchSpec {
 }
 
 export interface Branch {
+  origin: Point;
   stem: string;
   leaves: LeafSpec[];
 }
@@ -68,7 +69,7 @@ export const growBranch = (origin: Point, spec: BranchSpec, seed: number): Branc
     tone: 1,
     lean: 0.1,
   });
-  return { stem: quadPath(origin, control, tip), leaves };
+  return { origin, stem: quadPath(origin, control, tip), leaves };
 };
 
 export const Stem = ({ d, color, weight }: { d: string; color: string; weight: number }) => (
@@ -187,14 +188,18 @@ export const BranchLeaves = ({
   greens,
   stemColor,
   grow = () => 1,
+  swing = 0,
 }: {
   branch: Branch;
   greens: Greens;
   stemColor: string;
   grow?: (index: number) => number;
+  swing?: number;
 }) => (
-  <g>
-    <Stem d={branch.stem} color={stemColor} weight={2.2} />
+  <g transform={`rotate(${fixed(swing)} ${fixed(branch.origin[0])} ${fixed(branch.origin[1])})`}>
+    <g opacity={Math.min(1, grow(0) * 1.4)}>
+      <Stem d={branch.stem} color={stemColor} weight={2.2} />
+    </g>
     {branch.leaves.map((leaf, index) => (
       <WatercolorLeaf
         key={`${fixed(leaf.at[0])}:${fixed(leaf.at[1])}`}

@@ -24,6 +24,7 @@ export interface Timeline {
 }
 
 const TEXT_DELAY = 10;
+const BEAT_OVERLAP = 6;
 
 export const timelineOf = (props: BotanicalSaveTheDateProps, duration: number): Timeline => {
   const { timing, florals } = props;
@@ -49,7 +50,7 @@ export const timelineOf = (props: BotanicalSaveTheDateProps, duration: number): 
   const beat = (index: number): Beat => {
     const start = starts[index] ?? 0;
     const next = starts[index + 1] ?? duration;
-    const end = Math.max(start + 20, next - florals.exitFrames - 2);
+    const end = Math.max(start + 20, next - florals.exitFrames + BEAT_OVERLAP);
     return {
       stay: { start, end },
       cue: {

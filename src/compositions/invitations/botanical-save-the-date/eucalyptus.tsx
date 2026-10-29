@@ -50,6 +50,7 @@ export const EucalyptusFrame = ({
   paper,
   frame,
   start,
+  swing,
 }: {
   id: string;
   base: string;
@@ -57,6 +58,7 @@ export const EucalyptusFrame = ({
   paper: string;
   frame: number;
   start: number;
+  swing: (index: number) => number;
 }) => {
   const greens = { id, base };
   const pale = { id: `${id}-pale`, base: tint(base, 0.28) };
@@ -74,6 +76,7 @@ export const EucalyptusFrame = ({
             branch={branch}
             greens={index % 3 === 2 ? pale : greens}
             stemColor={shade(base, 0.25)}
+            swing={swing(index)}
             grow={(leaf) =>
               tween(frame, [delay + leaf * 1.4, delay + leaf * 1.4 + 18], [0.001, 1], settle)
             }

@@ -26,8 +26,10 @@ export const Peony = ({
   heart,
   open,
   seed,
+  turn,
 }: {
   id: string;
+  turn: number;
   at: Point;
   radius: number;
   color: string;
@@ -47,7 +49,7 @@ export const Peony = ({
   }));
   return (
     <g
-      transform={`translate(${fixed(at[0])} ${fixed(at[1])}) rotate(${fixed((1 - open) * -30)}) scale(${(0.5 + 0.5 * open).toFixed(4)} ${(0.5 + 0.5 * open).toFixed(4)})`}
+      transform={`translate(${fixed(at[0])} ${fixed(at[1])}) rotate(${fixed((1 - open) * -30 + turn)}) scale(${(0.5 + 0.5 * open).toFixed(4)} ${(0.5 + 0.5 * open).toFixed(4)})`}
       opacity={Math.min(1, open * 1.4)}
     >
       <defs>
@@ -214,9 +216,11 @@ export const PeonyGarland = ({
   filler,
   frame,
   start,
+  swing,
 }: {
   id: string;
   hexagon: Hexagon;
+  swing: (index: number) => number;
   filler: string;
   gold: string;
   lineWidth: number;
@@ -260,6 +264,7 @@ export const PeonyGarland = ({
           branch={branch}
           greens={leaves}
           stemColor={shade(greens, 0.3)}
+          swing={swing(index)}
           grow={(leaf) =>
             tween(
               frame,
@@ -284,6 +289,7 @@ export const PeonyGarland = ({
           color={color}
           heart={heart}
           seed={index + 3}
+          turn={swing(index + 7) * 1.5}
           open={tween(frame, [start + 10 + bloom.delay, start + 40 + bloom.delay], [0, 1], settle)}
         />
       ))}

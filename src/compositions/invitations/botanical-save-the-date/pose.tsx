@@ -16,8 +16,11 @@ export interface Drift {
 }
 
 export const stayOpen = (frame: number, stay: Stay, drift: Drift): number =>
-  tween(frame, [stay.start, stay.start + drift.enterFrames], [0, 1], smooth) *
+  tween(frame, [stay.start, stay.start + drift.enterFrames], [0, 1], settle) *
   tween(frame, [stay.end, stay.end + drift.exitFrames], [1, 0], smooth);
+
+export const swayAt = (frame: number, stay: Stay, drift: Drift, phase: number, amount = 1) =>
+  drift.sway * amount * Math.sin(((frame - stay.start) / drift.swayPeriod) * TAU + phase);
 
 export const isStaying = (frame: number, stay: Stay, drift: Drift): boolean =>
   frame >= stay.start - 1 && frame <= stay.end + drift.exitFrames + 1;
@@ -54,7 +57,7 @@ export const Placed = ({
   const length = Math.hypot(from[0], from[1]) || 1;
   const x = at[0] + (from[0] / length) * drift.slide * away;
   const y = at[1] + (from[1] / length) * drift.slide * away;
-  const sway = drift.sway * Math.sin(((frame - stay.start) / drift.swayPeriod) * TAU + phase);
+  const sway = swayAt(frame, stay, drift, phase);
   const turn = rotation + sway + away * 7 * Math.sign(from[0] || 1);
   const size = scale * (0.95 + 0.05 * (1 - away));
   return (

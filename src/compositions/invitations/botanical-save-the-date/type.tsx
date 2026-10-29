@@ -21,11 +21,30 @@ export interface Voice {
 
 const SOFT_CHARS = 2.4;
 const BLOCK_CHARS = 2.2;
+const FADE_FRAMES = 9;
 
 const ramp = (value: number): number => Math.min(1, Math.max(0, value));
 
-const sweep = (frame: number, from: number, frames: number, count: number, lead: number) =>
-  tween(frame, [from, from + Math.max(1, frames)], [-lead, count + lead], (t) => t);
+interface Sweep {
+  at: number;
+  soft: number;
+}
+
+const sweep = (
+  frame: number,
+  from: number,
+  frames: number,
+  count: number,
+  minimum: number,
+  extra: number,
+): Sweep => {
+  const span = Math.max(1, frames);
+  const soft = Math.max(minimum, (count / span) * FADE_FRAMES);
+  return {
+    at: tween(frame, [from, from + span], [-1, count + extra + soft], (t) => t),
+    soft,
+  };
+};
 
 export const onStage = (frame: number, cue: Cue): boolean =>
   frame >= cue.start - 1 && frame <= cue.end + cue.eraseFrames + 2;
@@ -38,26 +57,22 @@ export const glyphStates = (
   cue: Cue,
   reveal: Reveal,
 ): { glyph: number; cover: number }[] => {
-  const lead = reveal === 'block' ? BLOCK_CHARS : SOFT_CHARS;
-  const front = sweep(frame, cue.start, cue.typeFrames, count, lead);
-  const eraseFront = sweep(frame, cue.end, cue.eraseFrames * 0.62, count, lead);
-  const eraseBack = sweep(
-    frame,
-    cue.end + cue.eraseFrames * 0.38,
-    cue.eraseFrames * 0.62,
-    count,
-    lead,
-  );
+  if (reveal === 'type') {
+    const front = sweep(frame, cue.start, cue.typeFrames, count, SOFT_CHARS, 1);
+    const erase = sweep(frame, cue.end, cue.eraseFrames, count, SOFT_CHARS, 1);
+    return Array.from({ length: count }, (_, index) => ({
+      glyph: ramp((front.at - index) / front.soft) * (1 - ramp((erase.at - index) / erase.soft)),
+      cover: 0,
+    }));
+  }
+  const front = sweep(frame, cue.start, cue.typeFrames, count, 1, BLOCK_CHARS);
+  const cover = sweep(frame, cue.end, cue.eraseFrames * 0.6, count, 1, 1);
+  const clear = sweep(frame, cue.end + cue.eraseFrames * 0.4, cue.eraseFrames * 0.6, count, 1, 1);
   return Array.from({ length: count }, (_, index) => {
-    if (reveal === 'type') {
-      const shown = ramp((front - index) / SOFT_CHARS);
-      const erased = ramp((eraseFront - index) / SOFT_CHARS);
-      return { glyph: smooth(shown) * (1 - smooth(erased)), cover: 0 };
-    }
-    const reached = ramp(front - index);
-    const passed = ramp(front - BLOCK_CHARS - index);
-    const covered = ramp(eraseFront - index);
-    const cleared = ramp(eraseBack - index);
+    const reached = ramp((front.at - index) / front.soft);
+    const passed = ramp((front.at - BLOCK_CHARS - index) / front.soft);
+    const covered = ramp((cover.at - index) / cover.soft);
+    const cleared = ramp((clear.at - index) / clear.soft);
     return {
       glyph: passed * (1 - covered),
       cover: reached * (1 - passed) + covered * (1 - cleared),

@@ -224,8 +224,8 @@ export const Invitation = ({
     secondFamily: string;
   };
 }) => {
-  const small = capsStyle(voice, lettering.detailSize * 0.92);
-  const name = { ...capsStyle(voice, lettering.titleSize * 0.86, 700, 0.06), marginTop: '1.1em' };
+  const small = capsStyle(voice, lettering.detailSize);
+  const name = { ...capsStyle(voice, lettering.titleSize * 0.95, 700, 0.06), marginTop: '1.1em' };
   return (
     <Column top={top}>
       <TypedLine text={words.line} frame={frame} cue={cue} color={voice.muted} style={small} />
@@ -234,7 +234,7 @@ export const Invitation = ({
         frame={frame}
         cue={lineCue(cue, 1, stagger)}
         color={voice.accent}
-        style={{ ...scriptStyle(voice, lettering.scriptSize * 0.82), marginTop: '0.2em' }}
+        style={{ ...scriptStyle(voice, lettering.scriptSize * 0.9), marginTop: '0.2em' }}
       />
       <TypedLine
         text={words.first}
