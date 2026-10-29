@@ -122,7 +122,18 @@ const Walker = ({
           strokeLinecap="round"
         />
         <path d={circle(-2, -153, 11)} fill={skin} stroke={darken(skin, 0.3)} strokeWidth={0.8} />
-        <path d="M-12 -152Q-10 -142 -2 -142Q4 -142 6 -150" fill={darken(skin, 0.65)} />
+        <path d="M-11 -154L-16 -148L-11 -147Z" fill={skin} />
+        <path
+          d="M-11 -143Q-6 -138 2 -141Q6 -143 7 -149Q1 -144 -4 -143Q-8 -143 -11 -143Z"
+          fill={darken(skin, 0.65)}
+        />
+        <path
+          d="M-13 -145Q-9 -147.5 -5 -144.5"
+          fill="none"
+          stroke={darken(skin, 0.65)}
+          strokeWidth={2}
+          strokeLinecap="round"
+        />
         <path
           d="M-15 -158Q-14 -178 2 -176Q16 -174 12 -158Z"
           fill={turban}
@@ -131,7 +142,7 @@ const Walker = ({
         />
         <path d="M10 -164L24 -150L18 -146L8 -158Z" fill={turban} />
         <path d="M-14 -162L12 -166" stroke={trim} strokeWidth={2} />
-        <path d={circle(-12, -151, 1.8)} fill={darken(skin, 0.7)} />
+        <path d={circle(-8, -152, 1.6)} fill={darken(skin, 0.7)} />
       </g>
     </g>
   );
