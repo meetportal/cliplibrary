@@ -3,6 +3,7 @@ import { notFound, redirect } from 'next/navigation';
 import { SiteEditor } from '@/components/sites/editor/site-editor';
 import { findLatestOwnedSite } from '@/db/sites';
 import { currentUserId } from '@/lib/session';
+import { shareMetadata } from '@/lib/share-metadata';
 import { siteEditorPath } from '@/sites/published-site';
 import { findSiteTemplate } from '@/sites/templates';
 
@@ -10,7 +11,9 @@ type Props = { params: Promise<{ templateId: string }> };
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const template = findSiteTemplate((await params).templateId);
-  return { title: template === undefined ? 'Website' : `${template.meta.title} · Neuclip` };
+  return template === undefined
+    ? { title: 'Website' }
+    : shareMetadata(`${template.meta.title} · Neuclip`, template.meta.description);
 };
 
 const SiteTemplatePage = async ({ params }: Props) => {

@@ -333,6 +333,10 @@
       "linter": { "rules": { "performance": { "noAwaitInLoops": "off" } } }
     },
     {
+      "includes": ["src/og/**"],
+      "linter": { "rules": { "performance": { "noImgElement": "off" } } }
+    },
+    {
       "includes": ["src/app/**", "src/components/**", "src/lib/**", "tests/**", "e2e/**"],
       "linter": {
         "rules": {

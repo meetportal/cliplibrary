@@ -13,5 +13,10 @@
   ],
   "project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}", "e2e/**/*.ts", "scripts/**/*.ts"],
   "ignore": ["src/components/ui/**"],
-  "ignoreDependencies": ["tw-animate-css", "tailwindcss"]
+  "ignoreDependencies": [
+    "tw-animate-css",
+    "tailwindcss",
+    "@fontsource/inter",
+    "@fontsource/instrument-serif"
+  ]
 }

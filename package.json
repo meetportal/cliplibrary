@@ -43,6 +43,8 @@
     "@ai-sdk/react": "4.0.158",
     "@clerk/mcp-tools": "0.7.0",
     "@clerk/nextjs": "7.9.22",
+    "@fontsource/instrument-serif": "5.3.0",
+    "@fontsource/inter": "5.3.0",
     "@modelcontextprotocol/sdk": "1.32.2",
     "@neondatabase/serverless": "1.2.0",
     "@openrouter/ai-sdk-provider": "3.1.0",

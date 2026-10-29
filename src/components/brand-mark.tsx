@@ -1,5 +1,5 @@
-export const BrandMark = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 64 64" className={className} aria-hidden>
+export const BrandMark = ({ className, size }: { className?: string; size?: number }) => (
+  <svg viewBox="0 0 64 64" className={className} width={size} height={size} aria-hidden>
     <defs>
       <linearGradient id="brand-mark" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
         <stop offset="0" stopColor="#8b5cf6" />
