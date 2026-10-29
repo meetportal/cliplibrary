@@ -46,6 +46,14 @@ const PAIRS: Record<'verse' | 'save' | 'invite' | 'ring' | 'closing', SprayPlace
   ],
 };
 
+const SPRAY_LEAD = 6;
+
+const sprayStay = (stay: Stay, index: number, stagger: number): Stay => {
+  const start = stay.start + SPRAY_LEAD + index * stagger;
+  const end = stay.end - (1 - index) * Math.round(stagger * 0.6);
+  return { start, end: Math.max(start + 1, end) };
+};
+
 const Fading = ({
   frame,
   stay,
@@ -97,7 +105,7 @@ export const Scenery = ({
       <Placed
         key={`${key}-${place.seed}`}
         frame={frame}
-        stay={stay}
+        stay={sprayStay(stay, index, florals.stagger)}
         drift={drift}
         at={place.at}
         from={place.from}

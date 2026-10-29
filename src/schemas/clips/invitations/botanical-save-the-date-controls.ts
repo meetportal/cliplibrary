@@ -184,6 +184,11 @@ export const botanicalSaveTheDateControls = defineControls<BotanicalSaveTheDateP
           label: 'Slide distance',
           hint: 'In pixels the flowers travel as they slide in and away',
         },
+        {
+          path: 'florals.stagger',
+          label: 'Spray stagger',
+          hint: 'In frames the lower spray arrives after the upper one; the upper one leaves first',
+        },
         { path: 'florals.sway', label: 'Sway', hint: 'In degrees. 0 holds them still' },
         { path: 'florals.swayPeriod', label: 'Sway cycle', hint: 'In frames for one full sway' },
         {

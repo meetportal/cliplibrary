@@ -22,6 +22,17 @@ export const stayOpen = (frame: number, stay: Stay, drift: Drift): number =>
 export const swayAt = (frame: number, stay: Stay, drift: Drift, phase: number, amount = 1) =>
   drift.sway * amount * Math.sin(((frame - stay.start) / drift.swayPeriod) * TAU + phase);
 
+const SHOW_SHARE = 0.4;
+
+const shownAt = (frame: number, stay: Stay, drift: Drift): number =>
+  tween(frame, [stay.start, stay.start + drift.enterFrames * SHOW_SHARE], [0, 1], smooth) *
+  tween(
+    frame,
+    [stay.end + drift.exitFrames * (1 - SHOW_SHARE), stay.end + drift.exitFrames],
+    [1, 0],
+    smooth,
+  );
+
 export const isStaying = (frame: number, stay: Stay, drift: Drift): boolean =>
   frame >= stay.start - 1 && frame <= stay.end + drift.exitFrames + 1;
 
@@ -63,7 +74,7 @@ export const Placed = ({
   return (
     <g
       transform={`translate(${fixed(x)} ${fixed(y)}) rotate(${fixed(turn)}) scale(${flip ? '-' : ''}${size.toFixed(4)} ${size.toFixed(4)})`}
-      opacity={stayOpen(frame, stay, drift)}
+      opacity={shownAt(frame, stay, drift)}
     >
       {children}
     </g>

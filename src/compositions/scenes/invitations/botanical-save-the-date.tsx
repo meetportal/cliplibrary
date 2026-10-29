@@ -37,10 +37,10 @@ const BotanicalSaveTheDate = (props: BotanicalSaveTheDateProps) => {
       <AbsoluteFill>
         <Scenery props={props} timeline={timeline} frame={frame} width={width} height={height} />
         {show(beats.verseOne.cue) ? (
-          <Verse {...shared} cue={beats.verseOne.cue} text={props.verseOne} top={y(760)} />
+          <Verse {...shared} cue={beats.verseOne.cue} text={props.verseOne} top={y(705)} />
         ) : null}
         {show(beats.verseTwo.cue) ? (
-          <Verse {...shared} cue={beats.verseTwo.cue} text={props.verseTwo} top={y(760)} />
+          <Verse {...shared} cue={beats.verseTwo.cue} text={props.verseTwo} top={y(705)} />
         ) : null}
         {show(beats.save.cue) ? (
           <SaveTheDate
@@ -73,7 +73,7 @@ const BotanicalSaveTheDate = (props: BotanicalSaveTheDateProps) => {
           <Invitation
             {...shared}
             cue={beats.invite.cue}
-            top={y(520)}
+            top={y(540)}
             words={{
               line: props.inviteLine,
               script: props.inviteScript,
@@ -114,7 +114,7 @@ const BotanicalSaveTheDate = (props: BotanicalSaveTheDateProps) => {
           </>
         ) : null}
         {show(beats.closing.cue) ? (
-          <Verse {...shared} cue={beats.closing.cue} text={props.closing} top={y(840)} />
+          <Verse {...shared} cue={beats.closing.cue} text={props.closing} top={y(785)} />
         ) : null}
       </AbsoluteFill>
     </PromoLayer>
