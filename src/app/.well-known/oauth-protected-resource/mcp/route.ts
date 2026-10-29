@@ -1,6 +1,6 @@
 import { metadataCorsOptionsRequestHandler } from '@clerk/mcp-tools/next';
 import { corsHeaders, generateClerkProtectedResourceMetadata } from '@clerk/mcp-tools/server';
-import { MCP_PATH } from '@/auth/mcp-metadata';
+import { MCP_PATH, publicOrigin } from '@/auth/mcp-metadata';
 import { MCP_SCOPES } from '@/lib/mcp-auth';
 
 export const GET = (request: Request): Response => {
@@ -9,7 +9,7 @@ export const GET = (request: Request): Response => {
   return Response.json(
     generateClerkProtectedResourceMetadata({
       publishableKey,
-      resourceUrl: `${new URL(request.url).origin}${MCP_PATH}`,
+      resourceUrl: `${publicOrigin(request)}${MCP_PATH}`,
       properties: { scopes_supported: MCP_SCOPES, resource_name: 'neuclip' },
     }),
     { headers: { 'cache-control': 'max-age=3600', ...corsHeaders } },

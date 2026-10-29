@@ -1,5 +1,5 @@
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
-import { mcpChallenge } from '@/auth/mcp-metadata';
+import { mcpChallenge, publicOrigin } from '@/auth/mcp-metadata';
 import { mcpTokenOwner } from '@/lib/mcp-auth';
 import { isApprovedUser } from '@/lib/session';
 import { createMcpServer } from '@/mcp/server';
@@ -11,7 +11,7 @@ const refuse = (origin: string, status: number, message: string): Response =>
   );
 
 const handle = async (request: Request): Promise<Response> => {
-  const { origin } = new URL(request.url);
+  const origin = publicOrigin(request);
   const userId = await mcpTokenOwner(request);
   if (userId === null) {
     return refuse(

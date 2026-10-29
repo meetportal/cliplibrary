@@ -98,4 +98,24 @@ describe('/mcp auth', () => {
       scopes_supported: ['profile', 'email'],
     });
   });
+
+  it('uses the public host the client called when a proxy rewrites the request url', async () => {
+    const forwarded = { 'x-forwarded-host': 'neuclip.example', 'x-forwarded-proto': 'https' };
+    const challenge = await POST(
+      new Request('https://deploy-123--neuclip.example/mcp', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', ...forwarded },
+        body: '{}',
+      }),
+    );
+    expect(challenge.headers.get('www-authenticate')).toContain(
+      'resource_metadata="https://neuclip.example/.well-known/oauth-protected-resource/mcp"',
+    );
+    const described = metadata.GET(
+      new Request('https://deploy-123--neuclip.example/.well-known/oauth-protected-resource/mcp', {
+        headers: forwarded,
+      }),
+    );
+    expect(await described.json()).toMatchObject({ resource: 'https://neuclip.example/mcp' });
+  });
 });
