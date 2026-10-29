@@ -5,125 +5,116 @@ import {
   botanicalSaveTheDateMeta,
   botanicalSaveTheDateSchema,
 } from '@/schemas';
+import { ARCH, Scenery } from '../../invitations/botanical-save-the-date/scenery';
+import { timelineOf } from '../../invitations/botanical-save-the-date/timeline';
+import { archCenter } from '../../invitations/botanical-save-the-date/tropical';
+import { type Cue, onStage } from '../../invitations/botanical-save-the-date/type';
+import { voiceOf } from '../../invitations/botanical-save-the-date/voice';
+import { ArcText, WeddingWords } from '../../invitations/botanical-save-the-date/wedding-words';
 import {
-  ClosingBeat,
-  CoupleBeat,
-  PoemBeat,
-  SaveTheDateBeat,
-} from '../../invitations/botanical-save-the-date/beats';
-import { EventCard } from '../../invitations/botanical-save-the-date/event-card';
-import { type InviteType, isOnStage } from '../../invitations/botanical-save-the-date/lettering';
-import { PageBorder } from '../../invitations/botanical-save-the-date/page-border';
-import { Sprigs } from '../../invitations/botanical-save-the-date/sprigs';
-import { inviteScriptFonts, inviteSerifFonts } from '../../invitations/fonts';
+  Couple,
+  EventWords,
+  Invitation,
+  SaveTheDate,
+  Verse,
+} from '../../invitations/botanical-save-the-date/words';
 import { PromoLayer } from '../../promo/promo-layer';
 import type { SceneModule } from '../../scene-module';
 
 const BotanicalSaveTheDate = (props: BotanicalSaveTheDateProps) => {
-  const frame = useCurrentFrame();
-  const { width, height } = useVideoConfig();
-  const { timing, lettering, look, cards, events } = props;
-  const type: InviteType = {
-    serif: inviteSerifFonts[props.serifFont],
-    script: inviteScriptFonts[props.scriptFont],
-    ink: look.ink,
-    muted: look.muted,
-    accent: look.accent,
-    gold: props.gold,
-    rule: props.border.width,
-    tracking: lettering.capsTracking,
-    stagger: timing.lineStagger,
-    width: lettering.textWidth,
-    offsetY: lettering.offsetY,
-  };
-  const exitBefore = (next: number) => next - timing.overlap;
-  const beat = { frame, type, lettering };
-  const poemEnd = exitBefore(timing.dateAt);
-  const dateEnd = exitBefore(timing.coupleAt);
-  const coupleEnd = exitBefore(timing.eventsAt);
-  const span = (timing.closingAt - timing.eventsAt) / events.length;
-  const leafInk = {
-    color: props.greenery,
-    fill: props.sprigs.leafFill,
-    lineWidth: props.sprigs.lineWidth * 0.8,
-  };
+  const frame = useCurrentFrame() * props.motion.speed;
+  const { width, height, durationInFrames } = useVideoConfig();
+  const timeline = timelineOf(props, durationInFrames);
+  const { beats } = timeline;
+  const voice = voiceOf(props);
+  const { lettering, timing } = props;
+  const y = (top: number) => top + lettering.offsetY;
+  const shared = { frame, voice, lettering, stagger: timing.lineStagger };
+  const show = (cue: Cue) => onStage(frame, cue);
+  const arch = archCenter(ARCH);
   return (
-    <PromoLayer look={look} motion={props.motion}>
+    <PromoLayer look={props.look} motion={props.motion}>
       <AbsoluteFill>
-        <svg
-          width={width}
-          height={height}
-          style={{ position: 'absolute', inset: 0 }}
-          aria-hidden="true"
-        >
-          <PageBorder
-            frame={frame}
-            width={width}
-            height={height}
-            border={props.border}
-            color={props.gold}
-            start={props.sprigs.at}
-          />
-          <Sprigs
-            frame={frame}
-            width={width}
-            height={height}
-            sprigs={props.sprigs}
-            color={props.greenery}
-            accent={look.accent}
-          />
-        </svg>
-        {isOnStage(frame, timing.poemAt, poemEnd) ? (
-          <PoemBeat {...beat} start={timing.poemAt} end={poemEnd} poem={props.poem} />
+        <Scenery props={props} timeline={timeline} frame={frame} width={width} height={height} />
+        {show(beats.verseOne.cue) ? (
+          <Verse {...shared} cue={beats.verseOne.cue} text={props.verseOne} top={y(760)} />
         ) : null}
-        {isOnStage(frame, timing.dateAt, dateEnd) ? (
-          <SaveTheDateBeat
-            {...beat}
-            start={timing.dateAt}
-            end={dateEnd}
-            top={props.saveTop}
-            joiner={props.saveJoiner}
-            bottom={props.saveBottom}
-            date={props.date}
+        {show(beats.verseTwo.cue) ? (
+          <Verse {...shared} cue={beats.verseTwo.cue} text={props.verseTwo} top={y(760)} />
+        ) : null}
+        {show(beats.save.cue) ? (
+          <SaveTheDate
+            {...shared}
+            cue={beats.save.cue}
+            top={y(650)}
+            words={{
+              top: props.saveTop,
+              joiner: props.saveJoiner,
+              bottom: props.saveBottom,
+              date: props.date,
+            }}
           />
         ) : null}
-        {isOnStage(frame, timing.coupleAt, coupleEnd) ? (
-          <CoupleBeat
-            {...beat}
-            start={timing.coupleAt}
-            end={coupleEnd}
-            intro={props.coupleIntro}
-            first={props.partnerOne}
-            joiner={props.partnerJoiner}
-            second={props.partnerTwo}
+        {show(beats.couple.cue) ? (
+          <Couple
+            {...shared}
+            cue={beats.couple.cue}
+            top={y(1130)}
+            inset={130}
+            words={{
+              intro: props.coupleIntro,
+              first: props.partnerOne,
+              joiner: props.partnerJoiner,
+              second: props.partnerTwo,
+            }}
           />
         ) : null}
-        {events.map((event, index) => {
-          const start = Math.round(timing.eventsAt + span * index);
-          const end = exitBefore(Math.round(timing.eventsAt + span * (index + 1)));
-          return isOnStage(frame, start, end) ? (
-            <EventCard
-              key={`${index}:${event.title}`}
-              event={event}
+        {show(beats.invite.cue) ? (
+          <Invitation
+            {...shared}
+            cue={beats.invite.cue}
+            top={y(520)}
+            words={{
+              line: props.inviteLine,
+              script: props.inviteScript,
+              first: props.partnerOne,
+              firstFamily: props.partnerOneFamily,
+              second: props.partnerTwo,
+              secondFamily: props.partnerTwoFamily,
+            }}
+          />
+        ) : null}
+        {show(beats.mehendi.cue) ? (
+          <EventWords {...shared} cue={beats.mehendi.cue} top={y(650)} event={props.mehendi} />
+        ) : null}
+        {show(beats.ring.cue) ? (
+          <EventWords {...shared} cue={beats.ring.cue} top={y(520)} event={props.ring} />
+        ) : null}
+        {show(beats.wedding.cue) ? (
+          <>
+            <ArcText
+              text={props.wedding.arcText}
+              center={arch}
+              radius={(ARCH.right - ARCH.left) / 2 - 46}
+              startAngle={-174}
+              size={lettering.detailSize * 0.66}
+              tracking={0.3}
               frame={frame}
-              start={start}
-              end={end}
-              cards={cards}
-              type={type}
-              leafInk={leafInk}
-              lettering={lettering}
-              center={[width / 2, height / 2 + lettering.offsetY]}
+              cue={beats.wedding.cue}
+              voice={voice}
             />
-          ) : null;
-        })}
-        {isOnStage(frame, timing.closingAt, undefined) ? (
-          <ClosingBeat
-            {...beat}
-            start={timing.closingAt}
-            line={props.closingLine}
-            signoff={props.signoff}
-            family={props.familyName}
-          />
+            <WeddingWords
+              {...shared}
+              cue={beats.wedding.cue}
+              top={y(470)}
+              inset={120}
+              noteTop={y(1480)}
+              wedding={props.wedding}
+            />
+          </>
+        ) : null}
+        {show(beats.closing.cue) ? (
+          <Verse {...shared} cue={beats.closing.cue} text={props.closing} top={y(840)} />
         ) : null}
       </AbsoluteFill>
     </PromoLayer>
