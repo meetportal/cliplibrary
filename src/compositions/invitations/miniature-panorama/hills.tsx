@@ -1,46 +1,112 @@
-import type { MiniaturePanoramaProps } from '@/schemas';
-import { layerOffset, Strip, type World } from './strip';
+import { memo } from 'react';
+import { darken, lighten, mix } from './palette';
+import { fx, seeded } from './shapes';
 
-const SAMPLE = 20;
+const FROM = -1800;
 
-const RIDGES = [
-  { depth: 0.18, tile: 1400, base: 1330, top: 1125, height: 1, seed: 0.4, weight: 0.95 },
-  { depth: 0.3, tile: 1100, base: 1330, top: 1210, height: 0.7, seed: 2.1, weight: 1 },
-] as const;
+const TO = 3400;
 
-const ridgePath = (tile: number, base: number, top: number, height: number, seed: number) => {
-  const turn = (Math.PI * 2) / tile;
-  const points: string[] = [];
-  for (let x = 0; x <= tile; x += SAMPLE) {
-    const swell =
-      0.5 +
-      0.28 * Math.sin(x * turn * 2 + seed) +
-      0.14 * Math.sin(x * turn * 3 + seed * 2.3) +
-      0.08 * Math.abs(Math.sin(x * turn * 7 + seed));
-    points.push(`L ${x} ${(top + (1 - swell) * 120 * height).toFixed(1)}`);
+const range = (seed: number, base: number, height: number, step: number) => {
+  const random = seeded(seed);
+  const points: string[] = [`M${FROM} ${base + 60}`];
+  const ridges: string[] = [];
+  for (let x = FROM; x <= TO; x += step * (0.6 + random() * 0.8)) {
+    const peak = base - height * (0.45 + random() * 0.55);
+    const half = step * (0.35 + random() * 0.2);
+    points.push(`L${fx(x - half)} ${fx(base - height * 0.15 * random())}`);
+    points.push(`Q${fx(x - half * 0.25)} ${fx(peak + 8)} ${fx(x)} ${fx(peak)}`);
+    points.push(
+      `Q${fx(x + half * 0.3)} ${fx(peak + 10)} ${fx(x + half)} ${fx(base - height * 0.2 * random())}`,
+    );
+    ridges.push(
+      `M${fx(x)} ${fx(peak + 2)}Q${fx(x + half * 0.2)} ${fx(peak + (base - peak) * 0.5)} ${fx(x + half * 0.5)} ${fx(base - 6)}`,
+    );
   }
-  return `M 0 ${base} ${points.join(' ')} L ${tile} ${base} Z`;
+  points.push(`L${TO} ${base + 60}Z`);
+  return { body: points.join(''), ridges: ridges.join('') };
 };
 
-const PATHS = RIDGES.map((ridge) =>
-  ridgePath(ridge.tile, ridge.base, ridge.top, ridge.height, ridge.seed),
+const treeline = (seed: number, base: number) => {
+  const random = seeded(seed);
+  const shapes: string[] = [];
+  for (let x = FROM; x <= TO; x += 14 + random() * 22) {
+    const height = 26 + random() * 46;
+    const width = 9 + random() * 8;
+    shapes.push(
+      `M${fx(x - width)} ${base}Q${fx(x - width * 0.4)} ${fx(base - height * 0.7)} ${fx(x)} ${fx(base - height)}Q${fx(x + width * 0.4)} ${fx(base - height * 0.7)} ${fx(x + width)} ${base}Z`,
+    );
+  }
+  return shapes.join('');
+};
+
+export const FarHills = memo(
+  ({ id, far, near, base }: { id: string; far: string; near: string; base: number }) => {
+    const back = range(7, base, 190, 230);
+    const front = range(29, base + 18, 120, 170);
+    return (
+      <g>
+        <defs>
+          <linearGradient
+            id={`${id}-far`}
+            x1={0}
+            y1={base - 200}
+            x2={0}
+            y2={base}
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset={0} stopColor={darken(far, 0.08)} />
+            <stop offset={1} stopColor={lighten(far, 0.3)} />
+          </linearGradient>
+          <linearGradient
+            id={`${id}-near`}
+            x1={0}
+            y1={base - 120}
+            x2={0}
+            y2={base + 20}
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset={0} stopColor={darken(near, 0.1)} />
+            <stop offset={1} stopColor={lighten(near, 0.28)} />
+          </linearGradient>
+        </defs>
+        <path d={back.body} fill={`url(#${id}-far)`} />
+        <path
+          d={back.ridges}
+          fill="none"
+          stroke={lighten(far, 0.35)}
+          strokeWidth={3}
+          opacity={0.6}
+        />
+        <path d={front.body} fill={`url(#${id}-near)`} />
+        <path
+          d={front.ridges}
+          fill="none"
+          stroke={darken(near, 0.18)}
+          strokeWidth={2.5}
+          opacity={0.5}
+        />
+      </g>
+    );
+  },
 );
 
-export const Hills = ({
-  hills,
-  world,
-}: {
-  hills: MiniaturePanoramaProps['hills'];
-  world: World;
-}) => (
+export const MistTrees = memo(({ id, mist, base }: { id: string; mist: string; base: number }) => (
   <g>
-    {RIDGES.map((ridge, index) => (
-      <Strip key={ridge.tile} offset={layerOffset(world, ridge.depth)} width={ridge.tile}>
-        <path
-          d={PATHS[index]}
-          fill={world.shade(index === 0 ? hills.far : hills.near, ridge.weight)}
-        />
-      </Strip>
-    ))}
+    <defs>
+      <linearGradient
+        id={`${id}-mist`}
+        x1={0}
+        y1={base - 70}
+        x2={0}
+        y2={base}
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset={0} stopColor={darken(mist, 0.12)} />
+        <stop offset={1} stopColor={lighten(mist, 0.35)} />
+      </linearGradient>
+    </defs>
+    <path d={treeline(43, base)} fill={`url(#${id}-mist)`} />
+    <path d={treeline(61, base + 14)} fill={mix(mist, '#ffffff', 0.25)} opacity={0.85} />
+    <rect x={FROM} y={base + 6} width={TO - FROM} height={120} fill={lighten(mist, 0.3)} />
   </g>
-);
+));

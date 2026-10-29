@@ -1,164 +1,192 @@
-import type { MiniaturePanoramaProps } from '@/schemas';
 import { Elephant } from './elephant';
-import { PATH_FEET } from './foreground';
-import { mix } from './palette';
-import { FRAME_WIDTH, Glow, type World } from './strip';
+import { darken, lighten, type Paint } from './palette';
+import { circle, fx } from './shapes';
 
-type Procession = MiniaturePanoramaProps['procession'];
+type Procession = Paint['procession'];
 
-const NIGHT_WEIGHT = 0.35;
+const ROLES = ['horn', 'drum', 'flag', 'horn', 'umbrella', 'drum', 'staff', 'flag'] as const;
 
-const WALKER_STRIDE = 30;
+type Role = (typeof ROLES)[number];
 
-const ELEPHANT_STRIDE = 70;
+const STRIDE = 46;
 
-const LEAD_WALKERS = 2;
+const WALKER_GAP = 112;
 
-const WALKER_GAP = 72;
+const ELEPHANT_GAP = 330;
 
-const TRUNK_GAP = 236;
-
-const TAIL_GAP = 196;
-
-const ENTRY_MARGIN = 60;
-
-export type ProcessionColors = {
-  elephant: string;
-  elephantFar: string;
-  blanket: string;
-  canopy: string;
-  trim: string;
-  kurta: string;
-  legs: string;
-  turban: string;
-  skin: string;
-  glow: string;
-  flame: string;
-  lights: number;
+const Held = ({ role, procession, beat }: { role: Role; procession: Procession; beat: number }) => {
+  const { trim, blanket, howdah, kurta } = procession;
+  if (role === 'horn') {
+    return (
+      <path
+        d="M-10 -118Q-40 -150 -30 -190Q-26 -204 -16 -200Q-24 -160 -4 -126Z"
+        fill={howdah}
+        stroke={darken(howdah, 0.35)}
+        strokeWidth={1}
+      />
+    );
+  }
+  if (role === 'drum') {
+    return (
+      <g transform={`translate(0 ${fx(beat * 2)})`}>
+        <rect
+          x={-30}
+          y={-108}
+          width={46}
+          height={30}
+          rx={13}
+          fill={blanket}
+          stroke={darken(blanket, 0.35)}
+          strokeWidth={1}
+        />
+        <path d="M-24 -108L-24 -78M10 -108L10 -78M-30 -93L16 -93" stroke={trim} strokeWidth={2} />
+        <path
+          d={`M-34 -120L${fx(-46 + beat * 6)} -104`}
+          stroke={darken(kurta, 0.6)}
+          strokeWidth={2.4}
+        />
+      </g>
+    );
+  }
+  if (role === 'umbrella') {
+    return (
+      <g>
+        <path d="M-12 -110L-12 -246" stroke={darken(howdah, 0.3)} strokeWidth={3} />
+        <path d="M-62 -232Q-12 -290 38 -232Z" fill={blanket} stroke={trim} strokeWidth={3} />
+        <path d="M-62 -232L38 -232" stroke={trim} strokeWidth={5} strokeDasharray="4 4" />
+      </g>
+    );
+  }
+  if (role === 'flag') {
+    return (
+      <g>
+        <path d="M-14 -108L-14 -250" stroke={darken(howdah, 0.3)} strokeWidth={3} />
+        <path
+          d={`M-14 -248Q${fx(-44 + beat * 3)} -238 -60 -226L-14 -206Z`}
+          fill={howdah}
+          stroke={darken(howdah, 0.3)}
+          strokeWidth={1}
+        />
+      </g>
+    );
+  }
+  return <path d="M-16 -100L-22 -230" stroke={lighten(trim, 0.2)} strokeWidth={4} />;
 };
 
 const Walker = ({
-  x,
-  phase,
-  lantern,
-  colors,
+  role,
+  walk,
+  procession,
 }: {
-  x: number;
-  phase: number;
-  lantern: boolean;
-  colors: ProcessionColors;
+  role: Role;
+  walk: number;
+  procession: Procession;
 }) => {
-  const swing = Math.sin(phase) * 24;
-  const bob = -Math.abs(Math.sin(phase)) * 3;
+  const { kurta, turban, skin, trim } = procession;
+  const swing = Math.sin(walk) * 20;
+  const bob = Math.abs(Math.cos(walk)) * 3;
+  const outline = darken(kurta, 0.35);
   return (
-    <g transform={`translate(${x.toFixed(3)} ${bob.toFixed(3)})`}>
+    <g>
+      <ellipse cx={0} cy={3} rx={30} ry={6} fill={darken(kurta, 0.8)} opacity={0.2} />
       {[swing, -swing].map((angle, index) => (
-        <rect
-          key={index}
-          x={-3.5}
-          y={-32}
-          width={7}
-          height={32}
-          rx={3}
-          fill={index === 0 ? colors.legs : colors.kurta}
-          transform={`rotate(${angle.toFixed(3)} 0 -32)`}
-        />
-      ))}
-      <path d="M -11 -66 L 11 -66 L 16 -26 L -16 -26 Z" fill={colors.kurta} />
-      <circle cx={0} cy={-76} r={9} fill={colors.skin} />
-      <path d="M -10 -78 Q -10 -92 2 -92 Q 13 -90 11 -78 Z" fill={colors.turban} />
-      <path d="M -10 -80 Q -18 -74 -16 -64 L -12 -66 Q -12 -74 -8 -78 Z" fill={colors.turban} />
-      {lantern ? (
-        <g>
-          <line x1={8} y1={-52} x2={14} y2={-128} stroke={colors.trim} strokeWidth={3} />
-          <Glow x={14} y={-134} radius={34} color={colors.glow} amount={colors.lights} />
-          <rect x={8} y={-142} width={12} height={16} rx={3} fill={colors.trim} />
-          <rect
-            x={10.5}
-            y={-139}
-            width={7}
-            height={10}
-            rx={2}
-            fill={mix(colors.trim, colors.flame, colors.lights)}
+        <g key={index} transform={`rotate(${fx(angle)} 0 -66)`}>
+          <path
+            d="M-6 -70L-5 -4L5 -4L6 -70Z"
+            fill={index === 0 ? darken(kurta, 0.12) : kurta}
+            stroke={outline}
+            strokeWidth={0.8}
           />
+          <path d="M-8 -6L-14 2L6 2L6 -6Z" fill={darken(turban, 0.5)} />
         </g>
-      ) : (
-        <rect
-          x={-4}
-          y={-62}
-          width={7}
-          height={30}
-          rx={3}
-          fill={colors.kurta}
-          transform={`rotate(${(-swing * 0.6).toFixed(3)} 0 -62)`}
+      ))}
+      <g transform={`translate(0 ${fx(-bob)})`}>
+        <path d="M-15 -140L15 -140L28 -60L-30 -60Z" fill={kurta} stroke={outline} strokeWidth={1} />
+        <path d="M-15 -140L-6 -140L-14 -60L-30 -60Z" fill={darken(kurta, 0.08)} />
+        <path d="M-17 -104L19 -104L20 -94L-18 -94Z" fill={turban} />
+        <path d="M14 -98L22 -70L16 -68L10 -94Z" fill={turban} />
+        <path d="M-12 -110L12 -138" stroke={trim} strokeWidth={2} />
+        <path
+          d={`M-10 -136Q${fx(-26 - swing * 0.4)} -116 -30 -104`}
+          fill="none"
+          stroke={kurta}
+          strokeWidth={9}
+          strokeLinecap="round"
         />
-      )}
+        <Held role={role} procession={procession} beat={Math.sin(walk * 2)} />
+        <path
+          d={`M8 -136Q${fx(18 + swing * 0.4)} -112 12 -96`}
+          fill="none"
+          stroke={darken(kurta, 0.1)}
+          strokeWidth={8}
+          strokeLinecap="round"
+        />
+        <path d={circle(-2, -153, 11)} fill={skin} stroke={darken(skin, 0.3)} strokeWidth={0.8} />
+        <path d="M-11 -154L-16 -148L-11 -147Z" fill={skin} />
+        <path
+          d="M-11 -143Q-6 -138 2 -141Q6 -143 7 -149Q1 -144 -4 -143Q-8 -143 -11 -143Z"
+          fill={darken(skin, 0.65)}
+        />
+        <path
+          d="M-13 -145Q-9 -147.5 -5 -144.5"
+          fill="none"
+          stroke={darken(skin, 0.65)}
+          strokeWidth={2}
+          strokeLinecap="round"
+        />
+        <path
+          d="M-15 -158Q-14 -178 2 -176Q16 -174 12 -158Z"
+          fill={turban}
+          stroke={darken(turban, 0.3)}
+          strokeWidth={1}
+        />
+        <path d="M10 -164L24 -150L18 -146L8 -158Z" fill={turban} />
+        <path d="M-14 -162L12 -166" stroke={trim} strokeWidth={2} />
+        <path d={circle(-8, -152, 1.6)} fill={darken(skin, 0.7)} />
+      </g>
     </g>
   );
 };
 
 export const Procession = ({
+  x,
+  y,
+  travelled,
   procession,
-  lights,
-  panSpeed,
-  heading,
-  world,
 }: {
+  x: number;
+  y: number;
+  travelled: number;
   procession: Procession;
-  lights: MiniaturePanoramaProps['lights'];
-  panSpeed: number;
-  heading: number;
-  world: World;
 }) => {
-  if (!procession.show) {
-    return null;
+  const walk = (travelled / STRIDE) * Math.PI;
+  const members: { kind: 'walker' | 'elephant'; offset: number; role: Role; index: number }[] = [];
+  let offset = 0;
+  for (let index = 0; index < procession.walkers; index += 1) {
+    if (index === 1) {
+      offset += ELEPHANT_GAP;
+      members.push({ kind: 'elephant', offset, role: 'horn', index: -1 });
+      offset += ELEPHANT_GAP;
+    }
+    members.push({ kind: 'walker', offset, role: ROLES[index % ROLES.length] ?? 'horn', index });
+    offset += WALKER_GAP;
   }
-  const walked = Math.max(0, world.frame - procession.start);
-  const scale = procession.scale;
-  const lead = -ENTRY_MARGIN * scale + walked * procession.speed;
-  const ground = walked * (procession.speed + panSpeed);
-  const shade = (color: string) => world.shade(color, NIGHT_WEIGHT);
-  const elephant = shade(procession.elephant);
-  const kurta = shade(procession.kurta);
-  const colors: ProcessionColors = {
-    elephant,
-    elephantFar: mix(elephant, '#000000', 0.18),
-    blanket: shade(procession.blanket),
-    canopy: shade(procession.canopy),
-    trim: shade(procession.trim),
-    kurta,
-    legs: mix(kurta, '#000000', 0.12),
-    turban: shade(procession.turban),
-    skin: shade(procession.skin),
-    glow: lights.glow,
-    flame: lights.flame,
-    lights: world.lights,
-  };
-  const walkerPhase = (ground / (WALKER_STRIDE * scale)) * Math.PI;
-  const elephantPhase = (ground / (ELEPHANT_STRIDE * scale)) * Math.PI;
-  const elephantOffset =
-    procession.walkers > 0
-      ? -(Math.min(procession.walkers, LEAD_WALKERS) - 1) * WALKER_GAP - TRUNK_GAP
-      : 0;
-  const walkers = Array.from({ length: procession.walkers }, (_, index) => {
-    const behind = index >= LEAD_WALKERS;
-    const offset = behind
-      ? elephantOffset - TAIL_GAP - (index - LEAD_WALKERS) * WALKER_GAP
-      : -index * WALKER_GAP;
-    return { index, offset, lantern: !behind };
-  });
-  const mirror = heading < 0 ? `translate(${FRAME_WIDTH} 0) scale(-1 1) ` : '';
+  if (procession.walkers <= 1) {
+    members.push({ kind: 'elephant', offset: offset + ELEPHANT_GAP, role: 'horn', index: -1 });
+  }
   return (
-    <g transform={`${mirror}translate(${lead.toFixed(3)} ${PATH_FEET}) scale(${scale})`}>
-      <Elephant x={elephantOffset} phase={elephantPhase} colors={colors} frame={world.frame} />
-      {walkers.map((walker) => (
-        <Walker
-          key={walker.index}
-          x={walker.offset}
-          phase={walkerPhase + walker.index * 1.1}
-          lantern={walker.lantern}
-          colors={colors}
-        />
+    <g transform={`translate(${fx(x)} ${y}) scale(${procession.scale})`}>
+      {members.map((member) => (
+        <g
+          key={`${member.kind}-${member.index}`}
+          transform={`translate(${member.offset} ${member.index % 2 === 0 ? 0 : 10})`}
+        >
+          {member.kind === 'elephant' ? (
+            <Elephant walk={walk * 0.5} procession={procession} />
+          ) : (
+            <Walker role={member.role} walk={walk + member.index * 0.9} procession={procession} />
+          )}
+        </g>
       ))}
     </g>
   );
