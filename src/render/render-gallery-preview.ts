@@ -18,15 +18,29 @@ const GALLERY_PREVIEW_OPTIONS: RenderOptions = {
 };
 
 const FIRST_FRAME_WIDTH = 48;
+const STILL_BOX = 800;
 
 const firstFrameFileName = (name: string): string => `${name}.first-frame.jpg`;
+
+export const stillFileName = (name: string): string => `${name}.still.jpg`;
 
 export const galleryPreviewFileNames = (name: string): string[] => [
   `${name}.${outputExtension(GALLERY_PREVIEW_OPTIONS.codec)}`,
   firstFrameFileName(name),
+  stillFileName(name),
 ];
 
-const renderFirstFrame = async (project: Project, output: string): Promise<void> => {
+interface StillSpec {
+  frame: number;
+  quality: number;
+  scale: (width: number, height: number) => number;
+}
+
+const renderProjectStill = async (
+  project: Project,
+  output: string,
+  spec: StillSpec,
+): Promise<void> => {
   const serveUrl = await getServeUrl();
   const inputProps = project as unknown as Record<string, unknown>;
   const composition = await selectComposition({
@@ -41,17 +55,30 @@ const renderFirstFrame = async (project: Project, output: string): Promise<void>
     composition,
     inputProps,
     output,
-    frame: 0,
+    frame: Math.min(spec.frame, composition.durationInFrames - 1),
     imageFormat: 'jpeg',
-    jpegQuality: 70,
-    scale: FIRST_FRAME_WIDTH / composition.width,
+    jpegQuality: spec.quality,
+    scale: spec.scale(composition.width, composition.height),
   });
 };
+
+export const renderGalleryStill = (
+  project: Project,
+  outDir: string,
+  name: string,
+  frame: number,
+): Promise<void> =>
+  renderProjectStill(project, join(outDir, stillFileName(name)), {
+    frame,
+    quality: 84,
+    scale: (width, height) => STILL_BOX / Math.max(width, height),
+  });
 
 export const renderGalleryPreview = async (
   project: Project,
   outDir: string,
   name: string,
+  stillFrame: number,
 ): Promise<void> => {
   const { poster } = await renderProject({
     project,
@@ -60,5 +87,10 @@ export const renderGalleryPreview = async (
     name,
   });
   await rm(poster, { force: true });
-  await renderFirstFrame(project, join(outDir, firstFrameFileName(name)));
+  await renderProjectStill(project, join(outDir, firstFrameFileName(name)), {
+    frame: 0,
+    quality: 70,
+    scale: (width) => FIRST_FRAME_WIDTH / width,
+  });
+  await renderGalleryStill(project, outDir, name, stillFrame);
 };
