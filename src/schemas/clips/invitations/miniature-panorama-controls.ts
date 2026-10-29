@@ -44,7 +44,7 @@ export const miniaturePanoramaControls = defineControls<MiniaturePanoramaProps>(
         {
           path: 'invite.start',
           label: 'Text appears at',
-          hint: 'Frame number; the closing garden starts near frame 1080',
+          hint: 'Frame number; with the default shots the bead strings and chandelier settle in near frame 1090',
         },
         {
           path: 'invite.rise',
@@ -128,7 +128,7 @@ export const miniaturePanoramaControls = defineControls<MiniaturePanoramaProps>(
         {
           path: 'garlands.marigold',
           label: 'Marigolds',
-          hint: 'The marigold strings and the hanging blossoms',
+          hint: 'The marigold strings, the hanging blossoms and the lotus centres',
         },
       ],
     },
