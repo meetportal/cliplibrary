@@ -1,4 +1,6 @@
 import type { SiteTemplate } from '../types';
+import { snowDayOneDefaults, snowDayOneMeta, snowDayOneSchema } from './birthdays/snow-day-one';
+import { snowDayOneControls } from './birthdays/snow-day-one-controls';
 import { emeraldRoseDefaults, emeraldRoseMeta, emeraldRoseSchema } from './weddings/emerald-rose';
 import { emeraldRoseControls } from './weddings/emerald-rose-controls';
 import { inkAndLaceDefaults, inkAndLaceMeta, inkAndLaceSchema } from './weddings/ink-and-lace';
@@ -29,6 +31,19 @@ export const SITE_TEMPLATES: readonly SiteTemplate[] = [
       return parsed.success
         ? `${parsed.data.couple.firstName} & ${parsed.data.couple.secondName}`
         : inkAndLaceMeta.title;
+    },
+  },
+  {
+    id: snowDayOneMeta.id,
+    meta: snowDayOneMeta,
+    schema: snowDayOneSchema,
+    defaults: snowDayOneDefaults,
+    controls: snowDayOneControls,
+    headline: (content) => {
+      const parsed = snowDayOneSchema.safeParse(content);
+      return parsed.success
+        ? `${parsed.data.child.name} turns ${parsed.data.child.ageWord}`
+        : snowDayOneMeta.title;
     },
   },
 ];
