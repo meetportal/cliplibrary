@@ -37,7 +37,7 @@ export const RingAct = ({
   const ids = useGoldIds('ring-gold');
   const blurId = useSvgId('ring-blur');
   const layers = useMemo(() => vine(400), []);
-  const out = fadeOut(frame, [RING.wipe[0] + 10, RING.wipe[1]]);
+  const out = fadeOut(frame, [RING.wipe[0] - 4, RING.wipe[0] + 30]);
   if (frame < RING.vine[0] - 2 || out <= 0) {
     return null;
   }

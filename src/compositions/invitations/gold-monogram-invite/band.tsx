@@ -175,7 +175,7 @@ export const BandAct = ({
               ))}
               {saveTheDate.sprigs ? (
                 <g transform="translate(960 540)">
-                  <path d={sprigs(size * 1.25)} fill={withAlpha(gold.light, 0.85)} />
+                  <path d={sprigs(size * 1.55)} fill={withAlpha(gold.light, 0.85)} />
                 </g>
               ) : null}
             </g>

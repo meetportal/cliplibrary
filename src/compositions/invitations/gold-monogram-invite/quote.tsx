@@ -130,7 +130,7 @@ export const QuoteAct = ({
       </g>
       <RevealText
         text={quote.paperLead}
-        x={1258}
+        x={1118}
         y={470}
         style={{ fontFamily: script, fontSize: quote.paperScriptSize * 0.5 }}
         color={text.ink}
@@ -280,8 +280,8 @@ const PaperScript = ({
   if (reveal <= 0) {
     return null;
   }
-  const left = 760;
-  const right = 1560;
+  const left = 780;
+  const right = 1280;
   const edge = left + (right - left + 160) * reveal - 80;
   return (
     <>
@@ -302,7 +302,7 @@ const PaperScript = ({
         </mask>
       </defs>
       <text
-        x={1150}
+        x={1010}
         y={622}
         textAnchor="middle"
         mask={`url(#${maskId})`}

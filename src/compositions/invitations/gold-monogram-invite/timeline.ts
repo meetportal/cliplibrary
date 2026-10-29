@@ -7,7 +7,7 @@ export const QUOTE = {
   secondStart: 258,
   paperLead: 352,
   paperScript: [392, 468] as [number, number],
-  end: [548, 612] as [number, number],
+  end: [534, 590] as [number, number],
 };
 
 export const TITLE = {

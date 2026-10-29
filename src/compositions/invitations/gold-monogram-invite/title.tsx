@@ -72,7 +72,10 @@ export const TitleAct = ({
     return null;
   }
   const scale = 1.42 - 0.42 * enter;
-  const haze = Math.max(1 - enter, tween(frame, TITLE.exit, [0, 1], smooth));
+  const haze = Math.max(
+    tween(frame, [TITLE.enter[0], TITLE.enter[1] + 8], [1, 0], smooth),
+    tween(frame, TITLE.exit, [0, 1], smooth),
+  );
   const draw = tween(frame, TITLE.flourish, [0, 1], (t) => smooth(t) * 0.5 + t * 0.5);
   const glint = tween(frame, [TITLE.eyebrow + 20, TITLE.eyebrow + 80], [-0.2, 1.2], smooth);
   const size = title.size;
@@ -158,20 +161,20 @@ export const TitleAct = ({
         frame={frame}
         start={TITLE.eyebrow}
         stagger={8}
-        out={TITLE.exit}
+        out={[TITLE.exit[0] - 10, TITLE.exit[1] - 14]}
         blurId={blurId}
       />
       <RevealText
         text={title.tail}
         x={960 + size * 1.5}
-        y={520 + size * 0.86}
+        y={520 + size * 1.22}
         anchor="end"
         style={small}
         color={text.cream}
         frame={frame}
         start={TITLE.tail}
         stagger={8}
-        out={TITLE.exit}
+        out={[TITLE.exit[0] - 10, TITLE.exit[1] - 14]}
         blurId={blurId}
       />
     </svg>
