@@ -183,7 +183,7 @@ export const Lattice = ({ art, top, bottom }: { art: Art; top: number; bottom: n
   const gold = mix(art.stone.cream, '#b8913a', 0.4);
   return (
     <g>
-      <path d={shape.lines} stroke={gold} strokeWidth={2.4} fill="none" opacity={0.85} />
+      <path d={shape.lines} stroke={gold} strokeWidth={3} fill="none" opacity={0.85} />
       <rect x={0} y={top - 6} width={WIDTH} height={8} fill={gold} />
       <path d={shape.posts} fill={dark(gold, 0.1)} />
     </g>

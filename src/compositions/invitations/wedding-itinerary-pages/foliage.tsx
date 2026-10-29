@@ -340,7 +340,7 @@ export const Lawn = ({ art, top, seed }: { art: Art; top: number; seed: number }
   });
   return (
     <g>
-      <rect x={0} y={top} width={WIDTH} height={HEIGHT - top + 80} fill={fill(art, 'lawn')} />
+      <rect x={0} y={top} width={WIDTH} height={HEIGHT - top + 200} fill={fill(art, 'lawn')} />
       <path d={grass.dim} stroke={dark(art.leaf.lawn, 0.2)} strokeWidth={1.4} fill="none" />
       <path d={grass.lit} stroke={light(art.leaf.lawn, 0.22)} strokeWidth={1.2} fill="none" />
     </g>

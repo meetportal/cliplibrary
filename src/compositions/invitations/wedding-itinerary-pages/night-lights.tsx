@@ -27,7 +27,7 @@ export const Stars = ({ art, count, bottom }: { art: Art; count: number; bottom:
   return (
     <g>
       {shape.dots.map((dots, group) => {
-        const glow = 0.75 + 0.25 * Math.sin((art.frame / 46) * TAU + group * 1.7) * art.twinkle;
+        const glow = 0.65 + 0.35 * Math.sin((art.frame / 46) * TAU + group * 1.7) * art.twinkle;
         return (
           <g key={group} opacity={glow}>
             <path d={dots} fill={light(art.decor.crystal, 0.3)} />

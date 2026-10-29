@@ -7,7 +7,7 @@ import { GardenDinnerScene } from './scene-dinner';
 import { HaldiLoungeScene } from './scene-haldi';
 import { MandapScene } from './scene-mandap';
 import { PavilionsScene } from './scene-pavilions';
-import { cameraZoom, Sky, type Stage } from './stage';
+import { cameraDrift, Sky, type Stage } from './stage';
 import type { ScenePage } from './timeline';
 
 const SCENES: Record<ItineraryScene, (props: { stage: Stage }) => ReactNode> = {
@@ -52,7 +52,7 @@ export const Scenery = ({
       <ArtDefs art={art} />
       {look.showBackdrop ? <Sky art={art} wash={look.wash} /> : null}
       <g transform={`translate(0 ${layout.horizon})`}>
-        <g transform={cameraZoom(stage, opening ? 0 : scenery.zoom)}>
+        <g transform={cameraDrift(stage, opening ? 0 : scenery.drift)}>
           <Scene stage={stage} />
         </g>
       </g>

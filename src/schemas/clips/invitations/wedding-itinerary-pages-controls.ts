@@ -215,9 +215,9 @@ export const weddingItineraryPagesControls = defineControls<WeddingItineraryPage
           hint: 'Share of that distance the later scenes slide while they fade in',
         },
         {
-          path: 'scenery.zoom',
-          label: 'Settle zoom',
-          hint: 'Extra zoom each later scene eases out of. 0 turns it off',
+          path: 'scenery.drift',
+          label: 'Settle drift',
+          hint: 'In pixels. Each later scene rises this far while it fades in. 0 turns it off',
         },
         {
           path: 'scenery.sway',
@@ -285,9 +285,13 @@ export const weddingItineraryPagesControls = defineControls<WeddingItineraryPage
         {
           path: 'layout.textTop',
           label: 'Text area top',
-          hint: 'In pixels. Each page centres its text between top and bottom',
+          hint: 'In pixels. The cover and families pages hang from here; event and closing pages centre between top and bottom',
         },
-        { path: 'layout.textBottom', label: 'Text area bottom', hint: 'In pixels' },
+        {
+          path: 'layout.textBottom',
+          label: 'Text area bottom',
+          hint: 'In pixels. Only event and closing pages use it',
+        },
         { path: 'layout.blockGap', label: 'Gap between groups', hint: 'In pixels' },
       ],
     },

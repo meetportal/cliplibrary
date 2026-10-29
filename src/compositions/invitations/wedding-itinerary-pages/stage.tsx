@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { settle, tween } from '../../promo/timing';
+import { pixelTween, settle, tween } from '../../promo/timing';
 import { type Art, fill, gid } from './art';
 import { dark, ellipsePath, HEIGHT, Linear, light, memo, mix, random, WIDTH } from './paint';
 
@@ -13,8 +13,6 @@ export type Stage = {
 type From = 'bottom' | 'top' | 'left' | 'right' | 'fade';
 
 const STAGGER = 0.14;
-
-const RASTER_GUARD = 0.002;
 
 export const Layer = ({
   stage,
@@ -31,7 +29,12 @@ export const Layer = ({
 }) => {
   const begin = order * stage.frames * STAGGER;
   const away = tween(stage.local, [begin, begin + stage.frames], [1, 0], settle);
-  const offset = distance * stage.build * away;
+  const offset = pixelTween(
+    stage.local,
+    [begin, begin + stage.frames],
+    [distance * stage.build, 0],
+    settle,
+  );
   const x = from === 'left' ? -offset : from === 'right' ? offset : 0;
   const y = from === 'bottom' || from === 'fade' ? offset : from === 'top' ? -offset : 0;
   const opacity = from === 'fade' ? Math.min(0.999, 1 - away * Math.min(1, stage.build)) : 1;
@@ -91,8 +94,7 @@ export const Sky = ({ art, wash }: { art: Art; wash: number }) => {
   );
 };
 
-export const cameraZoom = (stage: Stage, zoom: number): string => {
-  const progress = tween(stage.local, [0, stage.frames * 1.4], [1, 0], settle);
-  const scale = 1 + RASTER_GUARD + zoom * progress;
-  return `translate(540 1340) scale(${scale.toFixed(5)}) translate(-540 -1340)`;
+export const cameraDrift = (stage: Stage, drift: number): string => {
+  const offset = pixelTween(stage.local, [0, stage.frames * 1.4], [drift, 0], settle);
+  return `translate(0 ${offset})`;
 };

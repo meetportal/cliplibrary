@@ -116,12 +116,12 @@ export const weddingItineraryPagesSchema = z.object({
     textTop: zSlider({ min: 40, max: 900 }),
     textBottom: zSlider({ min: 400, max: 1500 }),
     blockGap: zSlider({ min: 0, max: 120 }),
-    horizon: zSlider({ min: -300, max: 300 }),
+    horizon: zSlider({ min: -120, max: 300 }),
   }),
   scenery: z.object({
     build: zSlider({ min: 0, max: 2, step: 0.05 }),
     settle: zSlider({ min: 0, max: 1, step: 0.05 }),
-    zoom: zSlider({ min: 0, max: 0.2, step: 0.005 }),
+    drift: zSlider({ min: 0, max: 200 }),
     sway: zSlider({ min: 0, max: 3, step: 0.05 }),
     twinkle: zSlider({ min: 0, max: 1, step: 0.05 }),
     fireworks: z.boolean(),
@@ -282,9 +282,9 @@ export const weddingItineraryPagesDefaults: WeddingItineraryPagesProps = {
   scenery: {
     build: 1,
     settle: 0.35,
-    zoom: 0.06,
+    drift: 60,
     sway: 1,
-    twinkle: 0.6,
+    twinkle: 0.9,
     fireworks: true,
   },
   timing: {
