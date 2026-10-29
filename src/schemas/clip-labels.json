@@ -5963,5 +5963,88 @@
       "shaadi",
       "vertical"
     ]
+  },
+  "gold-monogram-invite": {
+    "summary": "A royal black and gold wedding invitation: a thin gold mandala draws itself ring by ring, half off the left edge, and turns slowly while \"Two hearts, one promise, and a story we will write together, forever.\" rises in word by word with the last phrase in gold script. The quote fades for \"The wedding of\" and a gold S and R monogram joined by a heart, drawn as outlines inside a double ring, filled with gold and crossed by one glint of light, with \"Sana & Reyansh\" in script and gold dust rising. The monogram then shrinks to the left as three event rows (Mehendi, Sangeet, Wedding) with dates, times, venues and small gold dividers reveal on the right.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Gold mandala rings start drawing on at the left edge over a warm black backdrop"
+      },
+      {
+        "at": 0.6,
+        "what": "The quote rises in word by word on the right, ending in gold script"
+      },
+      {
+        "at": 5.0,
+        "what": "Quote fades; \"The wedding of\" appears and the double ring and S and R initials draw as gold outlines"
+      },
+      {
+        "at": 7.5,
+        "what": "Initials and heart fill with gold, Sana & Reyansh fades in and gold dust drifts up"
+      },
+      {
+        "at": 8.7,
+        "what": "A soft sweep of light glints once across the monogram"
+      },
+      {
+        "at": 10.6,
+        "what": "The monogram shrinks to the left while Mehendi, Sangeet and Wedding rows reveal one after another with dividers"
+      },
+      {
+        "at": 14.2,
+        "what": "Everything holds, then fades out"
+      }
+    ],
+    "visuals": [
+      "warm black backdrop with dark edges",
+      "thin line gold mandala half off the left edge",
+      "serif quote with a gold script phrase",
+      "gold serif monogram with a heart in a double ring",
+      "gold script couple names",
+      "event schedule with script titles and gold diamond dividers",
+      "tiny rising gold dust"
+    ],
+    "motion": [
+      "line art drawing on ring by ring",
+      "slow mandala rotation",
+      "word by word rise and fade",
+      "outline then fill letter reveal",
+      "single light glint sweep",
+      "monogram shrink and slide aside",
+      "staggered row reveals"
+    ],
+    "mood": ["luxurious", "elegant", "festive", "calm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "indian wedding video invitation",
+      "save the date with event schedule",
+      "mehendi sangeet and wedding invite",
+      "engagement or anniversary announcement",
+      "monogram reveal for a couple"
+    ],
+    "editable": [
+      "quote text and its script phrase",
+      "two initials, names and the line above",
+      "event list with name, date, time and venue",
+      "script and serif fonts",
+      "gold, text and background colours",
+      "mandala spin, size, position and line width",
+      "gold dust count, size and rise speed",
+      "beat timings and the monogram position beside the events"
+    ],
+    "palette": ["#140f0b", "#050403", "#f4e4b8", "#a9792f", "#f3ebdc", "#b8ab92"],
+    "keywords": [
+      "wedding invitation",
+      "gold monogram",
+      "mandala",
+      "royal invite",
+      "black and gold",
+      "mehendi",
+      "sangeet",
+      "event schedule",
+      "initials",
+      "luxury"
+    ]
   }
 }

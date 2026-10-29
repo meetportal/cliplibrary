@@ -26,6 +26,7 @@ export * from './clips/hand-drawn/doodle-arrows';
 export * from './clips/hand-drawn/handwritten-note';
 export * from './clips/hand-drawn/scribble-caption';
 export * from './clips/invitations/botanical-save-the-date';
+export * from './clips/invitations/gold-monogram-invite';
 export * from './clips/invitations/miniature-panorama';
 export * from './clips/invitations/wedding-itinerary-pages';
 export * from './clips/kinetic-type/anniversary-kinetic';

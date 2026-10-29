@@ -6,6 +6,12 @@ import {
 } from './botanical-save-the-date';
 import { botanicalSaveTheDateControls } from './botanical-save-the-date-controls';
 import {
+  goldMonogramInviteDefaults,
+  goldMonogramInviteMeta,
+  goldMonogramInviteSchema,
+} from './gold-monogram-invite';
+import { goldMonogramInviteControls } from './gold-monogram-invite-controls';
+import {
   miniaturePanoramaDefaults,
   miniaturePanoramaMeta,
   miniaturePanoramaSchema,
@@ -25,6 +31,13 @@ export const invitationsClips: ClipModule[] = [
     defaults: botanicalSaveTheDateDefaults,
     meta: botanicalSaveTheDateMeta,
     controls: botanicalSaveTheDateControls,
+  },
+  {
+    id: 'gold-monogram-invite',
+    schema: goldMonogramInviteSchema,
+    defaults: goldMonogramInviteDefaults,
+    meta: goldMonogramInviteMeta,
+    controls: goldMonogramInviteControls,
   },
   {
     id: 'miniature-panorama',
