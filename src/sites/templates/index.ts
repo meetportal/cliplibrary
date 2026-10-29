@@ -1,6 +1,8 @@
 import type { SiteTemplate } from '../types';
 import { emeraldRoseDefaults, emeraldRoseMeta, emeraldRoseSchema } from './weddings/emerald-rose';
 import { emeraldRoseControls } from './weddings/emerald-rose-controls';
+import { inkAndLaceDefaults, inkAndLaceMeta, inkAndLaceSchema } from './weddings/ink-and-lace';
+import { inkAndLaceControls } from './weddings/ink-and-lace-controls';
 
 export const SITE_TEMPLATES: readonly SiteTemplate[] = [
   {
@@ -14,6 +16,19 @@ export const SITE_TEMPLATES: readonly SiteTemplate[] = [
       return parsed.success
         ? `${parsed.data.couple.firstName} & ${parsed.data.couple.secondName}`
         : emeraldRoseMeta.title;
+    },
+  },
+  {
+    id: inkAndLaceMeta.id,
+    meta: inkAndLaceMeta,
+    schema: inkAndLaceSchema,
+    defaults: inkAndLaceDefaults,
+    controls: inkAndLaceControls,
+    headline: (content) => {
+      const parsed = inkAndLaceSchema.safeParse(content);
+      return parsed.success
+        ? `${parsed.data.couple.firstName} & ${parsed.data.couple.secondName}`
+        : inkAndLaceMeta.title;
     },
   },
 ];
