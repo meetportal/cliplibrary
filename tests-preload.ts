@@ -56,3 +56,5 @@ mock.module('@clerk/nextjs', () => ({
   useUser: () => ({ isLoaded: true, isSignedIn: true, user: signedInUser }),
   useClerk: () => ({ loaded: true, signOut: () => Promise.resolve() }),
 }));
+
+mock.module('@/db/client', () => import('./tests/test-database'));
