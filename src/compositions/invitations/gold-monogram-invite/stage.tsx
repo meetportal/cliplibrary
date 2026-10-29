@@ -172,6 +172,11 @@ export const StageAct = ({
                 serif={serif}
                 center={center}
                 glint={monogram.glint && glint > -0.2 && glint < 1.2}
+                heart={
+                  stage.veil
+                    ? tween(frame, [STAGE.lift[0] + 80, STAGE.lift[0] + 116], [0, 1], smooth)
+                    : 1
+                }
               />
             </g>
             <Plaque

@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import type { OrnamentLayer } from './ornament';
 
 export const OrnamentArt = ({
@@ -37,5 +36,3 @@ export const OrnamentArt = ({
     )}
   </g>
 );
-
-export const useLayers = (build: () => OrnamentLayer[]): OrnamentLayer[] => useMemo(build, [build]);

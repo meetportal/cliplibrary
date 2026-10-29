@@ -12,7 +12,7 @@ const SWASH =
 const CURL =
   'M 318 -18 C 410 -130 534 -112 536 -40 C 538 14 470 26 446 -8 C 428 -34 452 -66 486 -58';
 
-export const EdgeShade = ({ color, reach }: { color: string; reach: number }) => {
+const EdgeShade = ({ color, reach }: { color: string; reach: number }) => {
   const sideId = useSvgId('shade-side');
   const topId = useSvgId('shade-top');
   const stops = [0, 0.1, 0.24, 0.42, 0.62, 0.82, 1];

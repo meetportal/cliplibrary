@@ -1,4 +1,4 @@
-import { accelerate, settle, smooth, tween } from '../../promo/timing';
+import { settle, smooth, tween } from '../../promo/timing';
 
 export const QUOTE = {
   fadeIn: [0, 24] as [number, number],
@@ -58,19 +58,6 @@ export const fadeIn = (frame: number, start: number, length = 30): number =>
 
 export const fadeOut = (frame: number, [from, to]: [number, number]): number =>
   tween(frame, [from, to], [1, 0], smooth);
-
-export const visible = (
-  frame: number,
-  start: number,
-  length: number,
-  out: [number, number],
-): number => Math.min(fadeIn(frame, start, length), fadeOut(frame, out));
-
-export const blurIn = (frame: number, start: number, length = 30, radius = 10): number =>
-  tween(frame, [start, start + length], [radius, 0], settle);
-
-export const blurOut = (frame: number, [from, to]: [number, number], radius = 10): number =>
-  tween(frame, [from, to], [0, radius], accelerate);
 
 export const progress = (frame: number, [from, to]: [number, number], easing = smooth): number =>
   tween(frame, [from, to], [0, 1], easing);

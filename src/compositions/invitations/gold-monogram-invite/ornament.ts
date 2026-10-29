@@ -16,11 +16,7 @@ const plus = ([ax, ay]: Point, [bx, by]: Point, scale = 1): Point => [
   ay + by * scale,
 ];
 
-export const around = (
-  count: number,
-  offset: number,
-  build: (angle: number, index: number) => string,
-) =>
+const around = (count: number, offset: number, build: (angle: number, index: number) => string) =>
   Array.from({ length: count }, (_, index) =>
     build(offset + (index / count) * Math.PI * 2 - Math.PI / 2, index),
   ).join(' ');
@@ -28,20 +24,14 @@ export const around = (
 export const circleAt = ([cx, cy]: Point, radius: number): string =>
   `M ${fixed(cx + radius)} ${fixed(cy)} A ${fixed(radius)} ${fixed(radius)} 0 1 0 ${fixed(cx - radius)} ${fixed(cy)} A ${fixed(radius)} ${fixed(radius)} 0 1 0 ${fixed(cx + radius)} ${fixed(cy)} Z`;
 
-export const ring = (radius: number): string => circleAt([0, 0], radius);
+const ring = (radius: number): string => circleAt([0, 0], radius);
 
-export const lobe = (
-  center: Point,
-  angle: number,
-  r0: number,
-  r1: number,
-  spread: number,
-): string => {
+const lobe = (center: Point, angle: number, r0: number, r1: number, spread: number): string => {
   const reach = r1 + (r1 - r0) * 0.18;
   return `M ${pt(polar(r0, angle - spread, center))} C ${pt(polar(reach, angle - spread * 1.5, center))} ${pt(polar(reach, angle + spread * 1.5, center))} ${pt(polar(r0, angle + spread, center))}`;
 };
 
-export const pointed = (
+const pointed = (
   center: Point,
   angle: number,
   r0: number,
@@ -67,7 +57,7 @@ export const teardrop = (base: Point, angle: number, length: number, width: numb
   return `M ${pt(base)} C ${pt(plus(shoulder, normal, width * 1.25))} ${pt(plus(end, normal, width * 0.95))} ${pt(end)} C ${pt(plus(end, normal, -width * 0.95))} ${pt(plus(shoulder, normal, -width * 1.25))} ${pt(base)} Z`;
 };
 
-export const smoothPath = (points: Point[]): string => {
+const smoothPath = (points: Point[]): string => {
   const [first, ...rest] = points;
   if (first === undefined) {
     return '';
@@ -101,7 +91,7 @@ export const flower = (center: Point, radius: number, petals: number, rotation =
     lobe(center, angle, radius * 0.28, radius, (Math.PI / petals) * 0.82),
   );
 
-export const dots = (radius: number, count: number, size: number, offset = 0): string =>
+const dots = (radius: number, count: number, size: number, offset = 0): string =>
   around(count, offset, (angle) => circleAt(polar(radius, angle), size));
 
 const step = (count: number) => Math.PI / count;

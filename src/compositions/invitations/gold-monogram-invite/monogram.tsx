@@ -12,6 +12,7 @@ export const MonogramLetters = ({
   serif,
   center,
   glint,
+  heart,
 }: {
   monogram: GoldMonogramInviteProps['monogram'];
   gold: Gold;
@@ -19,12 +20,13 @@ export const MonogramLetters = ({
   serif: string;
   center: Point;
   glint: boolean;
+  heart: number;
 }) => {
   const clipId = useSvgId('monogram-clip');
   const size = monogram.size;
   const [cx, cy] = center;
   const baseline = cy + size * 0.35;
-  const letters = (fill: string, stroke?: string, strokeWidth?: number) => (
+  const letters = (fill: string, stroke?: string, strokeWidth?: number, crest = heart) => (
     <g
       style={{
         fontFamily: serif,
@@ -45,8 +47,8 @@ export const MonogramLetters = ({
         <tspan>{monogram.first}</tspan>
         <tspan dy={-size * 0.04}>{monogram.second}</tspan>
       </text>
-      {monogram.showHeart ? (
-        <path d={heartPath([cx - size * 0.06, cy - size * 0.6], 0, size * 0.1)} />
+      {monogram.showHeart && crest > 0 ? (
+        <path d={heartPath([cx, cy - size * 0.86], 0, size * 0.07)} opacity={crest} />
       ) : null}
     </g>
   );
@@ -54,7 +56,7 @@ export const MonogramLetters = ({
   return (
     <g>
       <defs>
-        <clipPath id={clipId}>{letters('#ffffff')}</clipPath>
+        <clipPath id={clipId}>{letters('#ffffff', undefined, undefined, 0)}</clipPath>
       </defs>
       <g transform={`translate(${depth * 0.8} ${depth * 2.4})`} opacity={0.55}>
         {letters('#000000')}
