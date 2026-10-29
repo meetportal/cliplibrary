@@ -46,6 +46,7 @@ export const World = ({
           <filter
             id={ids.id('blur')}
             filterUnits="userSpaceOnUse"
+            colorInterpolationFilters="sRGB"
             x={-view.pushX - margin}
             y={-view.pushY - margin}
             width={FRAME_WIDTH + margin * 2}
