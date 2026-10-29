@@ -1,7 +1,7 @@
 import { type Art, type BushTone, bushColors, fill } from './art';
+import { type BushKind, type BushTexture, bushTexture } from './bush-texture';
 import {
   between,
-  circlePath,
   dark,
   f,
   HEIGHT,
@@ -15,42 +15,30 @@ import {
   WIDTH,
 } from './paint';
 
-type BushShape = { mass: string; shade: string; middle: string; lit: string; spots: string };
+type BushShape = BushTexture & { mass: string };
 
-const bushShape = (x: number, y: number, w: number, h: number, seed: number): BushShape =>
-  memo(`bush|${x}|${y}|${w}|${h}|${seed}`, () => {
+const bushShape = (
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  seed: number,
+  kind: BushKind,
+): BushShape =>
+  memo(`bush|${x}|${y}|${w}|${h}|${seed}|${kind}`, () => {
     const rand = random(seed);
     const bumps = Math.max(3, Math.round(w / Math.max(40, h * 0.42)));
     const mass = moundPath(x, y, w, h, rand, bumps);
-    const size = Math.min(1.6, Math.max(0.6, h / 120));
-    const count = Math.min(520, Math.max(30, Math.round((w * h) / 120)));
-    let shade = '';
-    let lit = '';
-    let middle = '';
-    let spots = '';
-    for (let index = 0; index < count; index++) {
-      const across = between(rand, -0.47, 0.47);
-      const reach = h * Math.sqrt(Math.max(0, 1 - (across * 2) ** 2));
-      const up = rand();
-      const px = x + across * w;
-      const py = y - up * reach * 0.92 - 4;
-      const angle = between(rand, 0, Math.PI * 2);
-      const length = between(rand, 8, 15) * size;
-      const leaf = leafPath(px, py, length, length * 0.36, angle);
-      const band = up + between(rand, -0.25, 0.25);
-      if (band > 0.62) {
-        lit += leaf;
-      } else if (band > 0.3) {
-        middle += leaf;
-      } else {
-        shade += leaf;
-      }
-      if (index % 9 === 0) {
-        spots += circlePath(px + 3, py - 2, 1.6 * size);
-      }
-    }
-    return { mass, shade, middle, lit, spots };
+    return { mass, ...bushTexture(kind, { x, y, w, h, rand }) };
   });
+
+const KIND_OF_TONE: Record<BushTone, BushKind> = {
+  deep: 'rosette',
+  dark: 'rosette',
+  mid: 'leafy',
+  olive: 'scales',
+  light: 'cone',
+};
 
 export const Bush = ({
   art,
@@ -61,6 +49,7 @@ export const Bush = ({
   tone,
   seed,
   bloom,
+  kind,
 }: {
   art: Art;
   x: number;
@@ -70,16 +59,39 @@ export const Bush = ({
   tone: BushTone;
   seed: number;
   bloom?: string | undefined;
+  kind?: BushKind | undefined;
 }) => {
-  const shape = bushShape(x, y, w, h, seed);
+  const shape = bushShape(x, y, w, h, seed, kind ?? KIND_OF_TONE[tone]);
   const [shadow, base, top] = bushColors(art, tone);
+  const middle = mix(base, top, 0.35);
   return (
     <g>
       <path d={shape.mass} fill={fill(art, `bush-${tone}`)} />
-      <path d={shape.shade} fill={shadow} opacity={0.75} />
-      <path d={shape.middle} fill={mix(base, top, 0.35)} opacity={0.8} />
-      <path d={shape.lit} fill={top} opacity={0.85} />
-      {bloom ? <path d={shape.spots} fill={bloom} /> : null}
+      {shape.darkBase ? <path d={shape.mass} fill={shadow} opacity={0.55} /> : null}
+      {shape.shade ? <path d={shape.shade} fill={shadow} opacity={0.75} /> : null}
+      {shape.stroked ? (
+        <>
+          <path
+            d={shape.middle}
+            fill="none"
+            stroke={middle}
+            strokeWidth={2.6}
+            strokeLinejoin="round"
+          />
+          <path d={shape.lit} fill="none" stroke={top} strokeWidth={2.6} strokeLinejoin="round" />
+        </>
+      ) : (
+        <>
+          <path d={shape.middle} fill={middle} opacity={0.9} />
+          <path d={shape.lit} fill={top} opacity={0.9} />
+        </>
+      )}
+      {shape.lines ? (
+        <path d={shape.lines} stroke={shadow} strokeWidth={1.4} fill="none" opacity={0.7} />
+      ) : null}
+      {shape.spots ? (
+        <path d={shape.spots} fill={bloom ?? shadow} opacity={bloom ? 1 : 0.6} />
+      ) : null}
     </g>
   );
 };
@@ -101,11 +113,15 @@ export const Mist = ({
   seed: number;
   opacity?: number;
 }) => {
-  const shape = memo(`mist|${x}|${y}|${w}|${h}|${seed}`, () => {
-    const rand = random(seed);
-    return moundPath(x, y, w, h, rand, Math.max(3, Math.round(w / (h * 0.32))));
-  });
-  return <path d={shape} fill={fill(art, 'mist')} opacity={opacity} />;
+  const shape = bushShape(x, y, w, h, seed + 500, 'rosette');
+  return (
+    <g opacity={opacity}>
+      <path d={shape.mass} fill={fill(art, 'mist')} />
+      <path d={shape.mass} fill={dark(art.leaf.mist, 0.15)} opacity={0.35} />
+      <path d={shape.middle} fill={light(art.leaf.mist, 0.08)} opacity={0.8} />
+      <path d={shape.lit} fill={light(art.leaf.mist, 0.28)} opacity={0.8} />
+    </g>
+  );
 };
 
 export const Tree = ({
@@ -200,7 +216,7 @@ export const Palm = ({
     <g>
       <path d={shape.trunk} fill={fill(art, 'trunk')} />
       <path d={shape.rings} fill="none" stroke={dark(leaf.trunk, 0.35)} strokeWidth={1.6} />
-      <g transform={`rotate(${f(angle)} ${f(x + lean)} ${f(y - height)})`}>
+      <g transform={`rotate(${angle.toFixed(3)} ${f(x + lean)} ${f(y - height)})`}>
         {shape.fronds.map((frond, index) => (
           <path
             key={index}
@@ -285,7 +301,7 @@ export const BigLeaf = ({
     };
   });
   return (
-    <g transform={`translate(${f(x)} ${f(y)}) rotate(${f(rotation)})`}>
+    <g transform={`translate(${f(x)} ${f(y)}) rotate(${rotation.toFixed(3)})`}>
       <path d={shape.blade} fill={tone} />
       <path
         d={`M0 0C${f(length * 0.3)} ${f(-width * 0.5)} ${f(length * 0.75)} ${f(-width * 0.45)} ${f(length)} 0C${f(length * 0.7)} ${f(-width * 0.1)} ${f(length * 0.3)} ${f(-width * 0.08)} 0 0Z`}

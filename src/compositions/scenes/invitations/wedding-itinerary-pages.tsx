@@ -58,7 +58,7 @@ const WeddingItineraryPages = (props: WeddingItineraryPagesProps) => {
                   props={props}
                   top={top}
                   frame={frame}
-                  start={page.start + 4}
+                  start={page.start + 2}
                   exit={eraseStart(page, timing)}
                 />
               ),

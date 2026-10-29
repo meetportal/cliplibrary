@@ -118,7 +118,7 @@ export const Vine = ({
   });
   const angle = sway(art.frame, 140, phase, 2.2 * art.sway);
   return (
-    <g transform={`translate(${f(x)} ${f(y)}) rotate(${f(angle)})`}>
+    <g transform={`translate(${f(x)} ${f(y)}) rotate(${angle.toFixed(3)})`}>
       <path d={shape.stem} stroke={art.leaf.trunk} strokeWidth={2.2 * size} fill="none" />
       <path d={shape.leaves} fill={art.leaf.dark} />
       <path d={shape.lit} fill={art.leaf.mid} />

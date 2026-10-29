@@ -14,6 +14,7 @@ export type TextPage = {
   look: ItineraryPageLook;
   rows: Row[];
   cover: boolean;
+  topAligned: boolean;
 };
 
 export type ScenePage = { key: string; start: number; end: number; look: ItineraryPageLook };
@@ -81,10 +82,11 @@ export const schedule = (props: Props): { scenes: ScenePage[]; texts: TextPage[]
       key: 'cover',
       start: 0,
       end: familyStart,
-      typeStart: Math.round(timing.titleDelay * 0.6),
+      typeStart: Math.round(timing.titleDelay * 0.4),
       look: cover,
       rows: coverRows,
       cover: true,
+      topAligned: true,
     },
     {
       key: 'families',
@@ -94,6 +96,7 @@ export const schedule = (props: Props): { scenes: ScenePage[]; texts: TextPage[]
       look: cover,
       rows: familyRows,
       cover: false,
+      topAligned: true,
     },
     ...events.map((event, index) => {
       const start = firstEvent + index * timing.eventFrames;
@@ -112,6 +115,7 @@ export const schedule = (props: Props): { scenes: ScenePage[]; texts: TextPage[]
           ]),
         ],
         cover: false,
+        topAligned: false,
       };
     }),
     {
@@ -126,6 +130,7 @@ export const schedule = (props: Props): { scenes: ScenePage[]; texts: TextPage[]
         rowsOf(0, 'regular', closing.rsvp),
       ]),
       cover: false,
+      topAligned: false,
     },
   ];
   return { scenes, texts };

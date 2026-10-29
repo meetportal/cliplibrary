@@ -100,7 +100,7 @@ export const RoseCorner = ({ stage, order }: { stage: Stage; order: number }) =>
       />
       <Vine art={art} x={120} y={-20} length={170} bend={-20} seed={5} phase={1.1} />
       <Vine art={art} x={210} y={-20} length={210} bend={24} seed={8} phase={2.1} />
-      <Vine art={art} x={330} y={-20} length={120} bend={10} seed={11} phase={0.7} size={0.8} />
+      <Vine art={art} x={300} y={-20} length={90} bend={10} seed={11} phase={0.7} size={0.8} />
       {TOP_ROSES.map((rose, index) => (
         <Rose key={index} x={rose.x} y={rose.y} r={rose.r} color={art.bloom.rose} />
       ))}
@@ -113,26 +113,26 @@ export const PavilionsScene = ({ stage }: { stage: Stage }) => {
   return (
     <>
       <Layer stage={stage} order={0} from="fade" distance={90}>
-        <Mist art={art} x={170} y={1580} w={560} h={360} seed={2} />
-        <Mist art={art} x={900} y={1580} w={560} h={320} seed={4} />
-        <Mist art={art} x={560} y={1580} w={420} h={250} seed={6} opacity={0.5} />
+        <Mist art={art} x={170} y={1580} w={600} h={560} seed={2} />
+        <Mist art={art} x={900} y={1580} w={600} h={500} seed={4} />
+        <Mist art={art} x={560} y={1580} w={460} h={380} seed={6} opacity={0.5} />
       </Layer>
       <Layer stage={stage} order={1.5} from="fade" distance={120}>
-        <Tree art={art} x={70} y={1580} trunk={90} w={240} h={300} tone="mid" seed={7} />
+        <Tree art={art} x={70} y={1580} trunk={150} w={260} h={400} tone="mid" seed={7} />
         <Bush art={art} x={300} y={1580} w={280} h={190} tone="dark" seed={8} />
         <Bush art={art} x={560} y={1580} w={300} h={240} tone="deep" seed={9} />
         <Bush art={art} x={800} y={1580} w={280} h={200} tone="dark" seed={10} />
-        <Tree art={art} x={1010} y={1580} trunk={70} w={260} h={260} tone="olive" seed={12} />
+        <Tree art={art} x={1010} y={1580} trunk={120} w={280} h={380} tone="olive" seed={12} />
         <Agave art={art} x={960} y={1585} size={150} seed={13} />
       </Layer>
       <Layer stage={stage} order={2.5} from="left" distance={420}>
-        <Palm art={art} x={60} y={1590} height={560} lean={60} seed={14} />
-        <Palm art={art} x={190} y={1590} height={400} lean={-30} seed={15} phase={1.4} />
+        <Palm art={art} x={50} y={1590} height={470} lean={50} seed={14} />
+        <Palm art={art} x={170} y={1590} height={340} lean={-24} seed={15} phase={1.4} />
       </Layer>
       <Layer stage={stage} order={0} from="bottom" distance={150}>
-        <Chhatri art={art} x={540} y={1575} scale={1} />
-        <Chhatri art={art} x={318} y={1588} scale={0.56} />
-        <Chhatri art={art} x={762} y={1588} scale={0.56} />
+        <Chhatri art={art} x={540} y={1578} scale={1.18} />
+        <Chhatri art={art} x={268} y={1592} scale={0.68} />
+        <Chhatri art={art} x={812} y={1592} scale={0.68} />
       </Layer>
       <Layer stage={stage} order={1} from="bottom" distance={380}>
         <Lawn art={art} top={1598} seed={16} />

@@ -178,7 +178,7 @@ export const BirdCage = ({
     return path;
   });
   return (
-    <g transform={`translate(${f(x)} -10) rotate(${f(angle)})`}>
+    <g transform={`translate(${f(x)} -10) rotate(${angle.toFixed(3)})`}>
       <path d={`M0 0L0 ${chain}`} stroke={wire} strokeWidth={2} strokeDasharray="6 3" />
       <g transform={`translate(0 ${chain + 68 * size}) scale(${size})`}>
         <path
@@ -246,7 +246,7 @@ export const Cascade = ({
   const angle = sway(art.frame, 130, phase, 2 * art.sway);
   const yellow = mix(art.bloom.marigold, '#fff27a', 0.45);
   return (
-    <g transform={`translate(${f(x)} 0) rotate(${f(angle)})`}>
+    <g transform={`translate(${f(x)} 0) rotate(${angle.toFixed(3)})`}>
       <path d={shape.leaves} fill={art.leaf.mid} />
       <path d={shape.blooms} fill={dark(yellow, 0.12)} />
       <path d={shape.lit} fill={light(yellow, 0.3)} />

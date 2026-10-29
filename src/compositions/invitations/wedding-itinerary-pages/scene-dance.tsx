@@ -67,8 +67,8 @@ export const DanceFloorScene = ({ stage }: { stage: Stage }) => {
           fill={hills}
           opacity={0.75}
         />
-        <Mist art={art} x={200} y={1580} w={520} h={300} seed={91} opacity={0.6} />
-        <Mist art={art} x={860} y={1580} w={520} h={280} seed={92} opacity={0.6} />
+        <Mist art={art} x={200} y={1580} w={560} h={460} seed={91} opacity={0.6} />
+        <Mist art={art} x={860} y={1580} w={560} h={430} seed={92} opacity={0.6} />
       </Layer>
       <Fireworks art={art} x={190} y={560} size={110} period={74} phase={10} />
       <Fireworks art={art} x={890} y={500} size={130} period={86} phase={44} />
@@ -132,9 +132,9 @@ export const DanceFloorScene = ({ stage }: { stage: Stage }) => {
         <StringLights art={art} from={[540, 40]} to={[1100, 30]} sag={60} phase={1} />
         <StringLights art={art} from={[-20, 150]} to={[360, 120]} sag={50} phase={2} />
         <StringLights art={art} from={[720, 120]} to={[1100, 150]} sag={50} phase={3} />
-        <Chandelier art={art} x={540} drop={30} scale={1.15} phase={0} />
-        <Chandelier art={art} x={190} drop={80} scale={0.7} phase={1.2} />
-        <Chandelier art={art} x={890} drop={80} scale={0.7} phase={2.4} />
+        <Chandelier art={art} x={540} drop={14} scale={1.55} phase={0} />
+        <Chandelier art={art} x={180} drop={70} scale={0.85} phase={1.2} />
+        <Chandelier art={art} x={900} drop={70} scale={0.85} phase={2.4} />
       </Layer>
       <Layer stage={stage} order={3} from="left" distance={240}>
         <Vine art={art} x={30} y={-20} length={560} bend={30} seed={102} phase={0.5} size={1.1} />

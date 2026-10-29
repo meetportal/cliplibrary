@@ -31,8 +31,8 @@ export const HaldiLoungeScene = ({ stage }: { stage: Stage }) => {
   return (
     <>
       <Layer stage={stage} order={0} from="fade" distance={80}>
-        <Mist art={art} x={200} y={1600} w={560} h={420} seed={51} />
-        <Mist art={art} x={760} y={1600} w={600} h={380} seed={52} opacity={0.6} />
+        <Mist art={art} x={200} y={1700} w={620} h={700} seed={51} />
+        <Mist art={art} x={760} y={1700} w={640} h={660} seed={52} opacity={0.6} />
       </Layer>
       <Layer stage={stage} order={1} from="left" distance={260}>
         <Palm art={art} x={80} y={1640} height={440} lean={40} seed={53} />
@@ -40,23 +40,14 @@ export const HaldiLoungeScene = ({ stage }: { stage: Stage }) => {
       </Layer>
       <Layer stage={stage} order={1} from="right" distance={260}>
         <Agave art={art} x={880} y={1630} size={230} seed={55} pale={0.65} />
-        <path d="M985 1720L985 260L1030 240L1030 1720Z" fill={fill(art, 'trunk')} />
-        {[300, 520, 740, 960, 1180, 1400].map((y, index) => (
-          <Bush
-            key={y}
-            art={art}
-            x={1020}
-            y={y + 120}
-            w={170}
-            h={230}
-            tone={index % 2 ? 'olive' : 'dark'}
-            seed={60 + index}
-          />
-        ))}
+        <path d="M1000 1720L1004 0L1046 0L1060 1720Z" fill={fill(art, 'trunk')} />
+        <Bush art={art} x={1040} y={1720} w={210} h={1800} tone="dark" seed={60} kind="rosette" />
+        <Vine art={art} x={960} y={300} length={420} bend={-18} seed={61} phase={0.6} />
+        <Vine art={art} x={990} y={760} length={300} bend={-14} seed={62} phase={2.1} />
       </Layer>
       <Layer stage={stage} order={2} from="bottom" distance={220}>
-        <Tree art={art} x={320} y={1700} trunk={40} w={300} h={250} tone="deep" seed={56} />
-        <Tree art={art} x={760} y={1700} trunk={40} w={330} h={290} tone="olive" seed={57} />
+        <Tree art={art} x={320} y={1700} trunk={60} w={320} h={340} tone="deep" seed={56} />
+        <Tree art={art} x={760} y={1700} trunk={60} w={340} h={380} tone="olive" seed={57} />
         <Bush
           art={art}
           x={560}
@@ -72,10 +63,12 @@ export const HaldiLoungeScene = ({ stage }: { stage: Stage }) => {
         <Lawn art={art} top={1690} seed={59} />
       </Layer>
       <Layer stage={stage} order={3} from="bottom" distance={260}>
-        <GiftStack art={art} x={540} y={1700} />
-        <Sofa art={art} x={540} y={1840} />
-        <GiftStack art={art} x={300} y={1860} scale={0.8} boxes={SIDE_BOXES} />
-        <GiftStack art={art} x={790} y={1860} scale={0.7} boxes={SIDE_BOXES} />
+        <GiftStack art={art} x={540} y={1690} scale={1.2} />
+        <g transform="translate(540 1850) scale(1.22) translate(-540 -1850)">
+          <Sofa art={art} x={540} y={1850} />
+        </g>
+        <GiftStack art={art} x={250} y={1880} scale={0.95} boxes={SIDE_BOXES} />
+        <GiftStack art={art} x={840} y={1880} scale={0.85} boxes={SIDE_BOXES} />
       </Layer>
       <Layer stage={stage} order={4} from="bottom" distance={360}>
         <Bush art={art} x={110} y={1960} w={420} h={250} tone="deep" seed={70} />

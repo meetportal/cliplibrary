@@ -32,14 +32,14 @@ export const MandapScene = ({ stage }: { stage: Stage }) => {
   return (
     <>
       <Layer stage={stage} order={0} from="fade" distance={70}>
-        <Mist art={art} x={220} y={1560} w={560} h={340} seed={121} />
-        <Mist art={art} x={840} y={1560} w={560} h={320} seed={122} opacity={0.6} />
+        <Mist art={art} x={220} y={1560} w={600} h={540} seed={121} />
+        <Mist art={art} x={840} y={1560} w={600} h={500} seed={122} opacity={0.6} />
       </Layer>
       <Layer stage={stage} order={1} from="bottom" distance={200}>
-        <Tree art={art} x={140} y={1600} trunk={50} w={260} h={250} tone="olive" seed={123} />
+        <Tree art={art} x={140} y={1600} trunk={90} w={280} h={360} tone="olive" seed={123} />
         <Bush art={art} x={400} y={1600} w={300} h={200} tone="dark" seed={124} />
         <Bush art={art} x={680} y={1600} w={300} h={210} tone="deep" seed={125} />
-        <Tree art={art} x={940} y={1600} trunk={50} w={280} h={260} tone="dark" seed={126} />
+        <Tree art={art} x={940} y={1600} trunk={90} w={300} h={380} tone="dark" seed={126} />
         <Palm art={art} x={60} y={1600} height={380} lean={30} seed={127} />
         <Agave art={art} x={1010} y={1600} size={170} seed={128} />
         <Lattice art={art} top={1500} bottom={1600} />
@@ -48,7 +48,9 @@ export const MandapScene = ({ stage }: { stage: Stage }) => {
         <Lawn art={art} top={1596} seed={129} />
       </Layer>
       <Layer stage={stage} order={2.5} from="bottom" distance={260}>
-        <Mandap art={art} />
+        <g transform="translate(540 1790) scale(1.18) translate(-540 -1790)">
+          <Mandap art={art} />
+        </g>
         <Carpet art={art} />
       </Layer>
       <Layer stage={stage} order={3.5} from="bottom" distance={360}>

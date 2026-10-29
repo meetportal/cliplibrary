@@ -48,7 +48,7 @@ export const MarigoldStrand = ({
   const angle = sway(art.frame, 120, phase, 1.6 * art.sway);
   const { marigold } = art.bloom;
   return (
-    <g transform={`translate(${f(x)} -12) rotate(${f(angle)})`}>
+    <g transform={`translate(${f(x)} -12) rotate(${angle.toFixed(3)})`}>
       <path d={shape.leaves} fill={art.leaf.mid} />
       <path d={shape.orange} fill={mix(marigold, '#e05a10', 0.4)} />
       <path d={shape.yellow} fill={light(mix(marigold, '#ffe14a', 0.5), 0.1)} />
@@ -123,23 +123,26 @@ export const Mandap = ({ art }: { art: Art }) => {
       <rect x={292} y={1360} width={16} height={340} fill={gold} />
       <rect x={772} y={1360} width={16} height={340} fill={gold} />
       <path d={beads.wraps} fill={orange} />
+      {[1, -1].map((side) => (
+        <g key={side} transform={side < 0 ? 'translate(1080 0) scale(-1 1)' : undefined}>
+          <path
+            d="M300 1366C392 1392 420 1452 352 1524C372 1590 404 1650 420 1700L300 1700Z"
+            fill={`url(#${drape})`}
+            opacity={0.9}
+          />
+          <path
+            d="M312 1380C370 1410 384 1460 346 1520C360 1600 380 1650 388 1698L366 1698C352 1640 338 1580 330 1520C356 1470 350 1420 312 1392Z"
+            fill={light(decor.drape, 0.25)}
+            opacity={0.55}
+          />
+          <circle cx={352} cy={1524} r={13} fill={orange} />
+          <circle cx={344} cy={1516} r={7} fill={bloom.marigold} />
+        </g>
+      ))}
       <path
-        d="M300 1372Q330 1520 420 1560Q330 1600 300 1700L292 1700Q312 1580 300 1372Z"
+        d="M300 1368Q540 1478 780 1368L780 1388Q540 1500 300 1388Z"
         fill={`url(#${drape})`}
-      />
-      <path
-        d="M780 1372Q750 1520 660 1560Q750 1600 780 1700L788 1700Q768 1580 780 1372Z"
-        fill={`url(#${drape})`}
-      />
-      <path
-        d="M300 1380Q360 1430 400 1680L360 1690Q340 1460 300 1380Z"
-        fill={light(decor.drape, 0.15)}
-        opacity={0.6}
-      />
-      <path
-        d="M780 1380Q720 1430 680 1680L720 1690Q740 1460 780 1380Z"
-        fill={light(decor.drape, 0.15)}
-        opacity={0.6}
+        opacity={0.75}
       />
       <rect x={280} y={1350} width={520} height={20} fill={gold} />
       <rect x={280} y={1346} width={520} height={6} fill={light(gold, 0.35)} />

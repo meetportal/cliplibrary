@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { WeddingItineraryPagesProps } from '@/schemas';
-import { tween } from '../../promo/timing';
+import { smooth, tween } from '../../promo/timing';
 import { inviteScriptFonts, inviteSerifFonts } from '../fonts';
 import { eraseStart, type Row, type RowTiming, rowTimings, type TextPage } from './timeline';
 
@@ -8,11 +8,24 @@ type Props = WeddingItineraryPagesProps;
 
 const CHAR_FADE = 3;
 
+const SCRIPT_FADE = 7;
+
 const ERASE_SPREAD = 0.8;
+
+const ERASE_FADE = 5;
 
 const BLOCK_ERASE_STEP = 3;
 
-type RowFont = { family: string; size: number; weight: number; height: number; tracking: number };
+const LINE_LAG = 5;
+
+type RowFont = {
+  family: string;
+  size: number;
+  weight: number;
+  height: number;
+  tracking: number;
+  fade: number;
+};
 
 const rowFont = (row: Row, props: Props): RowFont => {
   const { type } = props;
@@ -24,6 +37,7 @@ const rowFont = (row: Row, props: Props): RowFont => {
     weight: 400,
     height: Math.round(size * 1.18),
     tracking: 0,
+    fade: SCRIPT_FADE,
   });
   const serifRow = (size: number, weight: number): RowFont => ({
     family: serif,
@@ -31,6 +45,7 @@ const rowFont = (row: Row, props: Props): RowFont => {
     weight,
     height: Math.round(size * type.lineSpacing),
     tracking: type.tracking,
+    fade: CHAR_FADE,
   });
   switch (row.style) {
     case 'title':
@@ -58,11 +73,12 @@ const charOpacity = (
   erase: number,
   eraseFrames: number,
   charFrames: number,
+  fadeFrames: number,
 ): number => {
   const since = frame - timing.start - index * charFrames;
-  const typed = since < 0 ? 0 : Math.min(1, (since + 1) / CHAR_FADE);
+  const typed = since < 0 ? 0 : Math.min(1, (since + 1) / fadeFrames);
   const goneAt = erase + (index / Math.max(1, length)) * eraseFrames * ERASE_SPREAD;
-  return typed * (1 - Math.min(1, Math.max(0, (frame - goneAt + 1) / CHAR_FADE)));
+  return typed * (1 - Math.min(1, Math.max(0, (frame - goneAt + 1) / ERASE_FADE)));
 };
 
 const TypedRow = ({
@@ -72,6 +88,7 @@ const TypedRow = ({
   timing,
   frame,
   erase,
+  longest,
   props,
   color,
 }: {
@@ -81,6 +98,7 @@ const TypedRow = ({
   timing: RowTiming;
   frame: number;
   erase: number;
+  longest: number;
   props: Props;
   color: string;
 }) => {
@@ -119,10 +137,11 @@ const TypedRow = ({
               frame,
               timing,
               index,
-              chars.length,
+              longest,
               rowErase,
               props.timing.eraseFrames,
               props.timing.charFrames,
+              font.fade,
             ),
           }}
         >
@@ -157,49 +176,57 @@ const BlockTitle = ({
   blockFrames: number;
   color: string;
 }) => {
-  const enter = tween(frame, [timing.start, timing.end], [0, 1], (t) => t);
-  const leave = tween(frame, [exit, exit + blockFrames], [0, 1], (t) => t);
-  if (enter <= 0 || leave >= 1) {
-    return null;
-  }
-  const sweeping = leave > 0 ? sweep(leave) : enter < 1 ? sweep(enter) : null;
-  const shown = leave > 0 ? leave < 0.5 : enter >= 0.5;
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top,
-        textAlign: 'center',
-      }}
-    >
-      <div
-        style={{
-          position: 'relative',
-          display: 'inline-block',
-          fontFamily: font.family,
-          fontSize: font.size,
-          lineHeight: `${font.height}px`,
-          color,
-          whiteSpace: 'pre',
-        }}
-      >
-        <span style={{ opacity: shown ? 1 : 0 }}>{lines.join('\n')}</span>
-        {sweeping ? (
+    <>
+      {lines.map((line, index) => {
+        const lag = index * LINE_LAG;
+        const enter = tween(frame, [timing.start + lag, timing.end + lag], [0, 1], smooth);
+        const leave = tween(frame, [exit + lag, exit + lag + blockFrames], [0, 1], smooth);
+        if (enter <= 0 || leave >= 1) {
+          return null;
+        }
+        const sweeping = leave > 0 ? sweep(leave) : enter < 1 ? sweep(enter) : null;
+        const shown = leave > 0 ? leave < 0.5 : enter >= 0.5;
+        return (
           <div
+            key={index}
             style={{
               position: 'absolute',
-              top: font.size * 0.12,
-              bottom: font.size * 0.12,
-              left: `${(-6 + sweeping.left * 112).toFixed(3)}%`,
-              width: `${(sweeping.width * 112).toFixed(3)}%`,
-              background: color,
+              left: 0,
+              right: 0,
+              top: top + index * font.height,
+              textAlign: 'center',
             }}
-          />
-        ) : null}
-      </div>
-    </div>
+          >
+            <div
+              style={{
+                position: 'relative',
+                display: 'inline-block',
+                fontFamily: font.family,
+                fontSize: font.size,
+                lineHeight: `${font.height}px`,
+                color,
+                whiteSpace: 'pre',
+              }}
+            >
+              <span style={{ opacity: shown ? 1 : 0 }}>{line}</span>
+              {sweeping ? (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: font.size * 0.14,
+                    bottom: font.size * 0.1,
+                    left: `${(-8 + sweeping.left * 116).toFixed(3)}%`,
+                    width: `${(sweeping.width * 116).toFixed(3)}%`,
+                    background: color,
+                  }}
+                />
+              ) : null}
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 };
 
@@ -234,7 +261,9 @@ export const TextPageView = ({
     (header?.height ?? 0) +
     titleHeight +
     fonts.reduce((sum, font, index) => sum + font.height + (gaps[index] ?? 0), 0);
-  let cursor = Math.round((layout.textTop + layout.textBottom) / 2 - total / 2);
+  let cursor = page.topAligned
+    ? layout.textTop
+    : Math.round((layout.textTop + layout.textBottom) / 2 - total / 2);
   const headerTop = cursor;
   cursor += header?.height ?? 0;
   const titleTop = cursor;
@@ -246,6 +275,7 @@ export const TextPageView = ({
     return top;
   });
   const erase = eraseStart(page, timing);
+  const longest = Math.max(1, ...bodyRows.map((row) => Array.from(row.text).length));
   return (
     <>
       {header ? header.render(headerTop) : null}
@@ -276,6 +306,7 @@ export const TextPageView = ({
             timing={rowTiming}
             frame={frame}
             erase={erase}
+            longest={longest}
             props={props}
             color={row.accent ? page.look.titleColor : page.look.textColor}
           />

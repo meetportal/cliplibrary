@@ -19,9 +19,9 @@ export const GardenDinnerScene = ({ stage }: { stage: Stage }) => {
     <>
       <Stars art={art} count={120} bottom={1300} />
       <Layer stage={stage} order={0} from="fade" distance={60}>
-        <Mist art={art} x={180} y={1560} w={560} h={360} seed={166} opacity={0.55} />
-        <Mist art={art} x={880} y={1560} w={560} h={340} seed={167} opacity={0.55} />
-        <Mist art={art} x={540} y={1600} w={700} h={260} seed={168} opacity={0.4} />
+        <Mist art={art} x={180} y={1720} w={600} h={680} seed={166} opacity={0.55} />
+        <Mist art={art} x={880} y={1720} w={600} h={640} seed={167} opacity={0.55} />
+        <Mist art={art} x={540} y={1720} w={700} h={380} seed={168} opacity={0.4} />
       </Layer>
       <Layer stage={stage} order={1} from="bottom" distance={220}>
         <Bush art={art} x={130} y={1720} w={360} h={400} tone="light" seed={169} />
@@ -45,13 +45,15 @@ export const GardenDinnerScene = ({ stage }: { stage: Stage }) => {
         <Lawn art={art} top={1716} seed={173} />
       </Layer>
       <Layer stage={stage} order={2.5} from="bottom" distance={300}>
-        {[380, 470, 610, 700].map((x) => (
-          <Chair key={x} art={art} x={x} y={1752} scale={0.62} />
-        ))}
-        <Table art={art} x={540} y={1800} />
-        {[330, 450, 630, 750].map((x) => (
-          <Chair key={x} art={art} x={x} y={1846} scale={0.8} />
-        ))}
+        <g transform="translate(540 1820) scale(1.3) translate(-540 -1820)">
+          {[380, 470, 610, 700].map((x) => (
+            <Chair key={x} art={art} x={x} y={1752} scale={0.62} />
+          ))}
+          <Table art={art} x={540} y={1800} />
+          {[330, 450, 630, 750].map((x) => (
+            <Chair key={x} art={art} x={x} y={1846} scale={0.8} />
+          ))}
+        </g>
       </Layer>
       <Layer stage={stage} order={3.5} from="bottom" distance={360}>
         <Bush art={art} x={70} y={1960} w={340} h={300} tone="deep" seed={174} />

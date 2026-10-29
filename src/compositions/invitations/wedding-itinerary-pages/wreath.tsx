@@ -1,5 +1,5 @@
 import type { WeddingItineraryPagesProps } from '@/schemas';
-import { accelerate, settle, smooth, TAU, tween } from '../../promo/timing';
+import { accelerate, smooth, TAU, tween } from '../../promo/timing';
 import { inviteScriptFonts } from '../fonts';
 import { type Art, gid } from './art';
 import { Blossom } from './flowers';
@@ -7,7 +7,7 @@ import { dark, f, Linear, leafPath, light, memo, mix, random } from './paint';
 
 const ROOM = 46;
 
-const POP_FRAMES = 9;
+const POP_FRAMES = 12;
 
 const FLOURISH_REACH = 1.42;
 
@@ -62,7 +62,7 @@ export const Wreath = ({
   const reveal = (angle: number): number => {
     const turn = (((angle + Math.PI) % TAU) + TAU) % TAU;
     const at = start + (turn / TAU) * wreath.drawFrames;
-    return tween(frame, [at, at + POP_FRAMES], [0, 1], settle);
+    return tween(frame, [at, at + POP_FRAMES], [0, 1], smooth);
   };
   const out = tween(frame, [exit, exit + 26], [0, 1], accelerate);
   const fadeOut = tween(frame, [exit + 6, exit + 26], [1, 0], smooth);

@@ -13,7 +13,8 @@ export const Stars = ({ art, count, bottom }: { art: Art; count: number; bottom:
       const x = rand() * WIDTH;
       const y = rand() ** 1.3 * bottom;
       const group = index % STAR_GROUPS;
-      if (index % 11 === 0) {
+      const behindText = x > 160 && x < 920 && y > 240 && y < 1180;
+      if (index % 11 === 0 && !behindText) {
         const r = between(rand, 7, 13);
         sparks[group] +=
           `M${f(x)} ${f(y - r)}Q${f(x + 1.5)} ${f(y - 1.5)} ${f(x + r)} ${f(y)}Q${f(x + 1.5)} ${f(y + 1.5)} ${f(x)} ${f(y + r)}Q${f(x - 1.5)} ${f(y + 1.5)} ${f(x - r)} ${f(y)}Q${f(x - 1.5)} ${f(y - 1.5)} ${f(x)} ${f(y - r)}Z`;
@@ -122,7 +123,7 @@ export const Chandelier = ({
   });
   const crystal = art.decor.crystal;
   return (
-    <g transform={`translate(${f(x)} -20) rotate(${f(angle)})`}>
+    <g transform={`translate(${f(x)} -20) rotate(${angle.toFixed(3)})`}>
       <path
         d={`M0 0L0 ${drop}`}
         stroke={mix(crystal, '#8a8f99', 0.5)}
@@ -197,7 +198,7 @@ export const Fireworks = ({
   }
   const reach = size * (1 - (1 - progress) ** 3);
   const inner = reach * 0.45;
-  const fade = (1 - progress) ** 1.5;
+  const fade = Math.min(1, progress / 0.18) * (1 - progress) ** 1.5;
   const rays = Array.from({ length: 22 }, (_, index) => {
     const angle = (index / 22) * TAU;
     return `M${f(x + Math.cos(angle) * inner)} ${f(y + Math.sin(angle) * inner + progress * 18)}L${f(x + Math.cos(angle) * reach)} ${f(y + Math.sin(angle) * reach + progress * 30)}`;
@@ -213,7 +214,12 @@ export const Fireworks = ({
         fill="none"
       />
       <path d={rays} stroke={art.decor.crystal} strokeWidth={0.8} fill="none" opacity={0.5} />
-      <circle cx={x} cy={y} r={size * 0.25 * (1 - progress)} fill={fill(art, 'spark')} />
+      <circle
+        cx={x}
+        cy={y}
+        r={size * 0.25 * Math.min(1, progress / 0.18) * (1 - progress)}
+        fill={fill(art, 'spark')}
+      />
     </g>
   );
 };
