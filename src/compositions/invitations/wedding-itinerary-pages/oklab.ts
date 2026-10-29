@@ -38,7 +38,9 @@ const toRgb = ([lightness, a, b, alpha]: Lab): string => {
   const red = channel(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s);
   const green = channel(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s);
   const blue = channel(-0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s);
-  return `rgba(${red}, ${green}, ${blue}, ${alpha.toFixed(3)})`;
+  const hex = (value: number): string => value.toString(16).padStart(2, '0');
+  const opacity = Math.round(Math.min(1, Math.max(0, alpha)) * 255);
+  return `#${hex(red)}${hex(green)}${hex(blue)}${opacity >= 255 ? '' : hex(opacity)}`;
 };
 
 export const mixOklab = (from: string, to: string, amount: number): string => {

@@ -5,45 +5,71 @@ import {
   weddingItineraryPagesMeta,
   weddingItineraryPagesSchema,
 } from '@/schemas';
-import { ClosingPage, CoverPage, EventPage } from '../../invitations/wedding-itinerary-pages/pages';
-import {
-  backgroundAt,
-  pageArrival,
-  pageLeave,
-  pageVisible,
-} from '../../invitations/wedding-itinerary-pages/timeline';
+import { resolveArt } from '../../invitations/wedding-itinerary-pages/art';
+import { Scenery } from '../../invitations/wedding-itinerary-pages/scenery';
+import { TextPageView } from '../../invitations/wedding-itinerary-pages/text-page';
+import { eraseStart, schedule } from '../../invitations/wedding-itinerary-pages/timeline';
+import { Wreath, wreathHeight } from '../../invitations/wedding-itinerary-pages/wreath';
+import { smooth, tween } from '../../promo/timing';
 import { TransitionFrame } from '../../promo/transition-frame';
 import type { SceneModule } from '../../scene-module';
 
 const WeddingItineraryPages = (props: WeddingItineraryPagesProps) => {
-  const { cover, events, closing, timing, look, motion } = props;
+  const { timing, motion, wreath } = props;
   const frame = useCurrentFrame() * motion.speed;
-  const count = events.length + 2;
-  const colors = [cover.background, ...events.map((event) => event.background), closing.background];
-  const page = (index: number) => ({
-    props,
-    frame,
-    arrive: pageArrival(index, timing),
-    leave: pageLeave(frame, index, count, timing),
-  });
+  const { scenes, texts } = schedule(props);
   return (
     <TransitionFrame motion={motion}>
-      {look.showBackdrop ? (
-        <AbsoluteFill style={{ background: backgroundAt(frame, colors, timing) }}>
-          <AbsoluteFill
-            style={{
-              background: `linear-gradient(180deg, rgba(255, 255, 255, ${look.glow}) 0%, rgba(255, 255, 255, 0) 58%)`,
-            }}
-          />
-        </AbsoluteFill>
-      ) : null}
-      {pageVisible(frame, 0, count, timing) ? <CoverPage {...page(0)} /> : null}
-      {events.map((event, index) =>
-        pageVisible(frame, index + 1, count, timing) ? (
-          <EventPage key={index} event={event} {...page(index + 1)} />
-        ) : null,
-      )}
-      {pageVisible(frame, count - 1, count, timing) ? <ClosingPage {...page(count - 1)} /> : null}
+      <AbsoluteFill>
+        {scenes.map((page, index) => {
+          const next = scenes[index + 1];
+          const visible =
+            frame >= page.start - 1 &&
+            (next === undefined || frame <= next.start + timing.fadeFrames + 1);
+          if (!visible) {
+            return null;
+          }
+          const opacity =
+            index === 0
+              ? 1
+              : tween(frame, [page.start, page.start + timing.fadeFrames], [0, 1], smooth);
+          return (
+            <Scenery
+              key={page.key}
+              page={page}
+              index={index}
+              props={props}
+              frame={frame}
+              opacity={opacity}
+            />
+          );
+        })}
+      </AbsoluteFill>
+      {texts.map((page) => {
+        if (frame < page.start - 2 || frame > page.end + 2) {
+          return null;
+        }
+        const header = page.cover
+          ? {
+              height: wreathHeight(wreath.radius),
+              render: (top: number) => (
+                <Wreath
+                  art={resolveArt(props, page.look, 'wreath', frame)}
+                  props={props}
+                  top={top}
+                  frame={frame}
+                  start={page.start + 2}
+                  exit={eraseStart(page, timing)}
+                />
+              ),
+            }
+          : undefined;
+        return (
+          <AbsoluteFill key={page.key}>
+            <TextPageView page={page} props={props} frame={frame} header={header} />
+          </AbsoluteFill>
+        );
+      })}
     </TransitionFrame>
   );
 };

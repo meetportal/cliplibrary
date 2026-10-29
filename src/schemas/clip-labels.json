@@ -5713,86 +5713,94 @@
     ]
   },
   "wedding-itinerary-pages": {
-    "summary": "A vertical, multi-page Indian wedding invite. A pale sage cover draws a thin hand-drawn gold ring with leaf sprigs around an \"A | K\" monogram, fades in \"Anaya & Kabir\" in script and types the dates and a wedding hashtag, over rolling paper-cut hills with a domed chhatri. The pages then turn with soft color crossfades to a butter yellow Haldi page with a marigold garland frame and a low seat with bolsters, a night teal Sangeet page with string lights, stars, diyas and a dhol, a blush Wedding and Reception page with a gold four-pillar mandap under a floral arch, and a warm cream RSVP page back in the garden. Every detail line types on with a thin blinking caret.",
+    "summary": "A vertical, painted Indian wedding invite in a Mughal garden. A sky blue cover builds up from the lawn, pavilions, palms, misty trees, big leaves and a rose vine sliding in from every edge, while a leafy wreath of pink blossoms grows around a script \"ak\" monogram and Anaya & Kabir, the dates and a hashtag type on. A families page types the hosts and the couple, then each event gets its own painted scene with a crossfade and a gentle rise: a butter yellow Haldi lounge with a velvet sofa, gift boxes, bird cages and yellow cascades, a night Sangeet terrace with crystal chandeliers, string lights, fireworks, marble pavilions and a checkered dance floor, a blush Wedding & Reception mandap with marigold strands, drapes and a red carpet, and a night garden dinner under a blossom tree for the RSVP. Titles are swept in and out by a solid block and every line types on and erases letter by letter.",
     "beats": [
       {
         "at": 0.0,
-        "what": "Garden hills and a chhatri rise in from below while the gold ring draws itself around the A | K monogram"
+        "what": "The pavilion garden rises from the lawn, palms and leaves slide in, and the wreath grows around the ak monogram"
       },
       {
-        "at": 1.4,
-        "what": "Anaya & Kabir fades up in script, a divider grows, then the dates and #KabirFoundHisAnaya type on with a caret"
+        "at": 0.6,
+        "what": "Anaya & Kabir, the dates and #KabirFoundHisAnaya type on under the wreath"
       },
       {
-        "at": 4.0,
-        "what": "The page eases to butter yellow; marigold strands and a cushioned seat rise in, Haldi fades up and its date, venue and schedule type on"
+        "at": 6.6,
+        "what": "The wreath swings away and the families page types the four hosts, the invitation lines and Anaya and Kabir with their parents"
       },
       {
-        "at": 8.0,
-        "what": "Night teal Sangeet page: twinkling string lights, stars, diyas and a dhol rise in as the details type"
+        "at": 21.0,
+        "what": "Crossfade to the Haldi lounge: a block sweeps the Haldi title in, then the date, venue and times type on beside swinging bird cages"
       },
       {
-        "at": 12.0,
-        "what": "Blush Wedding & Reception page with a gold mandap, floral arch and aisle; date, venue and timings type on"
+        "at": 30.0,
+        "what": "Night Sangeet terrace with chandeliers, string lights and fireworks over a checkered dance floor; the title sweeps in and the details type"
       },
       {
-        "at": 16.0,
-        "what": "Warm cream closing page back in the garden: We can't wait to celebrate with you, then RSVP by 1 October and Ritu & Vikram Mehra type on"
+        "at": 38.8,
+        "what": "Blush Wedding & Reception mandap with marigold strands and a red carpet; the three line title sweeps in line by line and the schedule types"
+      },
+      {
+        "at": 47.6,
+        "what": "Night garden dinner under a blossom tree: the message, website and RSVP lines type on, then the clip fades out"
       }
     ],
     "visuals": [
-      "vertical 9:16 invitation pages",
-      "hand-drawn gold monogram ring with leaf sprigs",
-      "script couple names and event titles",
-      "small caps serif detail lines with a thin caret",
-      "flat layered paper-cut scenes with soft shadows",
-      "marigold garlands and a low seat with bolsters",
-      "string lights, stars and a dhol at night",
-      "four-pillar mandap under a floral arch",
-      "rolling hills and a domed chhatri"
+      "vertical 9:16 painted invitation pages",
+      "Mughal garden with domed chhatris and balustrades",
+      "leafy wreath of pink blossoms around a script monogram",
+      "script titles and small caps serif detail lines",
+      "velvet sofa, gift boxes and bird cages",
+      "crystal chandeliers, string lights and fireworks",
+      "checkered marble dance floor",
+      "marigold mandap with drapes and a red carpet",
+      "blossom tree over a candlelit dinner table",
+      "patterned miniature-painting bushes, palms and agaves"
     ],
     "motion": [
-      "typewriter reveal with blinking caret",
-      "script titles fading up",
-      "background color crossfades between pages",
-      "paper-cut layers rising from the bottom with parallax",
-      "swaying garlands and twinkling lights"
+      "scene layers rising and sliding in from every edge",
+      "letter by letter typing and erasing",
+      "solid block sweep reveal on titles",
+      "crossfades with a gentle rise between scenes",
+      "swaying vines, palms, cages, strands and chandeliers",
+      "twinkling stars and bulbs",
+      "wreath leaves and blossoms growing around the ring"
     ],
-    "mood": ["festive", "elegant", "warm", "romantic"],
+    "mood": ["festive", "elegant", "romantic", "lush"],
     "roles": ["opener", "feature", "closer"],
     "useCases": [
       "indian wedding e-invite",
       "wedding itinerary reel for instagram or whatsapp",
-      "save the date with event schedule",
-      "haldi, sangeet and reception announcement",
+      "haldi, sangeet and wedding schedule",
+      "families invitation page",
       "rsvp reminder story"
     ],
     "editable": [
       "couple names, monogram, dates and hashtag",
-      "list of event pages with title, date, venue, schedule and scene",
-      "each page color, title, text, accent, greenery and structure colors",
-      "closing message, rsvp line and hosts",
-      "script and serif fonts and text sizes",
-      "page length, typing speed and caret timing",
-      "scene size, paper shadow, drift and sway"
+      "hosting families, bride and groom lines",
+      "up to three event pages with title, date, venue, schedule, scene, sky, text colors and night shade",
+      "closing message, website and rsvp lines",
+      "greenery, blossom, stone and decor colors",
+      "script and serif fonts, sizes and weights",
+      "wreath size, leaves and flowers",
+      "page lengths, typing speed, title sweep, erase and build timing",
+      "scenery build, settle drift, sway, twinkle and fireworks"
     ],
-    "palette": ["#edf0e2", "#f8e5a6", "#14393f", "#f6dcd5", "#b08a4f", "#ee8f22"],
+    "palette": ["#a9dcdc", "#1d4a2f", "#d6426c", "#f4a514", "#0b2236", "#e2d0a2"],
     "keywords": [
-      "wedding",
-      "invitation",
-      "e-invite",
+      "wedding invitation",
       "indian wedding",
+      "itinerary",
       "haldi",
       "sangeet",
       "mandap",
-      "itinerary",
       "rsvp",
-      "monogram",
+      "mughal garden",
+      "painted",
       "typewriter",
-      "caret",
-      "paper cut",
-      "vertical",
-      "story"
+      "monogram",
+      "floral wreath",
+      "chandelier",
+      "fireworks"
     ]
   },
   "miniature-panorama": {
