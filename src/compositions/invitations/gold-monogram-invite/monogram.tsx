@@ -1,108 +1,158 @@
+import { random } from 'remotion';
 import type { GoldMonogramInviteProps } from '@/schemas';
-import { pixelTween, smooth } from '../../promo/timing';
-import { MonogramMark, markPadding } from './monogram-mark';
-import { goldText, riseIn } from './reveal';
+import { Embossed, type Gold, type GoldIds, paint, useSvgId, withAlpha } from './gold';
+import { heartPath, type Point, spiral, teardrop } from './ornament';
 
-const EYEBROW_GAP = 26;
+const GLITTER = 140;
 
-const NAMES_GAP = 18;
-
-export const Monogram = ({
-  frame,
+export const MonogramLetters = ({
   monogram,
-  schedule,
   gold,
-  text,
+  ids,
   serif,
-  script,
+  center,
+  glint,
+  heart,
 }: {
-  frame: number;
   monogram: GoldMonogramInviteProps['monogram'];
-  schedule: GoldMonogramInviteProps['schedule'];
-  gold: GoldMonogramInviteProps['gold'];
-  text: GoldMonogramInviteProps['text'];
+  gold: Gold;
+  ids: GoldIds;
   serif: string;
-  script: string;
+  center: Point;
+  glint: boolean;
+  heart: number;
 }) => {
-  const start = monogram.start;
-  const side = Math.ceil(monogram.ringRadius + markPadding) * 2;
-  const eyebrowHeight = Math.round(monogram.eyebrowSize * 1.4);
-  const namesHeight = Math.round(monogram.namesSize * 1.25);
-  const height = eyebrowHeight + EYEBROW_GAP + side + NAMES_GAP + namesHeight;
-  const width = Math.max(side, Math.round(monogram.namesSize * 9));
-  const eyebrow = riseIn(frame, start, Math.round(monogram.eyebrowSize * 0.8));
-  const names = riseIn(
-    frame,
-    start + monogram.drawFrames * 1.35,
-    Math.round(monogram.namesSize * 0.35),
-  );
-  const travelX = schedule.monogramX - 960;
-  const travelY = schedule.monogramY - 540;
-  const distance = Math.max(1, Math.round(Math.hypot(travelX, travelY)));
-  const moveRange: [number, number] = [schedule.start, schedule.start + schedule.shrinkFrames];
-  const moved = pixelTween(frame, moveRange, [0, distance], smooth) / distance;
-  const scale = 1 + (schedule.monogramScale - 1) * moved;
-  const left = Math.round(960 + travelX * moved - width / 2);
-  const top = Math.round(540 + travelY * moved - height / 2);
-  return (
-    <div
+  const clipId = useSvgId('monogram-clip');
+  const size = monogram.size;
+  const [cx, cy] = center;
+  const baseline = cy + size * 0.35;
+  const letters = (fill: string, stroke?: string, strokeWidth?: number, crest = heart) => (
+    <g
       style={{
-        position: 'absolute',
-        left,
-        top,
-        width,
-        height,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        transform: `scale(${scale.toFixed(4)})`,
-        transformOrigin: '50% 50%',
+        fontFamily: serif,
+        fontSize: size,
+        fontWeight: 600,
+        textRendering: 'geometricPrecision',
       }}
+      fill={fill}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
     >
-      <div
-        style={{
-          height: eyebrowHeight,
-          marginBottom: EYEBROW_GAP,
-          opacity: eyebrow.opacity,
-          transform: `translateY(${eyebrow.offset}px)`,
-          fontFamily: serif,
-          fontSize: monogram.eyebrowSize,
-          fontWeight: 600,
-          lineHeight: 1.4,
-          letterSpacing: '0.42em',
-          marginRight: '-0.42em',
-          textTransform: 'uppercase',
-          color: text.cream,
-          whiteSpace: 'nowrap',
-        }}
+      <text
+        x={cx - size * 0.12}
+        y={baseline}
+        textAnchor="middle"
+        letterSpacing={`${(-size * 0.07).toFixed(1)}`}
       >
-        {monogram.eyebrow}
-      </div>
-      <div style={{ width: side, height: side }}>
-        <MonogramMark
-          frame={frame}
-          monogram={monogram}
-          gold={gold}
-          glintColor={text.cream}
-          serif={serif}
-        />
-      </div>
-      <div
-        style={{
-          height: namesHeight,
-          marginTop: NAMES_GAP,
-          opacity: names.opacity,
-          transform: `translateY(${names.offset}px)`,
-          fontFamily: script,
-          fontSize: monogram.namesSize,
-          lineHeight: 1.25,
-          whiteSpace: 'nowrap',
-        }}
-      >
-        <span style={{ display: 'inline-block', ...goldText(gold.light, gold.dark) }}>
-          {monogram.names}
-        </span>
-      </div>
-    </div>
+        <tspan>{monogram.first}</tspan>
+        <tspan dy={-size * 0.04}>{monogram.second}</tspan>
+      </text>
+      {monogram.showHeart && crest > 0 ? (
+        <path d={heartPath([cx, cy - size * 0.86], 0, size * 0.07)} opacity={crest} />
+      ) : null}
+    </g>
+  );
+  const depth = size * 0.014;
+  return (
+    <g>
+      <defs>
+        <clipPath id={clipId}>{letters('#ffffff', undefined, undefined, 0)}</clipPath>
+      </defs>
+      <g transform={`translate(${depth * 0.8} ${depth * 2.4})`} opacity={0.55}>
+        {letters('#000000')}
+      </g>
+      <Embossed depth={depth} gold={gold} fill={paint(ids.band)}>
+        {(fill) => letters(fill)}
+      </Embossed>
+      {letters('none', withAlpha(gold.highlight, 0.45), 1.2)}
+      <g clipPath={`url(#${clipId})`}>
+        {Array.from({ length: GLITTER }, (_, index) => (
+          <circle
+            key={index.toString()}
+            cx={cx + (random(`glitter-x-${index}`) - 0.5) * size * 1.5}
+            cy={cy + (random(`glitter-y-${index}`) - 0.62) * size * 1.1}
+            r={0.8 + random(`glitter-r-${index}`) * 1.4}
+            fill={index % 2 === 0 ? gold.highlight : gold.deep}
+            opacity={0.55}
+          />
+        ))}
+      </g>
+      {glint ? letters(paint(ids.glint)) : null}
+    </g>
+  );
+};
+
+const Filigree = ({ center, width, color }: { center: Point; width: number; color: string }) => {
+  const [cx, cy] = center;
+  const half = width / 2;
+  const side = (sign: number) =>
+    `${spiral([cx + sign * half * 0.22, cy + 10], 16, sign > 0 ? Math.PI : 0, 1.3, sign)} ${spiral([cx + sign * half * 0.52, cy + 4], 12, sign > 0 ? 0 : Math.PI, 1.2, -sign)} M ${cx + sign * 6} ${cy - 6} C ${cx + sign * half * 0.3} ${cy - 18} ${cx + sign * half * 0.7} ${cy + 26} ${cx + sign * half * 0.82} ${cy - 4}`;
+  return (
+    <g fill="none" stroke={color} strokeWidth={2.2} strokeLinecap="round">
+      <path d={`${side(1)} ${side(-1)}`} />
+      <path d={`${teardrop([cx, cy - 4], Math.PI / 2, 30, 7)}`} fill={color} stroke="none" />
+    </g>
+  );
+};
+
+export const Plaque = ({
+  monogram,
+  gold,
+  ids,
+  serif,
+  y,
+  opacity,
+  backing,
+}: {
+  monogram: GoldMonogramInviteProps['monogram'];
+  gold: Gold;
+  ids: GoldIds;
+  serif: string;
+  y: number;
+  opacity: number;
+  backing: string;
+}) => {
+  const size = monogram.namesSize;
+  const width = Math.max(560, monogram.names.length * size * 0.62);
+  const left = 960 - width / 2;
+  const rule = (top: number) => (
+    <>
+      <rect x={left} y={top} width={width} height={3.2} fill={paint(ids.sheen)} />
+      <rect x={left} y={top + 8} width={width} height={1.6} fill={paint(ids.sheen)} />
+    </>
+  );
+  const name = (fill: string) => (
+    <text
+      x={960}
+      y={y + size * 0.36}
+      textAnchor="middle"
+      style={{
+        fontFamily: serif,
+        fontSize: size,
+        fontWeight: 500,
+        letterSpacing: '0.04em',
+        textRendering: 'geometricPrecision',
+      }}
+      fill={fill}
+    >
+      {monogram.names}
+    </text>
+  );
+  return (
+    <g opacity={opacity}>
+      <rect
+        x={left}
+        y={y - size * 0.95}
+        width={width}
+        height={size * 1.9}
+        fill={withAlpha(backing, 0.72)}
+      />
+      {rule(y - size * 0.95)}
+      {rule(y + size * 0.82)}
+      <Embossed depth={2} gold={gold} fill={paint(ids.band)}>
+        {name}
+      </Embossed>
+      <Filigree center={[960, y + size * 1.3]} width={width * 0.5} color={paint(ids.sheen)} />
+    </g>
   );
 };

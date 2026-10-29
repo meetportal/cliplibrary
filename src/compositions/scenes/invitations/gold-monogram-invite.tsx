@@ -1,4 +1,4 @@
-import { Composition, useCurrentFrame, useVideoConfig } from 'remotion';
+import { AbsoluteFill, Composition, useCurrentFrame } from 'remotion';
 import {
   type GoldMonogramInviteProps,
   goldMonogramInviteDefaults,
@@ -6,63 +6,38 @@ import {
   goldMonogramInviteSchema,
 } from '@/schemas';
 import { inviteScriptFonts, inviteSerifFonts } from '../../invitations/fonts';
-import { InviteBackdrop } from '../../invitations/gold-monogram-invite/backdrop';
-import { GoldDust } from '../../invitations/gold-monogram-invite/dust';
-import { Mandala } from '../../invitations/gold-monogram-invite/mandala';
-import { Monogram } from '../../invitations/gold-monogram-invite/monogram';
-import { Quote } from '../../invitations/gold-monogram-invite/quote';
-import { Schedule } from '../../invitations/gold-monogram-invite/schedule';
+import { BandAct } from '../../invitations/gold-monogram-invite/band';
+import { LotusAct } from '../../invitations/gold-monogram-invite/lotus';
+import { QuoteAct } from '../../invitations/gold-monogram-invite/quote';
+import { RingAct } from '../../invitations/gold-monogram-invite/ring-event';
+import { StageAct } from '../../invitations/gold-monogram-invite/stage';
+import { TitleAct } from '../../invitations/gold-monogram-invite/title';
 import { TransitionFrame } from '../../promo/transition-frame';
 import type { SceneModule } from '../../scene-module';
 
-const GoldMonogramInvite = ({
-  quote,
-  monogram,
-  events,
-  schedule,
-  fonts,
-  mandala,
-  dust,
-  gold,
-  text,
-  background,
-  motion,
-}: GoldMonogramInviteProps) => {
-  const frame = useCurrentFrame() * motion.speed;
-  const { fps } = useVideoConfig();
-  const serif = inviteSerifFonts[fonts.serif];
-  const script = inviteScriptFonts[fonts.script];
+const GoldMonogramInvite = (props: GoldMonogramInviteProps) => {
+  const frame = useCurrentFrame() * props.motion.speed;
+  const serif = inviteSerifFonts[props.fonts.serif];
+  const script = inviteScriptFonts[props.fonts.script];
+  const fonts = { serif, script };
+  const [lotusEvent, ringEvent, bandEvent] = props.events;
   return (
-    <TransitionFrame motion={motion}>
-      {background.show ? <InviteBackdrop background={background} /> : null}
-      <Mandala frame={frame} fps={fps} mandala={mandala} gold={gold} dimAt={monogram.start} />
-      <GoldDust frame={frame} start={monogram.start} dust={dust} color={gold.light} />
-      <Quote
-        frame={frame}
-        quote={quote}
-        gold={gold}
-        color={text.cream}
-        serif={serif}
-        script={script}
-      />
-      <Monogram
-        frame={frame}
-        monogram={monogram}
-        schedule={schedule}
-        gold={gold}
-        text={text}
-        serif={serif}
-        script={script}
-      />
-      <Schedule
-        frame={frame}
-        events={events}
-        schedule={schedule}
-        gold={gold}
-        text={text}
-        serif={serif}
-        script={script}
-      />
+    <TransitionFrame motion={props.motion}>
+      {props.background.show ? (
+        <AbsoluteFill style={{ backgroundColor: props.background.night }} />
+      ) : null}
+      <QuoteAct frame={frame} {...props} {...fonts} />
+      <TitleAct frame={frame} {...props} {...fonts} />
+      <StageAct frame={frame} {...props} {...fonts} />
+      {lotusEvent === undefined ? null : (
+        <LotusAct frame={frame} {...props} {...fonts} event={lotusEvent} />
+      )}
+      {ringEvent === undefined ? null : (
+        <RingAct frame={frame} {...props} {...fonts} event={ringEvent} />
+      )}
+      {bandEvent === undefined ? null : (
+        <BandAct frame={frame} {...props} {...fonts} event={bandEvent} />
+      )}
     </TransitionFrame>
   );
 };
