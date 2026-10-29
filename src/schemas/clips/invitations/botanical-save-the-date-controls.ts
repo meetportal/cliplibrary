@@ -44,7 +44,7 @@ export const botanicalSaveTheDateControls = defineControls<BotanicalSaveTheDateP
         {
           path: 'lettering.nameSize',
           label: 'Names size',
-          hint: 'In pixels. The script word before the second name follows it',
+          hint: 'In pixels. Long names shrink to fit the width; the script word before the second name follows it',
         },
       ],
     },

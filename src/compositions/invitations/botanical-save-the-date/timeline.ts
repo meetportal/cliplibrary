@@ -13,7 +13,7 @@ type BeatName =
   | 'wedding'
   | 'closing';
 
-export interface Beat {
+interface Beat {
   stay: Stay;
   cue: Cue;
 }

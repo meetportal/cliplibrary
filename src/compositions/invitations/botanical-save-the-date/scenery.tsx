@@ -11,8 +11,8 @@ import { type Arch, ArchCard, TropicalBouquet } from './tropical';
 import { inksOf } from './voice';
 import { PeachWash } from './wash';
 
-export const CARD = { x: 200, y: 470, width: 700, height: 960 };
-export const HEXAGON: Hexagon = { center: [540, 790], rx: 500, ry: 500 };
+const CARD = { x: 200, y: 470, width: 700, height: 960 };
+const HEXAGON: Hexagon = { center: [540, 790], rx: 500, ry: 500 };
 export const ARCH: Arch = { left: 90, right: 1060, top: 250, bottom: 1700 };
 
 interface SprayPlace {

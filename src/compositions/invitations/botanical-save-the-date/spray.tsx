@@ -72,7 +72,7 @@ export const growBranch = (origin: Point, spec: BranchSpec, seed: number): Branc
   return { origin, stem: quadPath(origin, control, tip), leaves };
 };
 
-export const Stem = ({ d, color, weight }: { d: string; color: string; weight: number }) => (
+const Stem = ({ d, color, weight }: { d: string; color: string; weight: number }) => (
   <>
     <path d={d} fill="none" stroke={color} strokeOpacity={0.18} strokeWidth={weight * 2.4} />
     <path

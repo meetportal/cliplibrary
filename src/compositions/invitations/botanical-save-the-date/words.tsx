@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react';
+import { useVideoConfig } from 'remotion';
 import type { BotanicalSaveTheDateProps } from '@/schemas';
 import { withAlpha } from './paint';
 import {
@@ -159,9 +160,16 @@ export const Couple = ({
   inset: number;
   words: { intro: string; first: string; joiner: string; second: string };
 }) => {
+  const room = useVideoConfig().width - inset * 2;
+  const capsWidth = (text: string) => Array.from(text).length * 0.74;
+  const widest = Math.max(
+    capsWidth(words.first),
+    capsWidth(words.second) + Array.from(words.joiner).length * 0.42,
+  );
+  const size = Math.min(lettering.nameSize, room / Math.max(1, widest));
   const name: CSSProperties = {
     fontFamily: voice.display,
-    fontSize: lettering.nameSize,
+    fontSize: size,
     fontWeight: 400,
     lineHeight: 1,
     letterSpacing: '0.04em',
@@ -183,15 +191,13 @@ export const Couple = ({
         color={voice.ink}
         style={name}
       />
-      <div
-        style={{ display: 'flex', alignItems: 'baseline', marginTop: lettering.nameSize * 0.12 }}
-      >
+      <div style={{ display: 'flex', alignItems: 'baseline', marginTop: size * 0.12 }}>
         <TypedLine
           text={words.joiner}
           frame={frame}
           cue={lineCue(cue, 2, stagger)}
           color={voice.accent}
-          style={{ ...scriptStyle(voice, lettering.nameSize * 0.92), lineHeight: 1 }}
+          style={{ ...scriptStyle(voice, size * 0.92), lineHeight: 1 }}
         />
         <TypedLine
           text={words.second}

@@ -138,8 +138,8 @@ const Anthurium = ({
     <g transform={`translate(${fixed(at[0])} ${fixed(at[1])}) rotate(${fixed(angle)})`}>
       <defs>
         <linearGradient id={`${id}-spathe`} x1="0" x2="1">
-          <stop offset="0" stopColor={shade(color, 0.24)} />
-          <stop offset="0.45" stopColor={shade(color, 0.08)} />
+          <stop offset="0" stopColor={shade(color, 0.1)} />
+          <stop offset="0.45" stopColor={color} />
           <stop offset="1" stopColor={tint(color, 0.6)} />
         </linearGradient>
       </defs>

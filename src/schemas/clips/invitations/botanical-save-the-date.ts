@@ -165,7 +165,7 @@ export const botanicalSaveTheDateDefaults: BotanicalSaveTheDateProps = {
     archFill: '#f3ebe3',
     archBorder: '#e9cdbd',
     tropical: '#4f5b53',
-    anthurium: '#f4e2dc',
+    anthurium: '#eab4b6',
     lineWidth: 4.5,
   },
   lettering: {

@@ -5,10 +5,9 @@ export interface Greens {
   base: string;
 }
 
-export const LEAF_TONES = 3;
+const LEAF_TONES = 3;
 
-export const toneId = (greens: Greens, tone: number): string =>
-  `${greens.id}-tone-${tone % LEAF_TONES}`;
+const toneId = (greens: Greens, tone: number): string => `${greens.id}-tone-${tone % LEAF_TONES}`;
 
 export const LeafDefs = ({ greens }: { greens: Greens }) => {
   const tones = [

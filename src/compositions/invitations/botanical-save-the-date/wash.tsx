@@ -21,7 +21,7 @@ const catmull = (points: readonly Point[]): string => {
   return parts.join(' ');
 };
 
-export const ribbonPath = (spine: readonly Point[], widths: readonly number[], seed: number) => {
+const ribbonPath = (spine: readonly Point[], widths: readonly number[], seed: number) => {
   const random = seeded(seed);
   const left: Point[] = [];
   const right: Point[] = [];

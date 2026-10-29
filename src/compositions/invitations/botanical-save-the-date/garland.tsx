@@ -18,7 +18,7 @@ const RINGS = [
   { count: 6, length: 0.34, width: 0.7, depth: 1, twist: 30 },
 ];
 
-export const Peony = ({
+const Peony = ({
   id,
   at,
   radius,
@@ -119,7 +119,7 @@ export interface Hexagon {
   ry: number;
 }
 
-export const hexagonPoints = (hexagon: Hexagon): Point[] => {
+const hexagonPoints = (hexagon: Hexagon): Point[] => {
   const { center, rx, ry } = hexagon;
   return [
     [center[0], center[1] - ry],
