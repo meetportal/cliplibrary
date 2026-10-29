@@ -73,7 +73,10 @@ export const pumpkinPatchControls = defineControls<PumpkinPatchContent>({
         { path: 'photos.hero', label: 'Top photo' },
         { path: 'photos.welcome', label: 'Welcome note photo' },
         { path: 'photos.venue', label: 'Venue photo' },
-        { path: 'photos.gifts', label: 'Registry photo' },
+      ],
+      more: [
+        { path: 'photos.brunch', label: 'The afternoon photo' },
+        { path: 'photos.registry', label: 'Registry photo' },
       ],
     },
     {

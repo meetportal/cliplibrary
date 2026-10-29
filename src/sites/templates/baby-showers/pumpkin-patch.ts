@@ -28,8 +28,9 @@ export const pumpkinPatchSchema = z.object({
   photos: z.object({
     hero: zImage(),
     welcome: zImage(),
+    brunch: zImage(),
     venue: zImage(),
-    gifts: zImage(),
+    registry: zImage(),
   }),
   welcome: z.object({
     title: z.string().max(60),
@@ -88,10 +89,11 @@ export const pumpkinPatchDefaults: PumpkinPatchContent = {
     rsvpBy: 'October 1st, 2027',
   },
   photos: {
-    hero: photo('pumpkin-harvest'),
-    welcome: photo('autumn-knit'),
-    venue: photo('country-barn'),
-    gifts: photo('baby-gifts'),
+    hero: photo('bump-heart'),
+    welcome: photo('white-pumpkins'),
+    brunch: photo('harvest-brunch'),
+    venue: photo('barn-porch'),
+    registry: photo('pumpkin-flatlay'),
   },
   welcome: {
     title: 'Come gather round',

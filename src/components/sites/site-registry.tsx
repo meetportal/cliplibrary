@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import type { z } from 'zod';
+import { pumpkinPatchSchema } from '@/sites/templates/baby-showers/pumpkin-patch';
 import { snowDayOneSchema } from '@/sites/templates/birthdays/snow-day-one';
 import { midnightCrownSchema } from '@/sites/templates/quinceaneras/midnight-crown';
 import { emeraldRoseSchema } from '@/sites/templates/weddings/emerald-rose';
@@ -8,6 +9,7 @@ import type { SiteView } from './site-view';
 import { emeraldRoseView } from './templates/emerald-rose';
 import { inkAndLaceView } from './templates/ink-and-lace';
 import { midnightCrownView } from './templates/midnight-crown';
+import { pumpkinPatchView } from './templates/pumpkin-patch';
 import { snowDayOneView } from './templates/snow-day-one';
 
 export interface BoundSite {
@@ -43,6 +45,7 @@ const BINDERS: Record<string, Binder> = {
   'ink-and-lace': bind(inkAndLaceSchema, inkAndLaceView),
   'snow-day-one': bind(snowDayOneSchema, snowDayOneView),
   'midnight-crown': bind(midnightCrownSchema, midnightCrownView),
+  'pumpkin-patch': bind(pumpkinPatchSchema, pumpkinPatchView),
 };
 
 export const bindSite = (templateId: string, content: unknown): BoundSite | null =>
