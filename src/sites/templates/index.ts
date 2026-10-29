@@ -9,6 +9,12 @@ export const SITE_TEMPLATES: readonly SiteTemplate[] = [
     schema: emeraldRoseSchema,
     defaults: emeraldRoseDefaults,
     controls: emeraldRoseControls,
+    headline: (content) => {
+      const parsed = emeraldRoseSchema.safeParse(content);
+      return parsed.success
+        ? `${parsed.data.couple.firstName} & ${parsed.data.couple.secondName}`
+        : emeraldRoseMeta.title;
+    },
   },
 ];
 

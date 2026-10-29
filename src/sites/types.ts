@@ -16,6 +16,7 @@ export interface SiteTemplate {
   id: string;
   meta: SiteMeta;
   schema: z.ZodType;
-  defaults: unknown;
+  defaults: Record<string, unknown>;
   controls: ClipControls;
+  headline: (content: unknown) => string;
 }
