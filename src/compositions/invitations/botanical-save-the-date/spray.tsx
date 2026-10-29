@@ -92,9 +92,8 @@ const CORNER = {
     { angle: 162, length: 500, curve: 0.1, leaf: 190, count: 6, girth: 1.3 },
   ],
   back: [
-    { angle: 214, length: 420, curve: -0.14, leaf: 170, count: 6, girth: 1.2 },
-    { angle: -62, length: 340, curve: 0.16, leaf: 150, count: 5, girth: 1.2 },
-    { angle: 110, length: 300, curve: -0.1, leaf: 150, count: 4, girth: 1.2 },
+    { angle: 172, length: 250, curve: 0.08, leaf: 120, count: 4, girth: 1.1 },
+    { angle: -34, length: 280, curve: -0.08, leaf: 120, count: 4, girth: 1.1 },
   ],
   lines: [
     { angle: -118, length: 260, curve: 0.1, leaf: 150, count: 3 },
