@@ -7,13 +7,13 @@ const WIDE = new Set(['M', 'W', 'm', 'w', '%', '@']);
 
 const TRACKING = -0.02;
 
-export const estimateWidth = (text: string, size: number): number =>
+const estimateWidth = (text: string, size: number): number =>
   [...text].reduce(
     (sum, glyph) => sum + (NARROW.has(glyph) ? 0.34 : WIDE.has(glyph) ? 0.98 : 0.74) + TRACKING,
     0,
   ) * size;
 
-export const fitSize = (text: string, size: number, maxWidth: number): number => {
+const fitSize = (text: string, size: number, maxWidth: number): number => {
   const width = estimateWidth(text, size);
   return width > maxWidth ? Math.floor((size * maxWidth) / width) : size;
 };

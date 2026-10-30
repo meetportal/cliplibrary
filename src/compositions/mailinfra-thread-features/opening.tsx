@@ -5,7 +5,7 @@ import { FadeIn, Headline } from '../promo/typography';
 import { EnvelopeLogo } from './envelopes';
 import { Spider } from './spider';
 
-export const abseilY = (frame: number, opening: ThreadOpening): number =>
+const abseilY = (frame: number, opening: ThreadOpening): number =>
   tween(frame, [2, 2 + opening.dropFrames + 14], [-140, opening.spiderStop], settle) +
   Math.sin(frame / 11) * 6 * tween(frame, [opening.dropFrames, opening.dropFrames + 20], [0, 1]);
 

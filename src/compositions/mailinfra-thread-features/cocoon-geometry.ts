@@ -32,7 +32,7 @@ const LINK_BANDS: [number, number][] = [
   [0.7, 0.94],
 ];
 
-export const meridianPoint = (shape: CocoonShape, strand: Strand, t: number): Point => {
+const meridianPoint = (shape: CocoonShape, strand: Strand, t: number): Point => {
   const span = shape.bottom - shape.top;
   const u = 1 - t;
   const x =
@@ -96,7 +96,7 @@ export const cocoonShape = (metrics: TitleMetrics, web: ThreadWeb, index: number
   return { ...base, links: crossLinks(base, index) };
 };
 
-export const edgeStrand = (shape: CocoonShape, sign: number): Strand => ({
+const edgeStrand = (shape: CocoonShape, sign: number): Strand => ({
   kx: sign * shape.rx,
   near: 1,
   far: 1,

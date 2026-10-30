@@ -10,7 +10,7 @@ import {
 import { mixHex } from './color';
 import { CaughtEnvelope } from './envelopes';
 
-export const CocoonCanvas = ({ shape, children }: { shape: CocoonShape; children: ReactNode }) => (
+const CocoonCanvas = ({ shape, children }: { shape: CocoonShape; children: ReactNode }) => (
   <svg
     aria-hidden="true"
     width={shape.halfWidth * 2}
