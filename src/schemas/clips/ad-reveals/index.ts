@@ -30,6 +30,24 @@ import {
 } from './helicopter-unveil';
 import { helicopterUnveilControls } from './helicopter-unveil-controls';
 import {
+  mailinfraDeliverabilityChargeDefaults,
+  mailinfraDeliverabilityChargeMeta,
+  mailinfraDeliverabilityChargeSchema,
+} from './mailinfra-deliverability-charge';
+import { mailinfraDeliverabilityChargeControls } from './mailinfra-deliverability-charge-controls';
+import {
+  mailinfraSpiderDropDefaults,
+  mailinfraSpiderDropMeta,
+  mailinfraSpiderDropSchema,
+} from './mailinfra-spider-drop';
+import { mailinfraSpiderDropControls } from './mailinfra-spider-drop-controls';
+import {
+  mailinfraThreadFeaturesDefaults,
+  mailinfraThreadFeaturesMeta,
+  mailinfraThreadFeaturesSchema,
+} from './mailinfra-thread-features';
+import { mailinfraThreadFeaturesControls } from './mailinfra-thread-features-controls';
+import {
   problemStrikeoutDefaults,
   problemStrikeoutMeta,
   problemStrikeoutSchema,
@@ -87,5 +105,26 @@ export const adRevealsClips: ClipModule[] = [
     defaults: burningPaperRevealDefaults,
     meta: burningPaperRevealMeta,
     controls: burningPaperRevealControls,
+  },
+  {
+    id: 'mailinfra-spider-drop',
+    schema: mailinfraSpiderDropSchema,
+    defaults: mailinfraSpiderDropDefaults,
+    meta: mailinfraSpiderDropMeta,
+    controls: mailinfraSpiderDropControls,
+  },
+  {
+    id: 'mailinfra-deliverability-charge',
+    schema: mailinfraDeliverabilityChargeSchema,
+    defaults: mailinfraDeliverabilityChargeDefaults,
+    meta: mailinfraDeliverabilityChargeMeta,
+    controls: mailinfraDeliverabilityChargeControls,
+  },
+  {
+    id: 'mailinfra-thread-features',
+    schema: mailinfraThreadFeaturesSchema,
+    defaults: mailinfraThreadFeaturesDefaults,
+    meta: mailinfraThreadFeaturesMeta,
+    controls: mailinfraThreadFeaturesControls,
   },
 ];
