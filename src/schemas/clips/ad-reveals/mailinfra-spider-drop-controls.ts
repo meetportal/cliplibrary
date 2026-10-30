@@ -97,7 +97,7 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
         {
           path: 'floors',
           label: 'Floors',
-          hint: 'One sign per floor the spider drops past, top to bottom. Time per floor shrinks on its own when the floors would not fit the clip',
+          hint: 'Up to 4 signs the spider drops past, top to bottom. Time per floor shrinks on its own when the floors would not fit the clip',
           items: { label: 'Label', crossed: 'Crossed out with silk', color: 'Sign color' },
         },
         {

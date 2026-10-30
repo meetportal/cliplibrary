@@ -25,7 +25,7 @@ export const mailinfraSpiderDropSchema = z.object({
     y: pixels(200, 1700),
     start: frames(120),
   }),
-  floors: z.array(spiderDropFloorSchema).max(6),
+  floors: z.array(spiderDropFloorSchema).max(4),
   signs: z.object({
     text: zColor(),
     textSize: pixels(32, 160),
@@ -185,7 +185,7 @@ export const mailinfraSpiderDropDefaults: MailinfraSpiderDropProps = {
     floorFrames: 40,
     landingFrames: 48,
     floorGap: 1920,
-    landingGap: 1250,
+    landingGap: 1000,
     slowAtSigns: 0.86,
     spiderY: 860,
     blurSamples: 32,
