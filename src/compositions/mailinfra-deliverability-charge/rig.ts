@@ -5,6 +5,7 @@ import {
   type Beats,
   clickAt,
   type PlugTiming,
+  plugExit,
   plugTiming,
   plugTravel,
   sparkLife,
@@ -78,6 +79,8 @@ const SOCKETS: Record<CableKey, SocketSpec> = {
 
 const START_Y = 2090;
 const ANCHOR_Y = 2420;
+const BACK_OUT = 110;
+const DROP_BELOW = 60;
 
 export const PLUG = { body: 92, pin: 16, thick: 24 } as const;
 
@@ -133,6 +136,7 @@ export interface CableRig {
   label: string;
   cable: Cubic;
   head: Point;
+  tail: Point;
   heading: Point;
   normal: Point;
   labelOpacity: number;
@@ -163,13 +167,25 @@ export const rigCable = (
     socket,
   ]);
   const plug: PlugTiming = plugTiming(props.timing, beats, order);
-  const travelled = plugTravel(frame, plug, route.length);
+  const leaving = frame >= plug.release;
+  const travelled = leaving ? route.length : plugTravel(frame, plug, route.length);
   const progress = route.length > 0 ? travelled / route.length : 0;
-  const heading = route.headingAt(travelled);
+  const exit = plugExit(frame, plug);
+  const seatAngle = Math.atan2(direction.y, direction.x);
+  const hangAngle = -Math.PI / 2;
+  const swingBack = Math.atan2(Math.sin(hangAngle - seatAngle), Math.cos(hangAngle - seatAngle));
+  const angle = seatAngle + swingBack * exit.turn;
+  const heading = leaving ? point(Math.cos(angle), Math.sin(angle)) : route.headingAt(travelled);
   const across = point(-heading.y, heading.x);
   const swing =
     props.cables.sway * 26 * Math.sin(Math.PI * progress) * Math.sin(frame / 11 + spec.phase);
-  const head = add(route.pointAt(travelled), across, swing);
+  const head = leaving
+    ? add(
+        add(socket, direction, -BACK_OUT * scale * exit.back),
+        point(0, 1),
+        (START_Y + DROP_BELOW - socket.y) * exit.fall,
+      )
+    : add(route.pointAt(travelled), across, swing);
   const tail = add(head, heading, -PLUG.body * scale);
   const anchor = point(start.x, ANCHOR_Y);
   const drift = props.cables.sway * (14 + 10 * Math.sin(Math.PI * progress));
@@ -191,6 +207,7 @@ export const rigCable = (
     label: props.cables[key].label,
     cable,
     head,
+    tail,
     heading,
     normal,
     labelOpacity: 1 - tween(frame, [plug.release, plug.release + 12], [0, 1]),

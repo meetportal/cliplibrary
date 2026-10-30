@@ -6,6 +6,7 @@ import {
   mailinfraDeliverabilityChargeMeta,
   mailinfraDeliverabilityChargeSchema,
 } from '@/schemas';
+import { BrandLine } from '../../mailinfra-deliverability-charge/brand';
 import { Plugs, Sparks, Wires } from '../../mailinfra-deliverability-charge/cables';
 import { mixColor } from '../../mailinfra-deliverability-charge/geometry';
 import {
@@ -140,6 +141,7 @@ const MailinfraDeliverabilityCharge = (props: MailinfraDeliverabilityChargeProps
           <Plugs rigs={rigs} cables={cables} glow={ids.near} />
         </svg>
       </AbsoluteFill>
+      <BrandLine brand={props.brand} />
       <HeadlineGlow headline={headline} glow={glow} />
       <Counter counter={counter} vessel={vessel} charge={level} />
       <LandedBadge

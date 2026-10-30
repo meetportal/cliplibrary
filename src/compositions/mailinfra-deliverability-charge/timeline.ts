@@ -1,5 +1,5 @@
 import type { MailinfraDeliverabilityChargeProps } from '@/schemas';
-import { land, launch, settle, smooth, turn, tween } from '../promo/timing';
+import { land, settle, smooth, turn, tween } from '../promo/timing';
 
 type Timing = MailinfraDeliverabilityChargeProps['timing'];
 
@@ -7,6 +7,7 @@ export interface Beats {
   chargeStart: number;
   fullAt: number;
   unplugAt: number;
+  drain: boolean;
   drainEnd: number;
   shiftEnd: number;
 }
@@ -19,20 +20,27 @@ export const beatsOf = (timing: Timing, shiftFrames: number): Beats => {
     chargeStart,
     fullAt,
     unplugAt,
+    drain: timing.drain,
     drainEnd: unplugAt + timing.drainFrames,
     shiftEnd: chargeStart + shiftFrames,
   };
 };
 
+const drained = (frame: number, beats: Beats): number =>
+  beats.drain ? tween(frame, [beats.unplugAt, beats.drainEnd], [0, 1], smooth) : 0;
+
 export const chargeAt = (frame: number, beats: Beats): number =>
   frame < beats.unplugAt
     ? tween(frame, [beats.chargeStart, beats.fullAt], [0, 1], turn)
-    : tween(frame, [beats.unplugAt, beats.drainEnd], [1, 0], smooth);
+    : 1 - drained(frame, beats);
 
 export const glowAt = (frame: number, beats: Beats): number =>
   frame < beats.unplugAt
     ? tween(frame, [beats.chargeStart, beats.shiftEnd], [0, 1], smooth)
-    : tween(frame, [beats.unplugAt, beats.drainEnd], [1, 0], smooth);
+    : 1 - drained(frame, beats);
+
+export const badgeExitAt = (beats: Beats, hold: number): number | undefined =>
+  beats.drain ? Math.max(beats.unplugAt, beats.fullAt + 36 + hold) : undefined;
 
 export const burstAt = (frame: number, beats: Beats, pulseFrames: number): number =>
   tween(frame, [beats.fullAt - 8, beats.fullAt + 6], [0, 1]) *
@@ -42,6 +50,8 @@ export const pulseAt = (frame: number, beats: Beats, pulseFrames: number, delay 
   tween(frame, [beats.fullAt + delay, beats.fullAt + delay + pulseFrames], [0, 1], settle);
 
 const SEAT_SPEED = 4;
+
+const gravity = (share: number): number => share * share;
 
 export interface PlugTiming {
   start: number;
@@ -62,9 +72,22 @@ export const plugTiming = (timing: Timing, beats: Beats, order: number): PlugTim
 };
 
 export const plugTravel = (frame: number, plug: PlugTiming, length: number): number =>
-  frame < plug.release
-    ? land(frame, [plug.start, plug.landed], [0, length], SEAT_SPEED)
-    : launch(frame, [plug.release, plug.gone], [length, 0], SEAT_SPEED);
+  land(frame, [plug.start, plug.landed], [0, length], SEAT_SPEED);
+
+export interface PlugExit {
+  back: number;
+  fall: number;
+  turn: number;
+}
+
+export const plugExit = (frame: number, plug: PlugTiming): PlugExit => {
+  const range: [number, number] = [plug.release, plug.gone];
+  return {
+    back: tween(frame, range, [0, 1], smooth),
+    fall: tween(frame, range, [0, 1], gravity),
+    turn: tween(frame, range, [0, 1], smooth),
+  };
+};
 
 export const sparkLife = (frame: number, plug: PlugTiming): number =>
   tween(frame, [plug.landed, plug.landed + 10], [0, 1]) *

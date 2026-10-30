@@ -73,14 +73,16 @@ export const pathOf = ([p0, p1, p2, p3]: Cubic): string =>
   `M${p0.x.toFixed(2)} ${p0.y.toFixed(2)} C${p1.x.toFixed(2)} ${p1.y.toFixed(2)} ${p2.x.toFixed(2)} ${p2.y.toFixed(2)} ${p3.x.toFixed(2)} ${p3.y.toFixed(2)}`;
 
 const channels = (color: string): [number, number, number, number] => {
-  if (color.startsWith('rgba(')) {
-    const [red = 0, green = 0, blue = 0, alpha = 1] = color
-      .slice(5, -1)
-      .split(',')
+  const functional = /^rgba?\(([^)]*)\)$/.exec(color.trim());
+  if (functional !== null) {
+    const [red = 0, green = 0, blue = 0, alpha = 1] = (functional[1] ?? '')
+      .split(/[\s,/]+/)
+      .filter((part) => part.length > 0)
       .map((part) => Number.parseFloat(part));
     return [red, green, blue, alpha];
   }
-  const value = color.replace('#', '');
+  const raw = color.replace('#', '');
+  const value = raw.length <= 4 ? [...raw].map((digit) => digit + digit).join('') : raw;
   const read = (start: number) => Number.parseInt(value.slice(start, start + 2), 16);
   return [read(0), read(2), read(4), value.length >= 8 ? read(6) / 255 : 1];
 };

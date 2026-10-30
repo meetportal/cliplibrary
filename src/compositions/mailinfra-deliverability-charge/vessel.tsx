@@ -185,11 +185,17 @@ export const VesselGlass = ({
   pulses: number[];
   glowFilters: { near: string; far: string };
 }) => {
-  const { inbox, charge } = props;
+  const { inbox, charge, counter } = props;
   const body = roundedBox(vessel, inbox.radius, 0);
-  const inset = Math.max(inbox.radius * 0.5, inbox.outline * 2);
-  const tipY = vessel.top + vessel.height * inbox.flapDepth;
-  const flap = `M${body.x + inset} ${body.y + inbox.outline * 0.5} L${vessel.cx} ${tipY} L${body.x + body.width - inset} ${body.y + inbox.outline * 0.5}`;
+  const seal = inbox.sealSize / 2;
+  const shoulder = body.y + Math.min(inbox.radius, body.height * 0.2);
+  const counterTop = vessel.top + vessel.height * counter.position - counter.size * 0.55;
+  const tipLimit = counterTop - (inbox.showSeal ? seal * 1.3 : 0) - 12;
+  const tipY = Math.min(
+    vessel.top + vessel.height * inbox.flapDepth,
+    Math.max(tipLimit, shoulder + 12),
+  );
+  const flap = `M${body.x} ${shoulder} L${vessel.cx} ${tipY} L${body.x + body.width} ${shoulder}`;
   const strength = Math.min(1, charge.glow * (1 + paint.burst * 0.5));
   const outline = (width: number) => (
     <>
@@ -206,7 +212,6 @@ export const VesselGlass = ({
       ) : null}
     </>
   );
-  const seal = inbox.sealSize / 2;
   return (
     <g>
       {charge.glow > 0 && charge.glowSize > 0 ? (
@@ -240,7 +245,12 @@ export const VesselGlass = ({
             opacity={0.35 * strength}
             filter={`url(#${glowFilters.near})`}
           />
-          <circle r={seal} fill={paint.glow} />
+          <circle
+            r={seal}
+            fill={paint.glow}
+            stroke={inbox.sealIcon}
+            strokeWidth={Math.max(2, seal * 0.08)}
+          />
           <rect
             x={-seal * 0.5}
             y={-seal * 0.34}

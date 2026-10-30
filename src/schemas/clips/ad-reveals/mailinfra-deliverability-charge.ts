@@ -13,6 +13,16 @@ const cableSchema = z.object({
 });
 
 export const mailinfraDeliverabilityChargeSchema = z.object({
+  brand: z.object({
+    show: z.boolean(),
+    text: z.string(),
+    mark: z.boolean(),
+    markColor: zColor(),
+    color: zColor(),
+    size: zSlider({ min: 16, max: 80 }),
+    top: zSlider({ min: 40, max: 600 }),
+    enterAt: zSlider({ min: 0, max: 120 }),
+  }),
   headline: z.object({
     text: z.string(),
     size: zSlider({ min: 30, max: 140 }),
@@ -23,6 +33,7 @@ export const mailinfraDeliverabilityChargeSchema = z.object({
     top: zSlider({ min: 60, max: 700 }),
   }),
   counter: z.object({
+    from: zSlider({ min: 0, max: 1000, step: 0.1 }),
     target: zSlider({ min: 0, max: 1000, step: 0.1 }),
     decimals: zSlider({ min: 0, max: 2 }),
     suffix: z.string(),
@@ -40,6 +51,7 @@ export const mailinfraDeliverabilityChargeSchema = z.object({
     ink: zColor(),
     size: zSlider({ min: 16, max: 56 }),
     gap: zSlider({ min: 20, max: 320 }),
+    hold: zSlider({ min: 0, max: 150 }),
   }),
   cables: z.object({
     spf: cableSchema,
@@ -107,6 +119,7 @@ export const mailinfraDeliverabilityChargeSchema = z.object({
     fullAt: zSlider({ min: 40, max: 290 }),
     unplugAt: zSlider({ min: 60, max: 295 }),
     unplugFrames: zSlider({ min: 10, max: 90 }),
+    drain: z.boolean(),
     drainFrames: zSlider({ min: 10, max: 120 }),
   }),
   background: z.object({
@@ -123,6 +136,16 @@ export type MailinfraDeliverabilityChargeProps = z.infer<
 >;
 
 export const mailinfraDeliverabilityChargeDefaults: MailinfraDeliverabilityChargeProps = {
+  brand: {
+    show: true,
+    text: 'mailinfra.co',
+    mark: true,
+    markColor: '#4048ff',
+    color: '#f4f5ff',
+    size: 34,
+    top: 180,
+    enterAt: 4,
+  },
   headline: {
     text: 'DELIVERABILITY',
     size: 66,
@@ -133,6 +156,7 @@ export const mailinfraDeliverabilityChargeDefaults: MailinfraDeliverabilityCharg
     top: 300,
   },
   counter: {
+    from: 0,
     target: 99.9,
     decimals: 1,
     suffix: '%',
@@ -150,6 +174,7 @@ export const mailinfraDeliverabilityChargeDefaults: MailinfraDeliverabilityCharg
     ink: '#1a1a1a',
     size: 30,
     gap: 120,
+    hold: 60,
   },
   cables: {
     spf: { show: true, label: 'SPF' },
@@ -204,7 +229,7 @@ export const mailinfraDeliverabilityChargeDefaults: MailinfraDeliverabilityCharg
     radius: 64,
     outline: 5,
     fill: '#0c0d1c',
-    flapDepth: 0.17,
+    flapDepth: 0.24,
     showSeal: true,
     sealSize: 72,
     sealIcon: '#ffffff',
@@ -213,10 +238,11 @@ export const mailinfraDeliverabilityChargeDefaults: MailinfraDeliverabilityCharg
     plugIn: 8,
     plugFrames: 56,
     stagger: 8,
-    chargeStart: 104,
-    fullAt: 200,
-    unplugAt: 230,
-    unplugFrames: 36,
+    chargeStart: 100,
+    fullAt: 186,
+    unplugAt: 228,
+    unplugFrames: 48,
+    drain: false,
     drainFrames: 58,
   },
   background: {
@@ -225,7 +251,7 @@ export const mailinfraDeliverabilityChargeDefaults: MailinfraDeliverabilityCharg
     edge: '#020205',
     haze: 0.4,
   },
-  motion: defaultMotion({ exit: 'none', exitFrames: 0, float: 0 }),
+  motion: defaultMotion({ exitFrames: 24, float: 0 }),
 };
 
 export const mailinfraDeliverabilityChargeMeta: ClipMeta = {
@@ -233,7 +259,7 @@ export const mailinfraDeliverabilityChargeMeta: ClipMeta = {
   id: 'mailinfra-deliverability-charge',
   title: 'Deliverability Charge',
   description:
-    'Five labeled cables (SPF, DKIM, DMARC, Warm-up, Dedicated IPs) rise and plug into a glowing envelope-shaped inbox under a spaced headline; sparks run up the wires, the glow turns from spam red to electric blue, a blue-violet liquid fills as the inbox rate counts to 99.9%, a pulse lands the "Landed in the inbox" badge, then the cables unplug and it drains.',
+    'Five labeled cables (SPF, DKIM, DMARC, Warm-up, Dedicated IPs) rise and plug into a glowing envelope-shaped inbox under a spaced headline; sparks run up the wires, the glow turns from spam red to electric blue, a blue-violet liquid fills as the inbox rate counts to 99.9%, a pulse lands the "Landed in the inbox" badge under the mailinfra.co brand line, then the cables unplug and drop away while the inbox stays charged.',
   category: 'ad-reveals',
   tags: ['counter', 'glow', 'headline', 'badge', 'reveal', 'icon', 'cta'],
   theme: 'dark',
@@ -241,5 +267,5 @@ export const mailinfraDeliverabilityChargeMeta: ClipMeta = {
   width: 1080,
   height: 1920,
   durationInFrames: 300,
-  posterFrame: 226,
+  posterFrame: 224,
 };

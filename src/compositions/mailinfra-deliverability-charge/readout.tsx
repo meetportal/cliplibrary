@@ -3,7 +3,7 @@ import { bodyFont, displayFont } from '../promo/fonts';
 import { pixelTween, settle, smooth, tween } from '../promo/timing';
 import { add, fade, mixColor } from './geometry';
 import { type CableRig, PLUG, type Vessel } from './rig';
-import type { Beats } from './timeline';
+import { type Beats, badgeExitAt } from './timeline';
 
 type Props = MailinfraDeliverabilityChargeProps;
 
@@ -66,7 +66,7 @@ export const Counter = ({
   vessel: Vessel;
   charge: number;
 }) => {
-  const value = (counter.target * charge).toFixed(counter.decimals);
+  const value = (counter.from + (counter.target - counter.from) * charge).toFixed(counter.decimals);
   return (
     <div
       style={{
@@ -132,7 +132,8 @@ export const LandedBadge = ({
   }
   const range: [number, number] = [beats.fullAt + 4, beats.fullAt + 36];
   const enter = tween(frame, range, [0, 1], settle);
-  const exit = tween(frame, [beats.unplugAt, beats.unplugAt + 14], [0, 1], smooth);
+  const exitAt = badgeExitAt(beats, badge.hold);
+  const exit = exitAt === undefined ? 0 : tween(frame, [exitAt, exitAt + 14], [0, 1], smooth);
   const opacity = enter * (1 - exit);
   if (opacity <= 0) {
     return null;
@@ -192,9 +193,9 @@ export const CableLabels = ({ rigs, cables }: { rigs: CableRig[]; cables: Props[
       if (rig.label.length === 0 || rig.labelOpacity <= 0) {
         return null;
       }
-      const scale = cables.plugSize;
-      const middle = add(rig.head, rig.heading, (-PLUG.body * scale) / 2);
-      const anchor = add(middle, rig.normal, (PLUG.thick * scale) / 2 + 12);
+      const anchor = add(rig.tail, rig.normal, (PLUG.thick * cables.plugSize) / 2 + 8);
+      const shift = (along: number, side: number) =>
+        Math.min(0, Math.max(-100, -50 - 50 * along + 50 * side)).toFixed(2);
       return (
         <div
           key={rig.key}
@@ -202,7 +203,7 @@ export const CableLabels = ({ rigs, cables }: { rigs: CableRig[]; cables: Props[
             position: 'absolute',
             left: anchor.x,
             top: anchor.y,
-            transform: `translate(${(-50 + rig.normal.x * 50).toFixed(2)}%, ${(-50 + rig.normal.y * 50).toFixed(2)}%)`,
+            transform: `translate(${shift(rig.heading.x, rig.normal.x)}%, ${shift(rig.heading.y, rig.normal.y)}%)`,
             opacity: rig.labelOpacity,
             display: 'flex',
             alignItems: 'center',

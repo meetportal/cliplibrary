@@ -17,9 +17,19 @@ export const mailinfraDeliverabilityChargeControls =
             hint: 'The spaced glowing word above the inbox',
           },
           {
+            path: 'brand.text',
+            label: 'Brand line',
+            hint: 'Small line above the headline, for example your website. Leave empty to show only the mark',
+          },
+          {
             path: 'counter.target',
             label: 'Final number',
-            hint: 'The counter climbs from 0 to this value as the inbox fills',
+            hint: 'The counter climbs to this value as the inbox fills',
+          },
+          {
+            path: 'badge.text',
+            label: 'Badge text',
+            hint: 'Rises in above the inbox when the counter reaches its final number',
           },
         ],
         more: [
@@ -27,6 +37,11 @@ export const mailinfraDeliverabilityChargeControls =
             path: 'counter.caption',
             label: 'Counter caption',
             hint: 'Small line under the number, shown in capitals. Leave empty to hide it',
+          },
+          {
+            path: 'counter.from',
+            label: 'Starting number',
+            hint: 'The counter starts here before charging',
           },
           {
             path: 'counter.suffix',
@@ -38,6 +53,13 @@ export const mailinfraDeliverabilityChargeControls =
             label: 'Decimal places',
             hint: '1 shows 99.9, 0 shows whole numbers',
           },
+          { path: 'brand.show', label: 'Show brand line' },
+          {
+            path: 'brand.mark',
+            label: 'Show brand mark',
+            hint: 'The small envelope tile before the brand line',
+          },
+          { path: 'badge.show', label: 'Show badge' },
           { path: 'headline.size', label: 'Headline size', hint: 'In pixels' },
           {
             path: 'headline.tracking',
@@ -49,6 +71,12 @@ export const mailinfraDeliverabilityChargeControls =
             label: 'Headline position',
             hint: 'Distance from the top of the frame, in pixels',
           },
+          { path: 'brand.size', label: 'Brand line size', hint: 'In pixels' },
+          {
+            path: 'brand.top',
+            label: 'Brand line position',
+            hint: 'Distance from the top of the frame, in pixels',
+          },
           { path: 'counter.size', label: 'Number size', hint: 'In pixels' },
           { path: 'counter.captionSize', label: 'Caption size', hint: 'In pixels' },
           {
@@ -56,41 +84,53 @@ export const mailinfraDeliverabilityChargeControls =
             label: 'Number height in the inbox',
             hint: 'Share of the inbox height from its top edge',
           },
+          { path: 'badge.size', label: 'Badge text size', hint: 'In pixels' },
+          { path: 'badge.gap', label: 'Badge gap above the inbox', hint: 'In pixels' },
         ],
       },
       {
         title: 'Colors',
         fields: [
           {
-            link: ['charge.charged', 'liquid.bottom'],
+            link: ['charge.charged', 'liquid.bottom', 'brand.markColor'],
             label: 'Primary color',
-            hint: 'The charged glow on the inbox, headline and pulse, the badge check, and the bottom of the liquid',
+            hint: 'The charged glow on the inbox, headline and pulse, the badge check, the bottom of the liquid and the brand mark',
           },
           { path: 'liquid.top', label: 'Secondary color', hint: 'Top of the liquid gradient' },
           {
             link: ['sparks.color', 'cables.ring'],
             label: 'Accent color',
-            hint: 'Sparks running up the wires, the plug rings and the dots on the cable labels',
+            hint: 'Sparks running up the wires, the plug rings, their click flash and the dots on the cable labels',
           },
           {
-            link: ['headline.color', 'counter.color', 'cables.labelInk'],
+            link: ['headline.color', 'counter.color', 'cables.labelInk', 'brand.color'],
             label: 'Text color',
-            hint: 'Headline letters, the counter and the cable label text',
+            hint: 'Headline letters, the counter, the cable label text and the brand line',
           },
-          { path: 'background.color', label: 'Background color', hint: 'Middle of the backdrop' },
+          {
+            path: 'background.color',
+            label: 'Background color',
+            hint: 'Middle of the backdrop',
+          },
         ],
         more: [
+          {
+            path: 'charge.low',
+            label: 'Spam color',
+            hint: 'The warning glow and liquid before charging, which shifts to the Primary color',
+          },
           {
             path: 'charge.charged',
             label: 'Charged glow color',
             hint: 'Glow on the inbox, headline, pulse and badge check once charging starts',
           },
           { path: 'liquid.bottom', label: 'Liquid bottom color' },
+          { path: 'brand.markColor', label: 'Brand mark color' },
           { path: 'sparks.color', label: 'Spark color' },
           {
             path: 'cables.ring',
             label: 'Plug ring color',
-            hint: 'Also the dot on each cable label',
+            hint: 'Also the flash when a plug clicks in and the dot on each cable label',
           },
           {
             path: 'headline.color',
@@ -99,7 +139,18 @@ export const mailinfraDeliverabilityChargeControls =
           },
           { path: 'counter.color', label: 'Number color' },
           { path: 'cables.labelInk', label: 'Cable label text color' },
+          {
+            path: 'brand.color',
+            label: 'Brand line color',
+            hint: 'Also the envelope on the brand mark',
+          },
           { path: 'counter.captionColor', label: 'Caption color' },
+          {
+            path: 'badge.fill',
+            label: 'Badge color',
+            hint: 'Also the tick inside the check circle',
+          },
+          { path: 'badge.ink', label: 'Badge text color' },
         ],
       },
       {
@@ -145,14 +196,8 @@ export const mailinfraDeliverabilityChargeControls =
         ],
       },
       {
-        title: 'Charge glow',
-        fields: [
-          {
-            path: 'charge.low',
-            label: 'Spam color',
-            hint: 'The warning glow and liquid before charging, which shifts to the Primary color',
-          },
-        ],
+        title: 'Glow and sparks',
+        fields: [],
         more: [
           { path: 'charge.glow', label: 'Glow strength', hint: '0 leaves only the outline' },
           {
@@ -181,18 +226,12 @@ export const mailinfraDeliverabilityChargeControls =
             hint: 'How far the completion rings spread past the inbox, in pixels. 0 hides them',
           },
           { path: 'charge.pulseFrames', label: 'Pulse length', hint: 'In frames' },
-        ],
-      },
-      {
-        title: 'Sparks',
-        fields: [],
-        more: [
           { path: 'sparks.count', label: 'Sparks per cable', hint: '0 turns the sparks off' },
           { path: 'sparks.shape', label: 'Spark shape' },
           { path: 'sparks.size', label: 'Spark size', hint: 'In pixels' },
           {
             path: 'sparks.tripFrames',
-            label: 'Trip length',
+            label: 'Spark trip length',
             hint: 'Frames a spark takes to run the whole wire, lower is faster',
           },
           { path: 'sparks.glow', label: 'Spark glow', hint: '0 turns the halo off' },
@@ -210,7 +249,7 @@ export const mailinfraDeliverabilityChargeControls =
           {
             path: 'liquid.startLevel',
             label: 'Empty level',
-            hint: 'Share of the inbox still filled before charging and after draining',
+            hint: 'Share of the inbox already filled before charging',
           },
           {
             path: 'liquid.wave',
@@ -248,7 +287,7 @@ export const mailinfraDeliverabilityChargeControls =
           {
             path: 'inbox.flapDepth',
             label: 'Envelope flap depth',
-            hint: 'Share of the inbox height the flap reaches down, 0 hides the flap',
+            hint: 'Share of the inbox height the flap reaches down; it always stops above the number. 0 hides the flap',
           },
           {
             path: 'inbox.showSeal',
@@ -256,39 +295,22 @@ export const mailinfraDeliverabilityChargeControls =
             hint: 'The round seal with a mail icon at the tip of the flap',
           },
           { path: 'inbox.sealSize', label: 'Seal size', hint: 'In pixels' },
-          { path: 'inbox.sealIcon', label: 'Seal icon color' },
-        ],
-      },
-      {
-        title: 'Landed badge',
-        fields: [],
-        more: [
           {
-            path: 'badge.text',
-            label: 'Badge text',
-            hint: 'Rises in above the inbox when the counter reaches its final number',
+            path: 'inbox.sealIcon',
+            label: 'Seal icon color',
+            hint: 'Also the ring around the seal',
           },
-          { path: 'badge.show', label: 'Show badge' },
-          {
-            path: 'badge.fill',
-            label: 'Badge color',
-            hint: 'Also the tick inside the check circle',
-          },
-          { path: 'badge.ink', label: 'Badge text color' },
-          { path: 'badge.size', label: 'Badge text size', hint: 'In pixels' },
-          { path: 'badge.gap', label: 'Gap above the inbox', hint: 'In pixels' },
         ],
       },
       {
         title: 'Timing',
-        fields: [
+        fields: [],
+        more: [
           {
             path: 'timing.fullAt',
             label: 'Full at',
             hint: 'Frame number where the counter lands and the pulse and badge appear',
           },
-        ],
-        more: [
           {
             path: 'timing.plugIn',
             label: 'First plug starts',
@@ -312,22 +334,37 @@ export const mailinfraDeliverabilityChargeControls =
           {
             path: 'timing.unplugAt',
             label: 'Unplug at',
-            hint: 'Frame number the cables pull out and the inbox starts draining. Kept at least 8 frames after Full at',
+            hint: 'Frame number the cables pull out and drop away. Kept at least 8 frames after Full at',
           },
           {
             path: 'timing.unplugFrames',
             label: 'Unplug length',
-            hint: 'Frames each cable takes to drop out of view',
+            hint: 'Frames each cable takes to back out and drop out of view',
+          },
+          {
+            path: 'timing.drain',
+            label: 'Drain at the end',
+            hint: 'On empties the inbox back to the Spam color after the cables unplug. Off keeps it charged',
           },
           {
             path: 'timing.drainFrames',
             label: 'Drain length',
-            hint: 'Frames the liquid and glow take to return to empty',
+            hint: 'Frames the liquid and glow take to empty. Drain at the end only',
+          },
+          {
+            path: 'badge.hold',
+            label: 'Badge hold',
+            hint: 'Frames the badge stays after it lands before it fades with the drain. Drain at the end only',
+          },
+          {
+            path: 'brand.enterAt',
+            label: 'Brand line appears at',
+            hint: 'Frame number the brand line fades in',
           },
         ],
       },
       {
-        title: 'Background',
+        title: 'Background and motion',
         fields: [],
         more: [
           {
@@ -343,21 +380,15 @@ export const mailinfraDeliverabilityChargeControls =
           {
             path: 'background.haze',
             label: 'Glow haze',
-            hint: 'Soft colored haze behind the inbox, 0 turns it off',
+            hint: 'Soft colored haze behind the inbox. Needs Show background on; 0 turns it off',
           },
-        ],
-      },
-      {
-        title: 'Motion',
-        fields: [],
-        more: [
           {
             ...MOTION.speed,
             hint: 'Scales the whole timeline; the entrance and exit keep their own length',
           },
           MOTION.enter,
           MOTION.enterFrames,
-          MOTION.exit,
+          { ...MOTION.exit, hint: 'Fade by default, so the ad ends gently' },
           MOTION.exitFrames,
         ],
       },
