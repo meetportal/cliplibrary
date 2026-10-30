@@ -46,6 +46,7 @@ export const elevatorNewspaperSchema = z.object({
   }),
   camera: z.object({
     zoom: zSlider({ min: 1, max: 2.6, step: 0.01 }),
+    creep: zSlider({ min: 0, max: 0.4, step: 0.01 }),
     focusX: zSlider({ min: 0, max: 1080 }),
     focusY: zSlider({ min: 0, max: 1920 }),
     pushStart: frames(),
@@ -94,13 +95,14 @@ export const elevatorNewspaperDefaults: ElevatorNewspaperProps = {
     softness: 0.6,
   },
   camera: {
-    zoom: 1.85,
+    zoom: 1.8,
+    creep: 0.08,
     focusX: 548,
     focusY: 870,
-    pushStart: 40,
-    pushFrames: 34,
-    pullStart: 112,
-    pullFrames: 26,
+    pushStart: 28,
+    pushFrames: 44,
+    pullStart: 106,
+    pullFrames: 28,
   },
   motion: defaultMotion({ exit: 'none', exitFrames: 0, float: 0 }),
 };

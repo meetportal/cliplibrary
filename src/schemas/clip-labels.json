@@ -6156,5 +6156,91 @@
       "calligraphy",
       "rajasthani"
     ]
+  },
+  "elevator-newspaper": {
+    "summary": "Photoreal footage of brushed steel elevator doors sliding open on a woman in a beige cap, black tee and blue jeans who hides her face behind an open newspaper. The spread carries your own print: a left cover page with a jewelry photo and a big COMING SOON headline, and a right page with the MAREN & CO masthead, a NEW STORE headline, a boxed teaser and a boutique photo. The camera pushes in to read it, then eases out as the doors close.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Closed brushed steel elevator doors in a bright lobby"
+      },
+      {
+        "at": 0.4,
+        "what": "Doors start sliding apart, a dark strip shows the printed newspaper inside"
+      },
+      {
+        "at": 1.2,
+        "what": "Camera starts pushing in toward the newspaper"
+      },
+      {
+        "at": 1.5,
+        "what": "Doors fully open on the woman holding the newspaper spread up over her face"
+      },
+      {
+        "at": 3.0,
+        "what": "Close framing on the spread: COMING SOON cover and NEW STORE page readable"
+      },
+      {
+        "at": 4.4,
+        "what": "Camera eases back out to the full doorway"
+      },
+      {
+        "at": 5.4,
+        "what": "Doors slide closed and meet in the middle"
+      }
+    ],
+    "visuals": [
+      "photoreal ai generated footage",
+      "brushed steel elevator doors",
+      "dark bronze elevator interior with downlights",
+      "woman hiding behind an open broadsheet newspaper",
+      "cover page with a jewelry photo and big serif headline",
+      "newspaper masthead, headline, teaser box and photo column",
+      "print tracked onto the real paper"
+    ],
+    "motion": [
+      "elevator doors sliding open and closed",
+      "camera push-in and pull-out",
+      "slow camera creep",
+      "paper swaying in her hands"
+    ],
+    "mood": ["editorial", "chic", "teasing", "cinematic"],
+    "roles": ["opener", "feature"],
+    "useCases": [
+      "store opening announcement",
+      "coming soon teaser",
+      "fashion or jewelry launch",
+      "new collection reveal",
+      "instagram reel hook",
+      "save the date for a launch"
+    ],
+    "editable": [
+      "cover and story headlines",
+      "newspaper name, edition line and date",
+      "subhead, teaser, caption and footer",
+      "cover and story photos",
+      "ink, accent and cover text colours",
+      "push-in amount and timing",
+      "print strength, shading and softness"
+    ],
+    "palette": ["#c9c9c7", "#2b2019", "#7a1f2b", "#3d0f1d", "#f3f1ed", "#4f78a8"],
+    "keywords": [
+      "elevator",
+      "lift",
+      "newspaper",
+      "coming soon",
+      "new store",
+      "opening",
+      "launch",
+      "jewelry",
+      "fashion",
+      "editorial",
+      "footage",
+      "live action",
+      "ai video",
+      "vertical",
+      "reveal",
+      "doors"
+    ]
   }
 }

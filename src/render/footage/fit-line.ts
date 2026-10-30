@@ -16,7 +16,7 @@ const leastSquares = (samples: Sample[]): Line => {
   return { slope, offset: meanAcross - slope * meanAlong };
 };
 
-export const lineAt = (line: Line, along: number) => line.slope * along + line.offset;
+const lineAt = (line: Line, along: number) => line.slope * along + line.offset;
 
 const median = (values: number[]) => {
   const sorted = [...values].sort((a, b) => a - b);
@@ -42,9 +42,4 @@ export type Point = [number, number];
 export const crossRowColumn = (row: Line, column: Line): Point => {
   const y = (row.slope * column.offset + row.offset) / (1 - row.slope * column.slope);
   return [column.slope * y + column.offset, y];
-};
-
-export const crossRows = (first: Line, second: Line): Point => {
-  const x = (second.offset - first.offset) / (first.slope - second.slope);
-  return [x, lineAt(first, x)];
 };

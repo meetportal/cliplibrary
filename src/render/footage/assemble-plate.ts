@@ -13,7 +13,7 @@ const segmentFrames = ({ from, to, step = 1 }: PlateSegment): number[] => {
   return Array.from({ length: count }, (_, index) => from + direction * index * step);
 };
 
-export const plateFrameOrder = (spec: FootageSpec) =>
+const plateFrameOrder = (spec: FootageSpec) =>
   spec.plate.flatMap((segment) =>
     segmentFrames(segment).map((frame) => ({ shot: segment.shot, frame })),
   );

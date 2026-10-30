@@ -1,4 +1,4 @@
-export type FootageStill = {
+type FootageStill = {
   name: string;
   model: string;
   prompt: string;
@@ -7,7 +7,7 @@ export type FootageStill = {
   publishWidth?: number;
 };
 
-export type FootageShot = {
+type FootageShot = {
   name: string;
   model: string;
   prompt: string;

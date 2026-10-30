@@ -13,6 +13,7 @@
   ],
   "project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}", "e2e/**/*.ts", "scripts/**/*.ts"],
   "ignore": ["src/components/ui/**"],
+  "ignoreBinaries": ["ffmpeg"],
   "ignoreDependencies": [
     "tw-animate-css",
     "tailwindcss",

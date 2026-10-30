@@ -15,8 +15,8 @@ import {
   spaced,
 } from './page-type';
 
-export const PAGE_WIDTH = 1024;
-export const PAGE_HEIGHT = 1448;
+const PAGE_WIDTH = 1024;
+const PAGE_HEIGHT = 1448;
 
 const OUTER = PAGE_WIDTH * 0.17;
 const INNER = PAGE_WIDTH * 0.07;

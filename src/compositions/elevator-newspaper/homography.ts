@@ -1,4 +1,4 @@
-export type Point = readonly [number, number];
+type Point = readonly [number, number];
 
 export type Quad = readonly [Point, Point, Point, Point];
 

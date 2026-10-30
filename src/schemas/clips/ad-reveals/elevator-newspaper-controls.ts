@@ -129,6 +129,11 @@ export const elevatorNewspaperControls = defineControls<ElevatorNewspaperProps>(
         { path: 'camera.pushFrames', label: 'Push-in length', hint: 'In frames' },
         { path: 'camera.pullFrames', label: 'Pull-out length', hint: 'In frames' },
         {
+          path: 'camera.creep',
+          label: 'Slow creep',
+          hint: 'Extra zoom gained slowly while the paper is held, so the camera never stops; 0 holds still',
+        },
+        {
           path: 'camera.focusX',
           label: 'Focus across',
           hint: 'In pixels from the left of the footage; moves to the center as the camera pushes in',
