@@ -1,12 +1,38 @@
 import type { MailinfraDeliverabilityChargeProps } from '@/schemas';
 import { bodyFont, displayFont } from '../promo/fonts';
-import { glowShadow } from '../promo/glow';
 import { pixelTween, settle, smooth, tween } from '../promo/timing';
-import { add } from './geometry';
+import { add, fade, mixColor } from './geometry';
 import { type CableRig, PLUG, type Vessel } from './rig';
 import type { Beats } from './timeline';
 
 type Props = MailinfraDeliverabilityChargeProps;
+
+const glowOf = (color: string, strength: number, size: number): string =>
+  strength <= 0
+    ? 'none'
+    : [0.04, 0.12, 0.32]
+        .map(
+          (spread, index) =>
+            `0 0 ${(size * spread).toFixed(1)}px ${fade(color, strength * (0.9 - index * 0.25))}`,
+        )
+        .join(', ');
+
+const Digits = ({ text, width }: { text: string; width: number }) => (
+  <>
+    {[...text].map((character, index) =>
+      character >= '0' && character <= '9' ? (
+        <span
+          key={`${index}:${character}`}
+          style={{ display: 'inline-block', width: `${width}em`, textAlign: 'center' }}
+        >
+          {character}
+        </span>
+      ) : (
+        <span key={`${index}:${character}`}>{character}</span>
+      ),
+    )}
+  </>
+);
 
 export const HeadlineGlow = ({ headline, glow }: { headline: Props['headline']; glow: string }) => (
   <div
@@ -22,8 +48,8 @@ export const HeadlineGlow = ({ headline, glow }: { headline: Props['headline']; 
       lineHeight: 1,
       letterSpacing: `${headline.tracking}em`,
       paddingLeft: `${headline.tracking}em`,
-      color: `color-mix(in srgb, ${headline.color}, ${glow} ${(headline.tint * 100).toFixed(1)}%)`,
-      textShadow: glowShadow(glow, headline.glow, headline.size * 1.6),
+      color: mixColor(headline.color, glow, headline.tint),
+      textShadow: glowOf(glow, headline.glow, headline.size * 1.6),
       whiteSpace: 'pre',
     }}
   >
@@ -60,12 +86,12 @@ export const Counter = ({
           fontSize: counter.size,
           lineHeight: 1.1,
           letterSpacing: '-0.035em',
-          fontVariantNumeric: 'tabular-nums',
           color: counter.color,
           whiteSpace: 'pre',
         }}
       >
-        {`${value}${counter.suffix}`}
+        <Digits text={value} width={0.58} />
+        {counter.suffix}
       </div>
       {counter.caption.length > 0 ? (
         <div
@@ -140,7 +166,7 @@ export const LandedBadge = ({
           fontSize: badge.size,
           lineHeight: 1.1,
           whiteSpace: 'pre',
-          boxShadow: glowShadow(check, 0.55, badge.size * 3),
+          boxShadow: glowOf(check, 0.55, badge.size * 3),
         }}
       >
         <svg width={mark} height={mark} viewBox="0 0 24 24" aria-hidden="true">
@@ -163,7 +189,7 @@ export const LandedBadge = ({
 export const CableLabels = ({ rigs, cables }: { rigs: CableRig[]; cables: Props['cables'] }) => (
   <>
     {rigs.map((rig) => {
-      if (rig.label.length === 0) {
+      if (rig.label.length === 0 || rig.labelOpacity <= 0) {
         return null;
       }
       const scale = cables.plugSize;
@@ -177,6 +203,7 @@ export const CableLabels = ({ rigs, cables }: { rigs: CableRig[]; cables: Props[
             left: anchor.x,
             top: anchor.y,
             transform: `translate(${(-50 + rig.normal.x * 50).toFixed(2)}%, ${(-50 + rig.normal.y * 50).toFixed(2)}%)`,
+            opacity: rig.labelOpacity,
             display: 'flex',
             alignItems: 'center',
             gap: Math.round(cables.labelSize * 0.35),

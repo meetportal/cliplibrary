@@ -29,17 +29,16 @@ import type { SceneModule } from '../../scene-module';
 const EASED = [0, 0.04, 0.14, 0.3, 0.5, 0.7, 0.86, 0.96, 1];
 
 const backdropGradient = (center: string, edge: string): string => {
-  const half = EASED.map(
-    (amount, index) =>
-      `color-mix(in oklab, ${edge}, ${center} ${(amount * 100).toFixed(1)}%) ${((index / (EASED.length - 1)) * 50).toFixed(1)}%`,
-  );
-  const mirrored = EASED.slice(0, -1)
-    .reverse()
-    .map(
-      (amount, index) =>
-        `color-mix(in oklab, ${edge}, ${center} ${(amount * 100).toFixed(1)}%) ${(50 + ((index + 1) / (EASED.length - 1)) * 50).toFixed(1)}%`,
-    );
-  return `linear-gradient(180deg, ${[...half, ...mirrored].join(', ')})`;
+  const last = EASED.length - 1;
+  const stops = [
+    ...EASED.map((amount, index) => [amount, (index / last) * 50] as const),
+    ...EASED.slice(0, -1)
+      .reverse()
+      .map((amount, index) => [amount, 50 + ((index + 1) / last) * 50] as const),
+  ];
+  return `linear-gradient(180deg, ${stops
+    .map(([amount, at]) => `${mixColor(edge, center, amount)} ${at.toFixed(1)}%`)
+    .join(', ')})`;
 };
 
 const Blur = ({

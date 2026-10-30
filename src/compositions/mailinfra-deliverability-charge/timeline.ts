@@ -35,11 +35,13 @@ export const glowAt = (frame: number, beats: Beats): number =>
     : tween(frame, [beats.unplugAt, beats.drainEnd], [1, 0], smooth);
 
 export const burstAt = (frame: number, beats: Beats, pulseFrames: number): number =>
-  tween(frame, [beats.fullAt - 3, beats.fullAt + 3], [0, 1]) *
-  (1 - tween(frame, [beats.fullAt + 3, beats.fullAt + 3 + pulseFrames], [0, 1]));
+  tween(frame, [beats.fullAt - 8, beats.fullAt + 6], [0, 1]) *
+  (1 - tween(frame, [beats.fullAt + 6, beats.fullAt + 6 + pulseFrames], [0, 1]));
 
 export const pulseAt = (frame: number, beats: Beats, pulseFrames: number, delay = 0): number =>
   tween(frame, [beats.fullAt + delay, beats.fullAt + delay + pulseFrames], [0, 1], settle);
+
+const SEAT_SPEED = 4;
 
 export interface PlugTiming {
   start: number;
@@ -61,8 +63,8 @@ export const plugTiming = (timing: Timing, beats: Beats, order: number): PlugTim
 
 export const plugTravel = (frame: number, plug: PlugTiming, length: number): number =>
   frame < plug.release
-    ? land(frame, [plug.start, plug.landed], [0, length])
-    : launch(frame, [plug.release, plug.gone], [length, 0]);
+    ? land(frame, [plug.start, plug.landed], [0, length], SEAT_SPEED)
+    : launch(frame, [plug.release, plug.gone], [length, 0], SEAT_SPEED);
 
 export const sparkLife = (frame: number, plug: PlugTiming): number =>
   tween(frame, [plug.landed, plug.landed + 10], [0, 1]) *

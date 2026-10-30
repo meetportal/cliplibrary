@@ -1,4 +1,5 @@
 import type { MailinfraDeliverabilityChargeProps } from '@/schemas';
+import { tween } from '../promo/timing';
 import { add, type Cubic, type Point, point, walk } from './geometry';
 import {
   type Beats,
@@ -24,14 +25,55 @@ interface SocketSpec {
   approach: number;
   tailReach: number;
   phase: number;
+  labelTurn: 1 | -1;
 }
 
 const SOCKETS: Record<CableKey, SocketSpec> = {
-  spf: { side: 'left', level: 0.42, reach: 250, approach: 250, tailReach: 230, phase: 0.4 },
-  dkim: { side: 'right', level: 0.42, reach: 250, approach: 250, tailReach: 230, phase: 1.9 },
-  dmarc: { side: 'left', level: 0.64, reach: 110, approach: 170, tailReach: 120, phase: 2.8 },
-  warmup: { side: 'right', level: 0.64, reach: 110, approach: 170, tailReach: 120, phase: 4.2 },
-  ips: { side: 'bottom', level: 1, reach: 80, approach: 230, tailReach: 160, phase: 5.3 },
+  spf: {
+    side: 'left',
+    level: 0.42,
+    reach: 250,
+    approach: 250,
+    tailReach: 230,
+    phase: 0.4,
+    labelTurn: -1,
+  },
+  dkim: {
+    side: 'right',
+    level: 0.42,
+    reach: 250,
+    approach: 250,
+    tailReach: 230,
+    phase: 1.9,
+    labelTurn: 1,
+  },
+  dmarc: {
+    side: 'left',
+    level: 0.64,
+    reach: 110,
+    approach: 170,
+    tailReach: 120,
+    phase: 2.8,
+    labelTurn: 1,
+  },
+  warmup: {
+    side: 'right',
+    level: 0.64,
+    reach: 110,
+    approach: 170,
+    tailReach: 120,
+    phase: 4.2,
+    labelTurn: -1,
+  },
+  ips: {
+    side: 'bottom',
+    level: 1,
+    reach: 80,
+    approach: 230,
+    tailReach: 160,
+    phase: 5.3,
+    labelTurn: 1,
+  },
 };
 
 const START_Y = 2090;
@@ -93,6 +135,7 @@ export interface CableRig {
   head: Point;
   heading: Point;
   normal: Point;
+  labelOpacity: number;
   click: number;
   sparks: Spark[];
 }
@@ -129,7 +172,7 @@ export const rigCable = (
   const head = add(route.pointAt(travelled), across, swing);
   const tail = add(head, heading, -PLUG.body * scale);
   const anchor = point(start.x, ANCHOR_Y);
-  const drift = props.cables.sway * (14 + 30 * Math.sin(Math.PI * progress));
+  const drift = props.cables.sway * (14 + 10 * Math.sin(Math.PI * progress));
   const cable: Cubic = [
     anchor,
     point(
@@ -142,7 +185,7 @@ export const rigCable = (
     ),
     tail,
   ];
-  const normal = spec.side === 'left' ? point(heading.y, -heading.x) : across;
+  const normal = point(across.x * spec.labelTurn, across.y * spec.labelTurn);
   return {
     key,
     label: props.cables[key].label,
@@ -150,6 +193,7 @@ export const rigCable = (
     head,
     heading,
     normal,
+    labelOpacity: 1 - tween(frame, [plug.release, plug.release + 12], [0, 1]),
     click: clickAt(frame, plug),
     sparks: sparksOn(cable, frame, props.sparks, sparkLife(frame, plug), spec.phase),
   };
@@ -169,7 +213,7 @@ const sparksOn = (
   return Array.from({ length: sparks.count }, (_, index) => {
     const share = fract(frame / sparks.tripFrames + index / sparks.count + phase * 0.13);
     const distance = share * path.length;
-    const edge = Math.min(1, (1 - share) / 0.08, share / 0.08);
+    const edge = Math.min(1, (1 - share) / 0.2, share / 0.1);
     return {
       at: path.pointAt(distance),
       heading: path.headingAt(distance),

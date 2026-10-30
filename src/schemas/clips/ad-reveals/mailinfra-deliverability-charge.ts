@@ -176,7 +176,7 @@ export const mailinfraDeliverabilityChargeDefaults: MailinfraDeliverabilityCharg
     shape: 'envelope',
     color: '#ffd700',
     size: 18,
-    tripFrames: 46,
+    tripFrames: 80,
     glow: 0.75,
   },
   charge: {
