@@ -6158,11 +6158,11 @@
     ]
   },
   "mailinfra-deliverability-charge": {
-    "summary": "A vertical dark ad where a tall envelope-shaped inbox outline glows spam red under the spaced headline DELIVERABILITY. Five slim plugs with yellow rings, labeled SPF, DKIM, DMARC, Warm-up and Dedicated IPs, rise from below and plug into its sides and base, glowing envelope sparks run up the wires, the glow shifts to electric blue while a blue-violet liquid fills and the inbox rate counts to 99.9%, rings pulse out and a white \"Landed in the inbox\" badge rises, then the cables unplug and it drains back to red.",
+    "summary": "A vertical dark ad for mailinfra.co: under a small brand line and the spaced headline DELIVERABILITY, a tall envelope-shaped inbox outline glows spam red. Five slim plugs with yellow rings, labeled SPF, DKIM, DMARC, Warm-up and Dedicated IPs, rise from below and plug into its sides and base, glowing envelope sparks run up the wires, the glow shifts to electric blue while a blue-violet liquid fills and the inbox rate counts to 99.9%, rings pulse out and a white \"Landed in the inbox\" badge rises. The cables back out and drop away while the inbox stays charged, then everything fades out.",
     "beats": [
       {
         "at": 0.0,
-        "what": "Empty red-glowing envelope inbox under the DELIVERABILITY headline, counter at 0.0% INBOX RATE"
+        "what": "Empty red-glowing envelope inbox under the DELIVERABILITY headline, counter at 0.0% INBOX RATE, the mailinfra.co brand line fades in"
       },
       {
         "at": 0.6,
@@ -6173,21 +6173,26 @@
         "what": "Plugs seat into the sides and base with a small flash, envelope sparks start running up the wires"
       },
       {
-        "at": 3.5,
+        "at": 3.3,
         "what": "Glow and liquid turn from spam red to electric blue and violet while the rate counts up"
       },
       {
-        "at": 6.7,
+        "at": 6.2,
         "what": "Counter lands on 99.9%, rings pulse out and the Landed in the inbox badge rises above"
       },
       {
-        "at": 7.7,
-        "what": "Cables pull out and drop away, labels fade, the liquid drains and the glow returns to red"
+        "at": 7.6,
+        "what": "Cables back out of their sockets and drop out of the frame, the inbox stays charged and blue"
+      },
+      {
+        "at": 9.2,
+        "what": "The whole frame fades out gently on the charged inbox, badge and brand line"
       }
     ],
     "visuals": [
       "vertical 9:16 frame",
       "near-black navy backdrop",
+      "brand line with an envelope tile",
       "glowing envelope-shaped inbox outline with a round mail seal",
       "spaced glowing headline",
       "labeled pill tags on slim plugs with yellow rings",
@@ -6202,10 +6207,11 @@
       "liquid fill with rising bubbles",
       "percentage count-up",
       "pulse rings",
-      "unplug and drain"
+      "cables back out and drop",
+      "fade out"
     ],
     "mood": ["techy", "confident", "energetic", "satisfying"],
-    "roles": ["feature", "proof", "opener"],
+    "roles": ["feature", "proof", "closer"],
     "useCases": [
       "cold email infrastructure ad",
       "email deliverability feature promo",
@@ -6214,15 +6220,15 @@
       "instagram or tiktok story ad"
     ],
     "editable": [
-      "headline text",
-      "final number, decimals, suffix and caption",
+      "headline, brand line and badge text",
+      "starting and final number, decimals, suffix and caption",
       "five cable labels and which cables show",
-      "badge text",
       "spam and charged glow colors",
       "liquid, spark, plug and wire colors",
       "inbox size, position, corners and flap",
       "spark shape, count and speed",
-      "plug-in, full, unplug and drain timing"
+      "plug-in, full and unplug timing",
+      "optional drain back to spam at the end"
     ],
     "palette": ["#0b0b18", "#ff5a36", "#4048ff", "#7c3aed", "#ffd700", "#f4f5ff"],
     "keywords": [
@@ -6230,6 +6236,7 @@
       "inbox rate",
       "email",
       "cold email",
+      "mailinfra",
       "charging",
       "battery",
       "cables",
