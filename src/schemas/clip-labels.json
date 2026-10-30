@@ -6572,5 +6572,115 @@
       "outbound",
       "lead gen"
     ]
+  },
+  "mailinfra-thread-features": {
+    "summary": "A vertical promo on a deep indigo backdrop with blurred violet and blue bokeh. A silk thread drops down the frame and a small spider abseils down it, stopping beside a Mailinfra label and the headline \"Built to land.\". The camera then whips down the thread with motion blur, stopping on four gold extruded titles (100 INBOXES FREE, 99.9% DELIVERABILITY, LIVE IN 5 MINUTES, PAY AFTER 30 DAYS), each wrapped in a silk cocoon with a violet-legged spider crawling behind it, dew drops, side webs, caught envelope emails or gold bokeh dots. A final dive lands on an orb web that starts weaving mid-dive, with a spider dropping to its hub and walking around it, above a Mailinfra end card with an envelope hexagon logo, a statement, an italic tagline and a mailinfra.co pill button.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Silk thread drops from the top of the frame with a glint at its tip"
+      },
+      {
+        "at": 0.2,
+        "what": "Spider abseils down the thread and stops mid-frame as the Mailinfra label and the Built to land headline rise in beside it"
+      },
+      {
+        "at": 1.35,
+        "what": "Camera whips down the thread with vertical motion blur"
+      },
+      {
+        "at": 1.9,
+        "what": "Lands on 100 INBOXES FREE in a dewy cocoon; the title rocks and settles while a spider crawls below the text"
+      },
+      {
+        "at": 4.5,
+        "what": "Whips to 99.9% DELIVERABILITY with a side web holding two caught emails and gold bokeh dots"
+      },
+      {
+        "at": 7.1,
+        "what": "Whips to LIVE IN 5 MINUTES with a left side web and a caught email"
+      },
+      {
+        "at": 9.7,
+        "what": "Whips to PAY AFTER 30 DAYS with two emails hanging from the cocoon and a spider above the title"
+      },
+      {
+        "at": 11.75,
+        "what": "Final dive down the thread as the orb web starts weaving below"
+      },
+      {
+        "at": 12.4,
+        "what": "Lands on the forming web; the Mailinfra logo and name rise in while a spider drops to the hub"
+      },
+      {
+        "at": 14.2,
+        "what": "Statement, italic tagline and mailinfra.co button complete the end card, which holds while the spider walks the web"
+      }
+    ],
+    "visuals": [
+      "glinting silk thread",
+      "small dark spiders with gold markings",
+      "gold extruded 3D titles with amber sides",
+      "silk cocoons with cross strands",
+      "side orb webs",
+      "silk-wrapped envelope emails",
+      "dew drops",
+      "blurred violet and blue bokeh",
+      "gold bokeh dots",
+      "orb web",
+      "envelope hexagon logo",
+      "italic serif tagline",
+      "blue to violet pill button with gold arrow"
+    ],
+    "motion": [
+      "vertical whip pans with motion blur",
+      "title swing and settle on arrival",
+      "spider abseil and crawl",
+      "thread glint running down",
+      "web draw-on",
+      "staggered rise and fade text"
+    ],
+    "mood": ["bold", "energetic", "playful", "premium", "night"],
+    "roles": ["opener", "feature", "cta", "closer"],
+    "useCases": [
+      "SaaS feature list ad",
+      "cold email or deliverability promo",
+      "instagram reel or tiktok promo",
+      "product benefits teaser",
+      "end card with website call to action"
+    ],
+    "editable": [
+      "opening headline and highlighted word",
+      "brand label",
+      "each title's two lines, hold length and tilt",
+      "spider, side web, caught emails, dew and gold dots per title",
+      "end card brand name, statement, tagline and button text",
+      "gold, brand, silk, text and background colours",
+      "whip length, dive length, motion blur and background depth",
+      "title size, extrusion depth and swing",
+      "end card hold length, with title holds squeezed to fit"
+    ],
+    "palette": ["#120d3a", "#ffd700", "#4040ff", "#7c3aed", "#efe6cf", "#f6f1e4"],
+    "keywords": [
+      "spider",
+      "spider web",
+      "cobweb",
+      "silk thread",
+      "whip pan",
+      "motion blur",
+      "3d text",
+      "extruded",
+      "gold",
+      "features",
+      "benefits",
+      "email",
+      "cold email",
+      "deliverability",
+      "end card",
+      "vertical",
+      "reel",
+      "promo",
+      "saas"
+    ]
   }
 }

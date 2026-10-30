@@ -5,6 +5,7 @@ import type { CrumpledPaperRevealProps } from './clips/ad-reveals/crumpled-paper
 import type { HelicopterUnveilProps } from './clips/ad-reveals/helicopter-unveil';
 import type { MailinfraDeliverabilityChargeProps } from './clips/ad-reveals/mailinfra-deliverability-charge';
 import type { MailinfraSpiderDropProps } from './clips/ad-reveals/mailinfra-spider-drop';
+import type { MailinfraThreadFeaturesProps } from './clips/ad-reveals/mailinfra-thread-features';
 import type { ProblemStrikeoutProps } from './clips/ad-reveals/problem-strikeout';
 import type { SpillRevealProps } from './clips/ad-reveals/spill-reveal';
 import type { ReliefBackdropProps } from './clips/backgrounds/relief-backdrop';
@@ -170,6 +171,7 @@ export interface ClipPropsMap {
   'mailinfra-spider-drop': MailinfraSpiderDropProps;
   'scene-transition': SceneTransitionProps;
   'mailinfra-deliverability-charge': MailinfraDeliverabilityChargeProps;
+  'mailinfra-thread-features': MailinfraThreadFeaturesProps;
 }
 
 export type ClipId = keyof ClipPropsMap;

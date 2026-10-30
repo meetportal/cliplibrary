@@ -42,6 +42,12 @@ import {
 } from './mailinfra-spider-drop';
 import { mailinfraSpiderDropControls } from './mailinfra-spider-drop-controls';
 import {
+  mailinfraThreadFeaturesDefaults,
+  mailinfraThreadFeaturesMeta,
+  mailinfraThreadFeaturesSchema,
+} from './mailinfra-thread-features';
+import { mailinfraThreadFeaturesControls } from './mailinfra-thread-features-controls';
+import {
   problemStrikeoutDefaults,
   problemStrikeoutMeta,
   problemStrikeoutSchema,
@@ -113,5 +119,12 @@ export const adRevealsClips: ClipModule[] = [
     defaults: mailinfraDeliverabilityChargeDefaults,
     meta: mailinfraDeliverabilityChargeMeta,
     controls: mailinfraDeliverabilityChargeControls,
+  },
+  {
+    id: 'mailinfra-thread-features',
+    schema: mailinfraThreadFeaturesSchema,
+    defaults: mailinfraThreadFeaturesDefaults,
+    meta: mailinfraThreadFeaturesMeta,
+    controls: mailinfraThreadFeaturesControls,
   },
 ];
