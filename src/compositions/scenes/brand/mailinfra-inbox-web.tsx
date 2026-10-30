@@ -17,10 +17,13 @@ import type { SceneModule } from '../../scene-module';
 
 const MailinfraInboxWeb = (props: MailinfraInboxWebProps) => {
   const frame = useCurrentFrame() * props.motion.speed;
-  const { width, height } = useVideoConfig();
+  const { width, height, durationInFrames } = useVideoConfig();
   const idPrefix = `inbox-web-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
   const web = useMemo(() => buildWeb(props), [props]);
-  const phases = phasesFor(props);
+  const phases = phasesFor(
+    props,
+    (durationInFrames - props.motion.exitFrames) * props.motion.speed,
+  );
   const camera = cameraAt(frame, web, phases, props);
   const pendulum = pendulumAt(frame, phases, props);
   return (

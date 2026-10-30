@@ -31,7 +31,7 @@ export const CounterOverlay = ({
             position: 'absolute',
             left: 0,
             right: 0,
-            top: 56,
+            top: props.headlineTop,
             display: 'flex',
             justifyContent: 'center',
             padding: '0 60px',
@@ -54,7 +54,7 @@ export const CounterOverlay = ({
           position: 'absolute',
           left: 0,
           right: 0,
-          bottom: 52,
+          bottom: props.counterBottom,
           display: 'flex',
           justifyContent: 'center',
         }}

@@ -52,13 +52,13 @@ export const Spider = ({
           d={leg.d}
           fill="none"
           stroke={rimColor}
-          strokeWidth={size * 0.056}
+          strokeWidth={size * 0.064}
           strokeLinecap="round"
           strokeLinejoin="round"
-          opacity={0.5}
+          opacity={0.55}
         />
       ))}
-      <g stroke={rimColor} strokeWidth={size * 0.022} strokeOpacity={0.65}>
+      <g stroke={rimColor} strokeWidth={size * 0.03} strokeOpacity={0.85}>
         <ellipse cx={0} cy={size * 0.21} rx={size * 0.15} ry={size * 0.2} fill={color} />
         <ellipse cx={0} cy={-size * 0.07} rx={size * 0.1} ry={size * 0.115} fill={color} />
       </g>
@@ -77,12 +77,20 @@ export const Spider = ({
       <ellipse cx={0} cy={-size * 0.07} rx={size * 0.1} ry={size * 0.115} fill={color} />
       <ellipse cx={0} cy={-size * 0.18} rx={size * 0.05} ry={size * 0.035} fill={color} />
       <ellipse
-        cx={-size * 0.05}
-        cy={size * 0.13}
-        rx={size * 0.05}
-        ry={size * 0.08}
-        fill="#ffffff"
-        opacity={0.12}
+        cx={-size * 0.045}
+        cy={size * 0.12}
+        rx={size * 0.06}
+        ry={size * 0.1}
+        fill={rimColor}
+        opacity={0.28}
+      />
+      <ellipse
+        cx={-size * 0.035}
+        cy={-size * 0.1}
+        rx={size * 0.035}
+        ry={size * 0.05}
+        fill={rimColor}
+        opacity={0.24}
       />
       <rect
         x={-size * 0.075}

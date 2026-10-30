@@ -119,7 +119,8 @@ const Envelope = ({
                 pathLength={1}
                 fill="none"
                 stroke={inboxes.checkColor}
-                strokeWidth={badgeRadius * 0.26}
+                strokeWidth={badgeRadius * 0.26 * (0.35 + 0.65 * Math.min(1, check * 2.5))}
+                opacity={Math.min(1, check * 5)}
                 strokeLinecap="butt"
                 strokeLinejoin="round"
                 strokeDasharray={check >= 1 ? undefined : `${check.toFixed(4)} 2`}

@@ -46,9 +46,16 @@ export const World = ({
   const spider = spiderAt(frame, web, phases, props);
   const heading = spiderHeading(frame, phases);
   const tail = spiderTail(spider, heading, props.spider.size);
-  const dragline: Point = spider.y < 0 ? tail : { x: 0, y: 0 };
+  const dragline: Point = frame < phases.runOut[0] || spider.y < 0 ? tail : { x: 0, y: 0 };
+  const previous = spiderAt(frame - 1, web, phases, props);
+  const fall =
+    frame <= phases.settle
+      ? Math.min(12, Math.abs(spider.y - previous.y) * scale * 0.12 * props.camera.motionBlur) /
+        scale
+      : 0;
   const dim = props.camera.endDim * tween(frame, phases.zoom, [0, 1], smooth);
   const depthBlur = (props.camera.endDim * 5 * tween(frame, phases.zoom, [0, 1], smooth)) / scale;
+  const sway = (props.camera.drift * 9 * tween(frame, phases.zoom, [0, 1], smooth)) / scale;
   const motionX = camera.blur / scale;
   const motionY = (camera.blur + camera.blurY) / scale;
   const blurred = motionY > 0.05;
@@ -89,16 +96,32 @@ export const World = ({
         >
           <feGaussianBlur stdDeviation={depthBlur.toFixed(3)} />
         </filter>
+        <filter
+          id={`${idPrefix}-fall`}
+          filterUnits="userSpaceOnUse"
+          x={left - viewWidth}
+          y={top - viewHeight}
+          width={viewWidth * 3}
+          height={viewHeight * 3}
+        >
+          <feGaussianBlur stdDeviation={`0 ${fall.toFixed(3)}`} />
+        </filter>
       </defs>
       <g filter={blurred ? `url(#${idPrefix}-motion)` : undefined}>
-        <g opacity={1 - dim} filter={depthBlur > 0.05 ? `url(#${idPrefix}-depth)` : undefined}>
+        <g
+          opacity={1 - dim}
+          filter={depthBlur > 0.05 ? `url(#${idPrefix}-depth)` : undefined}
+          transform={`translate(${(Math.sin(frame / 26) * sway).toFixed(3)} ${(Math.cos(frame / 33) * sway * 0.7).toFixed(3)})`}
+        >
           <WebSilk
             frame={frame}
             web={web}
             phases={phases}
             props={props}
             strokeWidth={strokeWidth}
-            spiderY={frame <= phases.runOut[1] ? spider.y : web.frameStart.y}
+            spiderY={
+              frame < phases.runOut[0] ? 0 : frame <= phases.runOut[1] ? spider.y : web.frameStart.y
+            }
           />
           <JunctionNodes
             frame={frame}
@@ -116,13 +139,15 @@ export const World = ({
           />
           <Envelopes frame={frame} web={web} phases={phases} props={props} gradientId={idPrefix} />
         </g>
-        <path
-          d={linePath({ x: 0, y: SKY }, dragline)}
-          fill="none"
-          stroke={props.web.silkColor}
-          strokeWidth={strokeWidth * 1.1}
-          opacity={0.9}
-        />
+        {props.spider.show ? (
+          <path
+            d={linePath({ x: 0, y: SKY }, dragline)}
+            fill="none"
+            stroke={props.web.silkColor}
+            strokeWidth={strokeWidth * 1.1}
+            opacity={0.9}
+          />
+        ) : null}
         {pendulum.opacity > 0.01 ? (
           <path
             d={linePath({ x: 0, y: 0 }, threadEnd)}
@@ -133,15 +158,17 @@ export const World = ({
           />
         ) : null}
         {props.spider.show ? (
-          <Spider
-            at={spider}
-            heading={heading}
-            gait={frame > phases.drop ? gaitPhase(frame, web, phases, props) : 0}
-            size={props.spider.size}
-            color={props.spider.color}
-            markColor={props.spider.markColor}
-            rimColor={props.web.silkColor}
-          />
+          <g filter={fall > 0.05 ? `url(#${idPrefix}-fall)` : undefined}>
+            <Spider
+              at={spider}
+              heading={heading}
+              gait={frame > phases.drop ? gaitPhase(frame, web, phases, props) : 0}
+              size={props.spider.size}
+              color={props.spider.color}
+              markColor={props.spider.markColor}
+              rimColor={props.web.silkColor}
+            />
+          </g>
         ) : null}
       </g>
     </svg>

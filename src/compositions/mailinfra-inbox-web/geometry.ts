@@ -67,9 +67,10 @@ const pickEnvelopes = (
   count: number,
   size: number,
   key: string,
+  keepOut: (point: Point) => boolean,
 ): EnvelopeTarget[] => {
   const candidates = spiral
-    .filter((junction) => junction.fraction > 0.38 && junction.radial !== 0)
+    .filter((junction) => junction.fraction > 0.38 && junction.radial !== 0 && !keepOut(junction))
     .map((junction) => ({ junction, order: random(`${key}-pick-${junction.index}`) }))
     .sort((a, b) => a.order - b.order)
     .map((entry) => entry.junction);
@@ -107,6 +108,29 @@ const pickEnvelopes = (
       },
     };
   });
+};
+
+const lockupKeepOut = (props: MailinfraInboxWebProps): ((point: Point) => boolean) => {
+  const { wordmark, envelopes, camera } = props;
+  const zoom = camera.endZoom;
+  const margin = envelopes.size * 0.75;
+  const textWidth = Math.max(
+    wordmark.size * 0.58 * wordmark.text.length,
+    wordmark.taglineSize * 0.5 * wordmark.tagline.length,
+    wordmark.urlSize * 0.75 * wordmark.url.length,
+  );
+  const top = (wordmark.threadLength - wordmark.size * 0.1) / zoom - margin;
+  const bottom =
+    (wordmark.threadLength +
+      wordmark.size * 1.2 +
+      wordmark.taglineGap +
+      wordmark.taglineSize * 1.5 +
+      wordmark.urlGap +
+      wordmark.urlSize * 2.2) /
+      zoom +
+    margin;
+  const half = textWidth / 2 / zoom + margin;
+  return (point) => point.y > top && point.y < bottom && Math.abs(point.x) < half;
 };
 
 export const buildWeb = (props: MailinfraInboxWebProps): WebGeometry => {
@@ -163,7 +187,13 @@ export const buildWeb = (props: MailinfraInboxWebProps): WebGeometry => {
     spiral,
     spiralLengths,
     dew,
-    envelopes: pickEnvelopes(spiral, Math.round(envelopes.count), web.size, key),
+    envelopes: pickEnvelopes(
+      spiral,
+      Math.round(envelopes.count),
+      web.size,
+      key,
+      lockupKeepOut(props),
+    ),
   };
 };
 
@@ -189,24 +219,6 @@ const polylineLength = (points: Point[]): number[] =>
     lengths.push(previous === undefined ? 0 : (lengths.at(-1) ?? 0) + distance(previous, point));
     return lengths;
   }, []);
-
-export const fractionAtSpiral = (web: WebGeometry, progress: number): number => {
-  const total = web.spiralLengths.at(-1) ?? 0;
-  const target = Math.min(1, Math.max(0, progress)) * total;
-  const steps = Math.max(1, web.spiral.length - 1);
-  let reached = progress <= 0 ? 0 : steps;
-  for (let index = 1; index < web.spiral.length; index++) {
-    const end = web.spiralLengths[index] ?? 0;
-    const start = web.spiralLengths[index - 1] ?? 0;
-    if (target <= end) {
-      reached = index - 1 + (end > start ? (target - start) / (end - start) : 0);
-      break;
-    }
-  }
-  return SPIRAL_START + (SPIRAL_END - SPIRAL_START) * (reached / steps);
-};
-
-export const spiralStartFraction = SPIRAL_START;
 
 export const loopFractionOf = (loop: Point[], point: Point): number => {
   const lengths = polylineLength(loop);

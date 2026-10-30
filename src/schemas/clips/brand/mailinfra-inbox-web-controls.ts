@@ -2,7 +2,8 @@ import { defineControls } from '../../control-layout';
 import { LOOK, MOTION } from '../../control-presets';
 import type { MailinfraInboxWebProps } from './mailinfra-inbox-web';
 
-const FRAMES = 'In frames, at normal animation speed';
+const FRAMES =
+  'In frames, at normal animation speed. Long settings are squeezed so the end card always holds';
 const HIDE_EMPTY = 'Leave empty to hide it';
 
 export const mailinfraInboxWebControls = defineControls<MailinfraInboxWebProps>({
@@ -33,6 +34,8 @@ export const mailinfraInboxWebControls = defineControls<MailinfraInboxWebProps>(
         { path: 'counterFrom', label: 'Counter starts at' },
         { path: 'wordmark.url', label: 'Website pill', hint: `Under the tagline. ${HIDE_EMPTY}` },
         { path: 'headlineSize', label: 'Headline size', hint: 'In pixels' },
+        { path: 'headlineTop', label: 'Headline from top', hint: 'In pixels' },
+        { path: 'counterBottom', label: 'Counter from bottom', hint: 'In pixels' },
         { path: 'counterSize', label: 'Counter size', hint: 'In pixels; the pill grows with it' },
         { path: 'wordmark.taglineSize', label: 'Tagline size', hint: 'In pixels' },
         { path: 'wordmark.urlSize', label: 'Website pill size', hint: 'In pixels' },
@@ -52,9 +55,15 @@ export const mailinfraInboxWebControls = defineControls<MailinfraInboxWebProps>(
           hint: 'Glowing web junctions, envelope outlines and the second bokeh tone',
         },
         {
-          link: ['wordmark.face', 'spider.markColor', 'look.accent'],
+          link: [
+            'wordmark.face',
+            'wordmark.faceTop',
+            'wordmark.side',
+            'spider.markColor',
+            'look.accent',
+          ],
           label: 'Accent color',
-          hint: 'The gold wordmark face, the highlighted headline words and the mark on the spider',
+          hint: 'The whole 3D wordmark (face, top light and depth keep their shading), the highlighted headline words and the mark on the spider',
         },
         {
           link: ['look.ink', 'web.silkColor'],
@@ -64,7 +73,7 @@ export const mailinfraInboxWebControls = defineControls<MailinfraInboxWebProps>(
         {
           link: ['look.background', 'look.backgroundEdge'],
           label: 'Background color',
-          hint: 'Sets the center and corners to one color; set them apart under More options',
+          hint: 'Recolors the center and corners together, keeping the darker corners',
         },
       ],
       more: [
@@ -95,23 +104,36 @@ export const mailinfraInboxWebControls = defineControls<MailinfraInboxWebProps>(
       ],
     },
     {
-      title: 'Web',
+      title: 'Web and spider',
       fields: [
         { path: 'web.radials', label: 'Spokes', hint: 'Threads running out from the center' },
         {
-          path: 'web.spiralTurns',
-          label: 'Spiral turns',
-          hint: 'Rings of the capture spiral; each crossing becomes an inbox',
+          path: 'spider.show',
+          label: 'Show spider',
+          hint: 'Off also hides the thread it drops on; the web still weaves itself',
         },
-        { path: 'spider.show', label: 'Show spider' },
       ],
       more: [
+        {
+          path: 'web.spiralTurns',
+          label: 'Spiral turns',
+          hint: 'Rings of the capture spiral. Every crossing glows; only the envelopes get inbox badges',
+        },
         { path: 'web.size', label: 'Web size', hint: 'Radius in pixels at normal zoom' },
         { path: 'web.frameSides', label: 'Frame corners', hint: 'Corners of the outer frame' },
         { path: 'web.wobble', label: 'Irregularity', hint: '0 makes a perfectly even web' },
-        { path: 'web.seed', label: 'Web shape', hint: 'Pick another number for a new layout' },
-        { path: 'web.silkWidth', label: 'Silk thickness', hint: 'In pixels' },
+        {
+          path: 'web.seed',
+          label: 'Web shape',
+          hint: 'Pick another number for a new layout. Also reshuffles the bokeh and envelope spots',
+        },
+        {
+          path: 'web.silkWidth',
+          label: 'Silk thickness',
+          hint: 'In pixels at normal zoom; threads thicken a little as the camera zooms in',
+        },
         { path: 'web.dew', label: 'Dew glints', hint: '0 turns the glints off' },
+        { path: 'spider.size', label: 'Spider size', hint: 'Leg span in pixels at normal zoom' },
       ],
     },
     {
@@ -133,19 +155,21 @@ export const mailinfraInboxWebControls = defineControls<MailinfraInboxWebProps>(
       ],
     },
     {
-      title: 'Spider',
-      fields: [],
-      more: [
-        { path: 'spider.size', label: 'Spider size', hint: 'Leg span in pixels at normal zoom' },
-      ],
-    },
-    {
       title: 'Gold wordmark',
-      fields: [],
+      fields: [{ path: 'wordmark.size', label: 'Wordmark size', hint: 'In pixels' }],
       more: [
-        { path: 'wordmark.size', label: 'Wordmark size', hint: 'In pixels' },
         { path: 'wordmark.depth', label: '3D depth', hint: 'In pixels. 0 makes it flat' },
         { path: 'wordmark.swing', label: 'Swing', hint: 'In degrees; it settles to still' },
+        {
+          path: 'wordmark.swingPeriod',
+          label: 'Swing period',
+          hint: 'Frames for one back-and-forth swing',
+        },
+        {
+          path: 'wordmark.swingSettle',
+          label: 'Swing settle',
+          hint: 'Frames until the swing comes to rest',
+        },
         {
           path: 'wordmark.shine',
           label: 'Shine',
@@ -161,10 +185,20 @@ export const mailinfraInboxWebControls = defineControls<MailinfraInboxWebProps>(
           label: 'Web center height',
           hint: 'Pixels from the top where the camera parks the web center on the end card',
         },
+        {
+          path: 'wordmark.taglineGap',
+          label: 'Space under the wordmark',
+          hint: 'In pixels, above the tagline',
+        },
+        {
+          path: 'wordmark.urlGap',
+          label: 'Space above the website',
+          hint: 'In pixels, between the tagline and the website pill',
+        },
       ],
     },
     {
-      title: 'Camera',
+      title: 'Camera and timing',
       fields: [],
       more: [
         { path: 'camera.startZoom', label: 'Zoom on the drop', hint: 'While the spider drops in' },
@@ -190,12 +224,6 @@ export const mailinfraInboxWebControls = defineControls<MailinfraInboxWebProps>(
           label: 'Web fade on the end card',
           hint: 'Dims and softens the web behind the wordmark',
         },
-      ],
-    },
-    {
-      title: 'Timing',
-      fields: [],
-      more: [
         { path: 'timing.dropFrames', label: 'Drop length', hint: FRAMES },
         {
           path: 'timing.weaveFrames',
@@ -205,7 +233,7 @@ export const mailinfraInboxWebControls = defineControls<MailinfraInboxWebProps>(
         {
           path: 'timing.holdFrames',
           label: 'Hold before the zoom',
-          hint: `${FRAMES}, after the counter finishes`,
+          hint: `${FRAMES}, after the last check mark`,
         },
         { path: 'timing.zoomFrames', label: 'Whip zoom length', hint: FRAMES },
       ],

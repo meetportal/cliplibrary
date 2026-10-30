@@ -7,9 +7,6 @@ import { FadeIn } from '../promo/typography';
 import { blend, fade } from './color';
 import type { Phases } from './timeline';
 
-const SWING_PERIOD = 42;
-const SWING_SETTLE = 78;
-
 export const pendulumAt = (
   frame: number,
   phases: Phases,
@@ -17,18 +14,19 @@ export const pendulumAt = (
 ): { angle: number; opacity: number } => {
   const landed = phases.zoom[1];
   const t = Math.max(0, frame - (landed - 6));
-  const decay = Math.max(0, 1 - t / SWING_SETTLE);
+  const decay = Math.max(0, 1 - t / props.wordmark.swingSettle);
   return {
-    angle: props.wordmark.swing * Math.cos((t / SWING_PERIOD) * Math.PI * 2) * decay ** 3,
+    angle:
+      props.wordmark.swing * Math.cos((t / props.wordmark.swingPeriod) * Math.PI * 2) * decay ** 3,
     opacity: tween(frame, [landed - 8, landed + 6], [0, 1], smooth),
   };
 };
 
-const SHINE_EVERY = 72;
+const SHINE_EVERY = 56;
 
 const shineAt = (frame: number, landed: number): number => {
   const since = frame - landed - 18;
-  return since < 0 ? -40 : -40 + ((since % SHINE_EVERY) / SHINE_EVERY) * 180;
+  return since < 0 ? -30 : -24 + ((since % SHINE_EVERY) / SHINE_EVERY) * 148;
 };
 
 const clippedFill = (image: string): CSSProperties => ({
@@ -124,7 +122,7 @@ export const EndCard = ({
   if (opacity <= 0) {
     return null;
   }
-  const below = wordmark.hubY + wordmark.threadLength + wordmark.size * 1.2 + 34;
+  const below = wordmark.hubY + wordmark.threadLength + wordmark.size * 1.2 + wordmark.taglineGap;
   return (
     <>
       {wordmark.text.length > 0 ? (
@@ -162,7 +160,7 @@ export const EndCard = ({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 22,
+          gap: wordmark.urlGap,
         }}
       >
         {wordmark.tagline.length > 0 ? (
