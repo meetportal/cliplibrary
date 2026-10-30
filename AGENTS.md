@@ -171,6 +171,27 @@ Field tags are read back by `src/core/schema-introspect.ts`:
 - `EASING_IDS`/`EasingId` live in `@/schemas` and are the single source consumed by the
   compositions motion kit (`kit/easing.ts`).
 
+## Generated footage clips
+
+Some clips play live-action footage generated from scratch with OpenRouter models, with editable
+print or graphics tracked onto it (`elevator-newspaper`). Each footage is a spec in
+`src/footage/<id>.ts`: the image model prompts for its stills (key frames and any photos the
+graphics use), the video model shots with first and last frames, the plate segments (frame
+ranges, reversed or sped up) and the tracking regions.
+
+- `bun run footage <id>` generates missing stills and shots into the ignored `footage/<id>/`,
+  publishes photos to `public/footage/<id>/` and assembles `public/footage/<id>/plate.mp4`
+  (`--stills`, `--shots`, `--plate`, `--only <name>`, `--force`). It needs `OPENROUTER_API_KEY`
+  and calls paid models; stills use Gemini 3 Pro Image, and Kling v3.0 Pro held the doors and the
+  paper still where Veo 3.1 kept moving them.
+- `bun run footage:track <id>` reads the plate and writes `src/footage/<id>.track.json`: the door
+  edges and the corners of each newspaper page on every frame, from robust line fits to the paper
+  edges and the fold. Commit the plate, the photos and the track; re-run the tracker whenever the
+  plate changes.
+- The scene plays the plate with `<Video>` and draws the print as canvas textures on a
+  homography-warped mesh in an orthographic `ThreeCanvas`, clipped to the door gap. Keep the
+  plate's frame rate as the clip's `fps` so plate and track frames line up one to one.
+
 ## Projects and layering
 
 A `Project` (in `@/project`) is `{ fps, width, height, durationInFrames, background,

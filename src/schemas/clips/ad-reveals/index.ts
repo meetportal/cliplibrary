@@ -24,6 +24,12 @@ import {
 } from './crumpled-paper-reveal';
 import { crumpledPaperRevealControls } from './crumpled-paper-reveal-controls';
 import {
+  elevatorNewspaperDefaults,
+  elevatorNewspaperMeta,
+  elevatorNewspaperSchema,
+} from './elevator-newspaper';
+import { elevatorNewspaperControls } from './elevator-newspaper-controls';
+import {
   helicopterUnveilDefaults,
   helicopterUnveilMeta,
   helicopterUnveilSchema,
@@ -126,5 +132,12 @@ export const adRevealsClips: ClipModule[] = [
     defaults: mailinfraThreadFeaturesDefaults,
     meta: mailinfraThreadFeaturesMeta,
     controls: mailinfraThreadFeaturesControls,
+  },
+  {
+    id: 'elevator-newspaper',
+    schema: elevatorNewspaperSchema,
+    defaults: elevatorNewspaperDefaults,
+    meta: elevatorNewspaperMeta,
+    controls: elevatorNewspaperControls,
   },
 ];
