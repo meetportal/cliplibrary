@@ -1,12 +1,17 @@
 import { PLATE_STAMP } from '@/footage/footage-spec';
 
-export type PlateSource = { image: HTMLCanvasElement; index: number | null; version: number };
+export type PlateSource = {
+  image: HTMLCanvasElement;
+  index: number | null;
+  version: number;
+  listeners: Set<() => void>;
+};
 
 export const createPlateSource = (width: number, height: number): PlateSource => {
   const image = document.createElement('canvas');
   image.width = width;
   image.height = height;
-  return { image, index: null, version: 0 };
+  return { image, index: null, version: 0, listeners: new Set() };
 };
 
 const readStamp = (
@@ -41,4 +46,7 @@ export const receivePlateFrame = (
   context.drawImage(frame, 0, 0, image.width, image.height);
   source.index = readStamp(context, image.width, image.height, pictureHeight);
   source.version += 1;
+  for (const listener of [...source.listeners]) {
+    listener();
+  }
 };

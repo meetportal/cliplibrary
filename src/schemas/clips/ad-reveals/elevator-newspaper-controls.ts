@@ -150,7 +150,7 @@ export const elevatorNewspaperControls = defineControls<ElevatorNewspaperProps>(
         {
           path: 'print.shading',
           label: 'Follow the paper light',
-          hint: "Darkens each page's print as the filmed light on it dims; 0 keeps it flat",
+          hint: 'Shades the print with the filmed paper so folds and shadows show through; 0 keeps it flat',
         },
         {
           path: 'print.softness',

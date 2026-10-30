@@ -1,14 +1,7 @@
 import { Video } from '@remotion/media';
 import { ThreeCanvas } from '@remotion/three';
 import { useCallback, useState } from 'react';
-import {
-  AbsoluteFill,
-  Composition,
-  getRemotionEnvironment,
-  staticFile,
-  useCurrentFrame,
-  useVideoConfig,
-} from 'remotion';
+import { AbsoluteFill, Composition, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 import {
   type ElevatorNewspaperProps,
   elevatorNewspaperDefaults,
@@ -25,15 +18,11 @@ import type { SceneModule } from '../../scene-module';
 
 const PLATE_HEIGHT = PLATE.height + PLATE.stampRows;
 
-const usePreviewPlate = () => {
-  const [source] = useState(() =>
-    getRemotionEnvironment().isRendering ? null : createPlateSource(PLATE.width, PLATE_HEIGHT),
-  );
+const usePlate = () => {
+  const [source] = useState(() => createPlateSource(PLATE.width, PLATE_HEIGHT));
   const onVideoFrame = useCallback(
     (frame: CanvasImageSource) => {
-      if (source !== null) {
-        receivePlateFrame(source, frame as HTMLCanvasElement, PLATE.height);
-      }
+      receivePlateFrame(source, frame as HTMLCanvasElement, PLATE.height);
     },
     [source],
   );
@@ -45,7 +34,7 @@ const ElevatorNewspaper = (props: ElevatorNewspaperProps) => {
   const { width, height } = useVideoConfig();
   const pixelRatio = useCanvasPixelRatio(2);
   const framing = cameraFraming(frame, props.camera, width, height);
-  const { source, onVideoFrame } = usePreviewPlate();
+  const { source, onVideoFrame } = usePlate();
   return (
     <TransitionFrame motion={props.motion}>
       <AbsoluteFill style={{ backgroundColor: '#000000', overflow: 'hidden' }}>
@@ -55,15 +44,7 @@ const ElevatorNewspaper = (props: ElevatorNewspaperProps) => {
             transform: `translate(${framing.x}px, ${framing.y}px) scale(${framing.scale})`,
           }}
         >
-          <AbsoluteFill style={{ overflow: 'hidden' }}>
-            <Video
-              src={staticFile(PLATE.src)}
-              muted
-              headless={source !== null}
-              onVideoFrame={source === null ? undefined : onVideoFrame}
-              style={{ width: PLATE.width, height: PLATE_HEIGHT }}
-            />
-          </AbsoluteFill>
+          <Video src={staticFile(PLATE.src)} muted headless onVideoFrame={onVideoFrame} />
           <ThreeCanvas
             width={PLATE.width}
             height={PLATE.height}
