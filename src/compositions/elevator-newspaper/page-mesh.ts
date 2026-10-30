@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from 'react';
-import { staticFile } from 'remotion';
 import * as THREE from 'three';
 import type { ElevatorNewspaperProps } from '@/schemas';
 import { type Quad, squareToQuad } from './homography';
@@ -7,47 +6,8 @@ import { drawPage, type PageSide } from './page-art';
 import { usePageFonts } from './page-fonts';
 
 const SEGMENTS = 16;
-const ABSOLUTE = /^(https?:|data:|blob:|\/)/;
 
-const resolveImage = (value: string): string => (ABSOLUTE.test(value) ? value : staticFile(value));
-
-type PhotoEntry = { image: HTMLImageElement | null; pending: Promise<void> | null };
-
-const photos = new Map<string, PhotoEntry>();
-
-const startLoading = (url: string): PhotoEntry => {
-  const entry: PhotoEntry = { image: null, pending: null };
-  entry.pending = new Promise<void>((resolve) => {
-    const image = new Image();
-    image.crossOrigin = 'anonymous';
-    image.onload = () => {
-      entry.image = image;
-      entry.pending = null;
-      resolve();
-    };
-    image.onerror = () => {
-      entry.pending = null;
-      resolve();
-    };
-    image.src = url;
-  });
-  photos.set(url, entry);
-  return entry;
-};
-
-const readPhoto = (src: string): HTMLImageElement | null => {
-  if (src === '') {
-    return null;
-  }
-  const url = resolveImage(src);
-  const entry = photos.get(url) ?? startLoading(url);
-  if (entry.pending !== null) {
-    throw entry.pending;
-  }
-  return entry.image;
-};
-
-const gridGeometry = (): THREE.BufferGeometry => {
+export const gridGeometry = (): THREE.BufferGeometry => {
   const uvs: number[] = [];
   const indices: number[] = [];
   for (let row = 0; row <= SEGMENTS; row += 1) {
@@ -72,7 +32,7 @@ const gridGeometry = (): THREE.BufferGeometry => {
   return geometry;
 };
 
-const placeGrid = (
+export const placeGrid = (
   geometry: THREE.BufferGeometry,
   quad: Quad,
   width: number,
@@ -90,7 +50,7 @@ const placeGrid = (
   geometry.computeBoundingSphere();
 };
 
-const usePageTexture = (
+export const usePageTexture = (
   side: PageSide,
   props: ElevatorNewspaperProps,
   photo: HTMLImageElement | null,
@@ -108,44 +68,3 @@ const usePageTexture = (
   useEffect(() => () => texture.dispose(), [texture]);
   return texture;
 };
-
-type PageProps = {
-  side: PageSide;
-  props: ElevatorNewspaperProps;
-  quad: Quad;
-  light: number;
-  width: number;
-  height: number;
-};
-
-const PageMesh = ({
-  side,
-  props,
-  quad,
-  light,
-  width,
-  height,
-  photo,
-}: PageProps & { photo: HTMLImageElement | null }) => {
-  const texture = usePageTexture(side, props, photo);
-  const geometry = useMemo(gridGeometry, []);
-  useEffect(() => () => geometry.dispose(), [geometry]);
-  placeGrid(geometry, quad, width, height);
-  const tone = 1 - props.print.shading * (1 - Math.min(1, light));
-  return (
-    <mesh geometry={geometry}>
-      <meshBasicMaterial
-        map={texture}
-        transparent
-        opacity={props.print.strength}
-        color={new THREE.Color(tone, tone, tone)}
-        toneMapped={false}
-        depthTest={false}
-      />
-    </mesh>
-  );
-};
-
-export const TrackedPage = (page: PageProps & { src: string }) => (
-  <PageMesh {...page} photo={readPhoto(page.src)} />
-);

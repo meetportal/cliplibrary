@@ -1,3 +1,5 @@
+export const PLATE_STAMP = { rows: 16, bits: 8 } as const;
+
 type FootageStill = {
   name: string;
   model: string;

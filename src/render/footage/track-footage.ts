@@ -22,7 +22,20 @@ type Measured = { doors: [number, number]; lines: SpreadLines; frame: Frame };
 const readFrames = async function* (spec: FootageSpec): AsyncGenerator<Frame> {
   const size = spec.width * spec.height * 3;
   const decoder = Bun.spawn(
-    ['ffmpeg', '-v', 'error', '-i', plateFile(spec), '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'],
+    [
+      'ffmpeg',
+      '-v',
+      'error',
+      '-i',
+      plateFile(spec),
+      '-vf',
+      `crop=${spec.width}:${spec.height}:0:0`,
+      '-f',
+      'rawvideo',
+      '-pix_fmt',
+      'rgb24',
+      '-',
+    ],
     { stdout: 'pipe' },
   );
   const reader = decoder.stdout.getReader();

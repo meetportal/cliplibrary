@@ -1,4 +1,5 @@
 import track from '@/footage/elevator-newspaper.track.json';
+import { PLATE_STAMP } from '@/footage/footage-spec';
 import type { Quad } from './homography';
 
 export type TrackedFrame = {
@@ -27,6 +28,7 @@ export const PLATE = {
   src: 'footage/elevator-newspaper/plate.mp4',
   width: track.width,
   height: track.height,
+  stampRows: PLATE_STAMP.rows,
   frames: FRAMES.length,
 };
 
