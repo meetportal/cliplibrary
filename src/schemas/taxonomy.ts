@@ -79,6 +79,8 @@ export const CLIP_CATEGORIES = [
       'launch',
       'helicopter',
       'banner',
+      'newspaper',
+      'elevator',
     ],
   },
   {
@@ -149,6 +151,7 @@ export const CLIP_TAGS = [
   'notification',
   'overlay',
   'film',
+  'footage',
   'grain',
   'texture',
   'logo',
