@@ -19,9 +19,6 @@ const envelopeAt = (
   };
 };
 
-export const landFrame = (index: number, phases: Phases): number =>
-  phases.envelopesAt + index * phases.stagger + phases.flight;
-
 const Envelope = ({
   target,
   index,

@@ -75,7 +75,7 @@ export const framePassFrame = (fraction: number, phases: Phases): number => {
 export const spiralProgress = (frame: number, phases: Phases): number =>
   tween(frame, phases.spiral, [0, 1], smooth);
 
-export const dropStart = (props: MailinfraInboxWebProps): number =>
+const dropStart = (props: MailinfraInboxWebProps): number =>
   -props.web.size * 0.55 - 540 / props.camera.startZoom - props.spider.size;
 
 const lerpPoint = (a: Point, b: Point, t: number): Point => ({

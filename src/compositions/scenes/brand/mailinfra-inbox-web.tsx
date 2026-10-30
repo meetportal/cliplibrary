@@ -15,7 +15,7 @@ import { World } from '../../mailinfra-inbox-web/world';
 import { PromoLayer } from '../../promo/promo-layer';
 import type { SceneModule } from '../../scene-module';
 
-export const MailinfraInboxWeb = (props: MailinfraInboxWebProps) => {
+const MailinfraInboxWeb = (props: MailinfraInboxWebProps) => {
   const frame = useCurrentFrame() * props.motion.speed;
   const { width, height } = useVideoConfig();
   const idPrefix = `inbox-web-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;

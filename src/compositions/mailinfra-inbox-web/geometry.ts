@@ -3,7 +3,7 @@ import type { MailinfraInboxWebProps } from '@/schemas';
 
 export type Point = { x: number; y: number };
 
-export type Junction = Point & { index: number; fraction: number; radial: number };
+type Junction = Point & { index: number; fraction: number; radial: number };
 
 export type EnvelopeTarget = Point & { origin: Point; tilt: number; junction: number };
 
@@ -22,12 +22,12 @@ export type WebGeometry = {
 const SPIRAL_START = 0.16;
 const SPIRAL_END = 0.93;
 
-export const polar = (angle: number, radius: number): Point => ({
+const polar = (angle: number, radius: number): Point => ({
   x: Math.cos(angle) * radius,
   y: Math.sin(angle) * radius,
 });
 
-export const distance = (a: Point, b: Point): number => Math.hypot(a.x - b.x, a.y - b.y);
+const distance = (a: Point, b: Point): number => Math.hypot(a.x - b.x, a.y - b.y);
 
 const rayHitsSegment = (angle: number, a: Point, b: Point): number | null => {
   const dx = Math.cos(angle);
@@ -183,31 +183,12 @@ export const sagPath = (points: Point[], sag: number): string => {
 export const linePath = (from: Point, to: Point): string =>
   `M ${from.x.toFixed(2)} ${from.y.toFixed(2)} L ${to.x.toFixed(2)} ${to.y.toFixed(2)}`;
 
-export const polylineLength = (points: Point[]): number[] =>
+const polylineLength = (points: Point[]): number[] =>
   points.reduce<number[]>((lengths, point, index) => {
     const previous = points[index - 1];
     lengths.push(previous === undefined ? 0 : (lengths.at(-1) ?? 0) + distance(previous, point));
     return lengths;
   }, []);
-
-export const alongPolyline = (points: Point[], lengths: number[], progress: number): Point => {
-  const total = lengths.at(-1) ?? 0;
-  const target = Math.min(1, Math.max(0, progress)) * total;
-  for (let index = 1; index < points.length; index++) {
-    const end = lengths[index] ?? 0;
-    const start = lengths[index - 1] ?? 0;
-    if (target <= end) {
-      const a = points[index - 1];
-      const b = points[index];
-      if (a === undefined || b === undefined) {
-        break;
-      }
-      const t = end > start ? (target - start) / (end - start) : 0;
-      return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
-    }
-  }
-  return points.at(-1) ?? { x: 0, y: 0 };
-};
 
 export const fractionAtSpiral = (web: WebGeometry, progress: number): number => {
   const total = web.spiralLengths.at(-1) ?? 0;
