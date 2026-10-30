@@ -11,6 +11,12 @@ import {
   dotWordmarkRevealSchema,
 } from './dot-wordmark-reveal';
 import { dotWordmarkRevealControls } from './dot-wordmark-reveal-controls';
+import {
+  mailinfraInboxWebDefaults,
+  mailinfraInboxWebMeta,
+  mailinfraInboxWebSchema,
+} from './mailinfra-inbox-web';
+import { mailinfraInboxWebControls } from './mailinfra-inbox-web-controls';
 import { puzzleSuccessDefaults, puzzleSuccessMeta, puzzleSuccessSchema } from './puzzle-success';
 import { puzzleSuccessControls } from './puzzle-success-controls';
 
@@ -49,5 +55,12 @@ export const brandClips: ClipModule[] = [
     defaults: puzzleSuccessDefaults,
     meta: puzzleSuccessMeta,
     controls: puzzleSuccessControls,
+  },
+  {
+    id: 'mailinfra-inbox-web',
+    schema: mailinfraInboxWebSchema,
+    defaults: mailinfraInboxWebDefaults,
+    meta: mailinfraInboxWebMeta,
+    controls: mailinfraInboxWebControls,
   },
 ];
