@@ -3,7 +3,6 @@ import type { BillboardReaderProps } from './clips/ad-reveals/billboard-reader';
 import type { BurningPaperRevealProps } from './clips/ad-reveals/burning-paper-reveal';
 import type { CrumpledPaperRevealProps } from './clips/ad-reveals/crumpled-paper-reveal';
 import type { HelicopterUnveilProps } from './clips/ad-reveals/helicopter-unveil';
-import type { MailinfraThreadFeaturesProps } from './clips/ad-reveals/mailinfra-thread-features';
 import type { ProblemStrikeoutProps } from './clips/ad-reveals/problem-strikeout';
 import type { SpillRevealProps } from './clips/ad-reveals/spill-reveal';
 import type { ReliefBackdropProps } from './clips/backgrounds/relief-backdrop';
@@ -163,7 +162,6 @@ export interface ClipPropsMap {
   'incoming-call-teaser': IncomingCallTeaserProps;
   'burning-paper-reveal': BurningPaperRevealProps;
   'scene-transition': SceneTransitionProps;
-  'mailinfra-thread-features': MailinfraThreadFeaturesProps;
 }
 
 export type ClipId = keyof ClipPropsMap;
