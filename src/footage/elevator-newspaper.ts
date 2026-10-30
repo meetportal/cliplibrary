@@ -84,23 +84,25 @@ export const elevatorNewspaperFootage: FootageSpec = {
         `${AVOID}, walking, stepping, moving toward the camera, folded corner`,
       ),
       tracking: {
-        anchor: {
-          frame: 0,
-          quads: {
-            left: [
-              [303.5, 776.5],
-              [542, 793],
-              [542, 1162],
-              [302.5, 1144.5],
-            ],
-            right: [
-              [542, 793],
-              [783, 774.5],
-              [785.5, 1148.8],
-              [542, 1162],
-            ],
+        anchors: [
+          {
+            frame: 0,
+            quads: {
+              left: [
+                [303.5, 776.5],
+                [542, 793],
+                [542, 1162],
+                [302.5, 1144.5],
+              ],
+              right: [
+                [542, 793],
+                [783, 774.5],
+                [785.5, 1148.8],
+                [542, 1162],
+              ],
+            },
           },
-        },
+        ],
         shared: FOLD,
         doors: { band: [395, 425], doorway: [120, 960] },
       },

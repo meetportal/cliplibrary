@@ -23,10 +23,22 @@ const stampFilter = (spec: FootageSpec): string => {
   return [`pad=iw:ih+${PLATE_STAMP.rows}:0:0:black`, ...boxes].join(',');
 };
 
-export const plateFrameOrder = (spec: FootageSpec) =>
-  spec.plate.flatMap((segment) =>
-    segmentFrames(segment).map((frame) => ({ shot: segment.shot, frame })),
-  );
+type PlateFrame = {
+  shot: string;
+  frame: number;
+  blend?: { shot: string; frame: number; weight: number };
+};
+
+export const plateFrameOrder = (spec: FootageSpec): PlateFrame[] =>
+  spec.plate.reduce<PlateFrame[]>((order, segment) => {
+    const frames = segmentFrames(segment).map((frame) => ({ shot: segment.shot, frame }));
+    const overlap = Math.min(segment.blend ?? 0, order.length, frames.length);
+    const blended = order.slice(order.length - overlap).map((entry, at) => {
+      const incoming = frames[at] as PlateFrame;
+      return { ...entry, blend: { ...incoming, weight: (at + 1) / (overlap + 1) } };
+    });
+    return [...order.slice(0, order.length - overlap), ...blended, ...frames.slice(overlap)];
+  }, []);
 
 export const assemblePlate = async (spec: FootageSpec): Promise<void> => {
   const work = mkdtempSync(join(tmpdir(), `${spec.id}-plate-`));
@@ -39,9 +51,15 @@ export const assemblePlate = async (spec: FootageSpec): Promise<void> => {
     }
     const sequence = join(work, 'sequence');
     mkdirSync(sequence);
-    plateFrameOrder(spec).forEach(({ shot, frame }, index) => {
-      copyFileSync(join(work, shot, frameName(frame)), join(sequence, frameName(index)));
-    });
+    for (const [index, { shot, frame, blend }] of plateFrameOrder(spec).entries()) {
+      const target = join(sequence, frameName(index));
+      if (blend === undefined) {
+        copyFileSync(join(work, shot, frameName(frame)), target);
+      } else {
+        const mix = `blend=all_expr='A*${(1 - blend.weight).toFixed(4)}+B*${blend.weight.toFixed(4)}'`;
+        await $`ffmpeg -v error -y -i ${join(work, shot, frameName(frame))} -i ${join(work, blend.shot, frameName(blend.frame))} -filter_complex ${mix} ${target}`;
+      }
+    }
     mkdirSync(publishDir(spec), { recursive: true });
     await $`ffmpeg -v error -y -framerate ${spec.fps} -i ${join(sequence, '%05d.png')} -vf ${stampFilter(spec)} -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p -movflags +faststart ${plateFile(spec)}`;
   } finally {
