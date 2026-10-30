@@ -1,0 +1,208 @@
+import type { MailinfraDeliverabilityChargeProps } from '@/schemas';
+import { bodyFont, displayFont } from '../promo/fonts';
+import { glowShadow } from '../promo/glow';
+import { pixelTween, settle, smooth, tween } from '../promo/timing';
+import { add } from './geometry';
+import { type CableRig, PLUG, type Vessel } from './rig';
+import type { Beats } from './timeline';
+
+type Props = MailinfraDeliverabilityChargeProps;
+
+export const HeadlineGlow = ({ headline, glow }: { headline: Props['headline']; glow: string }) => (
+  <div
+    style={{
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: headline.top,
+      textAlign: 'center',
+      fontFamily: displayFont,
+      fontWeight: 700,
+      fontSize: headline.size,
+      lineHeight: 1,
+      letterSpacing: `${headline.tracking}em`,
+      paddingLeft: `${headline.tracking}em`,
+      color: `color-mix(in srgb, ${headline.color}, ${glow} ${(headline.tint * 100).toFixed(1)}%)`,
+      textShadow: glowShadow(glow, headline.glow, headline.size * 1.6),
+      whiteSpace: 'pre',
+    }}
+  >
+    {headline.text}
+  </div>
+);
+
+export const Counter = ({
+  counter,
+  vessel,
+  charge,
+}: {
+  counter: Props['counter'];
+  vessel: Vessel;
+  charge: number;
+}) => {
+  const value = (counter.target * charge).toFixed(counter.decimals);
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: Math.round(vessel.top + vessel.height * counter.position - counter.size * 0.55),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <div
+        style={{
+          fontFamily: displayFont,
+          fontWeight: 600,
+          fontSize: counter.size,
+          lineHeight: 1.1,
+          letterSpacing: '-0.035em',
+          fontVariantNumeric: 'tabular-nums',
+          color: counter.color,
+          whiteSpace: 'pre',
+        }}
+      >
+        {`${value}${counter.suffix}`}
+      </div>
+      {counter.caption.length > 0 ? (
+        <div
+          style={{
+            fontFamily: bodyFont,
+            fontWeight: 600,
+            fontSize: counter.captionSize,
+            lineHeight: 1.2,
+            letterSpacing: '0.2em',
+            paddingLeft: '0.2em',
+            textTransform: 'uppercase',
+            color: counter.captionColor,
+            whiteSpace: 'pre',
+          }}
+        >
+          {counter.caption}
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+export const LandedBadge = ({
+  badge,
+  vessel,
+  beats,
+  frame,
+  check,
+}: {
+  badge: Props['badge'];
+  vessel: Vessel;
+  beats: Beats;
+  frame: number;
+  check: string;
+}) => {
+  if (!badge.show || badge.text.length === 0) {
+    return null;
+  }
+  const range: [number, number] = [beats.fullAt + 4, beats.fullAt + 36];
+  const enter = tween(frame, range, [0, 1], settle);
+  const exit = tween(frame, [beats.unplugAt, beats.unplugAt + 14], [0, 1], smooth);
+  const opacity = enter * (1 - exit);
+  if (opacity <= 0) {
+    return null;
+  }
+  const rise = pixelTween(frame, range, [Math.round(badge.size * 0.9), 0], settle);
+  const mark = Math.round(badge.size * 1.1);
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: Math.round(vessel.top - badge.gap - badge.size),
+        display: 'flex',
+        justifyContent: 'center',
+        opacity,
+        transform: `translateY(${rise}px)`,
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: Math.round(badge.size * 0.45),
+          padding: `${Math.round(badge.size * 0.4)}px ${Math.round(badge.size * 0.8)}px ${Math.round(badge.size * 0.4)}px ${Math.round(badge.size * 0.45)}px`,
+          borderRadius: 999,
+          background: badge.fill,
+          color: badge.ink,
+          fontFamily: bodyFont,
+          fontWeight: 600,
+          fontSize: badge.size,
+          lineHeight: 1.1,
+          whiteSpace: 'pre',
+          boxShadow: glowShadow(check, 0.55, badge.size * 3),
+        }}
+      >
+        <svg width={mark} height={mark} viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx={12} cy={12} r={12} fill={check} />
+          <path
+            d="M7 12.4 L10.5 15.8 L17 8.8"
+            fill="none"
+            stroke={badge.fill}
+            strokeWidth={2.6}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        {badge.text}
+      </div>
+    </div>
+  );
+};
+
+export const CableLabels = ({ rigs, cables }: { rigs: CableRig[]; cables: Props['cables'] }) => (
+  <>
+    {rigs.map((rig) => {
+      if (rig.label.length === 0) {
+        return null;
+      }
+      const scale = cables.plugSize;
+      const middle = add(rig.head, rig.heading, (-PLUG.body * scale) / 2);
+      const anchor = add(middle, rig.normal, (PLUG.thick * scale) / 2 + 12);
+      return (
+        <div
+          key={rig.key}
+          style={{
+            position: 'absolute',
+            left: anchor.x,
+            top: anchor.y,
+            transform: `translate(${(-50 + rig.normal.x * 50).toFixed(2)}%, ${(-50 + rig.normal.y * 50).toFixed(2)}%)`,
+            display: 'flex',
+            alignItems: 'center',
+            gap: Math.round(cables.labelSize * 0.35),
+            padding: `${Math.round(cables.labelSize * 0.28)}px ${Math.round(cables.labelSize * 0.62)}px`,
+            borderRadius: 999,
+            background: cables.labelFill,
+            border: `1.5px solid ${cables.plugEdge}`,
+            color: cables.labelInk,
+            fontFamily: bodyFont,
+            fontWeight: 600,
+            fontSize: cables.labelSize,
+            lineHeight: 1.1,
+            whiteSpace: 'pre',
+          }}
+        >
+          <div
+            style={{
+              width: Math.round(cables.labelSize * 0.34),
+              height: Math.round(cables.labelSize * 0.34),
+              borderRadius: 999,
+              background: cables.ring,
+            }}
+          />
+          {rig.label}
+        </div>
+      );
+    })}
+  </>
+);

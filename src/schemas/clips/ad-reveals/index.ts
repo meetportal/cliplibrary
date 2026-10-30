@@ -30,6 +30,12 @@ import {
 } from './helicopter-unveil';
 import { helicopterUnveilControls } from './helicopter-unveil-controls';
 import {
+  mailinfraDeliverabilityChargeDefaults,
+  mailinfraDeliverabilityChargeMeta,
+  mailinfraDeliverabilityChargeSchema,
+} from './mailinfra-deliverability-charge';
+import { mailinfraDeliverabilityChargeControls } from './mailinfra-deliverability-charge-controls';
+import {
   problemStrikeoutDefaults,
   problemStrikeoutMeta,
   problemStrikeoutSchema,
@@ -87,5 +93,12 @@ export const adRevealsClips: ClipModule[] = [
     defaults: burningPaperRevealDefaults,
     meta: burningPaperRevealMeta,
     controls: burningPaperRevealControls,
+  },
+  {
+    id: 'mailinfra-deliverability-charge',
+    schema: mailinfraDeliverabilityChargeSchema,
+    defaults: mailinfraDeliverabilityChargeDefaults,
+    meta: mailinfraDeliverabilityChargeMeta,
+    controls: mailinfraDeliverabilityChargeControls,
   },
 ];
