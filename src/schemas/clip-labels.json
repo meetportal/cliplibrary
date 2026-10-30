@@ -6354,5 +6354,127 @@
       "bokeh",
       "mailinfra"
     ]
+  },
+  "mailinfra-spider-drop": {
+    "summary": "A vertical cold email ad on a dark indigo backdrop with soft violet and blue bokeh. A purple spider lowers in from the top on a cream silk thread, holding a sealed cream envelope with a violet wax seal, under the headline Where does your cold email land? with land in gold. It drops and the camera whips down with motion blur past three dusty cobwebbed signs hanging from beams, Promotions in slate, Spam in dim red and Blocked in grey, both crossed out with an X of silk, each swinging as the spider passes. It lowers the envelope into a glowing electric blue Inbox tray, the spider climbs back out of frame, a check badge settles on the corner, a gold extruded 99.9% swings in with inbox placement under it and a Mailinfra end card settles with Pay after 30 days. No credit card. and a mailinfra.co pill.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Indigo bokeh backdrop with cobwebs in the top corners; the spider lowers in from above holding the sealed envelope"
+      },
+      {
+        "at": 0.4,
+        "what": "Headline Where does your cold email land? rises in under the spider, land in gold"
+      },
+      {
+        "at": 2.0,
+        "what": "Headline lifts away and the spider drops; the camera whips down with motion blur"
+      },
+      {
+        "at": 3.5,
+        "what": "The slate Promotions sign passes on its beam and swings after the spider brushes it"
+      },
+      {
+        "at": 4.9,
+        "what": "The dim red Spam sign, crossed out with an X of silk, passes and swings"
+      },
+      {
+        "at": 6.2,
+        "what": "The grey Blocked sign, crossed out with silk, passes and swings"
+      },
+      {
+        "at": 6.5,
+        "what": "A glowing blue Inbox tray rises into view and the camera settles as the spider lowers the envelope into it"
+      },
+      {
+        "at": 8.2,
+        "what": "The envelope slides into the tray and the spider climbs back up its thread out of frame"
+      },
+      {
+        "at": 8.8,
+        "what": "A blue check badge settles on the tray corner and its tick draws"
+      },
+      {
+        "at": 9.1,
+        "what": "A big gold extruded 99.9% swings down from above with inbox placement under it"
+      },
+      {
+        "at": 9.7,
+        "what": "End card fades in: envelope logo tile, Mailinfra, Pay after 30 days. No credit card. and a mailinfra.co pill"
+      }
+    ],
+    "visuals": [
+      "purple spider on a cream silk thread",
+      "sealed cream envelope with violet wax seal",
+      "dark indigo backdrop with violet and blue bokeh",
+      "dusty cobwebbed 3D signs hanging from beams",
+      "Promotions, Spam and Blocked labels",
+      "silk X strands crossing out Spam and Blocked",
+      "glowing electric blue Inbox tray",
+      "blue check badge",
+      "gold extruded 99.9% number",
+      "envelope logo tile and blue link pill"
+    ],
+    "motion": [
+      "vertical camera whip with motion blur",
+      "spider drop on silk",
+      "signs swinging when brushed",
+      "envelope sliding into a tray",
+      "soft badge settle",
+      "big number swinging in and settling",
+      "spider climbing out of frame",
+      "drifting bokeh parallax",
+      "end card fade up"
+    ],
+    "mood": ["playful", "dark", "spooky", "confident", "techy"],
+    "roles": ["opener", "proof", "cta", "closer"],
+    "useCases": [
+      "cold email infrastructure ad",
+      "email deliverability promo",
+      "inbox placement stat reveal",
+      "lead gen agency outreach ad",
+      "halloween themed SaaS ad",
+      "instagram reel or tiktok ad",
+      "brand end card"
+    ],
+    "editable": [
+      "opening headline and highlighted word",
+      "floor signs: label, crossed out toggle and color per sign",
+      "time per floor and landing timing",
+      "show or hide the spider",
+      "motion blur samples and length",
+      "inbox tray label and color",
+      "check badge",
+      "big number and caption",
+      "end card brand, tagline and link",
+      "primary, secondary, accent, text and background colors",
+      "bokeh lights",
+      "transparent background"
+    ],
+    "palette": ["#120e2e", "#4040ff", "#7c3aed", "#ffd700", "#f3ead6", "#6e3042"],
+    "keywords": [
+      "spider",
+      "spider web",
+      "cobweb",
+      "silk",
+      "envelope",
+      "email",
+      "cold email",
+      "inbox",
+      "spam",
+      "promotions",
+      "blocked",
+      "deliverability",
+      "inbox placement",
+      "99.9%",
+      "mailinfra",
+      "camera whip",
+      "motion blur",
+      "drop",
+      "halloween",
+      "saas ad",
+      "vertical",
+      "end card"
+    ]
   }
 }
