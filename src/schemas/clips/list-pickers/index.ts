@@ -9,6 +9,12 @@ import {
   listPickersReelSchema,
 } from './list-pickers-reel';
 import { listPickersReelControls } from './list-pickers-reel-controls';
+import {
+  mailinfraDewStepsDefaults,
+  mailinfraDewStepsMeta,
+  mailinfraDewStepsSchema,
+} from './mailinfra-dew-steps';
+import { mailinfraDewStepsControls } from './mailinfra-dew-steps-controls';
 import { menuStackDefaults, menuStackMeta, menuStackSchema } from './menu-stack';
 import { menuStackControls } from './menu-stack-controls';
 import { mindMapDefaults, mindMapMeta, mindMapSchema } from './mind-map';
@@ -94,5 +100,12 @@ export const listPickersClips: ClipModule[] = [
     defaults: listPickersReelDefaults,
     meta: listPickersReelMeta,
     controls: listPickersReelControls,
+  },
+  {
+    id: 'mailinfra-dew-steps',
+    schema: mailinfraDewStepsSchema,
+    defaults: mailinfraDewStepsDefaults,
+    meta: mailinfraDewStepsMeta,
+    controls: mailinfraDewStepsControls,
   },
 ];
