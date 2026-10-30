@@ -14,6 +14,7 @@ export * from './clips/ad-reveals/mailinfra-spider-drop';
 export * from './clips/ad-reveals/mailinfra-thread-features';
 export * from './clips/ad-reveals/problem-strikeout';
 export * from './clips/ad-reveals/spill-reveal';
+export * from './clips/ad-reveals/street-sign-swap';
 export * from './clips/backgrounds/relief-backdrop';
 export * from './clips/brand/app-icon-reveal';
 export * from './clips/brand/brand-reveal';
