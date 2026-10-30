@@ -7,6 +7,7 @@ import { elevatorNewspaperScene } from './elevator-newspaper';
 import { helicopterUnveilScene } from './helicopter-unveil';
 import { problemStrikeoutScene } from './problem-strikeout';
 import { spillRevealScene } from './spill-reveal';
+import { streetSignSwapScene } from './street-sign-swap';
 
 export const adRevealsScenes: SceneModule[] = [
   helicopterUnveilScene,
@@ -17,4 +18,5 @@ export const adRevealsScenes: SceneModule[] = [
   billboardReaderScene,
   burningPaperRevealScene,
   elevatorNewspaperScene,
+  streetSignSwapScene,
 ];

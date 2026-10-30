@@ -6,6 +6,7 @@ import type { ElevatorNewspaperProps } from './clips/ad-reveals/elevator-newspap
 import type { HelicopterUnveilProps } from './clips/ad-reveals/helicopter-unveil';
 import type { ProblemStrikeoutProps } from './clips/ad-reveals/problem-strikeout';
 import type { SpillRevealProps } from './clips/ad-reveals/spill-reveal';
+import type { StreetSignSwapProps } from './clips/ad-reveals/street-sign-swap';
 import type { ReliefBackdropProps } from './clips/backgrounds/relief-backdrop';
 import type { AppIconRevealProps } from './clips/brand/app-icon-reveal';
 import type { BrandRevealProps } from './clips/brand/brand-reveal';
@@ -161,6 +162,7 @@ export interface ClipPropsMap {
   'crumpled-paper-reveal': CrumpledPaperRevealProps;
   'billboard-reader': BillboardReaderProps;
   'elevator-newspaper': ElevatorNewspaperProps;
+  'street-sign-swap': StreetSignSwapProps;
   'incoming-call-teaser': IncomingCallTeaserProps;
   'burning-paper-reveal': BurningPaperRevealProps;
   'scene-transition': SceneTransitionProps;
