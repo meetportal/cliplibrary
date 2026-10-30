@@ -6158,7 +6158,7 @@
     ]
   },
   "mailinfra-spider-drop": {
-    "summary": "A vertical cold email ad on a dark indigo backdrop with soft violet and blue bokeh. A purple spider lowers in from the top on a cream silk thread, holding a sealed cream envelope with a violet wax seal, under the headline Where does your cold email land? with land in gold. It drops and the camera whips down with motion blur past three dusty cobwebbed signs hanging from beams, Promotions in slate, Spam in dim red crossed out with a silk strand and Blocked in grey crossed out, each swinging as the spider passes. It lowers the envelope into a glowing electric blue Inbox tray, a check badge settles on the corner, a gold extruded 99.9% swings in with inbox placement under it, the spider climbs out of frame and a Mailinfra end card settles with Pay after 30 days. No credit card. and a mailinfra.co pill.",
+    "summary": "A vertical cold email ad on a dark indigo backdrop with soft violet and blue bokeh. A purple spider lowers in from the top on a cream silk thread, holding a sealed cream envelope with a violet wax seal, under the headline Where does your cold email land? with land in gold. It drops and the camera whips down with motion blur past three dusty cobwebbed signs hanging from beams, Promotions in slate, Spam in dim red and Blocked in grey, both crossed out with an X of silk, each swinging as the spider passes. It lowers the envelope into a glowing electric blue Inbox tray, the spider climbs back out of frame, a check badge settles on the corner, a gold extruded 99.9% swings in with inbox placement under it and a Mailinfra end card settles with Pay after 30 days. No credit card. and a mailinfra.co pill.",
     "beats": [
       {
         "at": 0,
@@ -6178,27 +6178,27 @@
       },
       {
         "at": 4.9,
-        "what": "The dim red Spam sign, crossed out with a silk strand, passes and swings"
+        "what": "The dim red Spam sign, crossed out with an X of silk, passes and swings"
       },
       {
         "at": 6.2,
-        "what": "The grey crossed out Blocked sign passes and swings"
+        "what": "The grey Blocked sign, crossed out with silk, passes and swings"
       },
       {
-        "at": 7.3,
+        "at": 6.8,
         "what": "A glowing blue Inbox tray rises into view and the camera settles as the spider lowers the envelope into it"
       },
       {
-        "at": 8.6,
-        "what": "The envelope slides into the tray and a blue check badge settles on its corner"
+        "at": 8.2,
+        "what": "The envelope slides into the tray and the spider climbs back up its thread out of frame"
       },
       {
-        "at": 8.9,
+        "at": 8.8,
+        "what": "A blue check badge settles on the tray corner and its tick draws"
+      },
+      {
+        "at": 9.1,
         "what": "A big gold extruded 99.9% swings down from above with inbox placement under it"
-      },
-      {
-        "at": 9.4,
-        "what": "The spider climbs back up its thread out of frame"
       },
       {
         "at": 9.7,
@@ -6211,7 +6211,7 @@
       "dark indigo backdrop with violet and blue bokeh",
       "dusty cobwebbed 3D signs hanging from beams",
       "Promotions, Spam and Blocked labels",
-      "silk strands crossing out Spam and Blocked",
+      "silk X strands crossing out Spam and Blocked",
       "glowing electric blue Inbox tray",
       "blue check badge",
       "gold extruded 99.9% number",
