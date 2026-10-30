@@ -5,7 +5,7 @@ import { EASED_STOPS, lighten, mix, sparklePath } from './paint';
 
 type Step = MailinfraDewStepsProps['steps'][number];
 
-export const dropOutline = (radius: number, neck: number): string => {
+const dropOutline = (radius: number, neck: number): string => {
   const center = neck + radius;
   const points: string[] = [];
   const count = 120;

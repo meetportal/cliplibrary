@@ -6,7 +6,7 @@ import { type DewPlan, strandY } from './timeline';
 const STRAND_START = -900;
 const STRAND_STEP = 24;
 
-export const strandFront = (frame: number): number =>
+const strandFront = (frame: number): number =>
   frame < 15 ? STRAND_START + 500 + 3 * frame * frame : STRAND_START + 1175 + 90 * (frame - 15);
 
 export const Strand = ({

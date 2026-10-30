@@ -15,7 +15,7 @@ export type DewStop = {
   index: number;
   leave: number;
   arrive: number;
-  textEnd: number;
+  nextLeave: number;
   dropX: number;
   screenX: number;
   cameraX: number;
@@ -58,7 +58,7 @@ export const planOf = (props: MailinfraDewStepsProps, sceneDuration: number): De
       index,
       leave,
       arrive: leave + whip,
-      textEnd: timing.introFrames + (index + 1) * (whip + stop) - 12,
+      nextLeave: timing.introFrames + (index + 1) * (whip + stop),
       dropX,
       screenX,
       cameraX,
@@ -149,7 +149,7 @@ export const swingAt = (frame: number, stop: DewStop, amount: number, phase = 0)
   return amount * stop.direction * Math.exp(-time / 24) * Math.sin((time * Math.PI * 2) / 40);
 };
 
-export const bobAt = (frame: number, stop: DewStop): number => {
+const bobAt = (frame: number, stop: DewStop): number => {
   const time = frame - stop.arrive + 4;
   if (time <= 0) {
     return 0;

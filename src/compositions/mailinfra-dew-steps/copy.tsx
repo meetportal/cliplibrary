@@ -34,7 +34,7 @@ export const IntroTitle = ({
         accent={look.accent}
         align="center"
         start={10 / speed}
-        end={(leave - 14) / speed}
+        end={leave / speed - 15}
       />
     </div>
   );
@@ -64,7 +64,7 @@ export const StepCopy = ({
           : stop.screenX - drop.size - layout.textGap - layout.textWidth;
         const align = right ? 'left' : 'right';
         const start = (stop.arrive - 8) / speed;
-        const end = stop.textEnd / speed;
+        const end = stop.nextLeave / speed - 15;
         return (
           <div
             key={`${stop.index}-${step.title}`}
