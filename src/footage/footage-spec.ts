@@ -24,6 +24,13 @@ export type PlateSegment = {
   step?: number;
 };
 
+export type FootageTracking = {
+  search: [number, number, number, number];
+  doorBand: [number, number];
+  doorway: [number, number];
+  foldBand: [number, number];
+};
+
 export type FootageSpec = {
   id: string;
   aspectRatio: '9:16' | '16:9';
@@ -34,4 +41,5 @@ export type FootageSpec = {
   stills: FootageStill[];
   shots: FootageShot[];
   plate: PlateSegment[];
+  tracking: FootageTracking;
 };

@@ -89,4 +89,10 @@ export const elevatorNewspaperFootage: FootageSpec = {
     { shot: 'hold-and-close', from: 0, to: 45 },
     { shot: 'hold-and-close', from: 47, to: 119, step: 2 },
   ],
+  tracking: {
+    search: [250, 600, 850, 1160],
+    doorBand: [395, 425],
+    doorway: [170, 920],
+    foldBand: [470, 630],
+  },
 };

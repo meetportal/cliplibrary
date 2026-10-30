@@ -33,6 +33,7 @@
     "db:migrate": "bun run scripts/migrate-database.ts",
     "render:sites": "bun run src/render/render-sites.ts",
     "footage": "bun run src/render/footage/generate-footage.ts",
+    "footage:track": "bun run src/render/footage/track-footage.ts",
     "check:comments": "bun run scripts/strip-comments.ts --check",
     "check:em-dashes": "bun run scripts/check-em-dashes.ts",
     "check:repository": "bun run scripts/check-repository.ts",
