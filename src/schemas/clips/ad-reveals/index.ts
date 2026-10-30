@@ -61,6 +61,12 @@ import {
 import { problemStrikeoutControls } from './problem-strikeout-controls';
 import { spillRevealDefaults, spillRevealMeta, spillRevealSchema } from './spill-reveal';
 import { spillRevealControls } from './spill-reveal-controls';
+import {
+  streetSignSwapDefaults,
+  streetSignSwapMeta,
+  streetSignSwapSchema,
+} from './street-sign-swap';
+import { streetSignSwapControls } from './street-sign-swap-controls';
 
 export const adRevealsClips: ClipModule[] = [
   {
@@ -139,5 +145,12 @@ export const adRevealsClips: ClipModule[] = [
     defaults: elevatorNewspaperDefaults,
     meta: elevatorNewspaperMeta,
     controls: elevatorNewspaperControls,
+  },
+  {
+    id: 'street-sign-swap',
+    schema: streetSignSwapSchema,
+    defaults: streetSignSwapDefaults,
+    meta: streetSignSwapMeta,
+    controls: streetSignSwapControls,
   },
 ];

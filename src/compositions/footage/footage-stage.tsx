@@ -19,8 +19,6 @@ import { useCanvasPixelRatio } from '../kit/pixel-ratio';
 import { type FootageTrack, frameAt, type TrackFrame } from './footage-track';
 import { createPlateSource, type PlateSource, receivePlateFrame } from './plate-source';
 
-const OVERSCAN = 1.008;
-
 export type FootagePlate = { src: string; track: FootageTrack };
 
 type Stage = {
@@ -109,7 +107,6 @@ const StageScene = ({
   const { width, height } = plate.track;
   const stampShare = PLATE_STAMP.rows / (height + PLATE_STAMP.rows);
   const gl = useThree((state) => state.gl);
-  const camera = useThree((state) => state.camera);
   gl.localClippingEnabled = true;
   const plateMap = useDisposed(
     useMemo(() => {
@@ -150,9 +147,6 @@ const StageScene = ({
     }
     const index = source.index ?? frame;
     const tracked = frameAt(plate.track, index);
-    camera.position.set(-tracked.steady[0], tracked.steady[1], 100);
-    camera.zoom = OVERSCAN;
-    camera.updateProjectionMatrix();
     stage.planes[0]?.set(new THREE.Vector3(1, 0, 0), width / 2 - tracked.doors[0]);
     stage.planes[1]?.set(new THREE.Vector3(-1, 0, 0), tracked.doors[1] - width / 2);
     for (const listener of stage.listeners) {

@@ -6764,5 +6764,80 @@
       "reveal",
       "doors"
     ]
+  },
+  "street-sign-swap": {
+    "summary": "Photoreal handheld footage of a rainy Paris crosswalk in front of a columned stone building. A blonde woman in a camo cap, black tee and camo cargo trousers walks past holding a white board that asks when is the maison figue website launching ?, then in the same continuous take a woman in a green jersey and green cap walks in holding up an olive board that answers it's live now maisonfigue.com.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Blonde woman walks across the wet crosswalk holding the white question board"
+      },
+      {
+        "at": 1.8,
+        "what": "She walks out of frame on the right"
+      },
+      {
+        "at": 2.3,
+        "what": "A woman in a green jersey walks in from the right holding the olive answer board up"
+      },
+      {
+        "at": 4.2,
+        "what": "She stops on the crosswalk and holds the board to camera"
+      },
+      {
+        "at": 7.0,
+        "what": "The answer board stays readable to the end"
+      }
+    ],
+    "visuals": [
+      "photoreal ai generated footage",
+      "rainy Paris street with columns and umbrellas",
+      "white crosswalk on wet asphalt",
+      "white poster board with serif and bold sans question",
+      "olive green poster board with white rim and answer",
+      "print tracked onto the real boards"
+    ],
+    "motion": [
+      "people walking across a crosswalk",
+      "board handoff between two people in one take",
+      "handheld street footage"
+    ],
+    "mood": ["street", "playful", "fashion", "candid"],
+    "roles": ["opener", "cta"],
+    "useCases": [
+      "website launch announcement",
+      "brand teaser and reveal",
+      "fashion or streetwear launch",
+      "question and answer ad",
+      "instagram reel hook"
+    ],
+    "editable": [
+      "question words and brand",
+      "answer line and web address",
+      "text size and position on both boards",
+      "board, text and rim colours",
+      "print strength, shading and softness",
+      "framing closeness"
+    ],
+    "palette": ["#d8d2c6", "#2b2b2e", "#f2f2f0", "#4d6a3d", "#1f9e45", "#7a7f86"],
+    "keywords": [
+      "website launch",
+      "its live",
+      "street",
+      "paris",
+      "sign",
+      "board",
+      "poster",
+      "question",
+      "answer",
+      "crosswalk",
+      "rain",
+      "fashion",
+      "streetwear",
+      "footage",
+      "live action",
+      "ai video",
+      "vertical"
+    ]
   }
 }

@@ -14,9 +14,14 @@ type Corner = [number, number];
 type PageCorners = [Corner, Corner, Corner, Corner];
 
 export type FootageTracking = {
-  anchor: { frame: number; quads: Record<string, PageCorners> };
+  anchors: {
+    frame: number;
+    quads: Record<string, PageCorners>;
+    range?: [number, number];
+    margin?: number;
+    color?: { rgb: [number, number, number]; reach: number };
+  }[];
   shared?: [string, number, string, number][];
-  range?: [number, number];
   doors?: { band: [number, number]; doorway: [number, number] };
 };
 
@@ -36,6 +41,7 @@ export type PlateSegment = {
   from: number;
   to: number;
   step?: number;
+  blend?: number;
 };
 
 export type FootageSpec = {

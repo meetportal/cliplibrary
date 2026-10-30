@@ -3,7 +3,6 @@ import type { Quad } from './homography';
 export type TrackFrame = {
   doors: readonly [number, number];
   quads: Readonly<Record<string, Quad>>;
-  steady: readonly [number, number];
 };
 
 export type FootageTrack = { width: number; height: number; frames: TrackFrame[] };
@@ -11,7 +10,7 @@ export type FootageTrack = { width: number; height: number; frames: TrackFrame[]
 type RawTrack = {
   width: number;
   height: number;
-  frames: { doors: number[]; quads: Record<string, number[][]>; steady: number[] }[];
+  frames: { doors: number[]; quads: Record<string, number[][]> }[];
 };
 
 const toQuad = (points: number[][]): Quad => {
@@ -30,7 +29,6 @@ export const parseTrack = (raw: RawTrack): FootageTrack => ({
     quads: Object.fromEntries(
       Object.entries(frame.quads).map(([name, points]) => [name, toQuad(points)]),
     ),
-    steady: [frame.steady[0] ?? 0, frame.steady[1] ?? 0],
   })),
 });
 
