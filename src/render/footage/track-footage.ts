@@ -187,8 +187,9 @@ const center = (pose: Pose): [number, number] => {
 const steadyOffsets = (poses: Pose[], runs: { frames: number[] }[]): [number, number][] => {
   const offsets: [number, number][] = poses.map(() => [0, 0]);
   for (const { frames } of runs) {
-    const centers = frames.map((index) => center(poses[index] as Pose));
-    frames.forEach((index, at) => {
+    const posed = frames.filter((index) => Object.keys(poses[index] ?? {}).length > 0);
+    const centers = posed.map((index) => center(poses[index] as Pose));
+    posed.forEach((index, at) => {
       let weight = 0;
       const sum: [number, number] = [0, 0];
       for (let offset = -STEADY_REACH; offset <= STEADY_REACH; offset += 1) {
@@ -232,18 +233,17 @@ const track = async (spec: FootageSpec) => {
       0,
     );
     const anchorIndex = run.frames[nearest] ?? 0;
-    for (const [index, pose] of trackRun(planes, run.frames, anchorIndex, shot.tracking, doors)) {
+    const [low, high] = shot.tracking.range ?? [0, Number.POSITIVE_INFINITY];
+    const tracked = run.frames.filter((_, at) => {
+      const source = run.sources[at] ?? 0;
+      return source >= low && source <= high;
+    });
+    for (const [index, pose] of trackRun(planes, tracked, anchorIndex, shot.tracking, doors)) {
       poses.set(index, pose);
     }
     console.info(`Tracked ${run.frames.length} frames of ${run.shot}`);
   }
-  const ordered = planes.map((_, index) => {
-    const pose = poses.get(index);
-    if (pose === undefined) {
-      throw new Error(`No pose for frame ${index}`);
-    }
-    return pose;
-  });
+  const ordered = planes.map((_, index) => poses.get(index) ?? {});
   const steady = steadyOffsets(
     ordered,
     runsOf(spec).filter(

@@ -4,16 +4,22 @@ import { useDisposed, useFootageFrame, useStage } from './footage-stage';
 import { createPrintMaterial } from './print-material';
 import { gridGeometry, placeGrid } from './tracked-grid';
 
+export type PrintKey = { chroma: readonly [number, number]; reach: number };
+
 export const TrackedPrint = ({
   name,
   map,
   strength,
   shading,
+  paperWhite = 0.74,
+  colorKey,
 }: {
   name: string;
   map: THREE.Texture;
   strength: number;
   shading: number;
+  paperWhite?: number;
+  colorKey?: PrintKey;
 }) => {
   const { plateMap, planes, width, height, stampShare } = useStage();
   const geometry = useDisposed(useMemo(gridGeometry, []));
@@ -28,8 +34,14 @@ export const TrackedPrint = ({
   }
   print.material.opacity = strength;
   print.uniforms.shading.value = shading;
+  print.uniforms.paperWhite.value = paperWhite;
+  print.uniforms.keyReach.value = colorKey?.reach ?? 0;
+  if (colorKey !== undefined) {
+    print.uniforms.keyChroma.value.set(colorKey.chroma[0], colorKey.chroma[1]);
+  }
   const mesh = useRef<THREE.Mesh>(null);
-  useFootageFrame((tracked) => {
+  useFootageFrame((tracked, index) => {
+    print.uniforms.grainSeed.value = (index % 97) * 13.7;
     const quad = tracked.quads[name];
     if (mesh.current !== null) {
       mesh.current.visible = quad !== undefined;

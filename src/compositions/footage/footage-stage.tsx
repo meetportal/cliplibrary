@@ -29,7 +29,7 @@ type Stage = {
   width: number;
   height: number;
   stampShare: number;
-  listeners: Set<(frame: TrackFrame) => void>;
+  listeners: Set<(frame: TrackFrame, index: number) => void>;
 };
 
 const StageContext = createContext<Stage | null>(null);
@@ -42,12 +42,12 @@ export const useStage = (): Stage => {
   return stage;
 };
 
-export const useFootageFrame = (callback: (frame: TrackFrame) => void) => {
+export const useFootageFrame = (callback: (frame: TrackFrame, index: number) => void) => {
   const { listeners } = useStage();
   const latest = useRef(callback);
   latest.current = callback;
   useLayoutEffect(() => {
-    const listener = (frame: TrackFrame) => latest.current(frame);
+    const listener = (frame: TrackFrame, index: number) => latest.current(frame, index);
     listeners.add(listener);
     return () => {
       listeners.delete(listener);
@@ -148,14 +148,15 @@ const StageScene = ({
       seen.current = source.version;
       plateMap.needsUpdate = true;
     }
-    const tracked = frameAt(plate.track, source.index ?? frame);
+    const index = source.index ?? frame;
+    const tracked = frameAt(plate.track, index);
     camera.position.set(-tracked.steady[0], tracked.steady[1], 100);
     camera.zoom = OVERSCAN;
     camera.updateProjectionMatrix();
     stage.planes[0]?.set(new THREE.Vector3(1, 0, 0), width / 2 - tracked.doors[0]);
     stage.planes[1]?.set(new THREE.Vector3(-1, 0, 0), tracked.doors[1] - width / 2);
     for (const listener of stage.listeners) {
-      listener(tracked);
+      listener(tracked, index);
     }
   });
   return (

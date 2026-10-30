@@ -5,7 +5,7 @@ import type { ClipMeta } from '../../registry';
 
 const unit = (max = 1, step = 0.01) => zSlider({ min: 0, max, step });
 
-const frames = (max = 93) => zSlider({ min: 0, max });
+const frames = (max = 184) => zSlider({ min: 0, max });
 
 const size = () => zSlider({ min: 0.5, max: 1.5, step: 0.01 });
 
@@ -112,14 +112,14 @@ export const elevatorNewspaperDefaults: ElevatorNewspaperProps = {
     paperTint: 0.55,
   },
   camera: {
-    zoom: 1,
-    creep: 0.05,
-    focusX: 540,
-    focusY: 1000,
-    pushStart: 39,
-    pushFrames: 1,
-    pullStart: 76,
-    pullFrames: 1,
+    zoom: 1.5,
+    creep: 0.04,
+    focusX: 544,
+    focusY: 965,
+    pushStart: 34,
+    pushFrames: 54,
+    pullStart: 118,
+    pullFrames: 34,
   },
   motion: defaultMotion({ exit: 'none', exitFrames: 0, float: 0 }),
 };
@@ -132,11 +132,11 @@ export const elevatorNewspaperMeta: ClipMeta = {
   id: 'elevator-newspaper',
   title: 'Elevator Newspaper',
   description:
-    'Elevator doors slide open on a woman hiding behind an open tabloid, the shot cuts to a close-up of its coming soon cover and new store page printed with your own copy, then cuts back as the doors close.',
+    'Elevator doors slide open on a woman hiding behind an open tabloid, the camera glides in to read its coming soon cover and new store page printed with your own copy, then eases back as the doors close.',
   category: 'ad-reveals',
   tags: ['footage', 'paper', 'reveal', 'headline', 'camera-move'],
   theme: 'light',
   source: 'src/compositions/scenes/ad-reveals/elevator-newspaper.tsx',
-  durationInFrames: 94,
-  posterFrame: 58,
+  durationInFrames: 185,
+  posterFrame: 100,
 };

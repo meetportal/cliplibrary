@@ -3,7 +3,7 @@ import { MOTION } from '../../control-presets';
 import type { ElevatorNewspaperProps } from './elevator-newspaper';
 
 const LINES_HINT = 'Each line is a row; long copy shrinks to fit';
-const FRAME_HINT = 'Frame number; the close-up runs from frame 39 to 75';
+const FRAME_HINT = 'Frame number; the doors are fully open from about frame 33 to 154';
 const PHOTO_HINT = 'Leave empty, or use a link that fails to load, for a plain block';
 const BODY_HINT =
   'Small italic copy under the box; it wraps and is cut at the bottom of the column';
@@ -118,29 +118,21 @@ export const elevatorNewspaperControls = defineControls<ElevatorNewspaperProps>(
       title: 'Camera',
       fields: [
         {
-          path: 'camera.creep',
-          label: 'Slow creep',
-          hint: 'Zoom gained slowly while the camera is close; 0 holds still',
+          path: 'camera.zoom',
+          label: 'Push-in',
+          hint: 'How close the camera glides; 1 stays wide',
         },
-        { path: 'camera.pushStart', label: 'Close-up starts', hint: FRAME_HINT },
-        { path: 'camera.pullStart', label: 'Close-up ends', hint: FRAME_HINT },
+        { path: 'camera.pushStart', label: 'Push-in starts', hint: FRAME_HINT },
+        { path: 'camera.pullStart', label: 'Pull-out starts', hint: FRAME_HINT },
       ],
       more: [
         {
-          path: 'camera.zoom',
-          label: 'Extra push-in',
-          hint: 'Zooms further in while the camera is close; 1 adds none',
+          path: 'camera.creep',
+          label: 'Slow creep',
+          hint: 'Extra zoom gained slowly while the camera is close, so it never stops; 0 holds still',
         },
-        {
-          path: 'camera.pushFrames',
-          label: 'Push-in length',
-          hint: 'In frames; 1 changes on the cut',
-        },
-        {
-          path: 'camera.pullFrames',
-          label: 'Pull-out length',
-          hint: 'In frames; 1 changes on the cut',
-        },
+        { path: 'camera.pushFrames', label: 'Push-in length', hint: 'In frames' },
+        { path: 'camera.pullFrames', label: 'Pull-out length', hint: 'In frames' },
         {
           path: 'camera.focusX',
           label: 'Focus across',

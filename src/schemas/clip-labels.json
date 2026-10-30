@@ -6158,7 +6158,7 @@
     ]
   },
   "elevator-newspaper": {
-    "summary": "Photoreal footage of brushed steel elevator doors sliding open on a woman in a denim cap, white tee and black jeans who hides her face behind an open tabloid. It cuts to a close-up of the spread: a cover page with a ringed fist holding a cherry and a big COMING SOON headline, and a story page with a masthead, black STAY TUNED bands, a NEW STORE headline, boxed columns and a boutique photo. It cuts back as the doors close.",
+    "summary": "Photoreal footage of brushed steel elevator doors sliding open on a woman in a denim cap, white tee and black jeans holding an open tabloid up to her face. In one continuous take the camera glides in to read the spread, a cover page with a ringed fist holding a cherry and a big COMING SOON headline, and a story page with a masthead, black STAY TUNED bands, a NEW STORE headline, boxed columns and a store photo, then eases back as the doors close.",
     "beats": [
       {
         "at": 0,
@@ -6169,16 +6169,20 @@
         "what": "Doors slide apart, the printed newspaper shows through the gap"
       },
       {
-        "at": 1.6,
-        "what": "Hard cut to a close-up of the open spread held up over her face"
+        "at": 1.4,
+        "what": "Doors fully open; the camera starts gliding in toward the spread"
       },
       {
-        "at": 3.1,
-        "what": "Hard cut back to the doorway as the doors slide closed"
+        "at": 3.7,
+        "what": "Close framing on the spread with both pages readable"
       },
       {
-        "at": 3.9,
-        "what": "Doors meet in the middle"
+        "at": 4.9,
+        "what": "Camera eases back out to the doorway"
+      },
+      {
+        "at": 6.4,
+        "what": "Doors slide closed and meet in the middle"
       }
     ],
     "visuals": [
@@ -6192,7 +6196,7 @@
     ],
     "motion": [
       "elevator doors sliding open and closed",
-      "hard cuts",
+      "smooth camera push-in and pull-out",
       "slow camera creep",
       "paper swaying in her hands"
     ],
