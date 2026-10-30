@@ -23,7 +23,7 @@ const STEADY_SIGMA = 3;
 const STEADY_REACH = 8;
 const STEADY_LIMIT = 4;
 
-type Pose = { left: Corners; right: Corners };
+type Pose = Record<string, Corners>;
 
 const readPlanes = async (spec: FootageSpec): Promise<Plane[]> => {
   const size = spec.width * spec.height * 3;
@@ -101,10 +101,23 @@ const alignPage = (
   return corners;
 };
 
-const shareFold = ({ left, right }: Pose): Pose => {
-  const top: [number, number] = [(left[1][0] + right[0][0]) / 2, (left[1][1] + right[0][1]) / 2];
-  const bottom: [number, number] = [(left[2][0] + right[3][0]) / 2, (left[2][1] + right[3][1]) / 2];
-  return { left: [left[0], top, bottom, left[3]], right: [top, right[1], right[2], bottom] };
+const applyShared = (pose: Pose, shared: FootageTracking['shared']): Pose => {
+  const next: Pose = Object.fromEntries(
+    Object.entries(pose).map(([name, corners]) => [
+      name,
+      corners.map(([x, y]) => [x, y]) as Corners,
+    ]),
+  );
+  for (const [first, firstCorner, second, secondCorner] of shared ?? []) {
+    const a = next[first]?.[firstCorner];
+    const b = next[second]?.[secondCorner];
+    if (a !== undefined && b !== undefined) {
+      const middle: [number, number] = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+      (next[first] as Corners)[firstCorner] = middle;
+      (next[second] as Corners)[secondCorner] = [...middle];
+    }
+  }
+  return next;
 };
 
 const trackRun = (
@@ -118,9 +131,11 @@ const trackRun = (
   if (anchorPlane === undefined) {
     throw new Error(`Missing anchor frame ${anchorIndex}`);
   }
-  const anchorPose: Pose = { left: tracking.anchor.left, right: tracking.anchor.right };
-  const leftTemplates = templates(anchorPlane, anchorPose.left, GRID);
-  const rightTemplates = templates(anchorPlane, anchorPose.right, GRID);
+  const anchorPose: Pose = tracking.anchor.quads;
+  const names = Object.keys(anchorPose);
+  const quadTemplates = Object.fromEntries(
+    names.map((name) => [name, templates(anchorPlane, anchorPose[name] as Corners, GRID)]),
+  );
   const poses = new Map<number, Pose>([[anchorIndex, anchorPose]]);
   const walk = (order: number[]) => {
     let previous = anchorPose;
@@ -128,10 +143,13 @@ const trackRun = (
       const plane = planes[index];
       const gap = doors[index] ?? [0, plane?.width ?? 0];
       if (plane !== undefined) {
-        previous = shareFold({
-          left: alignPage(plane, previous.left, leftTemplates, gap),
-          right: alignPage(plane, previous.right, rightTemplates, gap),
-        });
+        const solved: Pose = Object.fromEntries(
+          names.map((name) => [
+            name,
+            alignPage(plane, previous[name] as Corners, quadTemplates[name] ?? [], gap),
+          ]),
+        );
+        previous = applyShared(solved, tracking.shared);
         poses.set(index, previous);
       }
     }
@@ -158,8 +176,8 @@ const runsOf = (spec: FootageSpec) => {
 
 const round = (value: number) => Math.round(value * 100) / 100;
 
-const center = ({ left, right }: Pose): [number, number] => {
-  const points = [...left, ...right];
+const center = (pose: Pose): [number, number] => {
+  const points = Object.values(pose).flat();
   return [
     points.reduce((sum, [x]) => sum + x, 0) / points.length,
     points.reduce((sum, [, y]) => sum + y, 0) / points.length,
@@ -234,8 +252,12 @@ const track = async (spec: FootageSpec) => {
   );
   const frames = ordered.map((pose, index) => ({
     doors: (doors[index] ?? [0, spec.width]).map(round),
-    left: pose.left.map((point) => point.map(round)),
-    right: pose.right.map((point) => point.map(round)),
+    quads: Object.fromEntries(
+      Object.entries(pose).map(([name, corners]) => [
+        name,
+        corners.map((point) => point.map(round)),
+      ]),
+    ),
     steady: (steady[index] ?? [0, 0]).map(round),
   }));
   const output = { width: spec.width, height: spec.height, fps: spec.fps, frames };

@@ -24,6 +24,11 @@ const BLANK =
 const AVOID =
   'camera movement, zoom, text on the newspaper, printed pages, headlines, letters, logos, people walking, face visible, eyes visible, lowering the newspaper, raising the newspaper, turning the newspaper';
 
+const FOLD: [string, number, string, number][] = [
+  ['left', 1, 'right', 0],
+  ['left', 2, 'right', 3],
+];
+
 const kling = (negativePrompt: string) => ({
   'atlas-cloud': { parameters: { negative_prompt: negativePrompt, cfg_scale: 0.7 } },
 });
@@ -100,19 +105,22 @@ export const elevatorNewspaperFootage: FootageSpec = {
       tracking: {
         anchor: {
           frame: 38,
-          left: [
-            [331, 766],
-            [564, 792],
-            [572, 1096],
-            [359, 1056],
-          ],
-          right: [
-            [564, 792],
-            [772, 752],
-            [790, 1074],
-            [572, 1096],
-          ],
+          quads: {
+            left: [
+              [331, 766],
+              [564, 792],
+              [572, 1096],
+              [359, 1056],
+            ],
+            right: [
+              [564, 792],
+              [772, 752],
+              [790, 1074],
+              [572, 1096],
+            ],
+          },
         },
+        shared: FOLD,
         doors: { band: [395, 425], doorway: [120, 960] },
       },
     },
@@ -129,19 +137,22 @@ export const elevatorNewspaperFootage: FootageSpec = {
       tracking: {
         anchor: {
           frame: 30,
-          left: [
-            [49, 654],
-            [559, 718],
-            [550, 1410],
-            [78, 1335],
-          ],
-          right: [
-            [559, 718],
-            [1020, 659],
-            [1019, 1375],
-            [550, 1410],
-          ],
+          quads: {
+            left: [
+              [49, 654],
+              [559, 718],
+              [550, 1410],
+              [78, 1335],
+            ],
+            right: [
+              [559, 718],
+              [1020, 659],
+              [1019, 1375],
+              [550, 1410],
+            ],
+          },
         },
+        shared: FOLD,
       },
     },
   ],

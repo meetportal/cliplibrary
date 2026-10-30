@@ -1,4 +1,4 @@
-import { type Quad, squareToQuad } from '@/compositions/elevator-newspaper/homography';
+import { type Quad, squareToQuad } from '@/compositions/footage/homography';
 
 export type Plane = { gray: Uint8Array; usable: Uint8Array; width: number; height: number };
 

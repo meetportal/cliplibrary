@@ -14,7 +14,8 @@ type Corner = [number, number];
 type PageCorners = [Corner, Corner, Corner, Corner];
 
 export type FootageTracking = {
-  anchor: { frame: number; left: PageCorners; right: PageCorners };
+  anchor: { frame: number; quads: Record<string, PageCorners> };
+  shared?: [string, number, string, number][];
   doors?: { band: [number, number]; doorway: [number, number] };
 };
 
