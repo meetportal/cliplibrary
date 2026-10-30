@@ -122,8 +122,6 @@ export type MailinfraDeliverabilityChargeProps = z.infer<
   typeof mailinfraDeliverabilityChargeSchema
 >;
 
-export type DeliverabilityCable = z.infer<typeof cableSchema>;
-
 export const mailinfraDeliverabilityChargeDefaults: MailinfraDeliverabilityChargeProps = {
   headline: {
     text: 'DELIVERABILITY',
@@ -243,5 +241,5 @@ export const mailinfraDeliverabilityChargeMeta: ClipMeta = {
   width: 1080,
   height: 1920,
   durationInFrames: 300,
-  posterFrame: 212,
+  posterFrame: 226,
 };

@@ -12,7 +12,7 @@ import {
 
 type Props = MailinfraDeliverabilityChargeProps;
 
-export const CABLE_KEYS = ['spf', 'dkim', 'dmarc', 'warmup', 'ips'] as const;
+const CABLE_KEYS = ['spf', 'dkim', 'dmarc', 'warmup', 'ips'] as const;
 
 export type CableKey = (typeof CABLE_KEYS)[number];
 
