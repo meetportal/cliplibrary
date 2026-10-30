@@ -54,6 +54,7 @@ export * from './clips/kinetic-type/word-streams';
 export * from './clips/list-pickers/color-pills';
 export * from './clips/list-pickers/heading-list';
 export * from './clips/list-pickers/list-pickers-reel';
+export * from './clips/list-pickers/mailinfra-dew-steps';
 export * from './clips/list-pickers/menu-stack';
 export * from './clips/list-pickers/mind-map';
 export * from './clips/list-pickers/pill-fan';
