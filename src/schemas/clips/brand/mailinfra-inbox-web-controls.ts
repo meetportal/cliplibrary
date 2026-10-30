@@ -78,7 +78,7 @@ export const mailinfraInboxWebControls = defineControls<MailinfraInboxWebProps>(
           hint: 'Also the fly-in streak',
         },
         { path: 'envelopes.lineColor', label: 'Envelope outline color' },
-        { path: 'web.silkColor', label: 'Silk color' },
+        { path: 'web.silkColor', label: 'Silk color', hint: 'Also the rim light on the spider' },
         { path: 'web.dewColor', label: 'Dew glint color' },
         { ...LOOK.ink, hint: 'Headline, counter number, tagline and website' },
         { ...LOOK.muted, label: 'Counter label color' },

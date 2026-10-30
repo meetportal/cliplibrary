@@ -4,6 +4,7 @@ import { bodyFont, displayFont } from '../promo/fonts';
 import { glowShadow } from '../promo/glow';
 import { smooth, tween } from '../promo/timing';
 import { FadeIn } from '../promo/typography';
+import { blend, fade } from './color';
 import type { Phases } from './timeline';
 
 const SWING_PERIOD = 42;
@@ -16,9 +17,9 @@ export const pendulumAt = (
 ): { angle: number; opacity: number } => {
   const landed = phases.zoom[1];
   const t = Math.max(0, frame - (landed - 6));
-  const fade = Math.max(0, 1 - t / SWING_SETTLE);
+  const decay = Math.max(0, 1 - t / SWING_SETTLE);
   return {
-    angle: props.wordmark.swing * Math.cos((t / SWING_PERIOD) * Math.PI * 2) * fade ** 3,
+    angle: props.wordmark.swing * Math.cos((t / SWING_PERIOD) * Math.PI * 2) * decay ** 3,
     opacity: tween(frame, [landed - 8, landed + 6], [0, 1], smooth),
   };
 };
@@ -30,10 +31,15 @@ const shineAt = (frame: number, landed: number): number => {
   return since < 0 ? -40 : -40 + ((since % SHINE_EVERY) / SHINE_EVERY) * 180;
 };
 
-const shineLayer = (position: number, color: string, strength: number): string =>
-  strength <= 0
-    ? ''
-    : `linear-gradient(105deg, transparent ${(position - 14).toFixed(2)}%, color-mix(in srgb, ${color} ${(strength * 100).toFixed(0)}%, transparent) ${position.toFixed(2)}%, transparent ${(position + 14).toFixed(2)}%), `;
+const clippedFill = (image: string): CSSProperties => ({
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  color: 'transparent',
+  backgroundImage: image,
+  backgroundClip: 'text',
+  WebkitBackgroundClip: 'text',
+});
 
 const ExtrudedWord = ({ props, shine }: { props: MailinfraInboxWebProps; shine: number }) => {
   const { wordmark } = props;
@@ -57,10 +63,14 @@ const ExtrudedWord = ({ props, shine }: { props: MailinfraInboxWebProps; shine: 
             position: 'absolute',
             left: step * 0.3,
             top: step,
-            color: `color-mix(in oklab, ${wordmark.side}, ${props.look.backgroundEdge} ${((step / Math.max(1, depth)) * 45).toFixed(1)}%)`,
+            color: blend(
+              wordmark.side,
+              props.look.backgroundEdge,
+              (step / Math.max(1, depth)) * 0.45,
+            ),
             textShadow:
               step === depth
-                ? `0 ${(depth * 0.9).toFixed(1)}px ${(wordmark.size * 0.14).toFixed(1)}px color-mix(in oklab, ${props.look.backgroundEdge} 80%, transparent)`
+                ? `0 ${(depth * 0.9).toFixed(1)}px ${(wordmark.size * 0.14).toFixed(1)}px ${fade(props.look.backgroundEdge, 0.8)}`
                 : undefined,
           }}
         >
@@ -70,18 +80,29 @@ const ExtrudedWord = ({ props, shine }: { props: MailinfraInboxWebProps; shine: 
       <div style={{ ...text, position: 'absolute', left: 0, top: -1.5, color: wordmark.faceTop }}>
         {wordmark.text}
       </div>
+      <div style={{ ...text, position: 'relative', color: wordmark.face }}>{wordmark.text}</div>
       <div
         style={{
           ...text,
-          position: 'relative',
-          color: 'transparent',
-          backgroundImage: `${shineLayer(shine, wordmark.faceTop, wordmark.shine)}linear-gradient(180deg, ${wordmark.faceTop} 4%, ${wordmark.face} 46%, color-mix(in oklab, ${wordmark.face}, ${wordmark.side} 45%) 100%)`,
-          backgroundClip: 'text',
-          WebkitBackgroundClip: 'text',
+          ...clippedFill(
+            `linear-gradient(180deg, ${wordmark.faceTop} 4%, ${wordmark.face} 46%, ${blend(wordmark.face, wordmark.side, 0.45)} 100%)`,
+          ),
         }}
       >
         {wordmark.text}
       </div>
+      {wordmark.shine > 0 && shine > -30 && shine < 130 ? (
+        <div
+          style={{
+            ...text,
+            ...clippedFill(
+              `linear-gradient(105deg, ${fade(wordmark.faceTop, 0)} ${(shine - 14).toFixed(2)}%, ${fade(wordmark.faceTop, wordmark.shine)} ${shine.toFixed(2)}%, ${fade(wordmark.faceTop, 0)} ${(shine + 14).toFixed(2)}%)`,
+            ),
+          }}
+        >
+          {wordmark.text}
+        </div>
+      ) : null}
     </div>
   );
 };
