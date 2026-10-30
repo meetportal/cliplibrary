@@ -2,7 +2,9 @@ import { defineControls } from '../../control-layout';
 import { LOOK, MOTION } from '../../control-presets';
 import type { MailinfraSpiderDropProps } from './mailinfra-spider-drop';
 
-const AFTER_LANDING = 'Frames after the camera lands on the inbox';
+const SCALED = 'Animation speed scales it';
+const AFTER_LANDING = `Frames after the camera lands on the inbox. ${SCALED}`;
+const FRAME_NUMBER = `Frame number. ${SCALED}`;
 const SCREEN_Y = 'Pixels from the top of the frame';
 
 export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropProps>({
@@ -28,7 +30,7 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
           label: 'Headline position',
           hint: `Top of the headline. ${SCREEN_Y}`,
         },
-        { path: 'headline.start', label: 'Headline appears at', hint: 'Frame number' },
+        { path: 'headline.start', label: 'Headline appears at', hint: FRAME_NUMBER },
       ],
     },
     {
@@ -50,14 +52,9 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
           hint: "Violet bokeh lights, the spider's sheen and the envelope's wax seal",
         },
         {
-          link: ['look.ink', 'signs.text'],
-          label: 'Text color',
-          hint: 'Headline, brand name and the floor sign labels',
-        },
-        {
-          link: ['look.background', 'look.backgroundEdge'],
+          ...LOOK.background,
           label: 'Background color',
-          hint: 'Backdrop top and bottom. Set them apart under More options for a fade',
+          hint: 'Top of the indigo backdrop. Its bottom is under More options',
         },
       ],
       more: [
@@ -68,11 +65,19 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
         { path: 'stat.face', label: 'Number face color', hint: 'Front of the big number' },
         { path: 'look.accent', label: 'Highlighted word color' },
         { path: 'bokeh.violet', label: 'Violet bokeh color', hint: 'Every other bokeh light' },
-        { path: 'spider.sheen', label: 'Spider sheen', hint: 'Highlights and stripes on the body' },
+        {
+          path: 'spider.sheen',
+          label: 'Spider sheen',
+          hint: 'Highlights, stripes and rim of the body, and tints the legs',
+        },
         { path: 'envelope.seal', label: 'Wax seal color' },
+        {
+          link: ['look.ink', 'signs.text'],
+          label: 'Text color',
+          hint: 'Headline, brand name and the floor sign labels',
+        },
         { path: 'look.ink', label: 'Headline and brand color' },
         { path: 'signs.text', label: 'Sign label color' },
-        { ...LOOK.background, label: 'Backdrop top' },
         {
           ...LOOK.backgroundEdge,
           label: 'Backdrop bottom',
@@ -87,16 +92,44 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
       ],
     },
     {
-      title: 'Floor signs',
+      title: 'Spider drop',
       fields: [
         {
           path: 'floors',
           label: 'Floors',
-          hint: 'One sign per floor the spider drops past, top to bottom. Each floor adds Time per floor to the drop, so keep the total inside the clip',
+          hint: 'One sign per floor the spider drops past, top to bottom. Time per floor shrinks on its own when the floors would not fit the clip',
           items: { label: 'Label', crossed: 'Crossed out with silk', color: 'Sign color' },
+        },
+        {
+          path: 'drop.floorFrames',
+          label: 'Time per floor',
+          hint: `Frames between signs. Lower is a faster drop. ${SCALED}`,
         },
       ],
       more: [
+        {
+          path: 'spider.show',
+          label: 'Show spider',
+          hint: 'Off lets the envelope ride the thread on its own',
+        },
+        { path: 'spider.size', label: 'Spider size', hint: 'Also scales the envelope' },
+        { path: 'spider.body', label: 'Body color' },
+        { path: 'spider.eyes', label: 'Eye color' },
+        {
+          path: 'spider.restY',
+          label: 'Opening height',
+          hint: `Where the spider hangs at the start. ${SCREEN_Y}`,
+        },
+        {
+          path: 'spider.arriveFrames',
+          label: 'Lowers in over',
+          hint: `Frames to come down from above. ${SCALED}`,
+        },
+        { path: 'spider.sway', label: 'Sway', hint: 'Side to side drift in pixels' },
+        { path: 'spider.bob', label: 'Bob', hint: 'Up and down bounce before the drop, in pixels' },
+        { path: 'silk.width', label: 'Thread width' },
+        { path: 'envelope.paper', label: 'Envelope color' },
+        { path: 'envelope.fold', label: 'Envelope fold lines' },
         {
           path: 'signs.firstSide',
           label: 'First sign side',
@@ -148,27 +181,15 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
           hint: 'The ledge each sign hangs from and the one under the inbox',
         },
         { path: 'signs.beamColor', label: 'Beam color' },
-      ],
-    },
-    {
-      title: 'Drop and timing',
-      fields: [
-        {
-          path: 'drop.floorFrames',
-          label: 'Time per floor',
-          hint: 'Frames between signs. Lower is a faster drop',
-        },
-      ],
-      more: [
         {
           path: 'drop.start',
           label: 'Drop starts at',
-          hint: 'Frame number. The headline leaves just before',
+          hint: `${FRAME_NUMBER}. The headline leaves just before`,
         },
         {
           path: 'drop.landingFrames',
           label: 'Landing length',
-          hint: 'Frames from the last sign to the inbox',
+          hint: `Frames from the last sign to the inbox. ${SCALED}`,
         },
         {
           path: 'drop.slowAtSigns',
@@ -181,6 +202,11 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
           hint: 'Pixels between floors. Wider makes faster whips',
         },
         {
+          path: 'drop.landingGap',
+          label: 'Inbox distance',
+          hint: 'Pixels from the last sign down to the inbox floor. Shorter shows the inbox sooner',
+        },
+        {
           path: 'drop.spiderY',
           label: 'Spider height while dropping',
           hint: `Where the spider rides on screen during the drop. ${SCREEN_Y}`,
@@ -188,7 +214,7 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
         {
           path: 'drop.blurSamples',
           label: 'Motion blur samples',
-          hint: '1 turns the whip blur off. More is smoother and slower to render',
+          hint: 'Most copies blended per frame; the count follows the camera speed. 1 turns the whip blur off',
         },
         {
           path: 'drop.shutter',
@@ -196,45 +222,11 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
           hint: 'Share of a frame the blur covers, 0 turns it off',
         },
         { path: 'climb.delay', label: 'Spider climbs at', hint: AFTER_LANDING },
-        { path: 'climb.frames', label: 'Climb length', hint: 'Frames to climb out of view' },
         {
-          ...MOTION.speed,
-          hint: 'Speeds up the whole story; the entrance and exit keep their own length',
+          path: 'climb.frames',
+          label: 'Climb length',
+          hint: `Frames to climb out of view. ${SCALED}`,
         },
-        MOTION.enter,
-        MOTION.enterFrames,
-        MOTION.exit,
-        MOTION.exitFrames,
-      ],
-    },
-    {
-      title: 'Spider and envelope',
-      fields: [
-        {
-          path: 'spider.show',
-          label: 'Show spider',
-          hint: 'Off lets the envelope ride the thread on its own',
-        },
-      ],
-      more: [
-        { path: 'spider.size', label: 'Spider size', hint: 'Also scales the envelope' },
-        { path: 'spider.body', label: 'Body color' },
-        { path: 'spider.eyes', label: 'Eye color' },
-        {
-          path: 'spider.restY',
-          label: 'Opening height',
-          hint: `Where the spider hangs at the start. ${SCREEN_Y}`,
-        },
-        {
-          path: 'spider.arriveFrames',
-          label: 'Lowers in over',
-          hint: 'Frames to come down from above',
-        },
-        { path: 'spider.sway', label: 'Sway', hint: 'Side to side drift in pixels' },
-        { path: 'spider.bob', label: 'Bob', hint: 'Up and down bounce before the drop, in pixels' },
-        { path: 'silk.width', label: 'Thread width' },
-        { path: 'envelope.paper', label: 'Envelope color' },
-        { path: 'envelope.fold', label: 'Envelope fold lines' },
       ],
     },
     {
@@ -254,7 +246,7 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
           label: 'Envelope let go at',
           hint: AFTER_LANDING,
         },
-        { path: 'inbox.slideFrames', label: 'Slide in length', hint: 'In frames' },
+        { path: 'inbox.slideFrames', label: 'Slide in length', hint: `In frames. ${SCALED}` },
         { path: 'badge.show', label: 'Check badge' },
         { path: 'badge.delay', label: 'Badge appears at', hint: AFTER_LANDING },
         { path: 'badge.size', label: 'Badge size' },
@@ -276,15 +268,17 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
     },
     {
       title: 'End card',
-      fields: [{ path: 'endCard.show', label: 'Show end card' }],
-      more: [
+      fields: [
         { path: 'endCard.brand', label: 'Brand name' },
-        { path: 'endCard.tagline', label: 'Tagline' },
         {
           path: 'endCard.url',
           label: 'Link',
           hint: 'Shown in the pill. Leave empty to hide the pill',
         },
+      ],
+      more: [
+        { path: 'endCard.tagline', label: 'Tagline' },
+        { path: 'endCard.show', label: 'Show end card' },
         { path: 'endCard.delay', label: 'Card appears at', hint: AFTER_LANDING },
         { path: 'endCard.y', label: 'Card position', hint: `Top of the logo row. ${SCREEN_Y}` },
         { path: 'endCard.brandSize', label: 'Brand size', hint: 'The logo tile follows' },
@@ -294,15 +288,23 @@ export const mailinfraSpiderDropControls = defineControls<MailinfraSpiderDropPro
       ],
     },
     {
-      title: 'Background',
+      title: 'Backdrop and motion',
       fields: [
         {
           ...LOOK.showBackdrop,
           label: 'Show backdrop',
           hint: 'Off drops the indigo backdrop and bokeh for a transparent background',
         },
+        {
+          ...MOTION.speed,
+          hint: 'Speeds up the whole story and every frame timing; the entrance and exit keep their own length',
+        },
       ],
       more: [
+        MOTION.enter,
+        MOTION.enterFrames,
+        MOTION.exit,
+        MOTION.exitFrames,
         { path: 'bokeh.count', label: 'Bokeh lights', hint: '0 turns them off' },
         { path: 'bokeh.blue', label: 'Blue bokeh color' },
         { path: 'bokeh.size', label: 'Bokeh size' },

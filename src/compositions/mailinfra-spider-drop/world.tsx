@@ -9,6 +9,7 @@ import {
   envelopeScreenTop,
   holdsEnvelope,
   legCycle,
+  restCamera,
   signCenterY,
   signSwing,
   spiderDropTimeline,
@@ -69,7 +70,7 @@ export const WorldSample = ({
 }) => {
   const line = spiderDropTimeline(props);
   const camera = cameraY(props, t);
-  const resting = (line.floors + 1) * props.drop.floorGap;
+  const resting = restCamera(props);
   const trayTop = props.inbox.y + resting - camera;
   const trayBottom = trayTop + props.inbox.width * 0.44 + 16;
   const bodyY = spiderScreenY(props, t);

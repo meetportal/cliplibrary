@@ -1,4 +1,4 @@
-import type { MailinfraSpiderDropProps } from '@/schemas';
+import { type MailinfraSpiderDropProps, mailinfraSpiderDropMeta } from '@/schemas';
 import { land, launch, settle, smooth, tween } from '../promo/timing';
 
 export type SpiderDropTimeline = {
@@ -13,15 +13,27 @@ export type SpiderDropTimeline = {
   climbEnd: number;
 };
 
+const fittedFloorFrames = (props: MailinfraSpiderDropProps, floors: number): number => {
+  const { drop, stat, endCard, motion } = props;
+  if (floors === 0) {
+    return drop.floorFrames;
+  }
+  const clipEnd = mailinfraSpiderDropMeta.durationInFrames * motion.speed;
+  const tail = Math.max(stat.delay, endCard.delay) + 40;
+  const room = (clipEnd - tail - drop.start - drop.landingFrames) / floors;
+  return Math.max(12, Math.min(drop.floorFrames, room));
+};
+
 export const spiderDropTimeline = (props: MailinfraSpiderDropProps): SpiderDropTimeline => {
   const { drop, inbox, climb } = props;
   const floors = props.floors.length;
-  const landing = drop.start + floors * drop.floorFrames + drop.landingFrames;
+  const floorFrames = fittedFloorFrames(props, floors);
+  const landing = drop.start + floors * floorFrames + drop.landingFrames;
   const release = landing + inbox.releaseAfter;
   const climbStart = landing + Math.max(climb.delay, inbox.releaseAfter + 2);
   return {
     start: drop.start,
-    floorFrames: drop.floorFrames,
+    floorFrames,
     landingFrames: drop.landingFrames,
     floors,
     landing,
@@ -41,37 +53,39 @@ const hermite = (u: number, startSlope: number, endSlope: number): number => {
 const cruise = (u: number, depth: number): number =>
   u - (depth * Math.sin(2 * Math.PI * u)) / (2 * Math.PI);
 
-const floorProgress = (props: MailinfraSpiderDropProps, t: number): number => {
+export const restCamera = (props: MailinfraSpiderDropProps): number =>
+  props.floors.length * props.drop.floorGap + props.drop.landingGap;
+
+export const cameraY = (props: MailinfraSpiderDropProps, t: number): number => {
   const line = spiderDropTimeline(props);
   const depth = props.drop.slowAtSigns;
   const passing = 1 - depth;
+  const { floorGap, landingGap } = props.drop;
   const elapsed = t - line.start;
   if (elapsed <= 0) {
     return 0;
   }
   const lastFloorAt = line.floors * line.floorFrames;
   if (line.floors > 0 && elapsed < line.floorFrames) {
-    return hermite(elapsed / line.floorFrames, 0, passing);
+    return hermite(elapsed / line.floorFrames, 0, passing) * floorGap;
   }
   if (elapsed < lastFloorAt) {
     const index = Math.floor(elapsed / line.floorFrames);
-    return index + cruise(elapsed / line.floorFrames - index, depth);
+    return (index + cruise(elapsed / line.floorFrames - index, depth)) * floorGap;
   }
-  const startSlope = line.floors > 0 ? (passing * line.landingFrames) / line.floorFrames : 0;
+  const arriving = line.floors > 0 ? (passing * floorGap) / line.floorFrames : 0;
+  const lastFloor = line.floors * floorGap;
   return land(
     elapsed,
     [lastFloorAt, lastFloorAt + line.landingFrames],
-    [line.floors, line.floors + 1],
-    1.5 / props.drop.floorGap,
-    startSlope,
+    [lastFloor, lastFloor + landingGap],
+    1.5,
+    (arriving * line.landingFrames) / landingGap,
   );
 };
 
-export const cameraY = (props: MailinfraSpiderDropProps, t: number): number =>
-  floorProgress(props, t) * props.drop.floorGap;
-
 const passFrame = (props: MailinfraSpiderDropProps, floor: number): number =>
-  props.drop.start + (floor + 1) * props.drop.floorFrames;
+  props.drop.start + (floor + 1) * spiderDropTimeline(props).floorFrames;
 
 const envelopeHang = (size: number) => 66 * size;
 
@@ -84,7 +98,7 @@ const envelopeHeight = (props: MailinfraSpiderDropProps): number =>
   ENVELOPE_HEIGHT * props.spider.size;
 
 const insertedEnvelopeTop = (props: MailinfraSpiderDropProps): number =>
-  props.inbox.y - envelopeHeight(props) * 0.5;
+  props.inbox.y - envelopeHeight(props) * 0.38;
 
 const releasedEnvelopeTop = (props: MailinfraSpiderDropProps): number =>
   props.inbox.y - envelopeHeight(props) * 0.86;
@@ -111,7 +125,7 @@ export const spiderScreenY = (props: MailinfraSpiderDropProps, t: number): numbe
     smooth,
   );
   const settleBob = bob * (1 - tween(t, [line.start - 10, line.start + 10], [0, 1]));
-  const lift = tween(t, [line.release, line.climbStart + 14], [0, -40], smooth);
+  const lift = tween(t, [line.release, line.climbStart + 10], [0, -40], smooth);
   const climb = launch(t, [line.climbStart, line.climbEnd], [0, -lowered - 900], 1.5);
   return arrive + settleBob + lead + lower + lift + climb;
 };
@@ -149,7 +163,7 @@ export const signCenterY = (props: MailinfraSpiderDropProps, floor: number): num
 const brushFrame = (props: MailinfraSpiderDropProps, floor: number): number => {
   const target = signCenterY(props, floor) - props.drop.spiderY;
   let low = props.drop.start;
-  let high = passFrame(props, floor) + props.drop.floorFrames;
+  let high = passFrame(props, floor) + spiderDropTimeline(props).floorFrames;
   for (let step = 0; step < 24; step++) {
     const middle = (low + high) / 2;
     if (cameraY(props, middle) < target) {

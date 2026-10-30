@@ -63,6 +63,41 @@ const signCenterX = (props: MailinfraSpiderDropProps, index: number): number => 
 const fitSize = (label: string, size: number, width: number): number =>
   Math.min(size, (width - 70) / Math.max(1, label.length * 0.56));
 
+const SilkCross = ({
+  cx,
+  y,
+  half,
+  rise,
+  color,
+}: {
+  cx: number;
+  y: number;
+  half: number;
+  rise: number;
+  color: string;
+}) => {
+  const strands = [
+    [cx - half, y - rise, cx + half, y + rise],
+    [cx - half, y + rise, cx + half, y - rise],
+  ] as const;
+  return (
+    <g fill="none" stroke={color} strokeLinecap="round">
+      {strands.map(([x1, y1, x2, y2]) => (
+        <g key={`${x1.toFixed(1)}:${y1.toFixed(1)}`}>
+          <path d={`M ${x1} ${y1} Q ${cx} ${y + 10} ${x2} ${y2}`} strokeWidth={7} />
+          <path
+            d={`M ${x1} ${y1 + 9} Q ${cx} ${y + 20} ${x2} ${y2 + 9}`}
+            strokeWidth={2.5}
+            strokeOpacity={0.55}
+          />
+          <circle cx={x1} cy={y1} r={6} fill={color} stroke="none" />
+          <circle cx={x2} cy={y2} r={6} fill={color} stroke="none" />
+        </g>
+      ))}
+    </g>
+  );
+};
+
 export const FloorBeam = ({ props, y }: { props: MailinfraSpiderDropProps; y: number }) => {
   const { signs, silk } = props;
   if (!signs.beam) {
@@ -207,25 +242,13 @@ export const FloorSign = ({
         opacity={signs.cobwebs * 0.8}
       />
       {floor.crossed ? (
-        <g fill="none" stroke={signs.strike} strokeLinecap="round">
-          <path
-            d={`M ${left - 14} ${top + 22} Q ${cx} ${y + 30} ${left + width + 14} ${top + height - 24}`}
-            strokeWidth={5}
-          />
-          <path
-            d={`M ${left - 6} ${top + 40} Q ${cx + 20} ${y + 44} ${left + width + 6} ${top + height - 8}`}
-            strokeWidth={2}
-            strokeOpacity={0.6}
-          />
-          <circle cx={left - 14} cy={top + 22} r={5} fill={signs.strike} stroke="none" />
-          <circle
-            cx={left + width + 14}
-            cy={top + height - 24}
-            r={5}
-            fill={signs.strike}
-            stroke="none"
-          />
-        </g>
+        <SilkCross
+          cx={cx}
+          y={y}
+          half={Math.min(width / 2 - 18, (floor.label.length * 0.56 * size) / 2 + 34)}
+          rise={size * 0.44}
+          color={signs.strike}
+        />
       ) : null}
     </g>
   );

@@ -168,10 +168,10 @@ export const CheckBadge = ({
         fill="none"
         stroke={badge.tick}
         strokeWidth={radius * 0.2}
-        strokeLinecap="round"
+        strokeLinecap="butt"
         strokeLinejoin="round"
         strokeDasharray={`${(tickLength * draw).toFixed(2)} ${tickLength * 2}`}
-        opacity={draw > 0 ? 1 : 0}
+        opacity={Math.min(1, (tickLength * draw) / (radius * 0.5))}
       />
     </g>
   );

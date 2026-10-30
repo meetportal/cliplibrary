@@ -15,17 +15,21 @@ import { TransitionFrame } from '../../promo/transition-frame';
 import { Headline } from '../../promo/typography';
 import type { SceneModule } from '../../scene-module';
 
+const SAMPLE_SPACING = 1.5;
+
 const sampleTimes = (props: MailinfraSpiderDropProps, frame: number): number[] => {
   const { blurSamples, shutter } = props.drop;
   const speed = props.motion.speed;
   const now = frame * speed;
   const earliest = Math.max(0, frame - shutter) * speed;
-  if (blurSamples <= 1 || shutter <= 0 || motionSpread(props, earliest, now) < 0.4) {
+  const spread = blurSamples <= 1 || shutter <= 0 ? 0 : motionSpread(props, earliest, now);
+  if (spread < 0.4) {
     return [now];
   }
+  const count = Math.min(blurSamples, Math.max(2, Math.ceil(spread / SAMPLE_SPACING)));
   return Array.from(
-    { length: blurSamples },
-    (_, index) => earliest + ((now - earliest) * index) / (blurSamples - 1),
+    { length: count },
+    (_, index) => earliest + ((now - earliest) * index) / (count - 1),
   );
 };
 
