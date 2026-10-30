@@ -48,6 +48,7 @@ import type { WordStreamsProps } from './clips/kinetic-type/word-streams';
 import type { ColorPillsProps } from './clips/list-pickers/color-pills';
 import type { HeadingListProps } from './clips/list-pickers/heading-list';
 import type { ListPickersReelProps } from './clips/list-pickers/list-pickers-reel';
+import type { MailinfraDewStepsProps } from './clips/list-pickers/mailinfra-dew-steps';
 import type { MenuStackProps } from './clips/list-pickers/menu-stack';
 import type { MindMapProps } from './clips/list-pickers/mind-map';
 import type { PillFanProps } from './clips/list-pickers/pill-fan';
@@ -91,6 +92,7 @@ export interface ClipPropsMap {
   'pill-fan': PillFanProps;
   'menu-stack': MenuStackProps;
   'heading-list': HeadingListProps;
+  'mailinfra-dew-steps': MailinfraDewStepsProps;
   'year-dial': YearDialProps;
   'mind-map': MindMapProps;
   'color-pills': ColorPillsProps;
