@@ -200,8 +200,8 @@ export const mailinfraThreadFeaturesDefaults: MailinfraThreadFeaturesProps = {
     }),
     title('PAY AFTER', '30 DAYS', {
       tilt: 5,
-      spiderX: 0.5,
-      spiderY: 0.7,
+      spiderX: 0.75,
+      spiderY: 1,
       sideWeb: 'none',
       caught: 2,
       dew: false,

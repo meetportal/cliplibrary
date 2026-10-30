@@ -59,18 +59,9 @@ const ExtrudedLine = ({
     top: 0,
     whiteSpace: 'pre',
   } as const;
+  const shadow = `8px 16px ${(size * 0.18).toFixed(1)}px ${colors.titleShadow}`;
   return (
     <div style={{ position: 'relative', whiteSpace: 'pre' }}>
-      <div
-        style={{
-          ...base,
-          color: colors.titleShadow,
-          transform: `translate(${(layers * 0.4 + 8).toFixed(1)}px, ${layers + 16}px)`,
-          filter: `blur(${(size * 0.09).toFixed(1)}px)`,
-        }}
-      >
-        {text}
-      </div>
       {Array.from({ length: layers }, (_, step) => {
         const index = layers - step;
         return (
@@ -80,6 +71,7 @@ const ExtrudedLine = ({
               ...base,
               color: mixHex(colors.titleSide, colors.titleDepth, index / Math.max(1, layers)),
               transform: `translate(${(index * 0.4).toFixed(1)}px, ${index}px)`,
+              textShadow: index === layers ? shadow : undefined,
             }}
           >
             {text}
@@ -89,7 +81,15 @@ const ExtrudedLine = ({
       <div style={{ ...base, color: colors.titleHighlight, transform: 'translate(-1.5px, -2px)' }}>
         {text}
       </div>
-      <div style={{ position: 'relative', color: colors.titleFace }}>{text}</div>
+      <div
+        style={{
+          position: 'relative',
+          color: colors.titleFace,
+          textShadow: layers === 0 ? shadow : undefined,
+        }}
+      >
+        {text}
+      </div>
     </div>
   );
 };

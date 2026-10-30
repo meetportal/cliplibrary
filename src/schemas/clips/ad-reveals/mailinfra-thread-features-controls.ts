@@ -44,7 +44,7 @@ export const mailinfraThreadFeaturesControls = defineControls<MailinfraThreadFea
         {
           path: 'titleStyle.depth',
           label: 'Extrusion depth',
-          hint: 'In pixels at the big line size; 0 leaves flat letters',
+          hint: 'In pixels for a 150 px line; smaller lines get a shallower side. 0 leaves flat letters',
         },
         {
           path: 'titleStyle.swing',
@@ -243,7 +243,11 @@ export const mailinfraThreadFeaturesControls = defineControls<MailinfraThreadFea
         { path: 'web.spiderBody', label: 'Spider body' },
         { path: 'web.spiderSheen', label: 'Spider sheen', hint: 'Light side of the body' },
         { path: 'web.spiderMark', label: 'Spider markings and eyes' },
-        { path: 'web.threadX', label: 'Thread position', hint: 'In pixels from the left edge' },
+        {
+          path: 'web.threadX',
+          label: 'Thread position',
+          hint: 'In pixels from the left edge; the titles, cocoons and orb web stay centered on it',
+        },
         { path: 'web.threadWidth', label: 'Thread thickness', hint: 'In pixels' },
         {
           path: 'web.glint',
@@ -289,7 +293,7 @@ export const mailinfraThreadFeaturesControls = defineControls<MailinfraThreadFea
         {
           path: 'camera.spacing',
           label: 'Distance between stops',
-          hint: 'In pixels of thread; longer whips move faster',
+          hint: 'In pixels of thread; more thread between stops makes each whip faster',
         },
         {
           path: 'camera.blur',

@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 import { AbsoluteFill } from 'remotion';
 
-const GHOST_GAP = 9;
+const GHOST_GAP = 14;
 
-const MAX_GHOSTS = 18;
+const MAX_GHOSTS = 7;
 
 export const Smear = ({
   velocity,
@@ -24,7 +24,7 @@ export const Smear = ({
   return (
     <AbsoluteFill
       style={{
-        filter: `blur(${(Math.min(26, step * 0.7 + spread * 0.03) * Math.min(1, spread / 60)).toFixed(2)}px)`,
+        filter: `blur(${(Math.min(30, step * 0.8 + spread * 0.03) * Math.min(1, spread / 60)).toFixed(2)}px)`,
       }}
     >
       {Array.from({ length: ghosts }, (_, index) => (

@@ -1,11 +1,46 @@
+import { useId } from 'react';
 import { AbsoluteFill, random } from 'remotion';
 import type { ThreadLook, ThreadTitle } from '@/schemas';
-import { withAlpha } from './color';
 import { nearness, type ThreadSchedule } from './schedule';
 
 const GAP = 300;
 
 const DOTS_PER_STOP = 11;
+
+const BLOB_STOPS: [number, number][] = [
+  [0, 1],
+  [0.25, 0.9],
+  [0.45, 0.68],
+  [0.62, 0.42],
+  [0.76, 0.2],
+  [0.88, 0.07],
+  [1, 0],
+];
+
+const DOT_STOPS: [number, number][] = [
+  [0, 1],
+  [0.5, 0.92],
+  [0.68, 0.6],
+  [0.82, 0.24],
+  [0.93, 0.06],
+  [1, 0],
+];
+
+const SoftDisc = ({
+  id,
+  color,
+  stops,
+}: {
+  id: string;
+  color: string;
+  stops: [number, number][];
+}) => (
+  <radialGradient id={id}>
+    {stops.map(([offset, opacity]) => (
+      <stop key={offset} offset={offset} stopColor={color} stopOpacity={opacity} />
+    ))}
+  </radialGradient>
+);
 
 export const Bokeh = ({
   look,
@@ -28,6 +63,7 @@ export const Bokeh = ({
   frame: number;
   blur: number;
 }) => {
+  const id = useId().replace(/:/g, '');
   if (look.bokeh <= 0) {
     return null;
   }
@@ -45,7 +81,7 @@ export const Bokeh = ({
       x: x + Math.sin(frame / pace + index) * 36,
       y: y + Math.cos(frame / (pace * 1.3) + index * 2) * 44,
       size,
-      color: seed('tone') > 0.5 ? look.bokehViolet : look.bokehBlue,
+      tone: seed('tone') > 0.5 ? 'violet' : 'blue',
       alpha: Math.min(1, (0.22 + seed('alpha') * 0.26) * look.bokeh),
     };
   }).filter((blob) => blob.y > -blob.size * 1.5 && blob.y < height + blob.size * 0.5);
@@ -72,38 +108,42 @@ export const Bokeh = ({
       };
     });
   });
+  const fill = (key: string) => `url(#${id}-${key})`;
   return (
     <AbsoluteFill style={{ filter: blur > 0.3 ? `blur(${blur.toFixed(2)}px)` : undefined }}>
-      {blobs.map((blob) => (
-        <div
-          key={blob.key}
-          style={{
-            position: 'absolute',
-            left: blob.x - blob.size / 2,
-            top: blob.y - blob.size / 2,
-            width: blob.size,
-            height: blob.size,
-            borderRadius: '50%',
-            backgroundColor: withAlpha(blob.color, blob.alpha),
-            filter: `blur(${(blob.size * 0.16).toFixed(1)}px)`,
-          }}
-        />
-      ))}
-      {dots.map((dot) => (
-        <div
-          key={dot.key}
-          style={{
-            position: 'absolute',
-            left: dot.x - dot.size / 2,
-            top: dot.y - dot.size / 2,
-            width: dot.size,
-            height: dot.size,
-            borderRadius: '50%',
-            backgroundColor: withAlpha(look.bokehGold, Math.min(1, dot.alpha * look.bokeh)),
-            filter: `blur(${(dot.size * 0.12).toFixed(1)}px)`,
-          }}
-        />
-      ))}
+      <svg
+        aria-hidden="true"
+        width={width}
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+        style={{ position: 'absolute', left: 0, top: 0 }}
+      >
+        <defs>
+          <SoftDisc id={`${id}-violet`} color={look.bokehViolet} stops={BLOB_STOPS} />
+          <SoftDisc id={`${id}-blue`} color={look.bokehBlue} stops={BLOB_STOPS} />
+          <SoftDisc id={`${id}-gold`} color={look.bokehGold} stops={DOT_STOPS} />
+        </defs>
+        {blobs.map((blob) => (
+          <circle
+            key={blob.key}
+            cx={blob.x}
+            cy={blob.y}
+            r={blob.size * 0.68}
+            fill={fill(blob.tone)}
+            opacity={blob.alpha}
+          />
+        ))}
+        {dots.map((dot) => (
+          <circle
+            key={dot.key}
+            cx={dot.x}
+            cy={dot.y}
+            r={dot.size * 0.6}
+            fill={fill('gold')}
+            opacity={Math.min(1, dot.alpha * look.bokeh)}
+          />
+        ))}
+      </svg>
     </AbsoluteFill>
   );
 };
