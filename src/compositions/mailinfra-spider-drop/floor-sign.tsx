@@ -54,7 +54,7 @@ export const Cobweb = ({
   );
 };
 
-export const signCenterX = (props: MailinfraSpiderDropProps, index: number): number => {
+const signCenterX = (props: MailinfraSpiderDropProps, index: number): number => {
   const first = props.signs.firstSide === 'right' ? 1 : -1;
   const side = index % 2 === 0 ? first : -first;
   return 540 + side * (props.signs.width / 2 - props.signs.overlap);

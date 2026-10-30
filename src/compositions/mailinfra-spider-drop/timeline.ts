@@ -41,7 +41,7 @@ const hermite = (u: number, startSlope: number, endSlope: number): number => {
 const cruise = (u: number, depth: number): number =>
   u - (depth * Math.sin(2 * Math.PI * u)) / (2 * Math.PI);
 
-export const floorProgress = (props: MailinfraSpiderDropProps, t: number): number => {
+const floorProgress = (props: MailinfraSpiderDropProps, t: number): number => {
   const line = spiderDropTimeline(props);
   const depth = props.drop.slowAtSigns;
   const passing = 1 - depth;
@@ -70,20 +70,20 @@ export const floorProgress = (props: MailinfraSpiderDropProps, t: number): numbe
 export const cameraY = (props: MailinfraSpiderDropProps, t: number): number =>
   floorProgress(props, t) * props.drop.floorGap;
 
-export const passFrame = (props: MailinfraSpiderDropProps, floor: number): number =>
+const passFrame = (props: MailinfraSpiderDropProps, floor: number): number =>
   props.drop.start + (floor + 1) * props.drop.floorFrames;
 
 const envelopeHang = (size: number) => 66 * size;
 
 const ENVELOPE_HEIGHT = 140;
 
-export const envelopeTopOffset = (props: MailinfraSpiderDropProps): number =>
+const envelopeTopOffset = (props: MailinfraSpiderDropProps): number =>
   props.spider.show ? envelopeHang(props.spider.size) : 0;
 
-export const envelopeHeight = (props: MailinfraSpiderDropProps): number =>
+const envelopeHeight = (props: MailinfraSpiderDropProps): number =>
   ENVELOPE_HEIGHT * props.spider.size;
 
-export const insertedEnvelopeTop = (props: MailinfraSpiderDropProps): number =>
+const insertedEnvelopeTop = (props: MailinfraSpiderDropProps): number =>
   props.inbox.y - envelopeHeight(props) * 0.5;
 
 const releasedEnvelopeTop = (props: MailinfraSpiderDropProps): number =>

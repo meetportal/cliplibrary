@@ -107,7 +107,7 @@ export const SpiderGradient = ({ id, props }: { id: string; props: MailinfraSpid
   </linearGradient>
 );
 
-export const ENVELOPE_WIDTH = 210;
+const ENVELOPE_WIDTH = 210;
 
 export const Envelope = ({
   props,
