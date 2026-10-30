@@ -40,8 +40,8 @@ const Layer = ({ offset, children }: { offset: number; children: ReactNode }) =>
 const MailinfraThreadFeatures = (props: MailinfraThreadFeaturesProps) => {
   const { opening, titles, titleStyle, web, camera, endCard, colors, look, motion } = props;
   const frame = useCurrentFrame() * motion.speed;
-  const { width, height } = useVideoConfig();
-  const schedule = buildSchedule(props);
+  const { width, height, durationInFrames } = useVideoConfig();
+  const schedule = buildSchedule(props, durationInFrames * motion.speed);
   const view = cameraY(frame, schedule);
   const velocity = view - cameraY(frame - motion.speed, schedule);
   const near = (top: number) => top - view > -height - MARGIN && top - view < height + MARGIN;
@@ -116,6 +116,7 @@ const MailinfraThreadFeatures = (props: MailinfraThreadFeaturesProps) => {
               colors={colors}
               frame={frame}
               land={schedule.land}
+              dive={camera.diveFrames}
               speed={motion.speed}
               width={width}
             />

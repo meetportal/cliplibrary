@@ -27,12 +27,40 @@ const Arrow = ({ size, colors }: { size: number; colors: ThreadColors }) => (
   </svg>
 );
 
+const hubWalk = (frame: number, land: number, card: ThreadEndCard, hubX: number) => {
+  const arrive = land + 36;
+  const start = card.webY - card.webSize * 0.12;
+  if (frame <= arrive) {
+    return {
+      x: hubX,
+      y: tween(frame, [land - 4, arrive], [-160, start], settle),
+      heading: 180 + Math.sin(frame / 17) * 9,
+      phase: frame / 4,
+    };
+  }
+  const elapsed = frame - arrive;
+  const travel = (elapsed * elapsed) / (elapsed + 40);
+  const angle = -Math.PI / 2 + travel * 0.03;
+  const radius = card.webSize * tween(frame, [arrive, arrive + 50], [0.12, 0.3]);
+  const walking = (angle * 180) / Math.PI + 180;
+  return {
+    x: hubX + Math.cos(angle) * radius,
+    y: card.webY + Math.sin(angle) * radius,
+    heading:
+      180 +
+      Math.sin(frame / 17) * 9 +
+      (walking - 180) * tween(frame, [arrive, arrive + 24], [0, 1]),
+    phase: frame / 4 + travel * 0.6,
+  };
+};
+
 export const EndCard = ({
   card,
   web,
   colors,
   frame,
   land,
+  dive,
   speed,
   width,
 }: {
@@ -41,10 +69,12 @@ export const EndCard = ({
   colors: ThreadColors;
   frame: number;
   land: number;
+  dive: number;
   speed: number;
   width: number;
 }) => {
-  const at = (step: number) => (land + 4 + step * card.stagger) / speed;
+  const at = (step: number) => (land - 2 + step * card.stagger) / speed;
+  const webStart = land - Math.round(dive * 0.75);
   const pill = card.buttonSize * 2.3;
   return (
     <>
@@ -53,19 +83,12 @@ export const EndCard = ({
         y={card.webY}
         radius={card.webSize}
         frame={frame}
-        start={land - 6}
+        start={webStart}
         frames={card.webFrames}
         web={web}
       />
       {card.showSpider ? (
-        <Spider
-          x={web.threadX + Math.sin(frame / 23) * 10 * tween(frame, [land + 30, land + 60], [0, 1])}
-          y={tween(frame, [land, land + 40], [-160, card.webY - card.webSize * 0.12], settle)}
-          heading={180 + Math.sin(frame / 17) * 9}
-          phase={frame / 4}
-          tuck={0.4}
-          web={web}
-        />
+        <Spider {...hubWalk(frame, land, card, web.threadX)} tuck={0.4} web={web} />
       ) : null}
       <div
         style={{

@@ -25,10 +25,9 @@ export const Opening = ({
   width: number;
 }) => {
   const right = opening.side === 'right';
-  const gutter = 70;
   const column = right
-    ? { left: web.threadX + gutter, right: gutter }
-    : { left: gutter, right: width - web.threadX + gutter };
+    ? { left: web.threadX + opening.gap, right: opening.margin }
+    : { left: opening.margin, right: width - web.threadX + opening.gap };
   const at = (sceneFrame: number) => sceneFrame / speed;
   return (
     <>
@@ -46,12 +45,12 @@ export const Opening = ({
         {opening.showLabel ? (
           <FadeIn start={at(4)}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-              <EnvelopeLogo size={54} colors={colors} />
+              <EnvelopeLogo size={opening.logoSize} colors={colors} />
               <div
                 style={{
                   fontFamily: bodyFont,
                   fontWeight: 600,
-                  fontSize: 36,
+                  fontSize: opening.labelSize,
                   letterSpacing: '-0.01em',
                   color: colors.text,
                 }}

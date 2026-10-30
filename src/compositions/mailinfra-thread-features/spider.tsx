@@ -60,7 +60,7 @@ export const Spider = ({
       </defs>
       <g
         fill="none"
-        stroke={web.spiderBody}
+        stroke={web.spiderSheen}
         strokeWidth={3.4}
         strokeLinejoin="round"
         strokeLinecap="round"
@@ -71,8 +71,26 @@ export const Spider = ({
           )),
         )}
       </g>
-      <ellipse cx={0} cy={18} rx={17} ry={22} fill={`url(#${id}-body)`} />
-      <ellipse cx={0} cy={-10} rx={12} ry={11} fill={`url(#${id}-body)`} />
+      <ellipse
+        cx={0}
+        cy={18}
+        rx={17}
+        ry={22}
+        fill={`url(#${id}-body)`}
+        stroke={web.silk}
+        strokeOpacity={0.45}
+        strokeWidth={1.5}
+      />
+      <ellipse
+        cx={0}
+        cy={-10}
+        rx={12}
+        ry={11}
+        fill={`url(#${id}-body)`}
+        stroke={web.silk}
+        strokeOpacity={0.45}
+        strokeWidth={1.5}
+      />
       <path d="M-6 9 L6 9 L0 19 Z M0 21 L6 31 L-6 31 Z" fill={web.spiderMark} />
       <circle cx={-4} cy={-17} r={2.2} fill={web.spiderMark} />
       <circle cx={4} cy={-17} r={2.2} fill={web.spiderMark} />

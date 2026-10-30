@@ -39,11 +39,14 @@ export const TitleStop = ({
   const here = crawlOffset(u, web.crawl);
   const ahead = crawlOffset(u + 0.05, web.crawl);
   const heading = (Math.atan2(ahead.y - here.y, ahead.x - here.x) * 180) / Math.PI + 90;
-  const spiderX = item.spiderX * (metrics.width / 2 + 30) + here.x;
-  const spiderY = item.spiderY * (metrics.height / 2 + 120) + here.y;
+  const spiderX = item.spiderX + here.x;
+  const spiderY = item.spiderY + here.y;
   return (
     <div style={{ position: 'absolute', left: web.threadX, top: style.centerY }}>
       <BackWeb shape={shape} sideWeb={sideWeb} item={item} index={index} web={web} frame={frame} />
+      {item.spider ? (
+        <Spider x={spiderX} y={spiderY} heading={heading} phase={u * 7} web={web} />
+      ) : null}
       <div
         style={{
           position: 'absolute',
@@ -72,9 +75,6 @@ export const TitleStop = ({
         </div>
         <FrontWraps width={metrics.width} height={metrics.height} progress={wraps} web={web} />
       </div>
-      {item.spider ? (
-        <Spider x={spiderX} y={spiderY} heading={heading} phase={u * 7} web={web} />
-      ) : null}
     </div>
   );
 };

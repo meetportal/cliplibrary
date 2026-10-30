@@ -2,8 +2,6 @@ import { defineControls } from '../../control-layout';
 import { LOOK, MOTION } from '../../control-presets';
 import type { MailinfraThreadFeaturesProps } from './mailinfra-thread-features';
 
-const FRAMES = 'In frames';
-
 export const mailinfraThreadFeaturesControls = defineControls<MailinfraThreadFeaturesProps>({
   sections: [
     {
@@ -12,15 +10,15 @@ export const mailinfraThreadFeaturesControls = defineControls<MailinfraThreadFea
         {
           path: 'titles',
           label: 'Titles on the thread',
-          hint: 'One stop per title, top to bottom. Each stop holds for its own length, so more or longer stops leave less time for the end card',
+          hint: 'One stop per title, top to bottom. When the stops would cut into the end card hold, every hold shrinks to fit',
           items: {
             top: 'Big line',
             bottom: 'Second line',
             hold: 'Hold length (frames)',
             tilt: 'Resting tilt (degrees)',
             spider: 'Spider on this title',
-            spiderX: 'Spider left to right',
-            spiderY: 'Spider top to bottom',
+            spiderX: 'Spider across (px from title center)',
+            spiderY: 'Spider down (px from title center)',
             sideWeb: 'Side web',
             caught: 'Caught emails',
             dew: 'Dew drops',
@@ -188,6 +186,18 @@ export const mailinfraThreadFeaturesControls = defineControls<MailinfraThreadFea
           label: 'Thread drop length',
           hint: 'In frames; the spider follows the thread down and settles a little later',
         },
+        { path: 'opening.labelSize', label: 'Brand label size', hint: 'In pixels' },
+        { path: 'opening.logoSize', label: 'Label logo size', hint: 'In pixels' },
+        {
+          path: 'opening.gap',
+          label: 'Gap from the thread',
+          hint: 'In pixels between the thread and the text column',
+        },
+        {
+          path: 'opening.margin',
+          label: 'Side margin',
+          hint: 'In pixels between the text column and the frame edge',
+        },
         {
           path: 'opening.hold',
           label: 'Opening length',
@@ -229,6 +239,27 @@ export const mailinfraThreadFeaturesControls = defineControls<MailinfraThreadFea
           label: 'Delay between items',
           hint: 'In frames; logo, statement, tagline and button arrive one after another',
         },
+        {
+          path: 'endCard.hold',
+          label: 'End card hold',
+          hint: 'In frames the end card keeps after the dive lands; title holds shrink when there is not enough room',
+        },
+        {
+          path: 'endCard.showSpider',
+          label: 'Spider on the orb web',
+          hint: 'Drops down the thread to the web as the dive lands',
+        },
+        {
+          path: 'endCard.webY',
+          label: 'Orb web height',
+          hint: 'In pixels from the top of the end card to the web center',
+        },
+        { path: 'endCard.webSize', label: 'Orb web size', hint: 'Radius in pixels' },
+        {
+          path: 'endCard.webFrames',
+          label: 'Orb web draw length',
+          hint: 'In frames; the web starts drawing partway through the dive',
+        },
       ],
     },
     {
@@ -238,10 +269,14 @@ export const mailinfraThreadFeaturesControls = defineControls<MailinfraThreadFea
         {
           path: 'web.crawl',
           label: 'Spider crawl',
-          hint: 'In pixels; how far the spiders wander. 0 keeps them still',
+          hint: 'In pixels; how far the spiders on the titles wander. 0 keeps them still',
         },
         { path: 'web.spiderBody', label: 'Spider body' },
-        { path: 'web.spiderSheen', label: 'Spider sheen', hint: 'Light side of the body' },
+        {
+          path: 'web.spiderSheen',
+          label: 'Spider legs and sheen',
+          hint: 'Legs and the light side of the body',
+        },
         { path: 'web.spiderMark', label: 'Spider markings and eyes' },
         {
           path: 'web.threadX',
@@ -261,22 +296,34 @@ export const mailinfraThreadFeaturesControls = defineControls<MailinfraThreadFea
           hint: 'In pixels the cocoon reaches above and below each title',
         },
         { path: 'web.seal', label: 'Email seal' },
-        {
-          path: 'endCard.showSpider',
-          label: 'Spider on the orb web',
-          hint: 'Drops down the thread to the web after the dive',
-        },
-        {
-          path: 'endCard.webY',
-          label: 'Orb web height',
-          hint: 'In pixels from the top of the end card to the web center',
-        },
-        { path: 'endCard.webSize', label: 'Orb web size', hint: 'Radius in pixels' },
-        { path: 'endCard.webFrames', label: 'Orb web draw length', hint: FRAMES },
       ],
     },
     {
-      title: 'Camera',
+      title: 'Background',
+      fields: [
+        {
+          ...LOOK.showBackdrop,
+          hint: 'Off leaves the thread, titles and end card over transparency',
+        },
+      ],
+      more: [
+        {
+          path: 'look.bokeh',
+          label: 'Bokeh strength',
+          hint: 'Scales the blurred lights and the gold dots; 0 hides both',
+        },
+        { path: 'look.vignette', label: 'Vignette', hint: 'Darkens the top and bottom edges' },
+        { path: 'look.bokehViolet', label: 'Violet lights' },
+        { path: 'look.bokehBlue', label: 'Blue lights' },
+        {
+          path: 'look.bokehGold',
+          label: 'Gold dots',
+          hint: 'Shown on titles with Gold bokeh dots on',
+        },
+      ],
+    },
+    {
+      title: 'Camera and motion',
       fields: [
         {
           path: 'camera.whipFrames',
@@ -305,32 +352,12 @@ export const mailinfraThreadFeaturesControls = defineControls<MailinfraThreadFea
           label: 'Background depth',
           hint: 'How fast the blurred lights move compared to the thread',
         },
+        MOTION.enter,
+        MOTION.enterFrames,
+        MOTION.exit,
+        MOTION.exitFrames,
+        MOTION.speed,
       ],
-    },
-    {
-      title: 'Background',
-      fields: [
-        {
-          ...LOOK.showBackdrop,
-          hint: 'Off leaves the thread, titles and end card over transparency',
-        },
-      ],
-      more: [
-        { path: 'look.bokeh', label: 'Bokeh strength', hint: '0 hides the blurred lights' },
-        { path: 'look.vignette', label: 'Vignette', hint: 'Darkens the top and bottom edges' },
-        { path: 'look.bokehViolet', label: 'Violet lights' },
-        { path: 'look.bokehBlue', label: 'Blue lights' },
-        {
-          path: 'look.bokehGold',
-          label: 'Gold dots',
-          hint: 'Shown on titles with Gold bokeh dots on',
-        },
-      ],
-    },
-    {
-      title: 'Motion',
-      fields: [],
-      more: [MOTION.enter, MOTION.enterFrames, MOTION.exit, MOTION.exitFrames, MOTION.speed],
     },
   ],
   hidden: ['motion.float'],

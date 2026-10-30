@@ -17,16 +17,21 @@ export interface ThreadSchedule {
   endTop: number;
 }
 
-export const buildSchedule = ({
-  opening,
-  titles,
-  camera,
-}: MailinfraThreadFeaturesProps): ThreadSchedule => {
+const MIN_HOLD = 8;
+
+export const buildSchedule = (
+  { opening, titles, camera, endCard }: MailinfraThreadFeaturesProps,
+  duration: number,
+): ThreadSchedule => {
+  const travel = opening.hold + titles.length * camera.whipFrames + camera.diveFrames;
+  const room = Math.max(0, duration - endCard.hold - travel);
+  const wanted = titles.reduce((sum, item) => sum + item.hold, 0);
+  const squeeze = wanted > room && wanted > 0 ? room / wanted : 1;
   let cursor = opening.hold;
   const stops = titles.map((item) => {
     const whipStart = cursor;
     const arrive = whipStart + camera.whipFrames;
-    cursor = arrive + item.hold;
+    cursor = arrive + Math.max(MIN_HOLD, Math.floor(item.hold * squeeze));
     return { whipStart, arrive, end: cursor };
   });
   return {

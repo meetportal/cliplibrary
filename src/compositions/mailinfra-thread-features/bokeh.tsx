@@ -78,8 +78,8 @@ export const Bokeh = ({
     const pace = 60 + seed('drift') * 40;
     return {
       key: index,
-      x: x + Math.sin(frame / pace + index) * 36,
-      y: y + Math.cos(frame / (pace * 1.3) + index * 2) * 44,
+      x: x + Math.sin(frame / pace + index) * 60,
+      y: y + Math.cos(frame / (pace * 1.3) + index * 2) * 70,
       size,
       tone: seed('tone') > 0.5 ? 'violet' : 'blue',
       alpha: Math.min(1, (0.22 + seed('alpha') * 0.26) * look.bokeh),
