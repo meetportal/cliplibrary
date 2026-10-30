@@ -8,7 +8,6 @@ export * from './clips/ad-reveals/billboard-reader';
 export * from './clips/ad-reveals/burning-paper-reveal';
 export * from './clips/ad-reveals/crumpled-paper-reveal';
 export * from './clips/ad-reveals/helicopter-unveil';
-export * from './clips/ad-reveals/mailinfra-deliverability-charge';
 export * from './clips/ad-reveals/problem-strikeout';
 export * from './clips/ad-reveals/spill-reveal';
 export * from './clips/backgrounds/relief-backdrop';
