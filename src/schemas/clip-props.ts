@@ -10,6 +10,7 @@ import type { AppIconRevealProps } from './clips/brand/app-icon-reveal';
 import type { BrandRevealProps } from './clips/brand/brand-reveal';
 import type { CtaEndCardProps } from './clips/brand/cta-end-card';
 import type { DotWordmarkRevealProps } from './clips/brand/dot-wordmark-reveal';
+import type { MailinfraInboxWebProps } from './clips/brand/mailinfra-inbox-web';
 import type { PuzzleSuccessProps } from './clips/brand/puzzle-success';
 import type { LaptopWipeRevealProps } from './clips/desk-scenes/laptop-wipe-reveal';
 import type { WebsiteFoundSpotlightProps } from './clips/desk-scenes/website-found-spotlight';
@@ -154,6 +155,7 @@ export interface ClipPropsMap {
   'dot-wordmark-reveal': DotWordmarkRevealProps;
   'cta-end-card': CtaEndCardProps;
   'puzzle-success': PuzzleSuccessProps;
+  'mailinfra-inbox-web': MailinfraInboxWebProps;
   'relief-backdrop': ReliefBackdropProps;
   'helicopter-unveil': HelicopterUnveilProps;
   'problem-strikeout': ProblemStrikeoutProps;
