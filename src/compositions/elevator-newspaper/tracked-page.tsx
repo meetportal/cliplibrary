@@ -1,4 +1,3 @@
-import { useLoader } from '@react-three/fiber';
 import { useEffect, useMemo } from 'react';
 import { staticFile } from 'remotion';
 import * as THREE from 'three';
@@ -11,6 +10,42 @@ const SEGMENTS = 16;
 const ABSOLUTE = /^(https?:|data:|blob:|\/)/;
 
 const resolveImage = (value: string): string => (ABSOLUTE.test(value) ? value : staticFile(value));
+
+type PhotoEntry = { image: HTMLImageElement | null; pending: Promise<void> | null };
+
+const photos = new Map<string, PhotoEntry>();
+
+const startLoading = (url: string): PhotoEntry => {
+  const entry: PhotoEntry = { image: null, pending: null };
+  entry.pending = new Promise<void>((resolve) => {
+    const image = new Image();
+    image.crossOrigin = 'anonymous';
+    image.onload = () => {
+      entry.image = image;
+      entry.pending = null;
+      resolve();
+    };
+    image.onerror = () => {
+      entry.pending = null;
+      resolve();
+    };
+    image.src = url;
+  });
+  photos.set(url, entry);
+  return entry;
+};
+
+const readPhoto = (src: string): HTMLImageElement | null => {
+  if (src === '') {
+    return null;
+  }
+  const url = resolveImage(src);
+  const entry = photos.get(url) ?? startLoading(url);
+  if (entry.pending !== null) {
+    throw entry.pending;
+  }
+  return entry.image;
+};
 
 const gridGeometry = (): THREE.BufferGeometry => {
   const uvs: number[] = [];
@@ -61,14 +96,15 @@ const usePageTexture = (
   photo: HTMLImageElement | null,
 ): THREE.Texture => {
   usePageFonts();
+  const { masthead, cover, story, ink, print } = props;
   const texture = useMemo(() => {
     const canvas = document.createElement('canvas');
-    drawPage(canvas, side, props, photo);
+    drawPage(canvas, side, { masthead, cover, story, ink, softness: print.softness }, photo);
     const made = new THREE.CanvasTexture(canvas);
     made.colorSpace = THREE.SRGBColorSpace;
     made.anisotropy = 16;
     return made;
-  }, [side, props, photo]);
+  }, [side, masthead, cover, story, ink, print.softness, photo]);
   useEffect(() => () => texture.dispose(), [texture]);
   return texture;
 };
@@ -110,10 +146,6 @@ const PageMesh = ({
   );
 };
 
-const PhotoPage = (page: PageProps & { src: string }) => {
-  const photo = useLoader(THREE.ImageLoader, resolveImage(page.src));
-  return <PageMesh {...page} photo={photo} />;
-};
-
-export const TrackedPage = (page: PageProps & { src: string }) =>
-  page.src === '' ? <PageMesh {...page} photo={null} /> : <PhotoPage {...page} />;
+export const TrackedPage = (page: PageProps & { src: string }) => (
+  <PageMesh {...page} photo={readPhoto(page.src)} />
+);

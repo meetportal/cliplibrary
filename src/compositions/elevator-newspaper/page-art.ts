@@ -23,19 +23,30 @@ const INNER = PAGE_WIDTH * 0.07;
 const TOP = PAGE_HEIGHT * 0.05;
 const BOTTOM = PAGE_HEIGHT * 0.05;
 const SQUEEZE = 0.82;
+const STORY_HEADLINE_ROOM = 300;
 
-type Page = { context: Context; props: ElevatorNewspaperProps; photo: CanvasImageSource | null };
+type PageCopy = Pick<ElevatorNewspaperProps, 'masthead' | 'cover' | 'story' | 'ink'> & {
+  softness: number;
+};
+
+type Page = { context: Context; props: PageCopy; photo: CanvasImageSource | null };
 
 const clear = (color: string) => {
   const parsed = parse(color);
   return parsed === undefined ? 'transparent' : formatRgb({ ...parsed, alpha: 0 });
 };
 
-const centeredCaps = (context: Context, text: string, x: number, y: number, size: number) => {
+const centeredCaps = (
+  context: Context,
+  text: string,
+  [x, y]: [number, number],
+  size: number,
+  maxWidth: number,
+) => {
   sans(context, size, 600);
   spaced(context, size, 0.28);
   context.textAlign = 'center';
-  context.fillText(text, x + (size * 0.28) / 2, y);
+  context.fillText(text, x + (size * 0.28) / 2, y, maxWidth);
   spaced(context, size, 0);
 };
 
@@ -46,7 +57,7 @@ const drawCover = ({ context, props, photo }: Page) => {
   context.fillStyle = ink.rules;
   rule(context, left, TOP + 6, width, 3);
   context.fillStyle = ink.text;
-  centeredCaps(context, masthead.brand, left + width / 2, TOP + 58, 30);
+  centeredCaps(context, masthead.brand, [left + width / 2, TOP + 58], 30, width * 0.9);
   context.fillStyle = ink.rules;
   rule(context, left, TOP + 82, width, 3);
   const box: Box = { x: left, y: TOP + 104, width, height: PAGE_HEIGHT - BOTTOM - TOP - 104 };
@@ -66,23 +77,25 @@ const drawCover = ({ context, props, photo }: Page) => {
   context.restore();
   const lines = linesOf(cover.headline);
   const setFont = (fontSize: number) => serif(context, fontSize, 900);
-  const size = fitText(context, lines, 230 * cover.headlineSize, (width * 0.9) / SQUEEZE, setFont);
+  const lineGap = 0.92;
+  const tallest = (box.height * 0.55) / (0.72 + lineGap * Math.max(0, lines.length - 1));
+  const size = Math.min(
+    tallest,
+    fitText(context, lines, 230 * cover.headlineSize, (width * 0.9) / SQUEEZE, setFont),
+  );
   setFont(size);
   context.fillStyle = ink.coverText;
   context.textAlign = 'center';
   context.textBaseline = 'alphabetic';
-  const lineGap = 0.92;
   const blockHeight = size * 0.72 + size * lineGap * (lines.length - 1);
-  const firstBaseline = box.y + box.height * 0.7 - blockHeight / 2 + size * 0.72;
+  const firstBaseline = Math.min(
+    box.y + box.height * 0.7 - blockHeight / 2 + size * 0.72,
+    box.y + box.height - size * 0.3 - size * lineGap * (lines.length - 1),
+  );
   condensedLines(context, lines, { x: left, y: firstBaseline, width }, size, lineGap, SQUEEZE);
 };
 
-const storyHeader = (
-  context: Context,
-  props: ElevatorNewspaperProps,
-  left: number,
-  width: number,
-) => {
+const storyHeader = (context: Context, props: PageCopy, left: number, width: number) => {
   const { masthead, ink } = props;
   const center = left + width / 2;
   context.fillStyle = ink.text;
@@ -101,24 +114,23 @@ const storyHeader = (
   sans(context, 24, 600);
   spaced(context, 24, 0.18);
   context.textAlign = 'left';
-  context.fillText(masthead.edition, left, TOP + 172);
+  context.fillText(masthead.edition, left, TOP + 172, width * 0.58);
   context.textAlign = 'right';
-  context.fillText(masthead.date, left + width, TOP + 172);
+  context.fillText(masthead.date, left + width, TOP + 172, width * 0.38);
   spaced(context, 24, 0);
   context.fillStyle = ink.rules;
   rule(context, left, TOP + 194, width, 2);
 };
 
-const storyHeadline = (
-  context: Context,
-  props: ElevatorNewspaperProps,
-  left: number,
-  width: number,
-) => {
+const storyHeadline = (context: Context, props: PageCopy, left: number, width: number) => {
   const { story, ink } = props;
   const lines = linesOf(story.headline);
   const setFont = (fontSize: number) => serif(context, fontSize, 900);
-  const size = fitText(context, lines, 190 * story.headlineSize, width / SQUEEZE, setFont);
+  const tallest = STORY_HEADLINE_ROOM / (0.74 + 0.92 * Math.max(0, lines.length - 1));
+  const size = Math.min(
+    tallest,
+    fitText(context, lines, 190 * story.headlineSize, width / SQUEEZE, setFont),
+  );
   setFont(size);
   context.fillStyle = ink.text;
   context.textAlign = 'center';
@@ -126,13 +138,13 @@ const storyHeadline = (
   condensedLines(context, lines, { x: left, y: top, width }, size, 0.92, SQUEEZE);
   const bottom = top + size * 0.92 * (lines.length - 1) + size * 0.16;
   context.fillStyle = ink.accent;
-  centeredCaps(context, story.subhead, left + width / 2, bottom + 52, 22);
+  centeredCaps(context, story.subhead, [left + width / 2, bottom + 52], 22, width);
   context.fillStyle = ink.rules;
   rule(context, left, bottom + 82, width, 2);
   return bottom + 82;
 };
 
-const teaserColumn = (context: Context, props: ElevatorNewspaperProps, box: Box) => {
+const teaserColumn = (context: Context, props: PageCopy, box: Box) => {
   const { story, ink } = props;
   context.strokeStyle = ink.rules;
   context.lineWidth = 3;
@@ -193,12 +205,7 @@ const photoColumn = (context: Context, page: Page, box: Box) => {
   );
 };
 
-const storyFooter = (
-  context: Context,
-  props: ElevatorNewspaperProps,
-  left: number,
-  width: number,
-) => {
+const storyFooter = (context: Context, props: PageCopy, left: number, width: number) => {
   const { story, ink } = props;
   const y = PAGE_HEIGHT - BOTTOM - 40;
   context.fillStyle = ink.rules;
@@ -206,7 +213,7 @@ const storyFooter = (
   rule(context, left, y + 22, width, 5);
   context.fillStyle = ink.text;
   for (const slot of [0.17, 0.5, 0.83]) {
-    centeredCaps(context, story.footer, left + width * slot, y, 22);
+    centeredCaps(context, story.footer, [left + width * slot, y], 22, width * 0.28);
   }
   context.fillStyle = ink.accent;
   for (const slot of [1 / 3, 2 / 3]) {
@@ -245,7 +252,7 @@ export type PageSide = 'cover' | 'story';
 export const drawPage = (
   canvas: HTMLCanvasElement,
   side: PageSide,
-  props: ElevatorNewspaperProps,
+  props: PageCopy,
   photo: CanvasImageSource | null,
 ) => {
   const art = document.createElement('canvas');
@@ -264,6 +271,6 @@ export const drawPage = (
   } else {
     drawStory({ context, props, photo });
   }
-  target.filter = props.print.softness > 0 ? `blur(${props.print.softness * 2}px)` : 'none';
+  target.filter = props.softness > 0 ? `blur(${props.softness * 2}px)` : 'none';
   target.drawImage(art, 0, 0);
 };

@@ -21,6 +21,7 @@ const loadPageFonts = (): Promise<void> => {
         document.fonts.load(`700 40px "${sansFont}"`),
       ]),
     )
+    .catch(() => undefined)
     .then(() => {
       ready = true;
     });

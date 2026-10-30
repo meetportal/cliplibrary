@@ -2,48 +2,29 @@ import { defineControls } from '../../control-layout';
 import { MOTION } from '../../control-presets';
 import type { ElevatorNewspaperProps } from './elevator-newspaper';
 
-const LINES_HINT = 'Each line is a row';
-const FRAME_HINT = 'Frame number; the doors are fully open from about frame 36 to 128';
+const LINES_HINT = 'Each line is a row; long copy shrinks to fit';
+const FRAME_HINT = 'Frame number; the doors are fully open from about frame 37 to 128';
+const PHOTO_HINT = 'Leave empty, or use a link that fails to load, for a plain block';
 
 export const elevatorNewspaperControls = defineControls<ElevatorNewspaperProps>({
   sections: [
     {
-      title: 'Headlines',
+      title: 'Cover page',
       fields: [
         {
           path: 'cover.headline',
           label: 'Cover headline',
           hint: `Big type over the photo on the left page. ${LINES_HINT}`,
         },
-        {
-          path: 'story.headline',
-          label: 'Story headline',
-          hint: `Big type under the masthead on the right page. ${LINES_HINT}`,
-        },
-        { path: 'masthead.brand', label: 'Newspaper name', hint: 'Masthead on both pages' },
-        {
-          path: 'story.subhead',
-          label: 'Subhead',
-          hint: 'Spaced capitals under the story headline',
-        },
+        { path: 'cover.photo', label: 'Cover photo', hint: PHOTO_HINT },
       ],
       more: [
+        { path: 'cover.headlineSize', label: 'Cover headline size' },
         {
-          path: 'cover.headlineSize',
-          label: 'Cover headline size',
-          hint: 'Long lines shrink to fit',
+          path: 'cover.photoTint',
+          label: 'Photo tint strength',
+          hint: 'How strongly the tint darkens the middle of the photo; 0 turns it off',
         },
-        {
-          path: 'story.headlineSize',
-          label: 'Story headline size',
-          hint: 'Long lines shrink to fit',
-        },
-        {
-          path: 'masthead.edition',
-          label: 'Edition line',
-          hint: 'Left end of the row under the masthead',
-        },
-        { path: 'masthead.date', label: 'Date', hint: 'Right end of the row under the masthead' },
       ],
     },
     {
@@ -57,7 +38,7 @@ export const elevatorNewspaperControls = defineControls<ElevatorNewspaperProps>(
         {
           link: ['ink.text', 'ink.rules'],
           label: 'Text color',
-          hint: 'Masthead, headline, body copy, caption and every printed rule',
+          hint: 'Masthead, story headline, body copy, caption and every printed rule',
         },
         { path: 'ink.coverText', label: 'Secondary color', hint: 'Cover headline over the photo' },
       ],
@@ -76,23 +57,34 @@ export const elevatorNewspaperControls = defineControls<ElevatorNewspaperProps>(
     {
       title: 'Story page',
       fields: [
-        { path: 'story.photo', label: 'Story photo', hint: 'Leave empty for a plain block' },
+        {
+          path: 'story.headline',
+          label: 'Story headline',
+          hint: `Big type under the masthead on the right page. ${LINES_HINT}`,
+        },
+        {
+          path: 'story.subhead',
+          label: 'Subhead',
+          hint: 'Spaced capitals under the story headline',
+        },
+        { path: 'story.photo', label: 'Story photo', hint: PHOTO_HINT },
+      ],
+      more: [
+        { path: 'story.headlineSize', label: 'Story headline size' },
         {
           path: 'story.teaserTitle',
           label: 'Teaser title',
           hint: `Boxed title in the left column. ${LINES_HINT}`,
         },
-      ],
-      more: [
         {
           path: 'story.teaser',
           label: 'Teaser text',
-          hint: `Under the teaser title. ${LINES_HINT}`,
+          hint: 'Under the teaser title; each line is a row',
         },
         {
           path: 'story.caption',
           label: 'Photo caption',
-          hint: `Bold capitals under the photo. ${LINES_HINT}`,
+          hint: 'Bold capitals under the photo; each line is a row',
         },
         {
           path: 'story.footer',
@@ -102,26 +94,27 @@ export const elevatorNewspaperControls = defineControls<ElevatorNewspaperProps>(
       ],
     },
     {
-      title: 'Cover page',
+      title: 'Masthead',
       fields: [
-        {
-          path: 'cover.photo',
-          label: 'Cover photo',
-          hint: 'Fills the left page; leave empty for a plain block',
-        },
+        { path: 'masthead.brand', label: 'Newspaper name', hint: 'Top of both pages' },
+        { path: 'masthead.date', label: 'Date', hint: 'Right end of the row under the masthead' },
       ],
       more: [
         {
-          path: 'cover.photoTint',
-          label: 'Photo tint strength',
-          hint: 'How strongly the tint darkens the middle of the photo; 0 turns it off',
+          path: 'masthead.edition',
+          label: 'Edition line',
+          hint: 'Left end of the row under the masthead',
         },
       ],
     },
     {
       title: 'Camera',
       fields: [
-        { path: 'camera.zoom', label: 'Push-in', hint: 'How close the camera gets; 1 stays wide' },
+        {
+          path: 'camera.zoom',
+          label: 'Push-in',
+          hint: 'How close the camera gets; 1 stays wide apart from the slow creep',
+        },
         { path: 'camera.pushStart', label: 'Push-in starts', hint: FRAME_HINT },
         { path: 'camera.pullStart', label: 'Pull-out starts', hint: FRAME_HINT },
       ],
@@ -157,7 +150,7 @@ export const elevatorNewspaperControls = defineControls<ElevatorNewspaperProps>(
         {
           path: 'print.shading',
           label: 'Follow the paper light',
-          hint: 'Darkens the print where the filmed paper is in shade; 0 keeps it flat',
+          hint: "Darkens each page's print as the filmed light on it dims; 0 keeps it flat",
         },
         {
           path: 'print.softness',
