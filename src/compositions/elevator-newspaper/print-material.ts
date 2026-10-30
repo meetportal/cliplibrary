@@ -32,7 +32,7 @@ const FRAGMENT_BODY = `
 vec3 plate = texture2D(plateMap, vPlateUv).rgb;
 float brightest = max(plate.r, max(plate.g, plate.b));
 float tint = (brightest - min(plate.r, min(plate.g, plate.b))) / max(brightest, 0.001);
-float paper = (1.0 - smoothstep(0.12, 0.24, tint)) * smoothstep(0.06, 0.14, brightest);
+float paper = (1.0 - smoothstep(0.17, 0.27, tint)) * smoothstep(0.05, 0.12, brightest);
 diffuseColor.a *= paper;
 outgoingLight *= mix(1.0, clamp(brightest / paperWhite, 0.0, 1.15), shading);
 `;
@@ -55,7 +55,7 @@ export const createPrintMaterial = ({
     plateSize: { value: new THREE.Vector2(width, height) },
     stampShare: { value: stampShare },
     shading: { value: 1 },
-    paperWhite: { value: 0.8 },
+    paperWhite: { value: 0.74 },
   };
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);

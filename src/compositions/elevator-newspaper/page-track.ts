@@ -6,6 +6,7 @@ export type TrackedFrame = {
   doors: readonly [number, number];
   left: Quad;
   right: Quad;
+  steady: readonly [number, number];
 };
 
 const quad = (points: number[][]): Quad => {
@@ -20,6 +21,7 @@ const FRAMES: TrackedFrame[] = track.frames.map((frame) => ({
   doors: [frame.doors[0] ?? 0, frame.doors[1] ?? 0],
   left: quad(frame.left),
   right: quad(frame.right),
+  steady: [frame.steady[0] ?? 0, frame.steady[1] ?? 0],
 }));
 
 export const PLATE = {

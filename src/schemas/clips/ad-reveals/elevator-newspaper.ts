@@ -5,20 +5,21 @@ import type { ClipMeta } from '../../registry';
 
 const unit = (max = 1, step = 0.01) => zSlider({ min: 0, max, step });
 
-const frames = (max = 165) => zSlider({ min: 0, max });
+const frames = (max = 93) => zSlider({ min: 0, max });
 
 const size = () => zSlider({ min: 0.5, max: 1.5, step: 0.01 });
 
 export const elevatorNewspaperSchema = z.object({
   masthead: z.object({
     brand: z.string(),
-    edition: z.string(),
-    date: z.string(),
+    edition: zMultiline(),
   }),
   cover: z.object({
     headline: zMultiline(),
     headlineSize: size(),
     photo: zImage(),
+    photoFocus: unit(),
+    photoZoom: zSlider({ min: 1, max: 2, step: 0.01 }),
     photoTint: unit(),
   }),
   story: z.object({
@@ -27,22 +28,25 @@ export const elevatorNewspaperSchema = z.object({
     subhead: z.string(),
     teaserTitle: zMultiline(),
     teaser: zMultiline(),
+    sidebarTitle: zMultiline(),
+    sidebar: zMultiline(),
     photo: zImage(),
     caption: zMultiline(),
     footer: z.string(),
   }),
   ink: z.object({
     text: zColor(),
-    accent: zColor(),
+    band: zColor(),
+    bandText: zColor(),
     coverText: zColor(),
+    paper: zColor(),
     tint: zColor(),
-    rules: zColor(),
-    filler: zColor(),
   }),
   print: z.object({
     strength: unit(),
     shading: unit(),
     softness: unit(2, 0.05),
+    paperTint: unit(),
   }),
   camera: z.object({
     zoom: zSlider({ min: 1, max: 2.6, step: 0.01 }),
@@ -50,59 +54,72 @@ export const elevatorNewspaperSchema = z.object({
     focusX: zSlider({ min: 0, max: 1080 }),
     focusY: zSlider({ min: 0, max: 1920 }),
     pushStart: frames(),
-    pushFrames: zSlider({ min: 1, max: 120 }),
+    pushFrames: zSlider({ min: 1, max: 100 }),
     pullStart: frames(),
-    pullFrames: zSlider({ min: 1, max: 120 }),
+    pullFrames: zSlider({ min: 1, max: 100 }),
   }),
   motion: motionSchema,
 });
 
 export type ElevatorNewspaperProps = z.infer<typeof elevatorNewspaperSchema>;
 
+const BODY =
+  'Our first store opens its doors with a collection made to be worn every day, layered, stacked and passed on. ' +
+  'Come early for the opening rituals, the first pieces of the season and a small gift for the first guests. ' +
+  'Every ring is finished by hand in our studio and polished to a soft glow.';
+
+const SIDEBAR =
+  'Join us for the opening evening with music, champagne and the first look at the new collection. ' +
+  'Bring a friend and find the piece that feels like yours.';
+
 export const elevatorNewspaperDefaults: ElevatorNewspaperProps = {
   masthead: {
-    brand: 'MAREN & CO',
-    edition: 'THE OPENING ISSUE',
-    date: 'JUNE 12',
+    brand: 'MARIELLE',
+    edition: 'BREAKING\nNEWS',
   },
   cover: {
     headline: 'COMING\nSOON',
     headlineSize: 1,
-    photo: 'footage/elevator-newspaper/ring-hand.jpg',
-    photoTint: 0.18,
+    photo: 'footage/elevator-newspaper/cover-photo.jpg',
+    photoFocus: 0.95,
+    photoZoom: 1.25,
+    photoTint: 0,
   },
   story: {
     headline: 'NEW STORE',
     headlineSize: 1,
-    subhead: 'FINE JEWELRY FOR EVERYDAY RITUALS',
-    teaserTitle: "DON'T\nMISS OUT",
-    teaser: 'Doors open on\nJune 12 with gifts\nfor the first\nhundred guests.',
-    photo: 'footage/elevator-newspaper/boutique.jpg',
-    caption: 'OUR NEW HOME\nON RUE CLEMENT',
+    subhead: 'JEWELRY FOR THE AUTHENTIC SOULS',
+    teaserTitle: "DON'T MISS\nOUT",
+    teaser: BODY,
+    sidebarTitle: "YOU'RE\nINVITED",
+    sidebar: SIDEBAR,
+    photo: 'footage/elevator-newspaper/store-photo.jpg',
+    caption: 'DISCOVER YOUR\nAUTHENTIC SOUL',
     footer: 'STAY TUNED',
   },
   ink: {
-    text: '#1c1a1a',
-    accent: '#7a1f2b',
-    coverText: '#fbf4ec',
-    tint: '#3d0f1d',
-    rules: '#1c1a1a',
-    filler: '#8b8682',
+    text: '#23212b',
+    band: '#23212b',
+    bandText: '#f4f2f8',
+    coverText: '#ffffff',
+    paper: '#d9d3e6',
+    tint: '#2a1020',
   },
   print: {
-    strength: 0.94,
-    shading: 1,
-    softness: 0.6,
+    strength: 0.96,
+    shading: 0.7,
+    softness: 0.5,
+    paperTint: 0.55,
   },
   camera: {
-    zoom: 1.8,
-    creep: 0.08,
-    focusX: 548,
-    focusY: 870,
-    pushStart: 28,
-    pushFrames: 44,
-    pullStart: 106,
-    pullFrames: 28,
+    zoom: 1,
+    creep: 0.05,
+    focusX: 540,
+    focusY: 1000,
+    pushStart: 39,
+    pushFrames: 1,
+    pullStart: 76,
+    pullFrames: 1,
   },
   motion: defaultMotion({ exit: 'none', exitFrames: 0, float: 0 }),
 };
@@ -115,11 +132,11 @@ export const elevatorNewspaperMeta: ClipMeta = {
   id: 'elevator-newspaper',
   title: 'Elevator Newspaper',
   description:
-    'Elevator doors slide open on a woman hiding behind an open newspaper whose coming soon cover and new store page carry your own copy, the camera pushes in to read it, then eases out as the doors close.',
+    'Elevator doors slide open on a woman hiding behind an open tabloid, the shot cuts to a close-up of its coming soon cover and new store page printed with your own copy, then cuts back as the doors close.',
   category: 'ad-reveals',
   tags: ['footage', 'paper', 'reveal', 'headline', 'camera-move'],
   theme: 'light',
   source: 'src/compositions/scenes/ad-reveals/elevator-newspaper.tsx',
-  durationInFrames: 166,
-  posterFrame: 84,
+  durationInFrames: 94,
+  posterFrame: 58,
 };

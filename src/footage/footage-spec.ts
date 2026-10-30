@@ -9,6 +9,15 @@ type FootageStill = {
   publishWidth?: number;
 };
 
+type Corner = [number, number];
+
+type PageCorners = [Corner, Corner, Corner, Corner];
+
+export type FootageTracking = {
+  anchor: { frame: number; left: PageCorners; right: PageCorners };
+  doors?: { band: [number, number]; doorway: [number, number] };
+};
+
 type FootageShot = {
   name: string;
   model: string;
@@ -17,6 +26,7 @@ type FootageShot = {
   seconds: number;
   firstFrame: string;
   lastFrame?: string;
+  tracking: FootageTracking;
 };
 
 export type PlateSegment = {
@@ -24,13 +34,6 @@ export type PlateSegment = {
   from: number;
   to: number;
   step?: number;
-};
-
-export type FootageTracking = {
-  search: [number, number, number, number];
-  doorBand: [number, number];
-  doorway: [number, number];
-  foldBand: [number, number];
 };
 
 export type FootageSpec = {
@@ -43,5 +46,4 @@ export type FootageSpec = {
   stills: FootageStill[];
   shots: FootageShot[];
   plate: PlateSegment[];
-  tracking: FootageTracking;
 };

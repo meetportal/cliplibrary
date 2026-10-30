@@ -9,6 +9,8 @@ import { PLATE, trackedFrame } from './page-track';
 import type { PlateSource } from './plate-source';
 import { createPrintMaterial } from './print-material';
 
+const OVERSCAN = 1.008;
+
 const STAMP_SHARE = PLATE.stampRows / (PLATE.height + PLATE.stampRows);
 
 const plateGeometry = (): THREE.BufferGeometry => {
@@ -61,6 +63,7 @@ export const SyncedSpread = ({
   source: PlateSource;
 }) => {
   const gl = useThree((state) => state.gl);
+  const camera = useThree((state) => state.camera);
   gl.localClippingEnabled = true;
   const coverMap = usePageTexture('cover', props, readPhoto(props.cover.photo));
   const storyMap = usePageTexture('story', props, readPhoto(props.story.photo));
@@ -128,6 +131,10 @@ export const SyncedSpread = ({
     const tracked = trackedFrame(source.index ?? frame);
     placeGrid(coverGeometry, tracked.left, PLATE.width, PLATE.height);
     placeGrid(storyGeometry, tracked.right, PLATE.width, PLATE.height);
+    const [shiftX, shiftY] = tracked.steady;
+    camera.position.set(-shiftX, shiftY, 100);
+    camera.zoom = OVERSCAN;
+    camera.updateProjectionMatrix();
     const [left, right] = tracked.doors;
     planes[0]?.set(new THREE.Vector3(1, 0, 0), PLATE.width / 2 - left);
     planes[1]?.set(new THREE.Vector3(-1, 0, 0), right - PLATE.width / 2);

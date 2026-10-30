@@ -23,7 +23,7 @@ const stampFilter = (spec: FootageSpec): string => {
   return [`pad=iw:ih+${PLATE_STAMP.rows}:0:0:black`, ...boxes].join(',');
 };
 
-const plateFrameOrder = (spec: FootageSpec) =>
+export const plateFrameOrder = (spec: FootageSpec) =>
   spec.plate.flatMap((segment) =>
     segmentFrames(segment).map((frame) => ({ shot: segment.shot, frame })),
   );
