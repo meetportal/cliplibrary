@@ -3,6 +3,8 @@ import type { BillboardReaderProps } from './clips/ad-reveals/billboard-reader';
 import type { BurningPaperRevealProps } from './clips/ad-reveals/burning-paper-reveal';
 import type { CrumpledPaperRevealProps } from './clips/ad-reveals/crumpled-paper-reveal';
 import type { HelicopterUnveilProps } from './clips/ad-reveals/helicopter-unveil';
+import type { MailinfraDeliverabilityChargeProps } from './clips/ad-reveals/mailinfra-deliverability-charge';
+import type { MailinfraSpiderDropProps } from './clips/ad-reveals/mailinfra-spider-drop';
 import type { ProblemStrikeoutProps } from './clips/ad-reveals/problem-strikeout';
 import type { SpillRevealProps } from './clips/ad-reveals/spill-reveal';
 import type { ReliefBackdropProps } from './clips/backgrounds/relief-backdrop';
@@ -10,6 +12,7 @@ import type { AppIconRevealProps } from './clips/brand/app-icon-reveal';
 import type { BrandRevealProps } from './clips/brand/brand-reveal';
 import type { CtaEndCardProps } from './clips/brand/cta-end-card';
 import type { DotWordmarkRevealProps } from './clips/brand/dot-wordmark-reveal';
+import type { MailinfraInboxWebProps } from './clips/brand/mailinfra-inbox-web';
 import type { PuzzleSuccessProps } from './clips/brand/puzzle-success';
 import type { LaptopWipeRevealProps } from './clips/desk-scenes/laptop-wipe-reveal';
 import type { WebsiteFoundSpotlightProps } from './clips/desk-scenes/website-found-spotlight';
@@ -48,6 +51,7 @@ import type { WordStreamsProps } from './clips/kinetic-type/word-streams';
 import type { ColorPillsProps } from './clips/list-pickers/color-pills';
 import type { HeadingListProps } from './clips/list-pickers/heading-list';
 import type { ListPickersReelProps } from './clips/list-pickers/list-pickers-reel';
+import type { MailinfraDewStepsProps } from './clips/list-pickers/mailinfra-dew-steps';
 import type { MenuStackProps } from './clips/list-pickers/menu-stack';
 import type { MindMapProps } from './clips/list-pickers/mind-map';
 import type { PillFanProps } from './clips/list-pickers/pill-fan';
@@ -91,6 +95,7 @@ export interface ClipPropsMap {
   'pill-fan': PillFanProps;
   'menu-stack': MenuStackProps;
   'heading-list': HeadingListProps;
+  'mailinfra-dew-steps': MailinfraDewStepsProps;
   'year-dial': YearDialProps;
   'mind-map': MindMapProps;
   'color-pills': ColorPillsProps;
@@ -152,6 +157,7 @@ export interface ClipPropsMap {
   'dot-wordmark-reveal': DotWordmarkRevealProps;
   'cta-end-card': CtaEndCardProps;
   'puzzle-success': PuzzleSuccessProps;
+  'mailinfra-inbox-web': MailinfraInboxWebProps;
   'relief-backdrop': ReliefBackdropProps;
   'helicopter-unveil': HelicopterUnveilProps;
   'problem-strikeout': ProblemStrikeoutProps;
@@ -161,7 +167,9 @@ export interface ClipPropsMap {
   'billboard-reader': BillboardReaderProps;
   'incoming-call-teaser': IncomingCallTeaserProps;
   'burning-paper-reveal': BurningPaperRevealProps;
+  'mailinfra-spider-drop': MailinfraSpiderDropProps;
   'scene-transition': SceneTransitionProps;
+  'mailinfra-deliverability-charge': MailinfraDeliverabilityChargeProps;
 }
 
 export type ClipId = keyof ClipPropsMap;

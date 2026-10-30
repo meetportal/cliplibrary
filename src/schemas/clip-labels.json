@@ -6156,5 +6156,421 @@
       "calligraphy",
       "rajasthani"
     ]
+  },
+  "mailinfra-dew-steps": {
+    "summary": "A landscape journey along one dewy silk strand on a deep indigo backdrop with soft violet and blue bokeh. A small spider walks in from a corner web under the title \"From zero to sending in 3 steps\" (\"sending\" in gold), then a whip camera with sideways motion blur races from drop to drop. Each big glossy blue-violet dew drop hangs from the strand holding a swinging extruded gold step number (01, 02, 03) and a tiny icon, with the step title and a one-line description beside it. The camera pulls back to the whole strand with the three drops glinting in turn above a Mailinfra lockup: envelope logo, wordmark, \"Pay after 30 days\" and a mailinfra.co pill.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Fade in on indigo bokeh; the silk strand draws across from the left as a corner web spins on"
+      },
+      {
+        "at": 0.4,
+        "what": "\"From zero to sending in 3 steps\" rises under the strand while a small spider walks along it"
+      },
+      {
+        "at": 2.0,
+        "what": "Whip pan with motion blur lands on drop 01, which swings and settles; \"Connect your lists\" rises beside it and a side web draws on"
+      },
+      {
+        "at": 4.6,
+        "what": "Whip to drop 02 with a smaller twin drop; \"Configure & send\" rises on the left"
+      },
+      {
+        "at": 7.0,
+        "what": "Longer whip to drop 03; a row of dew beads glints along the strand beside \"Pay only if happy\""
+      },
+      {
+        "at": 9.8,
+        "what": "Camera pulls back to show the whole strand with all three drops glinting in sequence"
+      },
+      {
+        "at": 10.3,
+        "what": "Lockup rises below: envelope logo, Mailinfra wordmark, \"Pay after 30 days\" with gold highlight and a mailinfra.co pill, then a fade out"
+      }
+    ],
+    "visuals": [
+      "deep indigo gradient backdrop with blurred violet and blue bokeh",
+      "pale cream silk strand with tiny dew beads",
+      "large glossy teardrop dew drops with white highlights",
+      "extruded gold step numbers inside the drops",
+      "small line icons: list, paper plane, check",
+      "corner and side spider webs",
+      "small spider walking on the strand",
+      "envelope logo tile with blue to violet gradient",
+      "rounded url pill"
+    ],
+    "motion": [
+      "whip pans with horizontal motion blur",
+      "drops swing and settle like pendulums",
+      "webs drawing on",
+      "spider walk cycle",
+      "text rise and fade",
+      "camera pull back",
+      "sequential glints and sparkles"
+    ],
+    "mood": ["sleek", "magical", "premium", "calm", "nocturnal"],
+    "roles": ["feature", "closer", "cta"],
+    "useCases": [
+      "three step onboarding explainer",
+      "how it works section of a SaaS promo",
+      "cold email infrastructure ad",
+      "product setup walkthrough teaser",
+      "pricing promise end card"
+    ],
+    "editable": [
+      "opening title and highlighted word",
+      "steps list with number, title, description, icon, extra detail and text side",
+      "brand name, tagline, highlighted words and web address",
+      "primary, secondary, accent, text and background colours",
+      "drop size, swing, tint strength, glow and lens magnification",
+      "number size and extrusion depth",
+      "strand height, sag, beads and web visibility",
+      "spider on or off, size and walk distance",
+      "opening, whip, stop and pull-back lengths, motion blur and camera drift",
+      "bokeh count, size, blur, brightness and parallax"
+    ],
+    "palette": ["#16123c", "#05041a", "#4545ff", "#7c3aed", "#ffcf3a", "#f4ecd8"],
+    "keywords": [
+      "steps",
+      "how it works",
+      "onboarding",
+      "dew drop",
+      "spider web",
+      "silk",
+      "whip pan",
+      "motion blur",
+      "gold numbers",
+      "numbered list",
+      "mailinfra",
+      "cold email",
+      "saas explainer",
+      "bokeh",
+      "end card"
+    ]
+  },
+  "mailinfra-inbox-web": {
+    "summary": "A square brand spot for cold email infrastructure on a black-violet backdrop with soft blue bokeh: a small dark spider with a gold envelope mark whips down on a silk thread with motion blur and a bounce, runs down and spins a cream orb web (frame strands, spokes, then a capture spiral with dew glints while it holds at the hub). Envelopes fly in from the sides with speed streaks and stick to the web, each getting a glowing blue inbox badge with a check, while every junction lights violet and a pill counts 0 to 100 inboxes under the line \"Scale across inboxes, not limits\". A whip zoom into the hub lands on an extruded gold 3D \"Mailinfra\" wordmark swinging from the hub thread, with \"Send now, pay later.\" and a mailinfra.co pill held for about three seconds.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "A spider whips down on a silk thread from the top of a dark violet bokeh backdrop with vertical motion blur, overshoots and bounces to a stop"
+      },
+      {
+        "at": 0.8,
+        "what": "It runs down to the bottom of the frame; frame strands draw outward both ways and anchor threads shoot off as the camera pulls back"
+      },
+      {
+        "at": 2.7,
+        "what": "The spider turns and walks back up to the center while the spokes draw out from the hub one by one and the hub mesh fills in"
+      },
+      {
+        "at": 4.3,
+        "what": "The capture spiral winds outward around the spider at the hub; dew glints appear along the silk"
+      },
+      {
+        "at": 5.4,
+        "what": "Headline \"Scale across inboxes, not limits\" and a counter pill appear; envelopes fly in from the sides, stick to junctions and get checked blue inbox badges"
+      },
+      {
+        "at": 6.2,
+        "what": "Every junction lights violet in a wave from the hub outward while the pill counts up to 100 inboxes"
+      },
+      {
+        "at": 9.2,
+        "what": "Headline and pill fade as a whip zoom with motion blur dives into the hub, dimming and softening the web"
+      },
+      {
+        "at": 9.7,
+        "what": "An extruded gold \"Mailinfra\" wordmark swings in on a thread below the spider and settles; \"Send now, pay later.\" and a mailinfra.co pill fade in and a glint sweeps the gold"
+      },
+      {
+        "at": 11.0,
+        "what": "The full lockup holds while the web sways softly, then the clip fades out"
+      }
+    ],
+    "visuals": [
+      "square 1:1 frame",
+      "black-violet backdrop with blurred blue and violet bokeh",
+      "pale cream spider web drawn as thin silk lines",
+      "small dark spider with a gold envelope mark",
+      "white envelopes with violet outlines stuck in the web",
+      "glowing blue inbox badges with white checks",
+      "violet glowing web junctions",
+      "counter pill with a blue outline",
+      "extruded gold 3D wordmark hanging on a thread",
+      "website pill under a tagline"
+    ],
+    "motion": [
+      "vertical whip pan with motion blur",
+      "line draw-on web weaving",
+      "slow camera pull back",
+      "envelopes flying in with speed streaks",
+      "staggered glow wave and count-up",
+      "whip zoom with blur",
+      "pendulum swing that settles",
+      "glint sweep across gold text"
+    ],
+    "mood": ["dark", "techy", "playful", "premium", "confident"],
+    "roles": ["opener", "proof", "closer", "cta"],
+    "useCases": [
+      "cold email infrastructure promo",
+      "lead gen agency or outbound tool ad",
+      "SaaS brand outro with tagline and URL",
+      "scale or network effect explainer",
+      "Instagram or LinkedIn square post"
+    ],
+    "editable": [
+      "headline, highlighted words, counter start, target and label",
+      "wordmark, tagline and website pill",
+      "web spokes, spiral turns, frame corners, size, irregularity and shape seed",
+      "silk thickness and dew glints",
+      "envelope count, size, stagger, fly-in length and streak",
+      "inbox badge size and glow",
+      "spider on or off and its size",
+      "primary, secondary, accent, text and background colors",
+      "camera zooms, follow, drift, motion blur and end-card web fade",
+      "drop, weaving, hold and zoom timing",
+      "wordmark size, 3D depth, swing angle, period and settle, shine, thread length, hub height and text spacing",
+      "headline and counter offsets"
+    ],
+    "palette": ["#120a26", "#030208", "#4040ff", "#7c3aed", "#ffd700", "#f4ecd8"],
+    "keywords": [
+      "spider web",
+      "orb web",
+      "spider",
+      "inbox",
+      "email",
+      "cold email",
+      "envelope",
+      "counter",
+      "scale",
+      "network",
+      "gold 3d text",
+      "wordmark",
+      "logo reveal",
+      "end card",
+      "whip zoom",
+      "bokeh",
+      "mailinfra"
+    ]
+  },
+  "mailinfra-spider-drop": {
+    "summary": "A vertical cold email ad on a dark indigo backdrop with soft violet and blue bokeh. A purple spider lowers in from the top on a cream silk thread, holding a sealed cream envelope with a violet wax seal, under the headline Where does your cold email land? with land in gold. It drops and the camera whips down with motion blur past three dusty cobwebbed signs hanging from beams, Promotions in slate, Spam in dim red and Blocked in grey, both crossed out with an X of silk, each swinging as the spider passes. It lowers the envelope into a glowing electric blue Inbox tray, the spider climbs back out of frame, a check badge settles on the corner, a gold extruded 99.9% swings in with inbox placement under it and a Mailinfra end card settles with Pay after 30 days. No credit card. and a mailinfra.co pill.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Indigo bokeh backdrop with cobwebs in the top corners; the spider lowers in from above holding the sealed envelope"
+      },
+      {
+        "at": 0.4,
+        "what": "Headline Where does your cold email land? rises in under the spider, land in gold"
+      },
+      {
+        "at": 2.0,
+        "what": "Headline lifts away and the spider drops; the camera whips down with motion blur"
+      },
+      {
+        "at": 3.5,
+        "what": "The slate Promotions sign passes on its beam and swings after the spider brushes it"
+      },
+      {
+        "at": 4.9,
+        "what": "The dim red Spam sign, crossed out with an X of silk, passes and swings"
+      },
+      {
+        "at": 6.2,
+        "what": "The grey Blocked sign, crossed out with silk, passes and swings"
+      },
+      {
+        "at": 6.5,
+        "what": "A glowing blue Inbox tray rises into view and the camera settles as the spider lowers the envelope into it"
+      },
+      {
+        "at": 8.2,
+        "what": "The envelope slides into the tray and the spider climbs back up its thread out of frame"
+      },
+      {
+        "at": 8.8,
+        "what": "A blue check badge settles on the tray corner and its tick draws"
+      },
+      {
+        "at": 9.1,
+        "what": "A big gold extruded 99.9% swings down from above with inbox placement under it"
+      },
+      {
+        "at": 9.7,
+        "what": "End card fades in: envelope logo tile, Mailinfra, Pay after 30 days. No credit card. and a mailinfra.co pill"
+      }
+    ],
+    "visuals": [
+      "purple spider on a cream silk thread",
+      "sealed cream envelope with violet wax seal",
+      "dark indigo backdrop with violet and blue bokeh",
+      "dusty cobwebbed 3D signs hanging from beams",
+      "Promotions, Spam and Blocked labels",
+      "silk X strands crossing out Spam and Blocked",
+      "glowing electric blue Inbox tray",
+      "blue check badge",
+      "gold extruded 99.9% number",
+      "envelope logo tile and blue link pill"
+    ],
+    "motion": [
+      "vertical camera whip with motion blur",
+      "spider drop on silk",
+      "signs swinging when brushed",
+      "envelope sliding into a tray",
+      "soft badge settle",
+      "big number swinging in and settling",
+      "spider climbing out of frame",
+      "drifting bokeh parallax",
+      "end card fade up"
+    ],
+    "mood": ["playful", "dark", "spooky", "confident", "techy"],
+    "roles": ["opener", "proof", "cta", "closer"],
+    "useCases": [
+      "cold email infrastructure ad",
+      "email deliverability promo",
+      "inbox placement stat reveal",
+      "lead gen agency outreach ad",
+      "halloween themed SaaS ad",
+      "instagram reel or tiktok ad",
+      "brand end card"
+    ],
+    "editable": [
+      "opening headline and highlighted word",
+      "floor signs: label, crossed out toggle and color per sign",
+      "time per floor and landing timing",
+      "show or hide the spider",
+      "motion blur samples and length",
+      "inbox tray label and color",
+      "check badge",
+      "big number and caption",
+      "end card brand, tagline and link",
+      "primary, secondary, accent, text and background colors",
+      "bokeh lights",
+      "transparent background"
+    ],
+    "palette": ["#120e2e", "#4040ff", "#7c3aed", "#ffd700", "#f3ead6", "#6e3042"],
+    "keywords": [
+      "spider",
+      "spider web",
+      "cobweb",
+      "silk",
+      "envelope",
+      "email",
+      "cold email",
+      "inbox",
+      "spam",
+      "promotions",
+      "blocked",
+      "deliverability",
+      "inbox placement",
+      "99.9%",
+      "mailinfra",
+      "camera whip",
+      "motion blur",
+      "drop",
+      "halloween",
+      "saas ad",
+      "vertical",
+      "end card"
+    ]
+  },
+  "mailinfra-deliverability-charge": {
+    "summary": "A vertical dark ad for mailinfra.co: under a small brand line and the spaced headline DELIVERABILITY, a tall envelope-shaped inbox outline glows spam red. Five slim plugs with yellow rings, labeled SPF, DKIM, DMARC, Warm-up and Dedicated IPs, rise from below and plug into its sides and base, glowing envelope sparks run up the wires, the glow shifts to electric blue while a blue-violet liquid fills and the inbox rate counts to 99.9%, rings pulse out and a white \"Landed in the inbox\" badge rises. The cables back out and drop away while the inbox stays charged, then everything fades out.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Empty red-glowing envelope inbox under the DELIVERABILITY headline, counter at 0.0% INBOX RATE, the mailinfra.co brand line fades in"
+      },
+      {
+        "at": 0.6,
+        "what": "Five labeled cables rise from below the frame one after another and sway as they climb"
+      },
+      {
+        "at": 2.0,
+        "what": "Plugs seat into the sides and base with a small flash, envelope sparks start running up the wires"
+      },
+      {
+        "at": 3.3,
+        "what": "Glow and liquid turn from spam red to electric blue and violet while the rate counts up"
+      },
+      {
+        "at": 6.2,
+        "what": "Counter lands on 99.9%, rings pulse out and the Landed in the inbox badge rises above"
+      },
+      {
+        "at": 7.6,
+        "what": "Cables back out of their sockets and drop out of the frame, the inbox stays charged and blue"
+      },
+      {
+        "at": 9.2,
+        "what": "The whole frame fades out gently on the charged inbox, badge and brand line"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "near-black navy backdrop",
+      "brand line with an envelope tile",
+      "glowing envelope-shaped inbox outline with a round mail seal",
+      "spaced glowing headline",
+      "labeled pill tags on slim plugs with yellow rings",
+      "yellow envelope sparks on thin wires",
+      "blue-violet liquid with a wave and bubbles",
+      "white check badge"
+    ],
+    "motion": [
+      "cables rise and plug in",
+      "sparks travel along wires",
+      "color shift from red to blue",
+      "liquid fill with rising bubbles",
+      "percentage count-up",
+      "pulse rings",
+      "cables back out and drop",
+      "fade out"
+    ],
+    "mood": ["techy", "confident", "energetic", "satisfying"],
+    "roles": ["feature", "proof", "closer"],
+    "useCases": [
+      "cold email infrastructure ad",
+      "email deliverability feature promo",
+      "inbox placement rate stat reveal",
+      "SaaS setup checklist story",
+      "instagram or tiktok story ad"
+    ],
+    "editable": [
+      "headline, brand line and badge text",
+      "starting and final number, decimals, suffix and caption",
+      "five cable labels and which cables show",
+      "spam and charged glow colors",
+      "liquid, spark, plug and wire colors",
+      "inbox size, position, corners and flap",
+      "spark shape, count and speed",
+      "plug-in, full and unplug timing",
+      "optional drain back to spam at the end"
+    ],
+    "palette": ["#0b0b18", "#ff5a36", "#4048ff", "#7c3aed", "#ffd700", "#f4f5ff"],
+    "keywords": [
+      "deliverability",
+      "inbox rate",
+      "email",
+      "cold email",
+      "mailinfra",
+      "charging",
+      "battery",
+      "cables",
+      "plug in",
+      "spf",
+      "dkim",
+      "dmarc",
+      "warm-up",
+      "dedicated ip",
+      "percentage counter",
+      "glow",
+      "envelope",
+      "outbound",
+      "lead gen"
+    ]
   }
 }

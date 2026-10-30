@@ -4,6 +4,8 @@ import { billboardReaderScene } from './billboard-reader';
 import { burningPaperRevealScene } from './burning-paper-reveal';
 import { crumpledPaperRevealScene } from './crumpled-paper-reveal';
 import { helicopterUnveilScene } from './helicopter-unveil';
+import { mailinfraDeliverabilityChargeScene } from './mailinfra-deliverability-charge';
+import { mailinfraSpiderDropScene } from './mailinfra-spider-drop';
 import { problemStrikeoutScene } from './problem-strikeout';
 import { spillRevealScene } from './spill-reveal';
 
@@ -15,4 +17,6 @@ export const adRevealsScenes: SceneModule[] = [
   batteryChargeSuccessScene,
   billboardReaderScene,
   burningPaperRevealScene,
+  mailinfraSpiderDropScene,
+  mailinfraDeliverabilityChargeScene,
 ];
