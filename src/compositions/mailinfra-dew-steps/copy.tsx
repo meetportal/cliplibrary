@@ -63,7 +63,7 @@ export const StepCopy = ({
           ? stop.screenX + drop.size + layout.textGap
           : stop.screenX - drop.size - layout.textGap - layout.textWidth;
         const align = right ? 'left' : 'right';
-        const start = (stop.arrive - 8) / speed;
+        const start = (stop.arrive - 4) / speed;
         const end = stop.nextLeave / speed - 15;
         return (
           <div

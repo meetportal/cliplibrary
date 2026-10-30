@@ -26,18 +26,23 @@ const endGlint = (frame: number, plan: DewPlan, pull: number, index: number): nu
   return glint;
 };
 
+const webFade = (frame: number, plan: DewPlan, pull: number): number =>
+  1 - tween(frame, [plan.pullStart, plan.pullStart + pull * 0.6], [0, 1], smooth);
+
 const SideWeb = ({
   stop,
   frame,
   props,
+  fade,
 }: {
   stop: DewStop;
   frame: number;
   props: MailinfraDewStepsProps;
+  fade: number;
 }) => {
   const right = stop.side === 'right';
   const hubX = stop.cameraX - FRAME_WIDTH / 2 + (right ? 70 : FRAME_WIDTH - 70);
-  const draw = tween(frame, [stop.arrive - 10, stop.arrive + 56], [0, 1], smooth);
+  const draw = tween(frame, [stop.arrive - 10, stop.arrive + 30], [0, 1], smooth);
   return (
     <OrbWeb
       hubX={hubX}
@@ -47,7 +52,7 @@ const SideWeb = ({
       to={right ? 88 : 172}
       draw={draw}
       color={props.silk.color}
-      opacity={props.silk.webOpacity}
+      opacity={props.silk.webOpacity * fade}
     />
   );
 };
@@ -84,7 +89,14 @@ const StopDrops = ({
     Math.sin(frame / 31 + stop.index) * motion.float * 26;
   return (
     <g>
-      {step.extra === 'side-web' ? <SideWeb stop={stop} frame={frame} props={props} /> : null}
+      {step.extra === 'side-web' ? (
+        <SideWeb
+          stop={stop}
+          frame={frame}
+          props={props}
+          fade={webFade(frame, plan, timing.pullBackFrames)}
+        />
+      ) : null}
       {step.extra === 'dew-beads' ? (
         <BeadRow
           x={stop.dropX}
@@ -146,14 +158,14 @@ export const World = ({
   id: string;
 }) => {
   const { intro, silk, spider, timing } = props;
-  const walkEnd = timing.introFrames + 16;
+  const walkEnd = Math.max(20, timing.introFrames - 10);
   const spiderX = tween(frame, [4, walkEnd], [SPIDER_START, spider.walkTo], smooth);
   const walking = Math.min(
     1,
     Math.abs(spiderX - tween(frame - 1, [4, walkEnd], [SPIDER_START, spider.walkTo], smooth)) / 3,
   );
   const stride = (spiderX - SPIDER_START) / (13 * spider.size);
-  const webDraw = tween(frame, [4, 70], [0, 1], smooth);
+  const webDraw = tween(frame, [4, Math.max(24, timing.introFrames - 8)], [0, 1], smooth);
   const transform = `translate(${FRAME_WIDTH / 2} ${FRAME_HEIGHT / 2}) scale(${camera.zoom}) translate(${-camera.x} ${-camera.y})`;
   return (
     <svg
@@ -186,7 +198,7 @@ export const World = ({
               to={92}
               draw={webDraw}
               color={silk.color}
-              opacity={silk.webOpacity}
+              opacity={silk.webOpacity * webFade(frame, plan, timing.pullBackFrames)}
             />
           ) : null}
           <Strand frame={frame} props={props} plan={plan} clipId={`${id}-front`} />

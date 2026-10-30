@@ -8,6 +8,7 @@ const CENTER_X = FRAME_WIDTH / 2;
 const CENTER_Y = FRAME_HEIGHT / 2;
 const END_HOLD = 56;
 const MIN_STOP = 24;
+const MIN_WHIP = 8;
 
 const whipEase = Easing.bezier(0.6, 0, 0.14, 1);
 
@@ -46,27 +47,35 @@ export const planOf = (props: MailinfraDewStepsProps, sceneDuration: number): De
   const firstScreenX =
     steps[0]?.textSide === 'left' ? FRAME_WIDTH - layout.dropInset : layout.dropInset;
   const firstDrop = layout.whipDistance + firstScreenX;
-  let previousCamera = CENTER_X;
-  const stops = steps.map((step, index) => {
-    const leave = timing.introFrames + index * (whip + stop);
+  const placed = steps.map((step, index) => {
     const screenX = step.textSide === 'left' ? FRAME_WIDTH - layout.dropInset : layout.dropInset;
     const dropX = firstDrop + index * layout.whipDistance;
-    const cameraX = dropX + CENTER_X - screenX;
-    const direction = Math.sign(cameraX - previousCamera) || 1;
-    previousCamera = cameraX;
+    return { step, index, screenX, dropX, cameraX: dropX + CENTER_X - screenX };
+  });
+  const distances = placed.map((item, index) =>
+    Math.abs(item.cameraX - (placed[index - 1]?.cameraX ?? CENTER_X)),
+  );
+  const meanDistance = distances.reduce((sum, value) => sum + value, 0) / Math.max(1, count) || 1;
+  let clock = timing.introFrames;
+  const stops = placed.map((item, index) => {
+    const leave = clock;
+    const length = Math.max(MIN_WHIP, (whip * (distances[index] ?? meanDistance)) / meanDistance);
+    const arrive = leave + length;
+    clock = arrive + stop;
+    const previous = placed[index - 1]?.cameraX ?? CENTER_X;
     return {
       index,
       leave,
-      arrive: leave + whip,
-      nextLeave: timing.introFrames + (index + 1) * (whip + stop),
-      dropX,
-      screenX,
-      cameraX,
-      side: step.textSide,
-      direction,
+      arrive,
+      nextLeave: clock,
+      dropX: item.dropX,
+      screenX: item.screenX,
+      cameraX: item.cameraX,
+      side: item.step.textSide,
+      direction: Math.sign(item.cameraX - previous) || 1,
     };
   });
-  const pullStart = timing.introFrames + count * (whip + stop);
+  const pullStart = clock;
   const pullEnd = pullStart + timing.pullBackFrames;
   const lastDrop = firstDrop + (count - 1) * layout.whipDistance;
   const span = lastDrop - firstDrop + drop.size * 2 + 260;
@@ -129,8 +138,8 @@ export const cameraAt = (frame: number, plan: DewPlan, drift: number): Camera =>
   const camera = baseCamera(frame, plan);
   const settleOut = 1 - 0.05 * tween(frame, [plan.pullStart, plan.endFrame], [0, 1], (t) => t);
   return {
-    x: camera.x + (Math.sin(frame / 110) * 16 * drift) / camera.zoom,
-    y: camera.y + (Math.cos(frame / 140) * 8 * drift) / camera.zoom,
+    x: camera.x + (Math.sin(frame / 70) * 40 * drift) / camera.zoom,
+    y: camera.y + (Math.cos(frame / 90) * 20 * drift) / camera.zoom,
     zoom: camera.zoom * settleOut * (1 + Math.sin(frame / 160) * 0.006 * drift),
   };
 };

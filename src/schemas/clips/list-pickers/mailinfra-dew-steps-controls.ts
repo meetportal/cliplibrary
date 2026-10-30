@@ -43,7 +43,7 @@ export const mailinfraDewStepsControls = defineControls<MailinfraDewStepsProps>(
         {
           link: ['number.gold', 'look.accent'],
           label: 'Primary color',
-          hint: 'The gold step numbers and the highlighted words in the title and tagline',
+          hint: 'The gold step numbers, their darker extruded sides, and the highlighted words in the title and tagline',
         },
         {
           link: ['drop.tint', 'bokeh.blue', 'endCard.markFrom'],
@@ -67,11 +67,10 @@ export const mailinfraDewStepsControls = defineControls<MailinfraDewStepsProps>(
         },
       ],
       more: [
-        { path: 'number.gold', label: 'Number gold', hint: 'Front face of the step numbers' },
         {
-          path: 'number.deep',
-          label: 'Number depth color',
-          hint: 'The dark gold of the extruded sides behind each number',
+          path: 'number.gold',
+          label: 'Number gold',
+          hint: 'Front face of the step numbers. The extruded sides follow as a darker shade',
         },
         { ...LOOK.accent, label: 'Highlighted word color' },
         { path: 'drop.tint', label: 'Drop tint' },
@@ -134,13 +133,13 @@ export const mailinfraDewStepsControls = defineControls<MailinfraDewStepsProps>(
       title: 'Dew drops',
       fields: [
         { path: 'drop.size', label: 'Drop size', hint: 'Radius of the big drops, in pixels' },
-      ],
-      more: [
         {
           path: 'drop.swing',
           label: 'Swing',
           hint: 'How far each drop swings, in degrees, as the camera lands on it. 0 keeps it still',
         },
+      ],
+      more: [
         {
           path: 'drop.clarity',
           label: 'Tint strength',
@@ -160,7 +159,7 @@ export const mailinfraDewStepsControls = defineControls<MailinfraDewStepsProps>(
         {
           path: 'number.size',
           label: 'Number size',
-          hint: 'Share of the drop size',
+          hint: 'Height of the number as a share of the drop radius',
         },
         {
           path: 'number.depth',
@@ -171,8 +170,9 @@ export const mailinfraDewStepsControls = defineControls<MailinfraDewStepsProps>(
     },
     {
       title: 'Silk and spider',
-      fields: [{ path: 'intro.showSpider', label: 'Show spider' }],
+      fields: [],
       more: [
+        { path: 'intro.showSpider', label: 'Show spider' },
         {
           path: 'intro.showWeb',
           label: 'Show corner web',
@@ -226,7 +226,7 @@ export const mailinfraDewStepsControls = defineControls<MailinfraDewStepsProps>(
         {
           path: 'timing.whipFrames',
           label: 'Whip length',
-          hint: `${FRAMES}, for each camera move between drops`,
+          hint: `${FRAMES}, for an average move. Longer moves get more frames so every whip runs at the same speed`,
         },
         {
           path: 'timing.pullBackFrames',
@@ -241,12 +241,12 @@ export const mailinfraDewStepsControls = defineControls<MailinfraDewStepsProps>(
         {
           path: 'timing.cameraDrift',
           label: 'Camera drift',
-          hint: 'Slow wander while the camera rests',
+          hint: 'Slow, subtle wander of the camera while it rests. 0 holds it still',
         },
         {
           path: 'layout.whipDistance',
           label: 'Distance between drops',
-          hint: 'Along the strand, in pixels. Longer distances make faster whips',
+          hint: 'Along the strand, in pixels. Every whip keeps the same speed; wider spacing makes all of them faster',
         },
         {
           ...MOTION.speed,
@@ -294,7 +294,7 @@ export const mailinfraDewStepsControls = defineControls<MailinfraDewStepsProps>(
         {
           path: 'bokeh.parallax',
           label: 'Light parallax',
-          hint: 'How much the lights slide with the camera. 0 keeps them still',
+          hint: 'How much the lights slide with the camera. 0 stops them sliding with the camera; they still drift slowly',
         },
         { ...LOOK.spotlight, label: 'Center glow' },
         LOOK.grain,

@@ -1,7 +1,7 @@
 import type { MailinfraDewStepsProps } from '@/schemas';
 import { displayFont } from '../promo/fonts';
 import { StepGlyph } from './glyphs';
-import { EASED_STOPS, lighten, mix, sparklePath } from './paint';
+import { depthShade, EASED_STOPS, lighten, mix, sparklePath } from './paint';
 
 type Step = MailinfraDewStepsProps['steps'][number];
 
@@ -40,6 +40,7 @@ const GoldNumber = ({
   radius: number;
 }) => {
   const size = radius * number.size;
+  const deep = depthShade(number.gold);
   const half = size * 0.36;
   const depth = Math.round(number.depth * (radius / 190));
   const text = {
@@ -66,8 +67,8 @@ const GoldNumber = ({
         >
           <stop offset="0" stopColor={lighten(number.gold, 0.6)} />
           <stop offset="0.42" stopColor={number.gold} />
-          <stop offset="0.56" stopColor={mix(number.gold, number.deep, 0.18)} />
-          <stop offset="1" stopColor={mix(number.gold, number.deep, 0.38)} />
+          <stop offset="0.56" stopColor={mix(number.gold, deep, 0.18)} />
+          <stop offset="1" stopColor={mix(number.gold, deep, 0.38)} />
         </linearGradient>
         <linearGradient
           id={`${id}-sweep`}
@@ -88,7 +89,7 @@ const GoldNumber = ({
           {...text}
           x={layer * 0.42}
           y={half + layer * 0.9}
-          fill={mix(number.deep, number.gold, 0.2 + 0.45 * (1 - layer / Math.max(1, depth)))}
+          fill={mix(deep, number.gold, 0.2 + 0.45 * (1 - layer / Math.max(1, depth)))}
         >
           {look.label}
         </text>

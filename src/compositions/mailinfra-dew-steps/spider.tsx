@@ -20,8 +20,8 @@ export const Spider = ({
   id: string;
 }) => {
   const s = spider.size * 1.8;
-  const limb = mix(spider.color, spider.sheen, 0.45);
-  const rim = { stroke: spider.sheen, strokeOpacity: 0.55, strokeWidth: 0.8 * s };
+  const limb = mix(spider.color, spider.sheen, 0.6);
+  const rim = { stroke: spider.sheen, strokeOpacity: 0.9, strokeWidth: 0.9 * s };
   const bob = Math.sin(stride * 2) * 1.2 * walking;
   const legs = (far: boolean) =>
     LEG_ROOTS.map((root, index) => {
@@ -75,7 +75,7 @@ export const Spider = ({
         rx={6 * s}
         ry={2.4 * s}
         fill={lighten(spider.sheen, 0.5)}
-        fillOpacity={0.45}
+        fillOpacity={0.7}
       />
       <g fill="none" stroke={limb} strokeLinecap="round">
         {legs(false).map((leg) => (

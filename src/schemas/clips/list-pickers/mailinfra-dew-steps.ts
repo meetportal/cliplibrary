@@ -52,7 +52,6 @@ export const mailinfraDewStepsSchema = z.object({
   }),
   number: z.object({
     gold: zColor(),
-    deep: zColor(),
     size: zSlider({ min: 0.4, max: 1.4, step: 0.01 }),
     depth: zSlider({ min: 0, max: 30 }),
     iconColor: zColor(),
@@ -165,7 +164,6 @@ export const mailinfraDewStepsDefaults: MailinfraDewStepsProps = {
   },
   number: {
     gold: '#ffcf3a',
-    deep: '#6b3f00',
     size: 0.92,
     depth: 12,
     iconColor: '#f4ecd8',

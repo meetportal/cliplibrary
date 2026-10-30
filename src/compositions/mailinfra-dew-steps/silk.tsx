@@ -102,7 +102,7 @@ export const Strand = ({
               cx={bead.x - bead.r * 0.35}
               cy={y - bead.r * 0.35}
               r={bead.r * 0.32}
-              fill="#ffffff"
+              fill={drop.shine}
               fillOpacity={0.9}
             />
           </g>
