@@ -57,22 +57,8 @@ export const VideoTile = ({ meta, video, firstFrame, width, height }: VideoGalle
       className={TILE_FRAME}
       style={{ aspectRatio: `${width} / ${height}` }}
     >
-      {firstFrame === null ? null : (
-        <Image
-          src={firstFrame}
-          alt=""
-          fill
-          unoptimized
-          className="scale-110 object-cover blur-md"
-        />
-      )}
-      {video === null ? (
-        <span className="absolute inset-0 grid place-items-center px-4 text-center text-muted-foreground text-xs">
-          No preview yet
-        </span>
-      ) : (
-        <ClipVideo src={video} inView={inView} />
-      )}
+      <Image src={firstFrame} alt="" fill unoptimized className="scale-110 object-cover blur-md" />
+      <ClipVideo src={video} inView={inView} />
       <TileBadge>
         <Play className="size-2.5 fill-current" />
         {formatDuration(meta)}
