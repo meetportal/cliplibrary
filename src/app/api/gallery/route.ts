@@ -7,7 +7,5 @@ const cursorSchema = z.coerce.number().int().min(0).catch(0);
 export const GET = (request: Request) => {
   const params = new URL(request.url).searchParams;
   const page = galleryPage(parseFilters(params), cursorSchema.parse(params.get('cursor')));
-  return Response.json(page, {
-    headers: { 'Cache-Control': 'public, max-age=300, s-maxage=86400' },
-  });
+  return Response.json(page, { headers: { 'Cache-Control': 'no-store' } });
 };
