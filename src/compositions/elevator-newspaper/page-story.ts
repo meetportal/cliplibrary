@@ -1,4 +1,3 @@
-import type { PageCopy } from './page-layout';
 import {
   type Box,
   type Context,
@@ -9,12 +8,13 @@ import {
   placeholderImage,
   rule,
   SQUEEZE,
-  serif,
   squeezedLines,
   tracked,
   widest,
   wrap,
-} from './page-type';
+} from '../footage/canvas-type';
+import type { PageCopy } from './page-layout';
+import { serif } from './page-type';
 
 type Size = [number, number];
 

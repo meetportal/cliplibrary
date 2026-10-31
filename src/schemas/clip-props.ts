@@ -7,6 +7,7 @@ import type { HelicopterUnveilProps } from './clips/ad-reveals/helicopter-unveil
 import type { MailinfraDeliverabilityChargeProps } from './clips/ad-reveals/mailinfra-deliverability-charge';
 import type { MailinfraSpiderDropProps } from './clips/ad-reveals/mailinfra-spider-drop';
 import type { MailinfraThreadFeaturesProps } from './clips/ad-reveals/mailinfra-thread-features';
+import type { NewspaperCityCutsProps } from './clips/ad-reveals/newspaper-city-cuts';
 import type { ProblemStrikeoutProps } from './clips/ad-reveals/problem-strikeout';
 import type { SpillRevealProps } from './clips/ad-reveals/spill-reveal';
 import type { StreetSignSwapProps } from './clips/ad-reveals/street-sign-swap';
@@ -170,6 +171,7 @@ export interface ClipPropsMap {
   'billboard-reader': BillboardReaderProps;
   'elevator-newspaper': ElevatorNewspaperProps;
   'street-sign-swap': StreetSignSwapProps;
+  'newspaper-city-cuts': NewspaperCityCutsProps;
   'incoming-call-teaser': IncomingCallTeaserProps;
   'burning-paper-reveal': BurningPaperRevealProps;
   'mailinfra-spider-drop': MailinfraSpiderDropProps;

@@ -8,6 +8,7 @@ import { helicopterUnveilScene } from './helicopter-unveil';
 import { mailinfraDeliverabilityChargeScene } from './mailinfra-deliverability-charge';
 import { mailinfraSpiderDropScene } from './mailinfra-spider-drop';
 import { mailinfraThreadFeaturesScene } from './mailinfra-thread-features';
+import { newspaperCityCutsScene } from './newspaper-city-cuts';
 import { problemStrikeoutScene } from './problem-strikeout';
 import { spillRevealScene } from './spill-reveal';
 import { streetSignSwapScene } from './street-sign-swap';
@@ -25,4 +26,5 @@ export const adRevealsScenes: SceneModule[] = [
   mailinfraThreadFeaturesScene,
   elevatorNewspaperScene,
   streetSignSwapScene,
+  newspaperCityCutsScene,
 ];

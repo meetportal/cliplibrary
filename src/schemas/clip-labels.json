@@ -6839,5 +6839,93 @@
       "ai video",
       "vertical"
     ]
+  },
+  "newspaper-city-cuts": {
+    "summary": "Photoreal footage of a woman in a light denim jacket holding an open newspaper up in front of her face while the background jump-cuts every half second or so from a crowded city square with glowing billboards to a leafy park, a glass office lobby and an ivy covered café front. The spread is printed with a jewelry front page: a cover photo of hands wearing gold rings under a small italic strip, and a story page with a blackletter masthead, a bold three line headline, a short column, a jewelry tray photo, a booth number, gold dates and a dark pill with a gem mark and the brand name. A hard cut lands on an off-white end card where a gold gem outline, a spaced serif wordmark and an italic tagline rise in.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "City square with billboards and a crowd; the printed newspaper fills the middle"
+      },
+      {
+        "at": 1.8,
+        "what": "Hard cut to a leafy park, the paper in the same spot"
+      },
+      {
+        "at": 2.5,
+        "what": "Hard cut to a glass office lobby"
+      },
+      {
+        "at": 3.2,
+        "what": "Hard cut to an ivy covered café front"
+      },
+      {
+        "at": 4.2,
+        "what": "Hard cut to the off-white end card; the gold gem mark fades in"
+      },
+      {
+        "at": 4.4,
+        "what": "Serif wordmark rises in under the mark"
+      },
+      {
+        "at": 5,
+        "what": "Italic tagline fades in below; the lockup holds to the end"
+      }
+    ],
+    "visuals": [
+      "photoreal ai generated footage",
+      "woman hiding behind an open newspaper",
+      "city square with glowing billboards and a crowd",
+      "leafy park, glass lobby and ivy café backgrounds",
+      "blackletter newspaper masthead and bold serif headline",
+      "cover photo of hands wearing gold rings",
+      "dark pill with a gold gem mark and brand name",
+      "off-white end card with a gold gem outline, spaced serif wordmark and italic tagline",
+      "print tracked onto the real paper"
+    ],
+    "motion": [
+      "jump cuts between city locations",
+      "paper swaying gently in her hands",
+      "hard cut to an end card",
+      "logo mark fading in and settling",
+      "wordmark and tagline rising in"
+    ],
+    "mood": ["editorial", "chic", "playful", "luxury", "urban"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "jewelry trade show announcement",
+      "new collection launch",
+      "booth or event invite",
+      "fashion brand teaser",
+      "instagram reel or story ad"
+    ],
+    "editable": [
+      "newspaper name and dateline",
+      "headline, story text, booth line and dates",
+      "cover strip text",
+      "cover and story photos with position and zoom",
+      "brand name in the pill and on the end card",
+      "end card tagline, logo mark toggle, sizes and timing",
+      "ink, accent gold, paper tint and end card colours",
+      "print strength, shading, paper tint and softness"
+    ],
+    "palette": ["#f6f3ec", "#1b1a17", "#b8893a", "#f3eee4", "#7a8fa8", "#3f6b3a"],
+    "keywords": [
+      "newspaper",
+      "jewelry",
+      "jump cut",
+      "city",
+      "street",
+      "breaking news",
+      "front page",
+      "trade show",
+      "booth",
+      "end card",
+      "gold",
+      "logo",
+      "wordmark",
+      "fashion",
+      "footage"
+    ]
   }
 }

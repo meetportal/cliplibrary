@@ -4,6 +4,7 @@ import type { FootageSpec, FootageTracking } from '@/footage/footage-spec';
 import { plateFrameOrder } from './assemble-plate';
 import { type BoardColor, type ColorMask, colorMask, trackByColor } from './color-track';
 import { doorEdges } from './door-edges';
+import { refineSpread, smoothRun } from './edge-refine';
 import { plateFile, trackFile } from './footage-paths';
 import {
   alignCorners,
@@ -244,6 +245,25 @@ const solveAnchor = (
   return new Map([...solved].map(([index, quad]) => [index, { [name]: quad }]));
 };
 
+const refineRun = (
+  planes: Plane[],
+  poses: Map<number, Pose>,
+  frames: number[],
+  { edges }: FootageTracking,
+) => {
+  if (edges === undefined) {
+    return;
+  }
+  for (const index of frames) {
+    const plane = planes[index];
+    const pose = poses.get(index);
+    if (plane !== undefined && pose !== undefined) {
+      poses.set(index, refineSpread(plane, pose, edges));
+    }
+  }
+  smoothRun(poses, frames);
+};
+
 const track = async (spec: FootageSpec) => {
   const read = await readPlanes(spec);
   const { planes } = read;
@@ -265,6 +285,7 @@ const track = async (spec: FootageSpec) => {
         poses.set(index, { ...poses.get(index), ...pose });
       }
     }
+    refineRun(planes, poses, run.frames, shot.tracking);
     console.info(`Tracked ${run.frames.length} frames of ${run.shot}`);
   }
   const ordered = planes.map((_, index) => poses.get(index) ?? {});

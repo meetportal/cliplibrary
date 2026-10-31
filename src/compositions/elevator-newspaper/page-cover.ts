@@ -1,5 +1,4 @@
 import { formatRgb, parse } from 'culori';
-import type { PageCopy } from './page-layout';
 import {
   type Box,
   type Context,
@@ -9,10 +8,11 @@ import {
   placeholderImage,
   rule,
   SQUEEZE,
-  serif,
   squeezedLines,
   tracked,
-} from './page-type';
+} from '../footage/canvas-type';
+import type { PageCopy } from './page-layout';
+import { serif } from './page-type';
 
 const clear = (color: string) => {
   const parsed = parse(color);
