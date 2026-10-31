@@ -48,6 +48,7 @@ type Quad = [Corner, Corner, Corner, Corner];
 const spread = (frame: number, left: Quad, right: Quad): FootageTracking => ({
   anchors: [{ frame, quads: { left, right } }],
   shared: FOLD,
+  edges: { left: 'left', right: 'right' },
 });
 
 const LOCATIONS = {

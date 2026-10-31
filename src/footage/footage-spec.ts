@@ -23,6 +23,7 @@ export type FootageTracking = {
   }[];
   shared?: [string, number, string, number][];
   doors?: { band: [number, number]; doorway: [number, number] };
+  edges?: { left: string; right: string };
 };
 
 type FootageShot = {
