@@ -16,7 +16,7 @@ export const GALLERY_KINDS = [
   { id: 'site', label: 'Websites' },
 ] as const;
 
-export type GalleryKind = (typeof GALLERY_KINDS)[number]['id'];
+type GalleryKind = (typeof GALLERY_KINDS)[number]['id'];
 
 export interface GalleryMeta {
   id: string;
@@ -224,22 +224,44 @@ export const filterClips = <Item extends { meta: GalleryMeta }>(
     .sort((left, right) => compare(left.meta, right.meta));
 };
 
-export const facetCounts = <Key extends string>(
+type FacetCount<Key extends string> = Partial<Record<Key, number>>;
+
+export interface FacetCounts {
+  kinds: FacetCount<GalleryKind>;
+  categories: FacetCount<GalleryCategory>;
+  tags: FacetCount<GalleryTag>;
+  themes: FacetCount<ClipTheme>;
+}
+
+const facetCount = <Key extends string>(
   items: readonly { meta: GalleryMeta }[],
   filters: GalleryFilters,
+  scores: SearchScores,
   facet: Facet,
   keysOf: (meta: GalleryMeta) => readonly Key[],
-): Map<Key, number> => {
-  const scores = searchScores(items, filters.query);
-  const counts = new Map<Key, number>();
+): FacetCount<Key> => {
+  const counts: FacetCount<Key> = {};
   for (const item of items) {
     if (matches(item.meta, filters, scores, facet)) {
       for (const key of keysOf(item.meta)) {
-        counts.set(key, (counts.get(key) ?? 0) + 1);
+        counts[key] = (counts[key] ?? 0) + 1;
       }
     }
   }
   return counts;
+};
+
+export const facetCounts = (
+  items: readonly { meta: GalleryMeta }[],
+  filters: GalleryFilters,
+): FacetCounts => {
+  const scores = searchScores(items, filters.query);
+  return {
+    kinds: facetCount(items, filters, scores, 'kind', (meta) => [meta.kind]),
+    categories: facetCount(items, filters, scores, 'category', (meta) => [meta.category]),
+    tags: facetCount(items, filters, scores, 'tags', (meta) => meta.tags),
+    themes: facetCount(items, filters, scores, 'theme', (meta) => [meta.theme]),
+  };
 };
 
 export const formatDuration = (meta: GalleryMeta): string => {

@@ -16,8 +16,8 @@ export const listClips = (): VideoGalleryItem[] =>
   CLIP_REGISTRY.map((meta) => ({
     kind: 'video',
     meta: videoMeta(meta),
-    video: clipPreviewVideo(meta.id),
-    firstFrame: previewUrl(firstFrameFileName(meta.id)),
+    video: `/previews/${meta.id}.mp4`,
+    firstFrame: `/previews/${firstFrameFileName(meta.id)}`,
     width: meta.width,
     height: meta.height,
   }));

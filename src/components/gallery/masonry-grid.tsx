@@ -1,7 +1,7 @@
 'use client';
 
 import { useWindowVirtualizer } from '@tanstack/react-virtual';
-import { type ComponentType, useLayoutEffect, useRef, useState } from 'react';
+import { type ComponentType, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const GAP = 12;
 const MIN_COLUMN_WIDTH = 212;
@@ -10,6 +10,7 @@ const PHONE_WIDTH = 640;
 const OVERSCAN_ITEMS = 4;
 const OVERSCAN_PX = 600;
 const SERVER_RENDERED_ITEMS = 16;
+const END_REACHED_ROWS = 2;
 
 interface GridLayout {
   width: number;
@@ -32,6 +33,7 @@ interface MasonryGridProps<Item> {
   itemKey: (item: Item) => string;
   heightRatio: (item: Item) => number;
   Tile: ComponentType<Item>;
+  onEndReached: () => void;
 }
 
 export const MasonryGrid = <Item extends object>({
@@ -39,6 +41,7 @@ export const MasonryGrid = <Item extends object>({
   itemKey,
   heightRatio,
   Tile,
+  onEndReached,
 }: MasonryGridProps<Item>) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [layout, setLayout] = useState<GridLayout | null>(null);
@@ -86,6 +89,14 @@ export const MasonryGrid = <Item extends object>({
       virtualizer.measure();
     }
   }, [columnWidth, items, virtualizer]);
+
+  const lastIndex = virtualizer.getVirtualItems().at(-1)?.index ?? -1;
+
+  useEffect(() => {
+    if (lastIndex >= 0 && lastIndex >= items.length - columns * END_REACHED_ROWS) {
+      onEndReached();
+    }
+  }, [lastIndex, items.length, columns, onEndReached]);
 
   if (layout === null) {
     return (
