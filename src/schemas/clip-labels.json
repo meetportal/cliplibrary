@@ -6765,6 +6765,100 @@
       "doors"
     ]
   },
+  "coming-soon-newspaper": {
+    "summary": "Photoreal footage of a woman in a cream linen suit standing against a pale honey limestone wall, hiding behind an open broadsheet printed with a black and white fashion spread: an AVELINE masthead and serif headline A NEW ERA OF EVERYDAY IS ABOUT TO BEGIN over a grainy campaign photo on the left page, and The Morning Edit nameplate with a tall condensed WE ARE COMING SOON headline on the right. She lowers and folds the paper as the print fades away, tucks it under her arm and walks out of frame, the shot dims to black and a widely spaced serif wordmark aveline | studio. rises in.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Woman reads the open printed broadsheet in front of her face"
+      },
+      {
+        "at": 2.5,
+        "what": "Camera has drifted gently closer; both pages fully readable"
+      },
+      {
+        "at": 4.4,
+        "what": "She lowers the paper, revealing sunglasses, and the print fades away"
+      },
+      {
+        "at": 5.3,
+        "what": "She folds the blank paper and tucks it under her arm"
+      },
+      {
+        "at": 7.9,
+        "what": "She walks out of frame to the left"
+      },
+      {
+        "at": 8.5,
+        "what": "The wall dims toward black"
+      },
+      {
+        "at": 8.8,
+        "what": "Spaced serif wordmark aveline | studio. rises and fades in"
+      },
+      {
+        "at": 10,
+        "what": "Wordmark holds on black"
+      }
+    ],
+    "visuals": [
+      "photoreal ai generated footage",
+      "pale honey limestone wall",
+      "woman in a cream linen suit and sunglasses",
+      "open broadsheet newspaper",
+      "black and white editorial print with masthead, headlines and grainy photos",
+      "tall condensed coming soon headline",
+      "white spaced serif wordmark with a thin divider on black"
+    ],
+    "motion": [
+      "paper lowered and folded",
+      "woman walking out of frame",
+      "print fading off the paper",
+      "gentle camera push and pull",
+      "fade to black",
+      "wordmark rise and fade"
+    ],
+    "mood": ["editorial", "minimal", "chic", "quiet", "teasing"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "fashion brand launch teaser",
+      "coming soon announcement",
+      "new collection reveal",
+      "store or studio opening",
+      "instagram reel or story hook"
+    ],
+    "editable": [
+      "brand name, dateline, headline, kicker and column copy on the left page",
+      "newspaper name, top line, big headline, column copy and footer on the right page",
+      "both page photos with position and zoom, photo contrast, brightness and grain",
+      "ink, paper, wordmark and fade colours",
+      "wordmark brand, second word, size, spacing, divider and timing",
+      "fade to black timing and depth",
+      "print strength, shading, softness, paper tint and fade-out timing",
+      "camera push-in and pull-out"
+    ],
+    "palette": ["#d8c3a2", "#efe9dd", "#1d1b19", "#e9e2d6", "#000000", "#ffffff"],
+    "keywords": [
+      "newspaper",
+      "broadsheet",
+      "coming soon",
+      "fashion",
+      "launch",
+      "teaser",
+      "editorial",
+      "linen",
+      "limestone",
+      "walk off",
+      "wordmark",
+      "fade to black",
+      "footage",
+      "live action",
+      "ai video",
+      "vertical",
+      "reveal",
+      "brand"
+    ]
+  },
   "street-sign-swap": {
     "summary": "Photoreal handheld footage of a rainy Paris crosswalk in front of a columned stone building. A blonde woman in a camo cap, black tee and camo cargo trousers walks past holding a white board that asks when is the maison figue website launching ?, then in the same continuous take a woman in a green jersey and green cap walks in holding up an olive board that answers it's live now maisonfigue.com.",
     "beats": [

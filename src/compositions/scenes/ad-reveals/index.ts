@@ -2,6 +2,7 @@ import type { SceneModule } from '../../scene-module';
 import { batteryChargeSuccessScene } from './battery-charge-success';
 import { billboardReaderScene } from './billboard-reader';
 import { burningPaperRevealScene } from './burning-paper-reveal';
+import { comingSoonNewspaperScene } from './coming-soon-newspaper';
 import { crumpledPaperRevealScene } from './crumpled-paper-reveal';
 import { elevatorNewspaperScene } from './elevator-newspaper';
 import { helicopterUnveilScene } from './helicopter-unveil';
@@ -24,5 +25,6 @@ export const adRevealsScenes: SceneModule[] = [
   mailinfraDeliverabilityChargeScene,
   mailinfraThreadFeaturesScene,
   elevatorNewspaperScene,
+  comingSoonNewspaperScene,
   streetSignSwapScene,
 ];

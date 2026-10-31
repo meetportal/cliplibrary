@@ -11,6 +11,7 @@ export const TrackedPrint = ({
   map,
   strength,
   shading,
+  opacity = 1,
   paperWhite = 0.74,
   colorKey,
 }: {
@@ -18,6 +19,7 @@ export const TrackedPrint = ({
   map: THREE.Texture;
   strength: number;
   shading: number;
+  opacity?: number;
   paperWhite?: number;
   colorKey?: PrintKey;
 }) => {
@@ -32,7 +34,7 @@ export const TrackedPrint = ({
     print.material.map = map;
     print.material.needsUpdate = true;
   }
-  print.material.opacity = strength;
+  print.material.opacity = strength * opacity;
   print.uniforms.shading.value = shading;
   print.uniforms.paperWhite.value = paperWhite;
   print.uniforms.keyReach.value = colorKey?.reach ?? 0;

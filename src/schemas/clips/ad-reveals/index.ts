@@ -18,6 +18,12 @@ import {
 } from './burning-paper-reveal';
 import { burningPaperRevealControls } from './burning-paper-reveal-controls';
 import {
+  comingSoonNewspaperDefaults,
+  comingSoonNewspaperMeta,
+  comingSoonNewspaperSchema,
+} from './coming-soon-newspaper';
+import { comingSoonNewspaperControls } from './coming-soon-newspaper-controls';
+import {
   crumpledPaperRevealDefaults,
   crumpledPaperRevealMeta,
   crumpledPaperRevealSchema,
@@ -145,6 +151,13 @@ export const adRevealsClips: ClipModule[] = [
     defaults: elevatorNewspaperDefaults,
     meta: elevatorNewspaperMeta,
     controls: elevatorNewspaperControls,
+  },
+  {
+    id: 'coming-soon-newspaper',
+    schema: comingSoonNewspaperSchema,
+    defaults: comingSoonNewspaperDefaults,
+    meta: comingSoonNewspaperMeta,
+    controls: comingSoonNewspaperControls,
   },
   {
     id: 'street-sign-swap',

@@ -1,7 +1,17 @@
-import type { ElevatorNewspaperProps } from '@/schemas';
 import { smooth, tween } from '../promo/timing';
 
 const linear = (progress: number) => progress;
+
+export type CameraMove = {
+  zoom: number;
+  creep: number;
+  focusX: number;
+  focusY: number;
+  pushStart: number;
+  pushFrames: number;
+  pullStart: number;
+  pullFrames: number;
+};
 
 export type Framing = { x: number; y: number; scale: number };
 
@@ -9,7 +19,7 @@ const clamp = (value: number, low: number, high: number) => Math.min(high, Math.
 
 export const cameraFraming = (
   frame: number,
-  camera: ElevatorNewspaperProps['camera'],
+  camera: CameraMove,
   width: number,
   height: number,
 ): Framing => {
