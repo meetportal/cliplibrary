@@ -12,6 +12,7 @@ export * from './clips/ad-reveals/helicopter-unveil';
 export * from './clips/ad-reveals/mailinfra-deliverability-charge';
 export * from './clips/ad-reveals/mailinfra-spider-drop';
 export * from './clips/ad-reveals/mailinfra-thread-features';
+export * from './clips/ad-reveals/newspaper-city-cuts';
 export * from './clips/ad-reveals/problem-strikeout';
 export * from './clips/ad-reveals/spill-reveal';
 export * from './clips/ad-reveals/street-sign-swap';

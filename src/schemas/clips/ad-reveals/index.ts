@@ -54,6 +54,12 @@ import {
 } from './mailinfra-thread-features';
 import { mailinfraThreadFeaturesControls } from './mailinfra-thread-features-controls';
 import {
+  newspaperCityCutsDefaults,
+  newspaperCityCutsMeta,
+  newspaperCityCutsSchema,
+} from './newspaper-city-cuts';
+import { newspaperCityCutsControls } from './newspaper-city-cuts-controls';
+import {
   problemStrikeoutDefaults,
   problemStrikeoutMeta,
   problemStrikeoutSchema,
@@ -152,5 +158,12 @@ export const adRevealsClips: ClipModule[] = [
     defaults: streetSignSwapDefaults,
     meta: streetSignSwapMeta,
     controls: streetSignSwapControls,
+  },
+  {
+    id: 'newspaper-city-cuts',
+    schema: newspaperCityCutsSchema,
+    defaults: newspaperCityCutsDefaults,
+    meta: newspaperCityCutsMeta,
+    controls: newspaperCityCutsControls,
   },
 ];
