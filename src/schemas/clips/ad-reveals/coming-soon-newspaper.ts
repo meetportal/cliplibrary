@@ -137,8 +137,8 @@ export const comingSoonNewspaperDefaults: ComingSoonNewspaperProps = {
     shading: 0.75,
     softness: 0.5,
     paperTint: 0.4,
-    fadeStart: 106,
-    fadeFrames: 14,
+    fadeStart: 104,
+    fadeFrames: 12,
   },
   wordmark: {
     brand: 'aveline',

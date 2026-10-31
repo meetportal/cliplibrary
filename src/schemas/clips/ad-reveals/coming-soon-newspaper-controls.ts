@@ -116,14 +116,26 @@ export const comingSoonNewspaperControls = defineControls<ComingSoonNewspaperPro
         },
       ],
       more: [
-        { path: 'wordmark.size', label: 'Size', hint: 'Brand size in pixels' },
+        {
+          path: 'wordmark.size',
+          label: 'Size',
+          hint: 'Brand size in pixels; the wordmark shrinks to fit 88% of the frame width',
+        },
         {
           path: 'wordmark.secondSize',
           label: 'Second word size',
           hint: 'Share of the brand size',
         },
-        { path: 'wordmark.tracking', label: 'Letter spacing', hint: 'In ems' },
-        { path: 'wordmark.gap', label: 'Gap around the divider', hint: 'In pixels' },
+        {
+          path: 'wordmark.tracking',
+          label: 'Letter spacing',
+          hint: 'In ems; a very wide wordmark shrinks to fit',
+        },
+        {
+          path: 'wordmark.gap',
+          label: 'Gap around the divider',
+          hint: 'In pixels; a very wide wordmark shrinks to fit',
+        },
         { path: 'wordmark.ruleHeight', label: 'Divider height', hint: 'In pixels; 0 hides it' },
         {
           path: 'wordmark.offsetY',
