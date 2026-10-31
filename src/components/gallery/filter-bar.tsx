@@ -22,28 +22,19 @@ import {
 } from '@/components/ui/select';
 import {
   DEFAULT_FILTERS,
+  type FacetCounts,
   GALLERY_KINDS,
   type GalleryFilters,
-  type GalleryKind,
   hasActiveFilters,
   SORT_OPTIONS,
   type SortId,
 } from '@/lib/gallery-filters';
 import {
-  type ClipTheme,
   categoryLabel,
   GALLERY_CATEGORIES,
   GALLERY_TAGS,
-  type GalleryCategory,
   type GalleryTag,
 } from '@/schemas/taxonomy';
-
-interface FacetCounts {
-  kinds: Map<GalleryKind, number>;
-  categories: Map<GalleryCategory, number>;
-  tags: Map<GalleryTag, number>;
-  themes: Map<ClipTheme, number>;
-}
 
 interface FilterBarProps {
   filters: GalleryFilters;
@@ -100,7 +91,7 @@ export const FilterBar = ({
     });
 
   const availableTags = GALLERY_TAGS.filter(
-    (tag) => (counts.tags.get(tag) ?? 0) > 0 || filters.tags.includes(tag),
+    (tag) => (counts.tags[tag] ?? 0) > 0 || filters.tags.includes(tag),
   );
 
   return (
@@ -149,7 +140,7 @@ export const FilterBar = ({
                 <SelectItem key={kind.id} value={kind.id}>
                   {kind.label}
                   <span className="ml-auto pl-3 text-muted-foreground text-xs">
-                    {counts.kinds.get(kind.id) ?? 0}
+                    {counts.kinds[kind.id] ?? 0}
                   </span>
                 </SelectItem>
               ))}
@@ -171,7 +162,7 @@ export const FilterBar = ({
                 <SelectItem key={category.id} value={category.id}>
                   {category.label}
                   <span className="ml-auto pl-3 text-muted-foreground text-xs">
-                    {counts.categories.get(category.id) ?? 0}
+                    {counts.categories[category.id] ?? 0}
                   </span>
                 </SelectItem>
               ))}
@@ -202,7 +193,7 @@ export const FilterBar = ({
                 >
                   {tag}
                   <span className="ml-auto pl-3 text-muted-foreground text-xs">
-                    {counts.tags.get(tag) ?? 0}
+                    {counts.tags[tag] ?? 0}
                   </span>
                 </DropdownMenuCheckboxItem>
               ))}
@@ -231,13 +222,13 @@ export const FilterBar = ({
               <SelectItem value="light">
                 Light
                 <span className="ml-auto pl-3 text-muted-foreground text-xs">
-                  {counts.themes.get('light') ?? 0}
+                  {counts.themes.light ?? 0}
                 </span>
               </SelectItem>
               <SelectItem value="dark">
                 Dark
                 <span className="ml-auto pl-3 text-muted-foreground text-xs">
-                  {counts.themes.get('dark') ?? 0}
+                  {counts.themes.dark ?? 0}
                 </span>
               </SelectItem>
             </SelectContent>

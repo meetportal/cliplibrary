@@ -59,8 +59,7 @@ describe('gallery filters', () => {
     expect(ids(filterClips(mixed, { ...DEFAULT_FILTERS, query: 'hiring' }))).toContain(
       'hiring-spotlight',
     );
-    const kinds = facetCounts(mixed, DEFAULT_FILTERS, 'kind', (meta) => [meta.kind]);
-    expect(kinds.get('poster')).toBe(1);
+    expect(facetCounts(mixed, DEFAULT_FILTERS).kinds.poster).toBe(1);
     expect(hasActiveFilters({ ...DEFAULT_FILTERS, kind: 'poster' })).toBe(true);
   });
 
@@ -138,14 +137,13 @@ describe('gallery filters', () => {
 
   it('counts each facet against the other active filters', () => {
     const filters = { ...DEFAULT_FILTERS, category: 'phone-layouts' as const };
-    const categories = facetCounts(items, filters, 'category', (meta) => [meta.category]);
-    expect(categories.get('kinetic-type')).toBeGreaterThan(0);
-    const themes = facetCounts(items, filters, 'theme', (meta) => [meta.theme]);
+    const { categories, themes } = facetCounts(items, filters);
+    expect(categories['kinetic-type']).toBeGreaterThan(0);
     const darkPhoneLayouts = CLIP_REGISTRY.filter(
       (meta) => meta.category === 'phone-layouts' && meta.theme === 'dark',
     ).length;
     expect(darkPhoneLayouts).toBeGreaterThan(0);
-    expect(themes.get('dark')).toBe(darkPhoneLayouts);
+    expect(themes.dark).toBe(darkPhoneLayouts);
   });
 
   it('reports active filters and formats durations', () => {

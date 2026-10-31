@@ -65,12 +65,7 @@ export const ClipGallery = ({
 }: ClipGalleryProps) => {
   const effective = { ...filters, query };
   const visible = filterClips(items, effective);
-  const counts = {
-    kinds: facetCounts(items, effective, 'kind', (meta) => [meta.kind]),
-    categories: facetCounts(items, effective, 'category', (meta) => [meta.category]),
-    tags: facetCounts(items, effective, 'tags', (meta) => meta.tags),
-    themes: facetCounts(items, effective, 'theme', (meta) => [meta.theme]),
-  };
+  const counts = facetCounts(items, effective);
 
   return (
     <div className="flex flex-col gap-6">
