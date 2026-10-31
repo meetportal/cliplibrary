@@ -1,6 +1,7 @@
 import type { BatteryChargeSuccessProps } from './clips/ad-reveals/battery-charge-success';
 import type { BillboardReaderProps } from './clips/ad-reveals/billboard-reader';
 import type { BurningPaperRevealProps } from './clips/ad-reveals/burning-paper-reveal';
+import type { ComingSoonNewspaperProps } from './clips/ad-reveals/coming-soon-newspaper';
 import type { CrumpledPaperRevealProps } from './clips/ad-reveals/crumpled-paper-reveal';
 import type { ElevatorNewspaperProps } from './clips/ad-reveals/elevator-newspaper';
 import type { HelicopterUnveilProps } from './clips/ad-reveals/helicopter-unveil';
@@ -169,6 +170,7 @@ export interface ClipPropsMap {
   'crumpled-paper-reveal': CrumpledPaperRevealProps;
   'billboard-reader': BillboardReaderProps;
   'elevator-newspaper': ElevatorNewspaperProps;
+  'coming-soon-newspaper': ComingSoonNewspaperProps;
   'street-sign-swap': StreetSignSwapProps;
   'incoming-call-teaser': IncomingCallTeaserProps;
   'burning-paper-reveal': BurningPaperRevealProps;
