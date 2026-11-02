@@ -30,9 +30,19 @@ const SUGGESTIONS: Record<MediaKind, string[]> = {
     'Write a warmer love story about meeting at a bookshop in Lisbon',
     'Switch to a dusty blue and silver palette',
   ],
+  music: [
+    'Write a catchier melody that builds to a high note',
+    'Turn this into a 90s house track at 124 BPM',
+    'Write a short chorus about summer nights for the AI render',
+  ],
 };
 
-const NOUNS: Record<MediaKind, string> = { clip: 'video', poster: 'poster', site: 'website' };
+const NOUNS: Record<MediaKind, string> = {
+  clip: 'video',
+  poster: 'poster',
+  site: 'website',
+  music: 'song',
+};
 
 const handledCalls = (messages: readonly MediaAgentMessage[]): Set<string> =>
   new Set(

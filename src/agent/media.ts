@@ -1,10 +1,11 @@
 import { z } from 'zod';
 import { type Design, designSchema, FONT_FAMILIES, isDesignIcon } from '@/design';
+import { type Song, songSchema } from '@/music';
 import { type Project, projectSchema } from '@/project';
 import { CLIP_SCHEMAS, isClipId } from '@/schemas';
 import { checkSiteDocument, type SiteDocument } from './site';
 
-const MEDIA_KINDS = ['clip', 'poster', 'site'] as const;
+const MEDIA_KINDS = ['clip', 'poster', 'site', 'music'] as const;
 
 export type MediaKind = (typeof MEDIA_KINDS)[number];
 
@@ -12,7 +13,9 @@ export type MediaDocument<K extends MediaKind> = K extends 'clip'
   ? Project
   : K extends 'poster'
     ? Design
-    : SiteDocument;
+    : K extends 'music'
+      ? Song
+      : SiteDocument;
 
 export const agentRequestSchema = z.object({
   messages: z.array(z.unknown()),
@@ -69,6 +72,12 @@ const failure = (issues: string[]): MediaCheck => ({ ok: false, error: issues.jo
 const checkAny = (kind: MediaKind, value: unknown): MediaCheck => {
   if (kind === 'site') {
     return checkSiteDocument(value);
+  }
+  if (kind === 'music') {
+    const parsed = songSchema.safeParse(value);
+    return parsed.success
+      ? { ok: true, document: parsed.data }
+      : failure([z.prettifyError(parsed.error)]);
   }
   if (kind === 'clip') {
     const parsed = projectSchema.safeParse(value);
