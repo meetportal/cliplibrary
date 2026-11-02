@@ -1,6 +1,6 @@
 import { resolveClipControls } from '@/core/clip-controls';
 import type { ControlSectionView } from '@/core/types';
-import { NOTE_NAMES, SCALES, type Song, songControls, songSchema } from '@/music';
+import { NOTE_NAMES, SCALES, songControls, songSchema } from '@/music';
 import { type ControlPathTarget, controlFieldGuide, describeControlPath } from './control-guide';
 
 let sections: ControlSectionView[] | null = null;
@@ -47,5 +47,3 @@ ${controlFieldGuide(musicSections(), '')}
   - Melody notes: /melody/notes, a list of { step, pitch, length }
 
 Song JSON schema: ${jsonSchema}`;
-
-export type { Song };

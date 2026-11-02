@@ -28,17 +28,17 @@ export const SCALES = [
   'minor-pentatonic',
 ] as const;
 
-export const LEAD_SOUNDS = ['soft-keys', 'pluck', 'bell', 'saw-lead', 'chip', 'flute'] as const;
-export const CHORD_SOUNDS = ['warm-pad', 'electric-piano', 'organ', 'strings', 'glass'] as const;
-export const BASS_SOUNDS = ['sub', 'round', 'acid', 'fm'] as const;
-export const DRUM_KITS = ['808', 'lofi', 'electro', 'brush'] as const;
+const LEAD_SOUNDS = ['soft-keys', 'pluck', 'bell', 'saw-lead', 'chip', 'flute'] as const;
+const CHORD_SOUNDS = ['warm-pad', 'electric-piano', 'organ', 'strings', 'glass'] as const;
+const BASS_SOUNDS = ['sub', 'round', 'acid', 'fm'] as const;
+const DRUM_KITS = ['808', 'lofi', 'electro', 'brush'] as const;
 
-export const CHORD_RHYTHMS = ['sustain', 'quarters', 'offbeats', 'arpeggio'] as const;
-export const CHORD_VOICINGS = ['triad', 'seventh', 'sus2'] as const;
-export const BASS_PATTERNS = ['roots', 'eighths', 'octaves', 'walking', 'kick-locked'] as const;
+const CHORD_RHYTHMS = ['sustain', 'quarters', 'offbeats', 'arpeggio'] as const;
+const CHORD_VOICINGS = ['triad', 'seventh', 'sus2'] as const;
+const BASS_PATTERNS = ['roots', 'eighths', 'octaves', 'walking', 'kick-locked'] as const;
 
 export const STEPS_PER_BAR = 16;
-export const MAX_BARS = 8;
+const MAX_BARS = 8;
 
 const drumPattern = () =>
   z
@@ -51,7 +51,7 @@ const partBase = {
   volume: zSlider({ min: -30, max: 6, step: 1 }).describe('Level in dB'),
 };
 
-export const melodyNoteSchema = z.object({
+const melodyNoteSchema = z.object({
   step: z
     .number()
     .int()
@@ -67,7 +67,7 @@ export const melodyNoteSchema = z.object({
   length: z.number().int().min(1).max(32).describe('Length in sixteenth notes'),
 });
 
-export const chordSchema = z.object({
+const chordSchema = z.object({
   degree: zSlider({ min: 1, max: 7, step: 1 }).describe('Scale degree of the chord root, 1 to 7'),
   bars: zSlider({ min: 1, max: 4, step: 1 }),
 });

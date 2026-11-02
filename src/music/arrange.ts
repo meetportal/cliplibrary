@@ -156,7 +156,7 @@ const loopEvents = (song: Song): StepEvent[] => [
   ...(song.melody.enabled ? melodyEvents(song) : []),
 ];
 
-export const stepTime = (song: Song, step: number): number =>
+const stepTime = (song: Song, step: number): number =>
   (step + (step % 2 === 1 ? song.swing * 0.5 : 0)) * stepSeconds(song);
 
 export const arrangeSong = (song: Song, loops = 1): MusicEvent[] => {

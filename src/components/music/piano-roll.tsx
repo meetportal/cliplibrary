@@ -95,6 +95,7 @@ export const PianoRoll = ({
         {notes.map((note) => (
           <div
             key={`${note.step}:${note.pitch}`}
+            data-note={`${note.step}:${note.pitch}`}
             className="absolute rounded-[3px] bg-gradient-to-r from-violet-500 to-pink-500 shadow-sm ring-1 ring-white/30"
             style={{
               left: `${(note.step / total) * 100}%`,
