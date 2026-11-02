@@ -58,16 +58,14 @@ export const drumVoices = (
   snare.volume.value = -6;
   snare.connect(snareFilter);
 
-  const hat = new tone.MetalSynth({
-    envelope: { attack: 0.001, decay: kit.hat.decay, release: 0.01 },
-    harmonicity: 5.1,
-    modulationIndex: 32,
-    resonance: 4000,
-    octaves: 1.5,
+  const hatFilter = new tone.Filter(kit.hat.frequency * 25, 'highpass');
+  hatFilter.connect(level);
+  const hat = new tone.NoiseSynth({
+    noise: { type: 'white' },
+    envelope: { attack: 0.001, decay: kit.hat.decay, sustain: 0, release: 0.01 },
   });
-  hat.frequency.value = kit.hat.frequency;
-  hat.volume.value = kit.hat.level - 12;
-  hat.connect(level);
+  hat.volume.value = kit.hat.level;
+  hat.connect(hatFilter);
 
   return {
     kick: {
@@ -93,7 +91,10 @@ export const drumVoices = (
     },
     hat: {
       play: (_midi, duration, time, velocity) => hat.triggerAttackRelease(duration, time, velocity),
-      dispose: () => hat.dispose(),
+      dispose: () => {
+        hat.dispose();
+        hatFilter.dispose();
+      },
     },
   };
 };

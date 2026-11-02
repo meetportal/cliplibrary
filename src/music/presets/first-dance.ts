@@ -17,7 +17,7 @@ export const firstDance: MusicPreset = {
     repeats: 2,
     chords: {
       enabled: true,
-      volume: -10,
+      volume: -4,
       sound: 'electric-piano',
       voicing: 'triad',
       rhythm: 'arpeggio',
@@ -34,7 +34,7 @@ export const firstDance: MusicPreset = {
     },
     melody: {
       enabled: true,
-      volume: -12,
+      volume: -6,
       sound: 'bell',
       octave: 5,
       notes: phrase([
@@ -60,7 +60,7 @@ export const firstDance: MusicPreset = {
         [112, 4, 16],
       ]),
     },
-    bass: { enabled: true, volume: -12, sound: 'round', pattern: 'roots', octave: 2 },
+    bass: { enabled: true, volume: -6, sound: 'round', pattern: 'roots', octave: 2 },
     drums: {
       enabled: false,
       volume: -14,
@@ -69,6 +69,6 @@ export const firstDance: MusicPreset = {
       snare: SILENT,
       hat: 'x...x...x...x...',
     },
-    mix: { reverb: 0.6, echo: 0.1, warmth: 0.4, master: -6 },
+    mix: { reverb: 0.6, echo: 0.1, warmth: 0.4, master: -3 },
   },
 };

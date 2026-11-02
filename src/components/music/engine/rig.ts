@@ -24,7 +24,7 @@ export const rigKey = (song: Song): string =>
 
 export const buildRig = async (tone: Tone, song: Song): Promise<Rig> => {
   const master = new tone.Volume(song.mix.master).toDestination();
-  const meter = new tone.Analyser('fft', 64);
+  const meter = new tone.Analyser('fft', 1024);
   master.connect(meter);
   const tone_ = new tone.Filter(warmthCutoff(song.mix.warmth), 'lowpass');
   tone_.connect(master);
