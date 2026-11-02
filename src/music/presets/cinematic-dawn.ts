@@ -1,0 +1,62 @@
+import { type MusicPreset, phrase, progression, SILENT } from './notes';
+
+export const cinematicDawn: MusicPreset = {
+  id: 'cinematic-dawn',
+  title: 'Cinematic Dawn',
+  description: 'Slow, wide strings and a lone flute for trailers, intros and title cards.',
+  song: {
+    title: 'Cinematic Dawn',
+    style:
+      'Epic cinematic score, slow swelling strings, lonely flute melody, deep sub bass, distant boom hits, hopeful sunrise',
+    lyrics: '',
+    tempo: 70,
+    key: 'D',
+    scale: 'minor',
+    swing: 0,
+    bars: 8,
+    repeats: 2,
+    chords: {
+      enabled: true,
+      volume: -10,
+      sound: 'strings',
+      voicing: 'triad',
+      rhythm: 'sustain',
+      octave: 3,
+      progression: progression([
+        [1, 2],
+        [6, 2],
+        [3, 2],
+        [7, 2],
+      ]),
+    },
+    melody: {
+      enabled: true,
+      volume: -12,
+      sound: 'flute',
+      octave: 5,
+      notes: phrase([
+        [0, 4, 16],
+        [16, 5, 8],
+        [24, 4, 8],
+        [32, 2, 16],
+        [48, 3, 8],
+        [56, 2, 8],
+        [64, 4, 16],
+        [80, 5, 8],
+        [88, 7, 8],
+        [96, 6, 16],
+        [112, 3, 16],
+      ]),
+    },
+    bass: { enabled: true, volume: -8, sound: 'sub', pattern: 'roots', octave: 1 },
+    drums: {
+      enabled: true,
+      volume: -8,
+      kit: '808',
+      kick: 'x...............',
+      snare: SILENT,
+      hat: SILENT,
+    },
+    mix: { reverb: 0.75, echo: 0.25, warmth: 0.3, master: -6 },
+  },
+};
