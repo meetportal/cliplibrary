@@ -1,8 +1,8 @@
 # neuclip
 
-A single Next.js project for a library of Remotion animation clips, editable poster packs and
-website templates, with a deep, schema-driven video editor, a canvas image editor and a website
-editor in the browser.
+A single Next.js project for a library of Remotion animation clips, editable poster packs,
+website templates and songs, with a deep, schema-driven video editor, a canvas image editor, a
+website editor and a music studio in the browser.
 
 ## Layout
 
@@ -37,6 +37,10 @@ Everything lives in one package. Modules import each other through the `@/` alia
   curated lucide icon set. Pure, no React.
 - `src/components/design-editor` - the Konva image editor: canvas workspace, panels, shortcuts,
   offscreen page rendering and PNG, JPG, PDF and JSON export. Edits autosave to `localStorage`.
+- `src/music` - the music studio's `Song` score (Zod schema, control layout, presets), scale and
+  chord theory, the pure arrangement into timed note events and the AI render prompt. Pure.
+- `src/components/music` - the music studio: Tone.js instruments, live looping playback and
+  offline WAV export (`engine/`), the piano roll, drum grid, chord strip and AI renders.
 - `src/posters` - poster packs. Each pack (`packs/<category>/<pack-id>/`) is one multi-page
   `Design` built with the authoring kit in `src/posters/kit` (elements, blocks, devices,
   templates and shared listing slides). `photos.ts` lists the bundled Unsplash photos in
@@ -332,6 +336,26 @@ To add a template:
 3. Put bundled photos in `public/site-assets/<id>/`, run `bunx next dev --port 3201` and
    `bun run render:sites <id> --base http://localhost:3201`, then commit
    `public/site-previews/<id>.jpg` (`tests/sites/previews.test.ts` fails without it).
+
+## Music studio
+
+`/music` lists the presets in `src/music/presets` and `/music/<presetId>` opens the studio. A song
+is a score, not audio: tempo, key and scale, a chord progression of scale degrees, melody notes
+(`{ step, pitch, length }` in sixteenths and scale steps from the key note), a bass pattern,
+16-step drum rows and a mix. `arrangeSong` turns it into timed note events that Tone.js plays in
+the browser (`src/components/music/engine`, loaded with a dynamic `import('tone')`) and renders
+offline to WAV. The score autosaves to `localStorage` (`neuclip-music:<presetId>`).
+
+- The media agent edits songs as media kind `music` (`src/agent/music.ts`): the system prompt
+  explains the score and how to write a melody, and JSON Patch edits are validated with
+  `songSchema`.
+- "AI audio render" posts the score to `POST /api/music/render` (approved users only), which
+  turns its style, tempo, key, chords and lyrics into a prompt (`songRenderPrompt`) for Google
+  Lyria 3 on OpenRouter (`src/lib/lyria.ts`: `lyria-3-clip-preview` for a 30 s clip,
+  `lyria-3-pro-preview` for a full song) and streams back the MP3. Renders are object URLs and are
+  not saved.
+- Keep instrument timelines strictly ordered: Tone's `MetalSynth` throws during offline renders,
+  so hats are filtered noise.
 
 ## Accounts and approval
 
