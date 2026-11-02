@@ -1,10 +1,12 @@
 import { z } from 'zod';
 import { type ControlEntry, clipControlsFor } from '@/core';
 import { type Design, type DesignControl, designSchema, FONT_FAMILIES } from '@/design';
+import { songSchema } from '@/music';
 import { type Project, projectSchema } from '@/project';
 import { CLIP_SCHEMAS, getClipMeta, isClipId } from '@/schemas';
 import { findSiteTemplate } from '@/sites/templates';
 import type { MediaKind } from './media';
+import { musicInstructions } from './music';
 import { siteFieldGuide } from './site';
 
 export const jsonSchema = (schema: z.ZodType): string =>
@@ -133,10 +135,14 @@ ${siteFieldGuide(template)}
 Content JSON schema: ${jsonSchema(template.schema)}`;
 };
 
+const songInstructions = (title: string): string =>
+  musicInstructions(title, SHARED_RULES, jsonSchema(songSchema));
+
 const INSTRUCTION_BUILDERS: Record<MediaKind, (title: string, document: unknown) => string> = {
   clip: clipInstructions,
   poster: posterInstructions,
   site: siteInstructions,
+  music: songInstructions,
 };
 
 const chatLine = (chatTitle: string | null): string =>

@@ -83,12 +83,21 @@ const editSite = (document: unknown, operations: readonly EditOperation[]): Medi
   return patched.ok ? checkMedia('site', patched.document) : patched;
 };
 
+const editMusic = (
+  document: unknown,
+  operations: readonly EditOperation[],
+): MediaCheck<'music'> => {
+  const patched = patchDocument(document, operations);
+  return patched.ok ? checkMedia('music', patched.document) : patched;
+};
+
 const EDITORS: {
   [K in MediaKind]: (document: unknown, operations: readonly EditOperation[]) => MediaCheck<K>;
 } = {
   clip: editClip,
   poster: editPoster,
   site: editSite,
+  music: editMusic,
 };
 
 export const applyEdits = <K extends MediaKind>(

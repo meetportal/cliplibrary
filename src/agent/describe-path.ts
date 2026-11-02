@@ -3,6 +3,7 @@ import type { Design, DesignControl } from '@/design';
 import type { Project } from '@/project';
 import { getClipMeta, isClipId } from '@/schemas';
 import type { MediaKind } from './media';
+import { describeMusicPath } from './music';
 import { checkSiteDocument, describeSitePath } from './site';
 
 export interface PathTarget {
@@ -116,11 +117,13 @@ const describeWebsitePath = (document: unknown, path: string): PathTarget => {
 
 export const describePath = (kind: MediaKind, document: unknown, path: string): PathTarget => {
   const target =
-    kind === 'site'
-      ? describeWebsitePath(document, path)
-      : kind === 'clip'
-        ? describeClipPath(document as Project, path)
-        : describePosterPath(document as Design, path);
+    kind === 'music'
+      ? { scope: 'Song', ...describeMusicPath(path) }
+      : kind === 'site'
+        ? describeWebsitePath(document, path)
+        : kind === 'clip'
+          ? describeClipPath(document as Project, path)
+          : describePosterPath(document as Design, path);
   return target.section?.toLowerCase() === target.scope.toLowerCase()
     ? { ...target, section: null }
     : target;
@@ -131,7 +134,7 @@ export const selectionNames = (
   document: unknown,
   focus: readonly string[],
 ): string[] => {
-  if (kind === 'site') {
+  if (kind === 'site' || kind === 'music') {
     return [];
   }
   if (kind === 'poster') {
