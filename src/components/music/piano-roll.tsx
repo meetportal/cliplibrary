@@ -10,6 +10,7 @@ import {
   type Song,
   STEPS_PER_BAR,
   scaleLength,
+  spellsWithFlats,
 } from '@/music';
 
 const TOP_PITCH = 14;
@@ -21,7 +22,7 @@ const MAX_NOTES = 128;
 
 const label = (song: Song, pitch: number): string => {
   const midi = melodyMidi(song, pitch);
-  return `${noteName(midi)}${Math.floor(midi / 12) - 1}`;
+  return `${noteName(midi, spellsWithFlats(song))}${Math.floor(midi / 12) - 1}`;
 };
 
 const covers = (note: MelodyNote, step: number, pitch: number): boolean =>

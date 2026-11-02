@@ -43,6 +43,15 @@ export const useSongPlayer = (song: Song): SongPlayer => {
   const live = useRef<Live | null>(null);
   const latest = useRef(song);
   latest.current = song;
+  const loaded = useRef<Tone | null>(null);
+
+  useEffect(() => {
+    import('tone')
+      .then((tone) => {
+        loaded.current = tone;
+      })
+      .catch(() => undefined);
+  }, []);
 
   const sync = useCallback(async (next: Song) => {
     const current = live.current;
@@ -69,8 +78,10 @@ export const useSongPlayer = (song: Song): SongPlayer => {
 
   const start = useCallback(async () => {
     setLoading(true);
-    const tone = await import('tone');
-    await tone.start();
+    const preloaded = loaded.current;
+    const resumed = preloaded?.start();
+    const tone = preloaded ?? (await import('tone'));
+    await (resumed ?? tone.start());
     if (live.current === null) {
       const rig = await buildRig(tone, latest.current);
       live.current = { tone, rig, key: rigKey(latest.current) };

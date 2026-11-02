@@ -26,5 +26,11 @@ describe('music theory', () => {
       'Bdim',
     ]);
     expect(chordName({ key: 'C', scale: 'major-pentatonic' }, 6)).toBe('Am');
+    expect([1, 6, 7].map((degree) => chordName({ key: 'D', scale: 'minor' }, degree))).toEqual([
+      'Dm',
+      'Bb',
+      'C',
+    ]);
+    expect(chordName({ key: 'E', scale: 'major' }, 3)).toBe('G#m');
   });
 });

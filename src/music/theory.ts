@@ -56,7 +56,27 @@ export const chordRootMidi = (
   octave: number,
 ): number => scaleMidi(song.key, CHORD_SCALE[song.scale], octave, degree - 1);
 
-export const noteName = (midi: number): string => NOTE_NAMES[modulo(midi, 12)] ?? 'C';
+const FLAT_NAMES = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'] as const;
+
+const RELATIVE_MAJOR: Record<Scale, number> = {
+  major: 0,
+  minor: 3,
+  dorian: 10,
+  mixolydian: 5,
+  lydian: 7,
+  phrygian: 8,
+  'harmonic-minor': 3,
+  'major-pentatonic': 0,
+  'minor-pentatonic': 3,
+};
+
+const FLAT_MAJORS = new Set([1, 3, 5, 6, 8, 10]);
+
+export const spellsWithFlats = (song: Pick<Song, 'key' | 'scale'>): boolean =>
+  FLAT_MAJORS.has(modulo(keyIndex(song.key) + RELATIVE_MAJOR[song.scale], 12));
+
+export const noteName = (midi: number, flats = false): string =>
+  (flats ? FLAT_NAMES : NOTE_NAMES)[modulo(midi, 12)] ?? 'C';
 
 const QUALITY: Record<string, string> = {
   '4,7': '',
@@ -67,7 +87,7 @@ const QUALITY: Record<string, string> = {
 
 export const chordName = (song: Pick<Song, 'key' | 'scale'>, degree: number): string => {
   const [root = 0, third = 0, fifth = 0] = chordMidi(song, degree, 4, 'triad');
-  return `${noteName(root)}${QUALITY[`${third - root},${fifth - root}`] ?? ''}`;
+  return `${noteName(root, spellsWithFlats(song))}${QUALITY[`${third - root},${fifth - root}`] ?? ''}`;
 };
 
 export const melodyMidi = (song: Song, pitch: number): number =>
