@@ -11,3 +11,15 @@ test('the library fits a phone screen', async ({ page }) => {
   expect(await pageWidth(page)).toBe(0);
   await expect(page.getByRole('banner')).toBeInViewport();
 });
+
+test('the clip editor switches between properties and timeline on a phone', async ({ page }) => {
+  await page.goto('/clips/chevron-mark-assemble-a');
+  await expect(page.getByRole('tab', { name: 'Properties' })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  );
+  expect(await pageWidth(page)).toBe(0);
+  await page.getByRole('tab', { name: 'Timeline' }).click();
+  await expect(page.getByRole('button', { name: 'Clip element' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Export' })).toBeAttached();
+});
