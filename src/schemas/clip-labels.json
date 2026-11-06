@@ -1,1 +1,402 @@
-{}
+{
+  "chevron-mark-assemble-a": {
+    "roles": ["opener", "closer"],
+    "concept": "Lone squares tumble across a field that keeps flipping between black and white until they find each other and lock into one solid chevron mark, so the brand reads as order made from scattered pieces. The copy is just the name: calm, confident and geometric.",
+    "needs": ["logo", "company name"],
+    "inspiration": "https://id.pinterest.com/pin/22518066881914111/",
+    "summary": "Small squares fall and tumble on a field that snaps between white and black, lock into a geometric chevron mark with a red-orange keystone, then the field fades through grey to near black while each piece turns over to white and the mark glides up as an emblem over a white logo card and a bold sans company name.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a single black square drops in from the top edge of a white field, motion blurred"
+      },
+      {
+        "at": 0.5,
+        "what": "it lands near the centre and keeps tumbling, rocking and turning a half turn as it floats"
+      },
+      {
+        "at": 1.7,
+        "what": "the field snaps from white to black and the square inverts to white in place"
+      },
+      {
+        "at": 1.8,
+        "what": "a second square drops in from the top and lands corner to corner on the first"
+      },
+      {
+        "at": 2.2,
+        "what": "the stacked pair rocks side to side as one piece"
+      },
+      {
+        "at": 3.5,
+        "what": "the pair twists apart and drifts upward, turning"
+      },
+      {
+        "at": 4.9,
+        "what": "both squares fall back toward the centre"
+      },
+      {
+        "at": 5.2,
+        "what": "the field snaps back to white, the squares invert to black and a chevron unfolds from a diamond at the bottom"
+      },
+      {
+        "at": 5.5,
+        "what": "the squares slam into the notch and lock with a small pulse"
+      },
+      {
+        "at": 5.8,
+        "what": "the top keystone diamond fills with the primary color"
+      },
+      {
+        "at": 6.4,
+        "what": "the field fades through grey to near black and each piece turns over edge on to white"
+      },
+      {
+        "at": 6.5,
+        "what": "the mark glides up and shrinks into an emblem"
+      },
+      {
+        "at": 7.2,
+        "what": "a white rounded logo card rises in under the emblem"
+      },
+      {
+        "at": 7.5,
+        "what": "the company name rises in below in white and the end frame holds"
+      }
+    ],
+    "visuals": [
+      "white and black snapping fields",
+      "tumbling squares and diamonds",
+      "thick chevron mark with two stacked diamonds",
+      "red-orange keystone diamond with an ink border",
+      "white rounded logo card",
+      "bold geometric sans name in white on near black"
+    ],
+    "motion": [
+      "squares dropping with motion blur and a spring landing",
+      "rocking, tumbling float",
+      "snap inversions of field and pieces",
+      "pieces locking into a chevron with a pulse",
+      "grey fade with pieces turning over edge on",
+      "emblem glide and logo card rise"
+    ],
+    "mood": ["minimal", "monochrome with one accent", "confident", "geometric"],
+    "useCases": [
+      "logo intro for a brand video",
+      "end card for a reel or story",
+      "studio or agency sting",
+      "product launch opener"
+    ],
+    "editable": [
+      "logo image and plate",
+      "company name and font",
+      "primary color on the keystone",
+      "final background color",
+      "light and dark flip colors",
+      "mark and square size",
+      "tumble amount",
+      "flip style and length",
+      "emblem size",
+      "build speed"
+    ],
+    "keywords": [
+      "logo reveal",
+      "logo animation",
+      "chevron",
+      "diamond",
+      "squares",
+      "geometric logo",
+      "brand intro",
+      "falling blocks",
+      "assemble",
+      "black and white",
+      "vertical",
+      "story"
+    ],
+    "palette": ["#fafafa", "#050505", "#0d0d0f", "#ff5a36", "#ffffff"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Brand name under the logo on the end frame; long names shrink and wrap to two lines"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a plate under the chevron emblem"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png"
+    },
+    "variantNote": "Closest to the inspiration, but the squares invert in place on every snap and turn over to white as the field fades to black, so the mark never vanishes, and the finished mark becomes an emblem above a real logo and name instead of fading out; the build runs quicker to leave a held end frame."
+  },
+  "chevron-mark-assemble-b": {
+    "roles": ["opener", "closer"],
+    "concept": "Lone squares tumble across a field that keeps flipping between black and white until they find each other and lock into one solid chevron mark, so the brand reads as order made from scattered pieces. The copy is just the name: calm, confident and geometric.",
+    "needs": ["logo", "company name"],
+    "inspiration": "https://id.pinterest.com/pin/22518066881914111/",
+    "summary": "Small squares fall and tumble on a field that snaps between white and black and lock into a geometric chevron mark with a cobalt keystone, then the field fades into the cobalt brand color while every piece, keystone included, turns over to white, and the mark settles as an emblem over a white logo card and a large serif company name.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a single black square drops in from the top edge of a white field, motion blurred"
+      },
+      {
+        "at": 0.5,
+        "what": "it lands near the centre and keeps tumbling, rocking and turning a half turn as it floats"
+      },
+      {
+        "at": 1.7,
+        "what": "the field snaps from white to black and the square inverts to white in place"
+      },
+      {
+        "at": 1.8,
+        "what": "a second square drops in from the top and lands corner to corner on the first"
+      },
+      {
+        "at": 2.2,
+        "what": "the stacked pair rocks side to side as one piece"
+      },
+      {
+        "at": 3.5,
+        "what": "the pair twists apart and drifts upward, turning"
+      },
+      {
+        "at": 4.9,
+        "what": "both squares fall back toward the centre"
+      },
+      {
+        "at": 5.2,
+        "what": "the field snaps back to white, the squares invert to black and a chevron unfolds from a diamond at the bottom"
+      },
+      {
+        "at": 5.5,
+        "what": "the squares slam into the notch and lock with a small pulse"
+      },
+      {
+        "at": 5.8,
+        "what": "the top keystone diamond fills with the primary color"
+      },
+      {
+        "at": 6.4,
+        "what": "the field fades from white into the cobalt brand color"
+      },
+      {
+        "at": 6.5,
+        "what": "the mark glides up and shrinks into an emblem"
+      },
+      {
+        "at": 6.6,
+        "what": "the chevron and both squares turn over edge on to white, the keystone included"
+      },
+      {
+        "at": 7.2,
+        "what": "a white logo card rises in under the emblem"
+      },
+      {
+        "at": 7.5,
+        "what": "the company name rises in below in a large white serif and the end frame holds"
+      }
+    ],
+    "visuals": [
+      "white and black snapping fields",
+      "tumbling squares and diamonds",
+      "thick chevron mark with two stacked diamonds",
+      "cobalt blue end field in the primary color",
+      "white logo card",
+      "large display serif name"
+    ],
+    "motion": [
+      "squares dropping with motion blur and a spring landing",
+      "rocking, tumbling float",
+      "snap inversions of field and pieces",
+      "pieces locking into a chevron with a pulse",
+      "fade into the brand color with pieces turning over to white",
+      "emblem glide and logo card rise"
+    ],
+    "mood": ["bold", "branded", "confident", "editorial"],
+    "useCases": [
+      "logo intro in brand colors",
+      "end card for a reel or story",
+      "brand launch sting",
+      "social post closer"
+    ],
+    "editable": [
+      "logo image and plate",
+      "company name and font",
+      "primary color for the end field and keystone",
+      "light and dark flip colors",
+      "mark and square size",
+      "tumble amount",
+      "flip style and length",
+      "emblem size",
+      "build speed"
+    ],
+    "keywords": [
+      "logo reveal",
+      "logo animation",
+      "chevron",
+      "diamond",
+      "squares",
+      "geometric logo",
+      "brand color",
+      "serif",
+      "brand intro",
+      "assemble",
+      "vertical",
+      "story"
+    ],
+    "palette": ["#fafafa", "#050505", "#2343d6", "#ffffff"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Brand name under the logo on the end frame; long names shrink and wrap to two lines"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a plate under the chevron emblem"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png"
+    },
+    "variantNote": "Same motion, but the last fade lands on the brand color instead of grey to black, the mark and name pick black or white to stay readable on it, and the name is set in a large display serif, so the end frame carries the brand; the build runs quicker to leave a held end frame."
+  },
+  "chevron-mark-assemble-c": {
+    "roles": ["opener", "closer"],
+    "concept": "Lone squares tumble across a field that keeps flipping between black and white until they find each other and lock into one solid chevron mark, so the brand reads as order made from scattered pieces. The copy is just the name: calm, confident and geometric.",
+    "needs": ["logo", "company name"],
+    "inspiration": "https://id.pinterest.com/pin/22518066881914111/",
+    "summary": "Small squares fall, tumble and lock into a geometric chevron mark with an amber keystone, and every background change is a diamond wipe that grows out of the pieces: from the square to black, from the chevron corner back to white and from the mark to near black, where a white plate unfolds from a small diamond into a circle around the logo above the company name.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a single black square drops in from the top edge of a white field, motion blurred"
+      },
+      {
+        "at": 0.5,
+        "what": "it lands near the centre and keeps tumbling, rocking and turning a half turn as it floats"
+      },
+      {
+        "at": 1.7,
+        "what": "a black diamond bursts out of the square and wipes the field to black, inverting the square"
+      },
+      {
+        "at": 1.8,
+        "what": "a second square drops in from the top and lands corner to corner on the first"
+      },
+      {
+        "at": 2.2,
+        "what": "the stacked pair rocks side to side as one piece"
+      },
+      {
+        "at": 3.5,
+        "what": "the pair twists apart and drifts upward, turning"
+      },
+      {
+        "at": 4.9,
+        "what": "both squares fall back toward the centre"
+      },
+      {
+        "at": 5.2,
+        "what": "a white diamond wipe grows from the chevron corner as the chevron unfolds, inverting the squares to black"
+      },
+      {
+        "at": 5.5,
+        "what": "the squares slam into the notch and lock with a small pulse"
+      },
+      {
+        "at": 5.8,
+        "what": "the top keystone diamond fills with the primary color"
+      },
+      {
+        "at": 6.4,
+        "what": "a near black diamond wipe grows out of the finished mark and turns it white"
+      },
+      {
+        "at": 6.5,
+        "what": "the mark glides up and shrinks into an emblem"
+      },
+      {
+        "at": 7.2,
+        "what": "a white plate unfolds from a small turning diamond and rounds into a circle sized to hold the whole logo"
+      },
+      {
+        "at": 7.5,
+        "what": "the company name rises in below in white"
+      },
+      {
+        "at": 7.8,
+        "what": "once the plate has settled into a circle the logo fades in inside it and the end frame holds"
+      }
+    ],
+    "visuals": [
+      "diamond shaped wipes between white and black",
+      "tumbling squares and diamonds",
+      "thick chevron mark with two stacked diamonds",
+      "amber keystone diamond with an ink border",
+      "round white logo plate",
+      "bold geometric sans name in white on near black"
+    ],
+    "motion": [
+      "squares dropping with motion blur and a spring landing",
+      "rocking, tumbling float",
+      "diamond wipes bursting from the pieces",
+      "pieces locking into a chevron with a pulse",
+      "plate unfolding from a turning diamond",
+      "emblem glide"
+    ],
+    "mood": ["minimal", "geometric", "playful", "monochrome with one accent"],
+    "useCases": [
+      "logo intro for a brand video",
+      "end card for a reel or story",
+      "app or studio sting",
+      "product launch opener"
+    ],
+    "editable": [
+      "logo image, plate shape and padding",
+      "company name and font",
+      "primary color on the keystone",
+      "final background color",
+      "light and dark flip colors",
+      "mark and square size",
+      "tumble amount",
+      "wipe style and length",
+      "emblem size",
+      "build speed"
+    ],
+    "keywords": [
+      "logo reveal",
+      "logo animation",
+      "chevron",
+      "diamond",
+      "diamond wipe",
+      "squares",
+      "geometric logo",
+      "brand intro",
+      "assemble",
+      "black and white",
+      "vertical",
+      "story"
+    ],
+    "palette": ["#fafafa", "#050505", "#0d0d0f", "#f2b51d", "#ffffff"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Brand name under the logo on the end frame; long names shrink and wrap to two lines"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a plate under the chevron emblem"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-round.png"
+    },
+    "variantNote": "Replaces the hard cuts with diamond wipes that grow out of the squares themselves and unfolds the logo plate from a diamond, so every change of background belongs to the mark and reads as one continuous build; the build runs quicker to leave a held end frame."
+  }
+}
