@@ -1,10 +1,10 @@
 import { createCompositionElement, createTrack, type Project, type Track } from '@/project';
-import { CLIP_DEFAULTS, type ClipId, getClipMeta } from '@/schemas';
+import { type ClipId, clipSampleProps, getClipMeta } from '@/schemas';
 
 const singleClipTrack = (id: ClipId): Track[] => {
   const track = createTrack('Clip');
   track.elements.push(
-    createCompositionElement(id, CLIP_DEFAULTS[id] as Record<string, unknown>, {
+    createCompositionElement(id, clipSampleProps(id), {
       id: `clip-${id}`,
       from: 0,
       durationInFrames: getClipMeta(id).durationInFrames,

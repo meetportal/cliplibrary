@@ -145,6 +145,23 @@ To add a clip:
    can edit, its palette and search keywords. Label from frames of the rendered preview, not from
    the title. `tests/schemas/clip-labels.test.ts` fails when a clip has no label.
 
+## Template clips and batches
+
+New clips are templates made in batches, three variants (`<design-id>-a`, `-b`, `-c`) of each
+design. Editable copy and images are `{{Token}}` strings in the clip's defaults (`{{Company Name}}`,
+`{{Logo}}`, `{{Website}}`, ...), so `CLIP_DEFAULTS` and the MCP tools keep the raw tokens.
+
+- The label in `clip-labels.json` adds `concept`, `needs`, `placeholders` (`kind`, `hint` and
+  `maxChars` for text), `samples` (a value for every token), `variantNote` and `inspiration`.
+- `clipSampleProps` (`src/schemas/clip-tokens.ts`) fills the tokens from the samples. Only
+  `seedProjectForClip`, the timeline's Animation picker and `render-one` without `--props` use it,
+  so the editor, previews and stills never show a raw token.
+- `ClipMeta` adds `batch` (`<yyyy-mm-dd>-<source>-<what>`), `variantOf`, `variant` and `retired`.
+  `auditBatchClip` and `auditBatchGroups` (`src/schemas/batch-audit.ts`,
+  `tests/schemas/batch-audit.test.ts`) enforce the template rules on every clip with a `batch`.
+- Sample logos are `public/design-assets/logos/willow-wide.png` (variant a),
+  `willow-square.png` (b) and `willow-round.png` (c).
+
 ## Controls
 
 Every clip has a hand-written control layout that drives its editor panel, and a field tag on

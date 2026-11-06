@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import { CLIP_DEFAULTS, type ClipId, isClipId } from '@/schemas';
+import { type ClipId, clipSampleProps, isClipId } from '@/schemas';
 import { renderClip } from './render-clip';
 import { type RenderOptions, resolveRenderOptions } from './render-options';
 
@@ -18,7 +18,7 @@ const readJson = async <T>(path: string): Promise<T> => {
 
 const loadProps = (clipId: ClipId, propsPath: string | null): Promise<Record<string, unknown>> =>
   propsPath === null
-    ? Promise.resolve(CLIP_DEFAULTS[clipId] as Record<string, unknown>)
+    ? Promise.resolve(clipSampleProps(clipId))
     : readJson<Record<string, unknown>>(propsPath);
 
 const main = async (): Promise<void> => {

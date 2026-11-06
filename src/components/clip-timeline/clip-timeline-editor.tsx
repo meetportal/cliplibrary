@@ -39,7 +39,7 @@ import {
   resizeElement,
   trimElementStart,
 } from '@/project';
-import { CLIP_DEFAULTS, CLIP_REGISTRY, type ClipId, getClipMeta } from '@/schemas';
+import { CLIP_REGISTRY, type ClipId, clipSampleProps, getClipMeta } from '@/schemas';
 import { ClipPropertySidebar } from './clip-property-sidebar';
 import { ClipTimelineHeader } from './clip-timeline-header';
 import { type MobilePanel, MobilePanelSwitch } from './mobile-panel-switch';
@@ -204,11 +204,10 @@ export const ClipTimelineEditor = ({
       return;
     }
     const sceneId = animationId as ClipId;
-    const element = createCompositionElement(
-      sceneId,
-      CLIP_DEFAULTS[sceneId] as Record<string, unknown>,
-      { from: frames.get(), durationInFrames: getClipMeta(sceneId).durationInFrames },
-    );
+    const element = createCompositionElement(sceneId, clipSampleProps(sceneId), {
+      from: frames.get(),
+      durationInFrames: getClipMeta(sceneId).durationInFrames,
+    });
     setProject(addElement(project, activeTrack, element));
     setSelectedId(element.id);
   };
