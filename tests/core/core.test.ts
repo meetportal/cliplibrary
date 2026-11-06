@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test';
 import { z } from 'zod';
 import { type ControlDescriptor, describeSchema } from '@/core';
-import { CLIP_SCHEMAS, zColor, zMultiline, zSlider } from '@/schemas';
+import { CLIP_MODULES, zColor, zMultiline, zSlider } from '@/schemas';
 
 const byPath = (controls: ControlDescriptor[], key: string): ControlDescriptor => {
   const found = controls.find((control) => control.path[0] === key);
@@ -48,7 +48,7 @@ describe('describeSchema', () => {
   });
 
   it('covers every top-level field of every real clip schema', () => {
-    for (const schemaForClip of Object.values(CLIP_SCHEMAS)) {
+    for (const { schema: schemaForClip } of CLIP_MODULES) {
       const described = describeSchema(schemaForClip);
       expect(described.length).toBeGreaterThan(0);
     }

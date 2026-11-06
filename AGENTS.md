@@ -43,8 +43,7 @@ Everything lives in one package. Modules import each other through the `@/` alia
   offline WAV export (`engine/`), the piano roll, drum grid, chord strip and AI renders.
 - `src/posters` - poster packs. Each pack (`packs/<category>/<pack-id>/`) is one multi-page
   `Design` built with the authoring kit in `src/posters/kit` (elements, blocks, devices,
-  templates and shared listing slides). `photos.ts` lists the bundled Unsplash photos in
-  `public/design-assets/photos`.
+  templates and shared listing slides). The library holds no packs right now.
 - `src/sites` - website templates: per-template Zod content schemas, defaults, metadata and control
   layouts (`templates/<category>/<id>.ts`), slugs, event dates, `.ics` files and the published-site
   check and paths (`published-site.ts`). Pure.
@@ -98,8 +97,8 @@ Everything lives in one package. Modules import each other through the `@/` alia
   the pack in `src/posters/poster-updated-at.json` when it is named or has no entry yet, so the
   grid sorts posters and clips together by last update. `--pack-file <path> --out <dir> --width
   <px>` renders an unregistered pack to any folder for review. `tests/posters/posters.test.ts`
-  fails when a pack has no preview, no timestamp, or uses a font, icon or photo outside the
-  bundled sets.
+  fails when a pack has no preview, no timestamp, uses a font or icon outside the bundled sets,
+  or an image that is not a file in `public`.
 
 ## Rules
 
@@ -175,27 +174,6 @@ Field tags are read back by `src/core/schema-introspect.ts`:
 - `EASING_IDS`/`EasingId` live in `@/schemas` and are the single source consumed by the
   compositions motion kit (`kit/easing.ts`).
 
-## Generated footage clips
-
-Some clips play live-action footage generated from scratch with OpenRouter models, with editable
-print or graphics tracked onto it (`elevator-newspaper`). Each footage is a spec in
-`src/footage/<id>.ts`: the image model prompts for its stills (key frames and any photos the
-graphics use), the video model shots with first and last frames, the plate segments (frame
-ranges, reversed or sped up) and the tracking regions.
-
-- `bun run footage <id>` generates missing stills and shots into the ignored `footage/<id>/`,
-  publishes photos to `public/footage/<id>/` and assembles `public/footage/<id>/plate.mp4`
-  (`--stills`, `--shots`, `--plate`, `--only <name>`, `--force`). It needs `OPENROUTER_API_KEY`
-  and calls paid models; stills use Gemini 3 Pro Image, and Kling v3.0 Pro held the doors and the
-  paper still where Veo 3.1 kept moving them.
-- `bun run footage:track <id>` reads the plate and writes `src/footage/<id>.track.json`: the door
-  edges and the corners of each newspaper page on every frame, from robust line fits to the paper
-  edges and the fold. Commit the plate, the photos and the track; re-run the tracker whenever the
-  plate changes.
-- The scene plays the plate with `<Video>` and draws the print as canvas textures on a
-  homography-warped mesh in an orthographic `ThreeCanvas`, clipped to the door gap. Keep the
-  plate's frame rate as the clip's `fps` so plate and track frames line up one to one.
-
 ## Projects and layering
 
 A `Project` (in `@/project`) is `{ fps, width, height, durationInFrames, background,
@@ -268,7 +246,7 @@ To add a pack:
 3. Run `bun run render:posters <pack-id>` and commit the previews and the timestamp.
 
 Keep every template element inside the template's own bounds (use `poly` for diagonal bands), and
-only use the bundled fonts, icons and photos.
+only use the bundled fonts and icons, and image files committed under `public`.
 
 ### Standard poster controls
 
@@ -331,8 +309,9 @@ To add a template:
 1. Add `src/sites/templates/<category>/<id>.ts` (`<name>Schema`, `<name>Defaults`, `<name>Meta`)
    and `<id>-controls.ts`, and register it with a `headline` in `src/sites/templates/index.ts`.
    `tests/sites/templates.test.ts` requires every content path in the layout exactly once.
-2. Build the website in `src/components/sites/templates/<id>/` as a `SiteView` (`scope`, `Body`,
-   `Intro`, `hasIntro`) and bind it in `src/components/sites/site-registry.tsx`.
+2. Build the website in `src/components/sites/templates/<id>/` (`scope`, `Body`, `Intro`,
+   `hasIntro`) and add a binder for it to `BINDERS` in `src/components/sites/site-registry.tsx`
+   that parses the content and returns a `BoundSite`. The library holds no templates right now.
 3. Put bundled photos in `public/site-assets/<id>/`, run `bunx next dev --port 3201` and
    `bun run render:sites <id> --base http://localhost:3201`, then commit
    `public/site-previews/<id>.jpg` (`tests/sites/previews.test.ts` fails without it).

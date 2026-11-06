@@ -1,11 +1,10 @@
 import type { Fill } from '@/design';
-import type { PosterPhotoName } from '../photos';
 import { group, offset, rotateNodes } from './blocks';
 import { circle, type Nodes, photo, rect, shadow } from './elements';
 
 interface PhoneStyle {
   screen?: Fill;
-  photo?: PosterPhotoName;
+  photo?: string;
   body?: string;
   rotation?: number;
   content?: Nodes[];
@@ -96,7 +95,7 @@ export const browser = (
 
 interface LaptopStyle {
   screen?: Fill;
-  photo?: PosterPhotoName;
+  photo?: string;
   body?: string;
   content?: Nodes[];
 }

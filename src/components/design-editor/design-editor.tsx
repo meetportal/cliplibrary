@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  Camera,
   Image as ImageIcon,
   Layers,
   LayoutTemplate,
@@ -37,7 +36,6 @@ import { ShortcutsDialog } from './shortcuts-dialog';
 import { BackgroundPanel } from './sidebar/background-panel';
 import { ElementsPanel } from './sidebar/elements-panel';
 import { LayersPanel } from './sidebar/layers-panel';
-import { PhotosPanel } from './sidebar/photos-panel';
 import { TemplatesPanel } from './sidebar/templates-panel';
 import { TextPanel } from './sidebar/text-panel';
 import { ThemePanel } from './sidebar/theme-panel';
@@ -188,12 +186,6 @@ export const DesignEditor = ({
       render: () => <ElementsPanel onAdd={addElement} />,
     },
     { id: 'text', label: 'Text', Icon: Type, render: () => <TextPanel onAdd={addElement} /> },
-    {
-      id: 'photos',
-      label: 'Photos',
-      Icon: Camera,
-      render: () => <PhotosPanel onPlace={(image) => placeImage(image)} />,
-    },
     {
       id: 'uploads',
       label: 'Uploads',

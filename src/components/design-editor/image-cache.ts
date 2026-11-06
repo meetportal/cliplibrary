@@ -36,13 +36,6 @@ export const loadImage = (src: string): Promise<HTMLImageElement | null> => {
 
 const cachedImage = (src: string): HTMLImageElement | undefined => loaded.get(src);
 
-export const cachedImageSize = (src: string): { width: number; height: number } | undefined => {
-  const image = loaded.get(src);
-  return image === undefined
-    ? undefined
-    : { width: image.naturalWidth, height: image.naturalHeight };
-};
-
 export const useImageSource = (src: string): HTMLImageElement | undefined => {
   const [image, setImage] = useState<HTMLImageElement | undefined>(() =>
     src === '' ? undefined : cachedImage(src),

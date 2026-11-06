@@ -22,7 +22,6 @@ import {
   type StarElement,
   type TextElement,
 } from '@/design';
-import { POSTER_PHOTOS, type PosterPhotoName } from '../photos';
 
 type Style<T> = Partial<Omit<T, 'type' | 'id'>>;
 
@@ -158,14 +157,13 @@ export const icon = (
   createIcon({ name, icon: name, x, y, width: size, height: size, color, ...style });
 
 export const photo = (
-  name: PosterPhotoName,
+  src: string,
   x: number,
   y: number,
   width: number,
   height: number,
   style: Style<ImageElement> = {},
-): ImageElement =>
-  createImage({ name, src: POSTER_PHOTOS[name].src, x, y, width, height, ...style });
+): ImageElement => createImage({ name: 'Photo', src, x, y, width, height, ...style });
 
 export const frame = (
   x: number,

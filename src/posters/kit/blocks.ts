@@ -5,7 +5,6 @@ import {
   scaleElement,
   type TextElement,
 } from '@/design';
-import type { PosterPhotoName } from '../photos';
 import { circle, flatten, icon, type Nodes, photo, rect, shadow, star, text } from './elements';
 
 export const group = (...nodes: Nodes[]): DesignElement[] => {
@@ -106,16 +105,10 @@ export const card = (x: number, y: number, width: number, height: number, style:
     ...(style.shadowBlur === 0 ? {} : shadow(style.shadowBlur ?? 36, 14, 'rgba(15,23,42,0.14)')),
   });
 
-export const avatar = (
-  name: PosterPhotoName,
-  cx: number,
-  cy: number,
-  radius: number,
-  ring?: string,
-) =>
+export const avatar = (src: string, cx: number, cy: number, radius: number, ring?: string) =>
   group(
     ring === undefined ? [] : circle(cx, cy, radius + radius * 0.08, ring),
-    photo(name, cx - radius, cy - radius, radius * 2, radius * 2, { cornerRadius: radius }),
+    photo(src, cx - radius, cy - radius, radius * 2, radius * 2, { cornerRadius: radius }),
   );
 
 export const rating = (

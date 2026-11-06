@@ -2,7 +2,7 @@ import type { z } from 'zod';
 import type { ClipControls } from '@/schemas/control-layout';
 import type { ClipTheme, SiteCategory, SiteTag } from '@/schemas/taxonomy';
 
-export interface SiteMeta {
+interface SiteMeta {
   id: string;
   title: string;
   description: string;

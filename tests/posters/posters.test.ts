@@ -6,7 +6,6 @@ import {
   auditPosterControls,
   findPoster,
   POSTER_META,
-  POSTER_PHOTOS,
   POSTER_UPDATED_AT,
   POSTERS,
   posterPreviewPath,
@@ -94,8 +93,7 @@ describe('posters', () => {
     expect(leftovers).toEqual([]);
   });
 
-  it('only use bundled fonts, icons and photos', () => {
-    const photoSources = new Set<string>(Object.values(POSTER_PHOTOS).map((photo) => photo.src));
+  it('only use bundled fonts, icons and images', () => {
     const problems = elements.flatMap(({ pack, element }) => {
       if (element.type === 'text' && !isKnownFont(element.fontFamily)) {
         return [`${pack}: font ${element.fontFamily}`];
@@ -103,7 +101,11 @@ describe('posters', () => {
       if (element.type === 'icon' && !isDesignIcon(element.icon)) {
         return [`${pack}: icon ${element.icon}`];
       }
-      if (element.type === 'image' && element.src !== '' && !photoSources.has(element.src)) {
+      if (
+        element.type === 'image' &&
+        element.src !== '' &&
+        !existsSync(join(publicDir, element.src))
+      ) {
         return [`${pack}: photo ${element.src}`];
       }
       return [];
@@ -115,11 +117,10 @@ describe('posters', () => {
     expect(Object.keys(POSTER_UPDATED_AT).sort()).toEqual([...packIds].sort());
   });
 
-  it('ships every bundled photo and a preview for every design', () => {
-    const missing = [
-      ...Object.values(POSTER_PHOTOS).map((photo) => photo.src),
-      ...POSTER_META.map(posterPreviewPath),
-    ].filter((path) => !existsSync(join(publicDir, path)));
+  it('ships a preview for every design', () => {
+    const missing = [...POSTER_META.map(posterPreviewPath)].filter(
+      (path) => !existsSync(join(publicDir, path)),
+    );
     expect(missing).toEqual([]);
   });
 });

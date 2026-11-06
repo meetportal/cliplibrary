@@ -5,7 +5,7 @@ import { listClips } from './clips';
 import { listPosters } from './posters';
 import { listSites } from './sites';
 
-export const GALLERY_PAGE_SIZE = 48;
+const GALLERY_PAGE_SIZE = 48;
 
 let catalog: readonly GalleryItem[] | null = null;
 

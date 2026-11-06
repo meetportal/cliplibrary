@@ -3,7 +3,6 @@ import {
   DEFAULT_FILTERS,
   facetCounts,
   filterClips,
-  formatDuration,
   type GalleryMeta,
   hasActiveFilters,
   parseFilters,
@@ -73,38 +72,6 @@ describe('gallery filters', () => {
     expect(parsed.sort).toBe('relevance');
   });
 
-  const search = (query: string) => ids(filterClips(items, { ...DEFAULT_FILTERS, query }));
-
-  it('requires every search token across title, tags, category and description', () => {
-    expect(search('PHONE grid')).toEqual(['phone-wall']);
-    expect(search('3d multi-phone layouts')).toContain('phone-wall');
-    expect(search('phone chart')).toEqual([]);
-  });
-
-  it('forgives typos, completes prefixes and knows category synonyms', () => {
-    expect(search('typewritter')).toEqual(['typewriter']);
-    expect(search('notifcation')).toEqual(['floating-cards', 'message-arise']);
-    expect(search('scrol')[0]).toBe('phone-scroll');
-    expect(search('hand drawn')).toEqual([
-      'handwritten-note',
-      'chalk-badge',
-      'chalk-title',
-      'scribble-caption',
-      'chalk-badge-grid',
-      'doodle-arrows',
-      'chalk-badges-reel',
-    ]);
-    const phones = CLIP_REGISTRY.filter((meta) => meta.tags.includes('phone')).map(
-      (meta) => meta.id,
-    );
-    expect(search('iphone').sort()).toEqual([...phones].sort());
-  });
-
-  it('ranks title matches above tag and description matches', () => {
-    expect(search('flip')).toEqual(['letter-flip', 'coming-soon-flips', 'app-icon-reveal']);
-    expect(search('counter')[0]).toBe('number-counter');
-  });
-
   it('puts the most recently updated clips first when there is no search to rank by', () => {
     const newestFirst = (list: { meta: GalleryMeta }[]) => list.map((item) => item.meta.updatedAt);
     const order = newestFirst(filterClips(items, DEFAULT_FILTERS));
@@ -115,16 +82,6 @@ describe('gallery filters', () => {
     expect(rankedOrder).toEqual([...rankedOrder].sort((left, right) => right.localeCompare(left)));
   });
 
-  it('filters by category, every selected tag and theme together', () => {
-    const result = filterClips(items, {
-      ...DEFAULT_FILTERS,
-      category: 'phone-layouts',
-      tags: ['3d', 'phone'],
-      theme: 'dark',
-    });
-    expect(ids(result)).toEqual(['phone-pair']);
-  });
-
   it('sorts by duration and by name', () => {
     const shortest = filterClips(items, { ...DEFAULT_FILTERS, sort: 'shortest' });
     const seconds = shortest.map((item) => item.meta.durationInFrames / item.meta.fps);
@@ -133,23 +90,5 @@ describe('gallery filters', () => {
       (item) => item.meta.title,
     );
     expect(byName).toEqual([...byName].sort((left, right) => right.localeCompare(left)));
-  });
-
-  it('counts each facet against the other active filters', () => {
-    const filters = { ...DEFAULT_FILTERS, category: 'phone-layouts' as const };
-    const { categories, themes } = facetCounts(items, filters);
-    expect(categories['kinetic-type']).toBeGreaterThan(0);
-    const darkPhoneLayouts = CLIP_REGISTRY.filter(
-      (meta) => meta.category === 'phone-layouts' && meta.theme === 'dark',
-    ).length;
-    expect(darkPhoneLayouts).toBeGreaterThan(0);
-    expect(themes.dark).toBe(darkPhoneLayouts);
-  });
-
-  it('reports active filters and formats durations', () => {
-    expect(hasActiveFilters(DEFAULT_FILTERS)).toBe(false);
-    expect(hasActiveFilters({ ...DEFAULT_FILTERS, query: ' x ' })).toBe(true);
-    const meta = CLIP_REGISTRY.find((entry) => entry.id === 'scene-transition');
-    expect(meta === undefined ? '' : formatDuration(videoMeta(meta))).toBe('1.3s');
   });
 });

@@ -46,7 +46,8 @@ const clipPropIssues = (project: Project): string[] =>
       if (!isClipId(element.clipId)) {
         return [`${where}: unknown clipId "${element.clipId}"`];
       }
-      const result = CLIP_SCHEMAS[element.clipId].safeParse(element.props);
+      const schema: z.ZodType = CLIP_SCHEMAS[element.clipId];
+      const result = schema.safeParse(element.props);
       return result.success ? [] : [`${where}: ${z.prettifyError(result.error)}`];
     }),
   );
