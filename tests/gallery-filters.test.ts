@@ -3,6 +3,7 @@ import {
   DEFAULT_FILTERS,
   facetCounts,
   filterClips,
+  formatDuration,
   type GalleryMeta,
   hasActiveFilters,
   parseFilters,
@@ -13,8 +14,49 @@ import { CLIP_REGISTRY } from '@/schemas';
 
 const items = CLIP_REGISTRY.map((meta) => ({ meta: videoMeta(meta) }));
 const ids = (list: { meta: GalleryMeta }[]) => list.map((item) => item.meta.id);
+const CHEVRON = ['chevron-mark-assemble-a', 'chevron-mark-assemble-b', 'chevron-mark-assemble-c'];
+const DOT_RING = ['dot-ring-logo-reveal-a', 'dot-ring-logo-reveal-b', 'dot-ring-logo-reveal-c'];
 
 describe('gallery filters', () => {
+  const search = (query: string) => ids(filterClips(items, { ...DEFAULT_FILTERS, query })).sort();
+
+  it('requires every search token across title, tags, category and description', () => {
+    expect(search('chevron FLIP')).toEqual(CHEVRON);
+    expect(search('pink ring')).toEqual(DOT_RING);
+    expect(search('dot ring flip')).toEqual([]);
+  });
+
+  it('forgives typos, completes prefixes and knows category synonyms', () => {
+    expect(search('chevrom')).toEqual(CHEVRON);
+    expect(search('chev')).toEqual(CHEVRON);
+    expect(search('wordmark')).toEqual([...CHEVRON, ...DOT_RING]);
+  });
+
+  it('filters by category, every selected tag and theme together', () => {
+    const result = filterClips(items, {
+      ...DEFAULT_FILTERS,
+      category: 'brand',
+      tags: ['logo', 'draw'],
+      theme: 'dark',
+    });
+    expect(ids(result)).toEqual(['dot-ring-logo-reveal-b']);
+  });
+
+  it('counts each facet against the other active filters', () => {
+    const { categories, themes, tags } = facetCounts(items, { ...DEFAULT_FILTERS, theme: 'dark' });
+    const dark = CLIP_REGISTRY.filter((meta) => meta.theme === 'dark').length;
+    expect(categories.brand).toBe(dark);
+    expect(tags.draw).toBe(1);
+    expect(themes.light).toBe(CLIP_REGISTRY.length - dark);
+  });
+
+  it('reports active filters and formats durations', () => {
+    expect(hasActiveFilters(DEFAULT_FILTERS)).toBe(false);
+    expect(hasActiveFilters({ ...DEFAULT_FILTERS, query: ' x ' })).toBe(true);
+    const meta = CLIP_REGISTRY.find((entry) => entry.id === 'dot-ring-logo-reveal-a');
+    expect(meta === undefined ? '' : formatDuration(videoMeta(meta))).toBe('6s');
+  });
+
   it('round-trips filters through the URL and drops defaults', () => {
     const filters = {
       query: 'phone',

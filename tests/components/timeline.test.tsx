@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { useState } from 'react';
 import { PropertyPanel } from '@/components/timeline/property-panel/property-panel';
 import { Timeline } from '@/components/timeline/timeline';
+import { seedProjectForClip } from '@/core';
 import { createFrameStore } from '@/lib/frame-store';
 import { LABEL_WIDTH } from '@/lib/timeline-geometry';
 import {
@@ -62,7 +63,7 @@ const renderTimeline = (project: Project, overrides: Record<string, unknown> = {
 describe('Timeline playhead', () => {
   it('follows the frame store without re-rendering the tracks', () => {
     const frames = createFrameStore();
-    const project = projectWithBlock();
+    const project = seedProjectForClip('chevron-mark-assemble-a');
     render(
       <Timeline
         project={project}
@@ -81,12 +82,12 @@ describe('Timeline playhead', () => {
         onRemoveTrack={mock()}
       />,
     );
-    const block = screen.getByRole('button', { name: 'Text element' });
+    const block = screen.getByRole('button', { name: 'Clip element' });
     act(() => frames.set(30));
     expect(screen.getByTestId('playhead').style.transform).toBe(
       `translateX(${LABEL_WIDTH + 30 * PX}px)`,
     );
-    expect(screen.getByRole('button', { name: 'Text element' })).toBe(block);
+    expect(screen.getByRole('button', { name: 'Clip element' })).toBe(block);
   });
 });
 
