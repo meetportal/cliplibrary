@@ -28,10 +28,12 @@ for (const viewport of VIEWPORTS) {
       await expect(clip).toBeVisible();
       expect(await pageOverflow(page)).toBe(0);
       await expect
-        .poll(async () => (await clip.boundingBox())?.width ?? 0)
-        .toBeGreaterThan(viewport.width * 0.6);
-      const box = await clip.boundingBox();
-      expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(viewport.width);
+        .poll(async () => {
+          const box = await clip.boundingBox();
+          const width = box?.width ?? 0;
+          return width > viewport.width * 0.6 && (box?.x ?? 0) + width <= viewport.width;
+        })
+        .toBe(true);
     });
   });
 }
