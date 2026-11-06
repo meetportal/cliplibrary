@@ -29,6 +29,9 @@ export const frameOutline = (frame: number, line: Timeline, lockup: Lockup, outl
   };
 };
 
+const BLOOM_FRAMES = 14;
+const BLOOM_MIN_GROWTH = 1.16;
+
 const bloomFade = (frame: number, line: Timeline) =>
   progress(frame, [line.close + 2, line.close + 16]);
 
@@ -94,9 +97,15 @@ const Handoff = ({ frame, props, lockup, line }: MarkProps) => {
     if (fade >= 1) {
       return null;
     }
-    const size =
-      diameter *
-      (1 + 0.16 * progress(frame, [line.close, line.close + 18], Easing.out(Easing.quad)));
+    const enclosing = Math.max(
+      diameter * BLOOM_MIN_GROWTH,
+      Math.hypot(lockup.logo.width, lockup.logo.height) + thickness,
+    );
+    const size = lerp(
+      diameter,
+      enclosing,
+      progress(frame, [line.close, line.close + BLOOM_FRAMES], Easing.out(Easing.cubic)),
+    );
     return (
       <RoundedRect
         lockup={lockup}

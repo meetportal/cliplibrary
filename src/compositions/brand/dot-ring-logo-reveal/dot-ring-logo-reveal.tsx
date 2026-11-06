@@ -16,7 +16,7 @@ const logoEntrance = (handoff: DotRingLogoRevealProps['ring']['handoff'], close:
     ? { start: close + 14, end: close + 30, scale: 0.94 }
     : handoff === 'frame'
       ? { start: close + 4, end: close + 26, scale: 0.86 }
-      : { start: close - 2, end: close + 24, scale: 0.84 };
+      : { start: close + 3, end: close + 26, scale: 0.84 };
 
 const LogoLayer = ({
   frame,

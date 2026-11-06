@@ -18,7 +18,9 @@ const MERGE_SHARE = 0.14;
 const APEX_RISE = 230;
 const FRAME_MARGIN = 80;
 const MARK_CLEARANCE = 24;
-const EDGE_CLEARANCE = 16;
+const FALL_EDGE_MARGIN = 60;
+const FALL_SHARE = 0.7;
+const LANDING_RISE = 70;
 
 export type Lockup = {
   center: Point;
@@ -85,15 +87,13 @@ export const buildLockup = (
   const radius = props.ring.size / 2;
   const markHalfWidth = Math.max(shape.width, props.ring.size + props.ring.thickness) / 2;
   const clearOfMark = canvas.width / 2 - markHalfWidth - stopRadius - MARK_CLEARANCE;
-  const slideStart = {
-    x: Math.max(stopRadius + EDGE_CLEARANCE, Math.min(left + stopRadius * 0.6, clearOfMark)),
-    y: stop.y,
-  };
+  const slideStart = { x: left + stopRadius * 0.6, y: stop.y };
+  const fallX = Math.max(stopRadius + FALL_EDGE_MARGIN, Math.min(slideStart.x, clearOfMark));
   const thickness = props.ring.thickness;
   const ringTop = center.y - radius - thickness / 2;
   const shapeTop = center.y - shape.height / 2;
   const apex = {
-    x: slideStart.x,
+    x: fallX,
     y: Math.max(SIDE_MARGIN, Math.min(ringTop, shapeTop) - APEX_RISE),
   };
   const exitFrom = { x: center.x, y: center.y - radius };
@@ -103,12 +103,20 @@ export const buildLockup = (
     { x: apex.x + 0.3 * (exitFrom.x - apex.x), y: apex.y },
     apex,
   ]);
-  const drop = curve([
-    apex,
-    lerpPoint(apex, slideStart, 1 / 3),
-    lerpPoint(apex, slideStart, 2 / 3),
-    slideStart,
-  ]);
+  const drop =
+    fallX === slideStart.x
+      ? curve([
+          apex,
+          lerpPoint(apex, slideStart, 1 / 3),
+          lerpPoint(apex, slideStart, 2 / 3),
+          slideStart,
+        ])
+      : curve([
+          apex,
+          { x: fallX, y: apex.y + FALL_SHARE * (slideStart.y - apex.y) },
+          { x: fallX, y: slideStart.y - LANDING_RISE },
+          slideStart,
+        ]);
   const circumference = 2 * Math.PI * radius;
   const mergeDistance = MERGE_SHARE * circumference;
   const merge = ringPoint(center, radius, mergeDistance);
