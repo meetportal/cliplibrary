@@ -17,6 +17,8 @@ const STOP_GAP = 0.06;
 const MERGE_SHARE = 0.14;
 const APEX_RISE = 230;
 const FRAME_MARGIN = 80;
+const MARK_CLEARANCE = 24;
+const EDGE_CLEARANCE = 16;
 
 export type Lockup = {
   center: Point;
@@ -80,8 +82,13 @@ export const buildLockup = (
   const baseline = top + markHeight + props.name.gap + metrics.capTop;
   const left = (canvas.width - lineWidth) / 2;
   const stop = { x: left + lineWidth - stopRadius, y: baseline - stopRadius };
-  const slideStart = { x: left + stopRadius * 0.6, y: stop.y };
   const radius = props.ring.size / 2;
+  const markHalfWidth = Math.max(shape.width, props.ring.size + props.ring.thickness) / 2;
+  const clearOfMark = canvas.width / 2 - markHalfWidth - stopRadius - MARK_CLEARANCE;
+  const slideStart = {
+    x: Math.max(stopRadius + EDGE_CLEARANCE, Math.min(left + stopRadius * 0.6, clearOfMark)),
+    y: stop.y,
+  };
   const thickness = props.ring.thickness;
   const ringTop = center.y - radius - thickness / 2;
   const shapeTop = center.y - shape.height / 2;

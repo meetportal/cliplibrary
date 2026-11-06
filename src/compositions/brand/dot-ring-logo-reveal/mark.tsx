@@ -30,7 +30,7 @@ export const frameOutline = (frame: number, line: Timeline, lockup: Lockup, outl
 };
 
 const bloomFade = (frame: number, line: Timeline) =>
-  progress(frame, [line.close - 3, line.close + 10]);
+  progress(frame, [line.close + 2, line.close + 16]);
 
 const RoundedRect = ({
   lockup,
