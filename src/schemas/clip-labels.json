@@ -400,7 +400,7 @@
     "variantNote": "Replaces the hard cuts with diamond wipes that grow out of the squares themselves and unfolds the logo plate from a diamond, so every change of background belongs to the mark and reads as one continuous build; the build runs quicker to leave a held end frame."
   },
   "dot-ring-logo-reveal-a": {
-    "summary": "On white, a pink dot is caught by a thick black ring as it draws, rides it round as a comet, and the ring thins away as the logo blooms out of it. The dot hops out of the ring, falls straight onto the name line and slides right, writing the company name letter by letter, and rests as its pink full stop.",
+    "summary": "On white, a pink dot is caught by a thick black ring as it draws, rides it round as a comet, and the ring thins away as the logo blooms out of it. The dot hops out of the ring, drops beside the logo onto the name line and slides right, writing the company name letter by letter, and rests as its pink full stop.",
     "beats": [
       {
         "at": 0.0,
@@ -428,7 +428,7 @@
       },
       {
         "at": 2.7,
-        "what": "it falls beside the logo, accelerating, and lands hard where the name begins with a quick squash, then rests for a beat"
+        "what": "it falls straight down beside the logo, accelerating, and lands hard on the name line with a quick squash, then rests for a beat"
       },
       {
         "at": 3.1,
@@ -513,7 +513,7 @@
     "inspiration": "https://id.pinterest.com/pin/22518066881914111/"
   },
   "dot-ring-logo-reveal-b": {
-    "summary": "On charcoal, a pink dot rides a light drawn ring round as a comet; the closed ring fills into a solid disc that reshapes into a plate fitted to the logo. The dot hops out of the ring, falls straight onto the name line and writes the company name in a serif, resting as its pink full stop.",
+    "summary": "On charcoal, a pink dot rides a light drawn ring round as a comet; the closed ring fills into a solid disc that reshapes into a plate fitted to the logo. The dot hops out of the ring, drops beside the logo onto the name line and writes the company name in a serif, resting as its pink full stop.",
     "beats": [
       {
         "at": 0.0,
@@ -541,7 +541,7 @@
       },
       {
         "at": 2.8,
-        "what": "it falls beside the logo, accelerating, and lands hard where the name begins with a quick squash, then rests for a beat"
+        "what": "it falls straight down beside the logo, accelerating, and lands hard on the name line with a quick squash, then rests for a beat"
       },
       {
         "at": 3.2,
@@ -627,7 +627,7 @@
     "inspiration": "https://id.pinterest.com/pin/22518066881914111/"
   },
   "dot-ring-logo-reveal-c": {
-    "summary": "On warm paper, a pink dot rides a thick ink ring round as a comet; once closed, the ring slims into a fine badge outline that wraps the logo as it blooms inside. The dot hops out of the ring, falls straight onto the name line and writes the company name, resting as its pink full stop.",
+    "summary": "On warm paper, a pink dot rides a thick ink ring round as a comet; once closed, the ring slims into a fine badge outline that wraps the logo as it blooms inside. The dot hops out of the ring, drops beside the logo onto the name line and writes the company name, resting as its pink full stop.",
     "beats": [
       {
         "at": 0.0,
@@ -635,7 +635,7 @@
       },
       {
         "at": 0.8,
-        "what": "a ink arc starts at 12 o'clock just right of the dot, thin at first, and grows counter-clockwise down the left side"
+        "what": "an ink arc starts at 12 o'clock just right of the dot, thin at first, and grows counter-clockwise down the left side"
       },
       {
         "at": 1.1,
@@ -655,7 +655,7 @@
       },
       {
         "at": 2.8,
-        "what": "it falls beside the logo, accelerating, and lands hard where the name begins with a quick squash, then rests for a beat"
+        "what": "it falls straight down beside the logo, accelerating, and lands hard on the name line with a quick squash, then rests for a beat"
       },
       {
         "at": 3.2,
