@@ -24,10 +24,14 @@ type LeafDescriptor = Extract<
 
 type MediaKind = 'image' | 'video';
 
+const ABSOLUTE = /^(https?:|data:|blob:|\/)/;
+
+const mediaUrl = (value: string): string => (ABSOLUTE.test(value) ? value : `/${value}`);
+
 const MediaPreview = ({ kind, value }: { kind: MediaKind; value: string }) =>
   kind === 'video' ? (
     <video
-      src={value}
+      src={mediaUrl(value)}
       className="h-28 w-full rounded-md object-cover"
       muted
       playsInline
@@ -37,8 +41,8 @@ const MediaPreview = ({ kind, value }: { kind: MediaKind; value: string }) =>
     <span
       role="img"
       aria-label="Selected image"
-      className="block h-28 w-full rounded-md bg-center bg-cover"
-      style={{ backgroundImage: `url("${value}")` }}
+      className="block h-28 w-full rounded-md bg-center bg-contain bg-no-repeat"
+      style={{ backgroundImage: `url("${mediaUrl(value)}")` }}
     />
   );
 

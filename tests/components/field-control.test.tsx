@@ -156,6 +156,20 @@ describe('FieldControl image', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Clear image' }));
     expect(onChange).toHaveBeenCalledWith('');
   });
+
+  it('previews a bundled image from the site root, whatever page the editor is on', () => {
+    renderControl(descriptor, 'design-assets/logos/willow-wide.png');
+    expect(screen.getByRole('img', { name: 'Selected image' }).style.backgroundImage).toBe(
+      'url("/design-assets/logos/willow-wide.png")',
+    );
+  });
+
+  it('keeps links, data and object URLs as they are', () => {
+    renderControl(descriptor, 'data:image/png;base64,AAAA');
+    expect(screen.getByRole('img', { name: 'Selected image' }).style.backgroundImage).toBe(
+      'url("data:image/png;base64,AAAA")',
+    );
+  });
 });
 
 describe('FieldControl local media', () => {
