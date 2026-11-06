@@ -11,12 +11,12 @@ import { type LogoState, useLogo } from './use-logo';
 
 const withoutFullStop = (name: string) => name.trim().replace(/\.$/, '').trimEnd();
 
-const logoEntrance = (handoff: DotRingLogoRevealProps['ring']['handoff'], close: number) =>
+const logoEntrance = (handoff: DotRingLogoRevealProps['ring']['handoff'], line: Timeline) =>
   handoff === 'plate'
-    ? { start: close + 14, end: close + 30, scale: 0.94 }
+    ? { start: line.close + 14, end: line.close + 30, scale: 0.94 }
     : handoff === 'frame'
-      ? { start: close + 4, end: close + 26, scale: 0.86 }
-      : { start: close + 3, end: close + 26, scale: 0.84 };
+      ? { start: line.close + 4, end: line.close + 26, scale: 0.86 }
+      : { start: line.exitEnd + 4, end: line.exitEnd + 24, scale: 0.84 };
 
 const LogoLayer = ({
   frame,
@@ -31,7 +31,7 @@ const LogoLayer = ({
   line: Timeline;
   props: DotRingLogoRevealProps;
 }) => {
-  const entrance = logoEntrance(props.ring.handoff, line.close);
+  const entrance = logoEntrance(props.ring.handoff, line);
   const shown = progress(frame, [entrance.start, entrance.start + 14], Easing.linear);
   if (shown <= 0) {
     return null;

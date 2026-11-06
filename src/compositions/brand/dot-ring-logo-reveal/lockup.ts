@@ -19,6 +19,7 @@ const APEX_RISE = 230;
 const FRAME_MARGIN = 80;
 const MARK_CLEARANCE = 24;
 const FALL_EDGE_MARGIN = 60;
+const EXIT_TANGENT = 0.35;
 const FALL_SHARE = 0.7;
 const LANDING_RISE = 70;
 
@@ -99,7 +100,7 @@ export const buildLockup = (
   const exitFrom = { x: center.x, y: center.y - radius };
   const exit = curve([
     exitFrom,
-    { x: exitFrom.x - 0.3 * (exitFrom.x - apex.x), y: exitFrom.y - 0.85 * (exitFrom.y - apex.y) },
+    { x: exitFrom.x - EXIT_TANGENT * Math.abs(exitFrom.x - apex.x), y: exitFrom.y },
     { x: apex.x + 0.3 * (exitFrom.x - apex.x), y: apex.y },
     apex,
   ]);

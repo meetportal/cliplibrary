@@ -31,9 +31,10 @@ export const frameOutline = (frame: number, line: Timeline, lockup: Lockup, outl
 
 const BLOOM_FRAMES = 14;
 const BLOOM_MIN_GROWTH = 1.16;
+const swell = Easing.bezier(0.33, 0, 0.2, 1);
 
 const bloomFade = (frame: number, line: Timeline) =>
-  progress(frame, [line.close + 2, line.close + 16]);
+  progress(frame, [line.exitEnd, line.exitEnd + BLOOM_FRAMES + 2]);
 
 const RoundedRect = ({
   lockup,
@@ -104,7 +105,7 @@ const Handoff = ({ frame, props, lockup, line }: MarkProps) => {
     const size = lerp(
       diameter,
       enclosing,
-      progress(frame, [line.close, line.close + BLOOM_FRAMES], Easing.out(Easing.cubic)),
+      progress(frame, [line.exitEnd, line.exitEnd + BLOOM_FRAMES], swell),
     );
     return (
       <RoundedRect
