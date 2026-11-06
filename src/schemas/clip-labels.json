@@ -398,5 +398,346 @@
       "Logo": "design-assets/logos/willow-round.png"
     },
     "variantNote": "Replaces the hard cuts with diamond wipes that grow out of the squares themselves and unfolds the logo plate from a diamond, so every change of background belongs to the mark and reads as one continuous build; the build runs quicker to leave a held end frame."
+  },
+  "dot-ring-logo-reveal-a": {
+    "summary": "On white, a pink dot is caught by a thick black ring as it draws, rides it round as a comet, and the ring thins away as the logo blooms out of it. The dot hops out of the ring, falls straight onto the name line and slides right, writing the company name letter by letter, and rests as its pink full stop.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a lone pink dot rises into place near the top of an empty white frame"
+      },
+      {
+        "at": 0.8,
+        "what": "a black arc starts at 12 o'clock just right of the dot, thin at first, and grows counter-clockwise down the left side"
+      },
+      {
+        "at": 1.1,
+        "what": "the arc reaches the dot, which becomes a pink comet driving the ring round counter-clockwise"
+      },
+      {
+        "at": 1.7,
+        "what": "the ring closes, then thins and widens away"
+      },
+      {
+        "at": 1.8,
+        "what": "the dot leaves the ring top and hops up and left to an apex above the start of the name"
+      },
+      {
+        "at": 2.0,
+        "what": "the logo blooms out of the empty space where the ring was"
+      },
+      {
+        "at": 2.7,
+        "what": "it falls straight down in front of the logo, accelerating, lands hard on the name line with a quick squash and rests for a beat"
+      },
+      {
+        "at": 3.1,
+        "what": "the dot slides right as the company name rises in letter by letter behind it"
+      },
+      {
+        "at": 3.7,
+        "what": "the dot rests as the full stop and the whole lockup holds"
+      }
+    ],
+    "visuals": [
+      "white background",
+      "thick black drawn ring",
+      "pink dot and comet",
+      "logo above a one-line company name",
+      "geometric sans name",
+      "pink full stop"
+    ],
+    "motion": [
+      "stroke draw",
+      "comet sweep",
+      "bloom handoff",
+      "letter by letter rise",
+      "slide along the baseline",
+      "ballistic dot hop and hard landing"
+    ],
+    "mood": ["confident", "clean", "playful", "minimal"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "logo intro for a reel or story",
+      "brand sting at the end of a promo",
+      "launch announcement opener",
+      "end card for a portrait ad"
+    ],
+    "editable": [
+      "logo image",
+      "company name",
+      "name font",
+      "dot and accent color",
+      "ring and text colors",
+      "background color",
+      "ring size and stroke thickness",
+      "logo box size",
+      "how the ring hands off to the logo",
+      "draw and write timing"
+    ],
+    "palette": ["#ffffff", "#0b0b0c", "#ff59b6"],
+    "keywords": [
+      "logo reveal",
+      "logo intro",
+      "dot",
+      "ring",
+      "full stop",
+      "wordmark",
+      "monogram",
+      "brand sting",
+      "portrait",
+      "drawn circle",
+      "white",
+      "black ring",
+      "pink dot",
+      "bloom"
+    ],
+    "concept": "One pink dot is the pen: it draws a single thick ring that hands off to the logo, then writes the company name out underneath and rests as its full stop, so the eye follows one point from the first frame to the last. Confident and tidy, with a short breath before the name.",
+    "needs": ["logo", "company name"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it blooms out of the drawn ring above the name"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name the dot writes out under the logo; the pink dot is its full stop, so a final period in the name is replaced by the dot"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png"
+    },
+    "variantNote": "Closest to the inspiration, but the name rises in cleanly letter by letter behind the dot instead of half-drawn strokes, the lockup is stacked and large for portrait, and the finished logo and name hold to the end instead of blurring out to a blank frame.",
+    "inspiration": "https://id.pinterest.com/pin/22518066881914111/"
+  },
+  "dot-ring-logo-reveal-b": {
+    "summary": "On charcoal, a pink dot rides a light drawn ring round as a comet; the closed ring fills into a solid disc that reshapes into a plate fitted to the logo. The dot hops out of the ring, falls straight onto the name line and writes the company name in a serif, resting as its pink full stop.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a lone pink dot rises into place near the top of an empty charcoal frame"
+      },
+      {
+        "at": 0.8,
+        "what": "a light arc starts at 12 o'clock just right of the dot, thin at first, and grows counter-clockwise down the left side"
+      },
+      {
+        "at": 1.1,
+        "what": "the arc reaches the dot, which becomes a pink comet driving the ring round counter-clockwise"
+      },
+      {
+        "at": 1.7,
+        "what": "the ring closes and fills inward into a solid light disc"
+      },
+      {
+        "at": 1.8,
+        "what": "the dot leaves the ring top and hops up and left to an apex above the start of the name"
+      },
+      {
+        "at": 2.0,
+        "what": "the disc reshapes into a rounded plate fitted to the logo, and the logo fades up on it"
+      },
+      {
+        "at": 2.8,
+        "what": "it falls straight down in front of the logo, accelerating, lands hard on the name line with a quick squash and rests for a beat"
+      },
+      {
+        "at": 3.2,
+        "what": "the dot slides right as the serif company name rises in letter by letter behind it"
+      },
+      {
+        "at": 3.8,
+        "what": "the dot rests as the full stop and the whole lockup holds"
+      }
+    ],
+    "visuals": [
+      "charcoal background",
+      "light drawn ring",
+      "pink dot and comet",
+      "light rounded plate behind the logo",
+      "serif company name",
+      "pink full stop"
+    ],
+    "motion": [
+      "stroke draw",
+      "comet sweep",
+      "ring fills into a disc",
+      "disc morphs into a plate",
+      "letter by letter rise",
+      "ballistic dot hop and hard landing"
+    ],
+    "mood": ["elegant", "premium", "calm", "confident"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "logo intro on a dark story",
+      "brand sting for an evening event",
+      "end card for a portrait ad",
+      "launch announcement opener"
+    ],
+    "editable": [
+      "logo image",
+      "company name",
+      "name font",
+      "dot and accent color",
+      "ring, text and plate colors",
+      "background color",
+      "plate padding and roundness",
+      "logo box size",
+      "how the ring hands off to the logo",
+      "draw and write timing"
+    ],
+    "palette": ["#141416", "#f4f1ea", "#ff59b6"],
+    "keywords": [
+      "logo reveal",
+      "logo intro",
+      "dot",
+      "ring",
+      "full stop",
+      "wordmark",
+      "monogram",
+      "brand sting",
+      "portrait",
+      "drawn circle",
+      "dark",
+      "charcoal",
+      "plate",
+      "serif",
+      "badge"
+    ],
+    "concept": "One pink dot is the pen: it draws a single thick ring that hands off to the logo, then writes the company name out underneath and rests as its full stop, so the eye follows one point from the first frame to the last. Confident and tidy, with a short breath before the name.",
+    "needs": ["logo", "company name"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a light plate on the dark background"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name the dot writes out under the logo; the pink dot is its full stop, so a final period in the name is replaced by the dot"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png"
+    },
+    "variantNote": "Moves the inspiration to a dark charcoal stage with a serif name, and turns the drawn ring into a light plate that reshapes to fit the logo, so a logo of any colour stays readable on dark while the dot still writes the name.",
+    "inspiration": "https://id.pinterest.com/pin/22518066881914111/"
+  },
+  "dot-ring-logo-reveal-c": {
+    "summary": "On warm paper, a pink dot rides a thick ink ring round as a comet; once closed, the ring slims into a fine badge outline that wraps the logo as it blooms inside. The dot hops out of the ring, falls straight onto the name line and writes the company name, resting as its pink full stop.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a lone pink dot rises into place near the top of a warm off-white frame"
+      },
+      {
+        "at": 0.8,
+        "what": "a ink arc starts at 12 o'clock just right of the dot, thin at first, and grows counter-clockwise down the left side"
+      },
+      {
+        "at": 1.1,
+        "what": "the arc reaches the dot, which becomes a pink comet driving the ring round counter-clockwise"
+      },
+      {
+        "at": 1.7,
+        "what": "the closed ring slims to a fine outline and reshapes into a badge around the logo"
+      },
+      {
+        "at": 1.8,
+        "what": "the dot leaves the ring top and hops up and left to an apex above the start of the name"
+      },
+      {
+        "at": 1.9,
+        "what": "the logo blooms inside the badge"
+      },
+      {
+        "at": 2.8,
+        "what": "it falls straight down in front of the logo, accelerating, lands hard on the name line with a quick squash and rests for a beat"
+      },
+      {
+        "at": 3.2,
+        "what": "the dot slides right as the company name rises in letter by letter behind it"
+      },
+      {
+        "at": 3.8,
+        "what": "the dot rests as the full stop and the whole lockup holds"
+      }
+    ],
+    "visuals": [
+      "warm off-white background",
+      "thick ink ring that slims to a fine badge outline",
+      "pink dot and comet",
+      "logo inside the badge",
+      "rounded geometric sans name",
+      "pink full stop"
+    ],
+    "motion": [
+      "stroke draw",
+      "comet sweep",
+      "ring slims and widens into a badge",
+      "logo bloom",
+      "letter by letter rise",
+      "ballistic dot hop and hard landing"
+    ],
+    "mood": ["friendly", "crafted", "tidy", "confident"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "logo intro for a studio or shop",
+      "brand sting at the end of a reel",
+      "badge style end card",
+      "launch announcement opener"
+    ],
+    "editable": [
+      "logo image",
+      "company name",
+      "name font",
+      "dot and accent color",
+      "ring and text colors",
+      "background color",
+      "badge outline thickness",
+      "frame padding and roundness",
+      "how the ring hands off to the logo",
+      "draw and write timing"
+    ],
+    "palette": ["#faf7f2", "#1d1b19", "#ff59b6"],
+    "keywords": [
+      "logo reveal",
+      "logo intro",
+      "dot",
+      "ring",
+      "full stop",
+      "wordmark",
+      "monogram",
+      "brand sting",
+      "portrait",
+      "drawn circle",
+      "badge",
+      "outline",
+      "emblem",
+      "paper",
+      "seal"
+    ],
+    "concept": "One pink dot is the pen: it draws a single thick ring that hands off to the logo, then writes the company name out underneath and rests as its full stop, so the eye follows one point from the first frame to the last. Confident and tidy, with a short breath before the name.",
+    "needs": ["logo", "company name"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it blooms inside the drawn ring, which stays as a fine badge outline"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name the dot writes out under the logo; the pink dot is its full stop, so a final period in the name is replaced by the dot"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-round.png"
+    },
+    "variantNote": "Keeps the drawn ring in the end frame, as the inspiration keeps its G: the ring slims into a fine badge outline that fits the logo, so the signature stroke is still part of the mark when the name is written.",
+    "inspiration": "https://id.pinterest.com/pin/22518066881914111/"
   }
 }
