@@ -29,7 +29,11 @@ describe('gallery filters', () => {
   it('forgives typos, completes prefixes and knows category synonyms', () => {
     expect(search('chevrom')).toEqual(CHEVRON);
     expect(search('chev')).toEqual(CHEVRON);
-    expect(search('wordmark')).toEqual([...CHEVRON, ...DOT_RING]);
+    expect(search('wordmark')).toEqual(
+      CLIP_REGISTRY.filter((meta) => meta.category === 'brand')
+        .map((meta) => meta.id)
+        .sort(),
+    );
   });
 
   it('filters by category, every selected tag and theme together', () => {

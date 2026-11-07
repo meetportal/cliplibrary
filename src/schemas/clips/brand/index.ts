@@ -1,5 +1,23 @@
 import type { ClipModule } from '../../registry';
 import {
+  arcBurstWordmarkADefaults,
+  arcBurstWordmarkAMeta,
+  arcBurstWordmarkASchema,
+} from './arc-burst-wordmark-a';
+import { arcBurstWordmarkAControls } from './arc-burst-wordmark-a-controls';
+import {
+  arcBurstWordmarkBDefaults,
+  arcBurstWordmarkBMeta,
+  arcBurstWordmarkBSchema,
+} from './arc-burst-wordmark-b';
+import { arcBurstWordmarkBControls } from './arc-burst-wordmark-b-controls';
+import {
+  arcBurstWordmarkCDefaults,
+  arcBurstWordmarkCMeta,
+  arcBurstWordmarkCSchema,
+} from './arc-burst-wordmark-c';
+import { arcBurstWordmarkCControls } from './arc-burst-wordmark-c-controls';
+import {
   chevronMarkAssembleADefaults,
   chevronMarkAssembleAMeta,
   chevronMarkAssembleASchema,
@@ -17,6 +35,24 @@ import {
   chevronMarkAssembleCSchema,
 } from './chevron-mark-assemble-c';
 import { chevronMarkAssembleCControls } from './chevron-mark-assemble-c-controls';
+import {
+  dotMorphWordmarkADefaults,
+  dotMorphWordmarkAMeta,
+  dotMorphWordmarkASchema,
+} from './dot-morph-wordmark-a';
+import { dotMorphWordmarkAControls } from './dot-morph-wordmark-a-controls';
+import {
+  dotMorphWordmarkBDefaults,
+  dotMorphWordmarkBMeta,
+  dotMorphWordmarkBSchema,
+} from './dot-morph-wordmark-b';
+import { dotMorphWordmarkBControls } from './dot-morph-wordmark-b-controls';
+import {
+  dotMorphWordmarkCDefaults,
+  dotMorphWordmarkCMeta,
+  dotMorphWordmarkCSchema,
+} from './dot-morph-wordmark-c';
+import { dotMorphWordmarkCControls } from './dot-morph-wordmark-c-controls';
 import {
   dotRingLogoRevealADefaults,
   dotRingLogoRevealAMeta,
@@ -38,6 +74,27 @@ import { dotRingLogoRevealCControls } from './dot-ring-logo-reveal-c-controls';
 
 export const brandClips: ClipModule[] = [
   {
+    id: 'arc-burst-wordmark-a',
+    schema: arcBurstWordmarkASchema,
+    defaults: arcBurstWordmarkADefaults,
+    meta: arcBurstWordmarkAMeta,
+    controls: arcBurstWordmarkAControls,
+  },
+  {
+    id: 'arc-burst-wordmark-b',
+    schema: arcBurstWordmarkBSchema,
+    defaults: arcBurstWordmarkBDefaults,
+    meta: arcBurstWordmarkBMeta,
+    controls: arcBurstWordmarkBControls,
+  },
+  {
+    id: 'arc-burst-wordmark-c',
+    schema: arcBurstWordmarkCSchema,
+    defaults: arcBurstWordmarkCDefaults,
+    meta: arcBurstWordmarkCMeta,
+    controls: arcBurstWordmarkCControls,
+  },
+  {
     id: 'chevron-mark-assemble-a',
     schema: chevronMarkAssembleASchema,
     defaults: chevronMarkAssembleADefaults,
@@ -57,6 +114,27 @@ export const brandClips: ClipModule[] = [
     defaults: chevronMarkAssembleCDefaults,
     meta: chevronMarkAssembleCMeta,
     controls: chevronMarkAssembleCControls,
+  },
+  {
+    id: 'dot-morph-wordmark-a',
+    schema: dotMorphWordmarkASchema,
+    defaults: dotMorphWordmarkADefaults,
+    meta: dotMorphWordmarkAMeta,
+    controls: dotMorphWordmarkAControls,
+  },
+  {
+    id: 'dot-morph-wordmark-b',
+    schema: dotMorphWordmarkBSchema,
+    defaults: dotMorphWordmarkBDefaults,
+    meta: dotMorphWordmarkBMeta,
+    controls: dotMorphWordmarkBControls,
+  },
+  {
+    id: 'dot-morph-wordmark-c',
+    schema: dotMorphWordmarkCSchema,
+    defaults: dotMorphWordmarkCDefaults,
+    meta: dotMorphWordmarkCMeta,
+    controls: dotMorphWordmarkCControls,
   },
   {
     id: 'dot-ring-logo-reveal-a',
