@@ -740,6 +740,389 @@
     "variantNote": "Keeps the drawn ring in the end frame, as the inspiration keeps its G: the ring slims into a fine badge outline that fits the logo, so the signature stroke is still part of the mark when the name is written.",
     "inspiration": "https://id.pinterest.com/pin/22518066881914111/"
   },
+  "dot-morph-wordmark-a": {
+    "summary": "On white, two ink dots and two orange to magenta gradient dots pop into a tight cluster, swirl, unfold into a rising chain and flatten into a row with a squash. They spring up one by one into a high wave, then drop in turn onto the name line, where each dot melts into its letters of the company name, wide apart. The last gradient dot lands as the full stop with its letters spilling out to the left, and the letters close up into the finished wordmark. As they close up, the logo fades in and rises into place above the name, and the logo, name and full stop hold.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "four dots pop out of points at the centre of a white frame"
+      },
+      {
+        "at": 0.2,
+        "what": "the tight cluster swirls round"
+      },
+      {
+        "at": 0.4,
+        "what": "the cluster unfolds into a rising diagonal chain that turns flat"
+      },
+      {
+        "at": 1.1,
+        "what": "the row lands and each dot squashes flat in turn"
+      },
+      {
+        "at": 1.5,
+        "what": "the dots spring up one after another, stretched tall, and hang in a high wave"
+      },
+      {
+        "at": 2.0,
+        "what": "each dot drops onto the name line and its letters bloom out of it as it melts away"
+      },
+      {
+        "at": 2.3,
+        "what": "the last gradient dot lands as the full stop and its letters spill out to the left"
+      },
+      {
+        "at": 2.7,
+        "what": "the wide letters close up into the wordmark"
+      },
+      {
+        "at": 2.9,
+        "what": "the logo fades in and rises into place above the name"
+      },
+      {
+        "at": 3.6,
+        "what": "the logo, the name and the full stop hold"
+      }
+    ],
+    "visuals": [
+      "white background",
+      "two ink dots",
+      "two orange to magenta gradient dots",
+      "rounded geometric sans name",
+      "gradient full stop",
+      "logo above the name"
+    ],
+    "motion": [
+      "pop in",
+      "swirl",
+      "unfold into a row",
+      "squash and stretch",
+      "hop wave",
+      "drop",
+      "dots melt into letters",
+      "tracking closes up",
+      "logo rises in"
+    ],
+    "mood": ["minimal", "playful", "clean", "modern"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "logo intro for a reel or story",
+      "brand sting at the end of a promo",
+      "launch announcement opener",
+      "end card for a portrait ad"
+    ],
+    "editable": [
+      "company name",
+      "logo",
+      "logo plate and size",
+      "name font",
+      "full stop on or off",
+      "gradient dot color",
+      "letter and dot color",
+      "background color",
+      "number and size of dots",
+      "hop height and squash",
+      "bloom or underline morph",
+      "letter spacing",
+      "pace and close up length"
+    ],
+    "palette": ["#ffffff", "#161618", "#ff8a3c", "#c2409a"],
+    "keywords": [
+      "wordmark",
+      "logo reveal",
+      "name reveal",
+      "dots",
+      "morph",
+      "bounce",
+      "squash and stretch",
+      "full stop",
+      "brand sting",
+      "portrait",
+      "white",
+      "ink dots",
+      "pink gradient",
+      "rounded sans",
+      "logo"
+    ],
+    "concept": "A handful of plain dots carry the whole film: they gather, swing out into a row, hop like a beat and then turn into the letters of the company name, so the name feels made of the motion before it. Calm, modern and a little playful, ending on the finished name and a colored full stop.",
+    "needs": ["company name", "logo"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name the dots turn into, on one line; long names shrink to fit, and a final period becomes the colored full stop"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Brand logo that settles in above the name once the letters close up; wide, square or round, shown whole"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png"
+    },
+    "variantNote": "Closest to the inspiration, but the full stop is the last gradient dot landing in place instead of fading in from nothing, the morph runs longer so each letter is seen growing out of its dot, the finished name holds for over two seconds instead of fading to black, and the dots share out any name, not only four letters.",
+    "inspiration": "https://es.pinterest.com/pin/823173638176168902/"
+  },
+  "dot-morph-wordmark-b": {
+    "summary": "On near black, two white dots and two violet to cyan gradient dots pop into a cluster, swirl, unfold and flatten into a row, spring up into a high wave and drop onto the name line, where each dot melts into its letters of the company name. Letters from the gradient dots start violet and turn white, the last dot lands as a gradient full stop, and the letters close up into a bold wordmark. As they close up, the logo rises in above the name on a soft light plate, and the lockup holds.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "four dots pop out of points at the centre of a near black frame"
+      },
+      {
+        "at": 0.2,
+        "what": "the tight cluster swirls round"
+      },
+      {
+        "at": 0.4,
+        "what": "the cluster unfolds into a rising diagonal chain that turns flat"
+      },
+      {
+        "at": 1.1,
+        "what": "the row lands and each dot squashes flat in turn"
+      },
+      {
+        "at": 1.5,
+        "what": "the dots spring up one after another, stretched tall, and hang in a high wave"
+      },
+      {
+        "at": 2.0,
+        "what": "each dot drops onto the name line and its letters bloom out of it, violet from the gradient dots and white from the plain ones"
+      },
+      {
+        "at": 2.3,
+        "what": "the last gradient dot lands as the full stop"
+      },
+      {
+        "at": 2.7,
+        "what": "the letters turn white and close up"
+      },
+      {
+        "at": 2.9,
+        "what": "the logo rises in above the name on a soft light plate"
+      },
+      {
+        "at": 3.6,
+        "what": "the logo and the bold white wordmark hold"
+      }
+    ],
+    "visuals": [
+      "near black background",
+      "white dots",
+      "violet to cyan gradient dots",
+      "bold geometric sans in white",
+      "gradient full stop",
+      "logo above the name",
+      "soft light logo plate"
+    ],
+    "motion": [
+      "pop in",
+      "swirl",
+      "unfold into a row",
+      "squash and stretch",
+      "hop wave",
+      "drop",
+      "dots melt into letters",
+      "tracking closes up",
+      "logo rises in"
+    ],
+    "mood": ["bold", "modern", "techy", "confident"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "logo intro for a reel or story",
+      "brand sting at the end of a promo",
+      "launch announcement opener",
+      "end card for a portrait ad"
+    ],
+    "editable": [
+      "company name",
+      "logo",
+      "logo plate and size",
+      "name font",
+      "full stop on or off",
+      "gradient dot color",
+      "letter and dot color",
+      "background color",
+      "number and size of dots",
+      "hop height and squash",
+      "bloom or underline morph",
+      "letter spacing",
+      "pace and close up length"
+    ],
+    "palette": ["#0d0d10", "#ffffff", "#8b5cff", "#22d3ee"],
+    "keywords": [
+      "wordmark",
+      "logo reveal",
+      "name reveal",
+      "dots",
+      "morph",
+      "bounce",
+      "squash and stretch",
+      "full stop",
+      "brand sting",
+      "portrait",
+      "dark",
+      "black",
+      "neon",
+      "violet",
+      "cyan",
+      "bold sans",
+      "logo"
+    ],
+    "concept": "A handful of plain dots carry the whole film: they gather, swing out into a row, hop like a beat and then turn into the letters of the company name, so the name feels made of the motion before it. Calm, modern and a little playful, ending on the finished name and a colored full stop.",
+    "needs": ["company name", "logo"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name the dots turn into, on one line; long names shrink to fit, and a final period becomes the colored full stop"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Brand logo that settles in above the name once the letters close up; wide, square or round, shown whole"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png"
+    },
+    "variantNote": "Same motion as the inspiration on a dark field with a bolder geometric sans and a violet to cyan gradient, so the name reads at thumbnail size; each new letter keeps the color of the dot it came from for a moment, which makes it plain that the dots became the letters.",
+    "inspiration": "https://es.pinterest.com/pin/823173638176168902/"
+  },
+  "dot-morph-wordmark-c": {
+    "summary": "On warm paper, two ink dots and two coral to amber gradient dots pop into a cluster, swirl, unfold and flatten into a row, spring up into a high wave and drop in turn onto the name line. Each dot splashes into an underline as wide as its letters, the letters of the company name rise out of it in a soft serif and the line pulls in and vanishes; the last coral line pulls into the full stop and the letters close up. As they close up, the logo fades in and rises into place above the name, and the lockup holds.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "four dots pop out of points at the centre of a warm paper frame"
+      },
+      {
+        "at": 0.2,
+        "what": "the tight cluster swirls round"
+      },
+      {
+        "at": 0.4,
+        "what": "the cluster unfolds into a rising diagonal chain that turns flat"
+      },
+      {
+        "at": 1.1,
+        "what": "the row lands and each dot squashes flat in turn"
+      },
+      {
+        "at": 1.5,
+        "what": "the dots spring up one after another, stretched tall, and hang in a high wave"
+      },
+      {
+        "at": 2.0,
+        "what": "each dot lands and spreads into an underline the width of its letters"
+      },
+      {
+        "at": 2.2,
+        "what": "the serif letters rise out of the line as it pulls in and fades"
+      },
+      {
+        "at": 2.3,
+        "what": "the last coral dot spreads under its letters, slides right beneath them and lifts into the full stop"
+      },
+      {
+        "at": 2.8,
+        "what": "the letters close up"
+      },
+      {
+        "at": 2.9,
+        "what": "the logo fades in and rises into place above the name"
+      },
+      {
+        "at": 3.6,
+        "what": "the logo and the serif wordmark hold"
+      }
+    ],
+    "visuals": [
+      "warm off white paper background",
+      "ink dots",
+      "coral to amber gradient dots",
+      "soft serif name",
+      "underlines the letters rise from",
+      "coral full stop",
+      "logo above the name"
+    ],
+    "motion": [
+      "pop in",
+      "swirl",
+      "unfold into a row",
+      "squash and stretch",
+      "hop wave",
+      "drop",
+      "dots spread into underlines",
+      "letters rise",
+      "tracking closes up",
+      "logo rises in"
+    ],
+    "mood": ["warm", "editorial", "friendly", "crafted"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "logo intro for a reel or story",
+      "brand sting at the end of a promo",
+      "launch announcement opener",
+      "end card for a portrait ad"
+    ],
+    "editable": [
+      "company name",
+      "logo",
+      "logo plate and size",
+      "name font",
+      "full stop on or off",
+      "gradient dot color",
+      "letter and dot color",
+      "background color",
+      "number and size of dots",
+      "hop height and squash",
+      "bloom or underline morph",
+      "letter spacing",
+      "pace and close up length"
+    ],
+    "palette": ["#f6f0e6", "#1d1a16", "#ff5f45", "#ffb23e"],
+    "keywords": [
+      "wordmark",
+      "logo reveal",
+      "name reveal",
+      "dots",
+      "morph",
+      "bounce",
+      "squash and stretch",
+      "full stop",
+      "brand sting",
+      "portrait",
+      "cream",
+      "paper",
+      "serif",
+      "coral",
+      "warm",
+      "editorial",
+      "logo"
+    ],
+    "concept": "A handful of plain dots carry the whole film: they gather, swing out into a row, hop like a beat and then turn into the letters of the company name, so the name feels made of the motion before it. Calm, modern and a little playful, ending on the finished name and a colored full stop.",
+    "needs": ["company name", "logo"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name the dots turn into, on one line; long names shrink to fit, and a final period becomes the colored full stop"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Brand logo that settles in above the name once the letters close up; wide, square or round, shown whole"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-round.png"
+    },
+    "variantNote": "Same dance as the inspiration, but each dot splashes into an underline as wide as its letters and the letters rise out of it, a clear, literal morph that never covers the name, set in a warm soft serif on paper for brands that want a crafted feel; the last line pulling into the full stop ties the stop to the dots.",
+    "inspiration": "https://es.pinterest.com/pin/823173638176168902/"
+  },
   "arc-burst-wordmark-a": {
     "summary": "Orange dotted and dashed arcs swirl on black while white comets streak to the centre, an orange iris rings out and opens onto white, and a bold lowercase wordmark pivots together from slanted slices with its logo above as orange arcs orbit and retract, leaving the clean black name and logo held on white.",
     "beats": [
