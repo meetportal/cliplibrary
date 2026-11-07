@@ -739,5 +739,309 @@
     },
     "variantNote": "Keeps the drawn ring in the end frame, as the inspiration keeps its G: the ring slims into a fine badge outline that fits the logo, so the signature stroke is still part of the mark when the name is written.",
     "inspiration": "https://id.pinterest.com/pin/22518066881914111/"
+  },
+  "arc-burst-wordmark-a": {
+    "summary": "Orange dotted and dashed arcs swirl on black while white comets streak to the centre, an orange iris rings out and opens onto white, and a bold lowercase wordmark pivots together from slanted slices with its logo above as orange arcs orbit and retract, leaving the clean black name and logo held on white.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Black field with orange dotted, dashed and solid arcs turning around the centre"
+      },
+      {
+        "at": 0.3,
+        "what": "White comets with short tails curve in toward the middle, their heads turning orange"
+      },
+      {
+        "at": 0.9,
+        "what": "An orange disc bursts out from the centre with white sparkles and fills the frame"
+      },
+      {
+        "at": 1.0,
+        "what": "A white iris opens inside the orange and rings out to a white stage by 1.5 s"
+      },
+      {
+        "at": 1.1,
+        "what": "Letters pivot in left to right from three slanted slices, some still orange, while orange arcs orbit the word"
+      },
+      {
+        "at": 1.3,
+        "what": "The logo pivots together above the name from slanted slices"
+      },
+      {
+        "at": 2.2,
+        "what": "The orange flecks thin away and the orbit arcs retract"
+      },
+      {
+        "at": 2.6,
+        "what": "Clean black lowercase wordmark under its logo, held on white to the end"
+      }
+    ],
+    "visuals": [
+      "black field with orange dotted and dashed arcs",
+      "white comets with tapered tails",
+      "orange iris burst with white sparkles",
+      "white stage",
+      "logo above a bold rounded lowercase wordmark in black",
+      "orange orbit arcs and orange letter fragments"
+    ],
+    "motion": [
+      "arcs spin and swell around the centre",
+      "comets spiral inward",
+      "circular iris ring wave",
+      "letter slices pivot on hinges into place, staggered left to right",
+      "orbit arcs grow, spin and retract"
+    ],
+    "mood": ["energetic", "confident", "playful", "modern"],
+    "useCases": [
+      "logo intro at the start of a brand video",
+      "end card for a product launch",
+      "agency or studio showreel sting",
+      "social post revealing a new name"
+    ],
+    "editable": [
+      "company name",
+      "logo, with an optional backing plate",
+      "primary accent colour, text, stage and field colours",
+      "font and letter case",
+      "burst style and timing",
+      "how the letters arrive, their stagger and swing",
+      "number of arcs, comets and orbit arcs",
+      "accent arc under the name"
+    ],
+    "palette": ["#050505", "#ff8c05", "#ffffff", "#0b0b0c"],
+    "keywords": [
+      "wordmark reveal",
+      "logo reveal",
+      "orange burst",
+      "iris wipe",
+      "pivoting letters",
+      "comets",
+      "dotted arcs",
+      "kinetic logo",
+      "brand intro"
+    ],
+    "variantNote": "Closest to the pin, but the one-frame hard cut to orange becomes a circular iris that rings out and opens onto white, so the burst reads as one move instead of a flash, and the letters and logo build in a clear left to right wave, so the name is readable by 2 s instead of after a jumble.",
+    "roles": ["opener", "closer"],
+    "concept": "A burst of energy on black, dotted and dashed arcs swirling and comets streaking in, opens the frame onto a clean stage where the bold wordmark and its logo pivot together out of spinning pieces in the middle of the swirl. The colour settles and drops away so the name ends alone, calm and confident: chaos resolving into the brand. No copy beyond the name.",
+    "needs": ["logo", "company name"],
+    "inspiration": "https://www.pinterest.com/pin/15058979991805046/",
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name built in the middle under the logo; it shrinks to fit, and a long name breaks onto two lines"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it pivots together above the name from slanted slices"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png"
+    }
+  },
+  "arc-burst-wordmark-b": {
+    "summary": "Coral arcs and white comets swirl on black, a coral iris rings out and opens onto deep ink, and a heavy warm white wordmark pivots together from slanted slices under its logo on a warm white plate as coral arcs orbit and retract, ending on a dark end card.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Black field with coral dotted, dashed and solid arcs turning around the centre"
+      },
+      {
+        "at": 0.3,
+        "what": "White comets with short tails curve in toward the middle, their heads turning coral"
+      },
+      {
+        "at": 0.9,
+        "what": "A coral disc bursts out from the centre with white sparkles and fills the frame"
+      },
+      {
+        "at": 1.0,
+        "what": "A deep ink iris opens inside the coral and rings out to the edges by 1.5 s"
+      },
+      {
+        "at": 1.1,
+        "what": "Heavy warm white letters pivot in left to right from slanted slices with coral stripes while coral arcs orbit"
+      },
+      {
+        "at": 1.3,
+        "what": "The logo swings up whole on its warm white plate above the name"
+      },
+      {
+        "at": 2.2,
+        "what": "The coral stripes thin away and the orbit arcs retract"
+      },
+      {
+        "at": 2.6,
+        "what": "Warm white wordmark under its plated logo, held on deep ink"
+      }
+    ],
+    "visuals": [
+      "black field with coral dotted and dashed arcs",
+      "white comets",
+      "coral iris burst",
+      "deep ink stage",
+      "logo on a warm white rounded plate",
+      "heavy grotesk wordmark in warm white",
+      "coral orbit arcs"
+    ],
+    "motion": [
+      "arcs spin and swell around the centre",
+      "comets spiral inward",
+      "circular iris ring wave",
+      "letter slices pivot on hinges into place, staggered left to right",
+      "orbit arcs grow, spin and retract"
+    ],
+    "mood": ["bold", "energetic", "nocturnal", "confident"],
+    "useCases": [
+      "logo intro for a dark brand video",
+      "end card for a tech or music launch",
+      "event sting on a dark screen",
+      "social post revealing a new name"
+    ],
+    "editable": [
+      "company name",
+      "logo, with a backing plate",
+      "primary accent colour, text, stage and field colours",
+      "font and letter case",
+      "burst style and timing",
+      "how the letters arrive, their stagger and swing",
+      "number of arcs, comets and orbit arcs",
+      "accent arc under the name"
+    ],
+    "palette": ["#030304", "#ff4f3a", "#12141f", "#f8f5ee"],
+    "keywords": [
+      "dark wordmark reveal",
+      "logo reveal",
+      "coral burst",
+      "iris wipe",
+      "pivoting letters",
+      "heavy type",
+      "comets",
+      "brand intro",
+      "end card"
+    ],
+    "variantNote": "Same motion as the pin with a new type and colour treatment: the burst opens onto deep ink instead of a white flash, the name lands as typed in heavy warm white type, the logo sits on a warm white plate so any logo reads, and a coral primary keeps it bright in dark promos without glare.",
+    "roles": ["opener", "closer"],
+    "concept": "A burst of energy on black, dotted and dashed arcs swirling and comets streaking in, opens the frame onto a clean stage where the bold wordmark and its logo pivot together out of spinning pieces in the middle of the swirl. The colour settles and drops away so the name ends alone, calm and confident: chaos resolving into the brand. No copy beyond the name.",
+    "needs": ["logo", "company name"],
+    "inspiration": "https://www.pinterest.com/pin/15058979991805046/",
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name built in the middle under the logo; it shrinks to fit, and a long name breaks onto two lines"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it swings up above the name on a warm white plate"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png"
+    }
+  },
+  "arc-burst-wordmark-c": {
+    "summary": "Orange arcs and white comets swirl on black, two huge orange discs close over the frame and part sideways like a lens onto white, the name swings up letter by letter under its logo while orange arcs orbit, then an orange accent arc draws out under the clean black name and stays.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Black field with orange dotted, dashed and solid arcs turning around the centre"
+      },
+      {
+        "at": 0.3,
+        "what": "White comets with short tails curve in toward the middle, their heads turning orange"
+      },
+      {
+        "at": 0.65,
+        "what": "Two huge orange discs slide in from the corners and close over the frame"
+      },
+      {
+        "at": 0.9,
+        "what": "The discs part sideways, darkening, and open a white lens that widens to the full stage"
+      },
+      {
+        "at": 1.0,
+        "what": "Whole letters swing up on a hinge left to right, their lower halves orange, draining to black as they land"
+      },
+      {
+        "at": 1.3,
+        "what": "The logo swings up on its own hinge above the name"
+      },
+      {
+        "at": 1.8,
+        "what": "An orange accent arc draws out from the middle under the name, thickening as it grows, while the orbit arcs retract"
+      },
+      {
+        "at": 3.3,
+        "what": "Clean black wordmark under its logo over the finished orange arc, held on white"
+      }
+    ],
+    "visuals": [
+      "black field with orange dotted and dashed arcs",
+      "white comets",
+      "two huge orange discs parting like a lens",
+      "white stage",
+      "round logo above a soft rounded wordmark in black",
+      "orange accent arc under the name"
+    ],
+    "motion": [
+      "arcs spin and swell around the centre",
+      "comets spiral inward",
+      "two discs close then part sideways",
+      "whole letters hinge up into place, staggered left to right",
+      "accent arc draws out from the centre"
+    ],
+    "mood": ["playful", "warm", "energetic", "friendly"],
+    "useCases": [
+      "logo intro for a friendly brand video",
+      "end card for a product launch",
+      "café, studio or shop opening post",
+      "social post revealing a new name"
+    ],
+    "editable": [
+      "company name",
+      "logo, with an optional backing plate",
+      "primary accent colour, text, stage and field colours",
+      "font and letter case",
+      "burst style and timing",
+      "how the letters arrive, their stagger and swing",
+      "number of arcs, comets and orbit arcs",
+      "accent arc under the name, its thickness and gap"
+    ],
+    "palette": ["#050505", "#f26b1d", "#ffffff", "#141414"],
+    "keywords": [
+      "wordmark reveal",
+      "logo reveal",
+      "lens wipe",
+      "split discs",
+      "swinging letters",
+      "accent underline",
+      "comets",
+      "brand intro",
+      "friendly logo"
+    ],
+    "variantNote": "Keeps the pin's two-disc lens but makes it a deliberate close and part instead of a cut, swings whole letters up on a hinge so the name settles cleanly and readable, and leaves one orange accent arc under the name so the end frame keeps the brand colour.",
+    "roles": ["opener", "closer"],
+    "concept": "A burst of energy on black, dotted and dashed arcs swirling and comets streaking in, opens the frame onto a clean stage where the bold wordmark and its logo pivot together out of spinning pieces in the middle of the swirl. The colour settles and drops away so the name ends alone, calm and confident: chaos resolving into the brand. No copy beyond the name.",
+    "needs": ["logo", "company name"],
+    "inspiration": "https://www.pinterest.com/pin/15058979991805046/",
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name built in the middle under the logo; it shrinks to fit, and a long name breaks onto two lines"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it swings up above the name on a hinge"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-round.png"
+    }
   }
 }

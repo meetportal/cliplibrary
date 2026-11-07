@@ -18,7 +18,11 @@ describe('searchClips', () => {
     expect(hits.every((hit) => hit.category === 'brand' && hit.orientation === 'portrait')).toBe(
       true,
     );
-    expect(searchClips('', { orientation: 'landscape' }, 100)).toHaveLength(0);
+    const landscape = searchClips('', { orientation: 'landscape' }, 100);
+    expect(landscape.length).toBe(
+      CLIP_REGISTRY.filter((meta) => orientationOf(meta) === 'landscape').length,
+    );
+    expect(landscape.every((hit) => hit.orientation === 'landscape')).toBe(true);
     const dark = searchClips('', { theme: 'dark' }, 100);
     expect(dark.length).toBeGreaterThan(0);
     expect(dark.every((hit) => hit.theme === 'dark')).toBe(true);

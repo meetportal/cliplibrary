@@ -1,3 +1,4 @@
+export * from './arc-burst-wordmark-common';
 export * from './batch-audit';
 export * from './chevron-mark-assemble-common';
 export * from './clip-labels';
@@ -5,6 +6,9 @@ export * from './clip-props';
 export * from './clip-tokens';
 export * from './clip-updated-at';
 export * from './clips';
+export * from './clips/brand/arc-burst-wordmark-a';
+export * from './clips/brand/arc-burst-wordmark-b';
+export * from './clips/brand/arc-burst-wordmark-c';
 export * from './clips/brand/chevron-mark-assemble-a';
 export * from './clips/brand/chevron-mark-assemble-b';
 export * from './clips/brand/chevron-mark-assemble-c';

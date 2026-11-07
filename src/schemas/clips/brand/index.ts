@@ -1,5 +1,23 @@
 import type { ClipModule } from '../../registry';
 import {
+  arcBurstWordmarkADefaults,
+  arcBurstWordmarkAMeta,
+  arcBurstWordmarkASchema,
+} from './arc-burst-wordmark-a';
+import { arcBurstWordmarkAControls } from './arc-burst-wordmark-a-controls';
+import {
+  arcBurstWordmarkBDefaults,
+  arcBurstWordmarkBMeta,
+  arcBurstWordmarkBSchema,
+} from './arc-burst-wordmark-b';
+import { arcBurstWordmarkBControls } from './arc-burst-wordmark-b-controls';
+import {
+  arcBurstWordmarkCDefaults,
+  arcBurstWordmarkCMeta,
+  arcBurstWordmarkCSchema,
+} from './arc-burst-wordmark-c';
+import { arcBurstWordmarkCControls } from './arc-burst-wordmark-c-controls';
+import {
   chevronMarkAssembleADefaults,
   chevronMarkAssembleAMeta,
   chevronMarkAssembleASchema,
@@ -37,6 +55,27 @@ import {
 import { dotRingLogoRevealCControls } from './dot-ring-logo-reveal-c-controls';
 
 export const brandClips: ClipModule[] = [
+  {
+    id: 'arc-burst-wordmark-a',
+    schema: arcBurstWordmarkASchema,
+    defaults: arcBurstWordmarkADefaults,
+    meta: arcBurstWordmarkAMeta,
+    controls: arcBurstWordmarkAControls,
+  },
+  {
+    id: 'arc-burst-wordmark-b',
+    schema: arcBurstWordmarkBSchema,
+    defaults: arcBurstWordmarkBDefaults,
+    meta: arcBurstWordmarkBMeta,
+    controls: arcBurstWordmarkBControls,
+  },
+  {
+    id: 'arc-burst-wordmark-c',
+    schema: arcBurstWordmarkCSchema,
+    defaults: arcBurstWordmarkCDefaults,
+    meta: arcBurstWordmarkCMeta,
+    controls: arcBurstWordmarkCControls,
+  },
   {
     id: 'chevron-mark-assemble-a',
     schema: chevronMarkAssembleASchema,

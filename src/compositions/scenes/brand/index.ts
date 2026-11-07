@@ -1,4 +1,7 @@
 import type { SceneModule } from '../../scene-module';
+import { arcBurstWordmarkAScene } from './arc-burst-wordmark-a';
+import { arcBurstWordmarkBScene } from './arc-burst-wordmark-b';
+import { arcBurstWordmarkCScene } from './arc-burst-wordmark-c';
 import { chevronMarkAssembleAScene } from './chevron-mark-assemble-a';
 import { chevronMarkAssembleBScene } from './chevron-mark-assemble-b';
 import { chevronMarkAssembleCScene } from './chevron-mark-assemble-c';
@@ -10,6 +13,9 @@ export const brandScenes: SceneModule[] = [
   chevronMarkAssembleAScene,
   chevronMarkAssembleBScene,
   chevronMarkAssembleCScene,
+  arcBurstWordmarkAScene,
+  arcBurstWordmarkBScene,
+  arcBurstWordmarkCScene,
   dotRingLogoRevealAScene,
   dotRingLogoRevealBScene,
   dotRingLogoRevealCScene,
