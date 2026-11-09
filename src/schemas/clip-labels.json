@@ -2148,5 +2148,326 @@
     },
     "variantNote": "Opens on the unlit sign and switches it on, lamp first, then each letter with its own stutter, while the tagline, logo and name show from the first frame; the whole clip is drawn in its own multi-line Monoton tubes in a warm red-orange bar-sign palette, so it reads as a retro marquee rather than a single-tube sign.",
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/neon-sign-flicker.mp4"
+  },
+  "text-rings-a": {
+    "roles": ["opener", "background", "transition"],
+    "useCases": [
+      "logo intro for a story or reel",
+      "event or launch teaser",
+      "brand slogan loop behind a post",
+      "shop or studio promo"
+    ],
+    "editable": [
+      "logo image",
+      "company name",
+      "tagline",
+      "separator",
+      "ring and logo colors",
+      "fonts for name and tagline rings",
+      "text size and ring spacing",
+      "spin speed and direction",
+      "ring entrance",
+      "logo entrance and circle size",
+      "timing of the draw, rings and settle"
+    ],
+    "concept": "The logo sits in a circle at the centre that draws itself on, then rings of the company name and a short tagline grow out of it one after another, spinning in alternate directions until the frame fills with a hypnotic vortex of type that eases to a stop and keeps turning. The eye stays pinned on the logo while the message multiplies outward; the copy is short, repeatable and confident.",
+    "needs": ["logo", "company name", "tagline"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a disc inside the drawn circle at the centre of the rings"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name repeated around every other ring, including the ring closest to the logo"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "A short repeatable phrase for the rings between the name rings, like a slogan or an offer"
+      }
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/text-rings.mp4",
+    "summary": "On black, the logo sits on a light disc from the first frame while a thin orange circle draws on around it. Once the circle closes, rings of the company name in bold white sans and a lowercase white tagline, split by small orange dots, grow out of it one after another, spin in alternate directions and fill the frame, then ease to a stop as a legible vortex that keeps turning.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the wide logo is on screen from the first frame on a light disc that grows gently into place over the first second"
+      },
+      {
+        "at": 0.0,
+        "what": "a circle draws clockwise from 12 o'clock around the logo at a near-constant speed, easing only as it closes at 0.53 s"
+      },
+      {
+        "at": 0.87,
+        "what": "after a short breath on the finished mark, the first ring, the company name, fades in just outside the circle and starts spinning"
+      },
+      {
+        "at": 1.5,
+        "what": "a new ring arrives about every two thirds of a second, alternating tagline and name, each growing outward and turning opposite to its neighbour"
+      },
+      {
+        "at": 3.9,
+        "what": "the vortex fills past the frame edges and its growth begins to ease off"
+      },
+      {
+        "at": 5.1,
+        "what": "the rings have settled into a still vortex around the logo and keep turning gently to the end"
+      }
+    ],
+    "visuals": [
+      "black background",
+      "white sans type on concentric circular paths",
+      "bold name rings and regular tagline rings",
+      "orange dot separators",
+      "thin orange circle around a light logo disc",
+      "type running off every edge"
+    ],
+    "motion": [
+      "stroke draw-on with a soft head",
+      "gentle logo grow",
+      "expanding rings",
+      "alternating rotation",
+      "ring fade-in",
+      "eased settle with continuous spin"
+    ],
+    "mood": ["hypnotic", "nocturnal", "minimal", "confident"],
+    "palette": ["#050505", "#f4f3ef", "#ff6b3d"],
+    "keywords": [
+      "text rings",
+      "circular text",
+      "vortex",
+      "spinning text",
+      "concentric",
+      "repeat",
+      "logo",
+      "tagline",
+      "black and white",
+      "kinetic typography",
+      "vertical",
+      "loop",
+      "night"
+    ],
+    "samples": {
+      "Logo": "design-assets/logos/willow-wide.png",
+      "Company Name": "Willow & Co.",
+      "Tagline": "fresh flowers every day"
+    },
+    "variantNote": "Closest to the original vortex, but the scribble becomes the logo on a light disc that is readable from the first frame, the first ring is the name, every ring is measured so its repeats close evenly, and the vortex settles into a legible held frame instead of fading to black."
+  },
+  "text-rings-b": {
+    "roles": ["opener", "background", "transition"],
+    "useCases": [
+      "logo intro for a story or reel",
+      "event or launch teaser",
+      "brand slogan loop behind a post",
+      "shop or studio promo"
+    ],
+    "editable": [
+      "logo image",
+      "company name",
+      "tagline",
+      "separator",
+      "ring and logo colors",
+      "fonts for name and tagline rings",
+      "text size and ring spacing",
+      "spin speed and direction",
+      "ring entrance",
+      "logo entrance and circle size",
+      "timing of the draw, rings and settle"
+    ],
+    "concept": "The logo sits in a circle at the centre that draws itself on, then rings of the company name and a short tagline grow out of it one after another, spinning in alternate directions until the frame fills with a hypnotic vortex of type that eases to a stop and keeps turning. The eye stays pinned on the logo while the message multiplies outward; the copy is short, repeatable and confident.",
+    "needs": ["logo", "company name", "tagline"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a disc inside the drawn circle at the centre of the rings"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name repeated around every other ring, including the ring closest to the logo"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "A short repeatable phrase for the rings between the name rings, like a slogan or an offer"
+      }
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/text-rings.mp4",
+    "summary": "On warm paper, the logo sits on a white disc from the first frame while a fine terracotta circle draws on around it. Once the circle closes, rings alternate the company name in a terracotta serif italic with the tagline in spaced dark capitals, grow outward, spin in alternate directions and settle into a calm, still-turning vortex of type.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the square logo is on screen from the first frame on a white disc that grows gently into place over the first second"
+      },
+      {
+        "at": 0.0,
+        "what": "a circle draws clockwise from 12 o'clock around the logo at a near-constant speed, easing only as it closes at 0.53 s"
+      },
+      {
+        "at": 0.87,
+        "what": "after a short breath on the finished mark, the first ring, the company name, in serif italic fades in just outside the circle and starts spinning"
+      },
+      {
+        "at": 1.5,
+        "what": "a new ring arrives about every two thirds of a second, alternating tagline and name, each growing outward and turning opposite to its neighbour"
+      },
+      {
+        "at": 3.9,
+        "what": "the vortex fills past the frame edges and its growth begins to ease off"
+      },
+      {
+        "at": 5.1,
+        "what": "the rings have settled into a still vortex around the logo and keep turning gently to the end"
+      }
+    ],
+    "visuals": [
+      "warm paper background",
+      "terracotta serif italic name rings",
+      "dark spaced capital tagline rings",
+      "terracotta dot separators",
+      "fine terracotta circle around a white logo disc",
+      "type running off every edge"
+    ],
+    "motion": [
+      "stroke draw-on with a soft head",
+      "gentle logo grow",
+      "expanding rings",
+      "alternating rotation",
+      "ring fade-in",
+      "eased settle with continuous spin"
+    ],
+    "mood": ["elegant", "warm", "calm", "editorial"],
+    "palette": ["#f2ece1", "#1b1a17", "#b4441f", "#ffffff"],
+    "keywords": [
+      "text rings",
+      "circular text",
+      "vortex",
+      "serif italic",
+      "spaced capitals",
+      "concentric",
+      "logo",
+      "tagline",
+      "paper",
+      "warm",
+      "kinetic typography",
+      "vertical",
+      "loop"
+    ],
+    "samples": {
+      "Logo": "design-assets/logos/willow-square.png",
+      "Company Name": "Willow & Co.",
+      "Tagline": "fresh flowers every day"
+    },
+    "variantNote": "Same motion as the original, but a daylight palette and a serif italic name in Primary against spaced sans capitals for the tagline, so the two voices read apart at a glance and the name is the accent of the whole vortex."
+  },
+  "text-rings-c": {
+    "roles": ["opener", "background", "transition"],
+    "useCases": [
+      "logo intro for a story or reel",
+      "event or launch teaser",
+      "brand slogan loop behind a post",
+      "shop or studio promo"
+    ],
+    "editable": [
+      "logo image",
+      "company name",
+      "tagline",
+      "separator",
+      "ring and logo colors",
+      "fonts for name and tagline rings",
+      "text size and ring spacing",
+      "spin speed and direction",
+      "ring entrance",
+      "logo entrance and circle size",
+      "timing of the draw, rings and settle"
+    ],
+    "concept": "The logo sits in a circle at the centre that draws itself on, then rings of the company name and a short tagline grow out of it one after another, spinning in alternate directions until the frame fills with a hypnotic vortex of type that eases to a stop and keeps turning. The eye stays pinned on the logo while the message multiplies outward; the copy is short, repeatable and confident.",
+    "needs": ["logo", "company name", "tagline"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a disc inside the drawn circle at the centre of the rings"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name repeated around every other ring, including the ring closest to the logo"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "A short repeatable phrase for the rings between the name rings, like a slogan or an offer"
+      }
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/text-rings.mp4",
+    "summary": "On deep night blue, a thick violet ring draws on while a white disc closes in like an iris and the logo fades up on it within half a second. Each new ring writes its words on letter by letter in a clockwise sweep as it grows: bright capital name rings alternate with dimmed lowercase tagline rings, spinning opposite ways until the vortex settles and keeps turning.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a white ring closes in toward the centre like an iris and fills into a disc by 0.3 s, and the round logo fades up on it by 0.4 s"
+      },
+      {
+        "at": 0.0,
+        "what": "a circle draws clockwise from 12 o'clock around the logo at a near-constant speed, easing only as it closes at 0.53 s"
+      },
+      {
+        "at": 0.87,
+        "what": "after a short breath on the finished mark, the first ring, the company name, writes on letter by letter in a clockwise sweep just outside the circle and starts spinning"
+      },
+      {
+        "at": 1.5,
+        "what": "a new ring arrives about every two thirds of a second, alternating tagline and name, each growing outward and turning opposite to its neighbour"
+      },
+      {
+        "at": 3.9,
+        "what": "the vortex fills past the frame edges and its growth begins to ease off"
+      },
+      {
+        "at": 5.1,
+        "what": "the rings have settled into a still vortex around the logo and keep turning gently to the end"
+      }
+    ],
+    "visuals": [
+      "deep night blue background",
+      "bright capital name rings",
+      "dimmed lowercase tagline rings",
+      "violet dot separators",
+      "thick violet ring around a white logo disc",
+      "type running off every edge"
+    ],
+    "motion": [
+      "stroke draw-on with a soft head",
+      "iris fill",
+      "letter by letter write-on around each ring",
+      "expanding rings",
+      "alternating rotation",
+      "eased settle with continuous spin"
+    ],
+    "mood": ["hypnotic", "layered", "modern", "nocturnal"],
+    "palette": ["#0c0b16", "#eeeaf8", "#9d8cff", "#ffffff"],
+    "keywords": [
+      "text rings",
+      "circular text",
+      "vortex",
+      "write on",
+      "typewriter ring",
+      "concentric",
+      "logo",
+      "tagline",
+      "violet",
+      "night",
+      "kinetic typography",
+      "vertical",
+      "loop"
+    ],
+    "samples": {
+      "Logo": "design-assets/logos/willow-round.png",
+      "Company Name": "Willow & Co.",
+      "Tagline": "fresh flowers every day"
+    },
+    "variantNote": "Keeps the vortex, but every ring writes its words on in a clockwise sweep that echoes the circle draw, the logo disc irises in from a bold Primary ring, and the tagline rings stay dimmed behind the bright name rings for the whole clip, so the build reads as one gesture with real depth."
   }
 }
