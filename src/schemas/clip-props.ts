@@ -22,6 +22,9 @@ import type { TextRingsCProps } from './clips/kinetic-type/text-rings-c';
 import type { PillFanAProps } from './clips/list-pickers/pill-fan-a';
 import type { PillFanBProps } from './clips/list-pickers/pill-fan-b';
 import type { PillFanCProps } from './clips/list-pickers/pill-fan-c';
+import type { WordPickerAProps } from './clips/list-pickers/word-picker-a';
+import type { WordPickerBProps } from './clips/list-pickers/word-picker-b';
+import type { WordPickerCProps } from './clips/list-pickers/word-picker-c';
 import type { PhoneSpinInAProps } from './clips/phone-reveals/phone-spin-in-a';
 import type { PhoneSpinInBProps } from './clips/phone-reveals/phone-spin-in-b';
 import type { PhoneSpinInCProps } from './clips/phone-reveals/phone-spin-in-c';
@@ -66,6 +69,9 @@ export interface ClipPropsMap {
   'phone-spin-in-a': PhoneSpinInAProps;
   'phone-spin-in-b': PhoneSpinInBProps;
   'phone-spin-in-c': PhoneSpinInCProps;
+  'word-picker-a': WordPickerAProps;
+  'word-picker-b': WordPickerBProps;
+  'word-picker-c': WordPickerCProps;
 }
 
 export type ClipId = keyof ClipPropsMap;
