@@ -16,6 +16,9 @@ import type { BotanicalSaveTheDateCProps } from './clips/invitations/botanical-s
 import type { ComingSoonFlipsAProps } from './clips/kinetic-type/coming-soon-flips-a';
 import type { ComingSoonFlipsBProps } from './clips/kinetic-type/coming-soon-flips-b';
 import type { ComingSoonFlipsCProps } from './clips/kinetic-type/coming-soon-flips-c';
+import type { DominoWordsAProps } from './clips/kinetic-type/domino-words-a';
+import type { DominoWordsBProps } from './clips/kinetic-type/domino-words-b';
+import type { DominoWordsCProps } from './clips/kinetic-type/domino-words-c';
 import type { TextRingsAProps } from './clips/kinetic-type/text-rings-a';
 import type { TextRingsBProps } from './clips/kinetic-type/text-rings-b';
 import type { TextRingsCProps } from './clips/kinetic-type/text-rings-c';
@@ -48,6 +51,9 @@ export interface ClipPropsMap {
   'coming-soon-flips-a': ComingSoonFlipsAProps;
   'coming-soon-flips-b': ComingSoonFlipsBProps;
   'coming-soon-flips-c': ComingSoonFlipsCProps;
+  'domino-words-a': DominoWordsAProps;
+  'domino-words-b': DominoWordsBProps;
+  'domino-words-c': DominoWordsCProps;
   'dot-morph-wordmark-a': DotMorphWordmarkAProps;
   'dot-morph-wordmark-b': DotMorphWordmarkBProps;
   'dot-morph-wordmark-c': DotMorphWordmarkCProps;

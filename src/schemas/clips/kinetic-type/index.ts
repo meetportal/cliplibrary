@@ -17,6 +17,12 @@ import {
   comingSoonFlipsCSchema,
 } from './coming-soon-flips-c';
 import { comingSoonFlipsCControls } from './coming-soon-flips-c-controls';
+import { dominoWordsADefaults, dominoWordsAMeta, dominoWordsASchema } from './domino-words-a';
+import { dominoWordsAControls } from './domino-words-a-controls';
+import { dominoWordsBDefaults, dominoWordsBMeta, dominoWordsBSchema } from './domino-words-b';
+import { dominoWordsBControls } from './domino-words-b-controls';
+import { dominoWordsCDefaults, dominoWordsCMeta, dominoWordsCSchema } from './domino-words-c';
+import { dominoWordsCControls } from './domino-words-c-controls';
 import { textRingsADefaults, textRingsAMeta, textRingsASchema } from './text-rings-a';
 import { textRingsAControls } from './text-rings-a-controls';
 import { textRingsBDefaults, textRingsBMeta, textRingsBSchema } from './text-rings-b';
@@ -45,6 +51,27 @@ export const kineticTypeClips: ClipModule[] = [
     defaults: comingSoonFlipsCDefaults,
     meta: comingSoonFlipsCMeta,
     controls: comingSoonFlipsCControls,
+  },
+  {
+    id: 'domino-words-a',
+    schema: dominoWordsASchema,
+    defaults: dominoWordsADefaults,
+    meta: dominoWordsAMeta,
+    controls: dominoWordsAControls,
+  },
+  {
+    id: 'domino-words-b',
+    schema: dominoWordsBSchema,
+    defaults: dominoWordsBDefaults,
+    meta: dominoWordsBMeta,
+    controls: dominoWordsBControls,
+  },
+  {
+    id: 'domino-words-c',
+    schema: dominoWordsCSchema,
+    defaults: dominoWordsCDefaults,
+    meta: dominoWordsCMeta,
+    controls: dominoWordsCControls,
   },
   {
     id: 'text-rings-a',
