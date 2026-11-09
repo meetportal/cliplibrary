@@ -19,6 +19,9 @@ import type { TextRingsCProps } from './clips/kinetic-type/text-rings-c';
 import type { PillFanAProps } from './clips/list-pickers/pill-fan-a';
 import type { PillFanBProps } from './clips/list-pickers/pill-fan-b';
 import type { PillFanCProps } from './clips/list-pickers/pill-fan-c';
+import type { PhoneSpinInAProps } from './clips/phone-reveals/phone-spin-in-a';
+import type { PhoneSpinInBProps } from './clips/phone-reveals/phone-spin-in-b';
+import type { PhoneSpinInCProps } from './clips/phone-reveals/phone-spin-in-c';
 import type { MagnifierCaptionAProps } from './clips/text-reveals/magnifier-caption-a';
 import type { MagnifierCaptionBProps } from './clips/text-reveals/magnifier-caption-b';
 import type { MagnifierCaptionCProps } from './clips/text-reveals/magnifier-caption-c';
@@ -54,6 +57,9 @@ export interface ClipPropsMap {
   'pill-fan-a': PillFanAProps;
   'pill-fan-b': PillFanBProps;
   'pill-fan-c': PillFanCProps;
+  'phone-spin-in-a': PhoneSpinInAProps;
+  'phone-spin-in-b': PhoneSpinInBProps;
+  'phone-spin-in-c': PhoneSpinInCProps;
 }
 
 export type ClipId = keyof ClipPropsMap;
