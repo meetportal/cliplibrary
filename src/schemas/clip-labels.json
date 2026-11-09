@@ -2928,5 +2928,363 @@
       "Logo": "design-assets/logos/willow-round.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/pill-fan.mp4"
+  },
+  "magnifier-caption-a": {
+    "summary": "On a dark navy portrait frame, a gold-rimmed magnifying glass glides over a blurred honeycomb of hexagon cells holding stray words. Each word of the caption lights up inside the lens as it is found and types letter by letter into a Bodoni caption balanced over two lines at the top, until the last word glows amber and is underlined; the lens then drifts home while the logo plate, company name and website hold at the bottom from the first frame.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "navy honeycomb, the magnifier over decoy words and the logo, name and website at the bottom"
+      },
+      {
+        "at": 1.2,
+        "what": "the lens slows over the first word, which glows inside its cell and types into the caption"
+      },
+      {
+        "at": 2.4,
+        "what": "the lens glides cell to cell, each word lighting up and typing in as the first line fills"
+      },
+      {
+        "at": 10.5,
+        "what": "the lens finds the keyword, which glows amber in its cell and types in amber"
+      },
+      {
+        "at": 10.8,
+        "what": "an amber underline draws under the keyword while the lens drifts with it"
+      },
+      {
+        "at": 13.1,
+        "what": "the lens glides home over the decoy words and settles on the finished caption"
+      }
+    ],
+    "visuals": [
+      "gold-rimmed magnifying glass with a long handle",
+      "blurred hexagon honeycomb of words",
+      "glowing word inside the lens",
+      "two-line Bodoni caption",
+      "amber underlined keyword",
+      "logo on a cream plate",
+      "company name and website"
+    ],
+    "motion": [
+      "lens gliding between cells",
+      "letter-by-letter typing",
+      "glow reveal under the lens",
+      "underline draw",
+      "lens drifting home"
+    ],
+    "mood": ["thoughtful", "elegant", "mysterious", "calm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "search or discovery product launch",
+      "brand manifesto reel",
+      "instagram reel hook",
+      "research or consulting promo",
+      "tagline reveal with logo"
+    ],
+    "editable": [
+      "caption",
+      "keyword style",
+      "logo image",
+      "company name",
+      "website",
+      "keyword, caption, honeycomb, background and plate colors",
+      "background words",
+      "cell shape",
+      "lens size, magnification, tilt and handle",
+      "caption and body fonts",
+      "timing of the first word, the keyword and the return"
+    ],
+    "palette": ["#070a18", "#18224d", "#f0d5a0", "#ffad42", "#f4efe4", "#5a6ca6"],
+    "keywords": [
+      "magnifying glass",
+      "magnifier",
+      "search",
+      "find",
+      "discover",
+      "honeycomb",
+      "hexagon",
+      "typing caption",
+      "serif",
+      "keyword highlight",
+      "underline",
+      "glow",
+      "portrait",
+      "dark",
+      "navy",
+      "gold",
+      "tagline",
+      "logo"
+    ],
+    "variantNote": "Closest to the inspiration, but the logo, name and website sit on screen from the first frame instead of a tiny url, the caption is larger and balanced over its lines, the lens glides through each word instead of stopping dead between hops, and it ends holding the finished caption instead of fading it away.",
+    "concept": "A magnifying glass searches a blurred honeycomb of stray words; each word it finds lights up inside the lens and joins a caption at the top, one word at a time, until the last word, the keyword, glows in the accent colour and is marked. The eye follows the lens and reads the message as it is found, with the brand waiting below. Thoughtful, calm and a little mysterious.",
+    "needs": ["logo", "company name", "headline", "website"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "The caption the lens finds one word at a time, best as one sentence of 4 to 10 words; the last word is the keyword, so end on the word that matters"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a plate under the magnifier"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Brand name under the logo; long names shrink to one line"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 36,
+        "hint": "Web address on the last line"
+      }
+    },
+    "samples": {
+      "Headline": "Every answer shows up for those who keep searching",
+      "Logo": "design-assets/logos/willow-wide.png",
+      "Company Name": "Willow & Co.",
+      "Website": "willowandco.com"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/magnifier-caption.mp4"
+  },
+  "magnifier-caption-b": {
+    "summary": "On warm off-white paper, an ink-rimmed magnifying glass slides over a soft, blurred honeycomb of grey-blue word cells and enlarges whatever it passes. Each caption word swells into view under the glass, lights up with a warm glow and types into a bold Inter Tight caption at the top; the last word is marked with a vermilion marker highlight that wipes in behind it. The logo on a white card, the company name and the website sit at the bottom from the first frame.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "paper honeycomb, the ink magnifier over decoy words and the logo card, name and website at the bottom"
+      },
+      {
+        "at": 1.2,
+        "what": "the first word swells under the glass, glows and types into the caption"
+      },
+      {
+        "at": 2.4,
+        "what": "the glass glides cell to cell, magnifying each word as it is found and typed"
+      },
+      {
+        "at": 10.5,
+        "what": "the keyword glows vermilion under the glass and types in vermilion"
+      },
+      {
+        "at": 10.8,
+        "what": "a vermilion marker highlight wipes in behind the keyword"
+      },
+      {
+        "at": 13.1,
+        "what": "the glass glides home over the decoy words and settles on the finished caption"
+      }
+    ],
+    "visuals": [
+      "ink-rimmed magnifying glass",
+      "magnified word cells under the glass",
+      "blurred paper honeycomb of words",
+      "bold sans caption",
+      "marker-highlighted keyword",
+      "logo on a white card",
+      "company name and website"
+    ],
+    "motion": [
+      "lens gliding between cells",
+      "magnification",
+      "letter-by-letter typing",
+      "glow reveal under the lens",
+      "marker highlight wipe",
+      "lens drifting home"
+    ],
+    "mood": ["clear", "editorial", "curious", "calm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "search or discovery product launch",
+      "editorial or newsletter promo",
+      "instagram reel hook",
+      "research or consulting promo",
+      "tagline reveal with logo"
+    ],
+    "editable": [
+      "caption",
+      "keyword style",
+      "logo image",
+      "company name",
+      "website",
+      "keyword, ink, honeycomb, paper and card colors",
+      "background words",
+      "cell shape",
+      "lens size, magnification, tilt and handle",
+      "caption and body fonts",
+      "timing of the first word, the keyword and the return"
+    ],
+    "palette": ["#f2ece0", "#fbf8f1", "#1d2433", "#e5482d", "#8b95ad", "#ffc94d"],
+    "keywords": [
+      "magnifying glass",
+      "magnifier",
+      "search",
+      "find",
+      "discover",
+      "honeycomb",
+      "paper",
+      "typing caption",
+      "sans serif",
+      "marker highlight",
+      "keyword highlight",
+      "magnify",
+      "portrait",
+      "light",
+      "editorial",
+      "tagline",
+      "logo"
+    ],
+    "variantNote": "Same search, retold as ink on paper: a bold Inter Tight caption with a marker highlight on the keyword reads faster than thin serif on navy, and the glass truly magnifies the cells it passes for the whole clip, so each found word grows into view before it types in.",
+    "concept": "A magnifying glass searches a blurred honeycomb of stray words; each word it finds lights up inside the lens and joins a caption at the top, one word at a time, until the last word, the keyword, glows in the accent colour and is marked. The eye follows the lens and reads the message as it is found, with the brand waiting below. Thoughtful, calm and a little mysterious.",
+    "needs": ["logo", "company name", "headline", "website"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "The caption the lens finds one word at a time, best as one sentence of 4 to 10 words; the last word is the keyword, so end on the word that matters"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a plate under the magnifier"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Brand name under the logo; long names shrink to one line"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 36,
+        "hint": "Web address on the last line"
+      }
+    },
+    "samples": {
+      "Headline": "Every answer shows up for those who keep searching",
+      "Logo": "design-assets/logos/willow-square.png",
+      "Company Name": "Willow & Co.",
+      "Website": "willowandco.com"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/magnifier-caption.mp4"
+  },
+  "magnifier-caption-c": {
+    "summary": "On a deep green portrait frame, a copper-rimmed magnifying glass glides over a blurred field of round word cells. Every word it finds lights up in the lens, then lifts out of its cell and flies up into its place in a Fraunces caption at the top, one word at a time, until the last word lifts out in copper and an underline draws beneath it; each emptied cell's glow fades as its word leaves. The lens drifts home while the logo plate, company name and website hold at the bottom from the first frame.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "green field of round cells, the copper magnifier over decoy words and the logo, name and website at the bottom"
+      },
+      {
+        "at": 1.2,
+        "what": "the lens finds the first word, which glows, lifts out of its cell and flies up into the caption"
+      },
+      {
+        "at": 2.4,
+        "what": "the lens glides cell to cell and each found word flies up to its place in the caption"
+      },
+      {
+        "at": 10.5,
+        "what": "the keyword glows copper in the lens, lifts out and flies up into the end of the caption"
+      },
+      {
+        "at": 11.4,
+        "what": "a copper underline draws under the keyword while the lens drifts on over the honeycomb"
+      },
+      {
+        "at": 13.1,
+        "what": "the lens glides home over the decoy words and settles on the finished caption"
+      }
+    ],
+    "visuals": [
+      "copper-rimmed magnifying glass",
+      "blurred field of round word cells",
+      "glowing word inside the lens",
+      "words flying from the lens into the caption",
+      "Fraunces serif caption",
+      "copper underlined keyword",
+      "logo on a cream plate",
+      "company name and website"
+    ],
+    "motion": [
+      "lens gliding between cells",
+      "words flying up into the caption",
+      "glow reveal under the lens",
+      "underline draw",
+      "lens drifting home"
+    ],
+    "mood": ["warm", "thoughtful", "curious", "calm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "search or discovery product launch",
+      "brand manifesto reel",
+      "instagram reel hook",
+      "coaching or research promo",
+      "tagline reveal with logo"
+    ],
+    "editable": [
+      "caption",
+      "keyword style",
+      "logo image",
+      "company name",
+      "website",
+      "keyword, caption, cell, background and plate colors",
+      "background words",
+      "cell shape",
+      "lens size, magnification, tilt and handle",
+      "caption and body fonts",
+      "timing of the first word, the keyword and the return"
+    ],
+    "palette": ["#061a14", "#0f3b30", "#eeb487", "#e8884e", "#f2ece0", "#4f8f7c"],
+    "keywords": [
+      "magnifying glass",
+      "magnifier",
+      "search",
+      "find",
+      "discover",
+      "bubbles",
+      "circles",
+      "flying words",
+      "serif caption",
+      "keyword highlight",
+      "underline",
+      "glow",
+      "portrait",
+      "dark",
+      "green",
+      "copper",
+      "tagline",
+      "logo"
+    ],
+    "variantNote": "Keeps the layout and the search, but every found word lifts out of the lens and flies up into its place in the caption, so the eye is led from the find to the line each time instead of jumping between two places, with round cells and a warm Fraunces caption on deep green.",
+    "concept": "A magnifying glass searches a blurred honeycomb of stray words; each word it finds lights up inside the lens and joins a caption at the top, one word at a time, until the last word, the keyword, glows in the accent colour and is marked. The eye follows the lens and reads the message as it is found, with the brand waiting below. Thoughtful, calm and a little mysterious.",
+    "needs": ["logo", "company name", "headline", "website"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "The caption the lens finds one word at a time, best as one sentence of 4 to 10 words; the last word is the keyword, so end on the word that matters"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a plate under the magnifier"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Brand name under the logo; long names shrink to one line"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 36,
+        "hint": "Web address on the last line"
+      }
+    },
+    "samples": {
+      "Headline": "Every answer shows up for those who keep searching",
+      "Logo": "design-assets/logos/willow-round.png",
+      "Company Name": "Willow & Co.",
+      "Website": "willowandco.com"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/magnifier-caption.mp4"
   }
 }
