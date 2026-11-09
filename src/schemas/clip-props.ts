@@ -13,6 +13,9 @@ import type { DotRingLogoRevealCProps } from './clips/brand/dot-ring-logo-reveal
 import type { ComingSoonFlipsAProps } from './clips/kinetic-type/coming-soon-flips-a';
 import type { ComingSoonFlipsBProps } from './clips/kinetic-type/coming-soon-flips-b';
 import type { ComingSoonFlipsCProps } from './clips/kinetic-type/coming-soon-flips-c';
+import type { TextRingsAProps } from './clips/kinetic-type/text-rings-a';
+import type { TextRingsBProps } from './clips/kinetic-type/text-rings-b';
+import type { TextRingsCProps } from './clips/kinetic-type/text-rings-c';
 import type { NeonSignFlickerAProps } from './clips/text-reveals/neon-sign-flicker-a';
 import type { NeonSignFlickerBProps } from './clips/text-reveals/neon-sign-flicker-b';
 import type { NeonSignFlickerCProps } from './clips/text-reveals/neon-sign-flicker-c';
@@ -36,6 +39,9 @@ export interface ClipPropsMap {
   'neon-sign-flicker-a': NeonSignFlickerAProps;
   'neon-sign-flicker-b': NeonSignFlickerBProps;
   'neon-sign-flicker-c': NeonSignFlickerCProps;
+  'text-rings-a': TextRingsAProps;
+  'text-rings-b': TextRingsBProps;
+  'text-rings-c': TextRingsCProps;
 }
 
 export type ClipId = keyof ClipPropsMap;

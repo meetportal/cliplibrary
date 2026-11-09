@@ -38,10 +38,13 @@ const Harness = ({ initial = DEFAULT_FILTERS }: { initial?: GalleryFilters }) =>
 
 const withWideGrid = (run: () => void) => {
   const width = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientWidth');
+  const height = window.innerHeight;
   Object.defineProperty(HTMLElement.prototype, 'clientWidth', { configurable: true, value: 1200 });
+  Object.defineProperty(window, 'innerHeight', { configurable: true, value: 100_000 });
   try {
     run();
   } finally {
+    Object.defineProperty(window, 'innerHeight', { configurable: true, value: height });
     if (width !== undefined) {
       Object.defineProperty(HTMLElement.prototype, 'clientWidth', width);
     }
