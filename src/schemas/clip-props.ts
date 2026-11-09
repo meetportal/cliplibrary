@@ -10,6 +10,9 @@ import type { DotMorphWordmarkCProps } from './clips/brand/dot-morph-wordmark-c'
 import type { DotRingLogoRevealAProps } from './clips/brand/dot-ring-logo-reveal-a';
 import type { DotRingLogoRevealBProps } from './clips/brand/dot-ring-logo-reveal-b';
 import type { DotRingLogoRevealCProps } from './clips/brand/dot-ring-logo-reveal-c';
+import type { BotanicalSaveTheDateAProps } from './clips/invitations/botanical-save-the-date-a';
+import type { BotanicalSaveTheDateBProps } from './clips/invitations/botanical-save-the-date-b';
+import type { BotanicalSaveTheDateCProps } from './clips/invitations/botanical-save-the-date-c';
 import type { ComingSoonFlipsAProps } from './clips/kinetic-type/coming-soon-flips-a';
 import type { ComingSoonFlipsBProps } from './clips/kinetic-type/coming-soon-flips-b';
 import type { ComingSoonFlipsCProps } from './clips/kinetic-type/coming-soon-flips-c';
@@ -33,6 +36,9 @@ export interface ClipPropsMap {
   'arc-burst-wordmark-a': ArcBurstWordmarkAProps;
   'arc-burst-wordmark-b': ArcBurstWordmarkBProps;
   'arc-burst-wordmark-c': ArcBurstWordmarkCProps;
+  'botanical-save-the-date-a': BotanicalSaveTheDateAProps;
+  'botanical-save-the-date-b': BotanicalSaveTheDateBProps;
+  'botanical-save-the-date-c': BotanicalSaveTheDateCProps;
   'chevron-mark-assemble-a': ChevronMarkAssembleAProps;
   'chevron-mark-assemble-b': ChevronMarkAssembleBProps;
   'chevron-mark-assemble-c': ChevronMarkAssembleCProps;
