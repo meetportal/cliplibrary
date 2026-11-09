@@ -3286,5 +3286,358 @@
       "Website": "willowandco.com"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/magnifier-caption.mp4"
+  },
+  "phone-spin-in-a": {
+    "summary": "On a light off-white studio, a titanium phone showing your app rises from below the frame nearly edge-on, makes one quarter turn toward the camera as it climbs and lands on the right third, turned slightly toward the copy. As it lands, your logo, a bold two or three line headline and your website with a round arrow button rise in one after another on the left, then everything holds with a gentle float.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the phone's edge pushes up from the bottom of an empty off-white studio, tipped back and leaning"
+      },
+      {
+        "at": 0.3,
+        "what": "it rises and turns a quarter turn toward the camera, sliding in from the right as the screen wakes"
+      },
+      {
+        "at": 1.2,
+        "what": "the logo fades up on the left while the phone is still settling"
+      },
+      {
+        "at": 1.5,
+        "what": "the headline rises in line by line"
+      },
+      {
+        "at": 2.0,
+        "what": "the website arrives with a round arrow button in the Primary color"
+      },
+      {
+        "at": 2.8,
+        "what": "the phone lands on the right third, slightly turned toward the copy"
+      },
+      {
+        "at": 3.1,
+        "what": "the finished frame holds with a gentle float, sway and camera drift"
+      }
+    ],
+    "visuals": [
+      "3d titanium smartphone",
+      "app screenshot on the phone screen",
+      "off-white seamless studio",
+      "soft shadow",
+      "logo above a bold sans headline",
+      "website with a round arrow button"
+    ],
+    "motion": [
+      "rise with a quarter spin",
+      "slide into place",
+      "staggered rise and fade",
+      "idle float and sway",
+      "slow camera drift"
+    ],
+    "mood": ["clean", "minimal", "premium", "calm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "app launch video",
+      "app store preview intro",
+      "feature announcement",
+      "product hero shot",
+      "website hero loop"
+    ],
+    "editable": [
+      "app screenshot",
+      "logo",
+      "headline",
+      "website",
+      "primary color",
+      "text and background colors",
+      "phone finish",
+      "spin amount and length",
+      "arrangement of phone and copy",
+      "headline font",
+      "logo size and plate",
+      "copy timing"
+    ],
+    "palette": ["#f4f4f2", "#e2e2dd", "#0b0b0c", "#2f5d46"],
+    "keywords": [
+      "3d phone",
+      "iphone",
+      "mockup",
+      "spin",
+      "rise",
+      "app reveal",
+      "app promo",
+      "smartphone",
+      "hero shot",
+      "headline",
+      "logo",
+      "website",
+      "light studio"
+    ],
+    "variantNote": "Closest to the inspiration: the same studio, phone, rise and quarter turn, but it lands on the right third so the logo, a short headline and the website can arrive on the left while it settles, and it ends on that finished frame instead of fading to black, so the whole clip says whose app it is.",
+    "concept": "One premium phone rises out of the bottom of the frame with a single quarter turn and lands facing the viewer, so the app screen becomes the hero in one calm move, while the logo, a short headline and the website arrive around it as it settles to say whose app it is. Quiet studio, one object, warm and confident copy.",
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/phone-spin-in.mp4",
+    "needs": ["app screenshot", "logo", "headline", "website"],
+    "placeholders": {
+      "Screen": {
+        "kind": "image",
+        "hint": "A portrait screenshot of the app (about 9 by 19.5); it fills the phone screen from the top and crops any extra"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits above the headline on the left"
+      },
+      "Headline": {
+        "kind": "text",
+        "maxChars": 44,
+        "hint": "One short line on what the app does; it wraps to up to three lines beside the phone and shrinks if longer"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Where to get the app, set small as the call to action near the logo and headline"
+      }
+    },
+    "samples": {
+      "Screen": "design-assets/screens/willow-app-home.jpg",
+      "Logo": "design-assets/logos/willow-wide.png",
+      "Headline": "Same-day flowers, one tap away",
+      "Website": "willowandco.com"
+    }
+  },
+  "phone-spin-in-b": {
+    "summary": "In a dark charcoal studio, a titanium phone showing your app rises from below with a quarter turn, its edges catching a warm light in the Primary color, and lands on the left third. Your logo on a round light plate, a large serif headline and your website in a Primary pill rise in on the right as it lands, then hold.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the phone's edge pushes up from the bottom of a dark studio, tipped back and leaning"
+      },
+      {
+        "at": 0.3,
+        "what": "it rises and turns a quarter turn toward the camera, sliding in from the left; a warm edge light runs along the frame"
+      },
+      {
+        "at": 1.2,
+        "what": "the logo on its light round plate fades up on the right"
+      },
+      {
+        "at": 1.5,
+        "what": "the serif headline rises in line by line in warm white"
+      },
+      {
+        "at": 1.9,
+        "what": "the website arrives in a Primary pill"
+      },
+      {
+        "at": 2.8,
+        "what": "the phone lands on the left third, turned slightly toward the copy"
+      },
+      {
+        "at": 3.1,
+        "what": "the finished frame holds with a gentle float and camera drift"
+      }
+    ],
+    "visuals": [
+      "3d titanium smartphone",
+      "app screenshot on the phone screen",
+      "dark charcoal studio",
+      "warm edge light on the phone frame",
+      "logo on a light round plate",
+      "serif headline in warm white",
+      "website in a pill"
+    ],
+    "motion": [
+      "rise with a quarter spin",
+      "slide into place",
+      "staggered rise and fade",
+      "idle float and sway",
+      "slow camera drift"
+    ],
+    "mood": ["premium", "moody", "elegant", "calm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "app launch video",
+      "premium app promo",
+      "dark mode feature announcement",
+      "product hero shot",
+      "event or service app teaser"
+    ],
+    "editable": [
+      "app screenshot",
+      "logo",
+      "headline",
+      "website",
+      "primary color and edge light",
+      "text and background colors",
+      "logo plate color and shape",
+      "phone finish",
+      "spin amount and length",
+      "arrangement of phone and copy",
+      "headline font",
+      "copy timing"
+    ],
+    "palette": ["#1a1a1e", "#060607", "#f4efe6", "#e0a84a"],
+    "keywords": [
+      "3d phone",
+      "iphone",
+      "mockup",
+      "spin",
+      "rise",
+      "app reveal",
+      "app promo",
+      "dark studio",
+      "night",
+      "serif headline",
+      "logo",
+      "website pill",
+      "rim light"
+    ],
+    "variantNote": "Same rise and quarter turn mirrored to the left, moved into a dark studio where a warm edge light in the brand color traces the frame as it turns, with an elegant serif headline, the logo on a light plate so any logo reads on the dark, and the website in a pill as a clear call to action.",
+    "concept": "One premium phone rises out of the bottom of the frame with a single quarter turn and lands facing the viewer, so the app screen becomes the hero in one calm move, while the logo, a short headline and the website arrive around it as it settles to say whose app it is. Quiet studio, one object, warm and confident copy.",
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/phone-spin-in.mp4",
+    "needs": ["app screenshot", "logo", "headline", "website"],
+    "placeholders": {
+      "Screen": {
+        "kind": "image",
+        "hint": "A portrait screenshot of the app (about 9 by 19.5); it fills the phone screen from the top and crops any extra"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a light plate above the headline, so dark logos stay readable"
+      },
+      "Headline": {
+        "kind": "text",
+        "maxChars": 44,
+        "hint": "One short line on what the app does; it wraps to up to three lines beside the phone and shrinks if longer"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Where to get the app, set small as the call to action near the logo and headline"
+      }
+    },
+    "samples": {
+      "Screen": "design-assets/screens/willow-app-home.jpg",
+      "Logo": "design-assets/logos/willow-square.png",
+      "Headline": "Same-day flowers, one tap away",
+      "Website": "willowandco.com"
+    }
+  },
+  "phone-spin-in-c": {
+    "summary": "In a warm sand studio, a desert titanium phone showing your app rises from below with a quarter turn and lands in the center, as in the original. As it settles, your logo and website slide out from behind it to the left and a bold headline slides out to the right, framing the phone, then everything holds.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the phone's edge pushes up from the bottom of a warm sand studio, tipped back and leaning"
+      },
+      {
+        "at": 0.3,
+        "what": "it rises and turns a quarter turn toward the camera, sliding in from the right as the screen wakes"
+      },
+      {
+        "at": 1.2,
+        "what": "the logo slides out from behind the phone to the left"
+      },
+      {
+        "at": 1.5,
+        "what": "the headline slides out from behind the phone to the right, line by line"
+      },
+      {
+        "at": 2.0,
+        "what": "the website with its Primary underline slides out under the logo"
+      },
+      {
+        "at": 2.8,
+        "what": "the phone lands in the center, turned slightly toward the logo"
+      },
+      {
+        "at": 3.1,
+        "what": "the finished frame holds with a gentle float, sway and camera drift"
+      }
+    ],
+    "visuals": [
+      "3d desert titanium smartphone",
+      "app screenshot on the phone screen",
+      "warm sand studio",
+      "soft shadow",
+      "logo and website left of the phone",
+      "bold rounded sans headline right of the phone",
+      "Primary underline"
+    ],
+    "motion": [
+      "rise with a quarter spin",
+      "slide into place",
+      "copy slides out from behind the phone",
+      "idle float and sway",
+      "slow camera drift"
+    ],
+    "mood": ["warm", "friendly", "balanced", "premium"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "app launch video",
+      "app store preview intro",
+      "feature announcement",
+      "product hero shot",
+      "social promo for a lifestyle app"
+    ],
+    "editable": [
+      "app screenshot",
+      "logo",
+      "headline",
+      "website",
+      "primary color",
+      "text and background colors",
+      "phone finish",
+      "spin amount and length",
+      "arrangement of phone and copy",
+      "headline font",
+      "gap between phone and copy",
+      "copy timing"
+    ],
+    "palette": ["#efe8de", "#dbd0c0", "#2a211b", "#c8553d"],
+    "keywords": [
+      "3d phone",
+      "iphone",
+      "mockup",
+      "spin",
+      "rise",
+      "app reveal",
+      "app promo",
+      "centered phone",
+      "split layout",
+      "warm",
+      "sand",
+      "headline",
+      "logo"
+    ],
+    "variantNote": "Keeps the original's centered phone, but the logo and headline slide out from behind it to either side as it lands, so the copy seems to come from the device itself and the end frame is a balanced hero with the phone framed by the brand on one side and the message on the other.",
+    "concept": "One premium phone rises out of the bottom of the frame with a single quarter turn and lands facing the viewer, so the app screen becomes the hero in one calm move, while the logo, a short headline and the website arrive around it as it settles to say whose app it is. Quiet studio, one object, warm and confident copy.",
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/phone-spin-in.mp4",
+    "needs": ["app screenshot", "logo", "headline", "website"],
+    "placeholders": {
+      "Screen": {
+        "kind": "image",
+        "hint": "A portrait screenshot of the app (about 9 by 19.5); it fills the phone screen from the top and crops any extra"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it slides out to the left of the phone above the website"
+      },
+      "Headline": {
+        "kind": "text",
+        "maxChars": 44,
+        "hint": "One short line on what the app does; it wraps to up to three lines right of the phone and shrinks if longer"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Where to get the app, set small as the call to action near the logo and headline"
+      }
+    },
+    "samples": {
+      "Screen": "design-assets/screens/willow-app-home.jpg",
+      "Logo": "design-assets/logos/willow-round.png",
+      "Headline": "Same-day flowers, one tap away",
+      "Website": "willowandco.com"
+    }
   }
 }
