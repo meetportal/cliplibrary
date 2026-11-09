@@ -1808,5 +1808,345 @@
       "Company Name": "Willow & Co.",
       "Logo": "design-assets/logos/willow-round.png"
     }
+  },
+  "neon-sign-flicker-a": {
+    "summary": "A pink neon word in rounded capital tubes glows on a dark plum wall under a hanging pendant lamp, with a white tagline, the logo on a lit plate, the company name and the website below. The first letter and the lamp sputter in irregular bursts that get shorter and dimmer, then the letter burns out to dark glass and the lamp goes dark while the rest of the sign keeps humming.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the whole sign glows pink under the lit, gently swaying lamp, tagline and logo lockup in place"
+      },
+      {
+        "at": 0.7,
+        "what": "the first letter and the lamp start to sputter: quick irregular drop-outs, then a dark gap with the letter as unlit glass"
+      },
+      {
+        "at": 2.0,
+        "what": "the bursts come back shorter, dimmer and with more drop-outs"
+      },
+      {
+        "at": 6.3,
+        "what": "a last short sputter, the letter fades to an ember and burns out, the lamp goes dark"
+      },
+      {
+        "at": 6.6,
+        "what": "the rest of the word hums softly beside the dead letter, the unlit lamp sways, the brand holds"
+      }
+    ],
+    "visuals": [
+      "pink neon tube lettering",
+      "hanging pendant lamp with a warm beam",
+      "unlit dark glass letter",
+      "pink glow on a dark wall",
+      "white uppercase tagline",
+      "logo on a lit plate",
+      "company name and website"
+    ],
+    "motion": ["neon flicker bursts", "burn-out", "lamp sway", "glow hum"],
+    "mood": ["moody", "nightlife", "wry", "bold"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "nightlife or event promo",
+      "instagram reel or story hook",
+      "bar, club or late opening announcement",
+      "brand intro with tagline",
+      "end card for a portrait ad"
+    ],
+    "editable": [
+      "neon word",
+      "tagline",
+      "logo image",
+      "company name",
+      "website",
+      "neon, text, wall, lamp and plate colors",
+      "neon lettering and text font",
+      "which letter fails and how it ends",
+      "number, length and gaps of the bursts",
+      "opening: lit or switched on",
+      "lamp show, beam, sway and height",
+      "glow, wall glow and hum"
+    ],
+    "palette": ["#0a0610", "#ff4fae", "#ffd9a0", "#f7eef3", "#f7ecf6"],
+    "keywords": [
+      "neon",
+      "neon sign",
+      "flicker",
+      "glow",
+      "pink",
+      "lamp",
+      "pendant light",
+      "burn out",
+      "headline",
+      "logo",
+      "nightlife",
+      "portrait",
+      "dark"
+    ],
+    "concept": "A neon sign glows on a dark wall under a hanging lamp while one letter, on the same circuit as the lamp, sputters in bursts that get shorter while the lamp stutters with it, so the eye locks on the word and the tagline and brand below read calmly. Moody and a little wry, nightlife after dark.",
+    "needs": ["logo", "company name", "headline", "tagline", "website"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "The word on the neon sign, or two short words; it shrinks to fit and two words may stack on two lines"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "One line under the sign that says what you offer; wraps to at most three lines"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a lit plate under the tagline"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name under the logo plate; long names shrink to one line"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Web address on the last line, shown in capitals"
+      }
+    },
+    "samples": {
+      "Headline": "Bloom",
+      "Tagline": "Flowers for the nights you will remember",
+      "Logo": "design-assets/logos/willow-wide.png",
+      "Company Name": "Willow & Co.",
+      "Website": "willowandco.com"
+    },
+    "variantNote": "Closest to the inspiration, but the letter fails like a real tube, with irregular drop-outs that get denser and dimmer instead of a 4-frame metronome strobe; the lamp always hangs over the failing letter whatever the word, and the logo sits on a lit plate lifted into the empty band, so the end frame is balanced and the brand reads.",
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/neon-sign-flicker.mp4"
+  },
+  "neon-sign-flicker-b": {
+    "summary": "An ice-blue neon word in rounded lowercase tubes glows on a deep navy wall under a hanging lamp, with a tracked mono tagline, the logo on a lit plate, the company name and the website below. The first letter and the lamp sputter in shrinking bursts, then the letter catches with a bright surge of the whole sign and stays lit to the end.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the whole sign glows ice blue under the lit, gently swaying lamp, tagline and logo lockup in place"
+      },
+      {
+        "at": 0.7,
+        "what": "the first letter and the lamp sputter with irregular drop-outs, then go dark for a beat"
+      },
+      {
+        "at": 2.0,
+        "what": "the bursts return shorter and weaker as the letter fights to stay on"
+      },
+      {
+        "at": 6.4,
+        "what": "after the last dark gap the letter catches and the whole sign surges bright"
+      },
+      {
+        "at": 7.5,
+        "what": "the surge settles and the full word holds lit with the lamp on"
+      }
+    ],
+    "visuals": [
+      "ice-blue neon tube lettering",
+      "lowercase rounded tubes",
+      "hanging pendant lamp with a warm beam",
+      "blue glow on a navy wall",
+      "mono uppercase tagline",
+      "logo on a lit plate",
+      "company name and website"
+    ],
+    "motion": ["neon flicker bursts", "relight surge", "lamp sway", "glow hum"],
+    "mood": ["cool", "nightlife", "hopeful", "calm"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "nightlife or event promo",
+      "instagram reel or story hook",
+      "bar, club or late opening announcement",
+      "brand intro with tagline",
+      "end card for a portrait ad"
+    ],
+    "editable": [
+      "neon word",
+      "tagline",
+      "logo image",
+      "company name",
+      "website",
+      "neon, text, wall, lamp and plate colors",
+      "neon lettering and text font",
+      "which letter fails and how it ends",
+      "number, length and gaps of the bursts",
+      "opening: lit or switched on",
+      "lamp show, beam, sway and height",
+      "glow, wall glow and hum"
+    ],
+    "palette": ["#050a16", "#5fd4ff", "#ffe2b0", "#eef6fb", "#e8f4ff"],
+    "keywords": [
+      "neon",
+      "neon sign",
+      "flicker",
+      "glow",
+      "blue",
+      "lamp",
+      "pendant light",
+      "relight",
+      "headline",
+      "logo",
+      "lowercase",
+      "portrait",
+      "dark"
+    ],
+    "concept": "A neon sign glows on a dark wall under a hanging lamp while one letter, on the same circuit as the lamp, sputters in bursts that get shorter while the lamp stutters with it, so the eye locks on the word and the tagline and brand below read calmly. Moody and a little wry, nightlife after dark.",
+    "needs": ["logo", "company name", "headline", "tagline", "website"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "The word on the neon sign, or two short words; it shrinks to fit and two words may stack on two lines"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "One line under the sign that says what you offer; wraps to at most three lines"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a lit plate under the tagline"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name under the logo plate; long names shrink to one line"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Web address on the last line, shown in capitals"
+      }
+    },
+    "samples": {
+      "Headline": "bloom",
+      "Tagline": "Flowers for the nights you will remember",
+      "Logo": "design-assets/logos/willow-square.png",
+      "Company Name": "Willow & Co.",
+      "Website": "willowandco.com"
+    },
+    "variantNote": "Same flicker beats in a cool ice-blue lowercase tube with a mono label, but the letter wins: it catches with a bright surge at 6.7 s and stays lit, so any headline ends whole and readable instead of as a broken word.",
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/neon-sign-flicker.mp4"
+  },
+  "neon-sign-flicker-c": {
+    "summary": "A red-orange neon sign in multi-line Monoton tubes starts unlit on a dark brown wall while the tagline, the logo on its lit plate, the company name and the website already show below. The hanging lamp clicks on and each letter ignites left to right with its own stutter, then the first letter and the lamp sputter in shrinking bursts and burn out, leaving dark glass while the rest of the sign keeps humming.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the unlit sign as dark glass tubes under the lamp, with the tagline, logo plate, name and website already in place"
+      },
+      {
+        "at": 0.15,
+        "what": "the lamp clicks on with a stutter"
+      },
+      {
+        "at": 0.33,
+        "what": "the letters ignite one by one, left to right, each with a short flicker; the whole word is lit by 1.0 s"
+      },
+      {
+        "at": 2.2,
+        "what": "the first letter and the lamp start to sputter in bursts that get shorter and weaker"
+      },
+      {
+        "at": 6.2,
+        "what": "a last short sputter, then the letter burns out to dark glass and the lamp goes dark"
+      },
+      {
+        "at": 6.4,
+        "what": "the rest of the sign hums on beside the dead letter while the unlit lamp sways and the brand holds"
+      }
+    ],
+    "visuals": [
+      "red-orange multi-line Monoton neon lettering",
+      "unlit glass tubes",
+      "hanging pendant lamp with a warm beam",
+      "warm glow on a dark wall",
+      "spaced uppercase tagline",
+      "logo on a lit plate",
+      "company name and website"
+    ],
+    "motion": ["switch-on ignition", "neon flicker bursts", "burn-out", "lamp sway"],
+    "mood": ["warm", "nightlife", "retro", "wry"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "nightlife or event promo",
+      "instagram reel or story hook",
+      "bar, club or late opening announcement",
+      "brand intro with tagline",
+      "end card for a portrait ad"
+    ],
+    "editable": [
+      "neon word",
+      "tagline",
+      "logo image",
+      "company name",
+      "website",
+      "neon, text, wall, lamp and plate colors",
+      "neon lettering and text font",
+      "which letter fails and how it ends",
+      "number, length and gaps of the bursts",
+      "opening: lit or switched on",
+      "lamp show, beam, sway and height",
+      "glow, wall glow and hum"
+    ],
+    "palette": ["#0c0706", "#ff5a36", "#ffd08a", "#fbf1e8", "#fff1e6"],
+    "keywords": [
+      "bar sign",
+      "burn out",
+      "flicker",
+      "glow",
+      "headline",
+      "lamp",
+      "logo",
+      "marquee",
+      "monoton",
+      "neon",
+      "neon sign",
+      "orange",
+      "portrait",
+      "red",
+      "retro",
+      "switch on"
+    ],
+    "concept": "A neon sign glows on a dark wall under a hanging lamp while one letter, on the same circuit as the lamp, sputters in bursts that get shorter while the lamp stutters with it, so the eye locks on the word and the tagline and brand below read calmly. Moody and a little wry, nightlife after dark.",
+    "needs": ["logo", "company name", "headline", "tagline", "website"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "The word on the neon sign, or two short words; it shrinks to fit and two words may stack on two lines"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "One line under the sign that says what you offer; wraps to at most three lines"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a lit plate under the tagline"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name under the logo plate; long names shrink to one line"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Web address on the last line, shown in capitals"
+      }
+    },
+    "samples": {
+      "Headline": "Bloom",
+      "Tagline": "Flowers for the nights you will remember",
+      "Logo": "design-assets/logos/willow-round.png",
+      "Company Name": "Willow & Co.",
+      "Website": "willowandco.com"
+    },
+    "variantNote": "Opens on the unlit sign and switches it on, lamp first, then each letter with its own stutter, while the tagline, logo and name show from the first frame; the whole clip is drawn in its own multi-line Monoton tubes in a warm red-orange bar-sign palette, so it reads as a retro marquee rather than a single-tube sign.",
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/neon-sign-flicker.mp4"
   }
 }

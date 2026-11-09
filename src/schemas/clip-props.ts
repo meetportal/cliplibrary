@@ -13,6 +13,9 @@ import type { DotRingLogoRevealCProps } from './clips/brand/dot-ring-logo-reveal
 import type { ComingSoonFlipsAProps } from './clips/kinetic-type/coming-soon-flips-a';
 import type { ComingSoonFlipsBProps } from './clips/kinetic-type/coming-soon-flips-b';
 import type { ComingSoonFlipsCProps } from './clips/kinetic-type/coming-soon-flips-c';
+import type { NeonSignFlickerAProps } from './clips/text-reveals/neon-sign-flicker-a';
+import type { NeonSignFlickerBProps } from './clips/text-reveals/neon-sign-flicker-b';
+import type { NeonSignFlickerCProps } from './clips/text-reveals/neon-sign-flicker-c';
 
 export interface ClipPropsMap {
   'arc-burst-wordmark-a': ArcBurstWordmarkAProps;
@@ -30,6 +33,9 @@ export interface ClipPropsMap {
   'dot-ring-logo-reveal-a': DotRingLogoRevealAProps;
   'dot-ring-logo-reveal-b': DotRingLogoRevealBProps;
   'dot-ring-logo-reveal-c': DotRingLogoRevealCProps;
+  'neon-sign-flicker-a': NeonSignFlickerAProps;
+  'neon-sign-flicker-b': NeonSignFlickerBProps;
+  'neon-sign-flicker-c': NeonSignFlickerCProps;
 }
 
 export type ClipId = keyof ClipPropsMap;
