@@ -4478,5 +4478,365 @@
       "Item 6": "Workshops"
     },
     "variantNote": "Same picker and pacing, but the brand gets its own column on the left so a large logo stays readable for the whole clip, and a counter in the frame rolls from 01 to 05 with each step, so the viewer always knows where they are in the list."
+  },
+  "domino-words-a": {
+    "summary": "On a deep navy stage with a glowing amber floor line, the logo sits on a cream plate above the company name from the first frame while a striped mint ball rolls in toward a row of upright words. The first word stands filled in cream and the rest are hollow outlines; the ball knocks the first word over and the words topple into each other like dominoes, filling in cream as they fall while the camera follows the chain. The last word tips over, lands flat with a small bounce and lights up in mint with a glow and a lit strip of floor, and the camera pulls back over the whole fallen sentence reflected in the floor, with the website in the footer.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "logo plate, company name, website and the upright word row are on screen; a striped mint ball rolls in from the left edge at an even speed"
+      },
+      {
+        "at": 2.1,
+        "what": "the ball hits the first word, which tips over slowly, speeds up and falls against the next word as the ball rolls back and eases to a stop"
+      },
+      {
+        "at": 2.7,
+        "what": "the words topple one after another about every two thirds of a second, each filling in cream as it falls, while the camera starts to follow the chain"
+      },
+      {
+        "at": 5.3,
+        "what": "the last word starts to tip, slowly at first, then faster"
+      },
+      {
+        "at": 6.6,
+        "what": "as the last word comes down, the camera starts a pull-back that ends on the whole fallen sentence lying on the floor, reflected below it"
+      },
+      {
+        "at": 6.8,
+        "what": "the last word slams flat onto the floor with a small bounce and lights up in mint with a glow and a lit strip of floor under it"
+      },
+      {
+        "at": 8.4,
+        "what": "the finished frame holds: logo and name at the top, the ball resting at the start of the row, the fallen sentence on the glowing floor, the website at the bottom"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "deep navy gradient background",
+      "glowing amber floor line with a floor reflection",
+      "striped mint ball",
+      "hollow outlined upright words in bold geometric caps",
+      "logo on a cream plate with the name under it",
+      "website footer between two thin rules"
+    ],
+    "motion": [
+      "domino topple chain with accelerating falls",
+      "rolling ball impact",
+      "outline to fill colour change",
+      "camera follow and pull-back",
+      "hard landing with a small bounce",
+      "neon glow on the punchline"
+    ],
+    "mood": ["playful", "satisfying", "energetic", "modern"],
+    "roles": ["opener", "cta"],
+    "useCases": [
+      "motivational brand message",
+      "product or service launch hook",
+      "instagram reel or tiktok",
+      "sales or growth campaign teaser",
+      "call to action question"
+    ],
+    "editable": [
+      "domino sentence",
+      "logo image",
+      "company name",
+      "website",
+      "primary, floor, text, background and plate colours",
+      "domino look and font",
+      "word size, spacing and letters per domino",
+      "chain length and last word fall",
+      "ball style, size and rebound",
+      "floor reflection, glow and light trail",
+      "camera follow and pull back timing"
+    ],
+    "palette": ["#161a3a", "#04050d", "#ffa53a", "#3cf2c0", "#fbf3e4", "#868cc4"],
+    "keywords": [
+      "domino",
+      "chain reaction",
+      "toppling words",
+      "falling text",
+      "ball",
+      "neon",
+      "glow",
+      "camera pan",
+      "kinetic typography",
+      "vertical",
+      "momentum",
+      "physics",
+      "call to action"
+    ],
+    "variantNote": "Closest to the original navy, amber and mint chain, but the logo and name sit on a plate at the top from the first frame, every word carries breathing room so the fallen pile never overlaps and reads as a sentence, each word topples with real accelerating physics and the last one lands hard with a small bounce, and the camera flows from the landing straight into the pull-back instead of stopping.",
+    "concept": "A sentence stands on a glowing floor as a row of upright word dominoes; one push from a rolling ball topples them in a chain the camera follows, each word lighting up as it falls, until the last word lands flat as the punchline and the camera pulls back over the whole sentence lying on the floor. The copy is one short, upbeat line that ends on a question or a call to action, with the brand at the top the whole time.",
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/domino-words.mp4",
+    "needs": ["logo", "company name", "domino sentence", "website"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a light plate at the top of the frame for the whole clip"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name under the logo at the top, on screen from the first frame"
+      },
+      "Headline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "One short sentence that becomes the row of falling word dominoes; its last word or two land as the glowing punchline, so end on a question or call to action"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Website or handle in the footer line at the bottom"
+      }
+    },
+    "samples": {
+      "Logo": "design-assets/logos/willow-wide.png",
+      "Company Name": "Willow & Co.",
+      "Headline": "One bouquet starts a chain of smiles. Send the first one?",
+      "Website": "willowandco.com"
+    }
+  },
+  "domino-words-b": {
+    "summary": "On a warm paper stage with a thin ink floor line, the logo sits on a white plate above the company name from the first frame while a solid orange ball rolls in toward a row of upright word tiles. The first tile is solid ink with paper-coloured condensed caps and the rest are pale tiles; the ball knocks the first tile over and the tiles topple into each other like real dominoes, darkening to ink as they fall, with soft shadows on the floor while the camera follows. The last tile tips over, lands flat with a small bounce and turns orange, and the camera pulls back over the whole fallen sentence of tiles, with the website in the footer.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "logo plate, company name, website and the row of upright word tiles are on screen; a solid orange ball rolls in from the left edge at an even speed"
+      },
+      {
+        "at": 2.1,
+        "what": "the ball hits the first tile, which tips over slowly, speeds up and falls against the next tile as the ball rolls back and eases to a stop"
+      },
+      {
+        "at": 2.7,
+        "what": "the tiles topple one after another about every two thirds of a second, each darkening from pale to ink as it falls, while the camera starts to follow the chain"
+      },
+      {
+        "at": 5.3,
+        "what": "the last tile starts to tip, slowly at first, then faster"
+      },
+      {
+        "at": 6.6,
+        "what": "as the last word comes down, the camera starts a pull-back that ends on the whole row of fallen tiles on the floor"
+      },
+      {
+        "at": 6.8,
+        "what": "the last tile slams flat onto the floor with a small bounce and turns orange on impact"
+      },
+      {
+        "at": 8.4,
+        "what": "the finished frame holds: logo and name at the top, the ball resting at the start of the row, the fallen tiles spelling the sentence, the website at the bottom"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "warm paper background",
+      "thin ink floor line with soft shadows",
+      "solid orange ball",
+      "condensed caps printed on solid ink domino tiles",
+      "pale tiles waiting to fall",
+      "logo on a white plate with the name under it",
+      "website footer between two thin rules"
+    ],
+    "motion": [
+      "domino topple chain with accelerating falls",
+      "rolling ball impact",
+      "tiles darkening as they fall",
+      "camera follow and pull-back",
+      "hard landing with a small bounce",
+      "punchline tile turning to the accent colour"
+    ],
+    "mood": ["playful", "satisfying", "editorial", "warm"],
+    "roles": ["opener", "cta"],
+    "useCases": [
+      "motivational brand message",
+      "product or service launch hook",
+      "instagram reel or tiktok",
+      "shop or studio promo",
+      "call to action question"
+    ],
+    "editable": [
+      "domino sentence",
+      "logo image",
+      "company name",
+      "website",
+      "primary, floor, text, background and plate colours",
+      "domino look and font",
+      "word size, spacing and letters per domino",
+      "chain length and last word fall",
+      "ball style, size and rebound",
+      "floor shadows and line",
+      "camera follow and pull back timing"
+    ],
+    "palette": ["#f2ece1", "#1c1b19", "#e4572e", "#d9cfbf", "#ffffff"],
+    "keywords": [
+      "domino",
+      "dominoes",
+      "chain reaction",
+      "toppling tiles",
+      "falling text",
+      "word tiles",
+      "ball",
+      "paper",
+      "light",
+      "kinetic typography",
+      "vertical",
+      "momentum",
+      "physics"
+    ],
+    "variantNote": "Turns the words into real domino tiles: condensed caps printed on solid ink tiles on a warm paper stage with soft floor shadows instead of the neon reflection, pale tiles that darken as they fall and a punchline tile that lands in Primary color, so the sentence stays crisp and readable at small sizes and on light feeds for the whole clip.",
+    "concept": "A sentence stands on a glowing floor as a row of upright word dominoes; one push from a rolling ball topples them in a chain the camera follows, each word lighting up as it falls, until the last word lands flat as the punchline and the camera pulls back over the whole sentence lying on the floor. The copy is one short, upbeat line that ends on a question or a call to action, with the brand at the top the whole time.",
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/domino-words.mp4",
+    "needs": ["logo", "company name", "domino sentence", "website"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a light plate at the top of the frame for the whole clip"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name under the logo at the top, on screen from the first frame"
+      },
+      "Headline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "One short sentence that becomes the row of falling word dominoes; its last word or two land as the glowing punchline, so end on a question or call to action"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Website or handle in the footer line at the bottom"
+      }
+    },
+    "samples": {
+      "Logo": "design-assets/logos/willow-square.png",
+      "Company Name": "Willow & Co.",
+      "Headline": "One bouquet starts a chain of smiles. Send the first one?",
+      "Website": "willowandco.com"
+    }
+  },
+  "domino-words-c": {
+    "summary": "On a deep plum stage with a dim violet floor tube, the logo sits on a light plate above the company name from the first frame while a glowing pink ball rolls in toward a row of upright words drawn as unlit neon tubes. The ball knocks the first word over and the words topple into each other like dominoes, each one igniting with a pink glow as it falls while the floor lights up in pink beneath the falling chain and the camera follows. The last word tips over, lands flat with a small bounce and flares bright pink, and the camera pulls back over the whole lit sentence reflected in the floor, with the website in the footer.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "logo plate, company name, website and the row of unlit neon words are on screen, the first already lit; a glowing pink ball rolls in from the left edge at an even speed"
+      },
+      {
+        "at": 2.1,
+        "what": "the ball hits the first word, which tips over slowly, speeds up and falls against the next word as the ball rolls back and eases to a stop, and a pink light starts running along the floor"
+      },
+      {
+        "at": 2.7,
+        "what": "the words topple one after another about every two thirds of a second, each igniting with a pink glow as it falls, while the lit floor follows the chain and the camera follows too"
+      },
+      {
+        "at": 5.3,
+        "what": "the last word starts to tip, slowly at first, then faster"
+      },
+      {
+        "at": 6.6,
+        "what": "as the last word comes down, the camera starts a pull-back that ends on the whole glowing sentence on the lit floor, reflected below it"
+      },
+      {
+        "at": 6.8,
+        "what": "the last word slams flat onto the floor with a small bounce and flares bright pink over a lit strip of floor"
+      },
+      {
+        "at": 8.4,
+        "what": "the finished frame holds: logo and name at the top, the ball resting at the start of the row, the lit sentence on the pink floor, the website at the bottom"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "deep plum gradient background",
+      "violet neon floor tube that lights up pink",
+      "glowing pink ball",
+      "rounded caps drawn as neon tubes",
+      "pink glow on lit words",
+      "floor reflection",
+      "logo on a light plate with the name under it",
+      "website footer between two thin rules"
+    ],
+    "motion": [
+      "domino topple chain with accelerating falls",
+      "rolling ball impact",
+      "neon ignition as each word falls",
+      "light trail running along the floor",
+      "camera follow and pull-back",
+      "hard landing with a small bounce and flare"
+    ],
+    "mood": ["electric", "playful", "nocturnal", "satisfying"],
+    "roles": ["opener", "cta"],
+    "useCases": [
+      "motivational brand message",
+      "nightlife or event teaser",
+      "instagram reel or tiktok",
+      "launch hook",
+      "call to action question"
+    ],
+    "editable": [
+      "domino sentence",
+      "logo image",
+      "company name",
+      "website",
+      "primary, floor, text, background and plate colours",
+      "domino look and font",
+      "word size, spacing and letters per domino",
+      "chain length and last word fall",
+      "ball style, size and rebound",
+      "floor reflection, glow and light trail",
+      "camera follow and pull back timing"
+    ],
+    "palette": ["#160d24", "#07040d", "#ff4fa3", "#5b3a8c", "#fff1f8", "#6e5a8f"],
+    "keywords": [
+      "domino",
+      "chain reaction",
+      "toppling words",
+      "neon",
+      "glow",
+      "light trail",
+      "falling text",
+      "ball",
+      "night",
+      "kinetic typography",
+      "vertical",
+      "momentum",
+      "physics"
+    ],
+    "variantNote": "Makes the chain reaction a light show: rounded words start as unlit neon tubes and ignite one by one with a Primary glow as they fall while the floor lights up beneath the chain, so the momentum stays visible for the whole clip and the end frame glows as one lit sentence.",
+    "concept": "A sentence stands on a glowing floor as a row of upright word dominoes; one push from a rolling ball topples them in a chain the camera follows, each word lighting up as it falls, until the last word lands flat as the punchline and the camera pulls back over the whole sentence lying on the floor. The copy is one short, upbeat line that ends on a question or a call to action, with the brand at the top the whole time.",
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/domino-words.mp4",
+    "needs": ["logo", "company name", "domino sentence", "website"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a light plate at the top of the frame for the whole clip"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name under the logo at the top, on screen from the first frame"
+      },
+      "Headline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "One short sentence that becomes the row of falling word dominoes; its last word or two land as the glowing punchline, so end on a question or call to action"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Website or handle in the footer line at the bottom"
+      }
+    },
+    "samples": {
+      "Logo": "design-assets/logos/willow-round.png",
+      "Company Name": "Willow & Co.",
+      "Headline": "One bouquet starts a chain of smiles. Send the first one?",
+      "Website": "willowandco.com"
+    }
   }
 }
