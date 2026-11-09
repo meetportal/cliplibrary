@@ -1,5 +1,23 @@
 import type { ClipModule } from '../../registry';
 import {
+  magnifierCaptionADefaults,
+  magnifierCaptionAMeta,
+  magnifierCaptionASchema,
+} from './magnifier-caption-a';
+import { magnifierCaptionAControls } from './magnifier-caption-a-controls';
+import {
+  magnifierCaptionBDefaults,
+  magnifierCaptionBMeta,
+  magnifierCaptionBSchema,
+} from './magnifier-caption-b';
+import { magnifierCaptionBControls } from './magnifier-caption-b-controls';
+import {
+  magnifierCaptionCDefaults,
+  magnifierCaptionCMeta,
+  magnifierCaptionCSchema,
+} from './magnifier-caption-c';
+import { magnifierCaptionCControls } from './magnifier-caption-c-controls';
+import {
   neonSignFlickerADefaults,
   neonSignFlickerAMeta,
   neonSignFlickerASchema,
@@ -39,5 +57,26 @@ export const textRevealsClips: ClipModule[] = [
     defaults: neonSignFlickerCDefaults,
     meta: neonSignFlickerCMeta,
     controls: neonSignFlickerCControls,
+  },
+  {
+    id: 'magnifier-caption-a',
+    schema: magnifierCaptionASchema,
+    defaults: magnifierCaptionADefaults,
+    meta: magnifierCaptionAMeta,
+    controls: magnifierCaptionAControls,
+  },
+  {
+    id: 'magnifier-caption-b',
+    schema: magnifierCaptionBSchema,
+    defaults: magnifierCaptionBDefaults,
+    meta: magnifierCaptionBMeta,
+    controls: magnifierCaptionBControls,
+  },
+  {
+    id: 'magnifier-caption-c',
+    schema: magnifierCaptionCSchema,
+    defaults: magnifierCaptionCDefaults,
+    meta: magnifierCaptionCMeta,
+    controls: magnifierCaptionCControls,
   },
 ];
