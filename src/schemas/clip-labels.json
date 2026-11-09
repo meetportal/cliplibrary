@@ -3639,5 +3639,421 @@
       "Headline": "Same-day flowers, one tap away",
       "Website": "willowandco.com"
     }
+  },
+  "botanical-save-the-date-a": {
+    "summary": "A vertical blush wedding save the date. The couple's names sit in tall high-contrast serif capitals with a plum script 'and' over a diagonal peach watercolour wash from the first frame. A watercolour eucalyptus spray with two pale blossoms and gold line leaves flies in from the top-left corner, a second one follows from the bottom-right, and a two-line verse in spaced capitals and plum script types in letter by letter, holds and erases. A bold SAVE the DATE fades into its place, the date and the venue type in, and a small crest fades in at the foot before the finished card holds with the sprays swaying.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "blush page and peach wash with 'for the wedding of' and the two names already set in the middle"
+      },
+      {
+        "at": 0.0,
+        "what": "the top-left spray flies in from its corner, the bottom-right spray follows half a second later"
+      },
+      {
+        "at": 0.8,
+        "what": "the verse types in letter by letter, a capitals line then a plum script line"
+      },
+      {
+        "at": 4.2,
+        "what": "the verse erases left to right"
+      },
+      {
+        "at": 5.0,
+        "what": "bold SAVE / DATE fades in where the verse was, with a small script 'the' between"
+      },
+      {
+        "at": 5.7,
+        "what": "the date types in under it in bold capitals"
+      },
+      {
+        "at": 7.4,
+        "what": "the venue types in under the names"
+      },
+      {
+        "at": 8.7,
+        "what": "the crest fades in at the foot of the card"
+      },
+      {
+        "at": 9.5,
+        "what": "the complete card holds while the sprays sway"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 card",
+      "blush pink page",
+      "peach watercolour wash",
+      "watercolour eucalyptus sprays with pale blossoms",
+      "gold line leaves and flecks",
+      "high-contrast serif names with a plum script 'and'",
+      "bold SAVE the DATE",
+      "small crest at the foot"
+    ],
+    "motion": [
+      "sprays flying in from opposite corners",
+      "letter by letter soft typing",
+      "verse erasing",
+      "fade in",
+      "gentle continuous sway"
+    ],
+    "mood": ["romantic", "elegant", "soft", "botanical"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "wedding save the date",
+      "instagram or whatsapp wedding story",
+      "engagement announcement",
+      "save the date reel opener"
+    ],
+    "editable": [
+      "both names",
+      "date",
+      "venue",
+      "verse",
+      "crest or logo",
+      "SAVE, the and DATE words",
+      "leaf, script, text, page and wash colours",
+      "petal, blossom heart, gold and shadow leaf colours",
+      "names, capitals and script fonts",
+      "spray size, sway, fly-in distance and timing",
+      "card frame: none, arch or hexagon",
+      "typing style and every beat's start frame"
+    ],
+    "palette": ["#fae8e7", "#6f9078", "#f0c3ae", "#3f2a3a", "#c9a265"],
+    "keywords": [
+      "save the date",
+      "wedding",
+      "wedding invitation",
+      "botanical",
+      "watercolour",
+      "eucalyptus",
+      "floral",
+      "blossom",
+      "blush",
+      "typing",
+      "vertical",
+      "engagement"
+    ],
+    "variantNote": "Closest to the original reel: the same blush page, peach wash, corner sprays, verse that types and erases, and bold SAVE the DATE, but the names are on the card from the first frame and stay, and everything builds on one card, so the reel never drops to an empty pink page between beats and the couple reads at once.",
+    "concept": "A blush save the date where watercolour leaf sprays with pale blossoms fly in from opposite corners to frame the couple's names, which are on the card from the first frame, then the message lands in calm typed beats in the original reel's order: a soft verse types in and erases, a bold SAVE the DATE with the date takes its place, and the venue and a small crest close the card, which holds complete. It keeps the 58 second reel's spray fly-ins, verse, save the date, couple and closing beats, condensed onto one card; the event cards are left out. The copy is warm, short and personal.",
+    "needs": ["couple's names", "wedding date", "venue", "a short verse", "crest or logo"],
+    "placeholders": {
+      "Partner One": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "First name of the couple, on the first line in capitals"
+      },
+      "Partner Two": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "Second name of the couple, after the script 'and'"
+      },
+      "Event Date": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The wedding date as it should read, under SAVE the DATE"
+      },
+      "Venue": {
+        "kind": "text",
+        "maxChars": 44,
+        "hint": "Venue and city under the names; wraps to two lines"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 64,
+        "hint": "A short romantic verse that types in and erases before SAVE the DATE"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Crest, monogram or planner logo at the foot of the card: wide, square or round"
+      }
+    },
+    "samples": {
+      "Partner One": "Leah",
+      "Partner Two": "James",
+      "Event Date": "18 April 2027",
+      "Venue": "The Olive Courtyard, New York",
+      "Tagline": "As the flowers bloom, we are counting down to forever",
+      "Logo": "design-assets/logos/willow-wide.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/botanical-save-the-date.mp4"
+  },
+  "botanical-save-the-date-b": {
+    "summary": "A vertical blush wedding save the date on a cream arch card with a soft blush border, taken from the original reel's wedding card. The couple's names sit in Playfair capitals with a rose script 'and' on the arch from the first frame. A watercolour eucalyptus spray with two pale blossoms flies in over the arch's top-left shoulder and a second one over its bottom-right foot, then a verse in Marcellus capitals and Pinyon script types in and erases, a bold SAVE the DATE fades into its place, the date and the venue type in, and a small crest fades in before the card holds with the sprays swaying.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "cream arch card on the blush page with 'for the wedding of' and the two names already set"
+      },
+      {
+        "at": 0.0,
+        "what": "the top-left spray flies in over the arch shoulder, the bottom-right spray follows over its foot"
+      },
+      {
+        "at": 0.8,
+        "what": "the verse types in letter by letter, a capitals line then a rose script line"
+      },
+      {
+        "at": 4.2,
+        "what": "the verse erases left to right"
+      },
+      {
+        "at": 5.0,
+        "what": "bold SAVE / DATE fades in on the arch with a small script 'the' between"
+      },
+      {
+        "at": 5.7,
+        "what": "the date types in"
+      },
+      {
+        "at": 7.4,
+        "what": "the venue types in under the names"
+      },
+      {
+        "at": 8.7,
+        "what": "the crest fades in at the foot of the arch"
+      },
+      {
+        "at": 9.5,
+        "what": "the complete card holds while the sprays sway"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 card",
+      "blush pink page",
+      "cream arch card with a blush border",
+      "watercolour eucalyptus sprays with pale blossoms",
+      "gold line leaves",
+      "Playfair names with a rose script 'and'",
+      "bold SAVE the DATE",
+      "small crest at the foot"
+    ],
+    "motion": [
+      "sprays flying in from opposite corners",
+      "letter by letter soft typing",
+      "verse erasing",
+      "fade in",
+      "gentle continuous sway"
+    ],
+    "mood": ["romantic", "elegant", "classic", "botanical"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "wedding save the date",
+      "instagram or whatsapp wedding story",
+      "engagement announcement",
+      "printed-stationery style invitation video"
+    ],
+    "editable": [
+      "both names",
+      "date",
+      "venue",
+      "verse",
+      "crest or logo",
+      "SAVE, the and DATE words",
+      "leaf, script, text, page and arch colours",
+      "arch border colour and width",
+      "names, capitals and script fonts",
+      "spray size, sway, fly-in distance and timing",
+      "card frame: none, arch or hexagon",
+      "typing style and every beat's start frame"
+    ],
+    "palette": ["#f8e4e3", "#f6eee6", "#6f9078", "#3a2a33", "#8a4a5e"],
+    "keywords": [
+      "save the date",
+      "wedding",
+      "wedding invitation",
+      "arch",
+      "botanical",
+      "watercolour",
+      "eucalyptus",
+      "floral",
+      "blush",
+      "cream",
+      "typing",
+      "vertical"
+    ],
+    "variantNote": "Sets the whole card on the cream arch from the original's wedding card, for the full clip, with a Playfair, Marcellus and Pinyon Script pairing, so the text sits on a calm, higher-contrast panel that reads like printed stationery and the sprays have a shape to frame instead of floating on an empty page.",
+    "concept": "A blush save the date where watercolour leaf sprays with pale blossoms fly in from opposite corners to frame the couple's names, which are on the card from the first frame, then the message lands in calm typed beats in the original reel's order: a soft verse types in and erases, a bold SAVE the DATE with the date takes its place, and the venue and a small crest close the card, which holds complete. It keeps the 58 second reel's spray fly-ins, verse, save the date, couple and closing beats, condensed onto one card; the event cards are left out. The copy is warm, short and personal.",
+    "needs": ["couple's names", "wedding date", "venue", "a short verse", "crest or logo"],
+    "placeholders": {
+      "Partner One": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "First name of the couple, on the first line in capitals"
+      },
+      "Partner Two": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "Second name of the couple, after the script 'and'"
+      },
+      "Event Date": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The wedding date as it should read, under SAVE the DATE"
+      },
+      "Venue": {
+        "kind": "text",
+        "maxChars": 44,
+        "hint": "Venue and city under the names; wraps to two lines"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 64,
+        "hint": "A short romantic verse that types in and erases before SAVE the DATE"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Crest, monogram or planner logo at the foot of the card: wide, square or round"
+      }
+    },
+    "samples": {
+      "Partner One": "Leah",
+      "Partner Two": "James",
+      "Event Date": "18 April 2027",
+      "Venue": "The Olive Courtyard, New York",
+      "Tagline": "As the flowers bloom, we are counting down to forever",
+      "Logo": "design-assets/logos/willow-square.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/botanical-save-the-date.mp4"
+  },
+  "botanical-save-the-date-c": {
+    "summary": "A vertical blush wedding save the date inside a tall gold hexagon, taken from the original reel's ring ceremony card. The couple's names sit in Cormorant capitals with a plum Parisienne 'and' on a soft panel from the first frame, and the gold line draws on around them from the top point down both sides. A watercolour eucalyptus spray with two pale blossoms flies in from the top-left corner and a second one from the bottom-right, then a dark block cursor, like the original's name reveal, types the verse, erases it, and types the date and the venue while a bold SAVE the DATE fades in, and a round crest fades in before the card holds with the sprays swaying.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "soft hexagon panel on the blush page with 'for the wedding of' and the two names already set"
+      },
+      {
+        "at": 0.0,
+        "what": "the top-left spray flies in, the bottom-right spray follows; the gold hexagon line draws on from its top point down both sides"
+      },
+      {
+        "at": 0.8,
+        "what": "a dark block cursor types the verse, a capitals line then a plum script line"
+      },
+      {
+        "at": 4.2,
+        "what": "the narrow block cursor runs left to right over the verse again and clears it letter by letter"
+      },
+      {
+        "at": 5.0,
+        "what": "bold SAVE / DATE fades in with a small script 'the' between"
+      },
+      {
+        "at": 5.7,
+        "what": "the block cursor types the date"
+      },
+      {
+        "at": 7.4,
+        "what": "the block cursor types the venue under the names"
+      },
+      {
+        "at": 8.7,
+        "what": "the crest fades in inside the hexagon"
+      },
+      {
+        "at": 9.5,
+        "what": "the complete card holds while the sprays sway"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 card",
+      "blush pink page",
+      "gold hexagon outline around a soft panel",
+      "watercolour eucalyptus sprays with pale blossoms",
+      "gold line leaves",
+      "Cormorant names with a plum script 'and'",
+      "dark block cursor",
+      "bold SAVE the DATE",
+      "round crest"
+    ],
+    "motion": [
+      "sprays flying in from opposite corners",
+      "gold line drawing on",
+      "block cursor typing",
+      "cursor erase",
+      "fade in",
+      "gentle continuous sway"
+    ],
+    "mood": ["romantic", "elegant", "modern", "botanical"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "wedding save the date",
+      "ring ceremony or engagement announcement",
+      "instagram or whatsapp wedding story",
+      "save the date reel opener"
+    ],
+    "editable": [
+      "both names",
+      "date",
+      "venue",
+      "verse",
+      "crest or logo",
+      "SAVE, the and DATE words",
+      "leaf, script, text, page and panel colours",
+      "hexagon line colour and width",
+      "names, capitals and script fonts",
+      "spray size, sway, fly-in distance and timing",
+      "card frame: none, arch or hexagon",
+      "typing style and every beat's start frame"
+    ],
+    "palette": ["#f9e6e5", "#c9a265", "#6f9078", "#352433", "#5a3350"],
+    "keywords": [
+      "save the date",
+      "wedding",
+      "wedding invitation",
+      "hexagon",
+      "gold frame",
+      "botanical",
+      "watercolour",
+      "eucalyptus",
+      "floral",
+      "typing cursor",
+      "blush",
+      "vertical"
+    ],
+    "variantNote": "Frames the card for the whole clip in the gold hexagon from the original's ring ceremony card, drawn on in the first two seconds, and types every line with the original's dark block cursor instead of a soft fade, with a Cormorant and Parisienne pairing, so each typed beat lands crisply in turn and the eye stays centred on the names.",
+    "concept": "A blush save the date where watercolour leaf sprays with pale blossoms fly in from opposite corners to frame the couple's names, which are on the card from the first frame, then the message lands in calm typed beats in the original reel's order: a soft verse types in and erases, a bold SAVE the DATE with the date takes its place, and the venue and a small crest close the card, which holds complete. It keeps the 58 second reel's spray fly-ins, verse, save the date, couple and closing beats, condensed onto one card; the event cards are left out. The copy is warm, short and personal.",
+    "needs": ["couple's names", "wedding date", "venue", "a short verse", "crest or logo"],
+    "placeholders": {
+      "Partner One": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "First name of the couple, on the first line in capitals"
+      },
+      "Partner Two": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "Second name of the couple, after the script 'and'"
+      },
+      "Event Date": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The wedding date as it should read, under SAVE the DATE"
+      },
+      "Venue": {
+        "kind": "text",
+        "maxChars": 44,
+        "hint": "Venue and city under the names; wraps to two lines"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 64,
+        "hint": "A short romantic verse that types in and erases before SAVE the DATE"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Crest, monogram or planner logo at the foot of the card: wide, square or round"
+      }
+    },
+    "samples": {
+      "Partner One": "Leah",
+      "Partner Two": "James",
+      "Event Date": "18 April 2027",
+      "Venue": "The Olive Courtyard, New York",
+      "Tagline": "As the flowers bloom, we are counting down to forever",
+      "Logo": "design-assets/logos/willow-round.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/botanical-save-the-date.mp4"
   }
 }
