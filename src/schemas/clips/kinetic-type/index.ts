@@ -17,6 +17,12 @@ import {
   comingSoonFlipsCSchema,
 } from './coming-soon-flips-c';
 import { comingSoonFlipsCControls } from './coming-soon-flips-c-controls';
+import { textRingsADefaults, textRingsAMeta, textRingsASchema } from './text-rings-a';
+import { textRingsAControls } from './text-rings-a-controls';
+import { textRingsBDefaults, textRingsBMeta, textRingsBSchema } from './text-rings-b';
+import { textRingsBControls } from './text-rings-b-controls';
+import { textRingsCDefaults, textRingsCMeta, textRingsCSchema } from './text-rings-c';
+import { textRingsCControls } from './text-rings-c-controls';
 
 export const kineticTypeClips: ClipModule[] = [
   {
@@ -39,5 +45,26 @@ export const kineticTypeClips: ClipModule[] = [
     defaults: comingSoonFlipsCDefaults,
     meta: comingSoonFlipsCMeta,
     controls: comingSoonFlipsCControls,
+  },
+  {
+    id: 'text-rings-a',
+    schema: textRingsASchema,
+    defaults: textRingsADefaults,
+    meta: textRingsAMeta,
+    controls: textRingsAControls,
+  },
+  {
+    id: 'text-rings-b',
+    schema: textRingsBSchema,
+    defaults: textRingsBDefaults,
+    meta: textRingsBMeta,
+    controls: textRingsBControls,
+  },
+  {
+    id: 'text-rings-c',
+    schema: textRingsCSchema,
+    defaults: textRingsCDefaults,
+    meta: textRingsCMeta,
+    controls: textRingsCControls,
   },
 ];
