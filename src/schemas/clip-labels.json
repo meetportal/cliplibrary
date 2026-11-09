@@ -4055,5 +4055,428 @@
       "Logo": "design-assets/logos/willow-round.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/botanical-save-the-date.mp4"
+  },
+  "word-picker-a": {
+    "roles": ["feature", "opener", "transition"],
+    "useCases": [
+      "services or offer rundown",
+      "feature list walkthrough",
+      "course or event agenda",
+      "menu or product range teaser",
+      "brand intro for a reel"
+    ],
+    "motion": [
+      "even step-by-step vertical roll",
+      "picked word grows into place",
+      "distance fade and shrink",
+      "staggered rise-in entrance",
+      "selection draws on"
+    ],
+    "needs": ["logo", "company name", "six short list items"],
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/word-picker.mp4",
+    "concept": "A short list of what the brand offers scrolls up one word at a time under the brand, and each new pick grows large into a fixed selection in the middle while its neighbours shrink and fade by distance, so the eye stays on one spot and reads the list like a menu being browsed. The copy is a handful of one or two word items, calm and confident, ending held on the last pick.",
+    "summary": "On a pale cool white with soft teal corner glows, the wide logo on a white plate and the company name sit centered at the top. Below, a tinted teal frame with corner lines and dots draws on, the first word rises into it, and the list steps up four times, each pick growing large and teal while the words around it shrink and fade grey, ending held on the fifth word.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the logo and company name are on screen at the top from the first frame, reaching full strength within a quarter second"
+      },
+      {
+        "at": 0.1,
+        "what": "the selection frame draws on with corner dots and lines while the first word rises into it in teal"
+      },
+      {
+        "at": 0.4,
+        "what": "the next words rise in below, smaller and fading toward grey"
+      },
+      {
+        "at": 1.1,
+        "what": "the list steps up one word, the second pick growing into the frame"
+      },
+      {
+        "at": 2.2,
+        "what": "the list steps again to the third word"
+      },
+      {
+        "at": 3.3,
+        "what": "the list steps to the fourth word"
+      },
+      {
+        "at": 4.4,
+        "what": "the last step lands on the fifth word, held with the full list to the end"
+      }
+    ],
+    "visuals": [
+      "centered vertical word list",
+      "large teal picked word",
+      "tinted rectangular selection frame",
+      "thin corner lines with dots",
+      "wide logo on a white plate beside the name",
+      "soft teal corner glows",
+      "pale cool white background"
+    ],
+    "mood": ["minimal", "clean", "calm", "editorial"],
+    "editable": [
+      "logo image",
+      "company name",
+      "list words",
+      "colors",
+      "layout stacked or split",
+      "fonts for the list, the pick and the name",
+      "picked word and list sizes",
+      "selection style, size and counter",
+      "number of moves and time per word",
+      "corner glows"
+    ],
+    "palette": ["#f5f7f7", "#0f766e", "#121417", "#8b9196", "#ffffff"],
+    "keywords": [
+      "word list",
+      "picker",
+      "scrolling list",
+      "selector",
+      "services",
+      "feature list",
+      "kinetic text",
+      "highlight word",
+      "menu",
+      "minimal",
+      "teal",
+      "logo",
+      "agenda"
+    ],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a plate beside the company name at the top for the whole clip"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name beside the logo at the top, above the list"
+      },
+      "Item 1": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The first word on the list, picked as the clip opens; one or two words like a service or topic"
+      },
+      "Item 2": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The second pick, one or two words"
+      },
+      "Item 3": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The third pick, one or two words"
+      },
+      "Item 4": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The fourth pick, one or two words"
+      },
+      "Item 5": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The last pick, held to the end; make it the one that matters most"
+      },
+      "Item 6": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "Shown under the last pick as the next item"
+      }
+    },
+    "samples": {
+      "Logo": "design-assets/logos/willow-wide.png",
+      "Company Name": "Willow & Co.",
+      "Item 1": "Bouquets",
+      "Item 2": "Centerpieces",
+      "Item 3": "Floral arches",
+      "Item 4": "Installations",
+      "Item 5": "Weddings",
+      "Item 6": "Workshops"
+    },
+    "variantNote": "Closest to the original picker, but the brand sits above the list from the first frame, the steps come a little quicker so the last pick holds for a full second instead of fading to black, and every word keeps one weight so nothing pops as it lands."
+  },
+  "word-picker-b": {
+    "roles": ["feature", "opener", "transition"],
+    "useCases": [
+      "services or offer rundown",
+      "feature list walkthrough",
+      "course or event agenda",
+      "menu or product range teaser",
+      "brand intro for a reel"
+    ],
+    "motion": [
+      "even step-by-step vertical roll",
+      "picked word grows into place",
+      "distance fade and shrink",
+      "staggered rise-in entrance",
+      "selection draws on"
+    ],
+    "needs": ["logo", "company name", "six short list items"],
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/word-picker.mp4",
+    "concept": "A short list of what the brand offers scrolls up one word at a time under the brand, and each new pick grows large into a fixed selection in the middle while its neighbours shrink and fade by distance, so the eye stays on one spot and reads the list like a menu being browsed. The copy is a handful of one or two word items, calm and confident, ending held on the last pick.",
+    "summary": "On a near-black stage with a faint coral glow, the square logo on a light plate and the company name in serif italic sit at the top. A thin coral line draws across the middle and opens into a solid bar, and a list of serif italic words scrolls up through it four times: each word turns dark the moment it crosses into the bar and grows large inside it, while the words around stay light and fade to grey, ending held on the fifth word.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the logo plate and the serif italic name are on screen at the top from the first frame"
+      },
+      {
+        "at": 0.0,
+        "what": "a thin coral line draws out from the centre and opens into a solid bar while the first word rises into it, dark on coral"
+      },
+      {
+        "at": 0.6,
+        "what": "the next words rise in below, light serif italic fading to grey"
+      },
+      {
+        "at": 1.1,
+        "what": "the list steps up and the second word passes into the bar, turning dark on coral as it crosses the edge"
+      },
+      {
+        "at": 2.2,
+        "what": "the list steps again to the third word"
+      },
+      {
+        "at": 3.3,
+        "what": "the list steps to the fourth word"
+      },
+      {
+        "at": 4.4,
+        "what": "the last step lands on the fifth word in the bar, held to the end"
+      }
+    ],
+    "visuals": [
+      "dark stage",
+      "solid coral selection bar",
+      "serif italic word list",
+      "dark picked word cut out of the bar",
+      "light words fading to grey",
+      "square logo on a light plate",
+      "faint coral corner glow"
+    ],
+    "mood": ["bold", "nocturnal", "editorial", "confident"],
+    "editable": [
+      "logo image",
+      "company name",
+      "list words",
+      "colors",
+      "layout stacked or split",
+      "fonts for the list, the pick and the name",
+      "picked word and list sizes",
+      "selection style, size and counter",
+      "number of moves and time per word",
+      "corner glows"
+    ],
+    "palette": ["#0f1012", "#ff6a3d", "#f3f1ec", "#6e6e75"],
+    "keywords": [
+      "word list",
+      "picker",
+      "scrolling list",
+      "selector",
+      "services",
+      "dark",
+      "coral",
+      "serif italic",
+      "highlight bar",
+      "menu",
+      "kinetic text",
+      "logo",
+      "night"
+    ],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a plate beside the company name at the top for the whole clip"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name in serif italic beside the logo at the top"
+      },
+      "Item 1": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The first word on the list, picked as the clip opens; one or two words like a service or topic"
+      },
+      "Item 2": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The second pick, one or two words"
+      },
+      "Item 3": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The third pick, one or two words"
+      },
+      "Item 4": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The fourth pick, one or two words"
+      },
+      "Item 5": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The last pick, held to the end; make it the one that matters most"
+      },
+      "Item 6": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "Shown under the last pick as the next item"
+      }
+    },
+    "samples": {
+      "Logo": "design-assets/logos/willow-square.png",
+      "Company Name": "Willow & Co.",
+      "Item 1": "Bouquets",
+      "Item 2": "Centerpieces",
+      "Item 3": "Floral arches",
+      "Item 4": "Installations",
+      "Item 5": "Weddings",
+      "Item 6": "Workshops"
+    },
+    "variantNote": "Same steps and pacing, but on a dark stage the selection is a solid Primary bar that the list scrolls through like a lens, so each word flips to reverse colour exactly where it crosses the bar edge, and the whole list is set in an editorial serif italic, a warmer, more distinct voice than the original's plain sans for the whole clip."
+  },
+  "word-picker-c": {
+    "roles": ["feature", "opener", "transition"],
+    "useCases": [
+      "services or offer rundown",
+      "feature list walkthrough",
+      "course or event agenda",
+      "menu or product range teaser",
+      "brand intro for a reel"
+    ],
+    "motion": [
+      "even step-by-step vertical roll",
+      "picked word grows into place",
+      "distance fade and shrink",
+      "staggered rise-in entrance",
+      "selection draws on"
+    ],
+    "needs": ["logo", "company name", "six short list items"],
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/word-picker.mp4",
+    "concept": "A short list of what the brand offers scrolls up one word at a time under the brand, and each new pick grows large into a fixed selection in the middle while its neighbours shrink and fade by distance, so the eye stays on one spot and reads the list like a menu being browsed. The copy is a handful of one or two word items, calm and confident, ending held on the last pick.",
+    "summary": "On warm sand with soft terracotta glows, a large round logo and the company name in serif hold a column on the left. On the right a terracotta bracket frame draws on with a counter at its left edge, and the list steps up four times, each pick growing large and terracotta while the counter rolls from 01 to 05 of 05, ending held on the fifth word.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the round logo and the serif name are on screen in the left column from the first frame"
+      },
+      {
+        "at": 0.1,
+        "what": "the bracket frame draws on at the right and the first word rises into it, with the counter at 01"
+      },
+      {
+        "at": 0.4,
+        "what": "the next words rise in below"
+      },
+      {
+        "at": 1.1,
+        "what": "the list steps up and the counter rolls to 02"
+      },
+      {
+        "at": 2.2,
+        "what": "the list steps to the third word, counter 03"
+      },
+      {
+        "at": 3.3,
+        "what": "the list steps to the fourth word, counter 04"
+      },
+      {
+        "at": 4.4,
+        "what": "the last step lands on the fifth word at 05 of 05, held to the end"
+      }
+    ],
+    "visuals": [
+      "split layout",
+      "large round logo above a serif name",
+      "word list on the right",
+      "terracotta picked word",
+      "tinted bracket frame with corner lines and dots",
+      "rolling numbered counter",
+      "warm sand background"
+    ],
+    "mood": ["warm", "editorial", "calm", "organised"],
+    "editable": [
+      "logo image",
+      "company name",
+      "list words",
+      "colors",
+      "layout stacked or split",
+      "fonts for the list, the pick and the name",
+      "picked word and list sizes",
+      "selection style, size and counter",
+      "number of moves and time per word",
+      "corner glows"
+    ],
+    "palette": ["#f4efe7", "#c2410c", "#1c1917", "#a39b91"],
+    "keywords": [
+      "word list",
+      "picker",
+      "numbered list",
+      "counter",
+      "agenda",
+      "services",
+      "split layout",
+      "terracotta",
+      "warm",
+      "menu",
+      "kinetic text",
+      "logo",
+      "steps"
+    ],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits large above the company name in the left column for the whole clip, with no plate"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name in serif under the logo in the left column"
+      },
+      "Item 1": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The first word on the list, picked as the clip opens; one or two words like a service or topic"
+      },
+      "Item 2": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The second pick, one or two words"
+      },
+      "Item 3": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The third pick, one or two words"
+      },
+      "Item 4": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The fourth pick, one or two words"
+      },
+      "Item 5": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "The last pick, held to the end; make it the one that matters most"
+      },
+      "Item 6": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "Shown under the last pick as the next item"
+      }
+    },
+    "samples": {
+      "Logo": "design-assets/logos/willow-round.png",
+      "Company Name": "Willow & Co.",
+      "Item 1": "Bouquets",
+      "Item 2": "Centerpieces",
+      "Item 3": "Floral arches",
+      "Item 4": "Installations",
+      "Item 5": "Weddings",
+      "Item 6": "Workshops"
+    },
+    "variantNote": "Same picker and pacing, but the brand gets its own column on the left so a large logo stays readable for the whole clip, and a counter in the frame rolls from 01 to 05 with each step, so the viewer always knows where they are in the list."
   }
 }
