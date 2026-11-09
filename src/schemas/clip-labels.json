@@ -2469,5 +2469,464 @@
       "Tagline": "fresh flowers every day"
     },
     "variantNote": "Keeps the vortex, but every ring writes its words on in a clockwise sweep that echoes the circle draw, the logo disc irises in from a bold Primary ring, and the tagline rings stay dimmed behind the bright name rings for the whole clip, so the build reads as one gesture with real depth."
+  },
+  "pill-fan-a": {
+    "summary": "On a near-white ground with soft violet corner glows, a bold black phrase is completed by rounded violet word pills. Each new word swings in on top around a hinge just right of the phrase while older pills fan away clockwise on spokes, tinted lighter and a little smaller, so every word in the fan stays readable. The logo and company name sit top left.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the logo and name sit top left from the first frame as the phrase rises in and the first pill swings down into place beside it"
+      },
+      {
+        "at": 1.1,
+        "what": "the second word swings in on top and the first pill fans down behind it, lighter and a little smaller"
+      },
+      {
+        "at": 1.8,
+        "what": "the third word arrives and the fan of older pills grows"
+      },
+      {
+        "at": 2.6,
+        "what": "the fourth word arrives with three older pills fanned out below"
+      },
+      {
+        "at": 3.4,
+        "what": "the fifth word takes the front as the oldest pill fades out of the fan"
+      },
+      {
+        "at": 4.1,
+        "what": "the last word swings in on top"
+      },
+      {
+        "at": 4.7,
+        "what": "the finished line, the fan of three older words and the logo hold to the end"
+      }
+    ],
+    "visuals": [
+      "near-white background with soft violet corner glows",
+      "bold black geometric sans phrase",
+      "rounded violet word pills with white words",
+      "fan of lighter, slightly smaller older pills",
+      "logo and company name top left",
+      "soft violet pill shadows"
+    ],
+    "motion": [
+      "swing in around a hinge",
+      "fanning rotation trail",
+      "spokes sliding out",
+      "word cycling",
+      "rise and fade in",
+      "slow glow drift"
+    ],
+    "mood": ["playful", "modern", "confident", "friendly"],
+    "roles": ["opener", "feature"],
+    "useCases": [
+      "agency or studio intro",
+      "what we do services reel",
+      "brand tagline animation",
+      "instagram or linkedin hook",
+      "product capability rundown"
+    ],
+    "editable": [
+      "phrase",
+      "six words",
+      "logo and company name",
+      "phrase and word fonts",
+      "pill, text and background colors",
+      "older pill style",
+      "fan angles, slide out and shrink",
+      "frames per word",
+      "hinge position and margins"
+    ],
+    "palette": ["#f8f7fc", "#14121f", "#5b4bdb", "#a99df0", "#ffffff"],
+    "keywords": [
+      "pill",
+      "word swap",
+      "rotating words",
+      "fan",
+      "tagline",
+      "we build",
+      "we design",
+      "phrase",
+      "cycling text",
+      "kinetic text",
+      "list picker",
+      "agency",
+      "services",
+      "capabilities",
+      "purple",
+      "violet",
+      "white",
+      "logo",
+      "corner logo"
+    ],
+    "variantNote": "Closest to the inspiration, but older pills slide out along their own spokes as solid lighter tints instead of translucent pills on one hinge, so the fan stays readable to the end; the logo and name sit top left, and it holds the finished line instead of fading to black.",
+    "concept": "A short phrase is completed again and again by word pills that swing in on top and fan away around a hinge, so one sentence says everything the company does in a few seconds. The eye stays on the newest word while the fan behind it keeps the list in view; quick, playful and confident copy, one word per pill.",
+    "needs": ["logo", "company name", "headline", "six short words"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 24,
+        "hint": "The lead-in the words complete, such as 'We design'; it sits left of the pills and wraps to two lines when long"
+      },
+      "Item 1": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 1 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 2": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 2 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 3": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 3 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 4": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 4 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 5": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 5 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 6": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 6 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name beside the logo; long names shrink to one line"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits in front of the company name"
+      }
+    },
+    "samples": {
+      "Headline": "We design",
+      "Item 1": "weddings",
+      "Item 2": "gardens",
+      "Item 3": "events",
+      "Item 4": "bouquets",
+      "Item 5": "spaces",
+      "Item 6": "moments",
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/pill-fan.mp4"
+  },
+  "pill-fan-b": {
+    "summary": "On a warm cream ground, a dark serif phrase is completed by terracotta word pills that swing in on top around a hinge. As each new word arrives the previous pill swings down and softly turns from solid into an outlined pill, cream inside with a terracotta rim and word, so the fan reads like a tidy list. The logo and company name sit top left.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the logo and name sit top left from the first frame as the phrase rises in and the first pill swings down into place beside it"
+      },
+      {
+        "at": 1.1,
+        "what": "the second word swings in on top and the first pill fans down behind it, softly turning from solid into an outlined pill"
+      },
+      {
+        "at": 1.8,
+        "what": "the third word arrives and the fan of older pills grows"
+      },
+      {
+        "at": 2.6,
+        "what": "the fourth word arrives with three older pills fanned out below"
+      },
+      {
+        "at": 3.4,
+        "what": "the fifth word takes the front as the oldest pill fades out of the fan"
+      },
+      {
+        "at": 4.1,
+        "what": "the last word swings in on top"
+      },
+      {
+        "at": 4.7,
+        "what": "the finished line, the fan of three older words and the logo hold to the end"
+      }
+    ],
+    "visuals": [
+      "warm cream background with soft peach corner glows",
+      "dark soft serif phrase",
+      "solid terracotta front pill with cream word",
+      "outlined older pills with terracotta rims and words",
+      "logo and company name top left"
+    ],
+    "motion": [
+      "swing in around a hinge",
+      "fanning rotation trail",
+      "solid to outline crossfade",
+      "word cycling",
+      "rise and fade in",
+      "slow glow drift"
+    ],
+    "mood": ["warm", "editorial", "friendly", "crafted"],
+    "roles": ["opener", "feature"],
+    "useCases": [
+      "studio or shop intro",
+      "what we make services reel",
+      "brand tagline animation",
+      "instagram or pinterest hook",
+      "event or wedding business promo"
+    ],
+    "editable": [
+      "phrase",
+      "six words",
+      "logo and company name",
+      "phrase and word fonts",
+      "pill, text and background colors",
+      "older pill style",
+      "fan angles, slide out and shrink",
+      "frames per word",
+      "hinge position and margins"
+    ],
+    "palette": ["#f6f0e6", "#2b1e16", "#d2552c", "#efc4a2", "#fff8f0"],
+    "keywords": [
+      "pill",
+      "word swap",
+      "rotating words",
+      "fan",
+      "tagline",
+      "we build",
+      "we design",
+      "phrase",
+      "cycling text",
+      "kinetic text",
+      "list picker",
+      "agency",
+      "services",
+      "capabilities",
+      "terracotta",
+      "orange",
+      "cream",
+      "serif",
+      "outline",
+      "warm"
+    ],
+    "variantNote": "Pairs a warm serif phrase with a rounded sans and swaps the violet for terracotta on cream; older words turn from solid into outlined pills instead of fading, so every word stays crisp and the front word is clearly the hero.",
+    "concept": "A short phrase is completed again and again by word pills that swing in on top and fan away around a hinge, so one sentence says everything the company does in a few seconds. The eye stays on the newest word while the fan behind it keeps the list in view; quick, playful and confident copy, one word per pill.",
+    "needs": ["logo", "company name", "headline", "six short words"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 24,
+        "hint": "The lead-in the words complete, such as 'We design'; it sits left of the pills and wraps to two lines when long"
+      },
+      "Item 1": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 1 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 2": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 2 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 3": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 3 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 4": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 4 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 5": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 5 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 6": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 6 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name beside the logo; long names shrink to one line"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits in front of the company name"
+      }
+    },
+    "samples": {
+      "Headline": "We design",
+      "Item 1": "weddings",
+      "Item 2": "gardens",
+      "Item 3": "events",
+      "Item 4": "bouquets",
+      "Item 5": "spaces",
+      "Item 6": "moments",
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/pill-fan.mp4"
+  },
+  "pill-fan-c": {
+    "summary": "On near-black, a white phrase is completed by lime word pills with dark words that swing in on top around a hinge, while older pills fan upward above the line as darker tints. The logo on a light round plate and the company name sit centered under the line from the start. As the last word lands the older pills sweep on and fade away while the line and brand glide up to the middle, ending on one clean, centered lockup.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the logo and name sit under the line from the first frame as the white phrase rises in and the first lime pill swings into place"
+      },
+      {
+        "at": 1.1,
+        "what": "the second word swings in and the first pill fans up above the line, darker"
+      },
+      {
+        "at": 1.8,
+        "what": "the third word arrives and the upward fan grows"
+      },
+      {
+        "at": 2.6,
+        "what": "the fourth word arrives with three darker pills fanned above"
+      },
+      {
+        "at": 3.4,
+        "what": "the fifth word takes the front as the oldest pill fades out of the fan"
+      },
+      {
+        "at": 4.1,
+        "what": "the last word swings in while the older pills sweep on and fade away, and the line and brand glide up to the middle of the frame"
+      },
+      {
+        "at": 4.9,
+        "what": "one clean line over the logo and name holds, centered, to the end"
+      }
+    ],
+    "visuals": [
+      "near-black background with faint lime corner glows",
+      "bold white sans phrase",
+      "lime word pills with dark words",
+      "fan of darker older pills opening upward",
+      "logo on a light round plate",
+      "company name centered under the line"
+    ],
+    "motion": [
+      "swing in around a hinge",
+      "upward fanning trail",
+      "fan sweeping away at the end",
+      "glide to center",
+      "word cycling",
+      "rise and fade in"
+    ],
+    "mood": ["bold", "modern", "confident", "energetic"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "agency or studio sign off",
+      "what we do services reel",
+      "brand tagline animation",
+      "tech or product capability rundown",
+      "instagram or linkedin hook"
+    ],
+    "editable": [
+      "phrase",
+      "six words",
+      "logo and company name",
+      "logo plate",
+      "phrase and word fonts",
+      "pill, text and background colors",
+      "fan direction and older pill style",
+      "clearing the fan at the end",
+      "frames per word",
+      "where the logo appears"
+    ],
+    "palette": ["#111114", "#f3f3ee", "#c6f135", "#34420f"],
+    "keywords": [
+      "pill",
+      "word swap",
+      "rotating words",
+      "fan",
+      "tagline",
+      "we build",
+      "we design",
+      "phrase",
+      "cycling text",
+      "kinetic text",
+      "list picker",
+      "agency",
+      "services",
+      "capabilities",
+      "lime",
+      "green",
+      "black",
+      "dark",
+      "end card",
+      "fan up",
+      "clean ending"
+    ],
+    "variantNote": "Dark with lime pills, and the fan opens upward so the logo and name can sit under the line for the whole clip; the older pills sweep away as the last word lands and the line and brand glide to the center, so it ends on one readable, centered lockup instead of a pile of pills.",
+    "concept": "A short phrase is completed again and again by word pills that swing in on top and fan away around a hinge, so one sentence says everything the company does in a few seconds. The eye stays on the newest word while the fan behind it keeps the list in view; quick, playful and confident copy, one word per pill.",
+    "needs": ["logo", "company name", "headline", "six short words"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 24,
+        "hint": "The lead-in the words complete, such as 'We design'; it sits left of the pills and wraps to two lines when long"
+      },
+      "Item 1": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 1 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 2": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 2 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 3": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 3 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 4": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 4 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 5": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 5 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Item 6": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Word 6 that completes the phrase, one word or two short ones on its own pill"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name beside the logo; long names shrink to one line"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits in front of the company name"
+      }
+    },
+    "samples": {
+      "Headline": "We design",
+      "Item 1": "weddings",
+      "Item 2": "gardens",
+      "Item 3": "events",
+      "Item 4": "bouquets",
+      "Item 5": "spaces",
+      "Item 6": "moments",
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-round.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/pill-fan.mp4"
   }
 }

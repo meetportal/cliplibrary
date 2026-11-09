@@ -16,6 +16,9 @@ import type { ComingSoonFlipsCProps } from './clips/kinetic-type/coming-soon-fli
 import type { TextRingsAProps } from './clips/kinetic-type/text-rings-a';
 import type { TextRingsBProps } from './clips/kinetic-type/text-rings-b';
 import type { TextRingsCProps } from './clips/kinetic-type/text-rings-c';
+import type { PillFanAProps } from './clips/list-pickers/pill-fan-a';
+import type { PillFanBProps } from './clips/list-pickers/pill-fan-b';
+import type { PillFanCProps } from './clips/list-pickers/pill-fan-c';
 import type { NeonSignFlickerAProps } from './clips/text-reveals/neon-sign-flicker-a';
 import type { NeonSignFlickerBProps } from './clips/text-reveals/neon-sign-flicker-b';
 import type { NeonSignFlickerCProps } from './clips/text-reveals/neon-sign-flicker-c';
@@ -42,6 +45,9 @@ export interface ClipPropsMap {
   'text-rings-a': TextRingsAProps;
   'text-rings-b': TextRingsBProps;
   'text-rings-c': TextRingsCProps;
+  'pill-fan-a': PillFanAProps;
+  'pill-fan-b': PillFanBProps;
+  'pill-fan-c': PillFanCProps;
 }
 
 export type ClipId = keyof ClipPropsMap;
