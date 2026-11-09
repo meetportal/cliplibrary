@@ -10,6 +10,9 @@ import type { DotMorphWordmarkCProps } from './clips/brand/dot-morph-wordmark-c'
 import type { DotRingLogoRevealAProps } from './clips/brand/dot-ring-logo-reveal-a';
 import type { DotRingLogoRevealBProps } from './clips/brand/dot-ring-logo-reveal-b';
 import type { DotRingLogoRevealCProps } from './clips/brand/dot-ring-logo-reveal-c';
+import type { ComingSoonFlipsAProps } from './clips/kinetic-type/coming-soon-flips-a';
+import type { ComingSoonFlipsBProps } from './clips/kinetic-type/coming-soon-flips-b';
+import type { ComingSoonFlipsCProps } from './clips/kinetic-type/coming-soon-flips-c';
 
 export interface ClipPropsMap {
   'arc-burst-wordmark-a': ArcBurstWordmarkAProps;
@@ -18,6 +21,9 @@ export interface ClipPropsMap {
   'chevron-mark-assemble-a': ChevronMarkAssembleAProps;
   'chevron-mark-assemble-b': ChevronMarkAssembleBProps;
   'chevron-mark-assemble-c': ChevronMarkAssembleCProps;
+  'coming-soon-flips-a': ComingSoonFlipsAProps;
+  'coming-soon-flips-b': ComingSoonFlipsBProps;
+  'coming-soon-flips-c': ComingSoonFlipsCProps;
   'dot-morph-wordmark-a': DotMorphWordmarkAProps;
   'dot-morph-wordmark-b': DotMorphWordmarkBProps;
   'dot-morph-wordmark-c': DotMorphWordmarkCProps;

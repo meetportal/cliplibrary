@@ -49,7 +49,10 @@ describe('gallery filters', () => {
   it('counts each facet against the other active filters', () => {
     const { categories, themes, tags } = facetCounts(items, { ...DEFAULT_FILTERS, theme: 'dark' });
     const dark = CLIP_REGISTRY.filter((meta) => meta.theme === 'dark').length;
-    expect(categories.brand).toBe(dark);
+    const darkBrand = CLIP_REGISTRY.filter(
+      (meta) => meta.theme === 'dark' && meta.category === 'brand',
+    ).length;
+    expect(categories.brand).toBe(darkBrand);
     expect(tags.draw).toBe(1);
     expect(themes.light).toBe(CLIP_REGISTRY.length - dark);
   });

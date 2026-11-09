@@ -1426,5 +1426,387 @@
       "Company Name": "Willow & Co.",
       "Logo": "design-assets/logos/willow-round.png"
     }
+  },
+  "coming-soon-flips-a": {
+    "summary": "A coming soon teaser on tangerine and navy plates. Condensed cream or navy words hard cut one at a time, HOLD YOUR BREATH WHAT'S NEXT IS LANDING, each with a short bar growing under it, and the second BREATH stutters through serif, marker, brush and thin typefaces. After a two frame flash of a pale blue plaster wall, an outlined ALMOST over a solid tangerine HERE flickers on letter by letter and tracks in at the top while two soft diagonal slats of window light sweep up the wall across the logo and name, leave the wall, swing back in, then open into one pool that rests on the logo and name.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "HOLD cuts in over a plate with a short bar growing under it, from the very first frame"
+      },
+      {
+        "at": 0.87,
+        "what": "hard cut to YOUR on the other plate"
+      },
+      {
+        "at": 1.77,
+        "what": "hard cut to BREATH"
+      },
+      {
+        "at": 2.53,
+        "what": "BREATH stutters through serif, marker, brush, hand and thin typefaces every two frames"
+      },
+      {
+        "at": 3.63,
+        "what": "WHAT'S, NEXT, IS and LANDING cut in one word at a time on alternating plates"
+      },
+      {
+        "at": 6.9,
+        "what": "two frame flash of the whole plaster wall with the logo and name"
+      },
+      {
+        "at": 6.97,
+        "what": "an outlined ALMOST over a solid tangerine HERE flickers on letter by letter and tracks in from wide spacing at the top"
+      },
+      {
+        "at": 7.1,
+        "what": "two soft diagonal slats of window light sweep up the wall from the lower left, catching the logo and name"
+      },
+      {
+        "at": 9.0,
+        "what": "the light crosses off the wall at an even speed and the wall goes dark for a moment"
+      },
+      {
+        "at": 9.4,
+        "what": "the light swings back in, speeding up, and slows onto the logo and name"
+      },
+      {
+        "at": 10.8,
+        "what": "the light opens into one wide pool over the logo and name, which hold with the title until the end"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "tangerine and navy plates",
+      "condensed uppercase words",
+      "short growing underline",
+      "outlined and solid stacked title",
+      "pale blue plaster wall",
+      "diagonal slatted window light",
+      "logo and name on the lit wall"
+    ],
+    "motion": [
+      "hard cuts between words",
+      "growing underline",
+      "font flicker",
+      "letter flicker and track in",
+      "light sweep",
+      "light swings back in and settles"
+    ],
+    "mood": ["suspenseful", "bold", "punchy", "cinematic"],
+    "editable": [
+      "company name",
+      "logo, its size and plate",
+      "teaser words, plate, length and font flicker per word",
+      "word font, size and underline",
+      "flicker fonts and speed",
+      "title lines, font, sizes and outline",
+      "primary, text, background and wall colors",
+      "plaster texture",
+      "light slats, angle, softness and timing",
+      "film grain"
+    ],
+    "palette": ["#ff6b35", "#111933", "#fff3e6", "#c4d2e6"],
+    "keywords": [
+      "coming soon",
+      "teaser",
+      "almost here",
+      "launch",
+      "hard cut",
+      "word by word",
+      "font flicker",
+      "condensed type",
+      "logo reveal",
+      "light sweep",
+      "window light",
+      "plaster wall",
+      "tangerine",
+      "navy",
+      "vertical",
+      "story",
+      "kinetic typography"
+    ],
+    "variantNote": "Closest to the inspiration, but it opens on the first word instead of 0.6 s of empty navy, the words are half again as big, the light never washes over the title, and instead of leaving the logo in the dark the light swings back and comes to rest on the logo and name, so the last 1.5 s and the poster show who is coming.",
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "coming soon teaser",
+      "product launch countdown post",
+      "instagram or tiktok story teaser",
+      "brand reveal before a launch",
+      "event or drop announcement"
+    ],
+    "concept": "A suspense teaser that says one condensed word per hard cut between two bold plates, stutters through typefaces on the breath beat, then lands on an outlined plus solid ALMOST HERE while slatted window light rakes a plaster wall to find the logo and name. Short, punchy, teasing copy; the eye goes word, title, then logo.",
+    "needs": ["logo", "company name"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Brand or product name under the logo on the lit wall at the very end; one line, long names shrink. Leave empty if your logo already spells the name"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Brand logo painted on the wall and found by the light; wide, square or round, shown whole"
+      }
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/coming-soon-flips.mp4",
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png"
+    }
+  },
+  "coming-soon-flips-b": {
+    "summary": "A coming soon teaser in warm black and marigold. Heavy condensed cream or black words hard cut one at a time, HOLD YOUR BREATH WHAT'S NEXT IS LANDING, each over a bar the full width of the word, and the second BREATH stutters through serif, marker, brush and thin typefaces. After a two frame flash of a warm sand plaster wall, a solid serif ALMOST in cream over a marigold HERE flickers on letter by letter and tracks in at the top while three narrow diagonal slats of warm light sweep the wall across the logo and name, leave the wall, swing back in, then open into one pool that rests on the logo and name.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "HOLD cuts in over a plate with a short bar growing under it, from the very first frame"
+      },
+      {
+        "at": 0.87,
+        "what": "hard cut to YOUR on the other plate"
+      },
+      {
+        "at": 1.77,
+        "what": "hard cut to BREATH"
+      },
+      {
+        "at": 2.53,
+        "what": "BREATH stutters through serif, marker, brush, hand and thin typefaces every two frames"
+      },
+      {
+        "at": 3.63,
+        "what": "WHAT'S, NEXT, IS and LANDING cut in one word at a time on alternating plates"
+      },
+      {
+        "at": 6.9,
+        "what": "two frame flash of the whole plaster wall with the logo and name"
+      },
+      {
+        "at": 6.97,
+        "what": "a solid serif ALMOST in cream over a marigold HERE flickers on letter by letter and tracks in at the top"
+      },
+      {
+        "at": 7.1,
+        "what": "three narrow diagonal slats of warm window light sweep up the sand wall, catching the logo and name"
+      },
+      {
+        "at": 9.0,
+        "what": "the light crosses off the wall at an even speed and the wall goes dark for a moment"
+      },
+      {
+        "at": 9.4,
+        "what": "the light swings back in, speeding up, and slows onto the logo and name"
+      },
+      {
+        "at": 10.8,
+        "what": "the slats merge into one warm pool over the logo and name, which hold with the title until the end"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "warm black and marigold plates",
+      "heavy condensed uppercase words",
+      "full width bar under each word",
+      "serif title in cream and marigold",
+      "warm sand plaster wall",
+      "three narrow slats of warm light",
+      "logo and name on the lit wall"
+    ],
+    "motion": [
+      "hard cuts between words",
+      "growing full width bar",
+      "font flicker",
+      "letter flicker and track in",
+      "light sweep",
+      "light swings back in and settles"
+    ],
+    "mood": ["suspenseful", "warm", "editorial", "cinematic"],
+    "editable": [
+      "company name",
+      "logo, its size and plate",
+      "teaser words, plate, length and font flicker per word",
+      "word font, size and underline",
+      "flicker fonts and speed",
+      "title lines, font, sizes and outline",
+      "primary, text, background and wall colors",
+      "plaster texture",
+      "light slats, angle, softness and timing",
+      "film grain"
+    ],
+    "palette": ["#f0b429", "#141210", "#f6efe2", "#eadfcb"],
+    "keywords": [
+      "coming soon",
+      "teaser",
+      "almost here",
+      "launch",
+      "hard cut",
+      "word by word",
+      "font flicker",
+      "condensed type",
+      "serif title",
+      "logo reveal",
+      "light sweep",
+      "window light",
+      "plaster wall",
+      "marigold",
+      "black",
+      "warm",
+      "vertical",
+      "story"
+    ],
+    "variantNote": "Same beats with a new type pairing and colour: heavier Anton words over a full width bar read faster on a phone, a solid DM Serif ALMOST HERE replaces the thin outline for an editorial finish, and warm black, marigold and sand make the flash to the lit wall feel like the same room; the light still comes to rest on the logo and name.",
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "coming soon teaser",
+      "product launch countdown post",
+      "instagram or tiktok story teaser",
+      "brand reveal before a launch",
+      "event or drop announcement"
+    ],
+    "concept": "A suspense teaser that says one condensed word per hard cut between two bold plates, stutters through typefaces on the breath beat, then lands on an outlined plus solid ALMOST HERE while slatted window light rakes a plaster wall to find the logo and name. Short, punchy, teasing copy; the eye goes word, title, then logo.",
+    "needs": ["logo", "company name"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Brand or product name under the logo on the lit wall at the very end; one line, long names shrink. Leave empty if your logo already spells the name"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Brand logo painted on the wall and found by the light; wide, square or round, shown whole"
+      }
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/coming-soon-flips.mp4",
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png"
+    }
+  },
+  "coming-soon-flips-c": {
+    "summary": "A coming soon teaser in plum and coral. Tall condensed cream or plum words hard cut one at a time, HOLD YOUR BREATH WHAT'S NEXT IS LANDING, each with a short bar growing under it, and the second BREATH stutters through serif, marker, brush and thin typefaces. After a two frame flash of a lilac plaster wall, flat horizontal blinds of light roll down the wall across the logo and name, leave the wall, roll back up, then open into one band that rests on the logo and name, while an outlined ALMOST over a solid coral HERE flickers on and tracks in beneath them as one lockup.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "HOLD cuts in over a plate with a short bar growing under it, from the very first frame"
+      },
+      {
+        "at": 0.87,
+        "what": "hard cut to YOUR on the other plate"
+      },
+      {
+        "at": 1.77,
+        "what": "hard cut to BREATH"
+      },
+      {
+        "at": 2.53,
+        "what": "BREATH stutters through serif, marker, brush, hand and thin typefaces every two frames"
+      },
+      {
+        "at": 3.63,
+        "what": "WHAT'S, NEXT, IS and LANDING cut in one word at a time on alternating plates"
+      },
+      {
+        "at": 6.9,
+        "what": "two frame flash of the whole plaster wall with the logo and name"
+      },
+      {
+        "at": 6.97,
+        "what": "an outlined ALMOST over a solid coral HERE flickers on letter by letter and tracks in under the logo"
+      },
+      {
+        "at": 7.1,
+        "what": "four flat blinds of light roll down the wall from the top, catching the logo and name"
+      },
+      {
+        "at": 9.0,
+        "what": "the light crosses off the wall at an even speed and the wall goes dark for a moment"
+      },
+      {
+        "at": 9.4,
+        "what": "the light swings back in, speeding up, and slows onto the logo and name"
+      },
+      {
+        "at": 10.8,
+        "what": "the blinds open into one band of light over the logo and name, which hold above the title until the end"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "coral and plum plates",
+      "tall condensed uppercase words",
+      "short growing underline",
+      "outlined and solid stacked title under the logo",
+      "lilac plaster wall",
+      "horizontal blinds of light",
+      "logo and name on the lit wall"
+    ],
+    "motion": [
+      "hard cuts between words",
+      "growing underline",
+      "font flicker",
+      "letter flicker and track in",
+      "blinds of light roll down",
+      "blinds roll back in and open"
+    ],
+    "mood": ["suspenseful", "bold", "playful", "cinematic"],
+    "editable": [
+      "company name",
+      "logo, its size and plate",
+      "teaser words, plate, length and font flicker per word",
+      "word font, size and underline",
+      "flicker fonts and speed",
+      "title lines, font, sizes, outline and height",
+      "primary, text, background and wall colors",
+      "plaster texture",
+      "light slats, angle, softness and timing",
+      "film grain"
+    ],
+    "palette": ["#ff5a6e", "#1a1030", "#fbeff3", "#e6deec"],
+    "keywords": [
+      "coming soon",
+      "teaser",
+      "almost here",
+      "launch",
+      "hard cut",
+      "word by word",
+      "font flicker",
+      "condensed type",
+      "logo reveal",
+      "blinds",
+      "window light",
+      "plaster wall",
+      "coral",
+      "plum",
+      "lockup",
+      "vertical",
+      "story"
+    ],
+    "variantNote": "Same words and cuts, but the light is flat blinds that roll down and open over the logo instead of diagonal slats, and the end frame reads top to bottom as one lockup, logo, name, then ALMOST HERE, so the brand is the first thing seen in the poster and the title sits on clean shadow.",
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "coming soon teaser",
+      "product launch countdown post",
+      "instagram or tiktok story teaser",
+      "brand reveal before a launch",
+      "event or drop announcement"
+    ],
+    "concept": "A suspense teaser that says one condensed word per hard cut between two bold plates, stutters through typefaces on the breath beat, then lands on an outlined plus solid ALMOST HERE while slatted window light rakes a plaster wall to find the logo and name. Short, punchy, teasing copy; the eye goes word, title, then logo.",
+    "needs": ["logo", "company name"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Brand or product name under the logo on the lit wall at the very end; one line, long names shrink. Leave empty if your logo already spells the name"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Brand logo painted on the wall and found by the light; wide, square or round, shown whole"
+      }
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/coming-soon-flips.mp4",
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-round.png"
+    }
   }
 }
