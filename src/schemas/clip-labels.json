@@ -4838,5 +4838,451 @@
       "Headline": "One bouquet starts a chain of smiles. Send the first one?",
       "Website": "willowandco.com"
     }
+  },
+  "gold-monogram-invite-a": {
+    "summary": "On a warm black backdrop a thin gold jewel mandala of spirals, flowers, petals and teardrops draws itself ring by ring on the left and keeps turning, with a gold monogram of the couple's initials in a double ring at its heart, a small heart on top. On the right the line above the names, the couple's names in gold script, a gold divider, the invitation line, the date in gold capitals, the venue and a small logo plate arrive one row at a time while gold dust rises.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the gold monogram of the couple's initials is already outlined and half filled, its double ring drawing and the first mandala ring starting, as a warm light comes up on the black backdrop"
+      },
+      {
+        "at": 0.5,
+        "what": "the jewel mandala draws outward ring by ring while it turns; a small gold heart settles on top of the monogram ring"
+      },
+      {
+        "at": 0.9,
+        "what": "the line above the names rises in on the right"
+      },
+      {
+        "at": 1.5,
+        "what": "the monogram is fully gold"
+      },
+      {
+        "at": 1.9,
+        "what": "the couple's names rise in gold script"
+      },
+      {
+        "at": 2.9,
+        "what": "the gold divider draws out from its diamond, then the invitation line rises in"
+      },
+      {
+        "at": 4.8,
+        "what": "the outermost ring of teardrops closes the mandala"
+      },
+      {
+        "at": 4.9,
+        "what": "the date in gold capitals, then the venue and city rise in"
+      },
+      {
+        "at": 6.9,
+        "what": "the logo plate rises in at the foot"
+      },
+      {
+        "at": 9.7,
+        "what": "a single glint of light crosses the monogram while the finished invitation holds, the mandala keeps turning and gold dust rises"
+      }
+    ],
+    "visuals": [
+      "warm black backdrop",
+      "thin gold jewel mandala",
+      "gold serif monogram in a double ring",
+      "small gold heart",
+      "gold script names",
+      "gold divider with a diamond",
+      "date in gold capitals",
+      "ivory invitation line and venue",
+      "logo on an ivory plate",
+      "rising gold dust"
+    ],
+    "motion": [
+      "line art drawing ring by ring",
+      "slow continuous mandala turn",
+      "outline then gold fill",
+      "single light glint",
+      "rows rising and fading in",
+      "rising twinkling dust"
+    ],
+    "mood": ["luxurious", "ceremonial", "elegant", "calm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "wedding video invitation",
+      "save the date",
+      "engagement or anniversary announcement",
+      "indian wedding invite",
+      "monogram reveal for a couple"
+    ],
+    "editable": [
+      "both names and the joiner",
+      "monogram letters",
+      "line above the names",
+      "invitation line",
+      "date",
+      "venue and city",
+      "logo and its plate",
+      "gold, text, background and plate colors",
+      "script and serif fonts",
+      "mandala pattern, size, line weight and turning speed",
+      "ring stagger and draw length",
+      "layout: split, center then aside or twin mandalas",
+      "gold dust",
+      "fill, glint and row timing"
+    ],
+    "palette": ["#120d0a", "#c9a25a", "#f3e2bd", "#f3ebdc", "#f6efe2"],
+    "keywords": [
+      "wedding invitation",
+      "gold monogram",
+      "mandala",
+      "royal invite",
+      "black and gold",
+      "initials",
+      "save the date",
+      "luxury",
+      "line art",
+      "couple names"
+    ],
+    "variantNote": "Closest to the inspiration: Cinzel capitals and Great Vibes script, the mandala on the left half and the text on the right as in its opening, but the monogram sits at the heart of the jewel mandala from the first frame to the last, so the hero and the signature ornament read as one image at 0.3 s instead of about 30 s in; the opening quote moves into the details as the invitation line so the monogram can lead, and the 63 s of separate scenes become one 14 s invitation with every detail on screen.",
+    "concept": "A black-and-gold royal wedding invitation: a fine gold mandala draws itself ring by ring and keeps turning while a gold monogram of the couple's initials holds its place as the hero from the first second, then the names follow in gold script and the invitation line, date and venue arrive one calm row at a time under a gold divider, so the eye moves from monogram to names to date. Warm, ceremonial and quietly luxurious copy.",
+    "needs": ["names of the couple", "invitation line", "date", "venue and city", "logo"],
+    "placeholders": {
+      "Partner One Name": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "First name of one partner, written first in the gold script; its first letter starts the monogram"
+      },
+      "Partner Two Name": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "First name of the other partner, written after the ampersand; its first letter ends the monogram"
+      },
+      "Invitation Line": {
+        "kind": "text",
+        "maxChars": 70,
+        "hint": "One warm sentence under the names, such as a short vow or an invitation to celebrate; wraps to two lines"
+      },
+      "Event Date": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "The wedding day, with the weekday or time if you like; shown in gold capitals on one line"
+      },
+      "Venue": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Name of the venue, shown before the city on the last line"
+      },
+      "City": {
+        "kind": "text",
+        "maxChars": 20,
+        "hint": "City of the venue, after the venue name"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Host, planner or venue logo at the foot of the invitation: wide, square or round, on a small ivory plate"
+      }
+    },
+    "samples": {
+      "Partner One Name": "Leah",
+      "Partner Two Name": "Daniel",
+      "Invitation Line": "Two hearts, one promise, and a story to write together",
+      "Event Date": "Saturday, 12 June 2027",
+      "Venue": "Hudson Garden Hall",
+      "City": "New York",
+      "Logo": "design-assets/logos/willow-wide.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/gold-monogram-invite.mp4"
+  },
+  "gold-monogram-invite-b": {
+    "summary": "On a warm black backdrop a thin gold lotus mandala of long pointed petals, small medallions and flowers draws itself ring by ring around a centred gold monogram of the couple's initials in a double ring with a small heart, turning slowly. After five seconds the turning medallion glides to the left while the line above the names, the names in gold script, a gold divider, the invitation line, the date in gold capitals, the venue and a small logo plate arrive on the right, with gold dust rising.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the gold monogram is already outlined and half filled in the middle of the frame, its double ring drawing, as a warm light comes up"
+      },
+      {
+        "at": 0.5,
+        "what": "the thin lotus mandala draws outward ring by ring around it while it turns; a small gold heart settles on the ring"
+      },
+      {
+        "at": 1.5,
+        "what": "the monogram is fully gold"
+      },
+      {
+        "at": 3.7,
+        "what": "a single glint of light crosses the monogram"
+      },
+      {
+        "at": 4.7,
+        "what": "the whole turning medallion glides to the left while its outer petals finish drawing"
+      },
+      {
+        "at": 5.1,
+        "what": "the line above the names rises in on the right, then the couple's names in gold script"
+      },
+      {
+        "at": 6.3,
+        "what": "the gold divider draws out and the invitation line rises in"
+      },
+      {
+        "at": 7.5,
+        "what": "the date in gold capitals, then the venue and city rise in"
+      },
+      {
+        "at": 8.7,
+        "what": "the logo plate rises in at the foot"
+      },
+      {
+        "at": 10.0,
+        "what": "the finished invitation holds while the mandala keeps turning and gold dust rises"
+      }
+    ],
+    "visuals": [
+      "warm black backdrop",
+      "thin gold lotus mandala",
+      "gold serif monogram in a double ring",
+      "small gold heart",
+      "gold script names",
+      "gold divider with a diamond",
+      "date in gold capitals",
+      "ivory invitation line and venue",
+      "logo on an ivory plate",
+      "rising gold dust"
+    ],
+    "motion": [
+      "line art drawing ring by ring",
+      "slow continuous mandala turn",
+      "outline then gold fill",
+      "single light glint",
+      "medallion glide aside",
+      "rows rising and fading in",
+      "rising twinkling dust"
+    ],
+    "mood": ["luxurious", "ceremonial", "romantic", "calm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "wedding video invitation",
+      "save the date",
+      "engagement or anniversary announcement",
+      "indian wedding invite",
+      "monogram reveal for a couple"
+    ],
+    "editable": [
+      "both names and the joiner",
+      "monogram letters",
+      "line above the names",
+      "invitation line",
+      "date",
+      "venue and city",
+      "logo and its plate",
+      "gold, text, background and plate colors",
+      "script and serif fonts",
+      "mandala pattern, size, line weight and turning speed",
+      "ring stagger and draw length",
+      "glide start and length",
+      "layout: split, center then aside or twin mandalas",
+      "gold dust",
+      "fill and glint timing"
+    ],
+    "palette": ["#120d0a", "#c9a25a", "#f3e2bd", "#f3ebdc", "#f6efe2"],
+    "keywords": [
+      "wedding invitation",
+      "gold monogram",
+      "lotus mandala",
+      "royal invite",
+      "black and gold",
+      "initials",
+      "save the date",
+      "luxury",
+      "line art",
+      "couple names"
+    ],
+    "variantNote": "Gives the monogram its own centred moment, as the inspiration's monogram scene does, then adds a change of its own: instead of fading out and cutting to a light streak and the event rows, the turning medallion glides calmly to the left and the details rise in beside it, so the monogram never leaves the screen. The thin lotus mandala (the inspiration's Mehendi mandala) draws around it from the first frame, and Cormorant Garamond with Pinyon Script give a softer, more romantic hand for the whole clip; the opening quote moves into the details so the monogram leads.",
+    "concept": "A black-and-gold royal wedding invitation: a fine gold mandala draws itself ring by ring and keeps turning while a gold monogram of the couple's initials holds its place as the hero from the first second, then the names follow in gold script and the invitation line, date and venue arrive one calm row at a time under a gold divider, so the eye moves from monogram to names to date. Warm, ceremonial and quietly luxurious copy.",
+    "needs": ["names of the couple", "invitation line", "date", "venue and city", "logo"],
+    "placeholders": {
+      "Partner One Name": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "First name of one partner, written first in the gold script; its first letter starts the monogram"
+      },
+      "Partner Two Name": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "First name of the other partner, written after the ampersand; its first letter ends the monogram"
+      },
+      "Invitation Line": {
+        "kind": "text",
+        "maxChars": 70,
+        "hint": "One warm sentence under the names, such as a short vow or an invitation to celebrate; wraps to two lines"
+      },
+      "Event Date": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "The wedding day, with the weekday or time if you like; shown in gold capitals on one line"
+      },
+      "Venue": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Name of the venue, shown before the city on the last line"
+      },
+      "City": {
+        "kind": "text",
+        "maxChars": 20,
+        "hint": "City of the venue, after the venue name"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Host, planner or venue logo at the foot of the invitation: wide, square or round, on a small ivory plate"
+      }
+    },
+    "samples": {
+      "Partner One Name": "Leah",
+      "Partner Two Name": "Daniel",
+      "Invitation Line": "Two hearts, one promise, and a story to write together",
+      "Event Date": "Saturday, 12 June 2027",
+      "Venue": "Hudson Garden Hall",
+      "City": "New York",
+      "Logo": "design-assets/logos/willow-square.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/gold-monogram-invite.mp4"
+  },
+  "gold-monogram-invite-c": {
+    "summary": "On a warm black backdrop two thin gold sunburst mandalas of rays, scallops and petals draw themselves ring by ring at the left and right edges and turn in opposite directions, framing a centred card: a gold monogram of the couple's initials in a double ring with a small heart at the top, then the line above the names, the names in gold script, a gold divider, the invitation line, the date in gold capitals, the venue and a small logo plate, which arrive one row at a time while gold dust rises.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the gold monogram is already outlined and half filled at the top centre, its double ring drawing, and the two edge mandalas begin to draw, as a warm light comes up"
+      },
+      {
+        "at": 0.5,
+        "what": "both half mandalas draw ring by ring at the left and right edges, turning in opposite directions"
+      },
+      {
+        "at": 1.7,
+        "what": "the line above the names rises in under the monogram, then the couple's names in gold script"
+      },
+      {
+        "at": 3.5,
+        "what": "the gold divider draws out and the invitation line rises in"
+      },
+      {
+        "at": 5.4,
+        "what": "the date in gold capitals rises in; the outer rays close both mandalas"
+      },
+      {
+        "at": 6.3,
+        "what": "the venue and city rise in, then the logo plate"
+      },
+      {
+        "at": 9.3,
+        "what": "a single glint of light crosses the monogram while the finished card holds, both mandalas keep turning and gold dust rises"
+      }
+    ],
+    "visuals": [
+      "warm black backdrop",
+      "two thin gold half mandalas at the edges",
+      "gold serif monogram in a double ring",
+      "small gold heart",
+      "gold script names",
+      "gold divider with a diamond",
+      "date in gold capitals",
+      "ivory invitation line and venue",
+      "logo on an ivory plate",
+      "rising gold dust"
+    ],
+    "motion": [
+      "line art drawing ring by ring",
+      "two mandalas turning in opposite directions",
+      "outline then gold fill",
+      "single light glint",
+      "rows rising and fading in",
+      "rising twinkling dust"
+    ],
+    "mood": ["luxurious", "ceremonial", "symmetrical", "calm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "wedding video invitation",
+      "save the date",
+      "engagement or anniversary announcement",
+      "indian wedding invite",
+      "monogram reveal for a couple"
+    ],
+    "editable": [
+      "both names and the joiner",
+      "monogram letters",
+      "line above the names",
+      "invitation line",
+      "date",
+      "venue and city",
+      "logo and its plate",
+      "gold, text, background and plate colors",
+      "script and serif fonts",
+      "mandala pattern, size, line weight and turning speed",
+      "ring stagger and draw length",
+      "layout: split, center then aside or twin mandalas",
+      "gold dust",
+      "fill, glint and row timing"
+    ],
+    "palette": ["#120d0a", "#c9a25a", "#f3e2bd", "#f3ebdc", "#f6efe2"],
+    "keywords": [
+      "wedding invitation",
+      "gold monogram",
+      "mandala frame",
+      "royal invite",
+      "black and gold",
+      "initials",
+      "save the date",
+      "luxury",
+      "symmetrical",
+      "couple names"
+    ],
+    "variantNote": "Takes the inspiration's half-off-the-edge mandala and mirrors it into two counter-turning half mandalas that frame a centred card for the whole clip, so every line sits on one axis like a printed invitation and the names get the full width; Marcellus with Parisienne keep it formal and light, and the opening quote moves into the details so the monogram leads from the first frame.",
+    "concept": "A black-and-gold royal wedding invitation: a fine gold mandala draws itself ring by ring and keeps turning while a gold monogram of the couple's initials holds its place as the hero from the first second, then the names follow in gold script and the invitation line, date and venue arrive one calm row at a time under a gold divider, so the eye moves from monogram to names to date. Warm, ceremonial and quietly luxurious copy.",
+    "needs": ["names of the couple", "invitation line", "date", "venue and city", "logo"],
+    "placeholders": {
+      "Partner One Name": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "First name of one partner, written first in the gold script; its first letter starts the monogram"
+      },
+      "Partner Two Name": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "First name of the other partner, written after the ampersand; its first letter ends the monogram"
+      },
+      "Invitation Line": {
+        "kind": "text",
+        "maxChars": 70,
+        "hint": "One warm sentence under the names, such as a short vow or an invitation to celebrate; wraps to two lines"
+      },
+      "Event Date": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "The wedding day, with the weekday or time if you like; shown in gold capitals on one line"
+      },
+      "Venue": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Name of the venue, shown before the city on the last line"
+      },
+      "City": {
+        "kind": "text",
+        "maxChars": 20,
+        "hint": "City of the venue, after the venue name"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Host, planner or venue logo at the foot of the invitation: wide, square or round, on a small ivory plate"
+      }
+    },
+    "samples": {
+      "Partner One Name": "Leah",
+      "Partner Two Name": "Daniel",
+      "Invitation Line": "Two hearts, one promise, and a story to write together",
+      "Event Date": "Saturday, 12 June 2027",
+      "Venue": "Hudson Garden Hall",
+      "City": "New York",
+      "Logo": "design-assets/logos/willow-round.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/gold-monogram-invite.mp4"
   }
 }
