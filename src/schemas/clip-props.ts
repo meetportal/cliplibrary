@@ -13,6 +13,9 @@ import type { DotRingLogoRevealCProps } from './clips/brand/dot-ring-logo-reveal
 import type { BotanicalSaveTheDateAProps } from './clips/invitations/botanical-save-the-date-a';
 import type { BotanicalSaveTheDateBProps } from './clips/invitations/botanical-save-the-date-b';
 import type { BotanicalSaveTheDateCProps } from './clips/invitations/botanical-save-the-date-c';
+import type { GoldMonogramInviteAProps } from './clips/invitations/gold-monogram-invite-a';
+import type { GoldMonogramInviteBProps } from './clips/invitations/gold-monogram-invite-b';
+import type { GoldMonogramInviteCProps } from './clips/invitations/gold-monogram-invite-c';
 import type { ComingSoonFlipsAProps } from './clips/kinetic-type/coming-soon-flips-a';
 import type { ComingSoonFlipsBProps } from './clips/kinetic-type/coming-soon-flips-b';
 import type { ComingSoonFlipsCProps } from './clips/kinetic-type/coming-soon-flips-c';
@@ -63,6 +66,9 @@ export interface ClipPropsMap {
   'magnifier-caption-a': MagnifierCaptionAProps;
   'magnifier-caption-b': MagnifierCaptionBProps;
   'magnifier-caption-c': MagnifierCaptionCProps;
+  'gold-monogram-invite-a': GoldMonogramInviteAProps;
+  'gold-monogram-invite-b': GoldMonogramInviteBProps;
+  'gold-monogram-invite-c': GoldMonogramInviteCProps;
   'neon-sign-flicker-a': NeonSignFlickerAProps;
   'neon-sign-flicker-b': NeonSignFlickerBProps;
   'neon-sign-flicker-c': NeonSignFlickerCProps;

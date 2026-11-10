@@ -17,6 +17,24 @@ import {
   botanicalSaveTheDateCSchema,
 } from './botanical-save-the-date-c';
 import { botanicalSaveTheDateCControls } from './botanical-save-the-date-c-controls';
+import {
+  goldMonogramInviteADefaults,
+  goldMonogramInviteAMeta,
+  goldMonogramInviteASchema,
+} from './gold-monogram-invite-a';
+import { goldMonogramInviteAControls } from './gold-monogram-invite-a-controls';
+import {
+  goldMonogramInviteBDefaults,
+  goldMonogramInviteBMeta,
+  goldMonogramInviteBSchema,
+} from './gold-monogram-invite-b';
+import { goldMonogramInviteBControls } from './gold-monogram-invite-b-controls';
+import {
+  goldMonogramInviteCDefaults,
+  goldMonogramInviteCMeta,
+  goldMonogramInviteCSchema,
+} from './gold-monogram-invite-c';
+import { goldMonogramInviteCControls } from './gold-monogram-invite-c-controls';
 
 export const invitationsClips: ClipModule[] = [
   {
@@ -39,5 +57,26 @@ export const invitationsClips: ClipModule[] = [
     defaults: botanicalSaveTheDateCDefaults,
     meta: botanicalSaveTheDateCMeta,
     controls: botanicalSaveTheDateCControls,
+  },
+  {
+    id: 'gold-monogram-invite-a',
+    schema: goldMonogramInviteASchema,
+    defaults: goldMonogramInviteADefaults,
+    meta: goldMonogramInviteAMeta,
+    controls: goldMonogramInviteAControls,
+  },
+  {
+    id: 'gold-monogram-invite-b',
+    schema: goldMonogramInviteBSchema,
+    defaults: goldMonogramInviteBDefaults,
+    meta: goldMonogramInviteBMeta,
+    controls: goldMonogramInviteBControls,
+  },
+  {
+    id: 'gold-monogram-invite-c',
+    schema: goldMonogramInviteCSchema,
+    defaults: goldMonogramInviteCDefaults,
+    meta: goldMonogramInviteCMeta,
+    controls: goldMonogramInviteCControls,
   },
 ];
