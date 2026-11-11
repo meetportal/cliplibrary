@@ -90,7 +90,7 @@ test('the agent edits a clip, names the chat and keeps both after a reload', asy
       ...editCall('edit-1', 'Rename the company', operations, { ok: true, operations }),
     ]),
   );
-  await page.goto('/clips/dot-ring-logo-reveal-a');
+  await page.goto('/clips/dot-ring-logo-reveal');
   await ask(page, 'Change the name');
 
   const panel = page.getByRole('region', { name: 'AI editor' });
@@ -103,7 +103,7 @@ test('the agent edits a clip, names the chat and keeps both after a reload', asy
   await expect(panel.getByTestId('agent-operation')).toContainText('Agent Studio');
   await expect(panel.getByTestId('agent-chat-title')).toHaveText('Agent greeting');
   await expect(panel.getByText('tokens')).toHaveCount(0);
-  expect(seen.media[0]).toMatchObject({ kind: 'clip', title: 'Dot Ring Logo Reveal A' });
+  expect(seen.media[0]).toMatchObject({ kind: 'clip', title: 'Dot Ring Logo Reveal' });
   expect(seen.titles[0]).toBeNull();
 
   const logoAndName = page.getByRole('region', { name: 'Logo and name' });
@@ -123,7 +123,7 @@ test('the agent edits a clip, names the chat and keeps both after a reload', asy
 
   await expect
     .poll(() =>
-      page.evaluate(() => localStorage.getItem('neuclip-clip:dot-ring-logo-reveal-a') ?? ''),
+      page.evaluate(() => localStorage.getItem('neuclip-clip:dot-ring-logo-reveal') ?? ''),
     )
     .toContain('Agent Studio');
   await page.reload();
@@ -166,7 +166,7 @@ test('a rejected clip edit is retried out of sight and applied on a phone', asyn
       ...editCall('edit-2', 'Make the dot teal', fixed, { ok: true, operations: fixed }),
     ]),
   );
-  await page.goto('/clips/dot-ring-logo-reveal-a');
+  await page.goto('/clips/dot-ring-logo-reveal');
   await ask(page, 'Make the dot teal');
 
   const panel = page.getByRole('region', { name: 'AI editor' });
@@ -183,9 +183,7 @@ test('a rejected clip edit is retried out of sight and applied on a phone', asyn
   await expect
     .poll(() =>
       page.evaluate(() => {
-        const saved = JSON.parse(
-          localStorage.getItem('neuclip-clip:dot-ring-logo-reveal-a') ?? '{}',
-        );
+        const saved = JSON.parse(localStorage.getItem('neuclip-clip:dot-ring-logo-reveal') ?? '{}');
         return saved.tracks?.[0]?.elements?.[0]?.props?.colors?.primary;
       }),
     )

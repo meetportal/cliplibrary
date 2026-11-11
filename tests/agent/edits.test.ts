@@ -7,7 +7,7 @@ import { createMediaTools, editSucceeded } from '@/agent/tools';
 import { seedProjectForClip } from '@/core';
 import { reviewPoster as poster } from './review-poster';
 
-const clip = seedProjectForClip('dot-ring-logo-reveal-a');
+const clip = seedProjectForClip('dot-ring-logo-reveal');
 
 const textIndex = poster.elements.findIndex((element) => element.type === 'text');
 
@@ -187,7 +187,7 @@ describe('mediaInstructions', () => {
   it('describes clip fields with their prop paths and the selection', () => {
     const text = mediaInstructions({
       kind: 'clip',
-      title: 'Dot Ring Logo Reveal A',
+      title: 'Dot Ring Logo Reveal',
       document: clip,
       focus: ['element-1'],
       chatTitle: 'Brighter name',

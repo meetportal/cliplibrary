@@ -50,8 +50,8 @@ interface VideoResult {
   timeline: { elements: { clip: string; from: number }[] }[];
 }
 
-const CHEVRON = 'chevron-mark-assemble-a';
-const DOT_RING = 'dot-ring-logo-reveal-a';
+const CHEVRON = 'chevron-mark-assemble';
+const DOT_RING = 'dot-ring-logo-reveal';
 
 describe('/mcp', () => {
   it('lists the tools', async () => {
@@ -96,13 +96,9 @@ describe('/mcp', () => {
 
   it('searches clips and describes one with its raw template tokens', async () => {
     const { results } = jsonOf<{ results: { id: string; preview: string }[] }>(
-      await call('search_clips', { query: 'dot ring logo reveal', limit: 3 }),
+      await call('search_clips', { query: 'dot ring logo reveal', limit: 1 }),
     );
-    expect(results.map((result) => result.id).sort()).toEqual([
-      'dot-ring-logo-reveal-a',
-      'dot-ring-logo-reveal-b',
-      'dot-ring-logo-reveal-c',
-    ]);
+    expect(results.map((result) => result.id).sort()).toEqual(['dot-ring-logo-reveal']);
     expect(results[0]?.preview).toBe(`https://clips.test/previews/${results[0]?.id}.mp4`);
     const clip = jsonOf<{ fieldGuide: string; defaultProps: { companyName: string } }>(
       await call('get_clip', { clipId: DOT_RING }),
@@ -125,8 +121,8 @@ describe('/mcp', () => {
       await call('add_clip', { videoId: created.videoId, clipId: DOT_RING }),
     );
     expect(added.timeline[0]?.elements.map((element) => element.clip)).toEqual([
-      `${CHEVRON} (Chevron Mark Assemble A)`,
-      `${DOT_RING} (Dot Ring Logo Reveal A)`,
+      `${CHEVRON} (Chevron Mark Assemble)`,
+      `${DOT_RING} (Dot Ring Logo Reveal)`,
     ]);
 
     const edited = jsonOf<VideoResult>(

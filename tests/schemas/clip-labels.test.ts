@@ -25,9 +25,9 @@ describe('labelled search', () => {
   const top = (query: string, count = 3) => searchClips(query, {}, count).map((hit) => hit.id);
 
   it('finds clips by what is on screen, not just their titles', () => {
-    expect(top('pink dot draws a ring around the logo')[0]).toMatch(/^dot-ring-logo-reveal-/);
+    expect(top('pink dot draws a ring around the logo')[0]).toMatch(/^dot-ring-logo-reveal$/);
     expect(top('black and white squares flip and drop into a logo mark')[0]).toMatch(
-      /^chevron-mark-assemble-/,
+      /^chevron-mark-assemble$/,
     );
   });
 
