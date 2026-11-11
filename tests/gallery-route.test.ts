@@ -23,11 +23,7 @@ describe('GET /api/gallery', () => {
 
   it('applies the search and filters from the query string', async () => {
     const { page: search } = await fetchPage(`?${new URLSearchParams({ q: 'dot ring' })}`);
-    expect(search.items.map((item) => item.meta.id).sort()).toEqual([
-      'dot-ring-logo-reveal-a',
-      'dot-ring-logo-reveal-b',
-      'dot-ring-logo-reveal-c',
-    ]);
+    expect(search.items.map((item) => item.meta.id).sort()).toEqual(['dot-ring-logo-reveal']);
     const { page: dark } = await fetchPage('?theme=dark');
     expect(dark.items.length).toBeGreaterThan(0);
     expect(dark.items.every((item) => item.meta.theme === 'dark')).toBe(true);

@@ -22,24 +22,24 @@ describe('createVideoProject', () => {
   it('plays clips back to back and sizes the video to the first clip', () => {
     const project = createVideoProject({
       clips: [
-        { clipId: 'chevron-mark-assemble-a', props: { brand: { name: 'Acme' } } },
-        { clipId: 'dot-ring-logo-reveal-a' },
+        { clipId: 'chevron-mark-assemble', props: { brand: { name: 'Acme' } } },
+        { clipId: 'dot-ring-logo-reveal' },
       ],
     });
-    const meta = getClipMeta('chevron-mark-assemble-a');
+    const meta = getClipMeta('chevron-mark-assemble');
     const [first, second] = project.tracks[0]?.elements ?? [];
     expect(project.width).toBe(meta.width);
     expect(first).toMatchObject({
-      clipId: 'chevron-mark-assemble-a',
+      clipId: 'chevron-mark-assemble',
       from: 0,
       props: { brand: { name: 'Acme' } },
     });
     expect(first).toMatchObject({
-      props: { brand: { logo: CLIP_DEFAULTS['chevron-mark-assemble-a'].brand.logo } },
+      props: { brand: { logo: CLIP_DEFAULTS['chevron-mark-assemble'].brand.logo } },
     });
     expect(second?.from).toBe(meta.durationInFrames);
     expect(project.durationInFrames).toBe(
-      meta.durationInFrames + getClipMeta('dot-ring-logo-reveal-a').durationInFrames,
+      meta.durationInFrames + getClipMeta('dot-ring-logo-reveal').durationInFrames,
     );
     expect(checkMedia('clip', project).ok).toBe(true);
   });
@@ -54,12 +54,12 @@ describe('createVideoProject', () => {
 
 describe('placeClip', () => {
   it('layers a clip on a new track at a given frame and grows the video', () => {
-    const base = createVideoProject({ clips: [{ clipId: 'chevron-mark-assemble-a' }] });
-    const placed = placeClip(base, { clipId: 'dot-ring-logo-reveal-a', from: 200, track: 1 });
+    const base = createVideoProject({ clips: [{ clipId: 'chevron-mark-assemble' }] });
+    const placed = placeClip(base, { clipId: 'dot-ring-logo-reveal', from: 200, track: 1 });
     expect(placed.tracks).toHaveLength(2);
     expect(placed.tracks[1]?.elements[0]?.from).toBe(200);
     expect(placed.durationInFrames).toBe(
-      200 + getClipMeta('dot-ring-logo-reveal-a').durationInFrames,
+      200 + getClipMeta('dot-ring-logo-reveal').durationInFrames,
     );
   });
 });

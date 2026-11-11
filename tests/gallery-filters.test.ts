@@ -14,8 +14,8 @@ import { CLIP_REGISTRY } from '@/schemas';
 
 const items = CLIP_REGISTRY.map((meta) => ({ meta: videoMeta(meta) }));
 const ids = (list: { meta: GalleryMeta }[]) => list.map((item) => item.meta.id);
-const CHEVRON = ['chevron-mark-assemble-a', 'chevron-mark-assemble-b', 'chevron-mark-assemble-c'];
-const DOT_RING = ['dot-ring-logo-reveal-a', 'dot-ring-logo-reveal-b', 'dot-ring-logo-reveal-c'];
+const CHEVRON = ['chevron-mark-assemble'];
+const DOT_RING = ['dot-ring-logo-reveal'];
 
 describe('gallery filters', () => {
   const search = (query: string) => ids(filterClips(items, { ...DEFAULT_FILTERS, query })).sort();
@@ -40,10 +40,10 @@ describe('gallery filters', () => {
     const result = filterClips(items, {
       ...DEFAULT_FILTERS,
       category: 'brand',
-      tags: ['logo', 'draw'],
+      tags: ['logo', 'flip'],
       theme: 'dark',
     });
-    expect(ids(result)).toEqual(['dot-ring-logo-reveal-b']);
+    expect(ids(result)).toEqual(['chevron-mark-assemble']);
   });
 
   it('counts each facet against the other active filters', () => {
@@ -53,14 +53,14 @@ describe('gallery filters', () => {
       (meta) => meta.theme === 'dark' && meta.category === 'brand',
     ).length;
     expect(categories.brand).toBe(darkBrand);
-    expect(tags.draw).toBe(1);
+    expect(tags.flip).toBe(2);
     expect(themes.light).toBe(CLIP_REGISTRY.length - dark);
   });
 
   it('reports active filters and formats durations', () => {
     expect(hasActiveFilters(DEFAULT_FILTERS)).toBe(false);
     expect(hasActiveFilters({ ...DEFAULT_FILTERS, query: ' x ' })).toBe(true);
-    const meta = CLIP_REGISTRY.find((entry) => entry.id === 'dot-ring-logo-reveal-a');
+    const meta = CLIP_REGISTRY.find((entry) => entry.id === 'dot-ring-logo-reveal');
     expect(meta === undefined ? '' : formatDuration(videoMeta(meta))).toBe('6s');
   });
 

@@ -63,7 +63,7 @@ const renderTimeline = (project: Project, overrides: Record<string, unknown> = {
 describe('Timeline playhead', () => {
   it('follows the frame store without re-rendering the tracks', () => {
     const frames = createFrameStore();
-    const project = seedProjectForClip('chevron-mark-assemble-a');
+    const project = seedProjectForClip('chevron-mark-assemble');
     render(
       <Timeline
         project={project}

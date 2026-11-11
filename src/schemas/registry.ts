@@ -17,14 +17,8 @@ export type ClipMeta = {
   width: number;
   height: number;
   batch?: string;
-  variantOf?: string;
-  variant?: ClipVariant;
   retired?: boolean;
 };
-
-export const CLIP_VARIANTS = ['a', 'b', 'c'] as const;
-
-export type ClipVariant = (typeof CLIP_VARIANTS)[number];
 
 export type ClipModule = {
   id: ClipId;

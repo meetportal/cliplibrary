@@ -12,8 +12,8 @@ const renderEditor = () =>
   render(
     <ClipTimelineEditor
       title="Chevron Mark Assemble A"
-      storageKey="neuclip-clip:chevron-mark-assemble-a"
-      initialProject={seedProjectForClip('chevron-mark-assemble-a')}
+      storageKey="neuclip-clip:chevron-mark-assemble"
+      initialProject={seedProjectForClip('chevron-mark-assemble')}
       demoSrc={null}
     />,
   );
@@ -34,7 +34,7 @@ describe('ClipTimelineEditor', () => {
     renderEditor();
     expect(screen.getAllByRole('button', { name: 'Clip element' })).toHaveLength(1);
     fireEvent.change(screen.getByLabelText('Add animation'), {
-      target: { value: 'dot-ring-logo-reveal-b' },
+      target: { value: 'dot-ring-logo-reveal' },
     });
     expect(screen.getAllByRole('button', { name: 'Clip element' })).toHaveLength(2);
   });

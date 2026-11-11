@@ -3,7 +3,7 @@ import { seedProjectForClip } from '@/core';
 
 describe('project seed', () => {
   it('seeds a real clip as a single composition element on one track', () => {
-    const project = seedProjectForClip('chevron-mark-assemble-a');
+    const project = seedProjectForClip('chevron-mark-assemble');
     expect(project.tracks).toHaveLength(1);
     const elements = project.tracks.flatMap((track) => track.elements);
     expect(elements).toHaveLength(1);

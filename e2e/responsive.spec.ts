@@ -20,7 +20,7 @@ for (const viewport of VIEWPORTS) {
     });
 
     test('the clip timeline fits its track to the screen width', async ({ page }) => {
-      await page.goto('/clips/chevron-mark-assemble-a');
+      await page.goto('/clips/chevron-mark-assemble');
       if (viewport.width < 1024) {
         await page.getByRole('tab', { name: 'Timeline' }).click();
       }

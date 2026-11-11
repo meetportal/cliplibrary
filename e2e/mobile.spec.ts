@@ -13,7 +13,7 @@ test('the library fits a phone screen', async ({ page }) => {
 });
 
 test('the clip editor switches between properties and timeline on a phone', async ({ page }) => {
-  await page.goto('/clips/chevron-mark-assemble-a');
+  await page.goto('/clips/chevron-mark-assemble');
   await expect(page.getByRole('tab', { name: 'Properties' })).toHaveAttribute(
     'aria-selected',
     'true',

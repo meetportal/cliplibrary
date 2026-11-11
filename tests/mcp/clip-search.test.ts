@@ -4,7 +4,7 @@ import { CLIP_REGISTRY } from '@/schemas';
 
 describe('searchClips', () => {
   it('ranks a title match first', () => {
-    expect(searchClips('dot ring logo reveal')[0]?.id).toMatch(/^dot-ring-logo-reveal-/);
+    expect(searchClips('dot ring logo reveal')[0]?.id).toMatch(/^dot-ring-logo-reveal$/);
   });
 
   it('browses every clip with an empty query and respects the limit', () => {

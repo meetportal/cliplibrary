@@ -3,8 +3,8 @@ import { describePath, selectionNames } from '@/agent/describe-path';
 import { seedProjectForClip } from '@/core';
 import { reviewPoster as poster } from './review-poster';
 
-const clip = seedProjectForClip('dot-ring-logo-reveal-a');
-const scope = 'Dot Ring Logo Reveal A';
+const clip = seedProjectForClip('dot-ring-logo-reveal');
+const scope = 'Dot Ring Logo Reveal';
 
 const clipElementId = clip.tracks[0]?.elements[0]?.id ?? '';
 

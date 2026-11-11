@@ -147,20 +147,20 @@ To add a clip:
 
 ## Template clips and batches
 
-New clips are templates made in batches, three variants (`<design-id>-a`, `-b`, `-c`) of each
-design. Editable copy and images are `{{Token}}` strings in the clip's defaults (`{{Company Name}}`,
-`{{Logo}}`, `{{Website}}`, ...), so `CLIP_DEFAULTS` and the MCP tools keep the raw tokens.
+New clips are templates made in batches, one clip per design, its id the design id. Editable copy
+and images are `{{Token}}` strings in the clip's defaults (`{{Company Name}}`, `{{Logo}}`,
+`{{Website}}`, ...), so `CLIP_DEFAULTS` and the MCP tools keep the raw tokens.
 
 - The label in `clip-labels.json` adds `concept`, `needs`, `placeholders` (`kind`, `hint` and
-  `maxChars` for text), `samples` (a value for every token), `variantNote` and `inspiration`.
+  `maxChars` for text), `samples` (a value for every token) and `inspiration`.
 - `clipSampleProps` (`src/schemas/clip-tokens.ts`) fills the tokens from the samples. Only
   `seedProjectForClip`, the timeline's Animation picker and `render-one` without `--props` use it,
   so the editor, previews and stills never show a raw token.
-- `ClipMeta` adds `batch` (`<yyyy-mm-dd>-<source>-<what>`), `variantOf`, `variant` and `retired`.
-  `auditBatchClip` and `auditBatchGroups` (`src/schemas/batch-audit.ts`,
-  `tests/schemas/batch-audit.test.ts`) enforce the template rules on every clip with a `batch`.
-- Sample logos are `public/design-assets/logos/willow-wide.png` (variant a),
-  `willow-square.png` (b) and `willow-round.png` (c).
+- `ClipMeta` adds `batch` (`<yyyy-mm-dd>-<source>-<what>`) and `retired`. `auditBatchClip` and
+  `auditBatchDesignIds` (`src/schemas/batch-audit.ts`, `tests/schemas/batch-audit.test.ts`)
+  enforce the template rules on every clip with a `batch`.
+- The sample logo is one of `public/design-assets/logos/willow-wide.png`, `willow-square.png` and
+  `willow-round.png`.
 
 ## Controls
 

@@ -2,15 +2,15 @@ import { type ClipLabel, clipLabel } from './clip-labels';
 import type { ClipId } from './clip-props';
 import { tokensIn } from './clip-tokens';
 import { CLIP_DEFAULTS, CLIP_REGISTRY, getClipMeta } from './clips';
-import { CLIP_VARIANTS, type ClipMeta, type ClipVariant } from './registry';
+import type { ClipMeta } from './registry';
 
 const BATCH_NAME = /^\d{4}-\d{2}-\d{2}(-[a-z0-9]+){2,}$/;
 
-const SAMPLE_LOGOS: Record<ClipVariant, string> = {
-  a: 'design-assets/logos/willow-wide.png',
-  b: 'design-assets/logos/willow-square.png',
-  c: 'design-assets/logos/willow-round.png',
-};
+const SAMPLE_LOGOS: readonly string[] = [
+  'design-assets/logos/willow-wide.png',
+  'design-assets/logos/willow-square.png',
+  'design-assets/logos/willow-round.png',
+];
 
 const sameKeys = (left: readonly string[], right: readonly string[]): boolean =>
   left.length === right.length &&
@@ -20,21 +20,14 @@ type Rule = (id: ClipId, meta: ClipMeta, label: ClipLabel) => string[];
 
 const when = (failed: boolean, problem: string): string[] => (failed ? [problem] : []);
 
-const naming: Rule = (id, meta) => [
-  ...when(
+const naming: Rule = (_id, meta) =>
+  when(
     !BATCH_NAME.test(meta.batch ?? ''),
     `batch "${meta.batch}" is not <yyyy-mm-dd>-<source>-<what>`,
-  ),
-  ...(meta.variant === undefined || meta.variantOf === undefined
-    ? ['a batch clip needs variant and variantOf']
-    : when(
-        id !== `${meta.variantOf}-${meta.variant}`,
-        `id should be ${meta.variantOf}-${meta.variant}`,
-      )),
-];
+  );
 
 const labelFields: Rule = (_id, _meta, label) =>
-  (['concept', 'needs', 'variantNote', 'inspiration'] as const).flatMap((field) =>
+  (['concept', 'needs', 'inspiration'] as const).flatMap((field) =>
     when(label[field] === undefined, `label has no ${field}`),
   );
 
@@ -70,14 +63,13 @@ const limits: Rule = (_id, _meta, label) => {
   ];
 };
 
-const sampleFiles: Rule = (_id, meta, label) => {
+const sampleFiles: Rule = (_id, _meta, label) => {
   const samples = label.samples ?? {};
   const { Logo: logo } = samples;
-  const expected = meta.variant === undefined ? undefined : SAMPLE_LOGOS[meta.variant];
   return [
     ...when(
-      logo !== undefined && expected !== undefined && logo !== expected,
-      `variant ${meta.variant} uses ${expected} as its sample logo`,
+      logo !== undefined && !SAMPLE_LOGOS.includes(logo),
+      `sample logo ${logo} is not one of ${SAMPLE_LOGOS}`,
     ),
     ...when(
       Object.values(samples).some((value) => value.startsWith('/')),
@@ -102,35 +94,9 @@ export const auditBatchClip = (id: ClipId): string[] => {
   return label === null ? ['no label'] : RULES.flatMap((rule) => rule(id, meta, label));
 };
 
-const groupKey = (meta: ClipMeta) =>
-  JSON.stringify([
-    meta.batch,
-    meta.width,
-    meta.height,
-    meta.fps,
-    meta.durationInFrames,
-    clipLabel(meta.id)?.inspiration,
-  ]);
-
-export const auditBatchGroups = (): string[] => {
-  const groups = new Map<string, ClipMeta[]>();
-  for (const meta of CLIP_REGISTRY) {
-    if (meta.variantOf !== undefined) {
-      groups.set(meta.variantOf, [...(groups.get(meta.variantOf) ?? []), meta]);
-    }
-  }
-  return [...groups].flatMap(([design, members]) => {
-    const problems: string[] = [];
-    const letters = members.map((meta) => meta.variant ?? '').sort();
-    if (!sameKeys(letters, CLIP_VARIANTS)) {
-      problems.push(`${design}: variants ${letters} instead of a, b and c`);
-    }
-    if (CLIP_REGISTRY.some((meta) => meta.id === design)) {
-      problems.push(`${design}: a clip already uses the design id`);
-    }
-    if (new Set(members.map(groupKey)).size > 1) {
-      problems.push(`${design}: variants differ in batch, size, length or inspiration`);
-    }
-    return problems;
-  });
+export const auditBatchDesignIds = (): string[] => {
+  const ids = CLIP_REGISTRY.filter((meta) => meta.batch !== undefined).map((meta) => meta.id);
+  return ids
+    .filter((id, at) => ids.indexOf(id) !== at)
+    .map((id) => `${id}: the design id is used more than once`);
 };

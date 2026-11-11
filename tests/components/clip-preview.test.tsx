@@ -20,7 +20,7 @@ import { seedProjectForClip } from '@/core';
 const renderPreview = (demoSrc: string | null) =>
   render(
     <ClipPreview
-      project={seedProjectForClip('chevron-mark-assemble-a')}
+      project={seedProjectForClip('chevron-mark-assemble')}
       demoSrc={demoSrc}
       playerRef={{ current: fakePlayer }}
       onFrameChange={() => undefined}
@@ -32,21 +32,21 @@ describe('ClipPreview', () => {
   beforeEach(() => localStorage.clear());
 
   it('remembers the demo view as a preference for the next clip', async () => {
-    renderPreview('/previews/chevron-mark-assemble-a.mp4');
+    renderPreview('/previews/chevron-mark-assemble.mp4');
     await userEvent.click(screen.getByRole('tab', { name: 'Demo' }));
     expect(localStorage.getItem('neuclip-preview-view')).toBe('"demo"');
     cleanup();
-    renderPreview('/previews/chevron-mark-assemble-a.mp4');
+    renderPreview('/previews/chevron-mark-assemble.mp4');
     expect(await screen.findByLabelText('Demo video')).toBeInTheDocument();
   });
 
   it('switches to the rendered demo video and pauses the editor player', async () => {
-    renderPreview('/previews/chevron-mark-assemble-a.mp4');
+    renderPreview('/previews/chevron-mark-assemble.mp4');
     expect(screen.queryByLabelText('Demo video')).toBeNull();
     await userEvent.click(screen.getByRole('tab', { name: 'Demo' }));
     expect(screen.getByLabelText('Demo video')).toHaveAttribute(
       'src',
-      '/previews/chevron-mark-assemble-a.mp4',
+      '/previews/chevron-mark-assemble.mp4',
     );
     expect(screen.getByLabelText('Demo video')).not.toHaveAttribute('controls');
     expect(pause).toHaveBeenCalled();

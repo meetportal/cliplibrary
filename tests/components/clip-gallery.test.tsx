@@ -6,7 +6,7 @@ import { galleryPage } from '@/lib/gallery-catalog';
 import { DEFAULT_FILTERS, type GalleryFilters } from '@/lib/gallery-filters';
 
 const PAGE_SIZE = 2;
-const DOT_RING = ['Dot Ring Logo Reveal A', 'Dot Ring Logo Reveal B', 'Dot Ring Logo Reveal C'];
+const DOT_RING = ['Dot Ring Logo Reveal'];
 
 const StubTile = ({ meta }: GalleryItem) => <article>{meta.title}</article>;
 
@@ -96,7 +96,7 @@ describe('ClipGallery', () => {
         .map((node) => node.textContent)
         .sort(),
     ).toEqual(DOT_RING);
-    expect(screen.getByText(/^3 of \d+ items$/)).toBeInTheDocument();
+    expect(screen.getByText(/^1 of \d+ items$/)).toBeInTheDocument();
   });
 
   it('shows removable chips for active filters and an empty state', () => {
