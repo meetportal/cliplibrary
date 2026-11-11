@@ -2473,5 +2473,127 @@
       "Logo": "design-assets/logos/willow-wide.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/billboard-reader.mp4"
+  },
+  "brand-reveal": {
+    "summary": "On a soft off-white backdrop with a faint drifting light, a small spaced INTRODUCING eyebrow fades up, a brand-blue halo draws itself clockwise from twelve o'clock around a white plate that holds the logo, and the company name rises in letter by letter beside it in a bold, tightly tracked sans, each letter fading from pale grey to black. A small blue dot appears as the halo closes and keeps circling it slowly, the tagline rises in underneath, and the finished lockup holds for four seconds.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "soft off-white backdrop; the INTRODUCING eyebrow fades and rises in above centre"
+      },
+      {
+        "at": 0.13,
+        "what": "a thin blue stroke starts drawing clockwise from twelve o'clock, thickening as it goes"
+      },
+      {
+        "at": 0.4,
+        "what": "the first letter of the name rises in beside the halo, grey turning black"
+      },
+      {
+        "at": 0.5,
+        "what": "the white plate and the logo fade and scale up inside the drawing halo"
+      },
+      {
+        "at": 0.7,
+        "what": "a small blue dot fades in just outside the halo, riding ahead of the stroke"
+      },
+      {
+        "at": 1.13,
+        "what": "the halo closes into a full ring around the logo"
+      },
+      {
+        "at": 1.4,
+        "what": "the last letter of the name starts rising in"
+      },
+      {
+        "at": 1.5,
+        "what": "the tagline rises and fades in under the lockup"
+      },
+      {
+        "at": 2.1,
+        "what": "the full lockup holds while the dot circles the halo slowly and the light drifts"
+      }
+    ],
+    "visuals": [
+      "soft off-white radial backdrop",
+      "small spaced capital eyebrow",
+      "brand-coloured halo ring around a white logo plate",
+      "logo inside the halo, a pill shape for wide logos",
+      "small orbiting accent dot",
+      "bold tightly tracked sans wordmark",
+      "grey tagline line"
+    ],
+    "motion": [
+      "eyebrow fade and rise",
+      "clockwise ring draw",
+      "plate and logo fade and scale up",
+      "letter by letter rise and fade",
+      "tagline rise",
+      "slow orbiting dot",
+      "slow light drift"
+    ],
+    "mood": ["calm", "clean", "confident", "modern", "premium"],
+    "roles": ["opener", "closer", "cta"],
+    "useCases": [
+      "logo intro for a brand or app launch",
+      "end card for a promo or product video",
+      "new company or product announcement",
+      "presentation or webinar title card"
+    ],
+    "editable": [
+      "logo image",
+      "company name",
+      "tagline",
+      "eyebrow word",
+      "name font and size",
+      "halo, text, secondary, plate and background colours",
+      "halo size, thickness and widest pill",
+      "orbiting dot size, distance, speed or off",
+      "eyebrow and tagline sizes and spacing",
+      "draw length, letter stagger and tagline delay",
+      "vertical position and light drift"
+    ],
+    "palette": ["#f6f6f3", "#dcdcd5", "#3157e6", "#111214", "#6c6c72", "#ffffff"],
+    "keywords": [
+      "brand reveal",
+      "logo reveal",
+      "introducing",
+      "halo",
+      "ring draw",
+      "circle draw",
+      "wordmark",
+      "logo intro",
+      "brand intro",
+      "end card",
+      "tagline",
+      "minimal",
+      "clean",
+      "app launch",
+      "letter rise"
+    ],
+    "concept": "One quiet lockup that assembles in under two seconds: an INTRODUCING eyebrow, a brand-coloured halo drawing itself around the logo, the name rising in letter by letter beside it and the tagline settling below, so the brand lands as a single confident line on a calm backdrop. Copy is short and assured: the name, then one plain sentence about what it does.",
+    "needs": ["logo", "company name", "tagline"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a white plate inside the halo, which stretches into a pill for a wide logo"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name beside the halo; one line, long names shrink to fit"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "One calm sentence under the name that says what the brand does; wraps onto two lines if long"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Tagline": "Flowers and events, beautifully arranged.",
+      "Logo": "design-assets/logos/willow-round.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/brand-reveal.mp4"
   }
 }
