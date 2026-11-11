@@ -1737,5 +1737,176 @@
       "Logo": "design-assets/logos/willow-wide.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/gold-monogram-invite.mp4"
+  },
+  "anniversary-kinetic": {
+    "summary": "A vertical kinetic-type anniversary teaser told one or two words at a time on near-black, teal, plum and cream stages: Ahem... glitches in, Lean in! bobs in a wave three times over, We’ve got whips in with a lime to violet gradient over diagonal streaks, big news lands over a noise burst and giant outline letters, so good shrinks on cream, then to share, with you, a diagonal cascade of Look with drawing arcs, how far typed letter by letter, we’ve, come in orange, and, still, a whipped going stack and a rising strong stack. Turning drops in letter by letter over a giant outline T, the years number glitches in over outline digits, today! is typed onto a slanted band, and four values punch in as slab capitals before a cream end card builds: logo, a ringed badge with the years and an ordinal, the company name in tracked capitals with its first letter in orange, the founded line between two rules and the tagline.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "Ahem... glitches in as shredded slices on near-black with faint specks"
+      },
+      {
+        "at": 0.57,
+        "what": "Lean in! three times on deep teal in a wide font, the letters bobbing in a wave"
+      },
+      {
+        "at": 1.47,
+        "what": "We’ve got whips in from the left with a lime to violet gradient over diagonal streaks"
+      },
+      {
+        "at": 1.8,
+        "what": "big news blurs in over a violet noise burst and giant outline letters, with a brief filled ghost behind"
+      },
+      {
+        "at": 2.63,
+        "what": "so good shrinks on cream while its last letters sweep from violet to dark"
+      },
+      {
+        "at": 3.23,
+        "what": "to share rises in on plum that fades to near-black, readable from its first frame"
+      },
+      {
+        "at": 4.03,
+        "what": "with you, the last letter rising up from below and easing into place"
+      },
+      {
+        "at": 4.77,
+        "what": "Look repeats on a diagonal in violet on cream while concentric arcs draw, then shows alone on plum"
+      },
+      {
+        "at": 5.87,
+        "what": "how far is typed letter by letter over a noise burst, then we’ve over its own giant outline"
+      },
+      {
+        "at": 6.87,
+        "what": "come in orange on cream, then and blurs in and still rises in"
+      },
+      {
+        "at": 7.93,
+        "what": "going whips in from the right as three offset lines over streaks, then strong rises in three lines over noise"
+      },
+      {
+        "at": 8.7,
+        "what": "Turning drops in letter by letter over a giant outline T with a filled ghost"
+      },
+      {
+        "at": 9.43,
+        "what": "the years number glitches in huge over outline digits and arcs"
+      },
+      {
+        "at": 9.8,
+        "what": "today! is typed onto a slanted band with a lime top edge and violet bottom edge"
+      },
+      {
+        "at": 10.47,
+        "what": "BOLDER., BRIGHTER. tracking in on the band, KINDER. glitching on a cream flash then the band, and FEARLESS. fading in letter by letter before glitching out"
+      },
+      {
+        "at": 12.63,
+        "what": "the cream end card builds: logo, the badge ring drawing round the years and ordinal, the name tracking in, rules extending around the founded line, then the tagline"
+      },
+      {
+        "at": 13.9,
+        "what": "the finished end card holds to the last frame with the dotted ring slowly turning"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "faint flickering film grain and twinkling specks on every stage",
+      "near-black, deep teal, plum and cream full-frame stages",
+      "bold rounded grotesk words centred mid-frame",
+      "wide display font for the stacked Lean in!",
+      "slab monospace capitals for the values",
+      "giant outline letters and concentric arcs behind some words",
+      "violet noise bursts and diagonal streaks",
+      "slanted band with a lime top edge and violet bottom edge",
+      "anniversary badge with a dotted inner ring and an ordinal number",
+      "logo, tracked capital company name, founded line between rules and tagline on cream"
+    ],
+    "motion": [
+      "one or two words per beat with hard cuts between stages",
+      "shredded slice glitches",
+      "wave bob of letters",
+      "whip-in with blur over streaks",
+      "shrink and colour sweep",
+      "typed letter by letter reveals",
+      "letter drop with bounce",
+      "tracking collapse",
+      "badge ring drawing and staged end card build"
+    ],
+    "mood": ["playful", "celebratory", "energetic", "warm", "confident"],
+    "roles": ["opener", "closer", "cta"],
+    "useCases": [
+      "company anniversary teaser",
+      "milestone or birthday announcement for a brand",
+      "years in business celebration post",
+      "social story for a founding anniversary"
+    ],
+    "editable": [
+      "years number and ordinal",
+      "company name and logo",
+      "founded line, tagline and badge line",
+      "every word of the teaser and the four values",
+      "colours of the stages, accent, highlight and name",
+      "word and value fonts and sizes",
+      "glitch, noise, streak and outline strength, band tilt",
+      "word pace and end card build length",
+      "badge size, ring, dots and spin"
+    ],
+    "palette": ["#0b0a13", "#0b292a", "#271a36", "#f4ede2", "#de5f37", "#8b6cc4"],
+    "keywords": [
+      "anniversary",
+      "kinetic type",
+      "milestone",
+      "birthday",
+      "years in business",
+      "celebration",
+      "big news",
+      "badge",
+      "teaser",
+      "glitch"
+    ],
+    "concept": "An anniversary told as a whispered build-up: one or two words per beat, each with its own quick kinetic trick and background, so the line We’ve got big news... look how far we’ve come... turning 25 today keeps the eye locked at the centre, accelerates through the company’s values and lands on the only calm moment, a cream badge with the years, the logo and the name. The copy is warm, playful and proud.",
+    "needs": ["logo", "company name", "years", "founded year", "tagline", "badge line"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Company name in tracked capitals under the anniversary badge"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo above the badge on the end card: wide, square or round"
+      },
+      "Years": {
+        "kind": "text",
+        "maxChars": 3,
+        "hint": "How many years, as a number, such as 25; shown huge after Turning and inside the badge"
+      },
+      "Founded Year": {
+        "kind": "text",
+        "maxChars": 8,
+        "hint": "The year the company started, after Est. between two rules"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 36,
+        "hint": "One short line that sums up the company, last line of the end card"
+      },
+      "Badge Line": {
+        "kind": "text",
+        "maxChars": 20,
+        "hint": "Two or three words inside the badge under the number, such as Years of craft"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png",
+      "Years": "25",
+      "Founded Year": "2001",
+      "Tagline": "Design for the long run",
+      "Badge Line": "Years of craft"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/anniversary-kinetic.mp4"
   }
 }
