@@ -2326,5 +2326,152 @@
       "Item 5": "Care"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/battery-charge-success.mp4"
+  },
+  "billboard-reader": {
+    "summary": "A big roadside billboard on a tall pole stands high above a coastal city at dusk: a dark navy board with corner marks carries a bold two line headline, the second line in the brand colour, a short tagline and the logo on a light plate above the company name. A caped hero in a purple suit with teal gloves and boots sits on the board's top edge, boots dangling over the face, reading a newspaper. The camera starts below the board looking up past the pole at the rooftops, the coast road and the beach, the three lamps warm up and pool light across the board, the hero turns the paper to the inside pages, and the camera cranes up and swings round to the hero's side, where he lowers the paper and his visor shows, until it looks down on the board with the ocean, the setting sun and its shimmering reflection behind.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the billboard seen from below on its pole above the rooftops and coast road, the hero holding the front page up, lamps dark"
+      },
+      {
+        "at": 0.8,
+        "what": "the three lamps warm up one after another and pool light across the top of the board"
+      },
+      {
+        "at": 1.0,
+        "what": "the camera eases into a crane up and swing to the right around the board while cars run along the coast road"
+      },
+      {
+        "at": 3.0,
+        "what": "the hero turns the page: one hand holds the spine while the other pushes the front page over, then both slide out to the edges of the open spread"
+      },
+      {
+        "at": 4.5,
+        "what": "the camera passes the top of the board and the ocean fills the background, surf rolling in along the beach"
+      },
+      {
+        "at": 5.0,
+        "what": "the hero lowers the paper so his helmet and visor show above it"
+      },
+      {
+        "at": 7.5,
+        "what": "the setting sun comes into view over a clear horizon with a shimmering reflection on the water below it"
+      },
+      {
+        "at": 9.0,
+        "what": "the camera keeps turning and rising slowly above the board, headline, tagline and logo facing the viewer, the hero reading in three quarter view with boots swinging"
+      }
+    ],
+    "visuals": [
+      "roadside billboard on a tall pole",
+      "bold two line headline with a coloured accent line",
+      "logo on a light plate with the company name",
+      "caped hero reading a newspaper on top of the board",
+      "three billboard lamps with light pools",
+      "low poly coastal city with a coast road and traffic",
+      "beach, palm trees and an ocean with surf lines",
+      "dusk sky with a low sun over a clear horizon",
+      "sun reflection shimmering on the water"
+    ],
+    "motion": [
+      "camera crane up",
+      "orbit around the billboard",
+      "lamps warming on",
+      "newspaper page turn",
+      "dangling boot swing",
+      "cape sway",
+      "traffic driving",
+      "surf rolling in"
+    ],
+    "mood": ["playful", "confident", "cinematic", "warm", "bold"],
+    "roles": ["opener", "feature", "closer", "cta"],
+    "useCases": [
+      "out of home or billboard campaign mockup",
+      "brand or product launch teaser",
+      "agency or marketing services ad",
+      "announcement of a new slogan or campaign",
+      "story ad that ends on the logo"
+    ],
+    "editable": [
+      "headline",
+      "headline accent",
+      "tagline",
+      "company name",
+      "logo",
+      "brand accent colour",
+      "hero suit colour",
+      "billboard colour",
+      "text colours",
+      "sky and haze colours",
+      "ocean, roofs, walls and lamp colours",
+      "headline, tagline and name sizes",
+      "capitals and corner marks",
+      "logo size and plate",
+      "hero on or off, page turn timing and foot swing",
+      "lamp glow and timing",
+      "camera orbit, rise, end distance and field of view",
+      "traffic and surf",
+      "sky and city on or off"
+    ],
+    "palette": ["#2e2a4d", "#f7a33c", "#5b2fae", "#3ccaa9", "#f6bfa2", "#7f6c96"],
+    "keywords": [
+      "billboard",
+      "outdoor ad",
+      "out of home",
+      "ooh",
+      "roadside sign",
+      "advertising",
+      "superhero",
+      "hero",
+      "newspaper",
+      "reading",
+      "city",
+      "coast",
+      "dusk",
+      "sunset",
+      "3d",
+      "camera move",
+      "drone shot",
+      "campaign",
+      "slogan",
+      "mockup"
+    ],
+    "concept": "Your ad is up on a giant billboard high over a coastal city, and even a superhero has stopped on top of it to read the paper. The camera rises from the street past the lit board to the hero and ends looking down on the finished ad, so the eye goes from the headline to the logo while the hero adds a wink of humour. Bold, confident and a little cheeky: the headline sets up a claim and the accent line lands it.",
+    "needs": ["logo", "company name", "headline", "headline accent", "tagline"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "First line of the billboard headline, the setup"
+      },
+      "Headline Accent": {
+        "kind": "text",
+        "maxChars": 20,
+        "hint": "Second headline line in the brand colour, the punchline people remember"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 64,
+        "hint": "One short sentence under the headline that says what you do"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Name under the logo in the bottom right corner of the billboard"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; sits on a light plate on the board"
+      }
+    },
+    "samples": {
+      "Headline": "Big moments,",
+      "Headline Accent": "beautifully done.",
+      "Tagline": "Flowers and events, designed in New York.",
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/billboard-reader.mp4"
   }
 }

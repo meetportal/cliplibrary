@@ -1,4 +1,5 @@
 import type { BatteryChargeSuccessProps } from './clips/ad-reveals/battery-charge-success';
+import type { BillboardReaderProps } from './clips/ad-reveals/billboard-reader';
 import type { AppIconRevealProps } from './clips/brand/app-icon-reveal';
 import type { ArcBurstWordmarkProps } from './clips/brand/arc-burst-wordmark';
 import type { ChevronMarkAssembleProps } from './clips/brand/chevron-mark-assemble';
@@ -23,6 +24,7 @@ export interface ClipPropsMap {
   'arc-burst-wordmark': ArcBurstWordmarkProps;
   'arch-save-the-date': ArchSaveTheDateProps;
   'battery-charge-success': BatteryChargeSuccessProps;
+  'billboard-reader': BillboardReaderProps;
   'botanical-save-the-date': BotanicalSaveTheDateProps;
   'chevron-mark-assemble': ChevronMarkAssembleProps;
   'coming-soon-flips': ComingSoonFlipsProps;
