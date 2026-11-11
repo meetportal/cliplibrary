@@ -4,6 +4,7 @@ export * from './clip-props';
 export * from './clip-tokens';
 export * from './clip-updated-at';
 export * from './clips';
+export * from './clips/brand/app-icon-reveal';
 export * from './clips/brand/arc-burst-wordmark';
 export * from './clips/brand/chevron-mark-assemble';
 export * from './clips/brand/dot-morph-wordmark';
