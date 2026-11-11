@@ -1,3 +1,4 @@
+import type { AppIconRevealProps } from './clips/brand/app-icon-reveal';
 import type { ArcBurstWordmarkProps } from './clips/brand/arc-burst-wordmark';
 import type { ChevronMarkAssembleProps } from './clips/brand/chevron-mark-assemble';
 import type { DotMorphWordmarkProps } from './clips/brand/dot-morph-wordmark';
@@ -16,6 +17,7 @@ import type { NeonSignFlickerProps } from './clips/text-reveals/neon-sign-flicke
 
 export interface ClipPropsMap {
   'anniversary-kinetic': AnniversaryKineticProps;
+  'app-icon-reveal': AppIconRevealProps;
   'arc-burst-wordmark': ArcBurstWordmarkProps;
   'botanical-save-the-date': BotanicalSaveTheDateProps;
   'chevron-mark-assemble': ChevronMarkAssembleProps;

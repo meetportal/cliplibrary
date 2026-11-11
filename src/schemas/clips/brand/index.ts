@@ -1,4 +1,6 @@
 import type { ClipModule } from '../../registry';
+import { appIconRevealDefaults, appIconRevealMeta, appIconRevealSchema } from './app-icon-reveal';
+import { appIconRevealControls } from './app-icon-reveal-controls';
 import {
   arcBurstWordmarkDefaults,
   arcBurstWordmarkMeta,
@@ -25,6 +27,13 @@ import {
 import { dotRingLogoRevealControls } from './dot-ring-logo-reveal-controls';
 
 export const brandClips: ClipModule[] = [
+  {
+    id: 'app-icon-reveal',
+    schema: appIconRevealSchema,
+    defaults: appIconRevealDefaults,
+    meta: appIconRevealMeta,
+    controls: appIconRevealControls,
+  },
   {
     id: 'arc-burst-wordmark',
     schema: arcBurstWordmarkSchema,
