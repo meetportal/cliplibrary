@@ -10,6 +10,7 @@ import type { ArchSaveTheDateProps } from './clips/invitations/arch-save-the-dat
 import type { BotanicalSaveTheDateProps } from './clips/invitations/botanical-save-the-date';
 import type { GoldMonogramInviteProps } from './clips/invitations/gold-monogram-invite';
 import type { AnniversaryKineticProps } from './clips/kinetic-type/anniversary-kinetic';
+import type { BrandingIsTickerProps } from './clips/kinetic-type/branding-is-ticker';
 import type { ComingSoonFlipsProps } from './clips/kinetic-type/coming-soon-flips';
 import type { DominoWordsProps } from './clips/kinetic-type/domino-words';
 import type { TextRingsProps } from './clips/kinetic-type/text-rings';
@@ -21,6 +22,7 @@ import type { NeonSignFlickerProps } from './clips/text-reveals/neon-sign-flicke
 
 export interface ClipPropsMap {
   'anniversary-kinetic': AnniversaryKineticProps;
+  'branding-is-ticker': BrandingIsTickerProps;
   'app-icon-reveal': AppIconRevealProps;
   'arc-burst-wordmark': ArcBurstWordmarkProps;
   'arch-save-the-date': ArchSaveTheDateProps;
