@@ -3,6 +3,7 @@ import type { ArcBurstWordmarkProps } from './clips/brand/arc-burst-wordmark';
 import type { ChevronMarkAssembleProps } from './clips/brand/chevron-mark-assemble';
 import type { DotMorphWordmarkProps } from './clips/brand/dot-morph-wordmark';
 import type { DotRingLogoRevealProps } from './clips/brand/dot-ring-logo-reveal';
+import type { ArchSaveTheDateProps } from './clips/invitations/arch-save-the-date';
 import type { BotanicalSaveTheDateProps } from './clips/invitations/botanical-save-the-date';
 import type { GoldMonogramInviteProps } from './clips/invitations/gold-monogram-invite';
 import type { AnniversaryKineticProps } from './clips/kinetic-type/anniversary-kinetic';
@@ -19,6 +20,7 @@ export interface ClipPropsMap {
   'anniversary-kinetic': AnniversaryKineticProps;
   'app-icon-reveal': AppIconRevealProps;
   'arc-burst-wordmark': ArcBurstWordmarkProps;
+  'arch-save-the-date': ArchSaveTheDateProps;
   'botanical-save-the-date': BotanicalSaveTheDateProps;
   'chevron-mark-assemble': ChevronMarkAssembleProps;
   'coming-soon-flips': ComingSoonFlipsProps;
