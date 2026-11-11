@@ -6,6 +6,12 @@ import {
 } from './anniversary-kinetic';
 import { anniversaryKineticControls } from './anniversary-kinetic-controls';
 import {
+  brandingIsTickerDefaults,
+  brandingIsTickerMeta,
+  brandingIsTickerSchema,
+} from './branding-is-ticker';
+import { brandingIsTickerControls } from './branding-is-ticker-controls';
+import {
   comingSoonFlipsDefaults,
   comingSoonFlipsMeta,
   comingSoonFlipsSchema,
@@ -23,6 +29,13 @@ export const kineticTypeClips: ClipModule[] = [
     defaults: anniversaryKineticDefaults,
     meta: anniversaryKineticMeta,
     controls: anniversaryKineticControls,
+  },
+  {
+    id: 'branding-is-ticker',
+    schema: brandingIsTickerSchema,
+    defaults: brandingIsTickerDefaults,
+    meta: brandingIsTickerMeta,
+    controls: brandingIsTickerControls,
   },
   {
     id: 'coming-soon-flips',
