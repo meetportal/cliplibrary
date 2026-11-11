@@ -8,6 +8,7 @@ export * from './clips/ad-reveals/battery-charge-success';
 export * from './clips/ad-reveals/billboard-reader';
 export * from './clips/brand/app-icon-reveal';
 export * from './clips/brand/arc-burst-wordmark';
+export * from './clips/brand/brand-reveal';
 export * from './clips/brand/chevron-mark-assemble';
 export * from './clips/brand/dot-morph-wordmark';
 export * from './clips/brand/dot-ring-logo-reveal';
