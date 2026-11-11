@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { auditBatchClip, auditBatchGroups, CLIP_IDS, clipLabel, getClipMeta } from '@/schemas';
+import { auditBatchClip, auditBatchDesignIds, CLIP_IDS, clipLabel, getClipMeta } from '@/schemas';
 
 const publicDir = join(process.cwd(), 'public');
 const isBundled = (value: string) => /\.(png|jpe?g|webp|svg|mp4|webm)$/.test(value);
@@ -13,8 +13,8 @@ describe('batch clips', () => {
     }
   });
 
-  it('ship every design as variants a, b and c of the same size, length and inspiration', () => {
-    expect(auditBatchGroups()).toEqual([]);
+  it('ship every design as one clip under its own design id', () => {
+    expect(auditBatchDesignIds()).toEqual([]);
   });
 
   it('bundle every sample image they name', () => {

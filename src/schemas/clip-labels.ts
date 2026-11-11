@@ -40,7 +40,6 @@ export const clipLabelSchema = z.object({
   needs: z.array(z.string().min(2)).min(1).optional(),
   placeholders: z.record(z.string(), placeholderSchema).optional(),
   samples: z.record(z.string(), z.string()).optional(),
-  variantNote: z.string().min(20).optional(),
   inspiration: z.url({ protocol: /^https$/ }).optional(),
 });
 
