@@ -5,6 +5,12 @@ import {
   batteryChargeSuccessSchema,
 } from './battery-charge-success';
 import { batteryChargeSuccessControls } from './battery-charge-success-controls';
+import {
+  billboardReaderDefaults,
+  billboardReaderMeta,
+  billboardReaderSchema,
+} from './billboard-reader';
+import { billboardReaderControls } from './billboard-reader-controls';
 
 export const adRevealsClips: ClipModule[] = [
   {
@@ -13,5 +19,12 @@ export const adRevealsClips: ClipModule[] = [
     defaults: batteryChargeSuccessDefaults,
     meta: batteryChargeSuccessMeta,
     controls: batteryChargeSuccessControls,
+  },
+  {
+    id: 'billboard-reader',
+    schema: billboardReaderSchema,
+    defaults: billboardReaderDefaults,
+    meta: billboardReaderMeta,
+    controls: billboardReaderControls,
   },
 ];
