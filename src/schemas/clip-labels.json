@@ -2013,5 +2013,145 @@
       "Logo": "design-assets/logos/willow-square.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/app-icon-reveal.mp4"
+  },
+  "arch-save-the-date": {
+    "summary": "A pink Mughal palace save the date: the camera glides down a corridor of scalloped pink arches hung with jasmine strings, rosettes and two-tier crystal chandeliers, settling on the last arch that frames a sunny terrace of hills, agave leaves, a cream balustrade and roses. Once the last arch's sky surrounds it, a script Save the Date fades in with flourishes that draw out to both sides while small birds cross high in the sky, then the line above the names, the couple's names in capitals, the date, the venue, a sign-off and the hosts in script write in line by line over a soft haze while the sky warms to a sunset glow.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the camera is already gliding in on a long ease-out, one nearer arch with its chandelier framing the last arch, whose sky, hills, balustrade and roses are already in view"
+      },
+      {
+        "at": 1.0,
+        "what": "the nearer arch sweeps up and out of frame as the last arch grows to fill the screen"
+      },
+      {
+        "at": 1.9,
+        "what": "Save the Date in plum script fades in on the sky inside the last arch while the glide is still settling; small birds start crossing high in the sky"
+      },
+      {
+        "at": 2.6,
+        "what": "fine flourishes draw out from the script to both sides, inside the sky"
+      },
+      {
+        "at": 3.4,
+        "what": "the line above the names, then the couple's names, the date and the venue write in left to right, one line after another, over a soft haze"
+      },
+      {
+        "at": 4.9,
+        "what": "the sign-off and the hosts in script finish the card as the glide comes softly to rest"
+      },
+      {
+        "at": 6.0,
+        "what": "the finished card holds while the clouds drift, the jasmine and chandeliers sway, birds cross and the sky warms to a pink sunset glow"
+      }
+    ],
+    "visuals": [
+      "scalloped pink Mughal arches",
+      "jasmine strings and rosettes",
+      "two-tier crystal chandelier",
+      "pink lotus columns",
+      "sunny sky with clouds and birds",
+      "green hills and agave leaves",
+      "cream balustrade with roses",
+      "plum script Save the Date with flourishes",
+      "capital names, date and venue"
+    ],
+    "motion": [
+      "camera glide through a row of arches",
+      "script fade in",
+      "flourishes drawing",
+      "left to right line writing",
+      "drifting clouds and flying birds",
+      "swaying jasmine and chandeliers",
+      "sky warming to sunset"
+    ],
+    "mood": ["romantic", "royal", "joyful", "warm"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "wedding save the date",
+      "indian wedding invitation",
+      "destination wedding announcement",
+      "engagement announcement",
+      "palace or heritage venue wedding invite"
+    ],
+    "editable": [
+      "both names and the joiner",
+      "line above the names",
+      "date",
+      "venue",
+      "sign-off and hosts",
+      "Save the Date words",
+      "arch, script, text and sky colors",
+      "greenery, flower, stone, crystal, gold and jasmine colors",
+      "script and capitals fonts and sizes",
+      "number of arches and glide length",
+      "chandeliers, jasmine strings and rosettes",
+      "sunset glow, birds and cloud drift",
+      "title, flourish and line timing"
+    ],
+    "palette": ["#e3949b", "#7d2148", "#8db5df", "#7dbb72", "#f5f1de", "#dfeaf5"],
+    "keywords": [
+      "save the date",
+      "wedding invitation",
+      "palace arches",
+      "mughal arch",
+      "indian wedding",
+      "jaipur",
+      "chandelier",
+      "jasmine",
+      "pink palace",
+      "royal wedding",
+      "terrace",
+      "destination wedding"
+    ],
+    "concept": "A royal pink palace save the date: the camera glides down a corridor of scalloped arches, jasmine and chandeliers toward a sunlit terrace, so the viewer arrives at the celebration, and the last arch becomes the frame for the card. Save the Date lands in script only once the last arch's sky surrounds it, its flourishes stay inside that sky, then the couple, date, venue and hosts write in calmly one line at a time as the camera settles, and the card holds as the sky warms. The copy is warm, formal and family-signed.",
+    "needs": [
+      "names of the couple",
+      "wedding date",
+      "venue and city",
+      "family surname for the sign-off"
+    ],
+    "placeholders": {
+      "Partner One": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "First name of one partner, first on the names line in capitals"
+      },
+      "Partner Two": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "First name of the other partner, after the ampersand"
+      },
+      "Event Date": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The wedding date as it should read, under the names"
+      },
+      "Venue": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Name of the venue, shown in capitals before the city"
+      },
+      "City": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "City of the venue, after the venue name"
+      },
+      "Last Name": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "Family surname of the hosts, written in script as The ... Family"
+      }
+    },
+    "samples": {
+      "Partner One": "Leah",
+      "Partner Two": "James",
+      "Event Date": "18 April 2027",
+      "Venue": "The Olive Courtyard",
+      "City": "New York",
+      "Last Name": "Brooks"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/arch-save-the-date.mp4"
   }
 }
