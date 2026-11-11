@@ -1,3 +1,4 @@
+import type { BatteryChargeSuccessProps } from './clips/ad-reveals/battery-charge-success';
 import type { AppIconRevealProps } from './clips/brand/app-icon-reveal';
 import type { ArcBurstWordmarkProps } from './clips/brand/arc-burst-wordmark';
 import type { ChevronMarkAssembleProps } from './clips/brand/chevron-mark-assemble';
@@ -21,6 +22,7 @@ export interface ClipPropsMap {
   'app-icon-reveal': AppIconRevealProps;
   'arc-burst-wordmark': ArcBurstWordmarkProps;
   'arch-save-the-date': ArchSaveTheDateProps;
+  'battery-charge-success': BatteryChargeSuccessProps;
   'botanical-save-the-date': BotanicalSaveTheDateProps;
   'chevron-mark-assemble': ChevronMarkAssembleProps;
   'coming-soon-flips': ComingSoonFlipsProps;
