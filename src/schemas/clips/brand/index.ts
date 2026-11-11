@@ -7,6 +7,8 @@ import {
   arcBurstWordmarkSchema,
 } from './arc-burst-wordmark';
 import { arcBurstWordmarkControls } from './arc-burst-wordmark-controls';
+import { brandRevealDefaults, brandRevealMeta, brandRevealSchema } from './brand-reveal';
+import { brandRevealControls } from './brand-reveal-controls';
 import {
   chevronMarkAssembleDefaults,
   chevronMarkAssembleMeta,
@@ -40,6 +42,13 @@ export const brandClips: ClipModule[] = [
     defaults: arcBurstWordmarkDefaults,
     meta: arcBurstWordmarkMeta,
     controls: arcBurstWordmarkControls,
+  },
+  {
+    id: 'brand-reveal',
+    schema: brandRevealSchema,
+    defaults: brandRevealDefaults,
+    meta: brandRevealMeta,
+    controls: brandRevealControls,
   },
   {
     id: 'chevron-mark-assemble',
