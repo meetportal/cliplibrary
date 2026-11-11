@@ -1908,5 +1908,110 @@
       "Badge Line": "Years of craft"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977dbaaec3893f5de08a6a4b6f6c2b8306df/public/previews/anniversary-kinetic.mp4"
+  },
+  "app-icon-reveal": {
+    "summary": "On a soft grey studio backdrop a blank, brand-coloured app icon tile fades and settles in at the centre, a glint of light sweeps across it, then it flips over like a card on its vertical axis, showing its thickness edge-on, to land on a white face holding the logo. The company name types in letter by letter underneath in a bold geometric sans, and the finished icon and name hold while the icon floats gently above its shadow.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a blank marigold app tile fades in and settles to size at the centre of a soft grey vignette"
+      },
+      {
+        "at": 0.4,
+        "what": "a soft diagonal glint sweeps across the blank tile"
+      },
+      {
+        "at": 0.73,
+        "what": "the tile starts to flip on its vertical axis, lifting slightly, its shadow stretching to the right"
+      },
+      {
+        "at": 1.1,
+        "what": "edge-on, only the tile's thickness shows as a thin slab"
+      },
+      {
+        "at": 1.17,
+        "what": "the company name starts typing in under the tile, each letter fading in from a slight blur"
+      },
+      {
+        "at": 1.47,
+        "what": "the tile lands on its white face with the logo centred inside"
+      },
+      {
+        "at": 2.0,
+        "what": "the name is complete; icon and name hold while the icon floats gently up and down"
+      }
+    ],
+    "visuals": [
+      "soft grey radial vignette backdrop",
+      "rounded square app icon tile with soft shadow",
+      "brand-coloured blank back of the tile",
+      "white icon face with the logo",
+      "bold geometric sans company name"
+    ],
+    "motion": [
+      "fade and settle in",
+      "light glint sweep",
+      "card flip on the vertical axis",
+      "letter by letter typing",
+      "gentle float"
+    ],
+    "mood": ["clean", "modern", "friendly", "confident"],
+    "roles": ["opener", "closer", "cta"],
+    "useCases": [
+      "app launch announcement",
+      "logo intro for a startup or shop",
+      "end card for an app promo",
+      "app store style brand sting"
+    ],
+    "editable": [
+      "logo image",
+      "company name",
+      "name font and size",
+      "tile back color",
+      "icon face color",
+      "name color",
+      "background colors",
+      "icon size, roundness and thickness",
+      "widest icon for wide logos",
+      "flip start and length",
+      "typing speed",
+      "float and shine"
+    ],
+    "palette": ["#e4e4e1", "#c3c4bf", "#f2b134", "#ffffff", "#26262b"],
+    "keywords": [
+      "app icon",
+      "app reveal",
+      "icon flip",
+      "card flip",
+      "logo reveal",
+      "app launch",
+      "typing name",
+      "logo intro",
+      "brand sting",
+      "end card",
+      "mobile app",
+      "rounded square",
+      "minimal",
+      "neumorphic",
+      "tile"
+    ],
+    "concept": "A blank app icon in the brand colour waits at the centre, flips over like a card to reveal the logo on its face, and the name types itself in underneath: one object, one turn, one word, landing as a clean app store style lockup. Calm and confident, with the flip as the payoff and the typed name as its answer.",
+    "needs": ["logo", "company name"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits inside the white face of the icon, which widens for a wide logo"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "The app or brand name that types in under the icon; one line, long names shrink to fit"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/app-icon-reveal.mp4"
   }
 }
