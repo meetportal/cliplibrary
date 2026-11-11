@@ -4,6 +4,7 @@ import type { DotMorphWordmarkProps } from './clips/brand/dot-morph-wordmark';
 import type { DotRingLogoRevealProps } from './clips/brand/dot-ring-logo-reveal';
 import type { BotanicalSaveTheDateProps } from './clips/invitations/botanical-save-the-date';
 import type { GoldMonogramInviteProps } from './clips/invitations/gold-monogram-invite';
+import type { AnniversaryKineticProps } from './clips/kinetic-type/anniversary-kinetic';
 import type { ComingSoonFlipsProps } from './clips/kinetic-type/coming-soon-flips';
 import type { DominoWordsProps } from './clips/kinetic-type/domino-words';
 import type { TextRingsProps } from './clips/kinetic-type/text-rings';
@@ -14,6 +15,7 @@ import type { MagnifierCaptionProps } from './clips/text-reveals/magnifier-capti
 import type { NeonSignFlickerProps } from './clips/text-reveals/neon-sign-flicker';
 
 export interface ClipPropsMap {
+  'anniversary-kinetic': AnniversaryKineticProps;
   'arc-burst-wordmark': ArcBurstWordmarkProps;
   'botanical-save-the-date': BotanicalSaveTheDateProps;
   'chevron-mark-assemble': ChevronMarkAssembleProps;
