@@ -2595,5 +2595,127 @@
       "Logo": "design-assets/logos/willow-round.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/brand-reveal.mp4"
+  },
+  "branding-is-ticker": {
+    "summary": "On a deep indigo stage with a soft drifting light, a cream logo tile and the company name sit in the top-left corner above an italic serif headline, \"your brand is\". Under it a ticker of bold sans words glides left one word at a time: the word in the slot turns the Primary colour over a matching underline that stretches to its width while the words waiting on either side stay faint. After character, clarity, rhythm, memory, warmth, presence, signal, craft, belief, momentum and legacy it comes full circle to character, the corner tile grows into a full cream end card, and the logo on a gradient tile, the name, a gradient LET'S TALK button, the website and the phone rise in one after another and hold while a soft shine crosses the button.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "dark stage: logo tile and name in the corner, \"your brand is\" headline, the first word sitting in the underlined slot"
+      },
+      {
+        "at": 0.93,
+        "what": "the ticker glides one word left, letters turn the Primary colour as they pass through the slot and the underline resizes to the next word"
+      },
+      {
+        "at": 5.6,
+        "what": "the ticker keeps stepping a word about every 0.93 s through the list"
+      },
+      {
+        "at": 10.27,
+        "what": "the ticker comes full circle to the first word; the corner logo and name fade"
+      },
+      {
+        "at": 10.33,
+        "what": "the corner tile grows into a full-frame cream card as the headline and ticker fade under it"
+      },
+      {
+        "at": 10.87,
+        "what": "the end card rises in: gradient logo tile, company name, gradient button, website and phone rows"
+      },
+      {
+        "at": 12.5,
+        "what": "the end card holds while a soft light drifts and a shine sweeps across the button"
+      }
+    ],
+    "visuals": [
+      "deep indigo backdrop with a soft drifting spotlight",
+      "cream rounded logo tile in the top-left corner with the company name in tracked capitals",
+      "cream italic serif headline",
+      "ticker of bold sans words with commas, the slotted one in the Primary colour with an underline",
+      "faint waiting words on either side of the slot",
+      "cream end card with a gradient logo tile, tracked name, gradient pill button and icon-chip contact rows"
+    ],
+    "motion": [
+      "ticker that builds speed and lands hard on each word, never quite stopping",
+      "a fixed Primary colour window over the slot that recolours every letter passing through it",
+      "underline stretching to each word's width",
+      "corner tile growing into a full-frame card",
+      "staggered rise and fade of the end card",
+      "button shine and arrow nudge on the hold",
+      "slow light drift"
+    ],
+    "mood": ["confident", "editorial", "warm", "premium", "agency"],
+    "roles": ["opener", "feature", "cta", "closer"],
+    "useCases": [
+      "brand or design studio promo post",
+      "agency services teaser for social",
+      "brand values or positioning statement",
+      "end card with contact details for a reel",
+      "rebrand announcement"
+    ],
+    "editable": [
+      "logo image",
+      "company name",
+      "website and phone",
+      "button text",
+      "headline lines",
+      "ticker word list",
+      "headline and word fonts and sizes",
+      "primary, text, background, surface and end card text colours",
+      "ticker length, glide, waiting word strength and underline",
+      "tile and end card sizes, margins and positions",
+      "tile grow length, end card stagger and button shine"
+    ],
+    "palette": ["#29233f", "#13101f", "#f4ecdf", "#ff9658", "#90275a", "#231a33"],
+    "keywords": [
+      "your brand is",
+      "brand ticker",
+      "word ticker",
+      "marquee",
+      "kinetic type",
+      "rotating words",
+      "underline",
+      "brand values",
+      "agency",
+      "studio",
+      "end card",
+      "lets talk",
+      "contact card",
+      "call to action",
+      "serif italic",
+      "dark",
+      "logo tile"
+    ],
+    "concept": "One sentence that never finishes: \"your brand is\" stays put while a ticker of brand qualities glides through an underlined accent slot, so each word gets its own moment and the list feels endless until it comes full circle. The corner logo tile then grows into the end card, turning the idea into a calm, direct invitation to talk. Copy is single confident words and a plain call to action.",
+    "needs": ["logo", "company name", "website", "phone"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; sits on a cream tile in the corner and on a white plate in a gradient tile on the end card"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name under the corner tile and under the logo on the end card, shown in capitals; long names shrink to fit"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Website address on the first contact line of the end card"
+      },
+      "Phone": {
+        "kind": "text",
+        "maxChars": 20,
+        "hint": "Phone number on the second contact line of the end card"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Website": "willowandco.com",
+      "Phone": "+1 646 555 0119",
+      "Logo": "design-assets/logos/willow-round.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/branding-is-ticker.mp4"
   }
 }
