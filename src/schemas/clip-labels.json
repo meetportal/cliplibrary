@@ -2153,5 +2153,178 @@
       "Last Name": "Brooks"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/arch-save-the-date.mp4"
+  },
+  "battery-charge-success": {
+    "summary": "On a near-black backdrop with a soft beam of light, an empty battery outline glows warning orange under the company name in wide bold capitals, five white plugs dangling below it on wavy cables, each labelled with a short word. The plugs swing up and click in, two on each side and one underneath, coloured lights start running along the cables, the name and glow turn from orange to the brand colour and the battery fills with a waving liquid that starts in a lighter tint of the brand colour while the percentage counts to 100. Two rings pulse out at full, the cables pull out and fly off frame, and a logo on a light plate, a tagline and the website rise into the space below the full battery.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "empty battery glowing orange at its floor, 0%, the name in orange above and five labelled plugs swaying on cables below"
+      },
+      {
+        "at": 1.0,
+        "what": "the plugs swing up on curving paths and turn to face their sockets"
+      },
+      {
+        "at": 2.6,
+        "what": "all five are plugged in: two on the left, two on the right, one under the battery"
+      },
+      {
+        "at": 2.7,
+        "what": "coloured lights start running along every cable into the battery"
+      },
+      {
+        "at": 3.0,
+        "what": "the name, the glow and the bolt turn from orange to the brand colour"
+      },
+      {
+        "at": 3.4,
+        "what": "liquid starts filling with a gentle wave and bubbles while the percentage counts up"
+      },
+      {
+        "at": 7.6,
+        "what": "100%: the number sits dark on the full teal liquid and two rings pulse out"
+      },
+      {
+        "at": 8.2,
+        "what": "the cables pull out and fly off frame, the bottom one first"
+      },
+      {
+        "at": 8.9,
+        "what": "the logo plate, then the tagline, then the website rise in under the full battery"
+      },
+      {
+        "at": 10.3,
+        "what": "the finished end card holds while the liquid keeps waving"
+      }
+    ],
+    "visuals": [
+      "glowing battery outline with a terminal cap",
+      "waving liquid fill with bubbles",
+      "white plugs with coloured stripes on wavy cables",
+      "short cable labels with coloured dots",
+      "wide bold capital wordmark",
+      "percentage counter",
+      "logo on a light rounded plate",
+      "tagline and website end card"
+    ],
+    "motion": [
+      "dangling sway",
+      "plugs swing in and connect",
+      "lights running along cables",
+      "colour turn from orange to brand colour",
+      "liquid fill with wave",
+      "counter",
+      "ring pulse",
+      "cables thrown off frame",
+      "end card rises in"
+    ],
+    "mood": ["energetic", "uplifting", "modern", "playful", "confident"],
+    "roles": ["opener", "feature", "closer", "cta"],
+    "useCases": [
+      "brand or product launch teaser",
+      "team culture or values post",
+      "new season or relaunch announcement",
+      "fundraising or goal progress reveal",
+      "story ad ending on the website"
+    ],
+    "editable": [
+      "company name",
+      "logo",
+      "tagline",
+      "website",
+      "five cable labels",
+      "charged colour",
+      "empty colour",
+      "cable light colours",
+      "low charge tint of the liquid",
+      "background and light beam",
+      "battery size, roundness and glow",
+      "charge length and plug timing",
+      "sway, wave, bubbles and rings",
+      "name, label, percentage, tagline and website sizes",
+      "logo plate"
+    ],
+    "palette": ["#06090b", "#ff7a2f", "#a1e8c3", "#34d9b4", "#f2f7f5"],
+    "keywords": [
+      "battery",
+      "charging",
+      "charge up",
+      "power",
+      "energy",
+      "plug in",
+      "cables",
+      "loading",
+      "progress",
+      "percentage",
+      "fully charged",
+      "100 percent",
+      "momentum",
+      "values",
+      "motivation",
+      "vertical story",
+      "glow",
+      "neon"
+    ],
+    "concept": "Five short things that power the brand plug into an empty battery and charge it from warning orange to full in the brand colour under its name; once it is full the cables drop away and the logo, tagline and website rise in. Upbeat and confident: the copy names what keeps the company going and the end card says what it adds up to.",
+    "needs": ["logo", "company name", "tagline", "website", "five short cable labels"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Name above the battery; it glows orange while empty and takes the full colour as it charges"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; rises in on a light plate under the full battery"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 44,
+        "hint": "One line under the logo at the end that says what the five things add up to"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Last line of the end card"
+      },
+      "Item 1": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Upper left cable: one of five short things that charge the brand up"
+      },
+      "Item 2": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Lower left cable label, a word or two"
+      },
+      "Item 3": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Upper right cable label, a word or two"
+      },
+      "Item 4": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Lower right cable label, a word or two"
+      },
+      "Item 5": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Bottom cable label, a word or two; it runs down the cable under the battery"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png",
+      "Tagline": "Fully charged for the season ahead",
+      "Website": "willowandco.com",
+      "Item 1": "Fresh ideas",
+      "Item 2": "Early mornings",
+      "Item 3": "Good people",
+      "Item 4": "Focus",
+      "Item 5": "Care"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/battery-charge-success.mp4"
   }
 }
