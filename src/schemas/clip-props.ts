@@ -10,6 +10,7 @@ import type { DotRingLogoRevealProps } from './clips/brand/dot-ring-logo-reveal'
 import type { ChalkBadgeProps } from './clips/hand-drawn/chalk-badge';
 import type { ChalkBadgeGridProps } from './clips/hand-drawn/chalk-badge-grid';
 import type { ChalkBadgesReelProps } from './clips/hand-drawn/chalk-badges-reel';
+import type { ChalkTitleProps } from './clips/hand-drawn/chalk-title';
 import type { ArchSaveTheDateProps } from './clips/invitations/arch-save-the-date';
 import type { BotanicalSaveTheDateProps } from './clips/invitations/botanical-save-the-date';
 import type { GoldMonogramInviteProps } from './clips/invitations/gold-monogram-invite';
@@ -38,6 +39,7 @@ export interface ClipPropsMap {
   'chalk-badge': ChalkBadgeProps;
   'chalk-badge-grid': ChalkBadgeGridProps;
   'chalk-badges-reel': ChalkBadgesReelProps;
+  'chalk-title': ChalkTitleProps;
   'chevron-mark-assemble': ChevronMarkAssembleProps;
   'coming-soon-flips': ComingSoonFlipsProps;
   'domino-words': DominoWordsProps;

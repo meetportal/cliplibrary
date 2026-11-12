@@ -13,6 +13,8 @@ import {
   chalkBadgesReelSchema,
 } from './chalk-badges-reel';
 import { chalkBadgesReelControls } from './chalk-badges-reel-controls';
+import { chalkTitleDefaults, chalkTitleMeta, chalkTitleSchema } from './chalk-title';
+import { chalkTitleControls } from './chalk-title-controls';
 
 export const handDrawnClips: ClipModule[] = [
   {
@@ -35,5 +37,12 @@ export const handDrawnClips: ClipModule[] = [
     defaults: chalkBadgesReelDefaults,
     meta: chalkBadgesReelMeta,
     controls: chalkBadgesReelControls,
+  },
+  {
+    id: 'chalk-title',
+    schema: chalkTitleSchema,
+    defaults: chalkTitleDefaults,
+    meta: chalkTitleMeta,
+    controls: chalkTitleControls,
   },
 ];
