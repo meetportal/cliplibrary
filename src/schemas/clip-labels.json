@@ -3142,5 +3142,195 @@
       "Word 10": "sweet"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/chalk-badge-grid.mp4"
+  },
+  "chalk-badges-reel": {
+    "concept": "A chalkboard reel of small words, each dressed as a different chalk badge: a script pair joined by a sparkling ampersand, a sticker sheet of six badges, three of them drawn big one at a time, then a chunky headline that sums it up under the logo. The rhythm of write, hold and wipe clean is the idea; the copy is short, warm and playful.",
+    "needs": [
+      "logo",
+      "company name",
+      "two opening words",
+      "six badge words",
+      "headline",
+      "tagline",
+      "website"
+    ],
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/chalk-badges-reel.mp4",
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name in small spaced capitals across the top of the board, from the badge sheet until the logo lands on the end card"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo on a light plate at the top of the end card: wide, square or round"
+      },
+      "Opener Left": {
+        "kind": "text",
+        "maxChars": 12,
+        "hint": "First script word of the opening pair, before the ampersand, such as a product or theme"
+      },
+      "Opener Right": {
+        "kind": "text",
+        "maxChars": 12,
+        "hint": "Second script word of the opening pair, after the ampersand"
+      },
+      "Word 1": {
+        "kind": "text",
+        "maxChars": 9,
+        "hint": "Lowercase script word with a looping swash, a quality like fresh or cosy"
+      },
+      "Word 2": {
+        "kind": "text",
+        "maxChars": 8,
+        "hint": "Short capitals on a tape label, like NEW IN or SALE"
+      },
+      "Word 3": {
+        "kind": "text",
+        "maxChars": 5,
+        "hint": "One short capital word on a round starburst sticker"
+      },
+      "Word 4": {
+        "kind": "text",
+        "maxChars": 8,
+        "hint": "Serif capitals on a ribbon banner, like LOCAL or HANDMADE"
+      },
+      "Word 5": {
+        "kind": "text",
+        "maxChars": 7,
+        "hint": "Friendly script word in a speech bubble, like hello or hi there"
+      },
+      "Word 6": {
+        "kind": "text",
+        "maxChars": 5,
+        "hint": "One short word in hand capitals inside a sun ring"
+      },
+      "Headline Line 1": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "Smaller first headline line on the end card, sets up the big line"
+      },
+      "Headline Line 2": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "The big punchline of the end card"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 18,
+        "hint": "Short line under the big headline"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "Website on the last line, underlined"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png",
+      "Opener Left": "Petals",
+      "Opener Right": "Posies",
+      "Word 1": "fresh",
+      "Word 2": "NEW IN",
+      "Word 3": "GIFT",
+      "Word 4": "LOCAL",
+      "Word 5": "hello",
+      "Word 6": "LOVE",
+      "Headline Line 1": "Small stems",
+      "Headline Line 2": "Big smiles",
+      "Tagline": "Tied by hand",
+      "Website": "willowandco.com"
+    },
+    "summary": "A green gridded chalkboard with drifting chalk dust. Two script words are chalked in left to right around an ornate ampersand with three yellow sparkles, then wiped away. The company name appears small across the top and a sticker sheet of six chalk badges fills the board in a three by two grid: a script word with a looping swash and coral sparkles, capitals on lilac tape, capitals on a coral starburst, serif capitals on a sky blue ribbon, a script word in a yellow speech bubble and hand capitals in a ring with coral rays. The sheet holds while sparkles twinkle, then the words wipe off, the tape and ribbon fade into the board and the starburst shrinks away as pale chalk dust. Three badges are then drawn big one at a time in the centre (tape, starburst, ribbon by default), each held fully written for about two thirds of a second before it wipes away. The company name fades from the top as the reel ends on a branded end card: the logo on a light plate, a small and a big chunky yellow headline line, a tagline and the website underlined in coral, held for about 1.7 seconds before it fades clean for the loop.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the first script word starts writing at once, then the ampersand and the second word chalk in, three yellow sparkles pop above"
+      },
+      {
+        "at": 1.6,
+        "what": "the opening pair wipes off left to right"
+      },
+      {
+        "at": 2.1,
+        "what": "the company name appears across the top and six badges chalk in one after another in a three by two sheet"
+      },
+      {
+        "at": 4.0,
+        "what": "the full sheet holds while sparkles twinkle and rays breathe"
+      },
+      {
+        "at": 4.7,
+        "what": "words wipe off first, then the tape and ribbon fade into the board and the starburst shrinks away as pale chalk dust"
+      },
+      {
+        "at": 5.5,
+        "what": "three close-ups in turn, at 5.5 s, 7.2 s and 8.9 s: the tape label, the starburst and the ribbon each grow from a sliver once the one before has gone, get their word written, hold fully written for about 0.7 s and wipe off"
+      },
+      {
+        "at": 10.5,
+        "what": "the company name fades from the top as the logo lands on a light plate, and the headline stack is written line by line"
+      },
+      {
+        "at": 12.9,
+        "what": "the coral underline finishes under the website and the full end card holds for about 1.7 seconds"
+      },
+      {
+        "at": 14.6,
+        "what": "the end card fades clean back to the empty board for the loop"
+      }
+    ],
+    "visuals": [
+      "green gridded chalkboard with chalk dust",
+      "script pair with ornate ampersand and sparkles",
+      "six chalk badges: swash script, tape label, starburst, ribbon, speech bubble, sun ring",
+      "company name in small spaced capitals at the top",
+      "logo on a light rounded plate",
+      "chunky yellow headline with a coral underlined website"
+    ],
+    "motion": [
+      "left to right chalk writing with a soft edge",
+      "fills grow from a sliver and shrink away",
+      "staggered badge sheet build",
+      "twinkling sparkles and breathing rays during holds",
+      "slow drifting chalk dust",
+      "soft fade wipes between beats"
+    ],
+    "mood": ["playful", "handmade", "warm", "schoolroom"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "brand reel for a small shop or studio",
+      "social post introducing what a business offers",
+      "end card for a promo with logo and website",
+      "back to school or workshop announcement"
+    ],
+    "editable": [
+      "company name",
+      "logo",
+      "two opening script words",
+      "six badge words",
+      "which three badges get close-ups",
+      "headline lines, tagline and website",
+      "primary, secondary, accent, text and board colours",
+      "badge, close-up, headline and logo sizes",
+      "chalk grain, smudges, grid and twinkle",
+      "wipe clean at the end"
+    ],
+    "palette": ["#33524a", "#eef3ec", "#ec7c64", "#b9a9ec", "#a3cfe6", "#f0d47c"],
+    "keywords": [
+      "chalkboard",
+      "chalk",
+      "badges",
+      "stickers",
+      "handwritten",
+      "reel",
+      "script",
+      "ampersand",
+      "end card",
+      "logo",
+      "school",
+      "sketch"
+    ]
   }
 }
