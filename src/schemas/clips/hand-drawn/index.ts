@@ -7,6 +7,12 @@ import {
   chalkBadgeGridSchema,
 } from './chalk-badge-grid';
 import { chalkBadgeGridControls } from './chalk-badge-grid-controls';
+import {
+  chalkBadgesReelDefaults,
+  chalkBadgesReelMeta,
+  chalkBadgesReelSchema,
+} from './chalk-badges-reel';
+import { chalkBadgesReelControls } from './chalk-badges-reel-controls';
 
 export const handDrawnClips: ClipModule[] = [
   {
@@ -22,5 +28,12 @@ export const handDrawnClips: ClipModule[] = [
     defaults: chalkBadgeGridDefaults,
     meta: chalkBadgeGridMeta,
     controls: chalkBadgeGridControls,
+  },
+  {
+    id: 'chalk-badges-reel',
+    schema: chalkBadgesReelSchema,
+    defaults: chalkBadgesReelDefaults,
+    meta: chalkBadgesReelMeta,
+    controls: chalkBadgesReelControls,
   },
 ];
