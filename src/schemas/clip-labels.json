@@ -3332,5 +3332,121 @@
       "school",
       "sketch"
     ]
+  },
+  "chalk-title": {
+    "summary": "A gridded dark green chalkboard where a faint smear of an erased title fades as two words are written one piece at a time in grainy white chalk: the first word in a slanted brush script, then a big italic ampersand with a thin coloured drop line, then the second word sitting a little higher. Three four-point sparkles pop in above the ampersand in the brand colour and a small spaced company name is written underneath. The sparkles twinkle, chalk dust drifts and a soft light circles while it holds, then the board is erased from right to left, leaving a faint smear.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the board with a faint smear of the last title, which fades as the first word starts"
+      },
+      {
+        "at": 0.1,
+        "what": "the first word is written in brush chalk from left to right, shedding a little dust"
+      },
+      {
+        "at": 0.6,
+        "what": "the big ampersand is written in the middle with its thin coloured drop line"
+      },
+      {
+        "at": 1.2,
+        "what": "the second word is written on the right, a little higher, while three sparkles pop in above the ampersand"
+      },
+      {
+        "at": 1.8,
+        "what": "the company name is written in small spaced capitals under the title"
+      },
+      {
+        "at": 2.4,
+        "what": "the finished title holds while the sparkles twinkle, dust drifts up and the light circles"
+      },
+      {
+        "at": 3.9,
+        "what": "the board is erased from right to left, the sparkles shrinking away, leaving a faint smear to loop"
+      }
+    ],
+    "visuals": [
+      "dark green chalkboard with a dotted grid and smudges",
+      "two words in slanted brush script chalk",
+      "big italic ampersand in chalk with a thin coloured drop line",
+      "three four-point sparkles in the brand colour",
+      "small spaced capital company name",
+      "faint smear of an erased title"
+    ],
+    "motion": [
+      "chalk write-on wipe",
+      "sparkle pop and twinkle",
+      "drifting chalk dust",
+      "circling board light",
+      "right to left erase"
+    ],
+    "mood": ["playful", "friendly", "handmade", "warm", "charming"],
+    "roles": ["opener", "feature", "transition"],
+    "useCases": [
+      "event or workshop title card",
+      "cafe, bakery or shop menu board title",
+      "class, lesson or chapter opener",
+      "podcast or show episode title",
+      "partnership or collaboration announcement"
+    ],
+    "editable": [
+      "first word",
+      "second word",
+      "company name",
+      "sparkle and drop line colour",
+      "chalk colour",
+      "board and grid colours",
+      "handwriting font",
+      "ampersand style and size",
+      "word size, spacing, lift and height",
+      "company name size, spacing and capitals",
+      "sparkles on or off, size and twinkle",
+      "chalk dust, grain, grid, smudges and light drift",
+      "writing time, the erase and the smear",
+      "chalkboard on or off"
+    ],
+    "palette": ["#2e4a42", "#1b312b", "#ecf3ef", "#e8c25a", "#5a756e"],
+    "keywords": [
+      "chalk",
+      "chalkboard",
+      "blackboard",
+      "ampersand",
+      "and",
+      "title card",
+      "handwritten",
+      "brush script",
+      "sparkle",
+      "menu board",
+      "classroom",
+      "cafe",
+      "write on",
+      "erase",
+      "two words"
+    ],
+    "concept": "Two words tied by a big ampersand are lettered onto a classroom chalkboard one piece at a time, left word, ampersand, right word, and the join is crowned with a wink of sparkles, so the pairing reads like a hand-lettered sign. The copy is short and warm, a this-and-that title, signed with the company name and wiped clean so it loops.",
+    "needs": ["first word", "second word", "company name"],
+    "placeholders": {
+      "Title Start": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "The word left of the ampersand, like the first half of a this-and-that title"
+      },
+      "Title End": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "The word right of the ampersand that completes the pair"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Small spaced line under the title that signs it with the business name"
+      }
+    },
+    "samples": {
+      "Title Start": "Flowers",
+      "Title End": "Friends",
+      "Company Name": "Willow & Co."
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/chalk-title.mp4"
   }
 }
