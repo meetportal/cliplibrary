@@ -6,6 +6,7 @@ import type { AppIconRevealProps } from './clips/brand/app-icon-reveal';
 import type { ArcBurstWordmarkProps } from './clips/brand/arc-burst-wordmark';
 import type { BrandRevealProps } from './clips/brand/brand-reveal';
 import type { ChevronMarkAssembleProps } from './clips/brand/chevron-mark-assemble';
+import type { CtaEndCardProps } from './clips/brand/cta-end-card';
 import type { DotMorphWordmarkProps } from './clips/brand/dot-morph-wordmark';
 import type { DotRingLogoRevealProps } from './clips/brand/dot-ring-logo-reveal';
 import type { ChalkBadgeProps } from './clips/hand-drawn/chalk-badge';
@@ -41,6 +42,7 @@ export interface ClipPropsMap {
   'burning-paper-reveal': BurningPaperRevealProps;
   'crumpled-paper-reveal': CrumpledPaperRevealProps;
   'brand-reveal': BrandRevealProps;
+  'cta-end-card': CtaEndCardProps;
   'botanical-save-the-date': BotanicalSaveTheDateProps;
   'chalk-badge': ChalkBadgeProps;
   'chalk-badge-grid': ChalkBadgeGridProps;
