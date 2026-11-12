@@ -22,6 +22,7 @@ export * from './clips/invitations/botanical-save-the-date';
 export * from './clips/invitations/gold-monogram-invite';
 export * from './clips/kinetic-type/anniversary-kinetic';
 export * from './clips/kinetic-type/branding-is-ticker';
+export * from './clips/kinetic-type/chunky-type-stack';
 export * from './clips/kinetic-type/coming-soon-flips';
 export * from './clips/kinetic-type/domino-words';
 export * from './clips/kinetic-type/text-rings';

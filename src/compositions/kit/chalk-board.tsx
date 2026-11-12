@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { mixLab, unitRgb } from './color';
+import { mixLab, unitRgb } from './lab-color';
 
 type BoardProps = {
   width: number;

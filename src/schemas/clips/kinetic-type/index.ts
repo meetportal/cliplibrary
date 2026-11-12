@@ -12,6 +12,12 @@ import {
 } from './branding-is-ticker';
 import { brandingIsTickerControls } from './branding-is-ticker-controls';
 import {
+  chunkyTypeStackDefaults,
+  chunkyTypeStackMeta,
+  chunkyTypeStackSchema,
+} from './chunky-type-stack';
+import { chunkyTypeStackControls } from './chunky-type-stack-controls';
+import {
   comingSoonFlipsDefaults,
   comingSoonFlipsMeta,
   comingSoonFlipsSchema,
@@ -36,6 +42,13 @@ export const kineticTypeClips: ClipModule[] = [
     defaults: brandingIsTickerDefaults,
     meta: brandingIsTickerMeta,
     controls: brandingIsTickerControls,
+  },
+  {
+    id: 'chunky-type-stack',
+    schema: chunkyTypeStackSchema,
+    defaults: chunkyTypeStackDefaults,
+    meta: chunkyTypeStackMeta,
+    controls: chunkyTypeStackControls,
   },
   {
     id: 'coming-soon-flips',
