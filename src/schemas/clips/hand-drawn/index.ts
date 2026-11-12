@@ -1,6 +1,12 @@
 import type { ClipModule } from '../../registry';
 import { chalkBadgeDefaults, chalkBadgeMeta, chalkBadgeSchema } from './chalk-badge';
 import { chalkBadgeControls } from './chalk-badge-controls';
+import {
+  chalkBadgeGridDefaults,
+  chalkBadgeGridMeta,
+  chalkBadgeGridSchema,
+} from './chalk-badge-grid';
+import { chalkBadgeGridControls } from './chalk-badge-grid-controls';
 
 export const handDrawnClips: ClipModule[] = [
   {
@@ -9,5 +15,12 @@ export const handDrawnClips: ClipModule[] = [
     defaults: chalkBadgeDefaults,
     meta: chalkBadgeMeta,
     controls: chalkBadgeControls,
+  },
+  {
+    id: 'chalk-badge-grid',
+    schema: chalkBadgeGridSchema,
+    defaults: chalkBadgeGridDefaults,
+    meta: chalkBadgeGridMeta,
+    controls: chalkBadgeGridControls,
   },
 ];
