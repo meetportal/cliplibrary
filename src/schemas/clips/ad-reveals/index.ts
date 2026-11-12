@@ -17,6 +17,12 @@ import {
   burningPaperRevealSchema,
 } from './burning-paper-reveal';
 import { burningPaperRevealControls } from './burning-paper-reveal-controls';
+import {
+  crumpledPaperRevealDefaults,
+  crumpledPaperRevealMeta,
+  crumpledPaperRevealSchema,
+} from './crumpled-paper-reveal';
+import { crumpledPaperRevealControls } from './crumpled-paper-reveal-controls';
 
 export const adRevealsClips: ClipModule[] = [
   {
@@ -39,5 +45,12 @@ export const adRevealsClips: ClipModule[] = [
     defaults: burningPaperRevealDefaults,
     meta: burningPaperRevealMeta,
     controls: burningPaperRevealControls,
+  },
+  {
+    id: 'crumpled-paper-reveal',
+    schema: crumpledPaperRevealSchema,
+    defaults: crumpledPaperRevealDefaults,
+    meta: crumpledPaperRevealMeta,
+    controls: crumpledPaperRevealControls,
   },
 ];
