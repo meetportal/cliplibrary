@@ -3448,5 +3448,159 @@
       "Company Name": "Willow & Co."
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/chalk-title.mp4"
+  },
+  "charge-compare": {
+    "summary": "On a dark navy backdrop a logo on a light plate sits in the top corner over a bold two-tone headline, 'YOUR REVENUE', and two dark phone outlines labelled GOING SOLO and TEAMED UP. White USB-C cables rise from the bottom and plug into both phones, a battery wakes on each screen and the left one sticks at a red 8% with a weak flickering bolt while the right one charges from red through orange and yellow to full in the brand colour, its percentage counting to 100 and a soft glow growing behind it. The comparison then drops away and the corner logo glides to the centre and grows; the company name lights up letter by letter beneath it, a mono tagline rises in and the website types into a pill with an arrow button, and the end card holds before dimming into the loop.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "logo in the corner, headline, two labels and two dark phones fade up"
+      },
+      {
+        "at": 0.6,
+        "what": "two white charging cables rise from the bottom edge"
+      },
+      {
+        "at": 1.8,
+        "what": "the plugs seat in both phones and a battery wakes on each screen"
+      },
+      {
+        "at": 2.1,
+        "what": "the right battery starts charging; the left one stays at 8% with a flickering bolt"
+      },
+      {
+        "at": 3.0,
+        "what": "the right battery passes orange and yellow while its glow grows"
+      },
+      {
+        "at": 4.0,
+        "what": "100%: the right battery is full in the brand colour, its bolt pops and a ring pulses out"
+      },
+      {
+        "at": 4.6,
+        "what": "the comparison drops away and the corner logo glides to the centre and grows"
+      },
+      {
+        "at": 5.5,
+        "what": "the company name lights up letter by letter under the logo"
+      },
+      {
+        "at": 5.8,
+        "what": "the tagline rises in and the website pill opens"
+      },
+      {
+        "at": 6.3,
+        "what": "the website types into the pill"
+      },
+      {
+        "at": 6.9,
+        "what": "the finished end card holds while the logo glow breathes and a spark circles the plate"
+      },
+      {
+        "at": 8.5,
+        "what": "the end card dims slightly so the loop returns to the opening fade"
+      }
+    ],
+    "visuals": [
+      "two dark phone outlines side by side",
+      "battery icons with segmented fill",
+      "percentage readouts",
+      "white USB-C charging cables",
+      "bold two-tone capital headline",
+      "logo on a light plate with a gradient ring",
+      "light lowercase company name",
+      "tracked mono tagline",
+      "website pill with arrow button"
+    ],
+    "motion": [
+      "cables rise and plug in",
+      "battery charge with colour sweep",
+      "counter",
+      "flickering bolt",
+      "glow grows",
+      "comparison drops away",
+      "logo glides to centre and grows",
+      "letter by letter light up",
+      "typing"
+    ],
+    "mood": ["confident", "modern", "clean", "persuasive"],
+    "roles": ["feature", "closer", "cta"],
+    "useCases": [
+      "agency or consultancy ad",
+      "before and after comparison",
+      "partnership pitch",
+      "growth or performance marketing promo",
+      "story ad ending on the website"
+    ],
+    "editable": [
+      "logo",
+      "company name",
+      "highlighted headline word and first word",
+      "phone labels",
+      "tagline",
+      "website",
+      "primary and secondary colours",
+      "low charge colour",
+      "text and background colours",
+      "battery levels and percentages",
+      "charge length and timing",
+      "sizes of every text",
+      "logo plate and its growth"
+    ],
+    "palette": ["#090c1b", "#5ee6c0", "#6a8cff", "#ff4d5e", "#eef0ff"],
+    "keywords": [
+      "charging",
+      "battery",
+      "phone",
+      "comparison",
+      "before and after",
+      "side by side",
+      "solo vs team",
+      "growth",
+      "revenue",
+      "agency",
+      "partnership",
+      "power up",
+      "percentage",
+      "logo end card",
+      "website",
+      "vertical story"
+    ],
+    "concept": "A side by side of two phones: going solo, the battery is stuck nearly empty, while teamed up with the company it charges to full in the brand colour under 'your revenue'. Then the corner logo glides forward and the end card names the company, says how it helps and gives the website. Confident and simple: the headline names what grows, the tagline says how.",
+    "needs": ["logo", "company name", "highlighted word", "tagline", "website"],
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; starts in the top corner on a light plate, then glides to the centre of the end card"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Name that lights up under the logo on the end card"
+      },
+      "Metric": {
+        "kind": "text",
+        "maxChars": 16,
+        "hint": "The one word that grows when people work with you, after 'Your' in the headline (Revenue, Bookings, Reach)"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 48,
+        "hint": "One line under the name on the end card that says how you help; wraps to two lines"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Types into the pill button at the bottom of the end card"
+      }
+    },
+    "samples": {
+      "Logo": "design-assets/logos/willow-square.png",
+      "Company Name": "Willow & Co.",
+      "Metric": "Revenue",
+      "Tagline": "Recharge your growth with our team",
+      "Website": "willowandco.com"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/charge-compare.mp4"
   }
 }

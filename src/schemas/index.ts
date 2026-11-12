@@ -27,6 +27,7 @@ export * from './clips/kinetic-type/domino-words';
 export * from './clips/kinetic-type/text-rings';
 export * from './clips/list-pickers/pill-fan';
 export * from './clips/list-pickers/word-picker';
+export * from './clips/phone-layouts/charge-compare';
 export * from './clips/phone-reveals/phone-spin-in';
 export * from './clips/text-reveals/magnifier-caption';
 export * from './clips/text-reveals/neon-sign-flicker';

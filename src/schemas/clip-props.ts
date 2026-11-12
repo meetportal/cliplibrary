@@ -21,6 +21,7 @@ import type { DominoWordsProps } from './clips/kinetic-type/domino-words';
 import type { TextRingsProps } from './clips/kinetic-type/text-rings';
 import type { PillFanProps } from './clips/list-pickers/pill-fan';
 import type { WordPickerProps } from './clips/list-pickers/word-picker';
+import type { ChargeCompareProps } from './clips/phone-layouts/charge-compare';
 import type { PhoneSpinInProps } from './clips/phone-reveals/phone-spin-in';
 import type { MagnifierCaptionProps } from './clips/text-reveals/magnifier-caption';
 import type { NeonSignFlickerProps } from './clips/text-reveals/neon-sign-flicker';
@@ -40,6 +41,7 @@ export interface ClipPropsMap {
   'chalk-badge-grid': ChalkBadgeGridProps;
   'chalk-badges-reel': ChalkBadgesReelProps;
   'chalk-title': ChalkTitleProps;
+  'charge-compare': ChargeCompareProps;
   'chevron-mark-assemble': ChevronMarkAssembleProps;
   'coming-soon-flips': ComingSoonFlipsProps;
   'domino-words': DominoWordsProps;
