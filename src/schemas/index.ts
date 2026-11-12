@@ -13,6 +13,7 @@ export * from './clips/brand/brand-reveal';
 export * from './clips/brand/chevron-mark-assemble';
 export * from './clips/brand/dot-morph-wordmark';
 export * from './clips/brand/dot-ring-logo-reveal';
+export * from './clips/hand-drawn/chalk-badge';
 export * from './clips/invitations/arch-save-the-date';
 export * from './clips/invitations/botanical-save-the-date';
 export * from './clips/invitations/gold-monogram-invite';
