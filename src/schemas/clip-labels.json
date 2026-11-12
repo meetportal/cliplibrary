@@ -2967,5 +2967,180 @@
       "Logo": "design-assets/logos/willow-wide.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/chalk-badge.mp4"
+  },
+  "chalk-badge-grid": {
+    "summary": "A green chalkboard with a faint dotted grid fills with a sticker sheet of twelve chalk-lettered badges in a four by three grid. The logo appears first on a light plate under three yellow sparkles, then the company name on a blue ribbon in the middle, then ten short words chalk in one after another in reading order, each in its own style: a script word with a looping swoosh and pink sparkles, hand-lettered capitals between yellow lines, bold capitals on lavender tape, block capitals in a blue frame, a warm script word under an arc, capitals on a coral starburst, capitals in a ring with pink rays, a script word in a yellow speech bubble, capitals on a lavender arrow tag and a blue script word with motion dashes. The sheet holds while sparkles twinkle, rays breathe and a soft light drifts over the board, then the words wipe away in reading order and the ribbon last, while the logo stays on its plate so the loop comes back around it.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the logo already sits on its light plate in the bottom right under three twinkling yellow sparkles"
+      },
+      {
+        "at": 0.1,
+        "what": "the blue ribbon unrolls in the middle and the company name is written on it"
+      },
+      {
+        "at": 0.2,
+        "what": "ten word badges chalk in one after another in reading order: strokes draw, tape and tags fill from the left, the starburst spins in, then each word is written with a soft left to right wipe"
+      },
+      {
+        "at": 2.1,
+        "what": "the full sheet holds while sparkles twinkle, the sun rays breathe, the motion dashes flick and a soft light drifts over the board"
+      },
+      {
+        "at": 4.9,
+        "what": "the words are wiped away in reading order, strokes retract and shapes shrink"
+      },
+      {
+        "at": 5.9,
+        "what": "the ribbon is erased last, leaving the logo alone on the clean board as the loop comes back around"
+      }
+    ],
+    "visuals": [
+      "green chalkboard with a dotted grid and smudges",
+      "twelve chalk badges in a four by three grid",
+      "company name on a blue ribbon",
+      "logo on a light plate with yellow sparkles",
+      "script words with swoosh, arc, bubble and dashes",
+      "capitals on lavender tape, arrow tag, coral starburst, ring with rays and a blue frame"
+    ],
+    "motion": [
+      "staggered chalk draw-on",
+      "soft left to right write wipe",
+      "stroke draw",
+      "tape and tag fill",
+      "starburst spin pop",
+      "twinkling sparkles",
+      "breathing rays",
+      "drifting light",
+      "erase in reading order"
+    ],
+    "mood": ["playful", "handmade", "friendly", "cheerful", "crafty"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "shop or cafe brand board",
+      "what we offer or our values list",
+      "school, class or workshop intro",
+      "social post with brand keywords",
+      "menu board or market stall sign",
+      "sticker or lettering pack promo"
+    ],
+    "editable": [
+      "company name",
+      "logo",
+      "ten badge words",
+      "starburst, warm script, sparkle and ray colours",
+      "tape and arrow tag colour",
+      "ribbon, frame and yellow line colours",
+      "chalk and dark letter colours",
+      "board, edge and grid colours",
+      "logo plate colour and on or off",
+      "badge size, column and row spacing, logo size",
+      "ornaments on or off and twinkle",
+      "chalk grain, grid, smudges and light drift",
+      "draw time, stagger and the wipe at the end",
+      "chalkboard on or off"
+    ],
+    "palette": ["#36524a", "#ec7a62", "#c0b2ea", "#a9d3e8", "#e9d27c", "#eef5ee"],
+    "keywords": [
+      "chalk",
+      "chalkboard",
+      "blackboard",
+      "badges",
+      "stickers",
+      "lettering",
+      "hand lettering",
+      "word grid",
+      "sticker sheet",
+      "tape label",
+      "starburst",
+      "ribbon",
+      "speech bubble",
+      "sparkle",
+      "cafe",
+      "menu board",
+      "school",
+      "brand board",
+      "keywords",
+      "values"
+    ],
+    "concept": "A sticker sheet of chalk-lettered badges fills a gridded chalkboard one badge at a time, each word in its own lettering style, so the board reads like a hand-lettered brand sampler: logo and name land first, then ten short words in reading order, hold to be read, and wipe clean around the logo, which stays for the whole loop. The copy is ten short, upbeat single words about the brand, what it offers or how it feels.",
+    "needs": ["logo", "company name", "ten short words"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name on the blue ribbon in the middle of the board; long names shrink to fit"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; sits on a light plate in the bottom right badge"
+      },
+      "Word 1": {
+        "kind": "text",
+        "maxChars": 12,
+        "hint": "Script word top left, underlined with a swoosh that curls into a loop"
+      },
+      "Word 2": {
+        "kind": "text",
+        "maxChars": 12,
+        "hint": "Hand-lettered capitals between yellow lines, second badge on the top row"
+      },
+      "Word 3": {
+        "kind": "text",
+        "maxChars": 12,
+        "hint": "Bold capitals on a lavender tape label, top row"
+      },
+      "Word 4": {
+        "kind": "text",
+        "maxChars": 10,
+        "hint": "Block capitals in a blue hand-drawn frame, top right"
+      },
+      "Word 5": {
+        "kind": "text",
+        "maxChars": 12,
+        "hint": "Warm script word under a chalk arc, middle row left"
+      },
+      "Word 6": {
+        "kind": "text",
+        "maxChars": 6,
+        "hint": "Bold capitals on the starburst; short words read best"
+      },
+      "Word 7": {
+        "kind": "text",
+        "maxChars": 5,
+        "hint": "Hand-lettered capitals inside the ring with rays; short words read best"
+      },
+      "Word 8": {
+        "kind": "text",
+        "maxChars": 10,
+        "hint": "Script word in the yellow speech bubble, bottom left"
+      },
+      "Word 9": {
+        "kind": "text",
+        "maxChars": 10,
+        "hint": "Bold capitals on the lavender arrow tag, bottom row"
+      },
+      "Word 10": {
+        "kind": "text",
+        "maxChars": 12,
+        "hint": "Blue script word with motion dashes on both sides, bottom row"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png",
+      "Word 1": "fresh",
+      "Word 2": "local",
+      "Word 3": "bloom",
+      "Word 4": "wild",
+      "Word 5": "petals",
+      "Word 6": "new",
+      "Word 7": "joy",
+      "Word 8": "hello",
+      "Word 9": "shop",
+      "Word 10": "sweet"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/chalk-badge-grid.mp4"
   }
 }
