@@ -2717,5 +2717,138 @@
       "Logo": "design-assets/logos/willow-round.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/branding-is-ticker.mp4"
+  },
+  "burning-paper-reveal": {
+    "summary": "A hand reaches in from the lower left holding up an off-white paper card with a thin inner border against a folded teal, mint and slate backdrop. A flame runs across the card from left to right in reverse, leaving whole paper behind its charred, glowing edge, so a handwritten intro line, a big serif headline with a hand-drawn underline, a handwritten accent line and a logo with the company name in spaced capitals appear as it passes. Sparks and a thin wisp of smoke rise from the tall flames while the backdrop eases back behind the card; once the paper is whole the flame shrinks on the right edge, dies out and the finished card holds.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the card already a third there, cut at a charred glowing edge with tall flames rising above it and a thin wisp of smoke from the flame tip, the first letters of the headline showing"
+      },
+      {
+        "at": 1.0,
+        "what": "the flame crosses the card at a steady pace, writing the headline letter by letter while sparks fly up and the backdrop eases back"
+      },
+      {
+        "at": 3.0,
+        "what": "the logo and the company name are complete along the bottom of the card"
+      },
+      {
+        "at": 3.5,
+        "what": "the handwritten accent line starts to appear under the underline"
+      },
+      {
+        "at": 5.0,
+        "what": "the headline is whole and the accent line finishes as the flame nears the right edge"
+      },
+      {
+        "at": 6.0,
+        "what": "the paper is whole; the flame sits on the right edge and slowly shrinks while the char fades and smoke wisps rise"
+      },
+      {
+        "at": 10.0,
+        "what": "the fire is out and the finished card holds"
+      }
+    ],
+    "visuals": [
+      "hand holding a paper card",
+      "off-white card with a thin inner border and paper grain",
+      "handwritten intro line and accent line in the brand colour",
+      "big serif headline with a hand-drawn underline",
+      "logo beside the company name in spaced capitals",
+      "tall flames on a charred glowing edge",
+      "sparks and smoke rising",
+      "folded teal, mint and slate backdrop"
+    ],
+    "motion": [
+      "reverse burn reveal from left to right",
+      "flickering flames",
+      "rising sparks and smoke",
+      "slow backdrop pull back",
+      "fire dying out"
+    ],
+    "mood": ["bold", "warm", "playful", "dramatic", "crafted"],
+    "roles": ["opener", "feature", "closer", "cta"],
+    "useCases": [
+      "social media ad or campaign launch",
+      "marketing agency or content studio promo",
+      "hot deal or limited offer announcement",
+      "new product or service reveal",
+      "story ad that signs off with the logo"
+    ],
+    "editable": [
+      "intro line",
+      "headline",
+      "accent line",
+      "company name",
+      "logo",
+      "brand accent colour",
+      "headline and name colour",
+      "paper and border colour",
+      "backdrop colours",
+      "headline, handwriting and name sizes",
+      "logo size and plate",
+      "burn time, start point, edge slant and raggedness",
+      "flame height, glow, sparks and smoke",
+      "flame and smoke colours",
+      "hand on or off, skin, bracelet and sleeve colours",
+      "backdrop pull back and card tilt",
+      "background on or off"
+    ],
+    "palette": ["#e0583a", "#1c2333", "#efebe2", "#1e5e5f", "#a0c6b7", "#26314a"],
+    "keywords": [
+      "burning paper",
+      "fire",
+      "flame",
+      "burn reveal",
+      "reverse burn",
+      "paper card",
+      "hand holding card",
+      "sparks",
+      "smoke",
+      "hot",
+      "catch fire",
+      "social media ad",
+      "headline reveal",
+      "serif",
+      "handwritten",
+      "promo"
+    ],
+    "concept": "The ad un-burns into place: a flame runs across a card held up to the viewer and leaves whole paper behind it, so the headline is read letter by letter as the fire writes it and the brand signs off at the bottom. The eye rides the flame from the first letter to the accent line, and the copy is short and hot: a handwritten setup, one big word, and a playful payoff.",
+    "needs": ["logo", "company name", "headline intro", "headline", "headline accent"],
+    "placeholders": {
+      "Headline Intro": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "Short handwritten setup above the headline, like the start of a sentence"
+      },
+      "Headline": {
+        "kind": "text",
+        "maxChars": 12,
+        "hint": "One big word or two at the heart of the card; it shrinks to stay on one line"
+      },
+      "Headline Accent": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "Handwritten payoff under the headline that finishes the sentence"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Name in spaced capitals beside the logo along the bottom of the card"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; sits at the bottom left of the card"
+      }
+    },
+    "samples": {
+      "Headline Intro": "Make Every",
+      "Headline": "Launch",
+      "Headline Accent": "catch fire",
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/burning-paper-reveal.mp4"
   }
 }

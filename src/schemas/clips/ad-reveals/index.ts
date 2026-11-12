@@ -11,6 +11,12 @@ import {
   billboardReaderSchema,
 } from './billboard-reader';
 import { billboardReaderControls } from './billboard-reader-controls';
+import {
+  burningPaperRevealDefaults,
+  burningPaperRevealMeta,
+  burningPaperRevealSchema,
+} from './burning-paper-reveal';
+import { burningPaperRevealControls } from './burning-paper-reveal-controls';
 
 export const adRevealsClips: ClipModule[] = [
   {
@@ -26,5 +32,12 @@ export const adRevealsClips: ClipModule[] = [
     defaults: billboardReaderDefaults,
     meta: billboardReaderMeta,
     controls: billboardReaderControls,
+  },
+  {
+    id: 'burning-paper-reveal',
+    schema: burningPaperRevealSchema,
+    defaults: burningPaperRevealDefaults,
+    meta: burningPaperRevealMeta,
+    controls: burningPaperRevealControls,
   },
 ];

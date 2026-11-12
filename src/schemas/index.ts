@@ -6,6 +6,7 @@ export * from './clip-updated-at';
 export * from './clips';
 export * from './clips/ad-reveals/battery-charge-success';
 export * from './clips/ad-reveals/billboard-reader';
+export * from './clips/ad-reveals/burning-paper-reveal';
 export * from './clips/brand/app-icon-reveal';
 export * from './clips/brand/arc-burst-wordmark';
 export * from './clips/brand/brand-reveal';
