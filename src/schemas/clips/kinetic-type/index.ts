@@ -17,6 +17,8 @@ import {
   chunkyTypeStackSchema,
 } from './chunky-type-stack';
 import { chunkyTypeStackControls } from './chunky-type-stack-controls';
+import { circlePopDefaults, circlePopMeta, circlePopSchema } from './circle-pop';
+import { circlePopControls } from './circle-pop-controls';
 import {
   comingSoonFlipsDefaults,
   comingSoonFlipsMeta,
@@ -49,6 +51,13 @@ export const kineticTypeClips: ClipModule[] = [
     defaults: chunkyTypeStackDefaults,
     meta: chunkyTypeStackMeta,
     controls: chunkyTypeStackControls,
+  },
+  {
+    id: 'circle-pop',
+    schema: circlePopSchema,
+    defaults: circlePopDefaults,
+    meta: circlePopMeta,
+    controls: circlePopControls,
   },
   {
     id: 'coming-soon-flips',

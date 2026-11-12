@@ -17,6 +17,7 @@ import type { GoldMonogramInviteProps } from './clips/invitations/gold-monogram-
 import type { AnniversaryKineticProps } from './clips/kinetic-type/anniversary-kinetic';
 import type { BrandingIsTickerProps } from './clips/kinetic-type/branding-is-ticker';
 import type { ChunkyTypeStackProps } from './clips/kinetic-type/chunky-type-stack';
+import type { CirclePopProps } from './clips/kinetic-type/circle-pop';
 import type { ComingSoonFlipsProps } from './clips/kinetic-type/coming-soon-flips';
 import type { DominoWordsProps } from './clips/kinetic-type/domino-words';
 import type { TextRingsProps } from './clips/kinetic-type/text-rings';
@@ -46,6 +47,7 @@ export interface ClipPropsMap {
   'chevron-mark-assemble': ChevronMarkAssembleProps;
   'coming-soon-flips': ComingSoonFlipsProps;
   'chunky-type-stack': ChunkyTypeStackProps;
+  'circle-pop': CirclePopProps;
   'domino-words': DominoWordsProps;
   'dot-morph-wordmark': DotMorphWordmarkProps;
   'dot-ring-logo-reveal': DotRingLogoRevealProps;
