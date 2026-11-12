@@ -29,6 +29,12 @@ import {
   dotRingLogoRevealSchema,
 } from './dot-ring-logo-reveal';
 import { dotRingLogoRevealControls } from './dot-ring-logo-reveal-controls';
+import {
+  dotWordmarkRevealDefaults,
+  dotWordmarkRevealMeta,
+  dotWordmarkRevealSchema,
+} from './dot-wordmark-reveal';
+import { dotWordmarkRevealControls } from './dot-wordmark-reveal-controls';
 
 export const brandClips: ClipModule[] = [
   {
@@ -79,5 +85,12 @@ export const brandClips: ClipModule[] = [
     defaults: dotRingLogoRevealDefaults,
     meta: dotRingLogoRevealMeta,
     controls: dotRingLogoRevealControls,
+  },
+  {
+    id: 'dot-wordmark-reveal',
+    schema: dotWordmarkRevealSchema,
+    defaults: dotWordmarkRevealDefaults,
+    meta: dotWordmarkRevealMeta,
+    controls: dotWordmarkRevealControls,
   },
 ];
