@@ -1,6 +1,7 @@
 import type { BatteryChargeSuccessProps } from './clips/ad-reveals/battery-charge-success';
 import type { BillboardReaderProps } from './clips/ad-reveals/billboard-reader';
 import type { BurningPaperRevealProps } from './clips/ad-reveals/burning-paper-reveal';
+import type { CrumpledPaperRevealProps } from './clips/ad-reveals/crumpled-paper-reveal';
 import type { AppIconRevealProps } from './clips/brand/app-icon-reveal';
 import type { ArcBurstWordmarkProps } from './clips/brand/arc-burst-wordmark';
 import type { BrandRevealProps } from './clips/brand/brand-reveal';
@@ -38,6 +39,7 @@ export interface ClipPropsMap {
   'battery-charge-success': BatteryChargeSuccessProps;
   'billboard-reader': BillboardReaderProps;
   'burning-paper-reveal': BurningPaperRevealProps;
+  'crumpled-paper-reveal': CrumpledPaperRevealProps;
   'brand-reveal': BrandRevealProps;
   'botanical-save-the-date': BotanicalSaveTheDateProps;
   'chalk-badge': ChalkBadgeProps;
