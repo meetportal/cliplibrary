@@ -44,15 +44,41 @@ export const toLab = (color: string): Lab => {
   };
 };
 
-export const fromLab = ({ l, a, b }: Lab): string => {
+const linearRgb = ({ l, a, b }: Lab): number[] => {
   const lc = (l + 0.3963377774 * a + 0.2158037573 * b) ** 3;
   const mc = (l - 0.1055613458 * a - 0.0638541728 * b) ** 3;
   const sc = (l - 0.0894841775 * a - 1.291485548 * b) ** 3;
-  const rgb = [
+  return [
     4.0767416621 * lc - 3.3077115913 * mc + 0.2309699292 * sc,
     -1.2684380046 * lc + 2.6097574011 * mc - 0.3413193965 * sc,
     -0.0041960863 * lc - 0.7034186147 * mc + 1.707614701 * sc,
   ];
+};
+
+const GAMUT_SLACK = 0.001;
+
+const inGamut = (lab: Lab) =>
+  linearRgb(lab).every((value) => value >= -GAMUT_SLACK && value <= 1 + GAMUT_SLACK);
+
+export const fitGamut = (lab: Lab): Lab => {
+  if (inGamut(lab)) {
+    return lab;
+  }
+  let low = 0;
+  let high = 1;
+  for (let step = 0; step < 16; step++) {
+    const middle = (low + high) / 2;
+    if (inGamut({ l: lab.l, a: lab.a * middle, b: lab.b * middle })) {
+      low = middle;
+    } else {
+      high = middle;
+    }
+  }
+  return { l: lab.l, a: lab.a * low, b: lab.b * low };
+};
+
+export const fromLab = (lab: Lab): string => {
+  const rgb = linearRgb(lab);
   return `#${rgb.map((value) => fromLinear(value).toString(16).padStart(2, '0')).join('')}`;
 };
 
