@@ -2850,5 +2850,122 @@
       "Logo": "design-assets/logos/willow-square.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/burning-paper-reveal.mp4"
+  },
+  "chalk-badge": {
+    "summary": "A dark green chalkboard with a faint dotted grid. A spaced-capital tagline types in along the top while the company name is written left to right in a slanted brush script of grainy white chalk. A chalk swoosh draws under the name and curls into a small loop after the last letter, two four-point sparkles pop in at its top right in the brand colour, and the logo rises in on a soft rounded plate below. The sparkles twinkle, chalk dust drifts and a soft light circles over the board while it holds, then the board is wiped clean from left to right.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the empty gridded chalkboard; the tagline starts typing in at the top"
+      },
+      {
+        "at": 0.2,
+        "what": "the name is written in chalk from left to right behind a soft slanted edge"
+      },
+      {
+        "at": 0.7,
+        "what": "the swoosh draws under the name and curls into a small loop after the last letter"
+      },
+      {
+        "at": 1.3,
+        "what": "two sparkles pop in at the top right of the name in the brand colour"
+      },
+      {
+        "at": 1.5,
+        "what": "the logo rises in on its rounded plate under the name"
+      },
+      {
+        "at": 2.1,
+        "what": "the finished badge holds while the sparkles twinkle, chalk dust drifts up and a soft light circles slowly over the board"
+      },
+      {
+        "at": 4.9,
+        "what": "the board is wiped clean from left to right, ready to loop"
+      }
+    ],
+    "visuals": [
+      "green chalkboard with a dotted grid and smudges",
+      "company name in brush script chalk",
+      "chalk swoosh underline with a loop",
+      "two four-point sparkles in the brand colour",
+      "spaced capital tagline at the top",
+      "logo on a rounded plate"
+    ],
+    "motion": [
+      "chalk write-on wipe",
+      "stroke draw",
+      "sparkle pop and twinkle",
+      "drifting chalk dust",
+      "typed tagline",
+      "left to right erase"
+    ],
+    "mood": ["playful", "friendly", "handmade", "warm", "casual"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "school, class or workshop intro",
+      "cafe, bakery or shop name card",
+      "small business logo sting",
+      "social post opener with the brand name",
+      "menu board or special of the day title"
+    ],
+    "editable": [
+      "company name",
+      "tagline",
+      "logo",
+      "sparkle colour",
+      "chalk colour",
+      "board and grid colours",
+      "logo plate colour",
+      "handwriting font",
+      "name and tagline sizes",
+      "underline, loop and sparkles on or off",
+      "sparkle size and twinkle",
+      "chalk dust, grain, grid, smudges and light drift",
+      "writing time and the erase at the end",
+      "chalkboard on or off"
+    ],
+    "palette": ["#2b463f", "#192f2a", "#e9f0ea", "#f2a4bc", "#55716a"],
+    "keywords": [
+      "chalk",
+      "chalkboard",
+      "blackboard",
+      "handwritten",
+      "brush script",
+      "underline",
+      "swoosh",
+      "sparkle",
+      "school",
+      "classroom",
+      "cafe",
+      "menu board",
+      "logo sting",
+      "name reveal",
+      "write on",
+      "erase"
+    ],
+    "concept": "A name written in chalk on a gridded board, underlined with one confident swoosh that ends in a playful loop and winked at by two sparkles, so the brand lands like a teacher's favourite word. It is quick to read, warm and casual, signs off with the logo and wipes clean like a real board.",
+    "needs": ["company name", "tagline", "logo"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The name written big in chalk script in the middle; it shrinks to stay on one line"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 44,
+        "hint": "A short line in spaced capitals at the top, like what you do or two things joined with a slash"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; sits on a light plate under the name"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Tagline": "Fresh flowers  /  Floral workshops",
+      "Logo": "design-assets/logos/willow-wide.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/chalk-badge.mp4"
   }
 }
