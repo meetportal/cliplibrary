@@ -15,6 +15,7 @@ export * from './clips/brand/chevron-mark-assemble';
 export * from './clips/brand/cta-end-card';
 export * from './clips/brand/dot-morph-wordmark';
 export * from './clips/brand/dot-ring-logo-reveal';
+export * from './clips/brand/dot-wordmark-reveal';
 export * from './clips/hand-drawn/chalk-badge';
 export * from './clips/hand-drawn/chalk-badge-grid';
 export * from './clips/hand-drawn/chalk-badges-reel';
