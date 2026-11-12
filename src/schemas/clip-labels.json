@@ -3743,5 +3743,116 @@
       "Logo": "design-assets/logos/willow-wide.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/chunky-type-stack.mp4"
+  },
+  "circle-pop": {
+    "summary": "On a near-black stage a small off-white circle carrying the company name in bold, slightly tilted sans pops up to size with a thin coral ripple ring bursting out of it. Its edge softens into a seven-lobed blob that wobbles while the name holds, then the blob bursts outward and floods the whole screen in off-white as the name grows to fill the frame, stacked on two lines. A soft coral tinted blob blooms behind the big name, above a tagline rises in under it with a waving coral squiggle and the filled frame holds, then the tint and tagline clear and the field shrinks back through the wobbling blob to the small circle the clip starts on, so it loops.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a small off-white circle with the tilted company name already readable sits at the centre of a near-black frame"
+      },
+      {
+        "at": 0.1,
+        "what": "the circle pops up to twice its size with a slight overshoot while a thin coral ripple ring bursts out of it and thins away"
+      },
+      {
+        "at": 0.4,
+        "what": "the circle's edge softens into a wavy seven-lobed blob that keeps wobbling as the name holds still inside it"
+      },
+      {
+        "at": 1.67,
+        "what": "the blob bursts outward with growing lobes and floods the whole screen in off-white while the name grows to fill the frame"
+      },
+      {
+        "at": 2.2,
+        "what": "a soft coral tinted blob blooms behind the big name, the tagline rises in under it and a coral squiggle draws on"
+      },
+      {
+        "at": 2.9,
+        "what": "the filled frame holds: big tilted name on the wobbling coral tint, tagline and the waving squiggle"
+      },
+      {
+        "at": 4.73,
+        "what": "the tagline, squiggle and tint clear, then the screen shrinks back into the wobbling blob and down to the small circle of the first frame"
+      }
+    ],
+    "visuals": [
+      "vertical 9:16 frame",
+      "near-black background",
+      "off-white circle that becomes a wavy blob",
+      "bold tilted grotesk company name",
+      "thin coral ripple ring",
+      "full-screen off-white field",
+      "soft coral tinted blob behind the name, clear of the tagline",
+      "tagline in medium sans",
+      "waving coral squiggle line"
+    ],
+    "motion": [
+      "bubble pop with overshoot",
+      "ripple ring burst",
+      "wobbling blob edge",
+      "flood to full screen",
+      "text scale up",
+      "colour tint bloom",
+      "tagline rise",
+      "line draw on",
+      "shrink back loop"
+    ],
+    "mood": ["playful", "bold", "punchy", "minimal", "modern"],
+    "roles": ["opener", "closer", "transition"],
+    "useCases": [
+      "brand name intro",
+      "brand sting without a logo",
+      "instagram reel or story opener",
+      "product or shop launch teaser",
+      "end card with a tagline"
+    ],
+    "editable": [
+      "company name",
+      "tagline",
+      "primary, text, surface and background colours",
+      "name font and tilt",
+      "name size and height on screen",
+      "circle size, wobble, waves and echo blob",
+      "ripple ring on or off, thickness and reach",
+      "tagline size, gap and squiggle",
+      "pop, flood and shrink back timing"
+    ],
+    "palette": ["#050506", "#efeeea", "#0d0d0f", "#ff5a36", "#ffc7b5"],
+    "keywords": [
+      "circle",
+      "bubble",
+      "pop",
+      "blob",
+      "wobble",
+      "flood",
+      "fill screen",
+      "burst",
+      "ripple",
+      "name reveal",
+      "kinetic typography",
+      "vertical",
+      "loop",
+      "sticker"
+    ],
+    "concept": "The name sits in a little bubble that pops, comes alive as a wobbling blob and then bursts to flood the screen, so the name takes over the whole frame and lands with a short tagline. The copy is just the name and one friendly line: bold, playful and confident.",
+    "needs": ["company name", "tagline"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The name that pops in on the circle and then fills the screen; wraps to two or three lines when long"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 40,
+        "hint": "One short friendly line under the big name on the filled screen"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Tagline": "Fresh flowers, delivered every Friday"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/circle-pop.mp4"
   }
 }
