@@ -3983,5 +3983,129 @@
       "Item 6": "Workshops"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/color-pills.mp4"
+  },
+  "crumpled-paper-reveal": {
+    "summary": "A cream sheet of paper hangs on a sage wall in hard window light, printed with a logo, a big serif headline in capitals, a short rule and tagline in the brand colour and the company name in small spaced capitals. The sheet crumples into a faceted paper ball that turns and squeezes, then bursts open and settles flat with its creases left in, the print coming back one line after another. The finished sheet holds while the window light slowly drifts across its creases.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the finished crumpled sheet with logo, headline, tagline and name, tilted slightly on the wall"
+      },
+      {
+        "at": 0.4,
+        "what": "the edges fold in and the print fades as the sheet crumples and shrinks"
+      },
+      {
+        "at": 1.5,
+        "what": "a faceted paper ball turns and squeezes in the window light, its hard shadow on the wall"
+      },
+      {
+        "at": 2.2,
+        "what": "the ball bursts open, turning back as it spreads into a crumpled sheet"
+      },
+      {
+        "at": 2.8,
+        "what": "the headline prints back onto the flattened sheet, then the logo"
+      },
+      {
+        "at": 3.2,
+        "what": "the short rule grows with the tagline under the headline, then the company name at the bottom"
+      },
+      {
+        "at": 4.1,
+        "what": "the finished sheet holds while the light and window shadows drift"
+      }
+    ],
+    "visuals": [
+      "crumpled cream paper sheet with visible creases",
+      "faceted paper ball",
+      "sage wall with hard window frame shadows",
+      "hard drop shadow behind the paper",
+      "big condensed serif headline in capitals",
+      "short brand-colour rule and spaced-capital tagline",
+      "logo at the top and company name at the bottom"
+    ],
+    "motion": [
+      "crumple into a ball",
+      "ball squeeze and turn",
+      "burst open and unfold",
+      "print fading back in line by line",
+      "slow drifting window light"
+    ],
+    "mood": ["tactile", "calm", "crafted", "editorial", "teasing"],
+    "roles": ["opener", "closer", "cta", "feature"],
+    "useCases": [
+      "coming soon teaser",
+      "new collection or season announcement",
+      "product launch countdown",
+      "brand story or editorial post",
+      "event or opening announcement"
+    ],
+    "editable": [
+      "headline",
+      "tagline",
+      "company name",
+      "logo",
+      "brand accent colour",
+      "headline and name colour",
+      "paper colour",
+      "wall colour",
+      "headline in capitals or as typed",
+      "headline, tagline and name sizes",
+      "logo size and plate",
+      "crease depth",
+      "ball size and turn",
+      "sheet tilt",
+      "light drift and window shadows",
+      "background on or off"
+    ],
+    "palette": ["#9eaa8c", "#efe7d4", "#1e2438", "#b5562f", "#5f6b52"],
+    "keywords": [
+      "crumpled paper",
+      "paper ball",
+      "crumple",
+      "unfold",
+      "unfolding paper",
+      "creased paper",
+      "coming soon",
+      "almost here",
+      "teaser",
+      "announcement",
+      "serif headline",
+      "paper texture",
+      "window light",
+      "editorial",
+      "launch"
+    ],
+    "concept": "The message is hidden in a crumpled ball of paper: the sheet crumples, the ball bursts open and the creased page turns out to carry the news, so the reveal is the unfolding itself. The copy is a short teaser, a big serif line like an editorial cover, signed with the logo and the name, and the eye follows the ball to the headline.",
+    "needs": ["logo", "headline", "tagline", "company name"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "The big teaser line printed in the middle of the sheet, two or three words read best"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Short line in spaced capitals under the headline, such as the collection or the date"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Name in small spaced capitals along the bottom of the sheet"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; printed at the top of the sheet"
+      }
+    },
+    "samples": {
+      "Headline": "Almost here",
+      "Tagline": "The Autumn Edit",
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/crumpled-paper-reveal.mp4"
   }
 }
