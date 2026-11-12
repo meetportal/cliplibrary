@@ -3854,5 +3854,134 @@
       "Tagline": "Fresh flowers, delivered every Friday"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/circle-pop.mp4"
+  },
+  "color-pills": {
+    "summary": "On a pale lavender white with soft blue and violet corner tints, six rounded pills in plum, coral, jade, indigo, azure and ruby rise into a gently zigzagging column, each with a white bullet and a bold rounded label; the first pills are already rising as the clip opens. A small navy cursor dot drops in from above and walks down the column, and each pill it touches slides right, swells a little and lifts on a soft coloured shadow before easing back. The settled list then holds to the end while the pill glows breathe and the corner tints drift.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the first two pills are already rising into the top of the column on the pale backdrop"
+      },
+      {
+        "at": 0.1,
+        "what": "the other pills rise in one after another down the column, each in its own colour"
+      },
+      {
+        "at": 1.2,
+        "what": "a small navy cursor dot fades in above the list and glides down to the first pill"
+      },
+      {
+        "at": 1.6,
+        "what": "the cursor nudges the first pill, which slides right, swells and lifts on a soft shadow"
+      },
+      {
+        "at": 2.2,
+        "what": "the cursor walks down one pill every 0.6 s, each touched pill sliding out while the one before eases back"
+      },
+      {
+        "at": 4.6,
+        "what": "the last pill is nudged, then the cursor drops away below the list and fades"
+      },
+      {
+        "at": 5.3,
+        "what": "the settled zigzag column of six pills holds to the end, its glows gently breathing"
+      }
+    ],
+    "visuals": [
+      "vertical column of rounded colour pills",
+      "white bullet dot before each label",
+      "bold rounded sans labels",
+      "small navy cursor dot with a pale ring",
+      "soft coloured glow around each pill",
+      "pale lavender white backdrop with blue and violet corner tints"
+    ],
+    "motion": [
+      "staggered rise and fade in",
+      "cursor walking down a list",
+      "touched pill slides right and swells",
+      "soft lift shadow",
+      "breathing glow on the held list"
+    ],
+    "mood": ["playful", "bright", "friendly", "clean", "minimal"],
+    "roles": ["feature", "transition"],
+    "useCases": [
+      "services or menu rundown",
+      "product range or flavour list",
+      "feature list for a launch post",
+      "course or event agenda",
+      "tags or categories teaser"
+    ],
+    "editable": [
+      "six pill labels",
+      "number of pills from 2 to 7",
+      "primary colour that turns the whole pill palette",
+      "per-pill hue, lightness, vividness and zigzag offset",
+      "text and cursor colours",
+      "font, text size, bullet and pill size",
+      "cursor push, swell, lift and size",
+      "row spacing and position",
+      "corner tints and pill glow",
+      "timing of the rise and the cursor walk"
+    ],
+    "palette": ["#eef0fa", "#8e2dd2", "#fb574d", "#00a475", "#3031c2", "#1c2041"],
+    "keywords": [
+      "pills",
+      "tags",
+      "chips",
+      "list",
+      "picker",
+      "cursor",
+      "hover",
+      "colorful",
+      "rainbow",
+      "menu",
+      "services",
+      "categories",
+      "bullet list",
+      "playful"
+    ],
+    "concept": "A short list of colourful labels builds into a playful column, then a small cursor walks down it and nudges each pill aside in turn, so every item gets its own moment, like browsing tags or picking a flavour. The copy is six short, friendly items, held together as a finished list at the end.",
+    "needs": ["six short list items"],
+    "placeholders": {
+      "Item 1": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The first pill at the top, touched first by the cursor; one to three short words like a service, flavour or topic"
+      },
+      "Item 2": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The second pill, one to three short words"
+      },
+      "Item 3": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The third pill, one to three short words"
+      },
+      "Item 4": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The fourth pill, one to three short words"
+      },
+      "Item 5": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The fifth pill, one to three short words"
+      },
+      "Item 6": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The last pill at the bottom, touched last; one to three short words"
+      }
+    },
+    "samples": {
+      "Item 1": "Bouquets",
+      "Item 2": "Centerpieces",
+      "Item 3": "Floral arches",
+      "Item 4": "Installations",
+      "Item 5": "Weddings",
+      "Item 6": "Workshops"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/color-pills.mp4"
   }
 }
