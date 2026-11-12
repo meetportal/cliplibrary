@@ -19,6 +19,7 @@ export * from './clips/hand-drawn/chalk-badge';
 export * from './clips/hand-drawn/chalk-badge-grid';
 export * from './clips/hand-drawn/chalk-badges-reel';
 export * from './clips/hand-drawn/chalk-title';
+export * from './clips/hand-drawn/doodle-arrows';
 export * from './clips/invitations/arch-save-the-date';
 export * from './clips/invitations/botanical-save-the-date';
 export * from './clips/invitations/gold-monogram-invite';

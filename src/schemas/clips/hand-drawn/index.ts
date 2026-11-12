@@ -15,6 +15,8 @@ import {
 import { chalkBadgesReelControls } from './chalk-badges-reel-controls';
 import { chalkTitleDefaults, chalkTitleMeta, chalkTitleSchema } from './chalk-title';
 import { chalkTitleControls } from './chalk-title-controls';
+import { doodleArrowsDefaults, doodleArrowsMeta, doodleArrowsSchema } from './doodle-arrows';
+import { doodleArrowsControls } from './doodle-arrows-controls';
 
 export const handDrawnClips: ClipModule[] = [
   {
@@ -44,5 +46,12 @@ export const handDrawnClips: ClipModule[] = [
     defaults: chalkTitleDefaults,
     meta: chalkTitleMeta,
     controls: chalkTitleControls,
+  },
+  {
+    id: 'doodle-arrows',
+    schema: doodleArrowsSchema,
+    defaults: doodleArrowsDefaults,
+    meta: doodleArrowsMeta,
+    controls: doodleArrowsControls,
   },
 ];
