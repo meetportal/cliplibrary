@@ -16,6 +16,7 @@ import type { BotanicalSaveTheDateProps } from './clips/invitations/botanical-sa
 import type { GoldMonogramInviteProps } from './clips/invitations/gold-monogram-invite';
 import type { AnniversaryKineticProps } from './clips/kinetic-type/anniversary-kinetic';
 import type { BrandingIsTickerProps } from './clips/kinetic-type/branding-is-ticker';
+import type { ChunkyTypeStackProps } from './clips/kinetic-type/chunky-type-stack';
 import type { ComingSoonFlipsProps } from './clips/kinetic-type/coming-soon-flips';
 import type { DominoWordsProps } from './clips/kinetic-type/domino-words';
 import type { TextRingsProps } from './clips/kinetic-type/text-rings';
@@ -44,6 +45,7 @@ export interface ClipPropsMap {
   'charge-compare': ChargeCompareProps;
   'chevron-mark-assemble': ChevronMarkAssembleProps;
   'coming-soon-flips': ComingSoonFlipsProps;
+  'chunky-type-stack': ChunkyTypeStackProps;
   'domino-words': DominoWordsProps;
   'dot-morph-wordmark': DotMorphWordmarkProps;
   'dot-ring-logo-reveal': DotRingLogoRevealProps;

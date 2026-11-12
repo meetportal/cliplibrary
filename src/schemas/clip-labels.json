@@ -3602,5 +3602,146 @@
       "Website": "willowandco.com"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/charge-compare.mp4"
+  },
+  "chunky-type-stack": {
+    "summary": "A dark green chalkboard with a faint grid where four short lines of chunky cream poster capitals pop in letter by letter as a stepped staircase, the second line biggest, and a coral underline draws under the last line as it types. The stack holds, then every letter shrinks to a dot in a left to right sweep, line after line, a big coral ampersand pops up in the middle and shrinks away, and the company name pops in letter by letter over its own coral underline. The logo sits on a cream plate below the type from the first frame to the last.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the end card from the loop, company name over its underline, shrinks away letter by letter from the left"
+      },
+      {
+        "at": 0.33,
+        "what": "line 1 pops in letter by letter in chunky cream capitals"
+      },
+      {
+        "at": 0.9,
+        "what": "line 2, the biggest, pops in stepped to the right"
+      },
+      {
+        "at": 1.4,
+        "what": "line 3 pops in stepped a little further right"
+      },
+      {
+        "at": 2.0,
+        "what": "line 4 pops in while a coral underline draws under it"
+      },
+      {
+        "at": 2.8,
+        "what": "the whole stack holds over the logo while the board light drifts"
+      },
+      {
+        "at": 4.1,
+        "what": "every letter shrinks to a dot in a left to right sweep, line after line, and the underline retracts"
+      },
+      {
+        "at": 5.07,
+        "what": "a big coral ampersand grows in the middle of the board, holds and shrinks away"
+      },
+      {
+        "at": 5.9,
+        "what": "the company name pops in letter by letter as its coral underline draws"
+      },
+      {
+        "at": 6.8,
+        "what": "the end card holds: company name, underline and logo"
+      }
+    ],
+    "visuals": [
+      "dark green chalkboard with a faint grid and soft smudges",
+      "four stepped lines of chunky cream poster capitals with soft drop shadows",
+      "letters leaning slightly at random like hand-set type",
+      "coral underline under the last line and under the company name",
+      "big coral ampersand",
+      "logo on a cream rounded plate under the type"
+    ],
+    "motion": [
+      "letter by letter pop in",
+      "underline draw",
+      "left to right shrink-to-dot sweep",
+      "ampersand pop",
+      "slow circling board light"
+    ],
+    "mood": ["bold", "playful", "punchy", "friendly", "confident"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "brand slogan or manifesto opener",
+      "product or service launch teaser",
+      "social post with a four line tagline",
+      "shop, studio or cafe promo",
+      "event or campaign headline card"
+    ],
+    "editable": [
+      "four lines of copy",
+      "company name",
+      "logo and its plate",
+      "underline and ampersand colour",
+      "letter colour",
+      "board, edge, grid and shadow colours",
+      "size of each line and the company name",
+      "staircase step, line spacing, letter wobble and width limit",
+      "underlines and ampersand on or off, thickness and size",
+      "typing length and letter pop length",
+      "board on or off and light drift"
+    ],
+    "palette": ["#2e4a42", "#1d322c", "#f3dd8e", "#f08b76", "#fbf3e1"],
+    "keywords": [
+      "kinetic type",
+      "chunky",
+      "bold type",
+      "letter pop",
+      "stacked text",
+      "staircase",
+      "tagline",
+      "slogan",
+      "manifesto",
+      "chalkboard",
+      "ampersand",
+      "underline",
+      "poster type",
+      "four lines"
+    ],
+    "concept": "A short four line slogan builds itself letter by letter into a chunky stepped stack, like poster type set by hand, so each line lands as its own beat and the biggest line carries the punch. Then the stack sweeps away, an ampersand pops as the and, and the company name lands as the answer, so the copy reads as a bold, upbeat promise followed by who makes it.",
+    "needs": ["logo", "company name", "four short slogan lines"],
+    "placeholders": {
+      "Line 1": {
+        "kind": "text",
+        "maxChars": 20,
+        "hint": "Opening line of a four line slogan, short and punchy, like a setup"
+      },
+      "Line 2": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "The biggest line, the punch of the slogan in two or three words"
+      },
+      "Line 3": {
+        "kind": "text",
+        "maxChars": 20,
+        "hint": "Third line that adds a detail to the promise"
+      },
+      "Line 4": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "Closing line of the slogan, underlined, can end with a full stop"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Business name that pops in after the ampersand and holds on the end card"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo under the type for the whole clip: wide, square or round"
+      }
+    },
+    "samples": {
+      "Line 1": "Small blooms",
+      "Line 2": "Big moments",
+      "Line 3": "Picked fresh",
+      "Line 4": "Made to last.",
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-wide.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/chunky-type-stack.mp4"
   }
 }

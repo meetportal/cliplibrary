@@ -25,14 +25,14 @@ const luminance = (color: string): number => {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
 
-const contrast = (a: string, b: string) => {
+export const contrast = (a: string, b: string) => {
   const [light = 0, dark = 0] = [luminance(a), luminance(b)].sort((x, y) => y - x);
   return (light + 0.05) / (dark + 0.05);
 };
 
-type Lab = { l: number; a: number; b: number };
+export type Lab = { l: number; a: number; b: number };
 
-const toLab = (color: string): Lab => {
+export const toLab = (color: string): Lab => {
   const [r = 0, g = 0, b = 0] = channels(color).map(toLinear);
   const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
   const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
@@ -44,7 +44,7 @@ const toLab = (color: string): Lab => {
   };
 };
 
-const fromLab = ({ l, a, b }: Lab): string => {
+export const fromLab = ({ l, a, b }: Lab): string => {
   const lc = (l + 0.3963377774 * a + 0.2158037573 * b) ** 3;
   const mc = (l - 0.1055613458 * a - 0.0638541728 * b) ** 3;
   const sc = (l - 0.0894841775 * a - 1.291485548 * b) ** 3;

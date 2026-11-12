@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from 'remotion';
 import type { ChalkTitleProps } from '@/schemas';
-import { Board } from './board';
-import { legibleOn, mixLab } from './color';
+import { Board } from '../../kit/chalk-board';
+import { legibleOn, mixLab } from '../../kit/lab-color';
 import { AMPERSAND_FACES, BYLINE_FACE, canvasMeasurer, SCRIPT_FACES, useFontsReady } from './fonts';
 import { buildLayout } from './layout';
 import {
