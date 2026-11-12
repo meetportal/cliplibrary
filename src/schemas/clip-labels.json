@@ -4343,5 +4343,141 @@
       "Logo": "design-assets/logos/willow-square.png"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/doodle-arrows.mp4"
+  },
+  "dot-wordmark-reveal": {
+    "summary": "A brand reveal on a warm cream stage. It opens on the finished lockup: the logo on a white plate inside a rounded teal tile with a small coral dot on its corner, the company name in a rounded bold sans below. The tile folds into a teal pill that tumbles through the tagline, landing one word per hop while slow circular wipes from each landing flip the stage between teal and cream. The pill drops to the centre and swells into a full teal field; a small white dot glides in and writes the name letter by letter along its baseline. A white plate blooms above the name with the logo, the coral dot pops onto its corner, the teal field folds back into the tile, a coral ring pulses out and the lockup holds to the end.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the finished lockup: logo on a white plate in a rounded teal tile with a coral corner dot, the company name below on cream"
+      },
+      {
+        "at": 0.1,
+        "what": "the tile folds into a small teal pill and the name letters fade away left to right"
+      },
+      {
+        "at": 0.6,
+        "what": "the pill tumbles down to the first tagline word"
+      },
+      {
+        "at": 1.1,
+        "what": "the tagline lands word by word with the pill, the hops stretching to fill the time; on two lines the pill hops along the gap between them, a one-word tagline gets extra hops around the word, and slow circular wipes from the landings flip the stage teal and cream"
+      },
+      {
+        "at": 3.5,
+        "what": "the full tagline reads on cream while the pill hops once more in place"
+      },
+      {
+        "at": 4.0,
+        "what": "the tagline fades and the pill drops to the centre, rounding into a growing dot"
+      },
+      {
+        "at": 4.4,
+        "what": "the dot swells until a teal field fills the frame"
+      },
+      {
+        "at": 4.9,
+        "what": "a small white dot glides in from the left and writes the company name letter by letter along its baseline, fading at the end of the name"
+      },
+      {
+        "at": 6.0,
+        "what": "a white plate blooms above the name as the last letters land, and the logo fades in on it"
+      },
+      {
+        "at": 6.7,
+        "what": "a coral dot pops onto the plate corner"
+      },
+      {
+        "at": 6.9,
+        "what": "the teal field folds back into a rounded tile around the plate, revealing cream; the name turns dark as the edge passes"
+      },
+      {
+        "at": 7.4,
+        "what": "a thin coral ring pulses out from the tile and fades"
+      },
+      {
+        "at": 7.6,
+        "what": "the finished lockup holds to the last frame while the coral dot breathes and a faint shade drifts down the backdrop, matching the opening frame for a seamless loop"
+      }
+    ],
+    "visuals": [
+      "warm cream background with a faint drifting shade",
+      "rounded teal tile framing a white logo plate",
+      "small coral dot on the tile corner",
+      "rounded bold sans company name",
+      "semibold sans tagline on one or two lines",
+      "teal pill that tumbles and hops",
+      "slow circular colour wipes",
+      "full teal field"
+    ],
+    "motion": [
+      "a tile folding into a pill",
+      "tumbling hops word to word",
+      "slow circular wipes flipping the stage colour",
+      "a dot swelling into a full-frame field",
+      "a dot writing a name letter by letter",
+      "a plate blooming and a field folding back into a logo tile",
+      "a ring pulse and a breathing dot on the hold"
+    ],
+    "mood": ["playful", "crisp", "friendly", "confident", "modern"],
+    "roles": ["opener", "closer"],
+    "useCases": [
+      "logo reveal for a brand or studio",
+      "intro or outro of a brand video",
+      "tagline launch post for social",
+      "app or product brand sting",
+      "end card for an ad"
+    ],
+    "editable": [
+      "logo",
+      "company name",
+      "tagline",
+      "primary, accent, text, background and surface colours",
+      "name and tagline fonts and sizes",
+      "colour flips on or off",
+      "logo size, plate padding, tile border and roundness",
+      "dot size, accent dot size and end pulse",
+      "frames per word and name write length",
+      "lockup spacing and vertical position"
+    ],
+    "palette": ["#f4f0e8", "#0e7a6c", "#f0566e", "#17302c", "#ffffff"],
+    "keywords": [
+      "logo reveal",
+      "wordmark",
+      "dot",
+      "bouncing dot",
+      "tagline",
+      "brand intro",
+      "color flip",
+      "circle wipe",
+      "logo tile",
+      "app icon",
+      "minimal",
+      "playful"
+    ],
+    "concept": "One dot is the brand's pen: it hops through the tagline word by word, each landing flipping the stage colour, then drops and swells into a colour field in which a smaller dot writes the name before the field folds back into the logo tile. The copy is a short, warm promise followed by the name, light and confident.",
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/dot-wordmark-reveal.mp4",
+    "needs": ["logo", "company name", "tagline"],
+    "placeholders": {
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 44,
+        "hint": "One short promise that lands word by word under the hopping dot; wraps to two lines"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name the dot writes under the logo tile; long names shrink to one line"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; sits on a light plate inside the coloured tile"
+      }
+    },
+    "samples": {
+      "Tagline": "Fresh flowers, arranged with care.",
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png"
+    }
   }
 }
