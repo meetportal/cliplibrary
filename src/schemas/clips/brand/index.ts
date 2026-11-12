@@ -15,6 +15,8 @@ import {
   chevronMarkAssembleSchema,
 } from './chevron-mark-assemble';
 import { chevronMarkAssembleControls } from './chevron-mark-assemble-controls';
+import { ctaEndCardDefaults, ctaEndCardMeta, ctaEndCardSchema } from './cta-end-card';
+import { ctaEndCardControls } from './cta-end-card-controls';
 import {
   dotMorphWordmarkDefaults,
   dotMorphWordmarkMeta,
@@ -56,6 +58,13 @@ export const brandClips: ClipModule[] = [
     defaults: chevronMarkAssembleDefaults,
     meta: chevronMarkAssembleMeta,
     controls: chevronMarkAssembleControls,
+  },
+  {
+    id: 'cta-end-card',
+    schema: ctaEndCardSchema,
+    defaults: ctaEndCardDefaults,
+    meta: ctaEndCardMeta,
+    controls: ctaEndCardControls,
   },
   {
     id: 'dot-morph-wordmark',
