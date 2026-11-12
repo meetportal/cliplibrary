@@ -4225,5 +4225,123 @@
       "Website": "willowandco.com"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/cta-end-card.mp4"
+  },
+  "doodle-arrows": {
+    "summary": "Ruled notebook paper in pale blue-grey. A graphite pencil arrow draws itself from the left, dipping through two waves before climbing to the upper right, while a straight pencil arrow in the brand colour draws a steady rise below it. Both tips aim at a handwritten headline that writes on letter by letter beside a logo and company name, then a brand-colour pencil stroke underlines it. The finished note holds while a soft light drifts across the paper.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "ruled paper with the logo and company name and the first hook of the wavy pencil arrow"
+      },
+      {
+        "at": 0.4,
+        "what": "the wavy arrow draws through two waves and the straight brand-colour arrow starts below"
+      },
+      {
+        "at": 1.1,
+        "what": "the handwritten headline starts writing on, letter by letter, where the arrows point"
+      },
+      {
+        "at": 1.2,
+        "what": "the wavy arrow climbs to the upper right and flicks on its open arrowhead"
+      },
+      {
+        "at": 1.5,
+        "what": "the straight arrow finishes its rise and its arrowhead"
+      },
+      {
+        "at": 2.0,
+        "what": "a brand-colour pencil underline draws under the headline"
+      },
+      {
+        "at": 2.7,
+        "what": "the finished note holds while a soft light drifts across the paper"
+      }
+    ],
+    "visuals": [
+      "ruled notebook paper",
+      "wavy graphite pencil arrow",
+      "straight brand-colour pencil arrow",
+      "handwritten marker headline",
+      "pencil underline",
+      "logo and company name lockup"
+    ],
+    "motion": [
+      "pencil draw-on strokes",
+      "arrowhead flicks",
+      "handwriting letter by letter",
+      "underline stroke",
+      "slow drifting paper light"
+    ],
+    "mood": ["friendly", "hand-made", "optimistic", "casual", "clear"],
+    "roles": ["feature", "proof", "opener", "cta"],
+    "useCases": [
+      "growth or results announcement",
+      "progress update or milestone post",
+      "coaching or course promo",
+      "tip or lesson slide",
+      "pitch or report highlight"
+    ],
+    "editable": [
+      "headline",
+      "company name",
+      "logo",
+      "brand accent colour",
+      "pencil arrow colour",
+      "text colour",
+      "paper colour",
+      "rule colour and spacing",
+      "ruled lines on or off",
+      "headline and name sizes",
+      "logo size and plate",
+      "pencil width and arrowhead size",
+      "draw time",
+      "hand wobble",
+      "underline on or off",
+      "light drift",
+      "background on or off"
+    ],
+    "palette": ["#eef1f4", "#d3d9e0", "#26262b", "#1d2230", "#d9482b"],
+    "keywords": [
+      "doodle",
+      "arrows",
+      "hand drawn",
+      "pencil",
+      "sketch",
+      "notebook",
+      "ruled paper",
+      "handwriting",
+      "growth",
+      "progress",
+      "upward trend",
+      "results",
+      "whiteboard",
+      "drawn arrow",
+      "underline"
+    ],
+    "concept": "Two quick pencil arrows sketch themselves on notebook paper, a bumpy wavy road and a clear straight climb, and both rise to the same spot where the message is written by hand, so the eye follows the pen straight to the headline and the brand. The copy is one short, warm handwritten line about progress or results, signed with the logo and name.",
+    "needs": ["logo", "company name", "headline"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 40,
+        "hint": "One short handwritten line both arrows point at, about progress or results; wraps to two lines"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Name printed beside the logo under the headline"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; sits left of the company name under the headline"
+      }
+    },
+    "samples": {
+      "Headline": "Small steps, big growth",
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/doodle-arrows.mp4"
   }
 }
