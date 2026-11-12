@@ -21,6 +21,7 @@ import type { CirclePopProps } from './clips/kinetic-type/circle-pop';
 import type { ComingSoonFlipsProps } from './clips/kinetic-type/coming-soon-flips';
 import type { DominoWordsProps } from './clips/kinetic-type/domino-words';
 import type { TextRingsProps } from './clips/kinetic-type/text-rings';
+import type { ColorPillsProps } from './clips/list-pickers/color-pills';
 import type { PillFanProps } from './clips/list-pickers/pill-fan';
 import type { WordPickerProps } from './clips/list-pickers/word-picker';
 import type { ChargeCompareProps } from './clips/phone-layouts/charge-compare';
@@ -56,6 +57,7 @@ export interface ClipPropsMap {
   'neon-sign-flicker': NeonSignFlickerProps;
   'text-rings': TextRingsProps;
   'pill-fan': PillFanProps;
+  'color-pills': ColorPillsProps;
   'phone-spin-in': PhoneSpinInProps;
   'word-picker': WordPickerProps;
 }
