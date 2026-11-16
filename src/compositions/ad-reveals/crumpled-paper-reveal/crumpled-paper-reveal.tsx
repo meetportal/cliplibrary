@@ -9,7 +9,16 @@ import { buildMesh, foldAt, lightAt, posePoints, SHEET } from './mesh';
 import { paletteFor } from './palette';
 import { PaperFacets, PaperShading, PaperShadow } from './paper';
 import { SheetCopy } from './sheet-copy';
-import { BEATS, centerAt, copyAt, crumpleAt, printScaleAt, squeezeAt, turnAt } from './timeline';
+import {
+  BEATS,
+  cameraAt,
+  centerAt,
+  copyAt,
+  crumpleAt,
+  printScaleAt,
+  squeezeAt,
+  turnAt,
+} from './timeline';
 import { Wall } from './wall';
 
 const DEGREE = Math.PI / 180;
@@ -66,6 +75,7 @@ export const CrumpledPaperReveal = (props: CrumpledPaperRevealProps) => {
   const light = lightAt(phase * 3, props.light.drift);
   const print = 1 - clamp01(crumple / 0.35);
   const shadowOffset = { x: lerp(24, 56, crumple), y: lerp(34, 92, crumple) };
+  const camera = cameraAt(frame, props.camera.push, durationInFrames);
   const fade = {
     headline: copyAt(frame, BEATS.headlineIn),
     logo: copyAt(frame, BEATS.logoIn),
@@ -76,61 +86,65 @@ export const CrumpledPaperReveal = (props: CrumpledPaperRevealProps) => {
   return (
     <AbsoluteFill>
       {props.showBackground ? (
-        <Wall
-          palette={palette}
+        <AbsoluteFill style={{ transform: `scale(${camera.wall.toFixed(5)})` }}>
+          <Wall
+            palette={palette}
+            width={width}
+            height={height}
+            phase={phase}
+            drift={props.light.drift}
+            strength={props.light.windowShadow}
+          />
+        </AbsoluteFill>
+      ) : null}
+      <AbsoluteFill style={{ transform: `scale(${camera.scale.toFixed(5)})` }}>
+        <PaperShadow
+          mesh={mesh}
+          points={points}
+          offset={shadowOffset}
+          color={palette.dropShadow}
           width={width}
           height={height}
-          phase={phase}
-          drift={props.light.drift}
-          strength={props.light.windowShadow}
         />
-      ) : null}
-      <PaperShadow
-        mesh={mesh}
-        points={points}
-        offset={shadowOffset}
-        color={palette.dropShadow}
-        width={width}
-        height={height}
-      />
-      <PaperFacets
-        mesh={mesh}
-        points={points}
-        light={light}
-        palette={palette}
-        print={print}
-        width={width}
-        height={height}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          left: center.x - SHEET.width / 2,
-          top: center.y - SHEET.height / 2,
-          width: SHEET.width,
-          height: SHEET.height,
-          transform: `rotate(${rotation}rad) scale(${printScaleAt(frame, (value) => foldAt(value, 0.6))})`,
-          transformOrigin: '50% 50%',
-        }}
-      >
-        <SheetCopy
-          props={props}
-          layout={layout}
+        <PaperFacets
+          mesh={mesh}
+          points={points}
+          light={light}
           palette={palette}
-          fade={fade}
-          headlineLines={layout.headline.lines}
-          logoBox={logoBox}
+          print={print}
+          width={width}
+          height={height}
         />
-      </div>
-      <PaperShading
-        mesh={mesh}
-        points={points}
-        light={light}
-        palette={palette}
-        print={print}
-        width={width}
-        height={height}
-      />
+        <div
+          style={{
+            position: 'absolute',
+            left: center.x - SHEET.width / 2,
+            top: center.y - SHEET.height / 2,
+            width: SHEET.width,
+            height: SHEET.height,
+            transform: `rotate(${rotation}rad) scale(${printScaleAt(frame, (value) => foldAt(value, 0.6))})`,
+            transformOrigin: '50% 50%',
+          }}
+        >
+          <SheetCopy
+            props={props}
+            layout={layout}
+            palette={palette}
+            fade={fade}
+            headlineLines={layout.headline.lines}
+            logoBox={logoBox}
+          />
+        </div>
+        <PaperShading
+          mesh={mesh}
+          points={points}
+          light={light}
+          palette={palette}
+          print={print}
+          width={width}
+          height={height}
+        />
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

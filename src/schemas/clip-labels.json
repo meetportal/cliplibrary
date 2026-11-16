@@ -3989,35 +3989,35 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/color-pills.mp4"
   },
   "crumpled-paper-reveal": {
-    "summary": "A cream sheet of paper hangs on a sage wall in hard window light, printed with a logo, a big serif headline in capitals, a short rule and tagline in the brand colour and the company name in small spaced capitals. The sheet crumples into a faceted paper ball that turns and squeezes, then bursts open and settles flat with its creases left in, the print coming back one line after another. The finished sheet holds while the window light slowly drifts across its creases.",
+    "summary": "A cream sheet of paper hangs on a sage wall in hard window light, printed with a logo, a big serif headline in capitals, a short rule and tagline in the brand colour and the company name in small spaced capitals. The camera eases back as the sheet crumples into a faceted paper ball that turns and squeezes, then the ball bursts open and settles flat with its creases left in, the print rising back one line after another. The camera then pushes in on the finished sheet until it nearly fills the frame width on the last frame, keeping the whole sheet in view, so the end meets the opening frame.",
     "beats": [
       {
         "at": 0.0,
-        "what": "the finished crumpled sheet with logo, headline, tagline and name, tilted slightly on the wall"
+        "what": "the finished crumpled sheet with logo, headline, tagline and name, seen slightly close, tilted on the wall"
       },
       {
-        "at": 0.4,
-        "what": "the edges fold in and the print fades as the sheet crumples and shrinks"
+        "at": 0.1,
+        "what": "the camera eases well back as the edges fold in and the print sinks and fades while the sheet crumples and shrinks"
       },
       {
-        "at": 1.5,
-        "what": "a faceted paper ball turns and squeezes in the window light, its hard shadow on the wall"
+        "at": 1.0,
+        "what": "a faceted paper ball turns, drifts and squeezes in the window light, its hard shadow on the wall"
       },
       {
-        "at": 2.2,
-        "what": "the ball bursts open, turning back as it spreads into a crumpled sheet"
+        "at": 1.8,
+        "what": "the ball unfolds from rest, building speed as it turns back and spreads into a crumpled sheet that sits further back on the wall"
       },
       {
         "at": 2.8,
-        "what": "the headline prints back onto the flattened sheet, then the logo"
+        "what": "the headline rises back onto the flattened sheet, then the logo"
       },
       {
         "at": 3.2,
-        "what": "the short rule grows with the tagline under the headline, then the company name at the bottom"
+        "what": "the camera starts pushing in while the short rule grows with the rising tagline, then the company name rises in at the bottom"
       },
       {
         "at": 4.1,
-        "what": "the finished sheet holds while the light and window shadows drift"
+        "what": "the finished sheet reads in full while the camera pushes in until the sheet nearly fills the width and the window light drifts, easing to rest on the last frame, which matches the first"
       }
     ],
     "visuals": [
@@ -4033,7 +4033,8 @@
       "crumple into a ball",
       "ball squeeze and turn",
       "burst open and unfold",
-      "print fading back in line by line",
+      "print rising back in line by line",
+      "camera push in on the finished sheet",
       "slow drifting window light"
     ],
     "mood": ["tactile", "calm", "crafted", "editorial", "teasing"],
@@ -4061,6 +4062,7 @@
       "ball size and turn",
       "sheet tilt",
       "light drift and window shadows",
+      "camera push in",
       "background on or off"
     ],
     "palette": ["#9eaa8c", "#efe7d4", "#1e2438", "#b5562f", "#5f6b52"],

@@ -1,7 +1,7 @@
 import { CAPS_FACE, HEADLINE_FACE, type Measure } from './fonts';
 import { SHEET } from './mesh';
 
-export const CONTENT_WIDTH = 720;
+const CONTENT_WIDTH = 720;
 export const HEADLINE_LEADING = 0.98;
 export const TAGLINE_TRACKING = 0.3;
 export const NAME_TRACKING = 0.28;

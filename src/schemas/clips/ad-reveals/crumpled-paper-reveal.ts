@@ -35,6 +35,9 @@ export const crumpledPaperRevealSchema = z.object({
     drift: zSlider({ min: 0, max: 2, step: 0.05 }),
     windowShadow: zSlider({ min: 0, max: 1, step: 0.05 }),
   }),
+  camera: z.object({
+    push: zSlider({ min: 0, max: 0.36, step: 0.01 }),
+  }),
 });
 
 export type CrumpledPaperRevealProps = z.infer<typeof crumpledPaperRevealSchema>;
@@ -56,13 +59,14 @@ export const crumpledPaperRevealDefaults: CrumpledPaperRevealProps = {
   lockup: { logoHeight: 140, showPlate: false },
   paper: { wrinkles: 1, ballSize: 0.26, spin: 28, tilt: -2 },
   light: { drift: 1, windowShadow: 0.7 },
+  camera: { push: 0.27 },
 };
 
 export const crumpledPaperRevealMeta: ClipMeta = {
   id: 'crumpled-paper-reveal',
   title: 'Crumpled Paper Reveal',
   description:
-    'A printed sheet crumples into a paper ball against a sage wall in hard window light, then bursts open and settles flat with its creases left in, so the logo, a big serif headline, a tagline and the company name read on crumpled paper and hold.',
+    'A printed sheet crumples into a paper ball against a sage wall in hard window light, then bursts open and settles flat with its creases left in, so the logo, a big serif headline, a tagline and the company name read on crumpled paper while the camera pushes in.',
   theme: 'light',
   source: 'src/compositions/scenes/ad-reveals/crumpled-paper-reveal.tsx',
   category: 'ad-reveals',
