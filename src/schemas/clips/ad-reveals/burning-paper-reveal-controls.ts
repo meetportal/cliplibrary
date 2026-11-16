@@ -113,14 +113,14 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
         {
           path: 'burn.sweepSeconds',
           label: 'Burn time',
-          hint: 'Seconds the flame takes to reach the right edge of the card at a steady pace; the fire then shrinks on the edge for about 4 seconds and the card holds',
+          hint: 'Seconds the flame takes to reach the right edge of the card, easing in and out; the fire then shrinks on the edge for about 4 seconds while the camera settles',
         },
       ],
       more: [
         {
           path: 'burn.startAt',
           label: 'Start point',
-          hint: 'How much of the card is already there at the first frame, from 0.05 (a sliver) to 0.8',
+          hint: 'How much of the card is already there at the first frame, from 0.05 (a sliver) to 0.8; the flame always starts just inside the left edge of the copy, so short copy never opens on a blank card',
         },
         {
           path: 'burn.slant',
@@ -157,8 +157,8 @@ export const burningPaperRevealControls = defineControls<BurningPaperRevealProps
         },
         {
           path: 'camera.pullBack',
-          label: 'Backdrop pull back',
-          hint: 'How much bigger the folded backdrop starts before it eases back behind the held card while the flame burns; 0 holds it still',
+          label: 'Camera pull back',
+          hint: 'How much closer the camera starts on the card, hand and fire, and how much more the card is turned, before it eases back over the whole clip; the backdrop follows at a little over half the amount; 0 holds the camera still',
         },
       ],
       more: [

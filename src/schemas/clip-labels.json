@@ -2722,35 +2722,35 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/branding-is-ticker.mp4"
   },
   "burning-paper-reveal": {
-    "summary": "A hand reaches in from the lower left holding up an off-white paper card with a thin inner border against a folded teal, mint and slate backdrop. A flame runs across the card from left to right in reverse, leaving whole paper behind its charred, glowing edge, so a handwritten intro line, a big serif headline with a hand-drawn underline, a handwritten accent line and a logo with the company name in spaced capitals appear as it passes. Sparks and a thin wisp of smoke rise from the tall flames while the backdrop eases back behind the card; once the paper is whole the flame shrinks on the right edge, dies out and the finished card holds.",
+    "summary": "A hand reaches in from the lower left holding up an off-white paper card with a thin inner border against a folded teal, mint and slate backdrop. A flame runs across the card from left to right in reverse, leaving whole paper behind its charred, glowing edge, so a handwritten intro line, a big serif headline with a hand-drawn underline, a handwritten accent line and a logo with the company name in spaced capitals appear as it passes. Sparks and a thin wisp of smoke rise from the tall flames while the camera starts close on the card, hand and fire and slowly pulls back the whole way through; once the paper is whole the flame shrinks on the right edge and dies out as the finished card settles.",
     "beats": [
       {
         "at": 0.0,
-        "what": "the card already a third there, cut at a charred glowing edge with tall flames rising above it and a thin wisp of smoke from the flame tip, the first letters of the headline showing"
+        "what": "close on the card, already a third there and cut at a charred glowing edge, with tall flames, sparks and a thin wisp of smoke; the camera starts pulling back"
       },
       {
         "at": 1.0,
-        "what": "the flame crosses the card at a steady pace, writing the headline letter by letter while sparks fly up and the backdrop eases back"
+        "what": "the flame gathers pace across the card, writing the headline letter by letter while the camera pulls back from the hand and card"
       },
       {
-        "at": 3.0,
+        "at": 4.0,
         "what": "the logo and the company name are complete along the bottom of the card"
       },
       {
-        "at": 3.5,
+        "at": 4.5,
         "what": "the handwritten accent line starts to appear under the underline"
       },
       {
-        "at": 5.0,
-        "what": "the headline is whole and the accent line finishes as the flame nears the right edge"
+        "at": 6.0,
+        "what": "the headline is whole and the accent line finishes as the flame eases toward the right edge"
       },
       {
-        "at": 6.0,
+        "at": 7.0,
         "what": "the paper is whole; the flame sits on the right edge and slowly shrinks while the char fades and smoke wisps rise"
       },
       {
-        "at": 10.0,
-        "what": "the fire is out and the finished card holds"
+        "at": 10.5,
+        "what": "the fire is out and the finished card settles as the camera eases to rest"
       }
     ],
     "visuals": [
@@ -2767,7 +2767,7 @@
       "reverse burn reveal from left to right",
       "flickering flames",
       "rising sparks and smoke",
-      "slow backdrop pull back",
+      "slow camera pull back on the card, hand and backdrop",
       "fire dying out"
     ],
     "mood": ["bold", "warm", "playful", "dramatic", "crafted"],
@@ -2795,7 +2795,7 @@
       "flame height, glow, sparks and smoke",
       "flame and smoke colours",
       "hand on or off, skin, bracelet and sleeve colours",
-      "backdrop pull back and card tilt",
+      "camera pull back and card tilt",
       "background on or off"
     ],
     "palette": ["#e0583a", "#1c2333", "#efebe2", "#1e5e5f", "#a0c6b7", "#26314a"],

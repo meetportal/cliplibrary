@@ -68,8 +68,10 @@ const bodyPath = (look: BurnLook, state: BurnState, scale: number) => {
   return `M ${left.join(' L ')} L ${right.join(' L ')} Z`;
 };
 
+const FLICKER_PACE = 0.8;
+
 const tongues = (look: BurnLook, state: BurnState): Shape[] => {
-  const t = look.frame / look.fps;
+  const t = (FLICKER_PACE * look.frame) / look.fps;
   return Array.from({ length: TONGUES }, (_, index) => {
     const along = TOP_ALONG + (SPAN * index) / (TONGUES - 1);
     const y = CARD.height * along;
@@ -78,11 +80,11 @@ const tongues = (look: BurnLook, state: BurnState): Shape[] => {
     const x = Math.min(CARD.width - EDGE_INSET, edgeX(y, state.front, look.burn)) + 12 + jitter;
     const rise = (1 - along) ** 0.9;
     const life = tongueLife(state.dying, bottomness(index));
-    const flicker = 0.8 + 0.22 * wave(t * 4.9, index * 1.9) + 0.09 * wave(t * 8.6, index * 0.7);
+    const flicker = 0.8 + 0.09 * wave(t * 4.9, index * 1.9) + 0.03 * wave(t * 8.6, index * 0.7);
     const height = look.height * life * (170 + 360 * rise) * flicker;
     const width = (78 + 64 * rise) * (0.45 + 0.55 * life);
     const lean =
-      22 * wave(t * 2.9, index * 2.7 + 1) +
+      14 * wave(t * 2.9, index * 2.7 + 1) +
       0.1 * height +
       clamped * 16 * (hash(index * 2.9 + 1) - 0.5);
     return {

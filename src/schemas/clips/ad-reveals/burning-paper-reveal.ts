@@ -82,17 +82,17 @@ export const burningPaperRevealDefaults: BurningPaperRevealProps = {
   showBackground: true,
   type: { headlineSize: 186, scriptSize: 54, nameSize: 26 },
   lockup: { logoHeight: 104, showPlate: false },
-  burn: { startAt: 0.34, sweepSeconds: 5.8, slant: 56, jag: 1 },
+  burn: { startAt: 0.34, sweepSeconds: 7, slant: 56, jag: 1 },
   fire: { height: 1, sparks: 1, smoke: 1, glow: 1 },
   hand: { show: true },
-  camera: { pullBack: 0.14, tilt: -2 },
+  camera: { pullBack: 0.3, tilt: -2 },
 };
 
 export const burningPaperRevealMeta: ClipMeta = {
   id: 'burning-paper-reveal',
   title: 'Burning Paper Reveal',
   description:
-    'A hand holds up a paper card while a flame runs across it in reverse, restoring the paper behind it so your headline, accent line, logo and name appear letter by letter, then the fire dies out and the finished card holds.',
+    'A hand holds up a paper card while a flame runs across it in reverse, restoring the paper behind it so your headline, accent line, logo and name appear letter by letter, while the camera slowly pulls back from the card and hand, then the fire dies out on the edge and the finished card settles.',
   theme: 'dark',
   source: 'src/compositions/scenes/ad-reveals/burning-paper-reveal.tsx',
   category: 'ad-reveals',
