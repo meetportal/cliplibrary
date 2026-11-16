@@ -55,5 +55,7 @@ export const plateSize = (
   return { width, height, logoWidth, logoHeight: inner };
 };
 
+const DRAW_STRETCH_POWER = 1;
+
 export const drawStretch = ({ width, height }: PlateSize) =>
-  Math.sqrt(1 + (4 * (width - height)) / (2 * Math.PI * height));
+  (1 + (4 * (width - height)) / (2 * Math.PI * height)) ** DRAW_STRETCH_POWER;
