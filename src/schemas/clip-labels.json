@@ -2164,47 +2164,51 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/arch-save-the-date.mp4"
   },
   "battery-charge-success": {
-    "summary": "On a near-black backdrop with a soft beam of light, an empty battery outline glows warning orange under the company name in wide bold capitals, five white plugs dangling below it on wavy cables, each labelled with a short word. The plugs swing up and click in, two on each side and one underneath, coloured lights start running along the cables, the name and glow turn from orange to the brand colour and the battery fills with a waving liquid that starts in a lighter tint of the brand colour while the percentage counts to 100. Two rings pulse out at full, the cables pull out and fly off frame, and a logo on a light plate, a tagline and the website rise into the space below the full battery.",
+    "summary": "On a near-black backdrop with a soft beam of light, an empty battery outline glows warning orange under the company name in wide bold capitals, five white plugs dangling below it on wavy cables, each labelled with a short word. The plugs swing up and click in, two on each side and one underneath, coloured lights start running along the cables, the name and glow turn from orange to the brand colour and the battery fills with a waving liquid that starts in a lighter tint of the brand colour while the percentage counts to 100. Two rings pulse out at full, the cables pull out and fly off frame, and a logo on a light plate, a tagline and the website rise into the space below the full battery. After a held end card the logo, tagline and website shrink away, the battery drains back to an orange 0% and the plugs rise back into view, so the clip loops to its first frame.",
     "beats": [
       {
         "at": 0.0,
         "what": "empty battery glowing orange at its floor, 0%, the name in orange above and five labelled plugs swaying on cables below"
       },
       {
-        "at": 1.0,
-        "what": "the plugs swing up on curving paths and turn to face their sockets"
+        "at": 0.9,
+        "what": "the plugs lift slowly, then fling up on curving paths, turning to face their sockets as they travel"
       },
       {
         "at": 2.6,
-        "what": "all five are plugged in: two on the left, two on the right, one under the battery"
-      },
-      {
-        "at": 2.7,
-        "what": "coloured lights start running along every cable into the battery"
+        "what": "all five are plugged in: two on the left, two on the right, one under the battery, and coloured lights start running along every cable"
       },
       {
         "at": 3.0,
-        "what": "the name, the glow and the bolt turn from orange to the brand colour"
+        "what": "the name, the glow and the bolt turn from orange through warm yellow to the brand colour"
       },
       {
-        "at": 3.4,
-        "what": "liquid starts filling with a gentle wave and bubbles while the percentage counts up"
+        "at": 3.2,
+        "what": "liquid starts filling slowly with a gentle wave and bubbles, then surges up while the percentage rolls"
       },
       {
-        "at": 7.6,
-        "what": "100%: the number sits dark on the full teal liquid and two rings pulse out"
+        "at": 6.7,
+        "what": "100%: the number sits dark on the full liquid and rings start pulsing out"
       },
       {
-        "at": 8.2,
+        "at": 6.9,
         "what": "the cables pull out and fly off frame, the bottom one first"
       },
       {
-        "at": 8.9,
+        "at": 7.5,
         "what": "the logo plate, then the tagline, then the website rise in under the full battery"
       },
       {
-        "at": 10.3,
-        "what": "the finished end card holds while the liquid keeps waving"
+        "at": 8.3,
+        "what": "the finished end card holds while the liquid waves and rings keep pulsing"
+      },
+      {
+        "at": 9.8,
+        "what": "the website, tagline and logo shrink away and the battery drains, turning back to orange"
+      },
+      {
+        "at": 10.1,
+        "what": "the plugs rise back into their dangling places and the clip ends on its opening frame"
       }
     ],
     "visuals": [
@@ -2226,7 +2230,10 @@
       "counter",
       "ring pulse",
       "cables thrown off frame",
-      "end card rises in"
+      "end card rises in",
+      "end card shrinks away",
+      "drain back to empty",
+      "loops to its first frame"
     ],
     "mood": ["energetic", "uplifting", "modern", "playful", "confident"],
     "roles": ["opener", "feature", "closer", "cta"],
@@ -2275,7 +2282,7 @@
       "glow",
       "neon"
     ],
-    "concept": "Five short things that power the brand plug into an empty battery and charge it from warning orange to full in the brand colour under its name; once it is full the cables drop away and the logo, tagline and website rise in. Upbeat and confident: the copy names what keeps the company going and the end card says what it adds up to.",
+    "concept": "Five short things that power the brand plug into an empty battery and charge it from warning orange to full in the brand colour under its name; once it is full the cables drop away and the logo, tagline and website rise in, then it all drains back to the start so it loops. Upbeat and confident: the copy names what keeps the company going and the end card says what it adds up to.",
     "needs": ["logo", "company name", "tagline", "website", "five short cable labels"],
     "placeholders": {
       "Company Name": {
