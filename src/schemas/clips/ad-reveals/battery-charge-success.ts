@@ -105,7 +105,7 @@ export const batteryChargeSuccessDefaults: BatteryChargeSuccessProps = {
     websiteSize: 40,
   },
   lockup: { logoHeight: 240, logoWidth: 600, showPlate: true },
-  timing: { plugAt: 30, plugFrames: 40, chargeFrames: 128, fullHold: 18 },
+  timing: { plugAt: 22, plugFrames: 48, chargeFrames: 104, fullHold: 8 },
   motion: { sway: 1, wave: 1, pulses: 2, bubbles: true, rings: true },
 };
 
@@ -113,13 +113,13 @@ export const batteryChargeSuccessMeta: ClipMeta = {
   id: 'battery-charge-success',
   title: 'Battery Charge Success',
   description:
-    'Five named cables swing up and plug into an empty battery, it charges from warning orange to full in your colour under your name, then the cables drop away and your logo, tagline and website rise in.',
+    'Five named cables swing up and plug into an empty battery, it charges from warning orange to full in your colour under your name, then the cables drop away and your logo, tagline and website rise in before it drains back to empty and loops.',
   theme: 'dark',
   source: 'src/compositions/scenes/ad-reveals/battery-charge-success.tsx',
   category: 'ad-reveals',
   tags: ['counter', 'glow', 'reveal', 'logo', 'cta', 'end-card', 'list'],
-  durationInFrames: 360,
-  posterFrame: 350,
+  durationInFrames: 334,
+  posterFrame: 282,
   fps: 30,
   width: 1080,
   height: 1920,

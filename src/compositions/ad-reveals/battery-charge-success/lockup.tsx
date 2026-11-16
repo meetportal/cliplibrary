@@ -2,7 +2,7 @@ import { Easing, Img } from 'remotion';
 import { resolveCustom } from '../../kit/resolve-custom';
 import { alpha } from './color';
 import { BODY_FACE, LABEL_FACE, type Wrapped } from './fonts';
-import { pixelTween, progress } from './timeline';
+import { exitPhase, pixelTween, progress, type Timeline } from './timeline';
 import { usableImage } from './use-logo-aspect';
 
 export type LockupLayout = {
@@ -13,8 +13,7 @@ export type LockupLayout = {
 
 export type LockupLook = {
   frame: number;
-  starts: readonly [number, number, number];
-  frames: number;
+  line: Timeline;
   logo: string;
   tagline: string;
   website: string;
@@ -24,19 +23,24 @@ export type LockupLook = {
   accent: string;
 };
 
-const RISE = 46;
-const EASE = Easing.out(Easing.cubic);
+const RISE = 48;
+const EASE = Easing.inOut(Easing.sin);
+const EXIT_SCALE = 0.1;
 
-const entrance = (frame: number, start: number, frames: number) => ({
-  opacity: progress(frame, start, start + frames * 0.5, Easing.inOut(Easing.sin)),
-  offset: pixelTween(frame, RISE, 0, start, frames, EASE),
-});
+const entrance = (frame: number, line: Timeline, index: number) => {
+  const start = line.lockup[index] ?? line.lockup[0];
+  const out = exitPhase(frame, line, (2 - index) * 0.075, 0.3 + (2 - index) * 0.075);
+  return {
+    opacity: progress(frame, start, start + line.lockupFrames * 0.6, EASE) * (1 - out),
+    offset: pixelTween(frame, RISE, 0, start, line.lockupFrames, EASE),
+    scale: out === 0 ? undefined : `scale(${(1 - EXIT_SCALE * out).toFixed(4)})`,
+  };
+};
 
 export const Lockup = ({ layout, look }: { layout: LockupLayout; look: LockupLook }) => {
-  const [logoAt, taglineAt, websiteAt] = look.starts;
-  const logo = entrance(look.frame, logoAt, look.frames);
-  const tagline = entrance(look.frame, taglineAt, look.frames);
-  const website = entrance(look.frame, websiteAt, look.frames);
+  const logo = entrance(look.frame, look.line, 0);
+  const tagline = entrance(look.frame, look.line, 1);
+  const website = entrance(look.frame, look.line, 2);
   return (
     <>
       {layout.logo !== null && usableImage(look.logo) ? (
@@ -56,6 +60,7 @@ export const Lockup = ({ layout, look }: { layout: LockupLayout; look: LockupLoo
             alignItems: 'center',
             justifyContent: 'center',
             opacity: logo.opacity,
+            transform: logo.scale,
           }}
         >
           <Img
@@ -78,6 +83,7 @@ export const Lockup = ({ layout, look }: { layout: LockupLayout; look: LockupLoo
             lineHeight: `${layout.tagline.lineHeight}px`,
             color: look.text,
             opacity: tagline.opacity,
+            transform: tagline.scale,
             whiteSpace: 'nowrap',
           }}
         >
@@ -101,6 +107,7 @@ export const Lockup = ({ layout, look }: { layout: LockupLayout; look: LockupLoo
             letterSpacing: '0.04em',
             color: look.accent,
             opacity: website.opacity,
+            transform: website.scale,
             whiteSpace: 'nowrap',
           }}
         >

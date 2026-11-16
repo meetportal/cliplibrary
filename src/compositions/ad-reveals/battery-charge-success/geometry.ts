@@ -1,6 +1,6 @@
 import { Easing } from 'remotion';
 import type { BatteryChargeSuccessProps } from '@/schemas';
-import { type CableKey, progress, type Timeline } from './timeline';
+import { type CableKey, progress, returnWindow, type Timeline } from './timeline';
 
 export type Point = { x: number; y: number };
 
@@ -109,8 +109,11 @@ const CABLE_ORDER: Record<CableKey, number> = {
 const PULL = 60;
 const THROW = 1080;
 
-const SWING = Easing.bezier(0.5, 0, 0.18, 1);
+const SWING = Easing.bezier(0.6, 0, 0.35, 1);
 const RISE = Easing.bezier(0.3, 0, 0.3, 1);
+const RETURN = Easing.out(Easing.quad);
+const RETURN_CLEARANCE = 90;
+const REACH_LEAD = 10;
 
 const cubic = (a: Point, b: Point, c: Point, d: Point, t: number): Point => {
   const u = 1 - t;
@@ -157,7 +160,13 @@ const farAlongEdge = (start: Point, rest: Rest, reach: number) => {
   };
 };
 
-export const cableState = (
+const returnDrop = (key: CableKey, frame: number, line: Timeline) => {
+  const [from, to] = returnWindow(key, line);
+  const distance = HEIGHT + RETURN_CLEARANCE - DANGLES[key].tip.y;
+  return distance * (1 - RETURN(progress(frame, from, to)));
+};
+
+const poseAt = (
   key: CableKey,
   frame: number,
   line: Timeline,
@@ -179,8 +188,7 @@ export const cableState = (
   const lift = along(swayTip, swayAngle, Math.min(320, span * 0.4));
   const approach = along(rest.socket, rest.angle + Math.PI, Math.min(240, span * 0.35));
   const flight = cubic(swayTip, lift, approach, rest.socket, eased);
-  const turn = SWING(Math.min(1, swing * 1.15));
-  const angle = lerp(swayAngle, rest.angle, turn);
+  const angle = lerp(swayAngle, rest.angle, eased);
   const tip = flight;
   const releaseStart = line.release[0] + CABLE_ORDER[key] * 2;
   const released = progress(frame, releaseStart, releaseStart + line.release[1] - line.release[0]);
@@ -188,7 +196,8 @@ export const cableState = (
     PULL * Easing.inOut(Easing.sin)(Math.min(1, released * 2.5)) +
     THROW * Easing.in(Easing.quad)(released);
   const away = { x: Math.cos(angle + Math.PI) * out, y: Math.sin(angle + Math.PI) * out };
-  const reach = Easing.inOut(Easing.sin)(swing);
+  const lead = progress(frame, line.plugStart(key) - REACH_LEAD, line.plugEnd(key));
+  const reach = key === 'bottom' ? RISE(lead) : SWING(lead);
   const { far, farAngle } = farAlongEdge(dangle.far, rest, reach);
   return {
     pose: {
@@ -201,6 +210,25 @@ export const cableState = (
     plugged: progress(frame, line.plugEnd(key), line.plugEnd(key) + 1),
     settled: reach,
     released,
+  };
+};
+
+export const cableState = (
+  key: CableKey,
+  frame: number,
+  line: Timeline,
+  box: Box,
+  sway: number,
+): CableState => {
+  if (frame < line.exit[0]) {
+    return poseAt(key, frame, line, box, sway);
+  }
+  const drop = returnDrop(key, frame, line);
+  const state = poseAt(key, frame - line.loop, line, box, sway);
+  return {
+    ...state,
+    pose: { ...state.pose, tip: { x: state.pose.tip.x, y: state.pose.tip.y + drop } },
+    far: { x: state.far.x, y: state.far.y + drop },
   };
 };
 
