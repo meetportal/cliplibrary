@@ -4,7 +4,7 @@ import type { BatteryChargeSuccessProps } from '@/schemas';
 import { Backdrop } from './backdrop';
 import { Battery } from './battery';
 import { CableLabels, CableWires, type DrawnCable } from './cables';
-import { inkOn, legibleOn, lowCharge, mix, mixLab } from './color';
+import { inkOn, legibleOn, lowCharge, mix, mixLab, mixLch } from './color';
 import { LABEL_FACE, useMeasure } from './fonts';
 import { batteryBox, cableState } from './geometry';
 import { lockupLayout, wordmarkLayout } from './layout';
@@ -18,6 +18,7 @@ const SEEDS = [0.4, 2.2, 3.7, 5.1, 1.3] as const;
 const LABEL_MARGIN = 28;
 const RING_FRAMES = 34;
 const RING_GAP = 11;
+const RING_PERIOD = 22;
 
 export const BatteryChargeSuccess = (props: BatteryChargeSuccessProps) => {
   const frame = useCurrentFrame();
@@ -32,9 +33,10 @@ export const BatteryChargeSuccess = (props: BatteryChargeSuccessProps) => {
   const { colors } = props;
   const tone = toneAmount(frame, line);
   const level = chargeLevel(frame, line);
+  const rate = Math.abs(chargeLevel(frame + 2, line) - chargeLevel(frame - 2, line)) * 25;
   const charged = legibleOn(colors.charged, colors.background, 4.5);
   const empty = legibleOn(colors.empty, colors.background, 3);
-  const toneColor = mix(empty, charged, tone);
+  const toneColor = mixLch(empty, charged, tone);
   const liquid = mixLab(
     lowCharge(colors.charged, props.battery.lowTint),
     colors.charged,
@@ -49,6 +51,7 @@ export const BatteryChargeSuccess = (props: BatteryChargeSuccessProps) => {
     }),
   );
   const labelSize = Math.max(18, Math.min(props.type.labelSize, Math.floor(labelFit)));
+  const clock = frame >= line.exit[0] ? frame - line.loop : frame;
   const cables: DrawnCable[] = CABLE_KEYS.map((key, index) => ({
     key,
     state: cableState(key, frame, line, box, props.motion.sway),
@@ -57,7 +60,7 @@ export const BatteryChargeSuccess = (props: BatteryChargeSuccessProps) => {
     seed: SEEDS[index] ?? 0,
   }));
   const look = {
-    frame,
+    frame: clock,
     tone,
     empty: colors.empty,
     wire: colors.wire,
@@ -68,10 +71,13 @@ export const BatteryChargeSuccess = (props: BatteryChargeSuccessProps) => {
     pulseStart: line.landed,
     labelSize,
   };
+  const ringStarts = [line.full, line.full + RING_GAP];
+  for (let start = line.full + RING_PERIOD * 2; start + RING_FRAMES * 0.6 <= line.exit[0]; ) {
+    ringStarts.push(start);
+    start += RING_PERIOD;
+  }
   const rings = props.motion.rings
-    ? [0, 1].map((index) =>
-        progress(frame, line.full + index * RING_GAP, line.full + index * RING_GAP + RING_FRAMES),
-      )
+    ? ringStarts.map((start) => progress(frame, start, start + RING_FRAMES))
     : [];
   const wordmark = wordmarkLayout(props, box, measure);
   const lockup = lockupLayout(props, box, aspect, measure);
@@ -96,11 +102,13 @@ export const BatteryChargeSuccess = (props: BatteryChargeSuccessProps) => {
           rings,
           bolt: tone,
           frame,
+          clock,
         }}
       />
       <Percent
         box={box}
         level={level}
+        rate={rate}
         size={props.type.percentSize}
         frame={frame}
         wave={props.motion.wave}
@@ -114,8 +122,7 @@ export const BatteryChargeSuccess = (props: BatteryChargeSuccessProps) => {
         layout={lockup}
         look={{
           frame,
-          starts: line.lockup,
-          frames: line.lockupFrames,
+          line,
           logo: props.logo,
           tagline: props.tagline,
           website: props.website,

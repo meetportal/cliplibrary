@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { alpha, mix } from './color';
+import { alpha, mix, mixLch } from './color';
 import { LABEL_FACE } from './fonts';
 import {
   type CableState,
@@ -75,7 +75,7 @@ const Pulses = ({
 
 const Plug = ({ cable, look }: { cable: DrawnCable; look: CableLook }) => {
   const { tip, angle, opacity } = cable.state.pose;
-  const stripe = mix(look.empty, cable.color, look.tone);
+  const stripe = mixLch(look.empty, cable.color, look.tone);
   const relief = mix(look.shell, '#7d8a88', 0.35);
   return (
     <g
@@ -210,7 +210,7 @@ export const CableLabels = ({
               width: dot,
               height: dot,
               borderRadius: dot,
-              backgroundColor: mix(look.empty, cable.color, look.tone),
+              backgroundColor: mixLch(look.empty, cable.color, look.tone),
               flexShrink: 0,
             }}
           />

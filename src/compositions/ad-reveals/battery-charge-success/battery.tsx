@@ -18,6 +18,7 @@ export type BatteryLook = {
   rings: readonly number[];
   bolt: number;
   frame: number;
+  clock: number;
 };
 
 const SHELL = 7;
@@ -51,7 +52,7 @@ export const Battery = ({ look }: { look: BatteryLook }) => {
   const { surface, amplitude } = liquidSurface(box, level, look.wave);
   const time = look.frame / 30;
   const liquidHeight = inner.y + inner.height - surface;
-  const floor = Math.max(0, 1 - level * 4) * (0.82 + 0.18 * Math.sin(time * 2.6));
+  const floor = Math.max(0, 1 - level * 4) * (0.82 + 0.18 * Math.sin((look.clock / 30) * 2.6));
   const glow = look.glow * (0.55 + 0.45 * level);
   const boltSize = Math.round(box.height * 0.075);
   const boltY = box.y + box.height * 0.22 - boltSize / 2;
