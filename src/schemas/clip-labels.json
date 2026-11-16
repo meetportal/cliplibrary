@@ -2478,43 +2478,43 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/billboard-reader.mp4"
   },
   "brand-reveal": {
-    "summary": "On a soft off-white backdrop with a faint drifting light, a small spaced INTRODUCING eyebrow fades up, a brand-blue halo draws itself clockwise from twelve o'clock around a white plate that holds the logo, and the company name rises in letter by letter beside it in a bold, tightly tracked sans, each letter fading from pale grey to black. A small blue dot appears as the halo closes and keeps circling it slowly, the tagline rises in underneath, and the finished lockup holds for four seconds.",
+    "summary": "On a soft off-white backdrop with a faint drifting light, a small spaced INTRODUCING eyebrow and the logo on its white plate are already in place; a brand-blue halo draws itself clockwise from twelve o'clock around the plate, and the company name rises in letter by letter beside it in a bold, tightly tracked sans, each letter easing up from below and slowing to a gentle stop while it fades from pale grey to black. A small blue dot appears as the halo closes and keeps circling it, the tagline drifts up underneath, the whole lockup eases slowly closer through the hold, and the frame blurs and dips to black at the end.",
     "beats": [
       {
         "at": 0.0,
-        "what": "soft off-white backdrop; the INTRODUCING eyebrow fades and rises in above centre"
+        "what": "the INTRODUCING eyebrow and the logo on its white plate are on screen; the lockup begins a slow push in"
       },
       {
-        "at": 0.13,
-        "what": "a thin blue stroke starts drawing clockwise from twelve o'clock, thickening as it goes"
+        "at": 0.33,
+        "what": "a thin blue stroke starts drawing clockwise from twelve o'clock around the plate, thickening as it goes"
       },
       {
-        "at": 0.4,
-        "what": "the first letter of the name rises in beside the halo, grey turning black"
+        "at": 0.47,
+        "what": "the first letter of the name rises up from below beside the halo, grey turning black"
       },
       {
-        "at": 0.5,
-        "what": "the white plate and the logo fade and scale up inside the drawing halo"
-      },
-      {
-        "at": 0.7,
+        "at": 1.0,
         "what": "a small blue dot fades in just outside the halo, riding ahead of the stroke"
       },
       {
-        "at": 1.13,
-        "what": "the halo closes into a full ring around the logo"
-      },
-      {
-        "at": 1.4,
+        "at": 1.37,
         "what": "the last letter of the name starts rising in"
       },
       {
-        "at": 1.5,
-        "what": "the tagline rises and fades in under the lockup"
+        "at": 1.43,
+        "what": "the halo closes into a full ring around the logo"
       },
       {
-        "at": 2.1,
-        "what": "the full lockup holds while the dot circles the halo slowly and the light drifts"
+        "at": 1.77,
+        "what": "the tagline drifts up and fades in under the lockup"
+      },
+      {
+        "at": 2.43,
+        "what": "the finished lockup holds while it keeps easing closer, the dot circles the halo and the light drifts"
+      },
+      {
+        "at": 4.4,
+        "what": "the lockup blurs as the whole frame dips smoothly to near black"
       }
     ],
     "visuals": [
@@ -2527,13 +2527,13 @@
       "grey tagline line"
     ],
     "motion": [
-      "eyebrow fade and rise",
       "clockwise ring draw",
-      "plate and logo fade and scale up",
-      "letter by letter rise and fade",
-      "tagline rise",
+      "letter by letter rise and fade, eased from rest",
+      "tagline drift up",
+      "slow push in on the halo and name",
       "slow orbiting dot",
-      "slow light drift"
+      "slow light drift",
+      "blur and dip to black at the end"
     ],
     "mood": ["calm", "clean", "confident", "modern", "premium"],
     "roles": ["opener", "closer", "cta"],
@@ -2549,12 +2549,12 @@
       "tagline",
       "eyebrow word",
       "name font and size",
-      "halo, text, secondary, plate and background colours",
+      "halo, text, secondary, plate, background and end fade colours",
       "halo size, thickness and widest pill",
       "orbiting dot size, distance, speed or off",
       "eyebrow and tagline sizes and spacing",
-      "draw length, letter stagger and tagline delay",
-      "vertical position and light drift"
+      "draw length, letter stagger, tagline delay, end fade length and end blur",
+      "vertical position, push in and light drift"
     ],
     "palette": ["#f6f6f3", "#dcdcd5", "#3157e6", "#111214", "#6c6c72", "#ffffff"],
     "keywords": [
@@ -2574,7 +2574,7 @@
       "app launch",
       "letter rise"
     ],
-    "concept": "One quiet lockup that assembles in under two seconds: an INTRODUCING eyebrow, a brand-coloured halo drawing itself around the logo, the name rising in letter by letter beside it and the tagline settling below, so the brand lands as a single confident line on a calm backdrop. Copy is short and assured: the name, then one plain sentence about what it does.",
+    "concept": "One quiet lockup that assembles in about two and a half seconds: the logo and an INTRODUCING eyebrow open the frame, a brand-coloured halo draws itself around the logo, the name rises in letter by letter beside it and the tagline settles below, so the brand lands as a single confident line on a calm backdrop, holds while it eases closer, then blurs and dips to black. Copy is short and assured: the name, then one plain sentence about what it does.",
     "needs": ["logo", "company name", "tagline"],
     "placeholders": {
       "Logo": {
