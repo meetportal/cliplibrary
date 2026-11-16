@@ -1,14 +1,14 @@
 import { Easing, useCurrentFrame } from 'remotion';
 import type { CirclePopProps } from '@/schemas';
-import { squigglePath } from './blob';
+import { squiggleLength, squigglePath } from './blob';
 import { LINE_FACE } from './fonts';
 import { pixelTween } from './pixel-tween';
-import type { CirclePopBeat } from './timeline';
+import { type CirclePopBeat, RISE_FRAMES } from './timeline';
 
-const RISE = 44;
+const RISE = 48;
 const SQUIGGLE_HEIGHT = 22;
 const SQUIGGLE_STROKE = 9;
-const settle = Easing.bezier(0.22, 0.9, 0.3, 1);
+const DRAW_FADE = 3;
 
 export const TagLine = ({
   text,
@@ -30,12 +30,18 @@ export const TagLine = ({
   lineAt: number;
 }) => {
   const frame = useCurrentFrame();
-  const shown = beat.lineIn * (1 - beat.lineOut);
+  const shown = beat.lineIn;
   if (shown <= 0 || text.trim() === '') {
     return null;
   }
-  const rise = RISE - pixelTween(frame, [lineAt, lineAt + 18], 0, RISE, settle);
-  const draw = beat.drawIn - beat.lineOut;
+  const rise =
+    RISE - pixelTween(frame, [lineAt, lineAt + RISE_FRAMES], 0, RISE, Easing.out(Easing.quad));
+  const shortest = Math.min(
+    1,
+    (3 * SQUIGGLE_STROKE) / squiggleLength(settings.squiggleWidth, SQUIGGLE_HEIGHT),
+  );
+  const draw = beat.drawIn > 0 ? shortest + (1 - shortest) * beat.drawIn : 0;
+  const drawOpacity = Math.min(1, (frame - lineAt - 2) / DRAW_FADE);
   const pad = SQUIGGLE_STROKE;
   return (
     <div
@@ -64,7 +70,7 @@ export const TagLine = ({
       >
         {text}
       </div>
-      {settings.squiggle && draw > 0.01 ? (
+      {settings.squiggle && draw > 0 ? (
         <svg
           width={settings.squiggleWidth + 2 * pad}
           height={SQUIGGLE_HEIGHT + 2 * pad}
@@ -72,6 +78,7 @@ export const TagLine = ({
         >
           <title>Squiggle</title>
           <path
+            opacity={drawOpacity}
             d={squigglePath(settings.squiggleWidth, SQUIGGLE_HEIGHT, beat.squiggle)}
             fill="none"
             stroke={accent}

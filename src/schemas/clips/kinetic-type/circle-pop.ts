@@ -64,20 +64,20 @@ export const circlePopDefaults: CirclePopProps = {
   circle: { size: 430, lobes: 7, wobble: 0.055, wobbleSpeed: 1, echo: 0.16 },
   ripple: { show: true, width: 8, reach: 1.9 },
   line: { size: 56, gap: 64, squiggle: true, squiggleWidth: 300 },
-  timing: { popFrames: 14, floodAt: 50, floodFrames: 12, collapseFrames: 28 },
+  timing: { popFrames: 18, floodAt: 44, floodFrames: 16, collapseFrames: 16 },
 };
 
 export const circlePopMeta: ClipMeta = {
   id: 'circle-pop',
   title: 'Circle Pop',
   description:
-    'Your company name pops in on a small off-white circle with a Primary ripple ring, the circle turns into a wobbling blob, then bursts to flood the screen so the tilted name fills the frame, a tagline rises in over a waving Primary squiggle, and the field shrinks back into the circle so it loops.',
+    'Your company name pops in on a small off-white circle with a Primary ripple ring, the circle turns into a wobbling blob, then bursts to flood the screen so the tilted name fills the frame, a tagline rises in over a waving Primary squiggle, and the filled frame pushes slowly closer before it dips to the background colour.',
   theme: 'dark',
   source: 'src/compositions/scenes/kinetic-type/circle-pop.tsx',
   category: 'kinetic-type',
   tags: ['kinetic', 'headline', 'text', 'zoom', 'reveal', 'minimal', 'cover'],
-  durationInFrames: 180,
-  posterFrame: 118,
+  durationInFrames: 150,
+  posterFrame: 112,
   fps: 30,
   width: 1080,
   height: 1920,

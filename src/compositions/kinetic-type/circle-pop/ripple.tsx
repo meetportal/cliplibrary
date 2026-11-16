@@ -24,8 +24,7 @@ export const Ripple = ({
   if (progress <= 0 || progress >= 1) {
     return null;
   }
-  const eased = 1 - (1 - progress) ** 3;
-  const thickness = strokeWidth * (1 - progress) ** 1.4;
+  const thickness = strokeWidth * Math.min(1, progress / 0.12) * (1 - progress);
   if (thickness < 0.3) {
     return null;
   }
@@ -40,7 +39,7 @@ export const Ripple = ({
       <circle
         cx={cx}
         cy={cy}
-        r={lerp(from, to, eased)}
+        r={lerp(from, to, progress)}
         fill="none"
         stroke={color}
         strokeWidth={thickness}
