@@ -2018,35 +2018,39 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/app-icon-reveal.mp4"
   },
   "arch-save-the-date": {
-    "summary": "A pink Mughal palace save the date: the camera glides down a corridor of scalloped pink arches hung with jasmine strings, rosettes and two-tier crystal chandeliers, settling on the last arch that frames a sunny terrace of hills, agave leaves, a cream balustrade and roses. Once the last arch's sky surrounds it, a script Save the Date fades in with flourishes that draw out to both sides while small birds cross high in the sky, then the line above the names, the couple's names in capitals, the date, the venue, a sign-off and the hosts in script write in line by line over a soft haze while the sky warms to a sunset glow.",
+    "summary": "A pink Mughal palace save the date: the camera glides down a corridor of scalloped pink arches hung with jasmine strings, rosettes and two-tier crystal chandeliers on a long ease-out and keeps creeping toward the last arch, which frames a sunny terrace of hills, agave leaves, a cream balustrade and roses. Once the last arch's sky surrounds it, a script Save the Date rises in with flourishes that draw out to both sides while small birds cross high in the sky, then the line above the names, the couple's names in capitals, the date, the venue, a sign-off and the hosts in script write in line by line, each rising slightly, over a soft haze while the sky warms to a sunset glow; the card and arch keep drifting slowly closer, ever slower, until the frame dips to black.",
     "beats": [
       {
         "at": 0.0,
-        "what": "the camera is already gliding in on a long ease-out, one nearer arch with its chandelier framing the last arch, whose sky, hills, balustrade and roses are already in view"
+        "what": "the camera is already gliding in, one nearer arch with its chandelier framing the last arch, whose sky, hills, balustrade and roses are already in view"
       },
       {
         "at": 1.0,
-        "what": "the nearer arch sweeps up and out of frame as the last arch grows to fill the screen"
+        "what": "the nearer arch sweeps up and out of frame as the last arch grows on a long glide that only ever slows"
       },
       {
-        "at": 1.9,
-        "what": "Save the Date in plum script fades in on the sky inside the last arch while the glide is still settling; small birds start crossing high in the sky"
+        "at": 2.5,
+        "what": "Save the Date in plum script fades and rises into the sky inside the last arch while the glide is still settling"
       },
       {
-        "at": 2.6,
-        "what": "fine flourishes draw out from the script to both sides, inside the sky"
+        "at": 3.1,
+        "what": "fine flourishes draw out from the script to both sides, inside the sky, as small birds start crossing high in the sky"
       },
       {
-        "at": 3.4,
-        "what": "the line above the names, then the couple's names, the date and the venue write in left to right, one line after another, over a soft haze"
+        "at": 5.0,
+        "what": "the line above the names, then the couple's names, the date and the venue write in left to right, each rising a little, one line after another over a soft haze"
       },
       {
-        "at": 4.9,
-        "what": "the sign-off and the hosts in script finish the card as the glide comes softly to rest"
+        "at": 6.3,
+        "what": "the sign-off and the hosts in script finish the card as the glide eases into a slow push"
       },
       {
-        "at": 6.0,
-        "what": "the finished card holds while the clouds drift, the jasmine and chandeliers sway, birds cross and the sky warms to a pink sunset glow"
+        "at": 7.5,
+        "what": "the finished card and its arch drift a few percent closer, slower and slower, while the clouds drift, the jasmine and chandeliers sway and the sky warms to a pink sunset glow"
+      },
+      {
+        "at": 12.5,
+        "what": "the whole frame dips to black over the last half second"
       }
     ],
     "visuals": [
@@ -2062,12 +2066,14 @@
     ],
     "motion": [
       "camera glide through a row of arches",
-      "script fade in",
+      "slow push in through the hold",
+      "script rise and fade in",
       "flourishes drawing",
-      "left to right line writing",
+      "left to right line writing with a slight rise",
       "drifting clouds and flying birds",
       "swaying jasmine and chandeliers",
-      "sky warming to sunset"
+      "sky warming to sunset",
+      "dip to black at the end"
     ],
     "mood": ["romantic", "royal", "joyful", "warm"],
     "roles": ["opener", "feature", "closer"],
@@ -2088,10 +2094,10 @@
       "arch, script, text and sky colors",
       "greenery, flower, stone, crystal, gold and jasmine colors",
       "script and capitals fonts and sizes",
-      "number of arches and glide length",
+      "number of arches, glide length and slow push",
       "chandeliers, jasmine strings and rosettes",
       "sunset glow, birds and cloud drift",
-      "title, flourish and line timing"
+      "title, flourish and line timing, rise and end fade"
     ],
     "palette": ["#e3949b", "#7d2148", "#8db5df", "#7dbb72", "#f5f1de", "#dfeaf5"],
     "keywords": [
@@ -2108,7 +2114,7 @@
       "terrace",
       "destination wedding"
     ],
-    "concept": "A royal pink palace save the date: the camera glides down a corridor of scalloped arches, jasmine and chandeliers toward a sunlit terrace, so the viewer arrives at the celebration, and the last arch becomes the frame for the card. Save the Date lands in script only once the last arch's sky surrounds it, its flourishes stay inside that sky, then the couple, date, venue and hosts write in calmly one line at a time as the camera settles, and the card holds as the sky warms. The copy is warm, formal and family-signed.",
+    "concept": "A royal pink palace save the date: the camera glides down a corridor of scalloped arches, jasmine and chandeliers toward a sunlit terrace, so the viewer arrives at the celebration, and the last arch becomes the frame for the card. Save the Date rises in on script only once the last arch's sky surrounds it, its flourishes stay inside that sky, then the couple, date, venue and hosts write in calmly one line at a time as the glide settles into a slow push, and the card drifts closer as the sky warms before a soft dip to black. The copy is warm, formal and family-signed.",
     "needs": [
       "names of the couple",
       "wedding date",
