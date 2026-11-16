@@ -3,11 +3,18 @@ import { Img } from 'remotion';
 import type { AppIconRevealProps } from '@/schemas';
 import { resolveCustom } from '../../kit/resolve-custom';
 import { alpha, mix } from './color';
-import { entrance, flipAngle, floatOffset, shineProgress, type Timeline } from './timeline';
+import { driftOffset, entrance, flipAngle, shineProgress, type Timeline } from './timeline';
 import { usableImage } from './use-logo-aspect';
 
 const EDGE_SHADE = 0.24;
-const TURN_SHADE = 0.2;
+const TURN_SHADE = 1;
+const TURN_SHADE_MAX = 0.6;
+const GRAZING_EDGE = 0.4;
+const RISE = 1.3;
+const EDGE_TINT = 0.35;
+const TURN_SHADE_POWER = 2;
+const HOVER_SCALE = 0.6;
+const SHADOW_FOLLOW = 1.6;
 
 const Logo = ({
   props,
@@ -92,18 +99,23 @@ export const Tile = ({
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
   const front = angle > Math.PI / 2;
-  const enter = entrance(frame);
   const lift = sin * life.lift;
-  const scale = enter.scale * (1 + lift);
-  const float = floatOffset(frame, line, life.float);
+  const drift = driftOffset(frame, life.float);
+  const rise = size * life.lift * RISE * (1 - angle / Math.PI);
+  const float = drift.y;
+  const hover = (-float / Math.max(1, size)) * HOVER_SCALE;
+  const scale = entrance(frame) * (1 + lift + hover);
   const faceWidth = tileWidth * Math.abs(cos);
   const edgeWidth = tile.depth * sin;
   const total = Math.max(0.01, faceWidth + edgeWidth);
   const radius = (size * tile.roundness) / 100;
   const radiusX = Math.min(total / 2, (radius * total) / tileWidth);
-  const turnShade = (1 - Math.abs(cos)) * TURN_SHADE;
-  const offsetY = size * (0.07 + lift * 0.6) - float * 0.5;
-  const blur = size * (0.16 + lift * 0.9) - float * 0.4;
+  const turnShade = Math.min(TURN_SHADE_MAX, (1 - Math.abs(cos)) ** TURN_SHADE_POWER * TURN_SHADE);
+  const edgeFace = mix(colors.face, '#000000', EDGE_SHADE);
+  const edgeBack = mix(mix(colors.face, colors.primary, EDGE_TINT), '#000000', EDGE_SHADE);
+  const grazing = mix(colors.background, colors.backgroundEdge, GRAZING_EDGE);
+  const offsetY = size * (0.07 + lift * 0.6) - float * SHADOW_FOLLOW;
+  const blur = size * (0.16 + lift * 0.9) - float * SHADOW_FOLLOW;
   const offsetX = size * (0.035 + sin * 0.07);
   const shadows = [
     `${offsetX.toFixed(1)}px ${offsetY.toFixed(1)}px ${Math.max(0, blur).toFixed(1)}px ${alpha(colors.shadow, tile.shadow * 0.42 * (1 - lift))}`,
@@ -120,7 +132,7 @@ export const Tile = ({
         width: edgeWidth,
         height: '100%',
         flexShrink: 0,
-        backgroundImage: `linear-gradient(90deg, ${mix(colors.primary, '#000000', EDGE_SHADE)} 0 50%, ${mix(colors.face, '#000000', EDGE_SHADE)} 50% 100%)`,
+        backgroundImage: `linear-gradient(90deg, ${edgeFace} 0%, ${edgeBack} 100%)`,
       }}
     />
   );
@@ -166,7 +178,7 @@ export const Tile = ({
           position: 'absolute',
           inset: 0,
           backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.05) 100%)`,
-          backgroundColor: alpha('#000000', turnShade),
+          backgroundColor: alpha(grazing, turnShade),
         }}
       />
     </div>
@@ -183,12 +195,11 @@ export const Tile = ({
         flexDirection: 'row',
         overflow: 'hidden',
         borderRadius: `${radiusX.toFixed(2)}px / ${radius.toFixed(2)}px`,
-        transform: `translateY(${float.toFixed(3)}px) scale(${scale.toFixed(4)})`,
-        opacity: enter.opacity,
+        transform: `translate(${drift.x.toFixed(3)}px, ${(float + rise).toFixed(3)}px) scale(${scale.toFixed(4)})`,
         boxShadow: shadows.join(', '),
       }}
     >
-      {front ? [strip, face] : [face, strip]}
+      {front ? [face, strip] : [strip, face]}
     </div>
   );
 };

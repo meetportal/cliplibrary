@@ -1,6 +1,4 @@
-import { Easing } from 'remotion';
-import { ramp } from '../../kit/motion';
-import { LETTER_FADE, type Timeline } from './timeline';
+import { letterState, type Timeline } from './timeline';
 
 export const NameLine = ({
   frame,
@@ -49,11 +47,13 @@ export const NameLine = ({
         if (!blank) {
           order += 1;
         }
-        const shown = blank ? 1 : ramp(frame, start, start + LETTER_FADE, Easing.linear);
+        const { shown, rise } = blank ? { shown: 1, rise: 0 } : letterState(frame, start, size);
         return (
           <span
             key={`${index}-${char}`}
             style={{
+              display: 'inline-block',
+              transform: rise > 0 ? `translateY(${rise}px)` : undefined,
               opacity: shown,
               filter:
                 shown > 0 && shown < 1 ? `blur(${(3 * (1 - shown)).toFixed(2)}px)` : undefined,
