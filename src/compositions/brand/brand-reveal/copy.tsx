@@ -1,13 +1,9 @@
-import { Easing } from 'remotion';
-import { ramp } from '../../kit/motion';
-import { pixelTween } from '../dot-ring-logo-reveal/pixel-tween';
 import type { Face } from './fonts';
-import { LETTER_FRAMES, settle, type Timeline } from './timeline';
+import { letterIn, type Timeline } from './timeline';
 
-const STEP = 2;
+const LETTER_RISE = 0.3;
 
-const evenTween = (frame: number, range: readonly [number, number], rise: number) =>
-  STEP * pixelTween(frame, range, [Math.round(rise / STEP), 0], settle);
+const offsetStyle = (offset: number) => (offset === 0 ? undefined : `translateY(${offset}px)`);
 
 export const NameLetters = ({
   frame,
@@ -19,6 +15,7 @@ export const NameLetters = ({
   face,
   tracking,
   color,
+  quantum,
 }: {
   frame: number;
   line: Timeline;
@@ -29,8 +26,9 @@ export const NameLetters = ({
   face: Face;
   tracking: number;
   color: string;
+  quantum: number;
 }) => {
-  const rise = Math.round(size * 0.16);
+  const rise = size * LETTER_RISE;
   let order = 0;
   return (
     <div
@@ -49,20 +47,20 @@ export const NameLetters = ({
     >
       {[...text].map((char, index) => {
         const blank = char.trim() === '';
-        const start = Math.round(line.letterStart + order * line.letterGap);
+        const start = line.letterStart + order * line.letterGap;
         if (!blank) {
           order += 1;
         }
-        const end = start + LETTER_FRAMES;
-        const offset = blank ? 0 : evenTween(frame, [start, end], rise);
-        const opacity = blank ? 1 : ramp(frame, start, start + LETTER_FRAMES * 0.75, Easing.linear);
+        const shown = letterIn(frame, start, rise, quantum);
+        const offset = blank ? 0 : shown.offset;
+        const opacity = blank ? 1 : shown.opacity;
         return (
           <span
             key={`${index}-${char}`}
             style={{
               display: 'inline-block',
               opacity,
-              transform: offset === 0 ? undefined : `translateY(${offset}px)`,
+              transform: offsetStyle(offset),
             }}
           >
             {char}
@@ -73,11 +71,9 @@ export const NameLetters = ({
   );
 };
 
-export const RisingLine = ({
-  frame,
-  start,
-  end,
-  rise,
+export const TextLine = ({
+  offset,
+  opacity,
   text,
   top,
   width,
@@ -89,10 +85,8 @@ export const RisingLine = ({
   color,
   upper,
 }: {
-  frame: number;
-  start: number;
-  end: number;
-  rise: number;
+  offset: number;
+  opacity: number;
   text: string;
   top: number;
   width: number;
@@ -104,13 +98,13 @@ export const RisingLine = ({
   color: string;
   upper: boolean;
 }) => {
-  const offset = evenTween(frame, [start, end], rise);
   return (
     <div
       style={{
         position: 'absolute',
         left: Math.round((width - maxWidth) / 2),
-        top: top + offset,
+        top,
+        transform: offsetStyle(offset),
         width: maxWidth,
         textAlign: 'center',
         textWrap: 'balance',
@@ -121,7 +115,7 @@ export const RisingLine = ({
         letterSpacing: `${tracking}em`,
         textTransform: upper ? 'uppercase' : undefined,
         color,
-        opacity: ramp(frame, start, end, Easing.out(Easing.quad)),
+        opacity,
       }}
     >
       {text}

@@ -4,7 +4,7 @@ import { ramp } from '../../kit/motion';
 import { resolveCustom } from '../../kit/resolve-custom';
 import { type PlateSize, stadiumPath, stadiumPoint } from './geometry';
 import { visibleInk } from './ink';
-import { drawProgress, plateIn, ringClosed, ringDash, type Timeline } from './timeline';
+import { drawProgress, ringClosed, ringDash, strokeGrow, type Timeline } from './timeline';
 
 const DOT_LEAD = 0.02;
 
@@ -42,9 +42,8 @@ export const Halo = ({
   const ink = visibleInk(colors.primary, colors.background);
   const progress = drawProgress(frame, line);
   const closed = ringClosed(progress);
-  const grow = ramp(progress, 0, 0.35);
+  const grow = strokeGrow(progress);
   const strokeWidth = halo.thickness * (0.35 + 0.65 * grow);
-  const shown = plateIn(frame, line);
   const elapsed = Math.max(0, frame - line.ringStart) / fps;
   const dotAt = progress + DOT_LEAD + (dot.orbit / 360) * elapsed;
   const dotPoint = stadiumPoint({ ...local, radius: dotRadius }, dotAt);
@@ -67,14 +66,7 @@ export const Halo = ({
         aria-hidden="true"
         style={{ position: 'absolute', left: 0, top: 0, overflow: 'visible' }}
       >
-        {logo === null ? null : (
-          <path
-            d={plateShape}
-            fill={colors.plate}
-            opacity={shown.opacity}
-            transform={`translate(${local.cx} ${local.cy}) scale(${shown.scale}) translate(${-local.cx} ${-local.cy})`}
-          />
-        )}
+        {logo === null ? null : <path d={plateShape} fill={colors.plate} />}
         {progress <= 0 ? null : (
           <path
             d={stadiumPath({ ...local, radius: ringRadius })}
@@ -106,8 +98,6 @@ export const Halo = ({
             width: plate.logoWidth,
             height: plate.logoHeight,
             objectFit: 'contain',
-            opacity: shown.opacity,
-            transform: `scale(${shown.scale})`,
           }}
         />
       )}

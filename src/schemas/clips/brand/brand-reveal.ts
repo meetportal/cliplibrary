@@ -19,6 +19,7 @@ export const brandRevealSchema = z.object({
     plate: zColor(),
     background: zColor(),
     backgroundEdge: zColor(),
+    fade: zColor(),
   }),
   showBackground: z.boolean(),
   halo: z.object({
@@ -54,12 +55,15 @@ export const brandRevealSchema = z.object({
   layout: z.object({
     offsetY: zSlider({ min: -300, max: 300, step: 2 }),
     lightDrift: zSlider({ min: 0, max: 400, step: 2 }),
+    pushIn: zSlider({ min: 0, max: 0.1, step: 0.005 }),
   }),
   timing: z.object({
     start: zSlider({ min: 0, max: 30 }),
     drawFrames: zSlider({ min: 14, max: 60 }),
     letterFrames: zSlider({ min: 1, max: 6, step: 0.5 }),
     taglineDelay: zSlider({ min: 0, max: 30 }),
+    exitFrames: zSlider({ min: 0, max: 30 }),
+    exitBlur: zSlider({ min: 0, max: 30 }),
   }),
 });
 
@@ -78,6 +82,7 @@ export const brandRevealDefaults: BrandRevealProps = {
     plate: '#ffffff',
     background: '#f6f6f3',
     backgroundEdge: '#dcdcd5',
+    fade: '#0b0b0c',
   },
   showBackground: true,
   halo: { size: 176, thickness: 12, gap: 9, logoPadding: 13, widest: 2.6 },
@@ -85,21 +90,28 @@ export const brandRevealDefaults: BrandRevealProps = {
   name: { font: 'inter-tight', size: 176, tracking: -0.045, gap: 64, maxWidth: 1640 },
   eyebrowStyle: { size: 22, tracking: 0.32, gap: 26 },
   taglineStyle: { size: 36, gap: 30, maxWidth: 1240 },
-  layout: { offsetY: -24, lightDrift: 260 },
-  timing: { start: 0, drawFrames: 30, letterFrames: 3, taglineDelay: 4 },
+  layout: { offsetY: -24, lightDrift: 260, pushIn: 0.08 },
+  timing: {
+    start: 0,
+    drawFrames: 34,
+    letterFrames: 3,
+    taglineDelay: 12,
+    exitFrames: 18,
+    exitBlur: 14,
+  },
 };
 
 export const brandRevealMeta: ClipMeta = {
   id: 'brand-reveal',
   title: 'Brand Reveal',
   description:
-    'A calm introduction: a brand-coloured halo draws itself around your logo while your name rises in letter by letter beside it, with an eyebrow above and your tagline below.',
+    'A calm introduction: a brand-coloured halo draws itself around your logo while your name rises in letter by letter beside it, with an eyebrow above and your tagline below, then the lockup eases closer, blurs and dips to black.',
   theme: 'light',
   source: 'src/compositions/scenes/brand/brand-reveal.tsx',
   category: 'brand',
   tags: ['logo', 'reveal', 'draw', 'minimal', 'end-card'],
-  durationInFrames: 180,
-  posterFrame: 120,
+  durationInFrames: 150,
+  posterFrame: 100,
   fps: 30,
   width: 1920,
   height: 1080,

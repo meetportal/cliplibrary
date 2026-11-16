@@ -61,6 +61,11 @@ export const brandRevealControls = defineControls<BrandRevealProps>({
         { path: 'colors.background', label: 'Background centre' },
         { path: 'colors.backgroundEdge', label: 'Background edges' },
         {
+          path: 'colors.fade',
+          label: 'End fade color',
+          hint: 'The colour the whole frame dips to at the end, with the background on',
+        },
+        {
           path: 'showBackground',
           label: 'Show background',
           hint: 'Turn off to layer the reveal over another clip',
@@ -147,7 +152,7 @@ export const brandRevealControls = defineControls<BrandRevealProps>({
         {
           path: 'timing.drawFrames',
           label: 'Halo draw length',
-          hint: 'In frames for a round halo; a pill around a wide logo takes a little longer',
+          hint: 'In frames for a round halo; a pill around a wide logo takes longer so the stroke keeps the same speed',
         },
         {
           path: 'layout.offsetY',
@@ -159,7 +164,7 @@ export const brandRevealControls = defineControls<BrandRevealProps>({
         {
           path: 'timing.start',
           label: 'Start',
-          hint: 'Frame number when the eyebrow appears; the halo starts 4 frames later',
+          hint: 'Delay in frames before the halo starts drawing; at 0 it starts 10 frames in',
         },
         {
           path: 'timing.letterFrames',
@@ -170,6 +175,21 @@ export const brandRevealControls = defineControls<BrandRevealProps>({
           path: 'timing.taglineDelay',
           label: 'Tagline delay',
           hint: 'Frames after the last letter starts',
+        },
+        {
+          path: 'timing.exitFrames',
+          label: 'End fade',
+          hint: 'In frames, the dip out at the very end; 0 holds the finished lockup',
+        },
+        {
+          path: 'timing.exitBlur',
+          label: 'End blur',
+          hint: 'In pixels, how soft the lockup goes as it dips out; 0 keeps it sharp',
+        },
+        {
+          path: 'layout.pushIn',
+          label: 'Push in',
+          hint: 'How much closer the lockup eases over the whole clip, as a share of its size; 0 holds it still',
         },
         {
           path: 'layout.lightDrift',
