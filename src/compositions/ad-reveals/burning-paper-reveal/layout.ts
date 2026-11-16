@@ -132,3 +132,21 @@ export const cardLayout = (
     ...brand,
   };
 };
+
+const CONTENT_LEAD = 72;
+
+export const burnFromContent = (
+  burn: BurningPaperRevealProps['burn'],
+  layout: CardLayout,
+): BurningPaperRevealProps['burn'] => {
+  const contentLeft = Math.min(
+    layout.intro.left,
+    layout.headline.left,
+    layout.name.left,
+    layout.logo?.left ?? Number.POSITIVE_INFINITY,
+  );
+  return {
+    ...burn,
+    startAt: Math.max(burn.startAt, (contentLeft + CONTENT_LEAD) / CARD.width),
+  };
+};

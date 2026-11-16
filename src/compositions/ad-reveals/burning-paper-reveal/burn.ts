@@ -6,15 +6,12 @@ export const CARD_CENTER = { x: 556, y: 990 } as const;
 
 const EDGE_STEP = 4;
 const OVERRUN = 70;
-const EASE_IN = 10;
-const EASE_IN_FLOOR = 0.4;
 const DIE_LEAD = 0.2;
-const DIE_SECONDS = 4.2;
+const DIE_SECONDS = 3.8;
 const CHAR_SECONDS = 1.5;
-const PULL_TAIL = 3;
 const CLIP_SLACK = 60;
 const SMOLDER = 0.7;
-const SMOLDER_SECONDS = 6;
+const SMOLDER_SECONDS = 4.5;
 
 type Burn = BurningPaperRevealProps['burn'];
 
@@ -40,22 +37,30 @@ const progress = (
 
 const sweepFrames = (burn: Burn, fps: number) => Math.max(1, Math.round(burn.sweepSeconds * fps));
 
+const burnEase = Easing.bezier(0.22, 0, 0.45, 1);
+
+const easeInverse = (target: number) => {
+  let low = 0;
+  let high = 1;
+  for (let step = 0; step < 32; step += 1) {
+    const mid = (low + high) / 2;
+    if (burnEase(mid) < target) {
+      low = mid;
+    } else {
+      high = mid;
+    }
+  }
+  return (low + high) / 2;
+};
+
 const frontAt = (frame: number, burn: Burn, reach: number) => {
   const start = burn.startAt * CARD.width;
   const edge = CARD.width + Math.abs(burn.slant) / 2;
   const end = CARD.width + OVERRUN + Math.abs(burn.slant) / 2 + burn.jag * 34;
-  const lead = EASE_IN * (1 + EASE_IN_FLOOR) * 0.5;
-  const speed = Math.max(0, edge - start) / Math.max(1, reach - EASE_IN + lead);
-  const f = Math.max(0, frame);
-  if (f < EASE_IN) {
-    return start + speed * (EASE_IN_FLOOR * f + ((1 - EASE_IN_FLOOR) * f * f) / (2 * EASE_IN));
-  }
-  if (f <= reach) {
-    return start + speed * (lead + f - EASE_IN);
-  }
-  const stop = (2 * (end - edge)) / Math.max(speed, 0.01);
-  const t = Math.min(f - reach, stop);
-  return edge + speed * t - (speed * t * t) / (2 * stop);
+  const share = easeInverse(Math.max(0, edge - start) / Math.max(1, end - start));
+  const total = reach / Math.max(0.05, share);
+  const t = Math.min(1, Math.max(0, frame) / total);
+  return start + (end - start) * burnEase(t);
 };
 
 export const burnAt = (frame: number, burn: Burn, fps: number): BurnState => {
@@ -78,12 +83,25 @@ export const burnAt = (frame: number, burn: Burn, fps: number): BurnState => {
   };
 };
 
-export const cameraScale = (frame: number, pullBack: number, burn: Burn, fps: number) => {
-  const end = sweepFrames(burn, fps) + PULL_TAIL * fps;
-  return 1 + pullBack * (1 - progress(frame, 0, end, Easing.out(Easing.cubic)));
+const cameraEase = Easing.bezier(0.2, 0, 0.62, 1);
+const ROLL_PER_PULL = 4;
+const BACKDROP_SHARE = 0.6;
+
+export const CAMERA_ORIGIN = {
+  x: CARD_CENTER.x - CARD.width / 2,
+  y: CARD_CENTER.y - CARD.height / 2,
+} as const;
+
+export const cameraAt = (frame: number, pullBack: number, duration: number) => {
+  const rest = 1 - progress(frame, 0, duration - 1, cameraEase);
+  return {
+    scale: 1 + pullBack * rest,
+    roll: -ROLL_PER_PULL * pullBack * rest,
+    backdrop: 1 + BACKDROP_SHARE * pullBack * rest,
+  };
 };
 
-const BOTTOM_LEAD = 0.62;
+const BOTTOM_LEAD = 0.4;
 
 export const tongueLife = (dying: number, bottomness: number) => {
   const start = (1 - bottomness) * BOTTOM_LEAD;

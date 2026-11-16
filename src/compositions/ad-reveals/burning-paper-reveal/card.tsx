@@ -2,9 +2,10 @@ import { useId } from 'react';
 import { Img } from 'remotion';
 import { resolveCustom } from '../../kit/resolve-custom';
 import { CARD, hash } from './burn';
+import { CanvasText } from './canvas-text';
 import { alpha, mixLab } from './color';
-import { type Face, HEADLINE_FACE, NAME_FACE, SCRIPT_FACE } from './fonts';
-import type { CardLayout, Line } from './layout';
+import { HEADLINE_FACE, NAME_FACE, SCRIPT_FACE } from './fonts';
+import type { CardLayout } from './layout';
 import { type LogoBox, usableImage } from './use-logo-aspect';
 
 export type CardLook = {
@@ -20,46 +21,12 @@ export type CardLook = {
   glow: number;
   front: number;
   heat: number;
+  detail: number;
 };
 
 const SCRIPT_TILT = -4;
 const PLATE_PAD = 10;
 const FULL_BOX: LogoBox = { x: 0, y: 0, w: 1, h: 1 };
-
-const Text = ({
-  line,
-  face,
-  color,
-  tilt = 0,
-  pivot = 'left bottom',
-  tracking = 0,
-}: {
-  line: Line;
-  face: Face;
-  color: string;
-  tilt?: number;
-  pivot?: string;
-  tracking?: number;
-}) => (
-  <div
-    style={{
-      position: 'absolute',
-      left: line.left,
-      top: line.top,
-      fontFamily: face.family,
-      fontWeight: face.weight,
-      fontSize: line.size,
-      lineHeight: 1,
-      letterSpacing: `${tracking}em`,
-      color,
-      whiteSpace: 'nowrap',
-      transform: tilt === 0 ? undefined : `rotate(${tilt}deg)`,
-      transformOrigin: pivot,
-    }}
-  >
-    {line.text}
-  </div>
-);
 
 const BLOTCHES = Array.from({ length: 46 }, (_, index) => ({
   key: index,
@@ -171,8 +138,19 @@ export const Card = ({
           boxSizing: 'border-box',
         }}
       />
-      <Text line={layout.intro} face={SCRIPT_FACE} color={look.accent} tilt={SCRIPT_TILT} />
-      <Text line={layout.headline} face={HEADLINE_FACE} color={look.text} />
+      <CanvasText
+        line={layout.intro}
+        face={SCRIPT_FACE}
+        color={look.accent}
+        detail={look.detail}
+        tilt={SCRIPT_TILT}
+      />
+      <CanvasText
+        line={layout.headline}
+        face={HEADLINE_FACE}
+        color={look.text}
+        detail={look.detail}
+      />
       <svg
         aria-hidden="true"
         width={CARD.width}
@@ -187,10 +165,11 @@ export const Card = ({
           fill="none"
         />
       </svg>
-      <Text
+      <CanvasText
         line={layout.accent}
         face={SCRIPT_FACE}
         color={look.accent}
+        detail={look.detail}
         tilt={SCRIPT_TILT}
         pivot="right top"
       />
@@ -223,6 +202,8 @@ export const Card = ({
               src={resolveCustom(look.logo)}
               style={{
                 position: 'absolute',
+                maxWidth: 'none',
+                maxHeight: 'none',
                 left: (-box.x * logo.width) / box.w,
                 top: (-box.y * logo.height) / box.h,
                 width: logo.width / box.w,
@@ -232,7 +213,13 @@ export const Card = ({
           </div>
         </>
       ) : null}
-      <Text line={layout.name} face={NAME_FACE} color={look.text} tracking={layout.name.tracking} />
+      <CanvasText
+        line={layout.name}
+        face={NAME_FACE}
+        color={look.text}
+        detail={look.detail}
+        tracking={layout.name.tracking}
+      />
       <Heat look={look} />
     </div>
   );
