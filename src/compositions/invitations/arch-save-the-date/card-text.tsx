@@ -1,66 +1,41 @@
-import type { CSSProperties } from 'react';
 import { Easing } from 'remotion';
 import type { ArchSaveTheDateProps } from '@/schemas';
 import { ramp } from '../../kit/motion';
-import { type Faces, fontSpec } from './fonts';
+import { CanvasLine } from './canvas-line';
+import type { Faces } from './fonts';
 import { CENTER_X } from './geometry';
 import type { Layout, Row } from './layout';
-import type { Cues } from './timeline';
-
-const FEATHER = 5;
-
-const lineBox = (y: number, height: number): CSSProperties => ({
-  position: 'absolute',
-  left: 0,
-  width: CENTER_X * 2,
-  top: y,
-  height,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  whiteSpace: 'pre',
-});
-
-const WipedLine = ({ text, progress }: { text: string; progress: number }) => {
-  const chars = Array.from(text);
-  const head = progress * (chars.length + FEATHER);
-  return (
-    <>
-      {chars.map((char, index) => (
-        <span key={index} style={{ opacity: Math.min(1, Math.max(0, (head - index) / FEATHER)) }}>
-          {char}
-        </span>
-      ))}
-    </>
-  );
-};
+import { type Cues, entrance, lineRise } from './timeline';
 
 const DetailRow = ({
   row,
   color,
-  progress,
+  line: lineAt,
 }: {
   row: Row;
   color: string;
-  progress: (line: number) => number;
+  line: (line: number) => { reveal: number; offset: number };
 }) => (
   <>
     {row.lines.map((line, index) => {
       const height = row.size * row.lineHeight;
+      const motion = lineAt(index);
       return (
-        <div
+        <CanvasLine
           key={index}
-          style={{
-            ...lineBox(row.y + index * height, height),
-            font: fontSpec(row.font, row.size),
-            letterSpacing: `${row.tracking}em`,
-            textTransform: row.caps ? 'uppercase' : 'none',
+          look={{
+            text: row.caps ? line.toUpperCase() : line,
+            face: row.font,
+            size: row.size,
+            tracking: row.tracking,
             color,
-            lineHeight: 1,
+            top: row.y + index * height,
+            height,
           }}
-        >
-          <WipedLine text={line} progress={progress(index)} />
-        </div>
+          offset={motion.offset}
+          opacity={1}
+          reveal={motion.reveal}
+        />
       );
     })}
   </>
@@ -77,11 +52,13 @@ const Flourish = ({
   scale,
   color,
   draw,
+  offset,
 }: {
   y: number;
   scale: number;
   color: string;
   draw: number;
+  offset: number;
 }) => {
   const side = (mirror: boolean) => (
     <g transform={mirror ? `translate(${CENTER_X * 2} 0) scale(-1 1)` : undefined}>
@@ -110,7 +87,7 @@ const Flourish = ({
       style={{ position: 'absolute', left: 0, top: y - 200, overflow: 'visible' }}
     >
       <g
-        transform={`translate(${CENTER_X} 0) scale(${scale}) translate(${-CENTER_X} 0)`}
+        transform={`translate(0 ${offset.toFixed(3)}) translate(${CENTER_X} 0) scale(${scale}) translate(${-CENTER_X} 0)`}
         opacity={Math.min(1, draw * 6)}
       >
         {side(false)}
@@ -133,13 +110,8 @@ export const CardText = ({
   frame: number;
   cues: Cues;
 }) => {
-  const { timing, colors } = props;
-  const titleOpacity = ramp(
-    frame,
-    cues.title,
-    cues.title + timing.titleFrames,
-    Easing.inOut(Easing.quad),
-  );
+  const { timing, colors, lettering } = props;
+  const titleIn = entrance(frame, cues.title, timing.titleFrames, lettering.rise);
   const draw = ramp(
     frame,
     cues.flourish,
@@ -148,28 +120,33 @@ export const CardText = ({
   );
   const { title } = layout;
   const titleLine = (part: Title['top'], key: string) => (
-    <div
+    <CanvasLine
       key={key}
-      style={{
-        ...lineBox(part.y, part.size),
-        font: fontSpec(faces.script, part.size),
+      look={{
+        text: part.text,
+        face: faces.script,
+        size: part.size,
+        tracking: 0,
         color: colors.script,
-        lineHeight: 1,
-        opacity: titleOpacity,
+        top: part.y,
+        height: part.size,
       }}
-    >
-      {part.text}
-    </div>
+      offset={titleIn.offset}
+      opacity={titleIn.opacity}
+      reveal={1}
+    />
   );
+  const detailRise = lineRise(lettering.rise);
   let lineIndex = 0;
   return (
     <>
       {props.words.saveJoiner.trim() === '' ? null : (
         <Flourish
           y={title.joiner.y + title.joiner.size * 0.5}
-          scale={props.lettering.titleSize / 172}
+          scale={lettering.titleSize / 172}
           color={colors.script}
           draw={draw}
+          offset={titleIn.offset}
         />
       )}
       {titleLine(title.top, 'top')}
@@ -183,9 +160,12 @@ export const CardText = ({
             key={row.key}
             row={row}
             color={row.color === 'script' ? colors.script : colors.text}
-            progress={(line) => {
+            line={(line) => {
               const start = cues.details + (first + line) * timing.lineStagger;
-              return ramp(frame, start, start + timing.wipeFrames, Easing.inOut(Easing.sin));
+              return {
+                reveal: ramp(frame, start, start + timing.wipeFrames, Easing.inOut(Easing.sin)),
+                offset: entrance(frame, start, timing.wipeFrames, detailRise).offset,
+              };
             }}
           />
         );

@@ -7,10 +7,18 @@ import { CardText } from './card-text';
 import { ChandelierDefs } from './chandelier';
 import { canvasMeasurer, facesOf, useFontsReady } from './fonts';
 import { Garden } from './garden';
-import { aboutVanish, archDepth, dollyAt, scaleAtDepth, terraceScale } from './geometry';
+import {
+  aboutVanish,
+  archDepth,
+  cardScale,
+  dollyAt,
+  scaleAtDepth,
+  terraceScale,
+  VANISH_Y,
+} from './geometry';
 import { buildLayout } from './layout';
 import { Birds, Haze, Sky } from './sky';
-import { buildCues } from './timeline';
+import { buildCues, cameraOf, exitAmount } from './timeline';
 
 export const ArchSaveTheDate = (props: ArchSaveTheDateProps) => {
   const frame = useCurrentFrame();
@@ -23,14 +31,17 @@ export const ArchSaveTheDate = (props: ArchSaveTheDateProps) => {
   );
   const { arcade, colors } = props;
   const arches = Math.max(1, Math.round(arcade.arches));
-  const dolly = dollyAt(frame, arches, arcade.dollyFrames);
-  const cues = useMemo(() => buildCues(props), [props]);
+  const camera = cameraOf(props, durationInFrames);
+  const dolly = dollyAt(frame, camera);
+  const card = cardScale(dolly);
+  const cues = useMemo(() => buildCues(props, durationInFrames), [props, durationInFrames]);
+  const exit = exitAmount(frame, cues);
   const dusk = ramp(frame, cues.dusk, durationInFrames, Easing.inOut(Easing.sin));
   const haze = ramp(frame, cues.details - 30, cues.details + 30, Easing.inOut(Easing.sin));
   const birds = ramp(frame, cues.flourish, cues.flourish + 40);
   const order = Array.from({ length: arches }, (_, index) => arches - 1 - index);
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ opacity: props.showScenery ? 1 : 1 - exit }}>
       <svg
         aria-hidden="true"
         width={width}
@@ -57,7 +68,17 @@ export const ArchSaveTheDate = (props: ArchSaveTheDateProps) => {
           );
         })}
       </svg>
-      <CardText props={props} faces={faces} layout={layout} frame={frame} cues={cues} />
+      <AbsoluteFill
+        style={{
+          transform: card === 1 ? undefined : `scale(${card.toFixed(6)})`,
+          transformOrigin: `${width / 2}px ${(VANISH_Y * height) / 1920}px`,
+        }}
+      >
+        <CardText props={props} faces={faces} layout={layout} frame={frame} cues={cues} />
+      </AbsoluteFill>
+      {props.showScenery && exit > 0 ? (
+        <AbsoluteFill style={{ backgroundColor: colors.fade, opacity: exit }} />
+      ) : null}
     </AbsoluteFill>
   );
 };

@@ -1,7 +1,7 @@
 import { defineControls } from '../../control-layout';
 import type { ArchSaveTheDateProps } from './arch-save-the-date';
 
-const CUE = 'Frames after the glide frames the title in the last arch, at 30 per second';
+const CUE = 'Frames after the last arch has grown around the title, at 30 per second';
 
 export const archSaveTheDateControls = defineControls<ArchSaveTheDateProps>({
   sections: [
@@ -74,6 +74,11 @@ export const archSaveTheDateControls = defineControls<ArchSaveTheDateProps>({
           hint: 'Hanging jasmine strings and rosette petals',
         },
         {
+          path: 'colors.fade',
+          label: 'End fade color',
+          hint: 'The colour the whole frame dips to at the very end, with the terrace and sky on',
+        },
+        {
           path: 'showScenery',
           label: 'Show terrace and sky',
           hint: 'Turn off to see another layer through the arches',
@@ -100,6 +105,11 @@ export const archSaveTheDateControls = defineControls<ArchSaveTheDateProps>({
         { path: 'lettering.top', label: 'Position', hint: 'Pixels from the top to the first word' },
         { path: 'timing.titleAt', label: 'Fades in at', hint: CUE },
         { path: 'timing.titleFrames', label: 'Fade length', hint: 'In frames' },
+        {
+          path: 'lettering.rise',
+          label: 'Rise',
+          hint: 'Pixels the script rises as it fades in; the detail lines rise a little over half of it as they write in, 0 keeps them still',
+        },
         { path: 'timing.flourishAt', label: 'Flourishes draw at', hint: CUE },
         { path: 'timing.flourishFrames', label: 'Flourish draw length', hint: 'In frames' },
       ],
@@ -153,7 +163,17 @@ export const archSaveTheDateControls = defineControls<ArchSaveTheDateProps>({
         {
           path: 'arcade.dollyFrames',
           label: 'Glide length',
-          hint: 'Frames until the last arch settles',
+          hint: 'Frames of the main glide through the arches; it eases out long and slow',
+        },
+        {
+          path: 'arcade.drift',
+          label: 'Slow push',
+          hint: 'How far the camera keeps creeping toward the last arch and card, slowing all the way to the end; 0 stops it when the glide ends',
+        },
+        {
+          path: 'timing.exitFrames',
+          label: 'End fade',
+          hint: 'In frames, the dip to the end fade colour at the very end; 0 holds the finished card',
         },
         { path: 'arcade.chandelier', label: 'Chandeliers' },
         { path: 'arcade.garlands', label: 'Jasmine strings' },
