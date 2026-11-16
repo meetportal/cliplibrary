@@ -3,42 +3,46 @@ import { Img } from 'remotion';
 import type { CrumpledPaperRevealProps } from '@/schemas';
 import { resolveCustom } from '../../kit/resolve-custom';
 import { type LogoBox, usableImage } from '../../kit/use-logo-box';
+import { CanvasLine, type LineStyle } from './canvas-line';
 import { CAPS_FACE, HEADLINE_FACE } from './fonts';
-import {
-  CONTENT_WIDTH,
-  HEADLINE_LEADING,
-  NAME_TRACKING,
-  type SheetLayout,
-  TAGLINE_TRACKING,
-} from './layout';
+import { HEADLINE_LEADING, NAME_TRACKING, type SheetLayout, TAGLINE_TRACKING } from './layout';
 import { SHEET } from './mesh';
 import type { Palette } from './palette';
+import type { CopyState } from './timeline';
 
 const LOGO_MAX_WIDTH = 440;
 const PLATE_PAD = 20;
+const RISE = 34;
+const CAPS_LEADING = 1.2;
 
-export type CopyFade = { headline: number; logo: number; tagline: number; name: number };
+export type CopyFade = {
+  headline: CopyState;
+  logo: CopyState;
+  tagline: CopyState;
+  name: CopyState;
+};
 
-const row = (top: number, opacity: number): CSSProperties => ({
+const motion = (top: number, state: CopyState): CSSProperties => ({
+  top,
+  opacity: state.opacity,
+  transform: state.lift > 0 ? `translateY(${(state.lift * RISE).toFixed(3)}px)` : undefined,
+});
+
+const row = (top: number, state: CopyState): CSSProperties => ({
   position: 'absolute',
   left: 0,
-  top,
   width: SHEET.width,
   display: 'flex',
   justifyContent: 'center',
-  opacity,
+  ...motion(top, state),
 });
 
-const caps = (size: number, tracking: number, color: string): CSSProperties => ({
-  fontFamily: CAPS_FACE.family,
-  fontWeight: CAPS_FACE.weight,
-  fontSize: size,
-  lineHeight: 1.2,
-  letterSpacing: `${tracking}em`,
-  paddingLeft: `${tracking}em`,
+const capsLook = (size: number, tracking: number, color: string): LineStyle => ({
+  face: CAPS_FACE,
+  size,
+  leading: CAPS_LEADING,
+  tracking,
   color,
-  whiteSpace: 'pre',
-  textTransform: 'uppercase',
 });
 
 const LogoImage = ({ src, box, maxHeight }: { src: string; box: LogoBox; maxHeight: number }) => {
@@ -56,6 +60,8 @@ const LogoImage = ({ src, box, maxHeight }: { src: string; box: LogoBox; maxHeig
           top: -box.y * imageHeight,
           width: imageWidth,
           height: imageHeight,
+          maxWidth: 'none',
+          maxHeight: 'none',
         }}
       />
     </div>
@@ -100,21 +106,21 @@ export const SheetCopy = ({
         </div>
       ) : null}
       {headlineLines.map((line, index) => (
-        <div
+        <CanvasLine
           key={`${index}-${line}`}
-          style={{
-            ...row(Math.round(layout.headlineTop + index * size * HEADLINE_LEADING), fade.headline),
-            fontFamily: HEADLINE_FACE.family,
-            fontWeight: HEADLINE_FACE.weight,
-            fontSize: size,
-            lineHeight: HEADLINE_LEADING,
-            letterSpacing: '-0.01em',
+          text={line}
+          look={{
+            face: HEADLINE_FACE,
+            size,
+            leading: HEADLINE_LEADING,
+            tracking: -0.01,
             color: palette.ink,
-            whiteSpace: 'pre',
           }}
-        >
-          {line}
-        </div>
+          style={motion(
+            Math.round(layout.headlineTop + index * size * HEADLINE_LEADING),
+            fade.headline,
+          )}
+        />
       ))}
       {showTagline ? (
         <>
@@ -124,27 +130,22 @@ export const SheetCopy = ({
                 width: 96,
                 height: 3,
                 background: palette.accent,
-                transform: `scaleX(${0.2 + 0.8 * fade.tagline})`,
+                transform: `scaleX(${0.2 + 0.8 * fade.tagline.opacity})`,
               }}
             />
           </div>
-          <div style={row(layout.taglineTop, fade.tagline)}>
-            <div style={caps(layout.taglineSize, TAGLINE_TRACKING, palette.accent)}>
-              {props.tagline}
-            </div>
-          </div>
+          <CanvasLine
+            text={props.tagline.toLocaleUpperCase()}
+            look={capsLook(layout.taglineSize, TAGLINE_TRACKING, palette.accent)}
+            style={motion(layout.taglineTop, fade.tagline)}
+          />
         </>
       ) : null}
-      <div style={row(layout.nameTop, fade.name)}>
-        <div
-          style={{
-            ...caps(layout.nameSize, NAME_TRACKING, palette.ink),
-            maxWidth: CONTENT_WIDTH + 40,
-          }}
-        >
-          {props.companyName}
-        </div>
-      </div>
+      <CanvasLine
+        text={props.companyName.toLocaleUpperCase()}
+        look={capsLook(layout.nameSize, NAME_TRACKING, palette.ink)}
+        style={motion(layout.nameTop, fade.name)}
+      />
     </>
   );
 };

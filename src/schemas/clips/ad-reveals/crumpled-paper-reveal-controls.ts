@@ -124,7 +124,7 @@ export const crumpledPaperRevealControls = defineControls<CrumpledPaperRevealPro
       ],
     },
     {
-      title: 'Light',
+      title: 'Light and camera',
       fields: [
         {
           path: 'light.drift',
@@ -135,6 +135,11 @@ export const crumpledPaperRevealControls = defineControls<CrumpledPaperRevealPro
           path: 'light.windowShadow',
           label: 'Window shadows',
           hint: 'How dark the window frame shadows on the wall are; 0 turns them off',
+        },
+        {
+          path: 'camera.push',
+          label: 'Push in',
+          hint: 'How much the camera pushes in on the finished sheet, as a share of its size; the sheet opens this much further back and the push ends on the same close framing, which is also where the clip starts so the loop joins up. 0 holds the camera close the whole time',
         },
       ],
     },
