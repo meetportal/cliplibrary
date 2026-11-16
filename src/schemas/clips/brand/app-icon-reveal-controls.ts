@@ -58,6 +58,11 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
         { path: 'colors.backgroundEdge', label: 'Background edges' },
         { path: 'colors.shadow', label: 'Shadow color', hint: 'The soft shadow under the icon' },
         {
+          path: 'colors.fade',
+          label: 'End fade color',
+          hint: 'The colour the whole frame dips to at the end, with the background on',
+        },
+        {
           path: 'showBackground',
           label: 'Show background',
           hint: 'Turn off to layer the reveal over another clip',
@@ -105,7 +110,11 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
     {
       title: 'Flip and typing',
       fields: [
-        { path: 'timing.flipFrames', label: 'Flip length', hint: 'In frames, for the half turn' },
+        {
+          path: 'timing.flipFrames',
+          label: 'Flip length',
+          hint: 'In frames, for the half turn; a wide icon turns a little slower',
+        },
         {
           path: 'timing.letterFrames',
           label: 'Typing speed',
@@ -123,6 +132,11 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
           label: 'Typing delay',
           hint: 'Frames after the icon turns edge-on before the first letter',
         },
+        {
+          path: 'timing.exitFrames',
+          label: 'End fade',
+          hint: 'In frames, the dip out at the very end; 0 holds the finished lockup',
+        },
       ],
     },
     {
@@ -130,8 +144,8 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
       fields: [
         {
           path: 'life.float',
-          label: 'Float',
-          hint: 'In pixels, how far the icon bobs once it lands; 0 holds it still',
+          label: 'Hover',
+          hint: 'In pixels, the radius of the slow circle the icon hovers in, with the light following; 0 holds it still',
         },
         {
           path: 'life.shine',
@@ -143,7 +157,7 @@ export const appIconRevealControls = defineControls<AppIconRevealProps>({
         {
           path: 'life.lift',
           label: 'Lift while turning',
-          hint: 'How much the icon grows toward you mid flip; 0 keeps its size',
+          hint: 'How much the icon grows toward you mid flip and rises into place as it turns; 0 keeps its size and place',
         },
       ],
     },

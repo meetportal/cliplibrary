@@ -9,12 +9,14 @@ export const Backdrop = ({
   edge,
   width,
   height,
+  focusX,
   focusY,
 }: {
   center: string;
   edge: string;
   width: number;
   height: number;
+  focusX: number;
   focusY: number;
 }) => {
   const id = useId().replace(/:/g, '');
@@ -25,7 +27,7 @@ export const Backdrop = ({
           <radialGradient
             id={id}
             gradientUnits="userSpaceOnUse"
-            cx={width / 2}
+            cx={focusX}
             cy={focusY}
             r={width * 0.62}
             gradientTransform={`translate(0 ${focusY}) scale(1 0.78) translate(0 ${-focusY})`}
