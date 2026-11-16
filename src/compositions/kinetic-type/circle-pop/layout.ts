@@ -2,6 +2,8 @@ import { type Face, measureWidth } from './fonts';
 
 export const LINE_HEIGHT = 0.98;
 export const SIDE = 90;
+const SHORT_BOOST = 1.7;
+const SHORT_CHARS = 6.8;
 
 export type NameLayout = {
   lines: string[];
@@ -35,18 +37,20 @@ export const layoutName = (
   maxWidth: number,
 ): NameLayout => {
   const text = name.trim();
+  const sizeCap =
+    maxSize * Math.min(SHORT_BOOST, Math.max(1, SHORT_CHARS / Math.max(1, text.length)));
   const words = text.split(/\s+/).filter((word) => word !== '');
   const single = measureWidth(text, face, ready);
   const options = [[text], ...splits(words)].map((lines) => {
     const widest = Math.max(...lines.map((line) => measureWidth(line, face, ready)), 0.01);
-    return { lines, widest, size: Math.min(maxSize, maxWidth / widest) };
+    return { lines, widest, size: Math.min(sizeCap, maxWidth / widest) };
   });
   const [first, ...rest] = options;
   const score = (option: { lines: string[]; size: number }) =>
     option.size / (1 + 0.12 * (option.lines.length - 1));
   const best = rest.reduce(
     (pick, option) => (score(option) > score(pick) ? option : pick),
-    first ?? { lines: [text], widest: single, size: maxSize },
+    first ?? { lines: [text], widest: single, size: sizeCap },
   );
   return {
     lines: best.lines,

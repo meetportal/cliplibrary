@@ -137,12 +137,12 @@ export const circlePopControls = defineControls<CirclePopProps>({
         {
           path: 'timing.popFrames',
           label: 'Pop length',
-          hint: 'In frames, from the half-size circle to full size',
+          hint: 'In frames, from the half-size circle up past full size and back',
         },
         {
           path: 'timing.collapseFrames',
-          label: 'Shrink back length',
-          hint: 'In frames at the end, as the screen shrinks back into the half-size circle the clip starts on',
+          label: 'Fade out length',
+          hint: 'In frames at the end, as the filled screen dips to the background colour',
         },
       ],
     },

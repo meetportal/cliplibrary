@@ -49,3 +49,17 @@ export const squigglePath = (width: number, height: number, phase: number): stri
   }
   return parts.join(' ');
 };
+
+export const squiggleLength = (width: number, height: number): number => {
+  const points = squigglePath(width, height, 0)
+    .split(/[ML]/)
+    .filter((part) => part.trim() !== '')
+    .map((part) => part.trim().split(' ').map(Number));
+  return points.reduce((total, point, index) => {
+    const previous = points[index - 1];
+    return previous === undefined
+      ? total
+      : total +
+          Math.hypot((point[0] ?? 0) - (previous[0] ?? 0), (point[1] ?? 0) - (previous[1] ?? 0));
+  }, 0);
+};
