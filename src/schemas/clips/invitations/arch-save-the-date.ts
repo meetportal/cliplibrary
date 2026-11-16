@@ -39,6 +39,7 @@ export const archSaveTheDateSchema = z.object({
     crystal: zColor(),
     gold: zColor(),
     jasmine: zColor(),
+    fade: zColor(),
   }),
   showScenery: z.boolean(),
   lettering: z.object({
@@ -50,10 +51,12 @@ export const archSaveTheDateSchema = z.object({
     hostSize: zSlider({ min: 36, max: 90 }),
     top: zSlider({ min: 520, max: 760, step: 2 }),
     haze: zSlider({ min: 0, max: 1, step: 0.01 }),
+    rise: zSlider({ min: 0, max: 48 }),
   }),
   arcade: z.object({
     arches: zSlider({ min: 2, max: 8 }),
     dollyFrames: zSlider({ min: 60, max: 300 }),
+    drift: zSlider({ min: 0, max: 0.5, step: 0.01 }),
     chandelier: z.boolean(),
     garlands: z.boolean(),
     sway: zSlider({ min: 0, max: 6, step: 0.1 }),
@@ -73,6 +76,7 @@ export const archSaveTheDateSchema = z.object({
     lineStagger: zSlider({ min: 0, max: 30 }),
     wipeFrames: zSlider({ min: 6, max: 60 }),
     duskAt: frameNumber(),
+    exitFrames: zSlider({ min: 0, max: 30 }),
   }),
 });
 
@@ -105,6 +109,7 @@ export const archSaveTheDateDefaults: ArchSaveTheDateProps = {
     crystal: '#dfeaf5',
     gold: '#d1a85c',
     jasmine: '#fbf3dc',
+    fade: '#0b0a0b',
   },
   showScenery: true,
   lettering: {
@@ -116,13 +121,15 @@ export const archSaveTheDateDefaults: ArchSaveTheDateProps = {
     hostSize: 60,
     top: 600,
     haze: 0.55,
+    rise: 18,
   },
   arcade: {
     arches: 2,
-    dollyFrames: 130,
+    dollyFrames: 210,
+    drift: 0.2,
     chandelier: true,
     garlands: true,
-    sway: 3,
+    sway: 4,
     rosettes: true,
   },
   sky: {
@@ -132,13 +139,14 @@ export const archSaveTheDateDefaults: ArchSaveTheDateProps = {
   },
   timing: {
     titleAt: 0,
-    titleFrames: 24,
-    flourishAt: 20,
-    flourishFrames: 44,
-    detailsAt: 46,
+    titleFrames: 30,
+    flourishAt: 18,
+    flourishFrames: 50,
+    detailsAt: 75,
     lineStagger: 9,
     wipeFrames: 28,
     duskAt: 60,
+    exitFrames: 15,
   },
 };
 
@@ -146,7 +154,7 @@ export const archSaveTheDateMeta: ClipMeta = {
   id: 'arch-save-the-date',
   title: 'Palace Arch Save the Date',
   description:
-    'A pink palace save the date: the camera glides through a row of scalloped arches hung with jasmine and crystal chandeliers to a sunny terrace, a script Save the Date fades in with drawn flourishes, then the couple, date, venue and hosts wipe in while the sky warms.',
+    'A pink palace save the date: the camera glides through a row of scalloped arches hung with jasmine and crystal chandeliers to a sunny terrace, a script Save the Date rises in with drawn flourishes, then the couple, date, venue and hosts write in while the camera pushes slowly closer and the sky warms, before a dip to black.',
   source: 'src/compositions/scenes/invitations/arch-save-the-date.tsx',
   posterFrame: 300,
   category: 'invitations',

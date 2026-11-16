@@ -9,13 +9,17 @@ import { useEffect, useState } from 'react';
 import { useDelayRender } from 'remotion';
 import type { ArchCapsFont, ArchSaveTheDateProps, ArchScriptFont } from '@/schemas';
 
-export type Face = { family: string; weight: number };
+export type Face = { family: string; weight: number; waitUntilDone: () => Promise<unknown> };
 
 const LATIN = { subsets: ['latin' as const] };
 
-const face = (loaded: { fontFamily: string }, weight: number): Face => ({
+const face = (
+  loaded: { fontFamily: string; waitUntilDone: () => Promise<unknown> },
+  weight: number,
+): Face => ({
   family: loaded.fontFamily,
   weight,
+  waitUntilDone: loaded.waitUntilDone,
 });
 
 const SCRIPT_FACES: Record<ArchScriptFont, Face> = {
@@ -56,15 +60,15 @@ export const useFontsReady = (faces: Faces): boolean => {
         continueRender(pending);
       }
     };
-    const fonts = key.split('|').map((entry) => {
-      const [family = '', weight = '400'] = entry.split(':');
-      return `${weight} 100px "${family}"`;
-    });
-    Promise.all(fonts.map((spec) => document.fonts.load(spec))).then(finish, finish);
+    Promise.all(
+      [faces.script, faces.caps].map((font) =>
+        font.waitUntilDone().then(() => document.fonts.load(fontSpec(font, 100))),
+      ),
+    ).then(finish, finish);
     return () => {
       active = false;
     };
-  }, [key, delayRender, continueRender]);
+  }, [key, faces.script, faces.caps, delayRender, continueRender]);
   useEffect(() => {
     if (ready === key && handle !== null) {
       continueRender(handle);
