@@ -72,6 +72,9 @@ Everything lives in one package. Modules import each other through the `@/` alia
 - `bun run verify` - Biome, no-comments, no em-dashes, repository hygiene (files at most 400 lines,
   kebab-case paths), knip, typecheck and tests. CI also runs coverage, build, e2e, audit and the
   Markdown, YAML and workflow linters.
+- `bun run audit` - the dependency audit CI runs. `picomatch` (pulled in by knip) carries a local
+  fix for the extglob ReDoS GHSA-fc5q-39xc-vjpf in `patches/`, so the audit ignores that advisory;
+  drop the patch and the ignore once a fixed `picomatch` release lands.
 - `bun run lint` / `bun run lint:fix` - Biome.
 - `bun run typecheck` - `tsc --noEmit`.
 - `bun run test` / `bun run test:e2e` - unit/component / Playwright.

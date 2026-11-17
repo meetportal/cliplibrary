@@ -240,7 +240,7 @@ jobs:
         with:
           bun-version: ${{ env.BUN_VERSION }}
       - run: bun install --frozen-lockfile
-      - run: bun audit --audit-level=high
+      - run: bun run audit
 
   gitleaks:
     name: Secret scan (gitleaks)
