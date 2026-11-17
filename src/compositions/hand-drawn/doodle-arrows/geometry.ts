@@ -4,6 +4,9 @@ export type Stroke = { points: Point[]; length: number };
 
 const SAMPLES_PER_SPAN = 18;
 const BARB_ANGLE = (31 * Math.PI) / 180;
+const BOIL_KNOT = 90;
+const BOIL_FRAMES = 3;
+const BOIL_PX = 1.6;
 
 export const WAVY_PATH: readonly Point[] = [
   { x: 470, y: 498 },
@@ -69,8 +72,50 @@ const lengthOf = (points: readonly Point[]) => {
   return total;
 };
 
-const shake = (points: readonly Point[], amount: number, seed: number): Point[] =>
-  points.map((point, index) => {
+const hash = (a: number, b: number, seed: number) => {
+  const value = Math.sin(a * 127.1 + b * 311.7 + seed * 74.7) * 43758.5453;
+  return (value - Math.floor(value)) * 2 - 1;
+};
+
+const cubic = (p0: number, p1: number, p2: number, p3: number, t: number) =>
+  0.5 *
+  (2 * p1 +
+    (p2 - p0) * t +
+    (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t +
+    (3 * p1 - p0 - 3 * p2 + p3) * t * t * t);
+
+const noiseAt = (knot: number, time: number, seed: number) => {
+  const key = Math.floor(time);
+  const t = time - key;
+  return cubic(
+    hash(knot, key - 1, seed),
+    hash(knot, key, seed),
+    hash(knot, key + 1, seed),
+    hash(knot, key + 2, seed),
+    t,
+  );
+};
+
+const boilAt = (along: number, length: number, time: number, seed: number) => {
+  const knots = Math.max(3, Math.round(length / BOIL_KNOT));
+  const position = along * knots;
+  const knot = Math.floor(position);
+  const t = position - knot;
+  return cubic(
+    noiseAt(knot - 1, time, seed),
+    noiseAt(knot, time, seed),
+    noiseAt(knot + 1, time, seed),
+    noiseAt(knot + 2, time, seed),
+    t,
+  );
+};
+
+export type Boil = { amount: number; frame: number };
+
+const shake = (points: readonly Point[], amount: number, seed: number, boil: Boil): Point[] => {
+  const length = lengthOf(points);
+  const time = boil.frame / BOIL_FRAMES;
+  return points.map((point, index) => {
     const next = points[Math.min(points.length - 1, index + 1)] ?? point;
     const previous = points[Math.max(0, index - 1)] ?? point;
     const dx = next.x - previous.x;
@@ -79,20 +124,18 @@ const shake = (points: readonly Point[], amount: number, seed: number): Point[] 
     const along = index / Math.max(1, points.length - 1);
     const offset =
       amount *
-      (1.1 * Math.sin(along * 23 + seed) +
-        0.6 * Math.sin(along * 57 + seed * 2.3) +
-        0.35 * Math.sin(along * 131 + seed * 4.1));
+        (1.1 * Math.sin(along * 23 + seed) +
+          0.6 * Math.sin(along * 57 + seed * 2.3) +
+          0.35 * Math.sin(along * 131 + seed * 4.1)) +
+      boil.amount * BOIL_PX * boilAt(along, length, time, seed);
     const fade = Math.min(1, along * 12, (1 - along) * 12);
     return { x: point.x - (dy / norm) * offset * fade, y: point.y + (dx / norm) * offset * fade };
   });
+};
 
 const stroke = (points: Point[]): Stroke => ({ points, length: lengthOf(points) });
 
-export const shaft = (anchors: readonly Point[], wobble: number, seed: number): Stroke =>
-  stroke(shake(smooth(anchors), wobble * 1.4, seed));
-
-export const head = (shaftStroke: Stroke, size: number): Stroke => {
-  const { points } = shaftStroke;
+const headPoints = (points: readonly Point[], size: number): Point[] => {
   const tip = points.at(-1) ?? { x: 0, y: 0 };
   const back = points[Math.max(0, points.length - 6)] ?? tip;
   const angle = Math.atan2(tip.y - back.y, tip.x - back.x) + Math.PI;
@@ -100,12 +143,30 @@ export const head = (shaftStroke: Stroke, size: number): Stroke => {
     x: tip.x + Math.cos(angle + turn) * size * scale,
     y: tip.y + Math.sin(angle + turn) * size * scale,
   });
-  return stroke([barb(BARB_ANGLE, 1), tip, barb(-BARB_ANGLE, 0.92)]);
+  return [barb(BARB_ANGLE, 1), tip, barb(-BARB_ANGLE, 0.92)];
 };
 
-export const line = (from: Point, to: Point, sag: number, wobble: number, seed: number): Stroke => {
+export const arrow = (
+  anchors: readonly Point[],
+  wobble: number,
+  seed: number,
+  headSize: number,
+  boil: Boil,
+): Stroke => {
+  const shaft = shake(smooth(anchors), wobble * 1.4, seed, boil);
+  return stroke([...shaft, ...headPoints(shaft, headSize)]);
+};
+
+export const line = (
+  from: Point,
+  to: Point,
+  sag: number,
+  wobble: number,
+  seed: number,
+  boil: Boil,
+): Stroke => {
   const middle = { x: (from.x + to.x) / 2, y: (from.y + to.y) / 2 + sag };
-  return stroke(shake(smooth([from, middle, to]), wobble * 0.9, seed));
+  return stroke(shake(smooth([from, middle, to]), wobble * 0.9, seed, boil));
 };
 
 export const pathData = (points: readonly Point[]) =>

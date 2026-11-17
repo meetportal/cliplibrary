@@ -4245,35 +4245,47 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/cta-end-card.mp4"
   },
   "doodle-arrows": {
-    "summary": "Ruled notebook paper in pale blue-grey. A graphite pencil arrow draws itself from the left, dipping through two waves before climbing to the upper right, while a straight pencil arrow in the brand colour draws a steady rise below it. Both tips aim at a handwritten headline that writes on letter by letter beside a logo and company name, then a brand-colour pencil stroke underlines it. The finished note holds while a soft light drifts across the paper.",
+    "summary": "Ruled notebook paper in pale blue-grey. A graphite pencil arrow draws itself from the left, dipping through two waves before climbing to the upper right, while a straight pencil arrow in the brand colour draws a steady rise below it, each arrowhead in the same stroke as its shaft. Both tips aim at a handwritten headline that writes on letter by letter beside a logo and company name that settle into place, then a brand-colour pencil stroke underlines it. The finished note holds while the pencil lines gently boil and the page slowly pushes closer, then the arrows crumble away, the wavy one first, and the headline and underline are rubbed out, leaving the logo and name.",
     "beats": [
       {
         "at": 0.0,
-        "what": "ruled paper with the logo and company name and the first hook of the wavy pencil arrow"
+        "what": "ruled paper with the logo and company name sitting slightly low, and the wavy pencil arrow starting to draw from the left"
       },
       {
         "at": 0.4,
-        "what": "the wavy arrow draws through two waves and the straight brand-colour arrow starts below"
+        "what": "the wavy arrow draws through two waves, the logo and name rise into place and the straight brand-colour arrow starts below"
       },
       {
         "at": 1.1,
-        "what": "the handwritten headline starts writing on, letter by letter, where the arrows point"
+        "what": "the handwritten headline writes on letter by letter, each letter rising softly into place where the arrows point"
       },
       {
         "at": 1.2,
-        "what": "the wavy arrow climbs to the upper right and flicks on its open arrowhead"
+        "what": "the wavy arrow climbs to the upper right and draws its open arrowhead in the same stroke"
       },
       {
-        "at": 1.5,
+        "at": 1.6,
         "what": "the straight arrow finishes its rise and its arrowhead"
       },
       {
-        "at": 2.0,
+        "at": 1.9,
         "what": "a brand-colour pencil underline draws under the headline"
       },
       {
-        "at": 2.7,
-        "what": "the finished note holds while a soft light drifts across the paper"
+        "at": 2.5,
+        "what": "the finished note holds while the pencil lines gently boil and the page slowly pushes closer"
+      },
+      {
+        "at": 4.8,
+        "what": "the wavy arrow fades from its start into thin grey dashes, then the straight arrow"
+      },
+      {
+        "at": 4.95,
+        "what": "the headline is rubbed out in a fine grain and the underline fades while the logo and name sink back and the page eases out"
+      },
+      {
+        "at": 5.75,
+        "what": "plain ruled paper with the logo and company name, ready to loop"
       }
     ],
     "visuals": [
@@ -4286,9 +4298,13 @@
     ],
     "motion": [
       "pencil draw-on strokes",
-      "arrowhead flicks",
-      "handwriting letter by letter",
+      "arrowheads drawn in one stroke with the shaft",
+      "handwriting letter by letter with a soft rise",
       "underline stroke",
+      "logo and name settle in",
+      "line boil",
+      "slow camera push",
+      "grainy eraser rub-out into grey dashes",
       "slow drifting paper light"
     ],
     "mood": ["friendly", "hand-made", "optimistic", "casual", "clear"],
@@ -4317,7 +4333,11 @@
       "hand wobble",
       "underline on or off",
       "light drift",
-      "background on or off"
+      "background on or off",
+      "line boil",
+      "camera push",
+      "logo rise",
+      "erase at end on or off"
     ],
     "palette": ["#eef1f4", "#d3d9e0", "#26262b", "#1d2230", "#d9482b"],
     "keywords": [
@@ -4335,7 +4355,10 @@
       "results",
       "whiteboard",
       "drawn arrow",
-      "underline"
+      "underline",
+      "eraser",
+      "erase",
+      "loop"
     ],
     "concept": "Two quick pencil arrows sketch themselves on notebook paper, a bumpy wavy road and a clear straight climb, and both rise to the same spot where the message is written by hand, so the eye follows the pen straight to the headline and the brand. The copy is one short, warm handwritten line about progress or results, signed with the logo and name.",
     "needs": ["logo", "company name", "headline"],

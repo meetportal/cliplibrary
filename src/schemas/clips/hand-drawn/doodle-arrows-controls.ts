@@ -80,6 +80,11 @@ export const doodleArrowsControls = defineControls<DoodleArrowsProps>({
           hint: 'A rounded plate behind the logo, for a light logo on light paper',
         },
         { path: 'colors.plate', label: 'Logo plate color' },
+        {
+          path: 'motion.lockupRise',
+          label: 'Logo rise',
+          hint: 'Pixels the logo and name rise into place at the start, and sink back during the erase; 0 holds them still',
+        },
       ],
     },
     {
@@ -100,6 +105,11 @@ export const doodleArrowsControls = defineControls<DoodleArrowsProps>({
           label: 'Underline',
           hint: 'A pencil stroke in the Primary color under the last headline line',
         },
+        {
+          path: 'motion.erase',
+          label: 'Erase at end',
+          hint: 'Rubs out the arrows, then the headline and the underline, from about 4.8 to 5.7 seconds, leaving the logo and name so the clip loops; off holds the finished note to the end',
+        },
       ],
       more: [
         { path: 'arrows.headSize', label: 'Arrowhead size', hint: 'Length of each barb in pixels' },
@@ -107,6 +117,11 @@ export const doodleArrowsControls = defineControls<DoodleArrowsProps>({
           path: 'arrows.wobble',
           label: 'Hand wobble',
           hint: 'How shaky the pencil lines are; 0 draws them clean',
+        },
+        {
+          path: 'motion.boil',
+          label: 'Line boil',
+          hint: 'How much the pencil lines gently shift the whole time, like a hand-drawn animation; 0 holds them still',
         },
       ],
     },
@@ -129,6 +144,11 @@ export const doodleArrowsControls = defineControls<DoodleArrowsProps>({
           path: 'paper.ruleSpacing',
           label: 'Rule spacing',
           hint: 'Pixels between the ruled lines',
+        },
+        {
+          path: 'motion.push',
+          label: 'Camera push',
+          hint: 'How much closer the whole page eases from about 0.7 to 5 seconds, as a share of its size; it eases back out over the last second and the first 0.7 seconds, whether or not the erase is on, so the loop meets itself; 0 holds it still',
         },
       ],
     },

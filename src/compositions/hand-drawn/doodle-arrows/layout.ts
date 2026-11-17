@@ -1,7 +1,7 @@
 import { HAND_FACE, type Measure, NAME_FACE } from './fonts';
 
 export const NOTE_LEFT = 1060;
-const NOTE_WIDTH = 740;
+export const NOTE_WIDTH = 740;
 export const HEADLINE_LEADING = 0.94;
 const LOGO_MAX_WIDTH = 300;
 const LOGO_GAP = 26;
