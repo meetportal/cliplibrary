@@ -6,13 +6,13 @@ export type Point = { x: number; y: number };
 
 export type Box = { x: number; y: number; width: number; height: number };
 
-type PlugPose = { tip: Point; angle: number; opacity: number };
+type PlugPose = { tip: Point; angle: number; opacity: number; scale: number };
 
 const WIDTH = 1080;
 export const HEIGHT = 1920;
 export const PLUG_LENGTH = 104;
 export const PLUG_THICKNESS = 40;
-const SIDE_ROWS = [0.49, 0.7] as const;
+const SIDE_ROWS = [0.45, 0.72] as const;
 const OFFSCREEN = 140;
 
 export const batteryBox = (battery: BatteryChargeSuccessProps['battery']): Box => ({
@@ -67,7 +67,7 @@ const restFor = (key: CableKey, box: Box): Rest => {
 
 const DANGLES: Record<CableKey, Dangle> = {
   leftTop: {
-    tip: { x: 160, y: 1300 },
+    tip: { x: 220, y: 1300 },
     angle: -Math.PI / 2 + 0.36,
     far: { x: 90, y: HEIGHT + OFFSCREEN },
     phase: 0,
@@ -91,7 +91,7 @@ const DANGLES: Record<CableKey, Dangle> = {
     phase: 4.4,
   },
   rightTop: {
-    tip: { x: 944, y: 1360 },
+    tip: { x: 890, y: 1360 },
     angle: -Math.PI / 2 - 0.12,
     far: { x: 1010, y: HEIGHT + OFFSCREEN },
     phase: 5.6,
@@ -172,6 +172,7 @@ const poseAt = (
   line: Timeline,
   box: Box,
   sway: number,
+  scale: number,
 ): CableState => {
   const rest = restFor(key, box);
   const dangle = DANGLES[key];
@@ -204,6 +205,7 @@ const poseAt = (
       tip: { x: tip.x + away.x, y: tip.y + away.y },
       angle,
       opacity: 1,
+      scale,
     },
     far: { x: far.x + away.x, y: far.y + away.y },
     farAngle,
@@ -219,12 +221,13 @@ export const cableState = (
   line: Timeline,
   box: Box,
   sway: number,
+  scale: number,
 ): CableState => {
   if (frame < line.exit[0]) {
-    return poseAt(key, frame, line, box, sway);
+    return poseAt(key, frame, line, box, sway, scale);
   }
   const drop = returnDrop(key, frame, line);
-  const state = poseAt(key, frame - line.loop, line, box, sway);
+  const state = poseAt(key, frame - line.loop, line, box, sway, scale);
   return {
     ...state,
     pose: { ...state.pose, tip: { x: state.pose.tip.x, y: state.pose.tip.y + drop } },
@@ -232,7 +235,8 @@ export const cableState = (
   };
 };
 
-const plugTail = (pose: PlugPose): Point => along(pose.tip, pose.angle + Math.PI, PLUG_LENGTH);
+const plugTail = (pose: PlugPose): Point =>
+  along(pose.tip, pose.angle + Math.PI, PLUG_LENGTH * pose.scale);
 
 const SAMPLES = 48;
 const PLUGGED_SWAY = 0.42;

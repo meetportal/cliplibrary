@@ -15,7 +15,8 @@ import { useLogoAspect } from './use-logo-aspect';
 import { Wordmark } from './wordmark';
 
 const SEEDS = [0.4, 2.2, 3.7, 5.1, 1.3] as const;
-const LABEL_MARGIN = 28;
+const LABEL_MARGIN = 20;
+const LABEL_BACK = 14;
 const RING_FRAMES = 34;
 const RING_GAP = 11;
 const RING_PERIOD = 22;
@@ -47,14 +48,16 @@ export const BatteryChargeSuccess = (props: BatteryChargeSuccessProps) => {
     ...CABLE_KEYS.map((key) => {
       const label = props.cables[key].label.trim();
       const width = measure(label, LABEL_FACE) + 0.56;
-      return label === '' ? props.type.labelSize : (box.x - LABEL_MARGIN - 14) / width;
+      return label === ''
+        ? props.type.labelSize
+        : (box.x - LABEL_MARGIN - LABEL_BACK * props.battery.plugSize) / width;
     }),
   );
   const labelSize = Math.max(18, Math.min(props.type.labelSize, Math.floor(labelFit)));
   const clock = frame >= line.exit[0] ? frame - line.loop : frame;
   const cables: DrawnCable[] = CABLE_KEYS.map((key, index) => ({
     key,
-    state: cableState(key, frame, line, box, props.motion.sway),
+    state: cableState(key, frame, line, box, props.motion.sway, props.battery.plugSize),
     label: props.cables[key].label,
     color: props.cables[key].color,
     seed: SEEDS[index] ?? 0,
