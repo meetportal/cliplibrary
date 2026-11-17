@@ -2,7 +2,7 @@ import type { ChalkBadgesReelProps } from '@/schemas';
 import { pulse, type ReelPalette } from './badges';
 import { ChalkText, DrawPath, Sparkle } from './chalk';
 import type { Measure, ReelFaceKey } from './fonts';
-import { captionStroke, endStroke, openerStrokes } from './timeline';
+import { captionStroke, driftBy, endStroke, openerStrokes } from './timeline';
 import type { ReelLogo } from './use-logo';
 
 export const CENTER_X = 960;
@@ -127,12 +127,16 @@ export const logoBox = (logo: ReelLogo, height: number): LogoBox | null => {
   return { width, height: width / logo.aspect, padding: Math.round(height * 0.2) };
 };
 
+const smooth = (value: number) => {
+  const t = Math.max(0, Math.min(1, value));
+  return t * t * (3 - 2 * t);
+};
+
 export const logoReveal = (frame: number, eraseAtEnd: boolean) => {
   const { write, erase } = endStroke(frame, 'logo', eraseAtEnd);
-  const grow = 1 - (1 - write) ** 3;
   return {
-    scale: (0.86 + 0.14 * grow) * (1 - 0.12 * erase ** 2),
-    opacity: Math.min(1, write * 4) * (1 - erase),
+    scale: (0.05 + 0.95 * (1 - (1 - write) ** 2)) * (1 - 0.9 * smooth(erase)),
+    opacity: smooth(write / 0.05) * (1 - smooth((erase - 0.85) / 0.15)),
   };
 };
 
@@ -150,11 +154,9 @@ export const LogoPlate = (props: {
   const w = box.width + box.padding * 2;
   const h = box.height + box.padding * 2;
   return (
-    <g
-      transform={`translate(${CENTER_X} ${LOGO_Y}) scale(${reveal.scale.toFixed(4)})`}
-      opacity={reveal.opacity}
-    >
+    <g transform={driftBy(props.frame)} opacity={reveal.opacity}>
       <rect
+        transform={`translate(${CENTER_X} ${LOGO_Y}) scale(${reveal.scale.toFixed(4)})`}
         x={-w / 2}
         y={-h / 2}
         width={w}
@@ -187,9 +189,10 @@ export const EndCardText = (props: {
   const underlineY = at(3) + web.size * 0.62;
   const half = web.width / 2;
   return (
-    <g>
+    <g transform={driftBy(kit.frame)}>
       <ChalkText
         id={`${kit.prefix}-end-one`}
+        stamp={{ measure: kit.measure, order: 'left' }}
         text={endCard.lineOne}
         face="chunky"
         size={one.size}
@@ -202,6 +205,7 @@ export const EndCardText = (props: {
       />
       <ChalkText
         id={`${kit.prefix}-end-two`}
+        stamp={{ measure: kit.measure, order: 'left' }}
         text={endCard.lineTwo}
         face="chunky"
         size={two.size}
@@ -214,6 +218,7 @@ export const EndCardText = (props: {
       />
       <ChalkText
         id={`${kit.prefix}-end-tag`}
+        stamp={{ measure: kit.measure, order: 'left' }}
         text={endCard.tagline}
         face="chunky"
         size={tag.size}
@@ -226,6 +231,7 @@ export const EndCardText = (props: {
       />
       <ChalkText
         id={`${kit.prefix}-end-web`}
+        stamp={{ measure: kit.measure, order: 'left' }}
         text={endCard.website}
         face="chunky"
         size={web.size}

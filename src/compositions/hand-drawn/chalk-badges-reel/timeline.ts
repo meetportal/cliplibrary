@@ -3,7 +3,7 @@ import { ramp } from '../../kit/motion';
 
 export type Stroke = { write: number; erase: number };
 
-const WRITE = Easing.linear;
+const WRITE = Easing.bezier(0.2, 0, 0.8, 1);
 const ERASE = Easing.inOut(Easing.sin);
 
 export const span = (
@@ -21,7 +21,8 @@ export const span = (
 };
 
 export const TEXT_FIRST: readonly [number, number] = [0, 0.55];
-export const FILL_LAST: readonly [number, number] = [0.05, 1];
+export const TEXT_STAMP: readonly [number, number] = [0, 0.85];
+export const FILL_LAST: readonly [number, number] = [0, 1];
 export const MARKS_SLOW: readonly [number, number] = [0, 1];
 
 export const isShown = (stroke: Stroke) => stroke.write > 0.001 && stroke.erase < 0.999;
@@ -38,7 +39,7 @@ const chalk = (
 });
 
 const OPENER = {
-  left: { start: -6, draw: 22 },
+  left: { start: -16, draw: 22 },
   amp: { start: 6, draw: 20 },
   right: { start: 14, draw: 22 },
   sparkles: { start: 22, draw: 12 },
@@ -67,6 +68,11 @@ export const GRID = {
   erase: 16,
 };
 
+const GRID_DRIFT = 80;
+
+export const gridDrift = (frame: number) =>
+  `translate(${(GRID_DRIFT * (0.5 - ramp(frame, GRID.start - 2, GRID.eraseStart + 34, WRITE))).toFixed(3)} 0) rotate(0.001)`;
+
 export const gridStroke = (frame: number, index: number): Stroke =>
   chalk(
     frame,
@@ -76,7 +82,19 @@ export const gridStroke = (frame: number, index: number): Stroke =>
     GRID.erase,
   );
 
-export const SPOTLIGHT = { start: 164, slot: 51, draw: 22, hold: 20, erase: 12 };
+export const SPOTLIGHT = {
+  start: 164,
+  slot: 55,
+  draw: 22,
+  hold: 18,
+  erase: 22,
+  enter: 300,
+  leave: 300,
+  drift: 12,
+  power: 8,
+};
+
+const spotlightLife = SPOTLIGHT.draw + SPOTLIGHT.hold + SPOTLIGHT.erase;
 
 export const spotlightStroke = (frame: number, index: number): Stroke => {
   const start = SPOTLIGHT.start + index * SPOTLIGHT.slot;
@@ -89,16 +107,25 @@ export const spotlightStroke = (frame: number, index: number): Stroke => {
   );
 };
 
+export const spotlightShift = (frame: number, index: number) => {
+  const start = SPOTLIGHT.start + index * SPOTLIGHT.slot;
+  const u = Math.max(0, Math.min(1, (frame - start) / spotlightLife));
+  const { enter, leave, drift, power } = SPOTLIGHT;
+  return enter * (1 - u) ** power - leave * u ** power - drift * (u - 0.4);
+};
+
 const END = {
-  logo: { start: 320, draw: 22 },
-  lineOne: { start: 322, draw: 28 },
-  lineTwo: { start: 332, draw: 30 },
-  tagline: { start: 346, draw: 24 },
-  website: { start: 352, draw: 28 },
-  underline: { start: 370, draw: 16 },
-  eraseStart: 437,
-  eraseStagger: 0,
-  erase: 12,
+  logo: { start: 331, draw: 20 },
+  lineOne: { start: 336, draw: 24 },
+  lineTwo: { start: 339, draw: 24 },
+  tagline: { start: 342, draw: 24 },
+  website: { start: 346, draw: 24 },
+  underline: { start: 360, draw: 14 },
+  eraseStart: 419,
+  eraseStagger: 2,
+  erase: 22,
+  drift: 72,
+  last: 449,
 };
 
 const CAPTION = { start: 62, draw: 30 };
@@ -114,14 +141,30 @@ const END_ORDER: readonly EndKey[] = [
   'underline',
 ];
 
-export const endStroke = (frame: number, key: EndKey, eraseAtEnd: boolean): Stroke =>
-  chalk(
+const endErase = (key: EndKey): readonly [number, number] => {
+  if (key === 'underline' || key === 'logo') {
+    return [END.eraseStart, endErase('website')[1]];
+  }
+  const start = END.eraseStart + END_ORDER.indexOf(key) * END.eraseStagger;
+  return [start, start + END.erase];
+};
+
+export const endStroke = (frame: number, key: EndKey, eraseAtEnd: boolean): Stroke => {
+  const [eraseStart, eraseEnd] = endErase(key);
+  return chalk(
     frame,
     END[key].start,
     END[key].draw,
-    eraseAtEnd ? END.eraseStart + END_ORDER.indexOf(key) * END.eraseStagger : null,
-    END.erase,
+    eraseAtEnd ? eraseStart : null,
+    eraseEnd - eraseStart,
   );
+};
 
 export const captionStroke = (frame: number): Stroke =>
   chalk(frame, CAPTION.start, CAPTION.draw, END.logo.start - 4, 18);
+
+export const endDrift = (frame: number) =>
+  END.drift * (0.5 - ramp(frame, END.logo.start, END.last, WRITE));
+
+export const driftBy = (frame: number) =>
+  `translate(${endDrift(frame).toFixed(3)} 0) rotate(0.001)`;
