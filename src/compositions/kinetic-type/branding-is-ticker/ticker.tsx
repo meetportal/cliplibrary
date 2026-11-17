@@ -1,4 +1,5 @@
-import { type Face, faceStyle, type Measure } from './fonts';
+import type { Face, Measure } from './fonts';
+import { TickerStrip } from './ticker-strip';
 import { type Timeline, tickerPosition } from './timeline';
 
 const LEAD = 5;
@@ -39,7 +40,7 @@ export const Ticker = ({
   const { words, face, size, slotX, top, width } = layout;
   const count = words.length;
   const first = -LEAD;
-  const last = count + TRAIL;
+  const last = line.steps + TRAIL;
   const comma = measure(',', face) * size;
   const items: {
     index: number;
@@ -89,49 +90,38 @@ export const Ticker = ({
   const blend = (value: (item: (typeof items)[number] | undefined) => number) =>
     value(pick(from)) + (value(pick(from + 1)) - value(pick(from))) * progress;
   const barWidth = blend((item) => item?.word ?? 0);
-  const windowWidth = Math.round(blend((item) => (item?.word ?? 0) + (item?.comma ?? 0)));
+  const windowWidth = blend((item) => (item?.word ?? 0) + (item?.comma ?? 0));
   const visible = items.filter((item) => {
     const x = slotX + item.x - shift;
     return x <= width && x + item.advance >= 0;
   });
-  const row = (color: string, offset: number) =>
-    visible.map((item) => (
-      <div
-        key={item.index}
-        style={{
-          position: 'absolute',
-          left: Math.round(slotX + item.x - shift) - offset,
-          top: pad,
-          ...faceStyle(face),
-          fontSize: size,
-          lineHeight: `${size}px`,
-          whiteSpace: 'nowrap',
-          color,
-        }}
-      >
-        {item.text}
-      </div>
-    ));
-  const band = { position: 'absolute' as const, top: top - pad, height: size + 2 * pad };
+  const bandTop = top - pad;
   return (
-    <>
-      <div style={{ ...band, left: 0, width }}>{row(dim, 0)}</div>
-      <div style={{ ...band, left: slotX, width: windowWidth, overflow: 'hidden' }}>
-        {row(active, slotX)}
-      </div>
-      {underline > 0 ? (
-        <div
-          style={{
-            position: 'absolute',
-            left: slotX,
-            top: Math.round(top + size * UNDERLINE_DROP),
-            width: Math.round(barWidth),
-            height: underline,
-            borderRadius: underline / 2,
-            backgroundColor: active,
-          }}
-        />
-      ) : null}
-    </>
+    <div style={{ position: 'absolute', left: 0, top: bandTop, width, height: size + 2 * pad }}>
+      <TickerStrip
+        runs={visible.map((item) => ({
+          key: item.index,
+          text: item.text,
+          x: slotX + item.x - shift,
+        }))}
+        face={face}
+        size={size}
+        width={width}
+        height={size + 2 * pad}
+        textTop={pad}
+        slot={{ left: slotX, width: windowWidth }}
+        dim={dim}
+        active={active}
+        bar={
+          underline > 0
+            ? {
+                width: barWidth,
+                top: Math.round(top + size * UNDERLINE_DROP) - bandTop,
+                height: underline,
+              }
+            : null
+        }
+      />
+    </div>
   );
 };

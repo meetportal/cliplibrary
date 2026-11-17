@@ -35,7 +35,7 @@ export const brandingIsTickerSchema = z.object({
   }),
   ticker: z.object({
     cycleFrames: zSlider({ min: 120, max: 330 }),
-    glide: zSlider({ min: 0.05, max: 0.5, step: 0.01 }),
+    glide: zSlider({ min: 0, max: 0.5, step: 0.01 }),
     dimStrength: zSlider({ min: 0.08, max: 0.6, step: 0.01 }),
     underline: zSlider({ min: 0, max: 16 }),
   }),
@@ -93,7 +93,7 @@ export const brandingIsTickerDefaults: BrandingIsTickerProps = {
   },
   showBackground: true,
   type: { headlineFont: 'playfair', wordFont: 'poppins', headlineSize: 100, wordSize: 104 },
-  ticker: { cycleFrames: 308, glide: 0.12, dimStrength: 0.2, underline: 7 },
+  ticker: { cycleFrames: 330, glide: 0, dimStrength: 0.2, underline: 7 },
   layout: { left: 160, top: 170, offsetY: 0, tileSize: 132, nameSize: 26, lightDrift: 90 },
   endCard: {
     logoSize: 264,
@@ -103,7 +103,7 @@ export const brandingIsTickerDefaults: BrandingIsTickerProps = {
     contactSize: 42,
     sheen: true,
   },
-  timing: { transitionFrames: 24, stagger: 7 },
+  timing: { transitionFrames: 17, stagger: 5 },
 };
 
 export const brandingIsTickerMeta: ClipMeta = {
@@ -116,7 +116,7 @@ export const brandingIsTickerMeta: ClipMeta = {
   category: 'kinetic-type',
   tags: ['kinetic', 'headline', 'text', 'marquee', 'slide', 'logo', 'cta', 'end-card', 'minimal'],
   durationInFrames: 450,
-  posterFrame: 140,
+  posterFrame: 150,
   fps: 30,
   width: 1080,
   height: 1920,

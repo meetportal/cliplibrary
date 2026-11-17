@@ -183,12 +183,12 @@ export const brandingIsTickerControls = defineControls<BrandingIsTickerProps>({
         {
           path: 'ticker.cycleFrames',
           label: 'Ticker length',
-          hint: 'In frames until the ticker comes back to the first word and the end card starts; each word gets an equal share',
+          hint: 'In frames until the ticker comes back to the first word and the end card starts; each word gets an equal share, and short lists go round more than once',
         },
         {
           path: 'ticker.glide',
           label: 'Glide',
-          hint: 'How much the ticker keeps moving between words; low values pause on each word, high values glide evenly',
+          hint: 'How evenly the ticker moves; 0 creeps out of each word, builds speed and lands on the next, higher values glide more evenly',
         },
       ],
       more: [
