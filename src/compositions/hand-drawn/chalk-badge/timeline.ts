@@ -7,30 +7,28 @@ export type BadgeState = {
   swoosh: number;
   sparkles: [number, number];
   twinkle: number;
-  lockup: number;
+  lockupSettle: number;
+  lockupExit: number;
   erase: number;
+  swooshErase: number;
+  sparkleErase: number;
   captionErase: number;
   dust: number;
-  lockupRise: number;
+  push: number;
 };
 
-const CAPTION_START = 2;
-const CAPTION_FRAMES = 22;
-const WRITE_START = 6;
-const ERASE_FRAMES = 30;
+const CAPTION_START = 0;
+const CAPTION_FRAMES = 30;
+const WRITE_START = 4;
+const ERASE_FRAMES = 36;
 const ERASE_TAIL = 3;
-const RISE_STEPS = [4, 4, 2, 2, 2, 2];
-const LOCKUP_RISE = RISE_STEPS.reduce((sum, step) => sum + step, 0);
-
-const risen = (elapsed: number) =>
-  RISE_STEPS.slice(0, Math.max(0, Math.min(RISE_STEPS.length, elapsed))).reduce(
-    (sum, step) => sum + step,
-    0,
-  );
+const SPARKLE_FRAMES = 14;
+const LOCKUP_FRAMES = 22;
+const WRITE_LEAD = 4;
+export const LOCKUP_DROP = 18;
 
 const smooth = Easing.inOut(Easing.sin);
-const settle = Easing.out(Easing.cubic);
-const landing = Easing.bezier(0.25, 0.6, 0.6, 0.9);
+const pop = Easing.inOut(Easing.cubic);
 
 export const badgeState = (
   frame: number,
@@ -40,26 +38,30 @@ export const badgeState = (
   eraseAtEnd: boolean,
 ): BadgeState => {
   const writeFrames = Math.max(8, Math.round(writeSeconds * fps));
-  const swooshStart = WRITE_START + Math.round(writeFrames * 0.5);
-  const swooshEnd = swooshStart + Math.round(writeFrames * 0.95);
-  const sparkleStart = swooshEnd - 8;
-  const lockupStart = swooshEnd - 2;
+  const swooshStart = WRITE_START + Math.round(writeFrames * 0.32);
+  const swooshEnd = swooshStart + Math.round(writeFrames * 1.03);
+  const sparkleStart = swooshEnd - 11;
+  const lockupStart = swooshEnd - 12;
   const eraseEnd = duration - ERASE_TAIL;
   const eraseStart = eraseEnd - ERASE_FRAMES;
-  const erasing = (from: number, to: number) => (eraseAtEnd ? ramp(frame, from, to, smooth) : 0);
+  const erasing = (from: number, to: number, easing = smooth) =>
+    eraseAtEnd ? ramp(frame, from, to, easing) : 0;
   return {
-    caption: ramp(frame, CAPTION_START, CAPTION_START + CAPTION_FRAMES, Easing.linear),
-    write: ramp(frame, WRITE_START, WRITE_START + writeFrames, smooth),
+    caption: ramp(frame, CAPTION_START, CAPTION_START + CAPTION_FRAMES, smooth),
+    write: ramp(frame, WRITE_START - WRITE_LEAD, WRITE_START + writeFrames, smooth),
     swoosh: ramp(frame, swooshStart, swooshEnd, smooth),
     sparkles: [
-      ramp(frame, sparkleStart, sparkleStart + 12, settle),
-      ramp(frame, sparkleStart + 4, sparkleStart + 15, settle),
+      ramp(frame, sparkleStart, sparkleStart + SPARKLE_FRAMES, pop),
+      ramp(frame, sparkleStart + 4, sparkleStart + 4 + SPARKLE_FRAMES, pop),
     ],
     twinkle: ramp(frame, sparkleStart + 8, sparkleStart + 30, smooth),
-    lockup: ramp(frame, lockupStart, lockupStart + 16, landing),
+    lockupSettle: 1 - ramp(frame, lockupStart, lockupStart + LOCKUP_FRAMES, smooth),
+    lockupExit: erasing(eraseStart + 10, eraseStart + 32, pop),
     erase: erasing(eraseStart, eraseEnd),
+    swooshErase: erasing(eraseStart + 2, eraseEnd),
+    sparkleErase: erasing(eraseStart + 4, eraseStart + 30, pop),
     captionErase: erasing(eraseStart + 2, eraseEnd - 4),
-    lockupRise: LOCKUP_RISE - risen(frame - lockupStart),
     dust: ramp(frame, WRITE_START + 4, WRITE_START + 4 + writeFrames, smooth),
+    push: ramp(frame, 0, duration - 1, smooth),
   };
 };
