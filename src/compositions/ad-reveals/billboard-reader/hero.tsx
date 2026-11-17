@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 import type { BillboardReaderProps } from '@/schemas';
 import { READER, TOP, type Vec3 } from './layout';
@@ -110,14 +110,13 @@ export const Hero = ({
     [colors.suit, colors.trim, colors.accent, colors.cape],
   );
   const sway = 0.05 * Math.sin(frame / 26);
-  const cape = useMemo(() => capeGeometry(Math.round(sway * 400) / 400), [sway]);
+  const cape = useMemo(() => capeGeometry(sway), [sway]);
+  useEffect(() => () => cape.dispose(), [cape]);
   const bob = 0.012 * Math.sin(frame / 19);
   const paperAt: Vec3 = [0, 1.72 - 0.62 * lower + bob, 0.95];
-  const { spine, angle, open, handL, handR } = pageTurn(flip, paperAt);
+  const { spine, angle, handL, handR, elbowL, elbowR } = pageTurn(flip, paperAt);
   const shoulderL: Vec3 = [-0.46, 1.24, -0.08];
   const shoulderR: Vec3 = [0.46, 1.24, -0.08];
-  const elbowL: Vec3 = [-0.66 - 0.12 * open, 0.98, 0.32];
-  const elbowR: Vec3 = [0.66 + 0.12 * open, 0.98, 0.32];
   const swingL = kick * 0.16 * Math.sin(frame / 21);
   const swingR = kick * 0.16 * Math.sin(frame / 21 + 2.1);
   const kneeL: Vec3 = [-0.22, 0.24, 0.8];

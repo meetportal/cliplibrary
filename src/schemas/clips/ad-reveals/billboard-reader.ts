@@ -86,7 +86,7 @@ export const billboardReaderDefaults: BillboardReaderProps = {
   lockup: { logoHeight: 240, showPlate: true },
   board: { brackets: true, lampsAt: 24, lampGlow: 1 },
   reader: { show: true, flipAt: 90, kick: 1 },
-  camera: { orbit: 33, rise: 18, endDistance: 46, fieldOfView: 40 },
+  camera: { orbit: 36, rise: 18, endDistance: 46, fieldOfView: 40 },
   city: { traffic: true, surf: 1 },
 };
 
