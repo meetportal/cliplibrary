@@ -3,15 +3,19 @@ import { mixLab } from '../../kit/lab-color';
 import { lerp, ramp } from '../../kit/motion';
 import { type Blob, caretAt, fillAt, type Stage } from './geometry';
 import type { LetterState } from './letters';
-import { pixelRise } from './timeline';
+import { rollAt, sweepAt, trailFade } from './roll';
+import { riseIn } from './timeline';
 
 export type Writer = { x0: number; x1: number; y: number; reveals: number[] };
 
-const pulseScale = (frame: number, start: number, last: number, amount: number) => {
-  if (frame < start || amount <= 0) {
+const LETTER_RISE = 0.16;
+const LETTER_SWEEP = 0.9;
+
+const pulseScale = (frame: number, start: number, end: number, amount: number) => {
+  if (frame < start || frame >= end || amount <= 0) {
     return 1;
   }
-  const length = Math.max(1, last - start);
+  const length = Math.max(1, end - start);
   const cycles = Math.max(1, Math.round(length / 30));
   const wave = Math.sin((Math.PI * cycles * (frame - start)) / length) ** 2;
   return 1 + 0.3 * amount * wave;
@@ -19,29 +23,39 @@ const pulseScale = (frame: number, start: number, last: number, amount: number) 
 
 const letterStates = (stage: Stage, writer: Writer, frame: number): LetterState[] => {
   const { schedule, lockup } = stage;
-  const stagger = Math.min(1, 10 / Math.max(1, lockup.letters.length));
+  const count = lockup.letters.length;
+  const rise = Math.round(lockup.nameSize * LETTER_RISE);
   return lockup.letters.map((_, at) => {
     if (frame < schedule.caretIn) {
-      const start = schedule.collapseStart + at * stagger;
-      const q = ramp(frame, start, start + 8, Easing.in(Easing.quad));
-      return { opacity: 1 - q, offset: Math.round(20 * q * q) };
+      return { opacity: 0, offset: 0, shift: 0 };
     }
     const reveal = writer.reveals[at] ?? schedule.writeEnd;
-    return { opacity: ramp(frame, reveal, reveal + 5), offset: pixelRise(frame, reveal, 6, 24) };
+    const sweep = sweepAt(schedule, frame, at, count);
+    return {
+      opacity: ramp(frame, reveal, reveal + 6, Easing.inOut(Easing.sin)) * (1 - sweep.fade),
+      offset: riseIn(frame, reveal, 10, rise),
+      shift: sweep.move * lockup.nameSize * LETTER_SWEEP,
+    };
   });
 };
 
 const plateState = (stage: Stage, frame: number, fill: Blob, hasLogo: boolean) => {
   const { schedule, lockup, palette } = stage;
   const color = hasLogo ? palette.surface : palette.primary;
+  const turn = {
+    dx: fill.cx - lockup.tile.cx,
+    dy: fill.cy - lockup.tile.cy,
+    rotation: fill.rotation,
+  };
   if (frame >= schedule.swellStart) {
     const swell = ramp(frame, schedule.swellStart, schedule.swellEnd, Easing.inOut(Easing.cubic));
     return {
       box: lockup.plate,
       color,
-      scale: lerp(0.85, 1, swell),
+      scale: lerp(0.85, 1, swell) * fill.scale,
       opacity: swell,
-      logo: ramp(frame, schedule.logoStart, schedule.logoStart + 10, Easing.inOut(Easing.cubic)),
+      logo: ramp(frame, schedule.logoStart, schedule.logoStart + 12, Easing.inOut(Easing.cubic)),
+      ...(frame >= schedule.foldEnd ? turn : { dx: 0, dy: 0, rotation: 0 }),
     };
   }
   if (frame >= schedule.collapseEnd) {
@@ -54,6 +68,18 @@ const plateState = (stage: Stage, frame: number, fill: Blob, hasLogo: boolean) =
     opacity: 1,
     scale: Math.max(0, Math.min(1, (shrink - 0.12) / 0.88)),
     logo: 1,
+    ...turn,
+  };
+};
+
+const onTile = (stage: Stage, fill: Blob) => {
+  const { lockup } = stage;
+  const ox = ((lockup.accent.cx - lockup.tile.cx) * fill.w * fill.scale) / lockup.tile.w;
+  const oy = ((lockup.accent.cy - lockup.tile.cy) * fill.h * fill.scale) / lockup.tile.h;
+  const angle = (fill.rotation * Math.PI) / 180;
+  return {
+    x: fill.cx + ox * Math.cos(angle) - oy * Math.sin(angle),
+    y: fill.cy + ox * Math.sin(angle) + oy * Math.cos(angle),
   };
 };
 
@@ -66,18 +92,16 @@ const accentState = (stage: Stage, frame: number, pulse: number, fill: Blob) => 
       schedule.collapseStart + 12,
       Easing.in(Easing.cubic),
     );
-    return {
-      x: fill.cx + ((lockup.accent.cx - lockup.tile.cx) * fill.w) / lockup.tile.w,
-      y: fill.cy + ((lockup.accent.cy - lockup.tile.cy) * fill.h) / lockup.tile.h,
-      scale: 1 - gone,
-    };
+    return { ...onTile(stage, fill), scale: 1 - gone };
   }
+  const place =
+    frame >= schedule.foldEnd ? onTile(stage, fill) : { x: lockup.accent.cx, y: lockup.accent.cy };
   return {
-    x: lockup.accent.cx,
-    y: lockup.accent.cy,
+    ...place,
     scale:
       ramp(frame, schedule.accentStart, schedule.accentStart + 10, Easing.inOut(Easing.cubic)) *
-      pulseScale(frame, schedule.foldEnd + 2, schedule.last, pulse),
+      pulseScale(frame, schedule.foldEnd + 2, schedule.exitStart, pulse) *
+      fill.scale,
   };
 };
 
@@ -105,6 +129,14 @@ const ringState = (stage: Stage, frame: number, pulse: number) => {
   };
 };
 
+const glowAt = (stage: Stage, frame: number) => {
+  const { schedule } = stage;
+  if (frame < schedule.collapseEnd) {
+    return 1 - ramp(frame, schedule.collapseStart, schedule.collapseEnd);
+  }
+  return ramp(frame, schedule.growStart, schedule.writeStart, Easing.inOut(Easing.sin));
+};
+
 export const frameState = (
   stage: Stage,
   writer: Writer,
@@ -113,6 +145,7 @@ export const frameState = (
   hasLogo: boolean,
 ) => {
   const fill = fillAt(stage, frame);
+  const roll = rollAt(stage.lockup.tile, stage.frameWidth, stage.schedule, frame);
   return {
     fill,
     letters: letterStates(stage, writer, frame),
@@ -120,13 +153,9 @@ export const frameState = (
     plate: plateState(stage, frame, fill, hasLogo),
     accent: accentState(stage, frame, pulse, fill),
     ring: ringState(stage, frame, pulse),
-    lineFade: 1 - ramp(frame, stage.schedule.dropStart, stage.schedule.dropStart + 10),
-    glow:
-      frame < stage.schedule.collapseEnd
-        ? 1 - ramp(frame, stage.schedule.collapseStart, stage.schedule.collapseEnd)
-        : frame >= stage.schedule.growStart
-          ? 1
-          : 0,
+    trail: fill.shift === 0 ? 0 : roll.speed,
+    trailFade: trailFade(stage.schedule, frame),
+    glow: glowAt(stage, frame),
     glowShift: (stage.frameHeight * frame) / (stage.schedule.last + 1),
   };
 };

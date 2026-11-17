@@ -3,6 +3,8 @@ import { contrast, fitGamut, fromLab, legibleOn, toLab } from '../../kit/lab-col
 
 const VISIBLE = 3;
 const MIN_DISTANCE = 0.22;
+const WARM_DISTANCE = 0.18;
+const WARM_CONTRAST = 2.2;
 
 const distance = (left: string, right: string) => {
   const a = toLab(left);
@@ -35,11 +37,20 @@ const vividOn = (color: string, background: string): string => {
   return legibleOn(color, background, VISIBLE);
 };
 
+const WARM = ['#c99500', '#b8860b', '#d97706'];
+
 const distinctFrom = (color: string, others: readonly string[], background: string): string => {
-  const far = (candidate: string) =>
-    others.every((other) => distance(candidate, other) >= MIN_DISTANCE);
-  if (far(color)) {
+  const far = (candidate: string, least: number) =>
+    others.every((other) => distance(candidate, other) >= least);
+  if (far(color, MIN_DISTANCE)) {
     return color;
+  }
+  const warm = WARM.find(
+    (candidate) =>
+      far(candidate, WARM_DISTANCE) && contrast(candidate, background) >= WARM_CONTRAST,
+  );
+  if (warm !== undefined) {
+    return warm;
   }
   const start = toLab(color);
   const chroma = Math.hypot(start.a, start.b);
@@ -54,7 +65,7 @@ const distinctFrom = (color: string, others: readonly string[], background: stri
           b: Math.sin(angle) * chroma,
         }),
       );
-      if (far(candidate) && contrast(candidate, background) >= VISIBLE * 0.8) {
+      if (far(candidate, MIN_DISTANCE) && contrast(candidate, background) >= VISIBLE * 0.8) {
         return candidate;
       }
     }

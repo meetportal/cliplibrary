@@ -1,7 +1,8 @@
+import { CanvasText } from './canvas-text';
 import type { Face } from './fonts';
 import type { Lockup } from './layout';
 
-export type LetterState = { opacity: number; offset: number };
+export type LetterState = { opacity: number; offset: number; shift: number };
 
 export const Letters = ({
   lockup,
@@ -21,24 +22,23 @@ export const Letters = ({
         return null;
       }
       return (
-        <div
+        <CanvasText
           key={`letter-${at}`}
-          style={{
-            position: 'absolute',
-            left: letter.left,
-            top: lockup.nameTop + state.offset,
-            height: lockup.nameSize,
-            lineHeight: `${lockup.nameSize}px`,
-            fontFamily: face.family,
-            fontWeight: face.weight,
-            fontSize: lockup.nameSize,
-            whiteSpace: 'pre',
+          glyph={{
+            text: letter.text,
+            face,
+            size: lockup.nameSize,
+            tracking: 0,
             color,
-            opacity: state.opacity,
+            lineHeight: lockup.nameSize,
+            width: letter.width,
           }}
-        >
-          {letter.text}
-        </div>
+          left={letter.left}
+          top={lockup.nameTop}
+          opacity={state.opacity}
+          dx={state.shift}
+          dy={state.offset}
+        />
       );
     })}
   </>

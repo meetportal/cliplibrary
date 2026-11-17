@@ -37,7 +37,13 @@ export const useStage = (
       width,
       Math.round(props.dot.size * 1.8),
     );
-    const schedule = buildSchedule(words.length, props.timing.hop, props.timing.write, duration);
+    const schedule = buildSchedule(
+      words.length,
+      letters.length,
+      props.timing.hop,
+      props.timing.write,
+      duration,
+    );
     const lockup = layoutLockup(
       props,
       showLogo ? logoBox : null,
@@ -53,7 +59,9 @@ export const useStage = (
       lockup,
       line,
       palette,
-      targets: flips ? flipTargets(schedule.lands) : schedule.lands.map(() => null),
+      targets: flips
+        ? flipTargets(schedule.lands, words.length <= 1)
+        : schedule.lands.map(() => null),
       pill: { w: props.dot.size, h: Math.round(props.dot.size * 1.8) },
       caret: Math.max(props.dot.size, Math.round(lockup.nameSize * 0.17)),
       center: { x: width / 2, y: centerY },

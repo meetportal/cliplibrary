@@ -72,7 +72,7 @@ export const dotWordmarkRevealDefaults: DotWordmarkRevealProps = {
   tile: { logoSize: 280, padding: 30, border: 22, roundness: 34 },
   dot: { size: 30, accentSize: 40, pulse: 0.6 },
   layout: { gap: 72, offsetY: 0 },
-  timing: { hop: 18, write: 36 },
+  timing: { hop: 14, write: 36 },
 };
 
 export const dotWordmarkRevealMeta: ClipMeta = {
