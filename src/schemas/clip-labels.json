@@ -2868,35 +2868,31 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/burning-paper-reveal.mp4"
   },
   "chalk-badge": {
-    "summary": "A dark green chalkboard with a faint dotted grid. A spaced-capital tagline types in along the top while the company name is written left to right in a slanted brush script of grainy white chalk. A chalk swoosh draws under the name and curls into a small loop after the last letter, two four-point sparkles pop in at its top right in the brand colour, and the logo rises in on a soft rounded plate below. The sparkles twinkle, chalk dust drifts and a soft light circles over the board while it holds, then the board is wiped clean from left to right.",
+    "summary": "A dark green chalkboard with a faint dotted grid. The clip opens with the first word of a spaced-capital tagline already typed along the top and the first letter of the company name being written; the tagline types on while the name is written left to right in a slanted brush script of grainy white chalk. A chalk swoosh draws under the name, slowing into a small loop after the last letter, two four-point sparkles pop in at its top right in the brand colour, and the logo grows in from a point on a soft rounded plate below. The badge keeps slowly growing while the sparkles twinkle, chalk dust drifts and a soft light circles over the board, then the board is erased: the tagline untypes from its end, the name wipes away left to right, the underline undraws from its start, the sparkles shrink and the logo plate shrinks away.",
     "beats": [
       {
         "at": 0.0,
-        "what": "the empty gridded chalkboard; the tagline starts typing in at the top"
+        "what": "the board opens with the tagline's first word typed and the first letter of the name being written in chalk"
       },
       {
-        "at": 0.2,
-        "what": "the name is written in chalk from left to right behind a soft slanted edge"
+        "at": 0.1,
+        "what": "the tagline types on while the name is written from left to right behind a soft slanted edge"
       },
       {
-        "at": 0.7,
-        "what": "the swoosh draws under the name and curls into a small loop after the last letter"
+        "at": 0.55,
+        "what": "the swoosh draws under the name with a soft chalk tip and slows into a small loop after the last letter"
       },
       {
-        "at": 1.3,
-        "what": "two sparkles pop in at the top right of the name in the brand colour"
+        "at": 1.45,
+        "what": "the logo grows in from a point on its rounded plate under the name and two sparkles pop in at the top right in the brand colour"
       },
       {
-        "at": 1.5,
-        "what": "the logo rises in on its rounded plate under the name"
+        "at": 2.2,
+        "what": "the finished badge holds while it slowly grows, the sparkles twinkle, chalk dust drifts up and a soft light circles over the board"
       },
       {
-        "at": 2.1,
-        "what": "the finished badge holds while the sparkles twinkle, chalk dust drifts up and a soft light circles slowly over the board"
-      },
-      {
-        "at": 4.9,
-        "what": "the board is wiped clean from left to right, ready to loop"
+        "at": 3.75,
+        "what": "the board is erased: the tagline untypes from its end, the name wipes away left to right, the underline undraws from its start, the sparkles shrink and the logo plate shrinks away, rolling into the next write"
       }
     ],
     "visuals": [
@@ -2909,11 +2905,12 @@
     ],
     "motion": [
       "chalk write-on wipe",
-      "stroke draw",
+      "soft-tipped stroke draw",
       "sparkle pop and twinkle",
+      "slow push on the badge",
       "drifting chalk dust",
       "typed tagline",
-      "left to right erase"
+      "left to right erase with the underline undrawing"
     ],
     "mood": ["playful", "friendly", "handmade", "warm", "casual"],
     "roles": ["opener", "feature", "closer"],
@@ -2937,6 +2934,7 @@
       "underline, loop and sparkles on or off",
       "sparkle size and twinkle",
       "chalk dust, grain, grid, smudges and light drift",
+      "slow push",
       "writing time and the erase at the end",
       "chalkboard on or off"
     ],

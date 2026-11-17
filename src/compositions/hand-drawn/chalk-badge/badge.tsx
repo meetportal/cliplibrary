@@ -2,17 +2,18 @@ import { useId } from 'react';
 import { lerp } from '../../kit/motion';
 import { ChalkFilter } from './chalk-filter';
 import { Dust } from './dust';
-import type { Face } from './fonts';
-import { type BadgeLayout, project, type Sparkle, WIPE } from './layout';
+import { type BadgeLayout, type Point, WIPE } from './layout';
+import { SoftStroke } from './soft-stroke';
 import { Halos, type SparkleDrawing, Stars } from './sparkles';
+import { paced } from './swoosh';
 import type { BadgeState } from './timeline';
+import type { WordImage } from './word-image';
 
 type BadgeProps = {
   layout: BadgeLayout;
   state: BadgeState;
   frame: number;
-  text: string;
-  face: Face;
+  word: WordImage | null;
   chalk: string;
   sparkle: string;
   showSwoosh: boolean;
@@ -23,9 +24,13 @@ type BadgeProps = {
   dust: number;
   width: number;
   height: number;
+  focus: Point;
+  scale: number;
 };
 
 const UNIT = Math.hypot(WIPE.x, WIPE.y);
+const MIN_WRITE_SOFT = 150;
+const MIN_ERASE_SOFT = 220;
 const dx = WIPE.x / UNIT;
 const dy = WIPE.y / UNIT;
 
@@ -51,19 +56,22 @@ export const Badge = (props: BadgeProps) => {
   const id = useId().replace(/:/g, '');
   const { layout, state, width, height } = props;
   const u = layout.size;
-  const soft = 0.9 * u;
-  const writeEdge = lerp(layout.wordSpan[0], layout.wordSpan[1] + soft, state.write);
-  const eraseEdge = lerp(layout.badgeSpan[0], layout.badgeSpan[1] + soft, state.erase);
-  const passed = (s: Sparkle) =>
-    1 - Math.max(0, Math.min(1, (eraseEdge - project(s.x, s.y) + 0.2 * soft) / (0.6 * soft)));
+  const soft = Math.max(0.9 * u, MIN_WRITE_SOFT);
+  const writeEdge = lerp(layout.wordSpan[0] + soft, layout.wordSpan[1] + soft, state.write);
+  const eraseSoft = Math.max(1.3 * u, MIN_ERASE_SOFT);
+  const eraseEdge = lerp(layout.wordSpan[0], layout.wordSpan[1] + eraseSoft, state.erase);
   const [big, small] = layout.sparkles;
   const twinkle = props.twinkle * state.twinkle;
+  const shrink = 1 - state.sparkleErase;
   const stars: SparkleDrawing[] = props.showSparkles
     ? [
-        { sparkle: big, grow: state.sparkles[0] * passed(big), phase: 0 },
-        { sparkle: small, grow: state.sparkles[1] * passed(small), phase: Math.PI / 2 },
+        { sparkle: big, grow: state.sparkles[0] * shrink, phase: 0 },
+        { sparkle: small, grow: state.sparkles[1] * shrink, phase: Math.PI / 2 },
       ]
     : [];
+  const { x: fx, y: fy } = props.focus;
+  const push = `translate(${fx.toFixed(2)} ${fy.toFixed(2)}) scale(${props.scale.toFixed(6)}) translate(${(-fx).toFixed(2)} ${(-fy).toFixed(2)})`;
+  const erased = state.erase > 0 ? `url(#${id}-erase-mask)` : undefined;
   return (
     <svg
       aria-hidden="true"
@@ -75,7 +83,7 @@ export const Badge = (props: BadgeProps) => {
       <defs>
         <ChalkFilter id={`${id}-chalk`} grain={props.grain} />
         <Wipe id={`${id}-write`} edge={writeEdge} soft={soft} keep="before" />
-        <Wipe id={`${id}-erase`} edge={eraseEdge} soft={soft} keep="after" />
+        <Wipe id={`${id}-erase`} edge={eraseEdge} soft={eraseSoft} keep="after" />
         <mask
           id={`${id}-write-mask`}
           maskUnits="userSpaceOnUse"
@@ -97,7 +105,7 @@ export const Badge = (props: BadgeProps) => {
           <rect width={width} height={height} fill={`url(#${id}-erase)`} />
         </mask>
       </defs>
-      <g mask={state.erase > 0 ? `url(#${id}-erase-mask)` : undefined}>
+      <g transform={push}>
         <Halos
           id={`${id}-halo`}
           items={stars}
@@ -105,42 +113,47 @@ export const Badge = (props: BadgeProps) => {
           twinkle={twinkle}
           color={props.sparkle}
         />
-        <g filter={`url(#${id}-chalk)`}>
-          <g mask={state.write < 1 ? `url(#${id}-write-mask)` : undefined}>
-            <text
-              x={layout.left}
-              y={layout.baseline}
-              fill={props.chalk}
-              style={{ fontFamily: `"${props.face.family}"`, fontWeight: props.face.weight }}
-              fontSize={u}
-            >
-              {props.text}
-            </text>
+      </g>
+      <g filter={`url(#${id}-chalk)`}>
+        <g transform={push}>
+          <g mask={erased}>
+            <g mask={state.write < 1 ? `url(#${id}-write-mask)` : undefined}>
+              {props.word === null ? null : (
+                <image
+                  href={props.word.href}
+                  x={props.word.x}
+                  y={props.word.y}
+                  width={props.word.w}
+                  height={props.word.h}
+                  preserveAspectRatio="none"
+                />
+              )}
+            </g>
           </g>
-          {props.showSwoosh && state.swoosh > 0 ? (
-            <path
-              d={layout.swoosh}
-              pathLength={1}
-              fill="none"
-              stroke={props.chalk}
-              strokeWidth={props.thickness * u}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeDasharray="1 2"
-              strokeDashoffset={1 - state.swoosh}
-              opacity={Math.min(1, state.swoosh * 14)}
+          {props.showSwoosh ? (
+            <SoftStroke
+              d={layout.swoosh.d}
+              drawn={paced(layout.swoosh.pace, state.swoosh)}
+              undrawn={state.swooshErase}
+              soft={layout.swoosh.soft}
+              color={props.chalk}
+              width={props.thickness * u}
             />
           ) : null}
           <g fill={props.sparkle}>
             <Stars items={stars} frame={props.frame} twinkle={twinkle} />
           </g>
         </g>
-        <Dust
-          layout={layout}
-          frame={props.frame}
-          level={state.dust * props.dust}
-          color={props.chalk}
-        />
+      </g>
+      <g transform={push}>
+        <g mask={erased}>
+          <Dust
+            layout={layout}
+            frame={props.frame}
+            level={state.dust * props.dust}
+            color={props.chalk}
+          />
+        </g>
       </g>
     </svg>
   );
