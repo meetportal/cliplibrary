@@ -65,6 +65,7 @@ export const ctaEndCardSchema = z.object({
     rise: zSlider({ min: 0, max: 80, step: 2 }),
     sheen: zSlider({ min: 0, max: 1, step: 0.05 }),
     drift: zSlider({ min: 0, max: 1, step: 0.05 }),
+    push: zSlider({ min: 0, max: 0.1, step: 0.005 }),
     exit: z.boolean(),
   }),
 });
@@ -100,14 +101,14 @@ export const ctaEndCardDefaults: CtaEndCardProps = {
   underline: { show: true, thickness: 8 },
   buttons: { height: 88, labelSize: 30, gap: 20 },
   layout: { offsetY: 0, spacing: 1 },
-  motion: { start: 0, stagger: 5, rise: 36, sheen: 0.6, drift: 0.6, exit: false },
+  motion: { start: 0, stagger: 5, rise: 36, sheen: 0.6, drift: 0.6, push: 0.05, exit: false },
 };
 
 export const ctaEndCardMeta: ClipMeta = {
   id: 'cta-end-card',
   title: 'CTA End Card',
   description:
-    'A calm app end card: the logo sits on a soft white plate while the headline rises in with the company name in the accent colour, an underline draws under the name, then the tagline, two download buttons and the web address arrive and hold.',
+    'A calm app end card: the logo sits on a soft white plate while the headline rises in with the company name in the accent colour, an underline draws under the name, then the tagline, two download buttons and the web address rise in, and the finished card slowly pushes closer to the end.',
   theme: 'light',
   source: 'src/compositions/scenes/brand/cta-end-card.tsx',
   category: 'brand',

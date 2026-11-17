@@ -166,6 +166,11 @@ export const ctaEndCardControls = defineControls<CtaEndCardProps>({
           hint: 'A soft light that sweeps the first button while the card holds; 0 turns it off',
         },
         {
+          path: 'motion.push',
+          label: 'Push in',
+          hint: 'About how much closer the card eases after everything has landed, as a share of its size; narrow cards push a little more, never past the frame edge; 0 holds it still',
+        },
+        {
           path: 'motion.drift',
           label: 'Background drift',
           hint: 'How far the soft light in the background wanders; 0 holds it still',
