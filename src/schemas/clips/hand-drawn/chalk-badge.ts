@@ -56,6 +56,7 @@ export const chalkBadgeSchema = z.object({
   motion: z.object({
     writeSeconds: zSlider({ min: 0.4, max: 2, step: 0.05 }),
     eraseAtEnd: z.boolean(),
+    push: zSlider({ min: 0, max: 0.12, step: 0.005 }).default(0.05),
   }),
 });
 
@@ -80,7 +81,7 @@ export const chalkBadgeDefaults: ChalkBadgeProps = {
   sparkles: { show: true, size: 1, twinkle: 0.6 },
   lockup: { show: true, height: 118, bottom: 176, showPlate: true },
   board: { gridSize: 144, gridOpacity: 0.55, smudge: 0.6, grain: 0.6, dust: 1, lightDrift: 320 },
-  motion: { writeSeconds: 0.9, eraseAtEnd: true },
+  motion: { writeSeconds: 1.25, eraseAtEnd: true, push: 0.05 },
 };
 
 export const chalkBadgeMeta: ClipMeta = {
@@ -92,8 +93,8 @@ export const chalkBadgeMeta: ClipMeta = {
   source: 'src/compositions/scenes/hand-drawn/chalk-badge.tsx',
   category: 'hand-drawn',
   tags: ['chalkboard', 'handwriting', 'badge', 'draw', 'texture', 'logo', 'wipe', 'grid'],
-  durationInFrames: 180,
-  posterFrame: 110,
+  durationInFrames: 150,
+  posterFrame: 96,
   fps: 30,
   width: 1920,
   height: 1080,

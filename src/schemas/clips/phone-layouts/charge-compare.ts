@@ -85,7 +85,7 @@ export const chargeCompareDefaults: ChargeCompareProps = {
     websiteSize: 38,
   },
   badge: { height: 220, endScale: 1.9, showPlate: true },
-  timing: { plugAt: 18, chargeFrames: 66, fullHold: 10 },
+  timing: { plugAt: 4, chargeFrames: 80, fullHold: 16 },
 };
 
 export const chargeCompareMeta: ClipMeta = {
@@ -97,8 +97,8 @@ export const chargeCompareMeta: ClipMeta = {
   source: 'src/compositions/scenes/phone-layouts/charge-compare.tsx',
   category: 'phone-layouts',
   tags: ['phone', 'multi-phone', 'counter', 'glow', 'logo', 'cta', 'end-card', 'typing'],
-  durationInFrames: 265,
-  posterFrame: 245,
+  durationInFrames: 240,
+  posterFrame: 222,
   fps: 30,
   width: 1080,
   height: 1920,

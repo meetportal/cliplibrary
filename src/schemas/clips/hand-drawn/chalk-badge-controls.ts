@@ -171,7 +171,14 @@ export const chalkBadgeControls = defineControls<ChalkBadgeProps>({
         {
           path: 'motion.eraseAtEnd',
           label: 'Wipe clean at the end',
-          hint: 'Erase the board left to right in the last second so the clip loops',
+          hint: 'Erase the board left to right at the end so the clip loops',
+        },
+      ],
+      more: [
+        {
+          path: 'motion.push',
+          label: 'Slow push',
+          hint: 'How far the badge slowly grows over the whole clip; short names grow a little more so they keep moving; 0 holds it still',
         },
       ],
     },

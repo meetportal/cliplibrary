@@ -1,16 +1,30 @@
 import { Easing } from 'remotion';
 import { alpha, mixLab } from './color';
 import { type Measure, MONO_FACE, NAME_FACE, URL_FACE, type Wrapped, wrapToFit } from './fonts';
-import { pixelTween, progress, type Timeline } from './timeline';
+import { progress, type Timeline } from './timeline';
 
 const SIDE = 70;
-const NAME_CENTER = 935;
+const NAME_CENTER = 1000;
 const NAME_GAP = 44;
 const PILL_GAP = 110;
-const PILL_TOP = 1350;
+const PILL_TOP = 1450;
 const PILL = { width: 780, height: 108, button: 80 } as const;
 const MONO_TRACKING = 0.16;
 const RISE = 28;
+const KEY_FADE = 4;
+const NAME_RISE = 18;
+const BLUR = 10;
+const SPREAD = 0.55;
+
+const focusIn = (frame: number, from: number, to: number, rise: number) => {
+  const p = progress(frame, from, to);
+  const lift = progress(frame, from, from + (to - from) * 0.5, Easing.out(Easing.quad));
+  return {
+    opacity: Easing.inOut(Easing.sin)(progress(p, 0, 0.7)),
+    offset: rise * (1 - lift),
+    blur: BLUR * (1 - p) ** 1.6,
+  };
+};
 
 export type EndCardLayout = {
   name: Wrapped;
@@ -70,8 +84,8 @@ const NameLetters = ({
   return (
     <div>
       {[...line].map((letter, index) => {
-        const at = start + (span * 0.65 * (offset + index)) / Math.max(1, total - 1);
-        const shown = progress(look.frame, at, at + span * 0.35, Easing.inOut(Easing.sin));
+        const at = start + (span * SPREAD * (offset + index)) / Math.max(1, total - 1);
+        const focus = focusIn(look.frame, at, at + span * (1 - SPREAD), NAME_RISE);
         const settle = progress(
           look.frame,
           at + span * 0.2,
@@ -81,7 +95,13 @@ const NameLetters = ({
         return (
           <span
             key={index}
-            style={{ opacity: shown, color: mixLab(look.accent, look.text, settle) }}
+            style={{
+              position: 'relative',
+              top: focus.offset,
+              opacity: focus.opacity,
+              filter: focus.blur > 0.05 ? `blur(${focus.blur}px)` : undefined,
+              color: mixLab(look.accent, look.text, settle),
+            }}
           >
             {letter}
           </span>
@@ -101,28 +121,24 @@ export const EndCard = ({ layout, look }: { layout: EndCardLayout; look: EndCard
     PILL_TOP,
     taglineTop + layout.tagline.lines.length * taglineLineHeight + PILL_GAP,
   );
-  const tagline = {
-    opacity: progress(frame, line.tagline[0], line.tagline[0] + 12, Easing.inOut(Easing.sin)),
-    offset: pixelTween(
-      frame,
-      RISE,
-      0,
-      line.tagline[0],
-      line.tagline[1] - line.tagline[0],
-      Easing.out(Easing.cubic),
-    ),
-  };
+  const tagline = focusIn(frame, line.tagline[0], line.tagline[1], RISE);
   const pillGrow = progress(frame, line.pill[0], line.pill[1], Easing.inOut(Easing.sin));
-  const pillWidth = Math.round(PILL.button + 28 + (PILL.width - PILL.button - 28) * pillGrow);
+  const pillWidth = PILL.button + 28 + (PILL.width - PILL.button - 28) * pillGrow;
   const chars = [...look.website];
-  const perFrame = Math.max(
-    1,
-    Math.ceil(chars.length / Math.max(1, line.typing[1] - line.typing[0])),
-  );
+  const perFrame = Math.max(1, chars.length / Math.max(1, line.typing[1] - line.typing[0]));
   const count =
-    frame < line.typing[0] ? 0 : Math.min(chars.length, (frame - line.typing[0] + 1) * perFrame);
+    frame < line.typing[0]
+      ? 0
+      : Math.min(chars.length, Math.floor((frame - line.typing[0] + 1) * perFrame));
   const typingEnd = line.typing[0] + Math.ceil(chars.length / perFrame);
-  const shown = chars.slice(0, count).join('');
+  const shown = chars.slice(0, count).map((letter, index) => ({
+    letter,
+    opacity: progress(
+      frame,
+      line.typing[0] + index / perFrame - 1,
+      line.typing[0] + index / perFrame + KEY_FADE,
+    ),
+  }));
   const caret = frame >= line.typing[0] ? 1 - progress(frame, typingEnd + 4, typingEnd + 12) : 0;
   const total = layout.name.lines.reduce((sum, text) => sum + [...text].length, 0);
   let offset = 0;
@@ -171,6 +187,7 @@ export const EndCard = ({ layout, look }: { layout: EndCardLayout; look: EndCard
           letterSpacing: `${MONO_TRACKING}em`,
           color: look.muted,
           opacity: tagline.opacity,
+          filter: tagline.blur > 0.05 ? `blur(${tagline.blur}px)` : undefined,
           whiteSpace: 'pre',
         }}
       >
@@ -207,7 +224,11 @@ export const EndCard = ({ layout, look }: { layout: EndCardLayout; look: EndCard
             whiteSpace: 'pre',
           }}
         >
-          {shown}
+          {shown.map((key, index) => (
+            <span key={index} style={{ opacity: key.opacity }}>
+              {key.letter}
+            </span>
+          ))}
           <span
             style={{
               display: 'inline-block',

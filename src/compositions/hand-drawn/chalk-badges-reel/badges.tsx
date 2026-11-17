@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { ChalkText, DrawPath, Pop, Sparkle } from './chalk';
 import type { Measure, ReelFaceKey } from './fonts';
-import { FILL_LAST, MARKS_SLOW, type Stroke, span, TEXT_FIRST } from './timeline';
+import { FILL_LAST, MARKS_SLOW, type Stroke, span, TEXT_FIRST, TEXT_STAMP } from './timeline';
 
 export type ReelPalette = {
   chalk: string;
@@ -27,7 +27,15 @@ export type BadgeKit = {
   measure: Measure;
   ornaments: boolean;
   twinkle: number;
+  stamp: boolean;
 };
+
+const exitAt = (kit: BadgeKit, half: number) => (kit.stamp ? -half : 0);
+
+const textWindow = (kit: BadgeKit) => (kit.stamp ? TEXT_STAMP : TEXT_FIRST);
+
+const stampOf = (kit: BadgeKit) =>
+  kit.stamp ? { measure: kit.measure, order: 'outside' as const } : undefined;
 
 type Fit = { size: number; width: number };
 
@@ -54,6 +62,7 @@ const ScriptBadge = (kit: BadgeKit) => {
     <g>
       <ChalkText
         id={`${kit.id}-t`}
+        stamp={stampOf(kit)}
         text={kit.text}
         face="script"
         size={f.size}
@@ -112,22 +121,23 @@ const TapeBadge = (kit: BadgeKit) => {
     <g>
       <g transform="rotate(-2.5)">
         <Pop
-          stroke={span(0, 0.62, kit.stroke, FILL_LAST)}
-          from={0.06}
-          axis="x"
-          dust={kit.palette.chalk}
+          stroke={span(0, 0.75, kit.stroke, FILL_LAST)}
+          exitAt={exitAt(kit, w / 2)}
+          pinch={kit.stamp}
+          lay={{ id: `${kit.id}-lay`, left: -w / 2 - 10, right: w / 2 + 10, top: -h, bottom: h }}
         >
-          {(tint) => <path d={d} fill={tint(kit.palette.secondary)} />}
+          <path d={d} fill={kit.palette.secondary} />
         </Pop>
         <ChalkText
           id={`${kit.id}-t`}
+          stamp={stampOf(kit)}
           text={kit.text}
           face="heavy"
           size={f.size}
           width={f.width}
           y={2}
           tracking={0.02}
-          stroke={span(0.14, 0.92, kit.stroke, TEXT_FIRST)}
+          stroke={span(0.2, 0.95, kit.stroke, textWindow(kit))}
           fill={kit.palette.secondaryInk}
         />
       </g>
@@ -156,34 +166,26 @@ const BurstBadge = (kit: BadgeKit) => {
     `M${x} ${y} l${14 * s} ${-14 * s} M${x + 12 * s} ${y + 10 * s} l${10 * s} ${-10 * s}`;
   return (
     <g>
-      <Pop
-        stroke={span(0, 0.6, kit.stroke, FILL_LAST)}
-        from={0.1}
-        turn={-35}
-        dust={kit.palette.chalk}
-      >
-        {(tint) => (
-          <>
-            <path d={burst(22, 98, 82)} fill={tint(kit.palette.primary)} />
-            <circle
-              r={64}
-              fill="none"
-              stroke={tint(kit.palette.primaryInk)}
-              strokeWidth={2.5}
-              opacity={0.35}
-            />
-          </>
-        )}
+      <Pop stroke={span(0, 0.6, kit.stroke, FILL_LAST)} from={0.04} turn={-35}>
+        <path d={burst(22, 98, 82)} fill={kit.palette.primary} />
+        <circle
+          r={64}
+          fill="none"
+          stroke={kit.palette.primaryInk}
+          strokeWidth={2.5}
+          opacity={0.35}
+        />
       </Pop>
       <ChalkText
         id={`${kit.id}-t`}
+        stamp={stampOf(kit)}
         text={kit.text}
         face="heavy"
         size={f.size}
         width={f.width}
         y={2}
         tracking={0.02}
-        stroke={span(0.3, 0.96, kit.stroke, TEXT_FIRST)}
+        stroke={span(0.3, 0.96, kit.stroke, textWindow(kit))}
         fill={kit.palette.primaryInk}
       />
       {kit.ornaments ? (
@@ -221,28 +223,25 @@ const RibbonBadge = (kit: BadgeKit) => {
   return (
     <g>
       <Pop
-        stroke={span(0, 0.55, kit.stroke, FILL_LAST)}
-        from={0.05}
-        axis="x"
-        dust={kit.palette.chalk}
+        stroke={span(0, 0.8, kit.stroke, FILL_LAST)}
+        exitAt={exitAt(kit, w / 2 + 46)}
+        pinch={kit.stamp}
+        lay={{ id: `${kit.id}-lay`, left: -w / 2 - 50, right: w / 2 + 50, top: -h, bottom: h + 30 }}
       >
-        {(tint) => (
-          <>
-            <path d={tail(-1)} fill={tint(kit.palette.ribbonShade)} />
-            <path d={tail(1)} fill={tint(kit.palette.ribbonShade)} />
-            <path d={body} fill={tint(kit.palette.ribbon)} />
-          </>
-        )}
+        <path d={tail(-1)} fill={kit.palette.ribbonShade} />
+        <path d={tail(1)} fill={kit.palette.ribbonShade} />
+        <path d={body} fill={kit.palette.ribbon} />
       </Pop>
       <ChalkText
         id={`${kit.id}-t`}
+        stamp={stampOf(kit)}
         text={kit.text}
         face="serif"
         size={f.size}
         width={f.width}
         y={-2 - 0.1 * f.size}
         tracking={0.05}
-        stroke={span(0.4, 1, kit.stroke, TEXT_FIRST)}
+        stroke={span(0.4, 1, kit.stroke, textWindow(kit))}
         fill={kit.palette.ribbonInk}
       />
     </g>
@@ -260,9 +259,15 @@ const BubbleBadge = (kit: BadgeKit) => {
   const d = `M${point(126)} A${rx} ${ry} 0 1 1 ${point(102)} L${(-0.74 * rx).toFixed(1)} ${ry + 34} L${point(126)}`;
   return (
     <g>
-      <DrawPath d={d} stroke={span(0, 0.7, kit.stroke)} color={kit.palette.accent} width={5.5} />
+      <DrawPath
+        d={d}
+        stroke={span(0, 0.7, kit.stroke, MARKS_SLOW)}
+        color={kit.palette.accent}
+        width={5.5}
+      />
       <ChalkText
         id={`${kit.id}-t`}
+        stamp={stampOf(kit)}
         text={kit.text}
         face="script"
         size={f.size}
@@ -296,6 +301,7 @@ const RingBadge = (kit: BadgeKit) => {
       />
       <ChalkText
         id={`${kit.id}-t`}
+        stamp={stampOf(kit)}
         text={kit.text}
         face="hand"
         size={f.size}

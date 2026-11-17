@@ -1,15 +1,58 @@
 import type { ReactNode } from 'react';
-import { mixOklab } from './color';
-import { REEL_FACES, type ReelFaceKey } from './fonts';
+import { type Measure, REEL_FACES, type ReelFaceKey } from './fonts';
 import { isShown, type Stroke } from './timeline';
 
 const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
 
-export const GrainFilter = (props: { id: string; grain: number }) => {
+const smooth = (value: number) => {
+  const t = clamp01(value);
+  return t * t * (3 - 2 * t);
+};
+
+const STAMP_WINDOW = 0.6;
+
+const stampOf = (erase: number, index: number, count: number) => {
+  const gap = count > 1 ? (1 - STAMP_WINDOW) / (count - 1) : 0;
+  const local = count > 1 ? (erase - index * gap) / STAMP_WINDOW : erase;
+  return { scale: 1 - 0.85 * smooth(local), opacity: 1 - smooth((local - 0.85) / 0.15) };
+};
+
+export type Stamp = { measure: Measure; order: 'left' | 'outside' };
+
+type Glyph = { char: string; left: number; center: number };
+
+const glyphsOf = (
+  text: string,
+  face: ReelFaceKey,
+  size: number,
+  tracking: number,
+  measure: Measure,
+): Glyph[] => {
+  const chars = [...text];
+  return chars.map((char, index) => {
+    const before = measure(chars.slice(0, index + 1).join(''), face) - measure(char, face);
+    const left = (before + index * tracking) * size;
+    return { char, left, center: left + (measure(char, face) * size) / 2 };
+  });
+};
+
+export const GrainFilter = (props: {
+  id: string;
+  grain: number;
+  width: number;
+  height: number;
+}) => {
   const k = 2.8 * props.grain;
   const b = 1 + 0.95 * props.grain;
   return (
-    <filter id={props.id} x="-5%" y="-5%" width="110%" height="110%">
+    <filter
+      id={props.id}
+      filterUnits="userSpaceOnUse"
+      x={-props.width * 0.05}
+      y={-props.height * 0.05}
+      width={props.width * 1.1}
+      height={props.height * 1.1}
+    >
       <feTurbulence
         type="fractalNoise"
         baseFrequency="0.9"
@@ -46,7 +89,7 @@ const Wipe = (props: {
   const fade = Math.max(soft, width * 3);
   const from = props.left - fade - soft;
   const to = props.right + fade + soft * 2;
-  const head = props.left - soft + stroke.write * (width + soft * 2);
+  const head = props.left + stroke.write * (width + soft);
   const tail = props.left - fade + stroke.erase * (width + fade);
   const writeStops: [number, string, string][] = [
     [head - soft, '#ffffff', 'write-start'],
@@ -113,6 +156,7 @@ export const ChalkText = (props: {
   tracking?: number;
   anchor?: 'start' | 'middle' | 'end';
   shadow?: string;
+  stamp?: Stamp | undefined;
 }) => {
   const x = props.x ?? 0;
   const y = props.y ?? 0;
@@ -121,7 +165,14 @@ export const ChalkText = (props: {
   const face = REEL_FACES[props.face];
   const settle = clamp01(props.stroke.write * 5);
   const enter = settle * settle * (3 - 2 * settle);
-  const text = (dx: number, dy: number, fill: string, opacity: number) => (
+  const style = {
+    fontFamily: `"${face.family}"`,
+    fontWeight: face.weight,
+    fontSize: props.size,
+    whiteSpace: 'pre' as const,
+    textRendering: 'geometricPrecision' as const,
+  };
+  const whole = (dx: number, dy: number, fill: string, opacity: number) => (
     <text
       x={x + dx}
       y={y + dy}
@@ -129,26 +180,62 @@ export const ChalkText = (props: {
       dominantBaseline="central"
       fill={fill}
       opacity={opacity * enter}
-      style={{
-        fontFamily: `"${face.family}"`,
-        fontWeight: face.weight,
-        fontSize: props.size,
-        letterSpacing: `${props.tracking ?? 0}em`,
-        whiteSpace: 'pre',
-      }}
+      style={{ ...style, letterSpacing: `${props.tracking ?? 0}em` }}
     >
       {props.text}
     </text>
   );
+  const measure = props.stamp?.measure;
+  const outside = props.stamp?.order === 'outside';
+  const glyphs =
+    measure === undefined
+      ? []
+      : glyphsOf(props.text, props.face, props.size, props.tracking ?? 0, measure);
+  const visible = glyphs.filter((glyph) => glyph.char.trim() !== '');
+  const middle = props.width / 2;
+  const byDistance = visible
+    .map((glyph, index) => ({ index, away: Math.abs(glyph.center - middle) }))
+    .sort((a, b) => b.away - a.away);
+  const ranks = visible.map((_, index) => byDistance.findIndex((entry) => entry.index === index));
+  const stamped = (dx: number, dy: number, fill: string, opacity: number) =>
+    visible.map((glyph, index) => {
+      const order = outside ? (ranks[index] ?? index) : index;
+      const stamp = stampOf(props.stroke.erase, order, visible.length);
+      if (stamp.opacity <= 0.001) {
+        return null;
+      }
+      const cx = left + glyph.center + dx;
+      const cy = y + dy;
+      return (
+        <text
+          key={`${glyph.left.toFixed(2)}-${dx}`}
+          x={left + glyph.left + dx}
+          y={cy}
+          textAnchor="start"
+          dominantBaseline="central"
+          fill={fill}
+          opacity={opacity * enter * stamp.opacity}
+          transform={
+            stamp.scale < 1
+              ? `translate(${cx.toFixed(2)} ${cy.toFixed(2)}) scale(${stamp.scale.toFixed(4)}) translate(${(-cx).toFixed(2)} ${(-cy).toFixed(2)})`
+              : undefined
+          }
+          style={style}
+        >
+          {glyph.char}
+        </text>
+      );
+    });
+  const text = measure === undefined ? whole : stamped;
   return (
     <Wipe
       id={props.id}
-      stroke={props.stroke}
+      stroke={measure === undefined ? props.stroke : { write: props.stroke.write, erase: 0 }}
       left={left}
       right={left + props.width}
       top={y - props.size * 1.1}
       bottom={y + props.size * 1.1}
-      soft={Math.max(20, props.size * 1.4)}
+      soft={Math.max(20, Math.min(props.size * 1.4, props.width * 0.8), props.width * 0.2)}
     >
       {props.shadow === undefined
         ? null
@@ -178,44 +265,64 @@ export const DrawPath = (props: {
       strokeWidth={props.width}
       strokeLinecap="butt"
       strokeLinejoin="round"
-      strokeDasharray={`${write.toFixed(4)} 2`}
-      opacity={(props.opacity ?? 1) * clamp01(write * 12) * (1 - erase * erase * (3 - 2 * erase))}
+      strokeDasharray={`${Math.max(0, write - erase).toFixed(4)} 2`}
+      strokeDashoffset={(-erase).toFixed(4)}
+      opacity={(props.opacity ?? 1) * clamp01(write * 12) * (1 - smooth((erase - 0.94) / 0.06))}
     />
   );
 };
 
+export type Lay = { id: string; left: number; right: number; top: number; bottom: number };
+
 export const Pop = (props: {
   stroke: Stroke;
   from?: number;
-  axis?: 'both' | 'x';
+  lay?: Lay;
+  exitAt?: number;
+  pinch?: boolean;
   turn?: number;
-  dust: string;
-  children: (tint: (color: string) => string) => ReactNode;
+  children: ReactNode;
 }) => {
   const { write, erase } = props.stroke;
   if (!isShown(props.stroke)) {
     return null;
   }
-  const grow = 1 - (1 - write) ** 2;
+  const { lay } = props;
+  const grow = lay === undefined ? 1 - (1 - write) ** 2 : 1;
   const from = props.from ?? 0.2;
   const enter = from + (1 - from) * grow;
-  const late = erase;
-  const shrink = late * late * (3 - 2 * late);
-  const blend = clamp01(erase / 0.7);
-  const toDust = 0.55 * blend * blend * (3 - 2 * blend);
-  const tint = (color: string) => (toDust > 0 ? mixOklab(color, props.dust, toDust) : color);
-  const wide = props.axis === 'x';
-  const sx = enter * (1 - (wide ? 0 : 0.92) * shrink);
-  const sy = wide ? 1 - 0.2 * (1 - grow) : sx;
-  const fadeOut = clamp01((erase - (wide ? 0.1 : 0.6)) / (wide ? 0.9 : 0.4));
-  const opacity = clamp01(write * 6) * (1 - fadeOut * fadeOut * (3 - 2 * fadeOut));
+  const fadeIn = lay === undefined ? smooth(write / 0.1) : 1;
+  const shrink = erase;
+  const pinch = props.pinch === true && lay !== undefined;
+  const ex = 1 - (pinch ? 0.5 : 0.97) * shrink;
+  const ey = lay === undefined ? ex : 1 - (pinch ? 0.97 : 0.85) * shrink;
+  const opacity = fadeIn * (1 - smooth((erase - 0.8) / 0.2));
   const turn = (props.turn ?? 0) * (1 - grow);
+  const body = (
+    <g transform={`rotate(${(turn + 0.01).toFixed(3)}) scale(${enter.toFixed(4)})`}>
+      {props.children}
+    </g>
+  );
   return (
     <g
-      transform={`rotate(${(turn + 0.01).toFixed(3)}) scale(${sx.toFixed(4)} ${sy.toFixed(4)})`}
+      transform={`translate(${props.exitAt ?? 0} 0) scale(${ex.toFixed(4)} ${ey.toFixed(4)}) translate(${-(props.exitAt ?? 0)} 0)`}
       opacity={opacity}
     >
-      {props.children(tint)}
+      {lay === undefined ? (
+        body
+      ) : (
+        <Wipe
+          id={lay.id}
+          stroke={{ write: 1 - (1 - write) ** 2, erase: 0 }}
+          left={lay.left}
+          right={lay.right}
+          top={lay.top}
+          bottom={lay.bottom}
+          soft={Math.max(40, (lay.right - lay.left) * 0.3)}
+        >
+          {body}
+        </Wipe>
+      )}
     </g>
   );
 };
@@ -235,8 +342,8 @@ export const Sparkle = (props: {
   pulse: number;
 }) => (
   <g transform={`translate(${props.x} ${props.y}) scale(${props.pulse.toFixed(4)})`}>
-    <Pop stroke={props.stroke} from={0} turn={-40} dust={props.color}>
-      {() => <path d={sparklePath(props.size)} fill={props.color} />}
+    <Pop stroke={props.stroke} from={0} turn={-40}>
+      <path d={sparklePath(props.size)} fill={props.color} />
     </Pop>
   </g>
 );

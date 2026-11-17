@@ -1,23 +1,21 @@
 import { Easing, interpolate } from 'remotion';
 import type { ChargeCompareProps } from '@/schemas';
 
-const PLUG_FRAMES = 36;
-const WAKE_FRAMES = 12;
-const CHARGE_DELAY = 8;
-const LEAVE_FRAMES = 16;
-const TRAVEL_DELAY = 2;
-const TRAVEL_FRAMES = 34;
-const END_HOLD = 59;
-const END_BUILD = 68;
-const MIN_STEP = 1;
-
-export const INTRO_FRAMES = 8;
+const PLUG_FRAMES = 48;
+const WAKE_FRAMES = 20;
+const WAKE_LEAD = 8;
+const CHARGE_LEAD = 8;
+const IRIS_DELAY = 8;
+const IRIS_FRAMES = 20;
+const TRAVEL_FRAMES = 36;
+const END_HOLD = 46;
+const END_BUILD = 54;
 
 export type Timeline = {
   plug: readonly [number, number];
   wake: readonly [number, number];
   charge: readonly [number, number];
-  leave: readonly [number, number];
+  iris: readonly [number, number];
   travel: readonly [number, number];
   name: readonly [number, number];
   tagline: readonly [number, number];
@@ -28,20 +26,20 @@ export type Timeline = {
 
 export const buildTimeline = (timing: ChargeCompareProps['timing'], duration: number): Timeline => {
   const plugEnd = timing.plugAt + PLUG_FRAMES;
-  const chargeStart = plugEnd + CHARGE_DELAY;
+  const chargeStart = plugEnd - CHARGE_LEAD;
   const latestLeave = duration - END_HOLD - END_BUILD;
   const leave = Math.min(chargeStart + timing.chargeFrames + timing.fullHold, latestLeave);
   const full = Math.min(chargeStart + timing.chargeFrames, leave);
   return {
     plug: [timing.plugAt, plugEnd],
-    wake: [plugEnd, plugEnd + WAKE_FRAMES],
+    wake: [plugEnd - WAKE_LEAD, plugEnd - WAKE_LEAD + WAKE_FRAMES],
     charge: [chargeStart, Math.max(chargeStart + 1, full)],
-    leave: [leave, leave + LEAVE_FRAMES],
-    travel: [leave + TRAVEL_DELAY, leave + TRAVEL_DELAY + TRAVEL_FRAMES],
-    name: [leave + 28, leave + 50],
-    tagline: [leave + 36, leave + 54],
-    pill: [leave + 40, leave + 60],
-    typing: [leave + 50, leave + 68],
+    iris: [leave + IRIS_DELAY, leave + IRIS_DELAY + IRIS_FRAMES],
+    travel: [leave, leave + TRAVEL_FRAMES],
+    name: [leave + 19, leave + 39],
+    tagline: [leave + 24, leave + 43],
+    pill: [leave + 26, leave + 41],
+    typing: [leave + 39, leave + END_BUILD],
     settled: leave + END_BUILD,
   };
 };
@@ -62,29 +60,4 @@ export const progress = (
   });
 };
 
-export const pixelTween = (
-  frame: number,
-  from: number,
-  to: number,
-  start: number,
-  frames: number,
-  easing: (t: number) => number,
-): number => {
-  const origin = Math.round(from);
-  const distance = Math.abs(Math.round(to) - origin);
-  if (distance === 0 || frame <= start) {
-    return origin;
-  }
-  const direction = Math.sign(Math.round(to) - origin);
-  const at = (step: number) => from + (to - from) * easing(progress(step, start, start + frames));
-  let travelled = 0;
-  for (let step = Math.floor(start) + 1; step <= frame && travelled < distance; step++) {
-    const ideal = Math.abs(at(step) - at(step - 1));
-    travelled = Math.min(distance, travelled + Math.max(MIN_STEP, Math.round(ideal)));
-  }
-  return origin + direction * travelled;
-};
-
-export const seatEase = (t: number) => 0.75 * Easing.out(Easing.cubic)(t) + 0.25 * t;
-
-export const chargeEase = (t: number) => 0.8 * Easing.inOut(Easing.sin)(t) + 0.2 * t;
+export const seatEase = Easing.inOut(Easing.sin);

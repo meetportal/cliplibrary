@@ -47,8 +47,13 @@ export const legibleOn = (color: string, background: string, ratio = 4.5): strin
   return lifted;
 };
 
-export const inkOn = (fill: string, dark: string, light: string): string =>
-  contrast(dark, fill) >= contrast(light, fill) ? dark : light;
+const INK_BAND = 0.2;
+
+export const inkOn = (fill: string, dark: string, light: string): string => {
+  const lean = Math.log(contrast(dark, fill) / contrast(light, fill)) / INK_BAND;
+  const t = Math.min(1, Math.max(0, 0.5 + lean));
+  return mixLab(light, dark, t * t * (3 - 2 * t));
+};
 
 type Lab = { l: number; a: number; b: number };
 
@@ -94,6 +99,28 @@ export const mixLab = (from: string, to: string, amount: number): string => {
     l: start.l + (end.l - start.l) * t,
     a: start.a + (end.a - start.a) * t,
     b: start.b + (end.b - start.b) * t,
+  });
+};
+
+const GREY_CHROMA = 0.02;
+
+export const mixLch = (from: string, to: string, amount: number): string => {
+  const start = toLab(from);
+  const end = toLab(to);
+  const t = Math.max(0, Math.min(1, amount));
+  const startChroma = Math.hypot(start.a, start.b);
+  const endChroma = Math.hypot(end.a, end.b);
+  const startHue = Math.atan2(start.b, start.a);
+  const endHue = Math.atan2(end.b, end.a);
+  const fromHue = startChroma < GREY_CHROMA ? endHue : startHue;
+  const toHue = endChroma < GREY_CHROMA ? startHue : endHue;
+  const turn = Math.atan2(Math.sin(toHue - fromHue), Math.cos(toHue - fromHue));
+  const hue = fromHue + turn * t;
+  const chroma = startChroma + (endChroma - startChroma) * t;
+  return fromLab({
+    l: start.l + (end.l - start.l) * t,
+    a: Math.cos(hue) * chroma,
+    b: Math.sin(hue) * chroma,
   });
 };
 

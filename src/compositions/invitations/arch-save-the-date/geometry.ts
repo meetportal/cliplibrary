@@ -1,7 +1,7 @@
 import { Easing, interpolate } from 'remotion';
 
 export const CENTER_X = 540;
-const VANISH_Y = 1350;
+export const VANISH_Y = 1350;
 export const SPRING_Y = 940;
 export const FLOOR_Y = 1920;
 const OPENING_HALF = 350;
@@ -65,18 +65,35 @@ export const BANDS = [
   { half: OPENING_HALF, apex: OPENING_APEX },
 ] as const;
 
-const dollyEase = Easing.bezier(0.25, 0.55, 0.35, 1);
+const dollyEase = Easing.bezier(0.2, 0.3, 0.3, 1);
+const driftEase = Easing.out(Easing.sin);
+const DRIFT_TAIL = 210;
 
-export type Dolly = { travelled: number; total: number };
+export type Dolly = { travelled: number; total: number; ahead: number };
 
-export const dollyAt = (frame: number, arches: number, dollyFrames: number): Dolly => {
-  const total = Math.max(0, arches - 2) * GAP + FOCAL / LAST_START_SCALE - FOCAL;
-  const progress = interpolate(frame, [0, Math.max(1, dollyFrames)], [0, 1], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
+export type Camera = { arches: number; dollyFrames: number; drift: number; duration: number };
+
+const clamped = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
+
+const driftAt = (frame: number, camera: Camera) =>
+  interpolate(frame, [0, camera.duration + DRIFT_TAIL], [0, 1], {
+    ...clamped,
+    easing: driftEase,
+  });
+
+export const dollyAt = (frame: number, camera: Camera): Dolly => {
+  const total = Math.max(0, camera.arches - 2) * GAP + FOCAL / LAST_START_SCALE - FOCAL;
+  const last = camera.drift * driftAt(camera.duration - 1, camera);
+  const glide = interpolate(frame, [0, Math.max(1, camera.dollyFrames)], [0, 1], {
+    ...clamped,
     easing: dollyEase,
   });
-  return { travelled: total * progress, total };
+  const drift = camera.drift * driftAt(frame, camera);
+  return {
+    travelled: Math.max(0, total - last) * glide + drift,
+    total: Math.max(total, last),
+    ahead: last - drift,
+  };
 };
 
 export const archDepth = (index: number, arches: number, dolly: Dolly): number =>
@@ -90,3 +107,5 @@ export const terraceScale = (dolly: Dolly): number =>
 
 export const aboutVanish = (scale: number): string =>
   `translate(${CENTER_X} ${VANISH_Y}) scale(${scale}) translate(${-CENTER_X} ${-VANISH_Y})`;
+
+export const cardScale = (dolly: Dolly): number => FOCAL / (FOCAL + dolly.ahead);

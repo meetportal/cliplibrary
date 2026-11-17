@@ -16,7 +16,16 @@ import {
   logoReveal,
   Opener,
 } from './sections';
-import { GRID, gridStroke, isShown, SPOTLIGHT, spotlightStroke } from './timeline';
+import {
+  endDrift,
+  GRID,
+  gridDrift,
+  gridStroke,
+  isShown,
+  SPOTLIGHT,
+  spotlightShift,
+  spotlightStroke,
+} from './timeline';
 import { useReelLogo } from './use-logo';
 
 const GRID_COLUMNS = [CENTER_X - 580, CENTER_X, CENTER_X + 580];
@@ -55,11 +64,17 @@ export const ChalkBadgesReel = (props: ChalkBadgesReelProps) => {
     ornaments: motion.ornaments,
     twinkle: motion.twinkle,
   };
-  const badgeKit = (index: number, stroke: BadgeKit['stroke'], key: string): BadgeKit => ({
+  const badgeKit = (
+    index: number,
+    stroke: BadgeKit['stroke'],
+    key: string,
+    stamp: boolean,
+  ): BadgeKit => ({
     ...kit,
     id: `${id}-${key}`,
     text: props.words[index] ?? '',
     stroke,
+    stamp,
   });
   const turn = (2 * Math.PI * frame) / Math.max(1, durationInFrames);
   const drift = props.board.lightDrift;
@@ -93,7 +108,7 @@ export const ChalkBadgesReel = (props: ChalkBadgesReelProps) => {
         style={{ position: 'absolute', inset: 0, overflow: 'visible' }}
       >
         <defs>
-          <GrainFilter id={`${id}-grain`} grain={props.board.grain} />
+          <GrainFilter id={`${id}-grain`} grain={props.board.grain} width={width} height={height} />
         </defs>
         {layout.showPlate && box !== null ? (
           <LogoPlate box={box} color={palette.plate} frame={frame} eraseAtEnd={motion.eraseAtEnd} />
@@ -103,8 +118,9 @@ export const ChalkBadgesReel = (props: ChalkBadgesReelProps) => {
             <Opener kit={kit} left={props.opener.left} right={props.opener.right} />
           ) : null}
           <Caption kit={kit} text={props.companyName} />
-          {gridOn
-            ? BADGES.map((Badge, index) => {
+          {gridOn ? (
+            <g transform={gridDrift(frame)}>
+              {BADGES.map((Badge, index) => {
                 const stroke = gridStroke(frame, index);
                 const x = GRID_COLUMNS[index % 3] ?? CENTER_X;
                 const y = GRID_ROWS[Math.floor(index / 3)] ?? SPOTLIGHT_Y;
@@ -113,11 +129,12 @@ export const ChalkBadgesReel = (props: ChalkBadgesReelProps) => {
                     key={x * 10 + y}
                     transform={`translate(${x} ${y}) scale(${layout.badgeScale})`}
                   >
-                    {Badge(badgeKit(index, stroke, `g${index}`))}
+                    {Badge(badgeKit(index, stroke, `g${index}`, false))}
                   </g>
                 ) : null;
-              })
-            : null}
+              })}
+            </g>
+          ) : null}
           {spotlights.map((choice, slot) => {
             const stroke = spotlightStroke(frame, slot);
             const index = Math.min(BADGES.length, Math.max(1, Math.round(choice))) - 1;
@@ -125,9 +142,9 @@ export const ChalkBadgesReel = (props: ChalkBadgesReelProps) => {
             return Badge !== undefined && isShown(stroke) ? (
               <g
                 key={`s${slot * 10 + index}`}
-                transform={`translate(${CENTER_X} ${SPOTLIGHT_Y}) scale(${layout.spotlightScale})`}
+                transform={`translate(${(CENTER_X + spotlightShift(frame, slot)).toFixed(3)} ${SPOTLIGHT_Y}) scale(${layout.spotlightScale})`}
               >
-                {Badge(badgeKit(index, stroke, `s${slot}`))}
+                {Badge(badgeKit(index, stroke, `s${slot}`, true))}
               </g>
             ) : null;
           })}
@@ -152,7 +169,7 @@ export const ChalkBadgesReel = (props: ChalkBadgesReelProps) => {
             height: box.height,
             objectFit: 'contain',
             opacity: reveal.opacity,
-            transform: `scale(${reveal.scale.toFixed(4)})`,
+            transform: `translateX(${endDrift(frame).toFixed(3)}px) scale(${reveal.scale.toFixed(4)})`,
           }}
         />
       ) : null}
