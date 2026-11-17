@@ -71,7 +71,6 @@ export const BrandingIsTicker = (props: BrandingIsTickerProps) => {
     chipInk: legible(gradient[0], chipFill, 3),
   };
   const grow = ramp(frame, line.growStart, line.growEnd, swell);
-  const stageFade = 1 - ramp(frame, line.growStart, line.growStart + 12);
   const nameFade = 1 - ramp(frame, line.cycleEnd - 4, line.cycleEnd + 6);
   const logoFade = 1 - ramp(frame, line.cycleEnd - 2, line.cycleEnd + 8);
   const box = {
@@ -98,7 +97,7 @@ export const BrandingIsTicker = (props: BrandingIsTickerProps) => {
         />
       ) : null}
       {covered ? null : (
-        <AbsoluteFill style={{ opacity: stageFade }}>
+        <AbsoluteFill>
           {lines.map((text, index) => (
             <div
               key={`${index}-${text}`}
@@ -156,10 +155,10 @@ export const BrandingIsTicker = (props: BrandingIsTickerProps) => {
       <div
         style={{
           position: 'absolute',
-          left: Math.round(box.left),
-          top: Math.round(box.top),
-          width: Math.round(box.width),
-          height: Math.round(box.height),
+          left: box.left,
+          top: box.top,
+          width: box.width,
+          height: box.height,
           borderRadius: box.radius,
           overflow: 'hidden',
           backgroundColor: colors.surface,
@@ -172,8 +171,8 @@ export const BrandingIsTicker = (props: BrandingIsTickerProps) => {
           <div
             style={{
               position: 'absolute',
-              left: -Math.round(box.left),
-              top: -Math.round(box.top),
+              left: -box.left,
+              top: -box.top,
               width,
               height,
             }}
@@ -183,8 +182,8 @@ export const BrandingIsTicker = (props: BrandingIsTickerProps) => {
               edge={colors.surface}
               width={width}
               height={height}
-              focusX={width * 0.5 + layout.lightDrift * 1.8 * Math.sin(turn * 2)}
-              focusY={height * 0.42 + layout.lightDrift * 1.8 * Math.cos(turn * 2)}
+              focusX={width * 0.5 + layout.lightDrift * 1.8 * Math.sin(turn)}
+              focusY={height * 0.42 + layout.lightDrift * 1.8 * Math.cos(turn)}
               radius={width * 0.72}
               opacity={glowIn}
             />

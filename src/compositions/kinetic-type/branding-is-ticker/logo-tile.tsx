@@ -39,6 +39,8 @@ export const LogoImage = ({
         top: Math.round((box.height - height) / 2),
         width: Math.round(width),
         height: Math.round(height),
+        maxWidth: 'none',
+        maxHeight: 'none',
         opacity,
       }}
     />

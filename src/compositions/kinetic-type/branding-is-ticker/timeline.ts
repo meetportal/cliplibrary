@@ -1,27 +1,19 @@
 import { Easing } from 'remotion';
 import type { BrandingIsTickerProps } from '@/schemas';
 
-export const settle = Easing.bezier(0.22, 0.9, 0.3, 1);
-export const swell = Easing.bezier(0.65, 0, 0.35, 1);
-const RUN_UP = 0.78;
-const RUN_POWER = 4;
-const LAND_POWER = 3;
-const LAND_SPEED = LAND_POWER / (1 - RUN_UP);
-const RUN_SHARE = LAND_SPEED / (RUN_POWER / RUN_UP + LAND_SPEED);
+export const swell = Easing.bezier(0.7, 0.12, 0.45, 1);
+export const rise = Easing.bezier(0.3, 0, 0.2, 1);
+const runUp = Easing.bezier(1, 0.035, 0.6, 0.986);
 
-const runAndLand = (u: number) => {
-  if (u <= RUN_UP) {
-    return RUN_SHARE * (u / RUN_UP) ** RUN_POWER;
-  }
-  const t = (u - RUN_UP) / (1 - RUN_UP);
-  return RUN_SHARE + (1 - RUN_SHARE) * (1 - (1 - t) ** LAND_POWER);
-};
-
-const END_LEAD = 18;
+const GROW_DELAY = 2;
+const HALF_FRAME = 0.5;
+const LONGEST_STEP = 36;
+const END_LEAD = 12;
 export const ENTRY_FRAMES = 22;
 export const ENTRY_RISE = 40;
 
 export type Timeline = {
+  steps: number;
   period: number;
   cycleEnd: number;
   growStart: number;
@@ -30,26 +22,26 @@ export type Timeline = {
   stagger: number;
 };
 
-export const buildTimeline = (props: BrandingIsTickerProps, steps: number): Timeline => {
+export const buildTimeline = (props: BrandingIsTickerProps, count: number): Timeline => {
   const cycleEnd = props.ticker.cycleFrames;
-  const growStart = cycleEnd + 2;
-  const entryStart = cycleEnd + END_LEAD;
-  const stagger = props.timing.stagger;
+  const growStart = cycleEnd + GROW_DELAY;
+  const words = Math.max(1, count);
+  const steps = words * Math.max(1, Math.ceil(cycleEnd / LONGEST_STEP / words));
   return {
-    period: cycleEnd / Math.max(1, steps),
+    steps,
+    period: cycleEnd / steps,
     cycleEnd,
     growStart,
     growEnd: growStart + props.timing.transitionFrames,
-    entryStart,
-    stagger,
+    entryStart: cycleEnd + END_LEAD,
+    stagger: props.timing.stagger,
   };
 };
 
-const glide = (u: number, share: number) =>
-  share * u + (1 - share) * runAndLand(Math.max(0, Math.min(1, u)));
+const glide = (u: number, share: number) => share * u + (1 - share) * runUp(u);
 
 export const tickerPosition = (frame: number, line: Timeline, share: number) => {
-  const raw = frame / line.period;
+  const raw = Math.max(0, Math.min(frame + HALF_FRAME, line.cycleEnd)) / line.period;
   const step = Math.floor(raw);
   return { step, progress: glide(raw - step, share) };
 };

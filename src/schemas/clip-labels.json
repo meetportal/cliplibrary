@@ -2618,35 +2618,35 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/brand-reveal.mp4"
   },
   "branding-is-ticker": {
-    "summary": "On a deep indigo stage with a soft drifting light, a cream logo tile and the company name sit in the top-left corner above an italic serif headline, \"your brand is\". Under it a ticker of bold sans words glides left one word at a time: the word in the slot turns the Primary colour over a matching underline that stretches to its width while the words waiting on either side stay faint. After character, clarity, rhythm, memory, warmth, presence, signal, craft, belief, momentum and legacy it comes full circle to character, the corner tile grows into a full cream end card, and the logo on a gradient tile, the name, a gradient LET'S TALK button, the website and the phone rise in one after another and hold while a soft shine crosses the button.",
+    "summary": "On a deep indigo stage with a soft drifting light, a cream logo tile and the company name sit in the top-left corner above an italic serif headline, \"your brand is\". Under it a ticker of bold sans words glides left one word at a time: the word in the slot turns the Primary colour over a matching underline that stretches to its width while the words waiting on either side stay faint. After character, clarity, rhythm, memory, warmth, presence, signal, craft, belief, momentum and legacy it comes full circle to character, the corner tile grows into a full cream end card, and the logo on a gradient tile, the name, a gradient LET'S TALK button, the website and the phone rise in one after another and keep drifting slowly upward while a soft shine crosses the button.",
     "beats": [
       {
         "at": 0.0,
-        "what": "dark stage: logo tile and name in the corner, \"your brand is\" headline, the first word sitting in the underlined slot"
+        "what": "dark stage: logo tile and name in the corner, \"your brand is\" headline, the first word sitting in the underlined slot as the ticker starts to creep"
       },
       {
-        "at": 0.93,
-        "what": "the ticker glides one word left, letters turn the Primary colour as they pass through the slot and the underline resizes to the next word"
+        "at": 0.7,
+        "what": "the ticker builds speed and lands the next word in the slot, letters turn the Primary colour as they pass through the slot and the underline resizes to the next word"
       },
       {
-        "at": 5.6,
-        "what": "the ticker keeps stepping a word about every 0.93 s through the list"
+        "at": 5.0,
+        "what": "the ticker keeps landing a word every second through the list"
       },
       {
-        "at": 10.27,
-        "what": "the ticker comes full circle to the first word; the corner logo and name fade"
+        "at": 11.0,
+        "what": "the ticker lands back on the first word and stops; the corner logo and name fade"
       },
       {
-        "at": 10.33,
-        "what": "the corner tile grows into a full-frame cream card as the headline and ticker fade under it"
+        "at": 11.07,
+        "what": "the corner tile grows into a full-frame cream card that covers the still headline and ticker"
       },
       {
-        "at": 10.87,
+        "at": 11.4,
         "what": "the end card rises in: gradient logo tile, company name, gradient button, website and phone rows"
       },
       {
-        "at": 12.5,
-        "what": "the end card holds while a soft light drifts and a shine sweeps across the button"
+        "at": 12.8,
+        "what": "the end card is complete and drifts slowly upward to the last frame while a soft light drifts and a shine sweeps across the button"
       }
     ],
     "visuals": [
@@ -2658,12 +2658,13 @@
       "cream end card with a gradient logo tile, tracked name, gradient pill button and icon-chip contact rows"
     ],
     "motion": [
-      "ticker that builds speed and lands hard on each word, never quite stopping",
+      "ticker that creeps out of each word, builds speed and lands softly on the next in one curve",
       "a fixed Primary colour window over the slot that recolours every letter passing through it",
       "underline stretching to each word's width",
-      "corner tile growing into a full-frame card",
+      "corner tile growing into a full-frame card over the still ticker",
       "staggered rise and fade of the end card",
-      "button shine and arrow nudge on the hold",
+      "slow upward drift of the end card through the hold",
+      "button shine on the hold",
       "slow light drift"
     ],
     "mood": ["confident", "editorial", "warm", "premium", "agency"],
