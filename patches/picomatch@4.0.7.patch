@@ -1,0 +1,50 @@
+diff --git a/lib/parse.js b/lib/parse.js
+index 29207512c60183b4bb9bf5112be3b9b5f4a9a9fd..a5d386d46e01b2af034848d88de4bdbc15a22b09 100644
+--- a/lib/parse.js
++++ b/lib/parse.js
+@@ -270,6 +270,16 @@ const getStarExtglobSequenceChars = pattern => {
+   return chars;
+ };
+ 
++const hasLeadingBareQuantifier = branch => {
++  let i = 0;
++
++  while (i < branch.length && (branch[i] === '*' || branch[i] === '?') && branch[i + 1] !== '(') {
++    i++;
++  }
++
++  return i > 0;
++};
++
+ const repeatedExtglobRecursion = pattern => {
+   let depth = 0;
+   let value = pattern.trim();
+@@ -284,7 +294,7 @@ const repeatedExtglobRecursion = pattern => {
+   return depth;
+ };
+ 
+-const analyzeRepeatedExtglob = (body, options) => {
++const analyzeRepeatedExtglob = (body, options, star) => {
+   if (options.maxExtglobRecursion === false) {
+     return { risky: false };
+   }
+@@ -332,6 +342,10 @@ const analyzeRepeatedExtglob = (body, options) => {
+ 
+     combinable = false;
+ 
++    if (hasLeadingBareQuantifier(branch)) {
++      return branches.length === 1 && branch === '*' ? { risky: true, safeOutput: star } : { risky: true };
++    }
++
+     if (repeatedExtglobRecursion(branch) > max) {
+       return { risky: true };
+     }
+@@ -539,7 +553,7 @@ const parse = (input, options) => {
+   const extglobClose = token => {
+     const literal = input.slice(token.startIndex, state.index + 1);
+     const body = input.slice(token.startIndex + 2, state.index);
+-    const analysis = analyzeRepeatedExtglob(body, opts);
++    const analysis = analyzeRepeatedExtglob(body, opts, star);
+ 
+     if ((token.type === 'plus' || token.type === 'star') && analysis.risky) {
+       const safeOutput = analysis.safeOutput

@@ -79,6 +79,9 @@
       },
     },
   },
+  "patchedDependencies": {
+    "picomatch@4.0.7": "patches/picomatch@4.0.7.patch",
+  },
   "overrides": {
     "zod": "4.6.7",
   },
