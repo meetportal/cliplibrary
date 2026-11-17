@@ -8,7 +8,7 @@ const NOISE_SEEDS = [11, 23, 37];
 const STREAK_WIDTH = 810;
 const STREAK_HEIGHT = 480;
 const STREAK_TRAVEL = 2;
-const STREAK_SPEED = 5.5;
+const STREAK_SPEED = 4;
 
 const rgb = (hex: string) => [1, 3, 5].map((at) => Number.parseInt(hex.slice(at, at + 2), 16));
 
@@ -105,14 +105,27 @@ export const Streaks = ({
         style={{
           position: 'absolute',
           left: 0,
-          top: imageHeight === undefined ? 0 : '50%',
-          marginTop: imageHeight === undefined ? 0 : -imageHeight / 2,
+          top: 0,
           width: `${span * 100}%`,
-          height: imageHeight ?? '100%',
+          height: '100%',
+          overflow: 'hidden',
           transform: `translateX(${((shift - STREAK_TRAVEL * 100) / span).toFixed(3)}%)`,
         }}
       >
-        <Img src={tile} style={{ width: '100%', height: '100%', display: 'block' }} />
+        <Img
+          src={tile}
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: imageHeight === undefined ? 0 : '50%',
+            marginTop: imageHeight === undefined ? 0 : -imageHeight / 2,
+            width: '100%',
+            height: imageHeight ?? '100%',
+            maxWidth: 'none',
+            maxHeight: 'none',
+            display: 'block',
+          }}
+        />
       </div>
     </AbsoluteFill>
   );
@@ -163,33 +176,27 @@ export const Stars = ({
   );
 };
 
-const GRAIN_TILES = 6;
 const GRAIN_SCALE = 0.25;
 const GRAIN_SHARE = 0.012;
 
 export const Grain = ({
   amount,
   color,
-  frame,
   width,
   height,
 }: {
   amount: number;
   color: string;
-  frame: number;
   width: number;
   height: number;
 }) => {
-  const tiles = useMemo(
+  const tile = useMemo(
     () =>
-      Array.from({ length: GRAIN_TILES }, (_, index) =>
-        paint(Math.round(width * GRAIN_SCALE), Math.round(height * GRAIN_SCALE), color, (x, y) =>
-          hash(x, y, 53 + index) < GRAIN_SHARE ? 1 : 0,
-        ),
+      paint(Math.round(width * GRAIN_SCALE), Math.round(height * GRAIN_SCALE), color, (x, y) =>
+        hash(x, y, 53) < GRAIN_SHARE ? 1 : 0,
       ),
     [color, width, height],
   );
-  const tile = tiles[Math.floor(Math.abs(frame)) % GRAIN_TILES] ?? null;
   if (amount <= 0 || tile === null) {
     return null;
   }

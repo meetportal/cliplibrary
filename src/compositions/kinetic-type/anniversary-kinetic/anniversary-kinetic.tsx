@@ -122,19 +122,14 @@ export const AnniversaryKinetic = (props: AnniversaryKineticProps) => {
             width={width}
             height={height}
           />
-          <Grain
-            amount={props.effects.grain}
-            color={palette.ink}
-            frame={frame}
-            width={width}
-            height={height}
-          />
+          <Grain amount={props.effects.grain} color={palette.ink} width={width} height={height} />
         </AbsoluteFill>
       ) : null}
       {scene === null ? (
         <EndCard
           props={props}
           local={frame - timeline.endStart}
+          span={durationInFrames - timeline.endStart}
           width={width}
           height={height}
           measure={measure}

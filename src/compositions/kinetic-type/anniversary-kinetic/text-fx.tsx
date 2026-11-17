@@ -1,10 +1,17 @@
 import type { ReactNode } from 'react';
 import { Easing } from 'remotion';
+import { ramp } from '../../kit/motion';
 import { Line } from './line';
 import type { Scene } from './scene';
 import { Shred } from './shred';
 
-export const out = Easing.out(Easing.cubic);
+export const settle = Easing.bezier(0.25, 0.1, 0.25, 1);
+
+export const glide = Easing.out(Easing.quad);
+
+export const fade = Easing.inOut(Easing.quad);
+
+export const appear = (local: number, frames: number) => ramp(local, -1, frames, glide);
 
 export const blurOf = (amount: number): string =>
   amount > 0.05 ? `blur(${amount.toFixed(2)}px)` : 'none';
@@ -51,12 +58,11 @@ export const Plain = ({
     size={size}
     center={middleOf(scene) + y}
     color={scene.palette.ink}
+    text={scene.beat.text}
     style={{
       filter,
       opacity,
-      transform: scale === 1 ? 'none' : `scale(${scale.toFixed(4)})`,
+      transform: scale === 1 ? undefined : `scale(${scale.toFixed(5)})`,
     }}
-  >
-    {scene.beat.text}
-  </Line>
+  />
 );

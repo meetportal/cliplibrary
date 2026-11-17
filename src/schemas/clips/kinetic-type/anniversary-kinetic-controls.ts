@@ -246,7 +246,7 @@ export const anniversaryKineticControls = defineControls<AnniversaryKineticProps
         {
           path: 'effects.grain',
           label: 'Film grain',
-          hint: 'Faint flickering grain over the background so held words never sit dead still; 0 turns it off',
+          hint: 'Faint fixed specks over the background; 0 turns them off',
         },
         { path: 'effects.bandTilt', label: 'Band tilt', hint: 'In degrees' },
         {
