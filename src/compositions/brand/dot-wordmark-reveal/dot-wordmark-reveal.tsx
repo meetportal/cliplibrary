@@ -2,7 +2,7 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig } from 'remotion';
 import type { DotWordmarkRevealProps } from '@/schemas';
 import { frameState } from './frame-state';
 import { Letters } from './letters';
-import { boxStyle, Disc, DriftBand, FillLayer, Irises, Plate, Words } from './parts';
+import { boxStyle, Disc, DriftBand, FillLayer, Irises, Plate, Trail, Words } from './parts';
 import { useStage } from './use-stage';
 
 export const DotWordmarkReveal = (props: DotWordmarkRevealProps) => {
@@ -23,7 +23,7 @@ export const DotWordmarkReveal = (props: DotWordmarkRevealProps) => {
       ) : null}
       <Irises stage={stage} frame={frame} />
       {props.showBackground ? <DriftBand stage={stage} shift={now.glowShift} /> : null}
-      <Words stage={stage} frame={frame} face={lineFace} fade={now.lineFade} />
+      <Words stage={stage} frame={frame} face={lineFace} />
       <Letters lockup={lockup} face={nameFace} color={palette.text} states={now.letters} />
       {now.ring === null ? null : (
         <div
@@ -34,6 +34,7 @@ export const DotWordmarkReveal = (props: DotWordmarkRevealProps) => {
           }}
         />
       )}
+      <Trail stage={stage} fill={now.fill} speed={now.trail} fade={now.trailFade} />
       <FillLayer
         stage={stage}
         fill={now.fill}
@@ -52,6 +53,9 @@ export const DotWordmarkReveal = (props: DotWordmarkRevealProps) => {
           logo={props.logo}
           logoBox={logoBox}
           size={lockup.logo}
+          dx={now.plate.dx}
+          dy={now.plate.dy}
+          rotation={now.plate.rotation}
         />
       )}
       <Disc

@@ -1,14 +1,19 @@
 import type { CSSProperties } from 'react';
-import { Img } from 'remotion';
+import { Easing, Img } from 'remotion';
 import { mixLab } from '../../kit/lab-color';
-import { lerp, ramp } from '../../kit/motion';
+import { ramp } from '../../kit/motion';
 import { resolveCustom } from '../../kit/resolve-custom';
 import type { LogoBox } from '../../kit/use-logo-box';
+import { CanvasText } from './canvas-text';
 import type { Face } from './fonts';
 import { type Blob, irisRadius, landPoint, primaryAmount, type Stage } from './geometry';
 import type { Box } from './layout';
 import { type LetterState, Letters } from './letters';
-import { irisProgress, pixelRise } from './timeline';
+import { irisProgress, riseIn } from './timeline';
+
+const WORD_RISE = 0.25;
+const WORD_SINK = 0.4;
+const WORD_EXIT = 12;
 
 export const boxStyle = (box: Box): CSSProperties => ({
   position: 'absolute',
@@ -43,7 +48,7 @@ export const Disc = ({
   ) : null;
 
 export const Irises = ({ stage, frame }: { stage: Stage; frame: number }) => {
-  if (frame >= stage.schedule.dropStart) {
+  if (frame >= stage.schedule.flipsEnd) {
     return null;
   }
   return (
@@ -71,23 +76,19 @@ export const Irises = ({ stage, frame }: { stage: Stage; frame: number }) => {
   );
 };
 
-export const Words = ({
-  stage,
-  frame,
-  face,
-  fade,
-}: {
-  stage: Stage;
-  frame: number;
-  face: Face;
-  fade: number;
-}) => {
+export const Words = ({ stage, frame, face }: { stage: Stage; frame: number; face: Face }) => {
   const { line, schedule, palette } = stage;
+  const count = line.words.length;
+  const stagger = count <= 1 ? 0 : Math.min(1, 4 / (count - 1));
+  const rise = Math.round(line.size * WORD_RISE);
+  const sink = Math.round(line.size * WORD_SINK);
   return (
     <>
       {line.words.map((word, at) => {
         const land = schedule.lands[at] ?? 0;
-        const opacity = ramp(frame, land - 2, land + 3) * fade;
+        const leave = schedule.dropStart + 3 + at * stagger;
+        const gone = ramp(frame, leave, leave + WORD_EXIT, Easing.inOut(Easing.sin));
+        const opacity = ramp(frame, land - 2, land + 4, Easing.inOut(Easing.sin)) * (1 - gone);
         if (opacity <= 0) {
           return null;
         }
@@ -96,25 +97,26 @@ export const Words = ({
           y: word.top + line.lineHeight / 2,
         });
         return (
-          <div
+          <CanvasText
             key={`word-${at}`}
-            style={{
-              position: 'absolute',
-              left: word.left,
-              top: word.top + pixelRise(frame, land - 2, 7, 18),
-              height: line.lineHeight,
-              lineHeight: `${line.lineHeight}px`,
-              fontFamily: face.family,
-              fontWeight: face.weight,
-              fontSize: line.size,
-              letterSpacing: `${face.tracking}em`,
-              whiteSpace: 'pre',
+            glyph={{
+              text: word.text,
+              face,
+              size: line.size,
+              tracking: face.tracking,
               color: mixLab(palette.text, palette.fillInk, amount),
-              opacity,
+              lineHeight: line.lineHeight,
+              width: word.width,
             }}
-          >
-            {word.text}
-          </div>
+            left={word.left}
+            top={word.top}
+            opacity={opacity}
+            dx={0}
+            dy={
+              riseIn(frame, land - 2, 10, rise) +
+              sink * ramp(frame, leave, leave + WORD_EXIT, Easing.in(Easing.quad))
+            }
+          />
         );
       })}
     </>
@@ -147,13 +149,13 @@ export const FillLayer = ({
         overflow: 'hidden',
         boxSizing: 'border-box',
         border: palette.tileEdge === null ? undefined : `${edge}px solid ${palette.tileEdge}`,
-        transform: fill.rotation === 0 ? undefined : `rotate(${fill.rotation}deg)`,
+        transform: `rotate(${fill.rotation.toFixed(3)}deg) scale(${fill.scale.toFixed(5)})`,
       }}
     >
       <div
         style={{
           position: 'absolute',
-          left: -(fill.cx - fill.w / 2) - edge,
+          left: -(fill.cx - fill.shift - fill.w / 2) - edge,
           top: -(fill.cy - fill.h / 2) - edge,
           width: frameWidth,
           height: frameHeight,
@@ -176,6 +178,55 @@ export const FillLayer = ({
   );
 };
 
+const plateTransform = (dx: number, dy: number, rotation: number, scale: number) =>
+  `translate(${dx.toFixed(3)}px, ${dy.toFixed(3)}px) rotate(${rotation.toFixed(3)}deg) scale(${scale.toFixed(5)})`;
+
+export const Trail = ({
+  stage,
+  fill,
+  speed,
+  fade,
+}: {
+  stage: Stage;
+  fill: Blob;
+  speed: number;
+  fade: number;
+}) => {
+  const strength = Math.min(1, Math.max(0, (speed - 16) / 50)) ** 2;
+  if (strength <= 0 || fade <= 0) {
+    return null;
+  }
+  const color = mixLab(stage.palette.background, stage.palette.primary, 0.45);
+  const length = Math.min(speed * 3.2, stage.frameWidth * 0.55) * fade;
+  const end = fill.cx - fill.w * 0.3;
+  return (
+    <>
+      {[
+        [-0.26, 0.8],
+        [0, 1],
+        [0.26, 0.62],
+      ].map(([row = 0, share = 1]) => {
+        const span = length * share;
+        return (
+          <div
+            key={`trail-${row}`}
+            style={{
+              position: 'absolute',
+              left: end - span,
+              top: fill.cy + row * fill.h - 2,
+              width: span,
+              height: 4,
+              borderRadius: 2,
+              backgroundColor: color,
+              opacity: strength,
+            }}
+          />
+        );
+      })}
+    </>
+  );
+};
+
 export const Plate = ({
   box,
   color,
@@ -185,10 +236,16 @@ export const Plate = ({
   logo,
   logoBox,
   size,
+  dx,
+  dy,
+  rotation,
 }: {
   box: Box;
   color: string;
   scale: number;
+  dx: number;
+  dy: number;
+  rotation: number;
   opacity: number;
   logoIn: number;
   logo: string;
@@ -201,7 +258,7 @@ export const Plate = ({
         ...boxStyle(box),
         backgroundColor: color,
         opacity,
-        transform: scale === 1 ? undefined : `scale(${scale})`,
+        transform: plateTransform(dx, dy, rotation, scale),
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -216,7 +273,6 @@ export const Plate = ({
             position: 'relative',
             overflow: 'hidden',
             opacity: logoIn,
-            transform: logoIn === 1 ? undefined : `scale(${lerp(0.86, 1, logoIn)})`,
           }}
         >
           <Img
