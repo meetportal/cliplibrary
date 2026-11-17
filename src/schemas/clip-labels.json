@@ -4126,7 +4126,7 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/crumpled-paper-reveal.mp4"
   },
   "cta-end-card": {
-    "summary": "A calm app download end card on a soft off-white backdrop. The logo sits centred near the top on a rounded white plate with a soft shadow, there from the first frame. Below it a big tight bold headline, \"Download Willow & Co. today.\", rises in group by group with the company name in bright blue, and a blue underline draws under the name. A grey tagline, a filled blue \"Download for iOS\" pill and a white outlined \"Get it on Android\" pill, then the web address in spaced capitals arrive in reading order. The finished card holds to the last frame while a soft shine sweeps the blue button and the background light drifts.",
+    "summary": "A calm app download end card on a soft off-white backdrop. The logo sits centred near the top on a rounded white plate with a soft shadow, there from the first frame. Below it a big tight bold headline, \"Download Willow & Co. today.\", rises in group by group with the company name in bright blue, and a blue underline draws under the name. A grey tagline, a filled blue \"Download for iOS\" pill and a white outlined \"Get it on Android\" pill, then the web address in spaced capitals arrive in reading order. Every piece eases in from rest, and once everything has landed the finished card slowly pushes closer to the last frame while a soft shine sweeps the blue button and the background light drifts.",
     "beats": [
       {
         "at": 0.0,
@@ -4134,27 +4134,27 @@
       },
       {
         "at": 0.1,
-        "what": "the company name rises in blue, then the last headline words, each fading up as it rises"
+        "what": "the headline eases up word by word from rest, the company name in blue between the dark words, each fading up as it rises and settling softly"
       },
       {
-        "at": 0.6,
-        "what": "the grey tagline fades up under the headline while a blue underline starts drawing under the name"
+        "at": 0.5,
+        "what": "the grey tagline rises in under the headline while a blue underline draws under the name"
       },
       {
-        "at": 0.8,
+        "at": 0.7,
         "what": "the blue iOS button and the white Android button rise in side by side"
       },
       {
-        "at": 1.1,
-        "what": "the web address in spaced capitals fades in on the last line"
+        "at": 1.0,
+        "what": "the web address in spaced capitals rises in on the last line and everything has landed by 1.8 s; from 1.6 s the whole card starts a slow push closer from rest"
       },
       {
-        "at": 1.9,
-        "what": "the finished card holds; a soft shine sweeps the blue button about every 1.5 s and the background light drifts"
+        "at": 1.8,
+        "what": "the finished card holds and keeps gently pushing closer, growing upward from its bottom line so every row keeps moving the way it rose; a soft shine sweeps the blue button about every 1.5 s and the background light drifts"
       },
       {
         "at": 4.5,
-        "what": "the full card is still holding on its last frame, shine and drift still moving, so the clip ends on the finished call to action"
+        "what": "the full card is still pushing in slowly on its last frame, so the clip ends on the finished call to action"
       }
     ],
     "visuals": [
@@ -4171,8 +4171,9 @@
       "underline drawing left to right",
       "buttons rising in side by side",
       "shine sweeping a button",
-      "slow background light drift",
-      "optional fade back to the logo for a loop"
+      "optional fade back to the logo for a loop",
+      "slow push in of the whole card through the hold",
+      "slow background light drift"
     ],
     "mood": ["calm", "clean", "minimal", "confident", "modern"],
     "roles": ["cta", "closer"],
@@ -4194,7 +4195,7 @@
       "headline font and size",
       "logo size and plate",
       "underline and website styling",
-      "stagger, rise, shine and drift"
+      "stagger, rise, push in, shine and drift"
     ],
     "palette": ["#f5f5f2", "#e2e2dc", "#0b0b0c", "#2f5bff", "#74747a", "#ffffff"],
     "keywords": [
