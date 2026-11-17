@@ -140,7 +140,7 @@ export const billboardReaderControls = defineControls<BillboardReaderProps>({
         {
           path: 'reader.flipAt',
           label: 'Page turn at',
-          hint: 'Frame the hero turns the newspaper to the inside pages; the turn takes 1 second',
+          hint: 'Frame the hero turns the newspaper to the inside pages; the turn takes about 1.1 seconds',
         },
         {
           path: 'reader.kick',

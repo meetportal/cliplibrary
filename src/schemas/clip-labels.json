@@ -2349,7 +2349,7 @@
     "beats": [
       {
         "at": 0.0,
-        "what": "the billboard seen from below on its pole above the rooftops and coast road, the hero holding the front page up, lamps dark"
+        "what": "the billboard seen from below on its pole above the rooftops and coast road, the hero holding the front page up, lamps dark, the camera already drifting slowly upward"
       },
       {
         "at": 0.8,
@@ -2357,19 +2357,23 @@
       },
       {
         "at": 1.0,
-        "what": "the camera eases into a crane up and swing to the right around the board while cars run along the coast road"
+        "what": "the camera builds from its slow drift into a steady crane up and swing to the right around the board while cars run along the coast road"
       },
       {
         "at": 3.0,
-        "what": "the hero turns the page: one hand holds the spine while the other pushes the front page over, then both slide out to the edges of the open spread"
+        "what": "the hero turns the page in one smooth move: his right hand carries the front page over, then sweeps back around the outer edge to the right side while his left hand reaches wide and takes the left edge as the spread lands"
       },
       {
-        "at": 4.5,
-        "what": "the camera passes the top of the board and the ocean fills the background, surf rolling in along the beach"
+        "at": 4.0,
+        "what": "the ocean fills the background behind the board, surf rolling in along the beach"
       },
       {
         "at": 5.0,
         "what": "the hero lowers the paper so his helmet and visor show above it"
+      },
+      {
+        "at": 5.5,
+        "what": "the camera rises past the top of the board and starts looking down on it"
       },
       {
         "at": 7.5,
@@ -2377,7 +2381,7 @@
       },
       {
         "at": 9.0,
-        "what": "the camera keeps turning and rising slowly above the board, headline, tagline and logo facing the viewer, the hero reading in three quarter view with boots swinging"
+        "what": "the camera keeps turning and rising above the board and slows into the last frame without stopping, headline, tagline and logo facing the viewer, the hero reading in three quarter view with boots swinging"
       }
     ],
     "visuals": [
