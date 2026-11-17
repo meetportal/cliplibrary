@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import { alpha, mixLab } from './color';
-import { LABEL_FACE } from './fonts';
+import { Readout, type Shutter } from './readout';
 
 export const PHONE = { width: 330, height: 680, top: 740, radius: 58, edge: 4 } as const;
 export const PHONE_CENTERS = [270, 810] as const;
@@ -9,6 +9,7 @@ export const PLUG_START = 1944;
 
 const BATTERY = { width: 150, height: 250, bottomGap: 50, stroke: 6, inset: 8, cap: 18 } as const;
 const SEGMENTS = 4;
+const SHIMMER = 64;
 
 export type PhoneLook = {
   center: number;
@@ -22,9 +23,11 @@ export type PhoneLook = {
   bolt: number;
   boltScale: number;
   boltInk: string;
-  percent: number | null;
+  percent: { value: number; shutter: Shutter; rate: number } | null;
   percentColor: string;
   percentSize: number;
+  percentMetrics: { digit: number; sign: number };
+  shimmer: { at: number; opacity: number };
 };
 
 const SideButtons = ({ edge }: { edge: string }) => (
@@ -53,12 +56,14 @@ const SideButtons = ({ edge }: { edge: string }) => (
 
 const Battery = ({ look }: { look: PhoneLook }) => {
   const clipId = useId().replace(/:/g, '');
+  const shimmerId = `${clipId}-shimmer`;
   const { width, height, stroke, inset, cap } = BATTERY;
   const innerTop = stroke + inset + cap;
   const innerHeight = height - stroke * 2 - inset * 2;
   const innerWidth = width - stroke * 2 - inset * 2;
   const fillHeight = Math.max(innerHeight * Math.max(0, Math.min(1, look.level)), 0);
   const fillTop = innerTop + innerHeight - fillHeight;
+  const shimmerTop = innerTop + innerHeight - (fillHeight + SHIMMER) * (look.shimmer.at % 1);
   const dividers = Array.from(
     { length: SEGMENTS - 1 },
     (_, index) => innerTop + (innerHeight * (index + 1)) / SEGMENTS,
@@ -79,6 +84,14 @@ const Battery = ({ look }: { look: PhoneLook }) => {
       }}
     >
       <defs>
+        <linearGradient id={shimmerId} x1="0" x2="0" y1="0" y2="1">
+          <stop offset={0} stopColor="#ffffff" stopOpacity={0} />
+          <stop offset={0.5} stopColor="#ffffff" stopOpacity={0.42} />
+          <stop offset={1} stopColor="#ffffff" stopOpacity={0} />
+        </linearGradient>
+        <clipPath id={`${shimmerId}-fill`}>
+          <rect x={0} y={fillTop} width={width} height={fillHeight} />
+        </clipPath>
         <clipPath id={clipId}>
           <rect x={stroke + inset} y={innerTop} width={innerWidth} height={innerHeight} rx={6} />
         </clipPath>
@@ -96,6 +109,17 @@ const Battery = ({ look }: { look: PhoneLook }) => {
       />
       <g clipPath={`url(#${clipId})`}>
         <rect x={0} y={fillTop} width={width} height={fillHeight + 2} fill={look.fill} />
+        {look.shimmer.opacity > 0 && fillHeight > 0 ? (
+          <rect
+            x={0}
+            y={shimmerTop}
+            width={width}
+            height={SHIMMER}
+            fill={`url(#${shimmerId})`}
+            opacity={look.shimmer.opacity}
+            clipPath={`url(#${shimmerId}-fill)`}
+          />
+        ) : null}
         {dividers.map((y) =>
           y > fillTop + 2 ? (
             <rect key={y} x={0} y={y - 3} width={width} height={6} fill={look.screen} />
@@ -110,7 +134,7 @@ const Battery = ({ look }: { look: PhoneLook }) => {
           d="M36 0 L4 52 H28 L22 92 L56 36 H32 Z"
           fill={look.boltInk}
           stroke={look.screen}
-          strokeWidth={3}
+          strokeWidth={5}
           strokeLinejoin="round"
         />
       </g>
@@ -175,24 +199,20 @@ export const Phone = ({ look }: { look: PhoneLook }) => (
       />
     </div>
     {look.percent === null ? null : (
-      <div
-        style={{
-          position: 'absolute',
-          left: 0,
+      <Readout
+        look={{
+          value: look.percent.value,
+          shutter: look.percent.shutter,
+          rate: look.percent.rate,
           width: PHONE.width,
           top: 170,
-          textAlign: 'center',
-          fontFamily: LABEL_FACE.family,
-          fontWeight: LABEL_FACE.weight,
-          fontSize: look.percentSize,
-          lineHeight: 1,
-          fontVariantNumeric: 'tabular-nums',
+          size: look.percentSize,
+          digit: look.percentMetrics.digit,
+          sign: look.percentMetrics.sign,
           color: look.percentColor,
           opacity: look.wake,
         }}
-      >
-        {`${Math.round(look.percent)}%`}
-      </div>
+      />
     )}
     <Battery look={look} />
   </div>
