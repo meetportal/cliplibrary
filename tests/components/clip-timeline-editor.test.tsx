@@ -1,7 +1,7 @@
 import { describe, expect, it, mock } from 'bun:test';
 
-mock.module('@/components/clip-timeline/clip-preview', () => ({
-  ClipPreview: () => null,
+mock.module('@remotion/player', () => ({
+  Player: () => null,
 }));
 
 import { fireEvent, render, screen } from '@testing-library/react';
