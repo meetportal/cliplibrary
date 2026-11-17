@@ -61,6 +61,8 @@ export const mixLab = (from: string, to: string, amount: number): string => {
   });
 };
 
+const HUE_LIFT = 0.04;
+
 export const mixHue = (from: string, to: string, amount: number): string => {
   const start = toLab(from);
   const end = toLab(to);
@@ -75,8 +77,10 @@ export const mixHue = (from: string, to: string, amount: number): string => {
   turn = Math.atan2(Math.sin(turn), Math.cos(turn));
   const hue = startHue + turn * t;
   const chroma = startChroma + (endChroma - startChroma) * t;
+  const line = start.l + (end.l - start.l) * t;
+  const held = Math.max(start.l, end.l) + HUE_LIFT;
   return fromLab({
-    l: start.l + (end.l - start.l) * t,
+    l: line + (Math.max(line, held) - line) * Math.sin(Math.PI * t),
     a: Math.cos(hue) * chroma,
     b: Math.sin(hue) * chroma,
   });
@@ -115,11 +119,6 @@ export const legibleOn = (color: string, background: string, ratio: number): str
 
 export const inkOn = (fill: string, dark: string, light: string): string =>
   contrast(dark, fill) >= contrast(light, fill) ? dark : light;
-
-export const softInkOn = (fill: string, dark: string, light: string): string => {
-  const balance = Math.log(contrast(dark, fill) / contrast(light, fill));
-  return mixLab(light, dark, clamp01(0.5 + balance * 1.5));
-};
 
 const CLOSE_HUE = 0.9;
 

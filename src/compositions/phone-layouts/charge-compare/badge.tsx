@@ -4,7 +4,8 @@ import { alpha } from './color';
 import { usableImage } from './use-logo-aspect';
 
 const CORNER = { left: 60, top: 64 } as const;
-const END_CENTER = { x: 540, y: 520 } as const;
+export const BADGE_END_Y = 590;
+const END_CENTER = { x: 540, y: BADGE_END_Y } as const;
 const MAX_END_WIDTH = 900;
 const WIDE_LIMIT = 3.2;
 const RING = 5;
@@ -39,13 +40,18 @@ export const badgeBox = (height: number, aspect: number | null, endScale: number
   };
 };
 
-const ringPoint = (width: number, height: number, radius: number, at: number) => {
+export const badgeCenter = (box: BadgeBox, travel: number) => ({
+  x: box.from.x + (box.to.x - box.from.x) * travel,
+  y: box.from.y + (box.to.y - box.from.y) * travel,
+});
+
+const ringPoint = (width: number, height: number, radius: number, distance: number) => {
   const r = Math.min(radius, width / 2, height / 2);
   const straightX = width - r * 2;
   const straightY = height - r * 2;
   const arc = (Math.PI * r) / 2;
   const total = (straightX + straightY) * 2 + arc * 4;
-  let rest = (((at % 1) + 1) % 1) * total;
+  let rest = ((distance % total) + total) % total;
   const corners = [
     { cx: width - r, cy: r, from: -Math.PI / 2 },
     { cx: width - r, cy: height - r, from: 0 },
@@ -82,8 +88,9 @@ export type BadgeLook = {
   showPlate: boolean;
   travel: number;
   halo: number;
+  breathe: number;
   opacity: number;
-  spark: { at: number; opacity: number };
+  spark: { distance: number; opacity: number };
 };
 
 const SPARK = 9;
@@ -116,9 +123,8 @@ export const Badge = ({ box, look }: { box: BadgeBox; look: BadgeLook }) => {
   if (!usableImage(look.logo)) {
     return null;
   }
-  const x = box.from.x + (box.to.x - box.from.x) * look.travel;
-  const y = box.from.y + (box.to.y - box.from.y) * look.travel;
-  const scale = 1 + (box.endScale - 1) * look.travel;
+  const { x, y } = badgeCenter(box, look.travel);
+  const scale = (1 + (box.endScale - 1) * look.travel) * look.breathe;
   const radius = Math.round(Math.min(box.width, box.height) * 0.26);
   return (
     <div
@@ -155,7 +161,12 @@ export const Badge = ({ box, look }: { box: BadgeBox; look: BadgeLook }) => {
       ) : null}
       {look.showPlate && look.spark.opacity > 0 ? (
         <Spark
-          point={ringPoint(box.width - RING, box.height - RING, radius - RING / 2, look.spark.at)}
+          point={ringPoint(
+            box.width - RING,
+            box.height - RING,
+            radius - RING / 2,
+            look.spark.distance,
+          )}
           color={look.primary}
           opacity={look.spark.opacity}
         />
@@ -169,6 +180,8 @@ export const Badge = ({ box, look }: { box: BadgeBox; look: BadgeLook }) => {
           width: box.logoWidth,
           height: box.logoHeight,
           objectFit: 'contain',
+          maxWidth: 'none',
+          maxHeight: 'none',
         }}
       />
     </div>
