@@ -1,13 +1,13 @@
 import { Img } from 'remotion';
 import type { DoodleArrowsProps } from '@/schemas';
-import { clamp01 } from '../../kit/motion';
 import { resolveCustom } from '../../kit/resolve-custom';
 import type { LogoBox } from '../../kit/use-logo-box';
+import { LineCanvas, NameCanvas } from './canvas-note';
 import { HAND_FACE, NAME_FACE } from './fonts';
-import { HEADLINE_LEADING, NOTE_LEFT, type NoteLayout, PLATE_PAD } from './layout';
+import { HEADLINE_LEADING, NOTE_LEFT, NOTE_WIDTH, type NoteLayout, PLATE_PAD } from './layout';
 import type { Palette } from './palette';
 
-const LETTER_FADE = 5;
+const LETTER_RISE = 0.07;
 
 const Logo = ({
   src,
@@ -74,17 +74,19 @@ export const Note = ({
   layout,
   palette,
   logoBox,
-  frame,
-  writeStart,
-  writeSpan,
+  reveal,
+  erase,
+  lift,
+  lineWidth,
 }: {
   props: DoodleArrowsProps;
   layout: NoteLayout;
   palette: Palette;
   logoBox: LogoBox | null;
-  frame: number;
-  writeStart: number;
-  writeSpan: number;
+  reveal: (index: number, total: number) => number;
+  erase: (row: number) => number;
+  lift: number;
+  lineWidth: (text: string) => number;
 }) => {
   const total = Math.max(
     1,
@@ -93,61 +95,61 @@ export const Note = ({
   let index = 0;
   return (
     <>
-      {layout.lines.map((text, row) => (
-        <div
-          key={`${row}-${text}`}
-          style={{
-            position: 'absolute',
-            left: NOTE_LEFT,
-            top: Math.round(layout.headlineTop + row * layout.size * HEADLINE_LEADING),
-            fontFamily: HAND_FACE.family,
-            fontWeight: HAND_FACE.weight,
-            fontSize: layout.size,
-            lineHeight: HEADLINE_LEADING,
-            color: palette.ink,
-            whiteSpace: 'pre',
-          }}
-        >
-          {[...text].map((letter, at) => {
-            const start = writeStart + (writeSpan * index) / total;
-            index += 1;
-            return (
-              <span
-                key={`${at}-${letter}`}
-                style={{ opacity: clamp01((frame - start) / LETTER_FADE) }}
-              >
-                {letter}
-              </span>
-            );
-          })}
-        </div>
-      ))}
-      {logoBox === null ? null : (
-        <Logo
-          src={props.logo}
-          box={logoBox}
-          layout={layout}
-          plate={props.lockup.showPlate}
-          plateColor={props.colors.plate}
-        />
-      )}
+      {layout.lines.map((text, row) => {
+        const letters = [...text].map((char) => {
+          const letter = { char, reveal: reveal(index, total) };
+          index += 1;
+          return letter;
+        });
+        return (
+          <LineCanvas
+            key={`${row}-${text}`}
+            left={NOTE_LEFT}
+            top={layout.headlineTop + row * layout.size * HEADLINE_LEADING}
+            width={lineWidth(text)}
+            look={{
+              letters,
+              face: HAND_FACE,
+              size: layout.size,
+              leading: HEADLINE_LEADING,
+              color: palette.ink,
+              rise: layout.size * LETTER_RISE,
+              erase: erase(row),
+            }}
+          />
+        );
+      })}
       <div
         style={{
           position: 'absolute',
-          left: NOTE_LEFT + layout.nameLeft,
-          top: layout.lockupTop,
-          height: layout.rowHeight,
-          display: 'flex',
-          alignItems: 'center',
-          fontFamily: NAME_FACE.family,
-          fontWeight: NAME_FACE.weight,
-          fontSize: layout.nameSize,
-          letterSpacing: '-0.01em',
-          color: palette.ink,
-          whiteSpace: 'pre',
+          left: 0,
+          top: 0,
+          width: '100%',
+          height: '100%',
+          transform: `translateY(${lift.toFixed(3)}px)`,
         }}
       >
-        {props.companyName}
+        {logoBox === null ? null : (
+          <Logo
+            src={props.logo}
+            box={logoBox}
+            layout={layout}
+            plate={props.lockup.showPlate}
+            plateColor={props.colors.plate}
+          />
+        )}
+        <NameCanvas
+          left={NOTE_LEFT + layout.nameLeft}
+          top={layout.lockupTop}
+          width={NOTE_WIDTH - layout.nameLeft}
+          look={{
+            text: props.companyName,
+            face: NAME_FACE,
+            size: layout.nameSize,
+            color: palette.ink,
+            height: layout.rowHeight,
+          }}
+        />
       </div>
     </>
   );

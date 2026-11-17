@@ -35,6 +35,12 @@ export const doodleArrowsSchema = z.object({
     ruleSpacing: zSlider({ min: 36, max: 90, step: 1 }),
     lightDrift: zSlider({ min: 0, max: 1, step: 0.05 }),
   }),
+  motion: z.object({
+    push: zSlider({ min: 0, max: 0.06, step: 0.005 }),
+    boil: zSlider({ min: 0, max: 2, step: 0.1 }),
+    lockupRise: zSlider({ min: 0, max: 40, step: 1 }),
+    erase: z.boolean(),
+  }),
 });
 
 export type DoodleArrowsProps = z.infer<typeof doodleArrowsSchema>;
@@ -56,19 +62,20 @@ export const doodleArrowsDefaults: DoodleArrowsProps = {
   lockup: { logoHeight: 92, showPlate: false },
   arrows: { strokeWidth: 8, headSize: 40, drawFrames: 36, wobble: 1, showUnderline: true },
   paper: { showRules: true, ruleSpacing: 54, lightDrift: 0.6 },
+  motion: { push: 0.025, boil: 0.6, lockupRise: 16, erase: true },
 };
 
 export const doodleArrowsMeta: ClipMeta = {
   id: 'doodle-arrows',
   title: 'Doodle Arrows',
   description:
-    'Two pencil arrows sketch themselves on ruled notebook paper, a wavy graphite one and a straight one in the brand colour, both rising to the upper right where a handwritten headline writes itself on and gets underlined beside the logo and company name.',
+    'Two pencil arrows sketch themselves on ruled notebook paper, a wavy graphite one and a straight one in the brand colour, both rising to the upper right where a handwritten headline writes itself on and gets underlined beside the logo and company name; the lines boil gently through the hold, then the arrows, headline and underline are rubbed out.',
   theme: 'light',
   source: 'src/compositions/scenes/hand-drawn/doodle-arrows.tsx',
   category: 'hand-drawn',
   tags: ['doodle', 'arrows', 'draw', 'sketch', 'handwriting', 'headline', 'logo', 'paper'],
   durationInFrames: 180,
-  posterFrame: 150,
+  posterFrame: 110,
   fps: 30,
   width: 1920,
   height: 1080,
