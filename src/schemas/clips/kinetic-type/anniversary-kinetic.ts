@@ -151,7 +151,7 @@ export const anniversaryKineticDefaults: AnniversaryKineticProps = {
     bandTilt: -6,
   },
   timing: { pace: 1, endBuild: 26 },
-  badge: { size: 480, dots: 54, ring: 6, spin: 0.3 },
+  badge: { size: 480, dots: 54, ring: 6, spin: 0.12 },
   brand: {
     logoHeight: 170,
     plate: false,

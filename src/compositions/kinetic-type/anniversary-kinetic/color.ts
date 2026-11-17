@@ -1,3 +1,5 @@
+import { fitGamut, fromLab, toLab } from '../../kit/lab-color';
+
 const HEX = /^#[0-9a-f]{6}$/i;
 
 const channels = (hex: string): number[] =>
@@ -50,4 +52,23 @@ export const readable = (color: string, background: string, toward: string, floo
     }
   }
   return solid(toward);
+};
+
+export const mixLch = (from: string, to: string, amount: number): string => {
+  const start = toLab(solid(from));
+  const end = toLab(solid(to));
+  const t = Math.max(0, Math.min(1, amount));
+  const chroma = (lab: { a: number; b: number }) => Math.hypot(lab.a, lab.b);
+  const startHue = Math.atan2(start.b, start.a);
+  let turn = Math.atan2(end.b, end.a) - startHue;
+  if (turn > Math.PI) {
+    turn -= 2 * Math.PI;
+  } else if (turn < -Math.PI) {
+    turn += 2 * Math.PI;
+  }
+  const hue = startHue + turn * t;
+  const c = chroma(start) + (chroma(end) - chroma(start)) * t;
+  return fromLab(
+    fitGamut({ l: start.l + (end.l - start.l) * t, a: c * Math.cos(hue), b: c * Math.sin(hue) }),
+  );
 };

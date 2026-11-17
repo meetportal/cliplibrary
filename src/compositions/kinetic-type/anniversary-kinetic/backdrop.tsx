@@ -1,9 +1,14 @@
-import { AbsoluteFill } from 'remotion';
-import { clamp01, ramp } from '../../kit/motion';
+import { AbsoluteFill, Easing } from 'remotion';
+import { ramp } from '../../kit/motion';
 import { alpha, mix } from './color';
 import type { Scene } from './scene';
 import { NoiseField, Streaks } from './textures';
 import { KINDER_FLASH_SHARE } from './timeline';
+
+const GIANT_DRIFT = 2;
+const GHOST_EASE = Easing.inOut(Easing.quad);
+const ARC_TURN = 30;
+const BAND_FRAMES = 8;
 
 const lastWord = (text: string) => text.trim().split(/\s+/).at(-1) ?? '';
 
@@ -11,12 +16,13 @@ const Giant = ({ scene, filled }: { scene: Scene; filled: boolean }) => {
   const { beat, local, length, width, height, props, palette } = scene;
   const first = beat.giant === 'first';
   const text = first ? [...beat.text.trim()].slice(0, 1).join('') : lastWord(beat.text);
-  const fontSize = Math.round(height * (first ? 1.05 : 0.62));
-  const drift = Math.round(local * 2);
-  const left = Math.round(width * (first ? 0.02 : -0.06)) - drift;
+  const fontSize = height * (first ? 1.05 : 0.62);
+  const drift = local * GIANT_DRIFT;
+  const left = width * (first ? 0.02 : -0.06) - drift;
   const fade = ramp(local, -1, 3);
   const envelope = filled
-    ? Math.sin(Math.PI * ramp(local, length * 0.25, length * 0.65, (t) => t))
+    ? ramp(local, length * 0.15, length * 0.45, GHOST_EASE) -
+      ramp(local, length * 0.55, length * 0.85, GHOST_EASE)
     : fade;
   const opacity = filled ? envelope * 0.85 : envelope * props.effects.outlines;
   if (opacity <= 0.005 || text === '') {
@@ -27,7 +33,7 @@ const Giant = ({ scene, filled }: { scene: Scene; filled: boolean }) => {
       style={{
         position: 'absolute',
         left,
-        top: Math.round(height / 2 - fontSize * 0.62),
+        top: height / 2 - fontSize * 0.62,
         fontFamily: scene.face.family,
         fontWeight: scene.face.weight,
         fontSize,
@@ -50,15 +56,16 @@ const Arcs = ({ scene }: { scene: Scene }) => {
   const cx = width * (number ? 0.5 : 0.3);
   const cy = height * (number ? 0.5 : 0.8);
   const radii = number ? [0.34, 0.46, 0.6] : [0.3, 0.46, 0.62];
-  const progress = clamp01((local + 1) / (length * 0.8));
-  const opacity = Math.max(0.15, props.effects.outlines) * ramp(local, 0, 2);
+  const opacity =
+    Math.max(0.15, props.effects.outlines) * ramp(local, -1, 4, Easing.inOut(Easing.quad));
   return (
     <AbsoluteFill style={{ opacity }}>
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true">
         {radii.map((share, index) => {
           const r = share * width;
           const around = 2 * Math.PI * r;
-          const drawn = clamp01(progress * 1.25 - index * 0.12);
+          const turn =
+            ARC_TURN * (1 - ramp(local, index - 1, index + length * 0.8, Easing.out(Easing.quad)));
           return (
             <circle
               key={share}
@@ -69,8 +76,8 @@ const Arcs = ({ scene }: { scene: Scene }) => {
               stroke={palette.ink}
               strokeOpacity={0.7}
               strokeWidth={3}
-              strokeDasharray={`${around * drawn * 0.72} ${around}`}
-              transform={`rotate(${-150 + index * 18} ${cx} ${cy})`}
+              strokeDasharray={`${around * 0.72} ${around}`}
+              transform={`rotate(${-150 + index * 18 - turn} ${cx} ${cy})`}
             />
           );
         })}
@@ -85,8 +92,11 @@ const Band = ({ scene, frame }: { scene: Scene; frame: number }) => {
   if (local < startsAt) {
     return null;
   }
-  const grow = ramp(local, startsAt, startsAt + 4);
-  const bandHeight = Math.round(scene.size * 1.5);
+  const grow = ramp(local, startsAt, startsAt + BAND_FRAMES, Easing.out(Easing.quad));
+  if (grow < 0.01) {
+    return null;
+  }
+  const bandHeight = scene.size * 1.5;
   const line = 3;
   return (
     <AbsoluteFill
@@ -99,7 +109,7 @@ const Band = ({ scene, frame }: { scene: Scene; frame: number }) => {
           position: 'absolute',
           left: -width * 0.3,
           width: width * 1.6,
-          top: Math.round(height / 2 - bandHeight / 2),
+          top: height / 2 - bandHeight / 2,
           height: bandHeight,
           overflow: 'hidden',
           backgroundColor: mix(props.colors.background, props.colors.secondary, 0.12),
@@ -110,7 +120,8 @@ const Band = ({ scene, frame }: { scene: Scene; frame: number }) => {
         <Streaks
           color={mix(props.colors.background, props.colors.secondary, 0.55)}
           opacity={
-            props.effects.streaks * (0.35 + 0.65 * (1 - ramp(local, startsAt, startsAt + 10)))
+            props.effects.streaks *
+            (0.35 + 0.65 * (1 - ramp(local, startsAt, startsAt + 12, Easing.inOut(Easing.quad))))
           }
           frame={frame}
           angle={-28}
@@ -123,7 +134,7 @@ const Band = ({ scene, frame }: { scene: Scene; frame: number }) => {
 
 export const Backdrop = ({ scene, frame }: { scene: Scene; frame: number }) => {
   const { beat, local, props } = scene;
-  const burst = 1 - ramp(local, 0, 10, (t) => t);
+  const burst = 1 - ramp(local, 0, 12, Easing.inOut(Easing.quad));
   const noiseColor = mix(props.colors.background, props.colors.secondary, 0.6);
   return (
     <AbsoluteFill>
@@ -133,7 +144,7 @@ export const Backdrop = ({ scene, frame }: { scene: Scene; frame: number }) => {
       {beat.texture === 'streaks' ? (
         <Streaks
           color={noiseColor}
-          opacity={props.effects.streaks * (1 - ramp(local, 0, 9, (t) => t))}
+          opacity={props.effects.streaks * (1 - ramp(local, 0, 10, Easing.inOut(Easing.quad)))}
           frame={local}
           angle={-28}
         />

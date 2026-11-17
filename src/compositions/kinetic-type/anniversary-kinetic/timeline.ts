@@ -66,14 +66,14 @@ const plans = (props: AnniversaryKineticProps): Plan[] => {
   const { opening, news, journey, milestone, values } = props;
   return [
     plan(opening.intro, 'glitch', 17),
-    plan(opening.leanIn, 'wave', 27, { stage: 'deep', font: 'wide' }),
+    plan(opening.leanIn, 'wave', 26, { stage: 'deep', font: 'wide' }),
     plan(news.weveGot, 'whip', 10, { texture: 'streaks' }),
-    plan(news.bigNews, 'news', 25, { texture: 'noise', giant: 'word', ghost: true }),
+    plan(news.bigNews, 'news', 24, { texture: 'noise', giant: 'word', ghost: true }),
     plan(news.soGood, 'shrink', 18, { stage: 'surface' }),
-    plan(news.toShare, 'rise', 24, { stage: 'plum' }),
+    plan(news.toShare, 'rise', 23, { stage: 'plum' }),
     plan(news.withYou, 'drop', 22),
     plan(journey.look, 'cascade', 12, { stage: 'surface', arcs: true }),
-    plan(journey.look, 'blur', 21, { stage: 'plum' }),
+    plan(journey.look, 'blur', 20, { stage: 'plum', giant: 'word' }),
     plan(journey.howFar, 'type', 14, { texture: 'noise' }),
     plan(journey.weve, 'type', 16, { giant: 'word' }),
     plan(journey.come, 'sweep', 10, { stage: 'surface' }),
@@ -81,13 +81,13 @@ const plans = (props: AnniversaryKineticProps): Plan[] => {
     plan(journey.still, 'rise', 15),
     plan(journey.going, 'stack', 11, { texture: 'streaks' }),
     plan(journey.strong, 'stack', 12, { texture: 'noise' }),
-    plan(milestone.turning, 'track', 22, { giant: 'first', ghost: true }),
+    plan(milestone.turning, 'track', 21, { giant: 'first', ghost: true }),
     plan(props.years, 'number', 11, { font: 'number', giant: 'word', arcs: true }),
-    plan(milestone.today, 'band', 20, { band: true }),
+    plan(milestone.today, 'band', 19, { band: true }),
     plan(values.first, 'slab', 15, { font: 'value' }),
     plan(values.second, 'collapse', 14, { font: 'value', band: true }),
     plan(values.third, 'flash', 14, { font: 'value', band: true }),
-    plan(values.fourth, 'wipe', 22, { font: 'value', texture: 'noise', giant: 'first' }),
+    plan(values.fourth, 'wipe', 21, { font: 'value', texture: 'noise', giant: 'first' }),
   ];
 };
 
