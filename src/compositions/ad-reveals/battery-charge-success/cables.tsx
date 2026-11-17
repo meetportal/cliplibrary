@@ -34,7 +34,8 @@ export type CableLook = {
 };
 
 const PULSE_PERIOD = 54;
-const LABEL_GAP = 50;
+const LABEL_CLEARANCE = 10;
+const LABEL_BACK = 14;
 const DEGREES = 180 / Math.PI;
 
 const Pulses = ({
@@ -74,12 +75,12 @@ const Pulses = ({
 };
 
 const Plug = ({ cable, look }: { cable: DrawnCable; look: CableLook }) => {
-  const { tip, angle, opacity } = cable.state.pose;
+  const { tip, angle, opacity, scale } = cable.state.pose;
   const stripe = mixLch(look.empty, cable.color, look.tone);
   const relief = mix(look.shell, '#7d8a88', 0.35);
   return (
     <g
-      transform={`translate(${tip.x.toFixed(2)} ${tip.y.toFixed(2)}) rotate(${(angle * DEGREES).toFixed(3)})`}
+      transform={`translate(${tip.x.toFixed(2)} ${tip.y.toFixed(2)}) rotate(${(angle * DEGREES).toFixed(3)}) scale(${scale.toFixed(3)})`}
       opacity={opacity}
     >
       <rect x={-24} y={-12} width={26} height={24} rx={3} fill="#252c30" />
@@ -177,12 +178,16 @@ export const CableLabels = ({
       if (cable.label.trim() === '') {
         return null;
       }
-      const { tip, angle, opacity } = cable.state.pose;
+      const { tip, angle, opacity, scale } = cable.state.pose;
       const flipped = FLIPPED[cable.key];
       const textAngle = flipped ? angle : angle + Math.PI;
-      const back = { x: tip.x - Math.cos(angle) * 14, y: tip.y - Math.sin(angle) * 14 };
+      const back = {
+        x: tip.x - Math.cos(angle) * LABEL_BACK * scale,
+        y: tip.y - Math.sin(angle) * LABEL_BACK * scale,
+      };
       const up = { x: Math.sin(textAngle), y: -Math.cos(textAngle) };
-      const anchor = { x: back.x + up.x * LABEL_GAP, y: back.y + up.y * LABEL_GAP };
+      const gap = (PLUG_THICKNESS * scale) / 2 + look.labelSize * 0.6 + LABEL_CLEARANCE;
+      const anchor = { x: back.x + up.x * gap, y: back.y + up.y * gap };
       const dot = Math.round(look.labelSize * 0.26);
       return (
         <div

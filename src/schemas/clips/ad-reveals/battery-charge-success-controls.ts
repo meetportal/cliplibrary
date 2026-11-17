@@ -128,6 +128,11 @@ export const batteryChargeSuccessControls = defineControls<BatteryChargeSuccessP
           hint: 'Largest size in pixels; long labels shrink to fit beside the battery',
         },
         {
+          path: 'battery.plugSize',
+          label: 'Plug size',
+          hint: 'Scales every plug and the gap to its label; 1 is the smallest',
+        },
+        {
           path: 'motion.sway',
           label: 'Sway',
           hint: 'How much the loose plugs and the wires drift; 0 holds them still',
