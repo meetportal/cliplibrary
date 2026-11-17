@@ -36,6 +36,7 @@
     "check:em-dashes": "bun run scripts/check-em-dashes.ts",
     "check:repository": "bun run scripts/check-repository.ts",
     "knip": "knip",
+    "audit": "bun audit --audit-level=high --ignore=GHSA-fc5q-39xc-vjpf",
     "verify": "bun run lint && bun run check:comments && bun run check:em-dashes && bun run check:repository && bun run knip && bun run typecheck && bun run test",
     "prepare": "lefthook install || true"
   },
@@ -114,5 +115,8 @@
   },
   "overrides": {
     "zod": "4.6.7"
+  },
+  "patchedDependencies": {
+    "picomatch@4.0.7": "patches/picomatch@4.0.7.patch"
   }
 }
