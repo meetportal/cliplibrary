@@ -4386,59 +4386,63 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/doodle-arrows.mp4"
   },
   "dot-wordmark-reveal": {
-    "summary": "A brand reveal on a warm cream stage. It opens on the finished lockup: the logo on a white plate inside a rounded teal tile with a small coral dot on its corner, the company name in a rounded bold sans below. The tile folds into a teal pill that tumbles through the tagline, landing one word per hop while slow circular wipes from each landing flip the stage between teal and cream. The pill drops to the centre and swells into a full teal field; a small white dot glides in and writes the name letter by letter along its baseline. A white plate blooms above the name with the logo, the coral dot pops onto its corner, the teal field folds back into the tile, a coral ring pulses out and the lockup holds to the end.",
+    "summary": "A brand reveal on a warm cream stage. The logo tile, a white plate with the logo inside a rounded teal tile with a small coral dot on its corner, rolls in from the left trailing speed lines and folds into a teal pill that bounces from word to word on top of the tagline, rising well above each word and squashing softly on each landing, while slow circular wipes from the landings flip the stage between teal and cream. The full tagline holds for about a second with the pill bobbing over the last word, then the pill leaps to the centre and swells into a full teal field, slowing as it fills the frame; a small white dot glides in and writes the name letter by letter along its baseline. A white plate blooms above the name with the logo, the coral dot pops onto its corner, the teal field folds back into the tile, a coral ring pulses out and the lockup breathes gently before the tile rolls off to the right, sweeping the name away with it.",
     "beats": [
       {
         "at": 0.0,
-        "what": "the finished lockup: logo on a white plate in a rounded teal tile with a coral corner dot, the company name below on cream"
+        "what": "the logo tile rolls in from the left trailing speed lines, a white plate with the logo inside a rounded teal tile with a coral corner dot"
       },
       {
         "at": 0.1,
-        "what": "the tile folds into a small teal pill and the name letters fade away left to right"
+        "what": "the tile slows and folds into a small teal pill while still rolling"
       },
       {
-        "at": 0.6,
-        "what": "the pill tumbles down to the first tagline word"
+        "at": 0.4,
+        "what": "the pill takes off from rest and arcs onto the first tagline word"
       },
       {
-        "at": 1.1,
-        "what": "the tagline lands word by word with the pill, the hops stretching to fill the time; on two lines the pill hops along the gap between them, a one-word tagline gets extra hops around the word, and slow circular wipes from the landings flip the stage teal and cream"
+        "at": 0.9,
+        "what": "the tagline lands word by word as the pill bounces from word to word on top of the words, rising well above each one and squashing softly on each landing; on two lines it hops down to the second row, a one-word tagline gets extra hops around the word, and slow circular wipes from the landings flip the stage teal and cream"
       },
       {
-        "at": 3.5,
-        "what": "the full tagline reads on cream while the pill hops once more in place"
+        "at": 2.7,
+        "what": "the full tagline holds on cream for about a second while the pill bobs gently over the last word"
       },
       {
-        "at": 4.0,
-        "what": "the tagline fades and the pill drops to the centre, rounding into a growing dot"
+        "at": 3.7,
+        "what": "the pill leaps to the centre, rounding into a growing dot, as the tagline sinks and fades word by word"
       },
       {
-        "at": 4.4,
-        "what": "the dot swells until a teal field fills the frame"
+        "at": 4.1,
+        "what": "the dot swells and slows as a teal field fills the frame"
       },
       {
-        "at": 4.9,
-        "what": "a small white dot glides in from the left and writes the company name letter by letter along its baseline, fading at the end of the name"
+        "at": 4.5,
+        "what": "a small white dot glides in from the left and writes the company name letter by letter along its baseline, each letter rising softly into place; short names write quickly"
       },
       {
-        "at": 6.0,
+        "at": 5.9,
         "what": "a white plate blooms above the name as the last letters land, and the logo fades in on it"
       },
       {
-        "at": 6.7,
+        "at": 6.3,
         "what": "a coral dot pops onto the plate corner"
       },
       {
-        "at": 6.9,
+        "at": 6.4,
         "what": "the teal field folds back into a rounded tile around the plate, revealing cream; the name turns dark as the edge passes"
       },
       {
-        "at": 7.4,
+        "at": 6.9,
         "what": "a thin coral ring pulses out from the tile and fades"
       },
       {
-        "at": 7.6,
-        "what": "the finished lockup holds to the last frame while the coral dot breathes and a faint shade drifts down the backdrop, matching the opening frame for a seamless loop"
+        "at": 7.1,
+        "what": "the finished lockup holds for about 1.5 seconds while the tile breathes gently, the coral dot pulses and a faint shade drifts down the backdrop"
+      },
+      {
+        "at": 8.7,
+        "what": "the tile rolls off to the right, accelerating with speed lines, and the name letters slide after it and fade, leaving the empty cream stage for the loop to roll the tile back in"
       }
     ],
     "visuals": [
@@ -4452,13 +4456,13 @@
       "full teal field"
     ],
     "motion": [
-      "a tile folding into a pill",
-      "tumbling hops word to word",
+      "a tile rolling in and folding into a pill",
+      "one continuous chain of high bouncing hops on top of the words, then a gentle bob over the last word",
       "slow circular wipes flipping the stage colour",
-      "a dot swelling into a full-frame field",
+      "a dot swelling and slowing into a full-frame field",
       "a dot writing a name letter by letter",
       "a plate blooming and a field folding back into a logo tile",
-      "a ring pulse and a breathing dot on the hold"
+      "a ring pulse, a breathing tile and dot on the hold, then the tile rolling out"
     ],
     "mood": ["playful", "crisp", "friendly", "confident", "modern"],
     "roles": ["opener", "closer"],
