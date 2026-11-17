@@ -3256,11 +3256,11 @@
       "Tagline": "Tied by hand",
       "Website": "willowandco.com"
     },
-    "summary": "A green gridded chalkboard with drifting chalk dust. Two script words are chalked in left to right around an ornate ampersand with three yellow sparkles, then wiped away. The company name appears small across the top and a sticker sheet of six chalk badges fills the board in a three by two grid: a script word with a looping swash and coral sparkles, capitals on lilac tape, capitals on a coral starburst, serif capitals on a sky blue ribbon, a script word in a yellow speech bubble and hand capitals in a ring with coral rays. The sheet holds while sparkles twinkle, then the words wipe off, the tape and ribbon fade into the board and the starburst shrinks away as pale chalk dust. Three badges are then drawn big one at a time in the centre (tape, starburst, ribbon by default), each held fully written for about two thirds of a second before it wipes away. The company name fades from the top as the reel ends on a branded end card: the logo on a light plate, a small and a big chunky yellow headline line, a tagline and the website underlined in coral, held for about 1.7 seconds before it fades clean for the loop.",
+    "summary": "A green gridded chalkboard with drifting chalk dust. The reel opens with the first script word already being written, then an ornate ampersand with three yellow sparkles and the second script word chalk in, and the pair wipes away. The company name appears small across the top and a sticker sheet of six chalk badges fills the board in a three by two grid, drifting slowly sideways the whole time it is on screen: a script word with a looping swash and coral sparkles, capitals on lilac tape, capitals on a coral starburst, serif capitals on a sky blue ribbon, a script word in a yellow speech bubble and hand capitals in a ring with coral rays. The sheet holds while sparkles twinkle, then the words wipe off, the strokes retract and the tape, starburst and ribbon shrink away at full colour. Three badges are then drawn big one at a time (tape, starburst, ribbon by default): each glides in from the right while its colour is laid on and its word written, drifts while held for about two thirds of a second, then its letters shrink out from the outside in, its fill pinches down to a thin line or a dot at full colour and it slides off left as the next one arrives on the right. The company name fades from the top as the reel ends on a branded end card: the logo plate grows from a point, a small and a big chunky yellow headline line, a tagline and the website underlined in coral, held for about 1.5 seconds while the whole card drifts slowly left, then every letter shrinks away at full colour in a left to right wave, line after line, the underline retracts with the website and the logo plate shrinks away to the empty board for the loop.",
     "beats": [
       {
         "at": 0.0,
-        "what": "the first script word starts writing at once, then the ampersand and the second word chalk in, three yellow sparkles pop above"
+        "what": "the first script word is already half written, then the ampersand and the second word chalk in, three yellow sparkles pop above"
       },
       {
         "at": 1.6,
@@ -3268,31 +3268,31 @@
       },
       {
         "at": 2.1,
-        "what": "the company name appears across the top and six badges chalk in one after another in a three by two sheet"
+        "what": "the company name appears across the top and six badges chalk in one after another in a three by two sheet that drifts slowly sideways, tape and ribbon colour laid on with a soft chalk edge"
       },
       {
         "at": 4.0,
-        "what": "the full sheet holds while sparkles twinkle and rays breathe"
+        "what": "the full sheet holds, still drifting, while sparkles twinkle and rays breathe"
       },
       {
         "at": 4.7,
-        "what": "words wipe off first, then the tape and ribbon fade into the board and the starburst shrinks away as pale chalk dust"
+        "what": "words wipe off, strokes retract and the tape, starburst and ribbon shrink away at full colour"
       },
       {
         "at": 5.5,
-        "what": "three close-ups in turn, at 5.5 s, 7.2 s and 8.9 s: the tape label, the starburst and the ribbon each grow from a sliver once the one before has gone, get their word written, hold fully written for about 0.7 s and wipe off"
+        "what": "three close-ups at 5.5 s, 7.3 s and 9.1 s: each glides in from the right while its tape, starburst or ribbon is laid on and its word written, drifts while held about 0.6 s, then its letters shrink out, its fill pinches to a line or dot at full colour and it slides off left as the next one arrives on the right"
       },
       {
-        "at": 10.5,
-        "what": "the company name fades from the top as the logo lands on a light plate, and the headline stack is written line by line"
+        "at": 11.0,
+        "what": "the company name fades from the top as the logo plate grows from a point, and the headline stack is written line by line"
       },
       {
-        "at": 12.9,
-        "what": "the coral underline finishes under the website and the full end card holds for about 1.7 seconds"
+        "at": 12.5,
+        "what": "the coral underline finishes under the website and the full end card holds about 1.5 seconds while drifting slowly left"
       },
       {
-        "at": 14.6,
-        "what": "the end card fades clean back to the empty board for the loop"
+        "at": 14.0,
+        "what": "every letter shrinks away at full colour in a left to right wave, line after line, the underline retracts with the website and the logo plate shrinks away to the empty board for the loop"
       }
     ],
     "visuals": [
@@ -3304,12 +3304,13 @@
       "chunky yellow headline with a coral underlined website"
     ],
     "motion": [
-      "left to right chalk writing with a soft edge",
-      "fills grow from a sliver and shrink away",
-      "staggered badge sheet build",
-      "twinkling sparkles and breathing rays during holds",
-      "slow drifting chalk dust",
-      "soft fade wipes between beats"
+      "left to right chalk writing with a soft edge, eased in and out",
+      "fills laid on with a chalk wipe or grown from a dot, and shrunk or pinched away at full colour",
+      "staggered badge sheet build with a slow sideways drift",
+      "close-ups glide in from the right and slide off left, overlapping",
+      "letters shrink away one by one at full colour",
+      "slow drift through every hold, twinkling sparkles and breathing rays",
+      "slow drifting chalk dust"
     ],
     "mood": ["playful", "handmade", "warm", "schoolroom"],
     "roles": ["opener", "feature", "closer"],
