@@ -5,6 +5,7 @@ import { chunkyTypeStackScene } from './chunky-type-stack';
 import { circlePopScene } from './circle-pop';
 import { comingSoonFlipsScene } from './coming-soon-flips';
 import { dominoWordsScene } from './domino-words';
+import { echoStackScene } from './echo-stack';
 import { textRingsScene } from './text-rings';
 
 export const kineticTypeScenes: SceneModule[] = [
@@ -14,5 +15,6 @@ export const kineticTypeScenes: SceneModule[] = [
   circlePopScene,
   comingSoonFlipsScene,
   dominoWordsScene,
+  echoStackScene,
   textRingsScene,
 ];
