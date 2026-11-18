@@ -9,10 +9,7 @@ import { makeMeasurer, useStackFont } from './fonts';
 import { Grain } from './grain';
 import { buildLayout } from './layout';
 import { Glyphs, type LetterState, Underline } from './letters';
-import { buildTimeline, progress, type Window } from './timeline';
-
-const popStates = (frame: number, windows: Window[]): LetterState[] =>
-  windows.map((window) => ({ pop: progress(frame, window), shrink: 0 }));
+import { buildTimeline, EASE_SINE, progress } from './timeline';
 
 export const ChunkyTypeStack = (props: ChunkyTypeStackProps) => {
   const frame = useCurrentFrame();
@@ -37,11 +34,16 @@ export const ChunkyTypeStack = (props: ChunkyTypeStackProps) => {
   );
   const { colors } = props;
   const accent = accentColor(colors.primary, colors.background, colors.text);
-  const opening = frame < durationInFrames / 2;
-  const nameStates: LetterState[] = opening
-    ? timeline.nameOut.map((window) => ({ pop: 1, shrink: progress(frame, window) }))
-    : popStates(frame, timeline.nameIn);
-  const turn = (4 * Math.PI * frame) / durationInFrames;
+  const nameStates: LetterState[] = timeline.nameIn.map((window, at) => {
+    const leaving = progress(frame, timeline.nameOut[at] ?? window);
+    return leaving < 1 ? { pop: 1, shrink: leaving } : { pop: progress(frame, window), shrink: 0 };
+  });
+  const barLeaving = progress(frame, timeline.nameUnderlineOut);
+  const nameBar =
+    barLeaving < 1
+      ? { grow: 1, retract: barLeaving }
+      : { grow: progress(frame, timeline.nameUnderlineIn), retract: 0 };
+  const turn = 2 * Math.PI * progress(frame, { from: 0, to: timeline.settled }, EASE_SINE);
   const light = {
     x: width / 2 + props.motion.lightDrift * Math.sin(turn),
     y: height * 0.45 + props.motion.lightDrift * 0.6 * (Math.cos(turn) - 1),
@@ -63,7 +65,7 @@ export const ChunkyTypeStack = (props: ChunkyTypeStackProps) => {
         />
       ) : null}
       {props.showBackground ? (
-        <Grain amount={props.motion.grain} frame={frame} width={width} height={height} />
+        <Grain amount={props.motion.grain} width={width} height={height} />
       ) : null}
       <svg
         aria-hidden="true"
@@ -108,6 +110,16 @@ export const ChunkyTypeStack = (props: ChunkyTypeStackProps) => {
               fill={accent}
             />
           )}
+          {props.ampersand.show ? (
+            <Ampersand
+              x={layout.ampersand.x}
+              centerY={layout.ampersand.baseline - (layout.cap * layout.ampersand.size) / 2}
+              baseline={layout.ampersand.baseline}
+              size={layout.ampersand.size}
+              zoom={progress(frame, timeline.amp)}
+              fill={accent}
+            />
+          ) : null}
           <Glyphs
             letters={layout.name.letters}
             states={nameStates}
@@ -117,22 +129,11 @@ export const ChunkyTypeStack = (props: ChunkyTypeStackProps) => {
           {layout.nameUnderline === null ? null : (
             <Underline
               bar={layout.nameUnderline}
-              grow={opening ? 1 : progress(frame, timeline.nameUnderlineIn)}
-              retract={opening ? progress(frame, timeline.nameUnderlineOut) : 0}
+              grow={nameBar.grow}
+              retract={nameBar.retract}
               fill={accent}
             />
           )}
-          {props.ampersand.show ? (
-            <Ampersand
-              x={layout.ampersand.x}
-              centerY={layout.ampersand.baseline - (layout.cap * layout.ampersand.size) / 2}
-              baseline={layout.ampersand.baseline}
-              size={layout.ampersand.size}
-              grow={progress(frame, timeline.ampGrow)}
-              shrink={progress(frame, timeline.ampShrink)}
-              fill={accent}
-            />
-          ) : null}
         </g>
       </svg>
       <Brand

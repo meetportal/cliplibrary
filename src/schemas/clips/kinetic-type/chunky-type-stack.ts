@@ -97,19 +97,19 @@ export const chunkyTypeStackDefaults: ChunkyTypeStackProps = {
   ampersand: { show: true, size: 620 },
   endCard: { nameSize: 176, underline: true },
   brand: { y: 905, logoHeight: 160, logoWidth: 520, plate: true },
-  motion: { typeFrames: 62, popFrames: 10, lightDrift: 440, grain: 0.16 },
+  motion: { typeFrames: 72, popFrames: 10, lightDrift: 440, grain: 0.16 },
 };
 
 export const chunkyTypeStackMeta: ClipMeta = {
   id: 'chunky-type-stack',
   title: 'Chunky Type Stack',
   description:
-    'Four lines of chunky cream poster type pop in letter by letter as a staircase on a green chalkboard grid, a Primary underline draws under the last line, the letters shrink away in a left to right sweep, a big Primary ampersand pops and shrinks, and your company name pops in over its underline above your logo, which stays on screen the whole time.',
+    'Four lines of chunky cream poster type pop in letter by letter as a staircase on a green chalkboard grid, a Primary underline draws under the last line, the letters shrink away in a left to right sweep, a big Primary ampersand grows and zooms past you as it fades, and your company name pops in over its underline above your logo, which stays on screen the whole time.',
   theme: 'dark',
   source: 'src/compositions/scenes/kinetic-type/chunky-type-stack.tsx',
   category: 'kinetic-type',
   tags: ['kinetic', 'headline', 'text', 'stack', 'reveal'],
-  durationInFrames: 255,
+  durationInFrames: 240,
   posterFrame: 112,
   fps: 30,
   width: 1920,

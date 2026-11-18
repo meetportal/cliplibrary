@@ -68,12 +68,12 @@ export const chunkyTypeStackControls = defineControls<ChunkyTypeStackProps>({
         {
           path: 'motion.grain',
           label: 'Chalk dust',
-          hint: 'Strength of the fine flickering chalk specks on the board; 0 turns them off',
+          hint: 'Strength of the fine, still chalk specks on the board; 0 turns them off',
         },
         {
           path: 'motion.lightDrift',
           label: 'Board light drift',
-          hint: 'In pixels, how far the soft light on the board circles, twice per loop; 0 holds it still',
+          hint: 'In pixels, how far the soft light on the board circles once before the end card settles; 0 holds it still',
         },
       ],
     },
@@ -121,7 +121,7 @@ export const chunkyTypeStackControls = defineControls<ChunkyTypeStackProps>({
         {
           path: 'ampersand.show',
           label: 'Ampersand',
-          hint: 'The big Primary ampersand that pops between the stack and the company name',
+          hint: 'The big Primary ampersand that zooms past between the stack and the company name',
         },
       ],
       more: [
@@ -171,7 +171,11 @@ export const chunkyTypeStackControls = defineControls<ChunkyTypeStackProps>({
           label: 'Underline gap',
           hint: 'Space between the letters and the underline, as a share of the letter height',
         },
-        { path: 'ampersand.size', label: 'Ampersand size', hint: 'In pixels at its biggest' },
+        {
+          path: 'ampersand.size',
+          label: 'Ampersand size',
+          hint: 'Font size in pixels before it zooms past',
+        },
         {
           path: 'endCard.nameSize',
           label: 'Company name size',
@@ -185,12 +189,12 @@ export const chunkyTypeStackControls = defineControls<ChunkyTypeStackProps>({
         {
           path: 'motion.typeFrames',
           label: 'Typing length',
-          hint: 'In frames, from the first letter popping in to the last',
+          hint: 'In frames, from the first letter popping in to the last; very short copy types a little quicker',
         },
         {
           path: 'motion.popFrames',
           label: 'Letter pop length',
-          hint: 'In frames, how long each letter takes to grow and settle',
+          hint: 'In frames, how long each letter takes to fade in and settle to full size',
         },
       ],
     },
