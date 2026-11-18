@@ -24,7 +24,7 @@ const siteIdInput = z.string().describe('The siteId that create_site or list_sit
 const NOT_FOUND = 'No website with that siteId. Use list_sites.';
 
 export const registerSiteTools = (server: McpServer, origin: string, ownerId: string) => {
-  const describe = (site: SiteRow, withContent = false) => ({
+  const siteSummary = (site: SiteRow, withContent = false) => ({
     siteId: site.id,
     slug: site.slug,
     title: findSiteTemplate(site.templateId)?.headline(site.content) ?? site.slug,
@@ -38,7 +38,7 @@ export const registerSiteTools = (server: McpServer, origin: string, ownerId: st
 
   const written = (write: SiteWrite): CallToolResult =>
     write.ok
-      ? json(describe(write.site))
+      ? json(siteSummary(write.site))
       : failure(write.reason === 'taken' ? SLUG_TAKEN : NOT_FOUND);
 
   server.registerTool(
@@ -168,7 +168,7 @@ export const registerSiteTools = (server: McpServer, origin: string, ownerId: st
     },
     async ({ siteId }) => {
       const site = await findOwnedSite(ownerId, siteId);
-      return site === null ? failure(NOT_FOUND) : json(describe(site, true));
+      return site === null ? failure(NOT_FOUND) : json(siteSummary(site, true));
     },
   );
 
@@ -180,6 +180,6 @@ export const registerSiteTools = (server: McpServer, origin: string, ownerId: st
       inputSchema: {},
       annotations: { readOnlyHint: true },
     },
-    async () => json({ sites: (await listOwnedSites(ownerId)).map((site) => describe(site)) }),
+    async () => json({ sites: (await listOwnedSites(ownerId)).map((site) => siteSummary(site)) }),
   );
 };

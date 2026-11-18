@@ -1,8 +1,8 @@
 import { describe, expect, it, mock } from 'bun:test';
 
-mock.module('@remotion/player', () => ({
-  Player: () => null,
-}));
+const EmptyPlayer = () => null;
+
+mock.module('@remotion/player', () => ({ Player: EmptyPlayer }));
 
 import { fireEvent, render, screen } from '@testing-library/react';
 import { ClipTimelineEditor } from '@/components/clip-timeline/clip-timeline-editor';

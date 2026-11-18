@@ -1,6 +1,6 @@
 import { statSync } from 'node:fs';
 import { Glob } from 'bun';
-import ts from 'typescript';
+import { parseSync } from 'oxc-parser';
 
 type CommentRange = {
   start: number;
@@ -21,56 +21,21 @@ const ALLOWED = [
 
 const isAllowed = (text: string): boolean => ALLOWED.some((pattern) => pattern.test(text));
 
-const lineOf = (lineStarts: readonly number[], position: number): number => {
-  let low = 0;
-  let high = lineStarts.length - 1;
-  while (low < high) {
-    const mid = (low + high + 1) >> 1;
-    const start = lineStarts[mid] ?? 0;
-    if (start <= position) {
-      low = mid;
-    } else {
-      high = mid - 1;
-    }
+const lineOf = (source: string, position: number): number =>
+  source.slice(0, position).split('\n').length;
+
+const collectComments = (file: string, source: string): CommentRange[] => {
+  const { comments, errors } = parseSync(file, source);
+  const [error] = errors;
+  if (error !== undefined) {
+    throw new Error(`${file}: ${error.message}`);
   }
-  return low + 1;
-};
-
-const collectComments = (source: string): CommentRange[] => {
-  const sourceFile = ts.createSourceFile(
-    'file.tsx',
-    source,
-    ts.ScriptTarget.Latest,
-    true,
-    ts.ScriptKind.TSX,
-  );
-  const lineStarts = ts.computeLineStarts(source);
-  const found = new Map<number, CommentRange>();
-
-  const addRanges = (ranges: ts.CommentRange[] | undefined): void => {
-    if (ranges === undefined) {
-      return;
-    }
-    for (const range of ranges) {
-      if (!found.has(range.pos)) {
-        found.set(range.pos, {
-          start: range.pos,
-          end: range.end,
-          text: source.slice(range.pos, range.end),
-          line: lineOf(lineStarts, range.pos),
-        });
-      }
-    }
-  };
-
-  const visit = (node: ts.Node): void => {
-    addRanges(ts.getLeadingCommentRanges(source, node.getFullStart()));
-    addRanges(ts.getTrailingCommentRanges(source, node.getEnd()));
-    node.forEachChild(visit);
-  };
-  visit(sourceFile);
-
-  return [...found.values()].sort((left, right) => left.start - right.start);
+  return comments.map((comment) => ({
+    start: comment.start,
+    end: comment.end,
+    text: source.slice(comment.start, comment.end),
+    line: lineOf(source, comment.start),
+  }));
 };
 
 const stripFrom = (source: string, disallowed: CommentRange[]): string => {
@@ -126,7 +91,9 @@ const main = async (): Promise<void> => {
   const scanned = await Promise.all(
     files.map(async (file) => {
       const source = await Bun.file(file).text();
-      const disallowed = collectComments(source).filter((comment) => !isAllowed(comment.text));
+      const disallowed = collectComments(file, source).filter(
+        (comment) => !isAllowed(comment.text),
+      );
       return { file, source, disallowed };
     }),
   );
