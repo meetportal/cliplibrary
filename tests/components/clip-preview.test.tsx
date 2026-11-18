@@ -7,9 +7,9 @@ const fakePlayer = {
   removeEventListener: () => undefined,
 } as unknown as PlayerRef;
 
-mock.module('@remotion/player', () => ({
-  Player: () => <div data-testid="player" />,
-}));
+const FakePlayer = () => <div data-testid="player" />;
+
+mock.module('@remotion/player', () => ({ Player: FakePlayer }));
 
 import type { PlayerRef } from '@remotion/player';
 import { cleanup, render, screen } from '@testing-library/react';

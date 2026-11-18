@@ -169,5 +169,5 @@ export const removeTrack = (project: Project, trackId: string): Project => {
 export const projectContentEnd = (project: Project): number =>
   listElements(project).reduce((max, element) => {
     const end = element.from + element.durationInFrames;
-    return end > max ? end : max;
+    return Math.max(end, max);
   }, 0);

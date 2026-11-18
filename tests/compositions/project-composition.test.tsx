@@ -1,9 +1,11 @@
 import { describe, expect, it, mock } from 'bun:test';
 
+const FakeCompositionElementView = () => (
+  <canvas data-testid="scene-canvas" style={{ position: 'absolute', left: 120, top: 80 }} />
+);
+
 mock.module('@/compositions/project/elements/composition-element', () => ({
-  CompositionElementView: () => (
-    <canvas data-testid="scene-canvas" style={{ position: 'absolute', left: 120, top: 80 }} />
-  ),
+  CompositionElementView: FakeCompositionElementView,
 }));
 
 import { Thumbnail } from '@remotion/player';
