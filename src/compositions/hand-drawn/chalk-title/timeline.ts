@@ -15,12 +15,13 @@ export type TitleTimeline = {
 };
 
 const FIRST = 2;
-const ERASE_FRAMES = 28;
+const ERASE_FRAMES = 26;
 const ERASE_TAIL = 5;
-const SPARKLE_FRAMES = 12;
+const SPARKLE_FRAMES = 16;
+const SETTLE = 6;
 
 const WRITE_EASE = Easing.inOut(Easing.sin);
-export const POP_EASE = Easing.out(Easing.cubic);
+export const GROW_EASE = Easing.inOut(Easing.cubic);
 
 export const buildTimeline = (
   duration: number,
@@ -34,7 +35,7 @@ export const buildTimeline = (
   const amp = { from: start.from + step, to: start.from + step + write };
   const end = { from: amp.from + step, to: amp.from + step + write };
   const byline = { from: end.to - 3, to: end.to - 3 + Math.round(0.9 * write) };
-  const sparkleStart = amp.to - 2;
+  const sparkleStart = amp.to - 6;
   const sparkles = [3, 0, 6].map((delay) => ({
     from: sparkleStart + delay,
     to: sparkleStart + delay + SPARKLE_FRAMES,
@@ -46,7 +47,7 @@ export const buildTimeline = (
     end,
     byline,
     sparkles,
-    twinkle: { from: sparkleStart + SPARKLE_FRAMES, to: sparkleStart + SPARKLE_FRAMES + 30 },
+    twinkle: { from: sparkleStart + 8, to: sparkleStart + 8 + 40 },
     erase: eraseAtEnd ? { from: eraseTo - ERASE_FRAMES, to: eraseTo } : null,
     smearFade: { from: 0, to: start.to },
   };
@@ -54,3 +55,11 @@ export const buildTimeline = (
 
 export const progress = (frame: number, window: Window, easing = WRITE_EASE) =>
   ramp(frame, window.from, window.to, easing);
+
+export const settle = (frame: number, window: Window) =>
+  ramp(frame, window.from, window.to + SETTLE, GROW_EASE);
+
+export const titleDrift = (frame: number, duration: number, amount: number) => {
+  const turn = (2 * Math.PI * frame) / duration;
+  return { x: amount * Math.sin(turn), y: -amount * Math.cos(turn) };
+};

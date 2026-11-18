@@ -56,6 +56,7 @@ export const chalkTitleSchema = z.object({
     writeSeconds: zSlider({ min: 0.4, max: 1, step: 0.05 }),
     eraseAtEnd: z.boolean(),
     smear: zSlider({ min: 0, max: 0.3, step: 0.01 }),
+    drift: zSlider({ min: 0, max: 40, step: 1 }),
   }),
 });
 
@@ -78,7 +79,7 @@ export const chalkTitleDefaults: ChalkTitleProps = {
   byline: { show: true, size: 30, tracking: 0.24, gap: 96, uppercase: true },
   sparkles: { show: true, size: 1, twinkle: 0.6 },
   board: { gridSize: 144, gridOpacity: 0.55, smudge: 0.45, grain: 0.55, dust: 1, lightDrift: 380 },
-  motion: { writeSeconds: 0.65, eraseAtEnd: true, smear: 0.06 },
+  motion: { writeSeconds: 0.65, eraseAtEnd: true, smear: 0.06, drift: 11 },
 };
 
 export const chalkTitleMeta: ClipMeta = {

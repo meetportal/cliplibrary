@@ -12,11 +12,17 @@ const starPath = (r: number) => {
 
 const pulse = (frame: number, phase: number) => Math.sin((2 * Math.PI * frame) / PULSE + phase);
 
-export const Stars = (props: { items: SparkleDrawing[]; frame: number; twinkle: number }) => (
+export const Stars = (props: {
+  items: SparkleDrawing[];
+  frame: number;
+  twinkle: number;
+  mask: string;
+}) => (
   <>
     {props.items.map(({ sparkle, grow, phase }) => {
       const scale = grow * (1 + 0.18 * props.twinkle * pulse(props.frame, phase));
-      const turn = 14 * props.twinkle * Math.sin((2 * Math.PI * props.frame) / SWAY + phase);
+      const turn =
+        14 * props.twinkle * Math.sin((2 * Math.PI * props.frame) / SWAY + phase) - 40 * (1 - grow);
       if (scale <= 0.001) {
         return null;
       }
@@ -24,6 +30,7 @@ export const Stars = (props: { items: SparkleDrawing[]; frame: number; twinkle: 
         <path
           key={phase}
           d={starPath(sparkle.r)}
+          mask={props.mask}
           transform={`translate(${sparkle.x.toFixed(2)} ${sparkle.y.toFixed(2)}) rotate(${turn.toFixed(2)}) scale(${scale.toFixed(4)})`}
         />
       );

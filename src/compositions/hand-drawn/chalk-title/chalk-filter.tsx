@@ -1,45 +1,65 @@
-export const ChalkFilter = (props: { id: string; grain: number }) => {
-  const gain = -3.2 * props.grain;
-  const offset = 1 + 1.55 * props.grain;
-  return (
-    <filter
-      id={props.id}
-      x="-10%"
-      y="-30%"
-      width="120%"
-      height="160%"
-      colorInterpolationFilters="sRGB"
+import { type Coverage, GRAIN_TILE, grainTile, wobbleTile } from './grain-tile';
+
+export type Region = { x: number; y: number; width: number; height: number };
+
+export const chalkCoverage = (grain: number): Coverage => ({
+  gain: -4.2 * grain,
+  offset: 1 + 2.05 * grain,
+});
+
+export const ChalkGrain = (props: {
+  id: string;
+  coverage: Coverage;
+  tile: number;
+  regions: Record<string, Region>;
+}) => (
+  <>
+    <pattern
+      id={`${props.id}-tile`}
+      patternUnits="userSpaceOnUse"
+      width={props.tile}
+      height={props.tile}
     >
-      <feTurbulence
-        type="fractalNoise"
-        baseFrequency="0.55"
-        numOctaves={2}
-        seed={11}
-        result="grain"
-      />
-      <feColorMatrix
-        in="grain"
-        type="matrix"
-        values={`0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  ${gain} 0 0 0 ${offset}`}
-        result="holes"
-      />
-      <feComposite in="SourceGraphic" in2="holes" operator="in" result="dusty" />
-      <feDisplacementMap
-        in="dusty"
-        in2="grain"
-        scale={3 + 3 * props.grain}
-        xChannelSelector="R"
-        yChannelSelector="G"
-        result="chalk"
-      />
-      <feGaussianBlur in="SourceAlpha" stdDeviation={5} result="blur" />
-      <feOffset in="blur" dy={4} result="drop" />
-      <feFlood floodColor="#000000" floodOpacity={0.32} />
-      <feComposite in2="drop" operator="in" result="shadow" />
-      <feMerge>
-        <feMergeNode in="shadow" />
-        <feMergeNode in="chalk" />
-      </feMerge>
-    </filter>
-  );
-};
+      <image href={grainTile(props.coverage)} width={props.tile} height={props.tile} />
+    </pattern>
+    {Object.entries(props.regions).map(([name, region]) => (
+      <mask key={name} id={`${props.id}-${name}`} maskUnits="userSpaceOnUse" {...region}>
+        <rect {...region} fill={`url(#${props.id}-tile)`} />
+      </mask>
+    ))}
+  </>
+);
+
+export const ChalkRough = (props: {
+  id: string;
+  scale: number;
+  soften: string;
+  region: Region;
+}) => (
+  <filter
+    id={props.id}
+    filterUnits="userSpaceOnUse"
+    primitiveUnits="userSpaceOnUse"
+    {...props.region}
+    colorInterpolationFilters="sRGB"
+  >
+    <feImage
+      href={wobbleTile()}
+      x={props.region.x}
+      y={props.region.y}
+      width={GRAIN_TILE}
+      height={GRAIN_TILE}
+      preserveAspectRatio="none"
+      result="tile"
+    />
+    <feTile in="tile" result="wobble" />
+    <feDisplacementMap
+      in="SourceGraphic"
+      in2="wobble"
+      scale={props.scale}
+      xChannelSelector="R"
+      yChannelSelector="G"
+    />
+    <feGaussianBlur stdDeviation={props.soften} />
+  </filter>
+);

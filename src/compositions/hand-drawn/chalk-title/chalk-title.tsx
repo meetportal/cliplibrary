@@ -5,15 +5,9 @@ import { Board } from '../../kit/chalk-board';
 import { legibleOn, mixLab } from '../../kit/lab-color';
 import { AMPERSAND_FACES, BYLINE_FACE, canvasMeasurer, SCRIPT_FACES, useFontsReady } from './fonts';
 import { buildLayout } from './layout';
-import {
-  AMP_SOFT,
-  Lettering,
-  type LetteringState,
-  softOf,
-  WORD_SOFT,
-  writeEdge,
-} from './lettering';
-import { buildTimeline, POP_EASE, progress } from './timeline';
+import { Lettering, type LetteringState } from './lettering';
+import { buildTimeline, GROW_EASE, progress, settle, titleDrift } from './timeline';
+import { AMP_SOFT, softOf, WORD_SOFT, writeEdge } from './wipes';
 
 export const ChalkTitle = (props: ChalkTitleProps) => {
   const frame = useCurrentFrame();
@@ -35,12 +29,24 @@ export const ChalkTitle = (props: ChalkTitleProps) => {
     amp: progress(frame, timeline.amp),
     end: progress(frame, timeline.end),
     byline: progress(frame, timeline.byline),
-    sparkles: timeline.sparkles.map((window) => progress(frame, window, POP_EASE)),
+    rise: {
+      start: settle(frame, timeline.start),
+      amp: settle(frame, timeline.amp),
+      end: settle(frame, timeline.end),
+      byline: settle(frame, timeline.byline),
+    },
+    sparkles: timeline.sparkles.map((window) => progress(frame, window, GROW_EASE)),
     twinkle: props.sparkles.twinkle * progress(frame, timeline.twinkle),
     erase,
     smear: props.motion.smear * (erase > 0 ? 1 : smearIn),
     tipDust: props.board.dust,
     airDust: props.board.dust * built,
+    drift: titleDrift(frame, durationInFrames, props.motion.drift),
+    smearAt: titleDrift(
+      timeline.erase === null ? 0 : (timeline.erase.from + timeline.erase.to) / 2,
+      durationInFrames,
+      props.motion.drift,
+    ),
   };
   const pieces = [
     { piece: layout.start, window: timeline.start, share: WORD_SOFT },
