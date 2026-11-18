@@ -27,6 +27,8 @@ import {
 import { comingSoonFlipsControls } from './coming-soon-flips-controls';
 import { dominoWordsDefaults, dominoWordsMeta, dominoWordsSchema } from './domino-words';
 import { dominoWordsControls } from './domino-words-controls';
+import { echoStackDefaults, echoStackMeta, echoStackSchema } from './echo-stack';
+import { echoStackControls } from './echo-stack-controls';
 import { textRingsDefaults, textRingsMeta, textRingsSchema } from './text-rings';
 import { textRingsControls } from './text-rings-controls';
 
@@ -72,6 +74,13 @@ export const kineticTypeClips: ClipModule[] = [
     defaults: dominoWordsDefaults,
     meta: dominoWordsMeta,
     controls: dominoWordsControls,
+  },
+  {
+    id: 'echo-stack',
+    schema: echoStackSchema,
+    defaults: echoStackDefaults,
+    meta: echoStackMeta,
+    controls: echoStackControls,
   },
   {
     id: 'text-rings',
