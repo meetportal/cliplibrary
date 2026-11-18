@@ -3356,7 +3356,7 @@
     ]
   },
   "chalk-title": {
-    "summary": "A gridded dark green chalkboard where a faint smear of an erased title fades as two words are written one piece at a time in grainy white chalk: the first word in a slanted brush script, then a big italic ampersand with a thin coloured drop line, then the second word sitting a little higher. Three four-point sparkles pop in above the ampersand in the brand colour and a small spaced company name is written underneath. The sparkles twinkle, chalk dust drifts and a soft light circles while it holds, then the board is erased from right to left, leaving a faint smear.",
+    "summary": "A gridded dark green chalkboard where a faint smear of an erased title fades as two words are written one piece at a time in grainy white chalk: the first word in a slanted brush script, then a big italic ampersand with a thin coloured drop line, then the second word sitting a little higher. Each word rises a little and the ampersand grows into place as it is written. Three four-point sparkles grow in above the ampersand in the brand colour and a small spaced company name is written underneath. The whole title circles slowly over the board while the sparkles twinkle, chalk dust drifts and a soft light circles, then the board is erased from right to left, leaving a faint smear.",
     "beats": [
       {
         "at": 0.0,
@@ -3364,15 +3364,15 @@
       },
       {
         "at": 0.1,
-        "what": "the first word is written in brush chalk from left to right, shedding a little dust"
+        "what": "the first word is written in brush chalk from left to right, rising a little as it goes and shedding dust"
       },
       {
         "at": 0.6,
-        "what": "the big ampersand is written in the middle with its thin coloured drop line"
+        "what": "the big ampersand grows into place in the middle as it is written, with its thin coloured drop line"
       },
       {
-        "at": 1.2,
-        "what": "the second word is written on the right, a little higher, while three sparkles pop in above the ampersand"
+        "at": 1.1,
+        "what": "the second word rises in on the right, a little higher, while three sparkles grow and turn in above the ampersand"
       },
       {
         "at": 1.8,
@@ -3380,11 +3380,11 @@
       },
       {
         "at": 2.4,
-        "what": "the finished title holds while the sparkles twinkle, dust drifts up and the light circles"
+        "what": "the finished title drifts in a slow circle while the sparkles twinkle, dust drifts up and the light circles"
       },
       {
-        "at": 3.9,
-        "what": "the board is erased from right to left, the sparkles shrinking away, leaving a faint smear to loop"
+        "at": 4.2,
+        "what": "the board is erased from right to left, the sparkles shrinking away, leaving a faint smear for the last third of a second to loop"
       }
     ],
     "visuals": [
@@ -3396,8 +3396,10 @@
       "faint smear of an erased title"
     ],
     "motion": [
-      "chalk write-on wipe",
-      "sparkle pop and twinkle",
+      "chalk write-on wipe with a small rise",
+      "ampersand grow in",
+      "sparkle grow and twinkle",
+      "slow title drift",
       "drifting chalk dust",
       "circling board light",
       "right to left erase"
@@ -3424,7 +3426,7 @@
       "company name size, spacing and capitals",
       "sparkles on or off, size and twinkle",
       "chalk dust, grain, grid, smudges and light drift",
-      "writing time, the erase and the smear",
+      "writing time, the erase, the smear and the title drift",
       "chalkboard on or off"
     ],
     "palette": ["#2e4a42", "#1b312b", "#ecf3ef", "#e8c25a", "#5a756e"],
