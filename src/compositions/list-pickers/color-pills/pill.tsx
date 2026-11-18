@@ -1,4 +1,5 @@
 import { withAlpha } from './palette';
+import { PillLabel } from './pill-label';
 
 export type PillMetrics = {
   height: number;
@@ -6,6 +7,7 @@ export type PillMetrics = {
   fontSize: number;
   family: string;
   weight: number;
+  ready: () => Promise<unknown>;
   bullet: boolean;
 };
 
@@ -95,7 +97,14 @@ export const Pill = ({
             }}
           />
         ) : null}
-        <span>{label}</span>
+        <PillLabel
+          text={label}
+          color={ink}
+          family={metrics.family}
+          weight={metrics.weight}
+          ready={metrics.ready}
+          size={metrics.fontSize}
+        />
       </div>
     </div>
   );

@@ -3880,35 +3880,39 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/circle-pop.mp4"
   },
   "color-pills": {
-    "summary": "On a pale lavender white with soft blue and violet corner tints, six rounded pills in plum, coral, jade, indigo, azure and ruby rise into a gently zigzagging column, each with a white bullet and a bold rounded label; the first pills are already rising as the clip opens. A small navy cursor dot drops in from above and walks down the column, and each pill it touches slides right, swells a little and lifts on a soft coloured shadow before easing back. The settled list then holds to the end while the pill glows breathe and the corner tints drift.",
+    "summary": "On a pale lavender white with soft blue and violet corner tints, the first plum pill already sits at the top as the clip opens, and five more rounded pills in coral, jade, indigo, azure and ruby rise in under it into a gently zigzagging column, each with a white bullet and a bold rounded label. The first pill slides aside as a small navy cursor dot drops in beside it, then the cursor walks down the column and each pill it reaches slides right, swells a little and lifts on a soft coloured shadow while the next one leans out and the last one eases back. After the last pill the cursor slips down and shrinks away, the settled list eases back slightly and the whole frame dips to black.",
     "beats": [
       {
         "at": 0.0,
-        "what": "the first two pills are already rising into the top of the column on the pale backdrop"
+        "what": "the first pill already sits at the top of the column on the pale backdrop"
       },
       {
-        "at": 0.1,
-        "what": "the other pills rise in one after another down the column, each in its own colour"
+        "at": 0.0,
+        "what": "the other pills rise in one after another under it, each in its own colour"
       },
       {
-        "at": 1.2,
-        "what": "a small navy cursor dot fades in above the list and glides down to the first pill"
+        "at": 1.0,
+        "what": "the first pill slides right as a small navy cursor dot drops in beside it"
       },
       {
-        "at": 1.6,
-        "what": "the cursor nudges the first pill, which slides right, swells and lifts on a soft shadow"
+        "at": 1.4,
+        "what": "the cursor rests on the first pill, which has swelled and lifted on a soft shadow"
       },
       {
-        "at": 2.2,
-        "what": "the cursor walks down one pill every 0.6 s, each touched pill sliding out while the one before eases back"
+        "at": 1.5,
+        "what": "the cursor glides down one pill every 0.67 s, each touched pill sliding out while the next leans out and the one before eases back"
       },
       {
-        "at": 4.6,
-        "what": "the last pill is nudged, then the cursor drops away below the list and fades"
+        "at": 4.8,
+        "what": "after the last pill the cursor slips down and shrinks away as the last pill eases back"
       },
       {
-        "at": 5.3,
-        "what": "the settled zigzag column of six pills holds to the end, its glows gently breathing"
+        "at": 5.2,
+        "what": "the settled zigzag list eases back slightly"
+      },
+      {
+        "at": 5.5,
+        "what": "the whole frame dips to black"
       }
     ],
     "visuals": [
@@ -3923,8 +3927,10 @@
       "staggered rise and fade in",
       "cursor walking down a list",
       "touched pill slides right and swells",
+      "neighbouring pills lean out and ease back",
       "soft lift shadow",
-      "breathing glow on the held list"
+      "cursor shrinks away",
+      "dip to black"
     ],
     "mood": ["playful", "bright", "friendly", "clean", "minimal"],
     "roles": ["feature", "transition"],
@@ -3945,7 +3951,8 @@
       "cursor push, swell, lift and size",
       "row spacing and position",
       "corner tints and pill glow",
-      "timing of the rise and the cursor walk"
+      "timing of the rise and the cursor walk",
+      "end fade colour and length"
     ],
     "palette": ["#eef0fa", "#8e2dd2", "#fb574d", "#00a475", "#3031c2", "#1c2041"],
     "keywords": [
@@ -3962,9 +3969,10 @@
       "services",
       "categories",
       "bullet list",
-      "playful"
+      "playful",
+      "dip to black"
     ],
-    "concept": "A short list of colourful labels builds into a playful column, then a small cursor walks down it and nudges each pill aside in turn, so every item gets its own moment, like browsing tags or picking a flavour. The copy is six short, friendly items, held together as a finished list at the end.",
+    "concept": "A short list of colourful labels builds into a playful column, then a small cursor walks down it and nudges each pill aside in turn, so every item gets its own moment, like browsing tags or picking a flavour. The copy is six short, friendly items, and the finished list eases back as the frame dips to black.",
     "needs": ["six short list items"],
     "placeholders": {
       "Item 1": {

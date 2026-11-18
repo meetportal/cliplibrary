@@ -61,7 +61,12 @@ export const colorPillsControls = defineControls<ColorPillsProps>({
         {
           path: 'showBackground',
           label: 'Show background',
-          hint: 'Turn off to layer the pills over another clip',
+          hint: 'Turn off to layer the pills over another clip; they then fade out at the end instead of dipping',
+        },
+        {
+          path: 'colors.fade',
+          label: 'End fade color',
+          hint: 'The color the whole frame dips to at the end, with the background on',
         },
         {
           path: 'glow.strength',
@@ -113,15 +118,24 @@ export const colorPillsControls = defineControls<ColorPillsProps>({
         {
           path: 'timing.every',
           label: 'Time per pill',
-          hint: 'Frames the cursor spends on each pill',
+          hint: 'Frames the cursor spends on each pill; fewer pills glide slower and more pills walk faster so the walk always fills the clip',
         },
-        { path: 'timing.cursorAt', label: 'Cursor in at', hint: 'Frame number the cursor appears' },
+        {
+          path: 'timing.cursorAt',
+          label: 'Cursor in at',
+          hint: 'Frame the first pill starts sliding aside as the cursor drops in',
+        },
       ],
       more: [
         {
           path: 'timing.move',
           label: 'Cursor move',
           hint: 'Frames to glide from one pill to the next',
+        },
+        {
+          path: 'timing.exit',
+          label: 'End fade',
+          hint: 'In frames, the dip out at the very end; 0 holds the finished list',
         },
         {
           path: 'timing.entrance',
@@ -131,7 +145,7 @@ export const colorPillsControls = defineControls<ColorPillsProps>({
         {
           path: 'timing.stagger',
           label: 'Rise-in stagger',
-          hint: 'Frames between pills rising in',
+          hint: 'Frames between pills rising in under the first one',
         },
       ],
     },
