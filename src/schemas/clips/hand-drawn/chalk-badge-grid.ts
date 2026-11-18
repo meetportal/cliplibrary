@@ -47,6 +47,7 @@ export const chalkBadgeGridSchema = z.object({
     drawSeconds: zSlider({ min: 0.5, max: 1.3, step: 0.05 }),
     stagger: zSlider({ min: 0, max: 5, step: 1 }),
     eraseAtEnd: z.boolean(),
+    drift: zSlider({ min: 0, max: 40, step: 1 }),
   }),
 });
 
@@ -86,7 +87,7 @@ export const chalkBadgeGridDefaults: ChalkBadgeGridProps = {
   logoBadge: { height: 128, showPlate: true },
   ornaments: { show: true, twinkle: 0.7 },
   board: { gridSize: 144, gridOpacity: 0.5, smudge: 0.6, grain: 0.55, lightDrift: 300 },
-  motion: { drawSeconds: 1, stagger: 3, eraseAtEnd: true },
+  motion: { drawSeconds: 1, stagger: 3, eraseAtEnd: true, drift: 32 },
 };
 
 export const chalkBadgeGridMeta: ClipMeta = {

@@ -153,6 +153,11 @@ export const chalkBadgeGridControls = defineControls<ChalkBadgeGridProps>({
           label: 'Stagger',
           hint: 'Frames between one badge starting and the next',
         },
+        {
+          path: 'motion.drift',
+          label: 'Sheet drift',
+          hint: 'How far in pixels the whole badge sheet slowly circles over the board, so the held board never sits dead still; 0 holds it in place',
+        },
       ],
     },
   ],

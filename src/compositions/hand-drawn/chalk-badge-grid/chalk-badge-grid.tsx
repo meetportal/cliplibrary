@@ -10,7 +10,7 @@ import { inkOn, liftOn, mixOklab } from './color';
 import { makeMeasure, useGridFonts } from './fonts';
 import { LogoImage, LogoPlate, logoBox } from './logo-badge';
 import type { BadgeKit, GridPalette } from './parts';
-import { badgeState, type GridTiming } from './timeline';
+import { badgeState, type GridTiming, sheetDrift } from './timeline';
 import { useGridLogo } from './use-logo';
 
 const WORD_BADGES: {
@@ -31,6 +31,7 @@ const WORD_BADGES: {
 ];
 
 const COLUMN_STEP = 460;
+const LIFT = 10;
 const ROW_STEP = 318;
 
 const palette = (colors: ChalkBadgeGridProps['colors']): GridPalette => ({
@@ -98,7 +99,8 @@ export const ChalkBadgeGrid = (props: ChalkBadgeGridProps) => {
   ];
   const logoKit = kitFor(0, '');
   const box = logoBox(logo, props.logoBadge.height);
-  const logoAt = center(3, 2);
+  const sheet = sheetDrift(frame, timing, props.motion.drift);
+  const logoCell = center(3, 2);
   const drift = (2 * Math.PI * frame) / durationInFrames;
   const light = {
     x: width * 0.5 + Math.cos(drift) * props.board.lightDrift,
@@ -129,39 +131,45 @@ export const ChalkBadgeGrid = (props: ChalkBadgeGridProps) => {
         style={{ position: 'absolute', inset: 0 }}
       >
         <defs>
-          <ChalkGrain id={`${id}-chalk`} grain={props.board.grain} />
+          <ChalkGrain id={`${id}-chalk`} grain={props.board.grain} width={width} height={height} />
         </defs>
-        {cells
-          .filter((cell) => cell.text !== '')
-          .map((cell) => {
-            const at = center(cell.column, cell.row);
-            const Draw = cell.draw;
-            return (
-              <g key={cell.slot} transform={`translate(${at.x} ${at.y}) scale(${scale})`}>
-                <g filter={`url(#${id}-chalk)`}>
-                  <rect x={-260} y={-150} width={520} height={300} fill="none" />
-                  <Draw kit={kitFor(cell.slot, cell.text)} />
-                </g>
-              </g>
-            );
-          })}
-        <g transform={`translate(${logoAt.x} ${logoAt.y}) scale(${scale})`}>
-          <g filter={`url(#${id}-chalk)`}>
-            <rect x={-200} y={-150} width={400} height={300} fill="none" />
-            <LogoPlate
-              kit={logoKit}
-              box={box}
-              showPlate={props.logoBadge.showPlate}
-              hasLogo={logo !== null}
-            />
+        <g transform={`translate(${sheet.x.toFixed(3)} ${sheet.y.toFixed(3)}) rotate(0.001)`}>
+          <g filter={`url(#${id}-chalk-rough)`}>
+            {cells
+              .filter((cell) => cell.text !== '')
+              .map((cell) => {
+                const at = center(cell.column, cell.row);
+                const Draw = cell.draw;
+                const kit = kitFor(cell.slot, cell.text);
+                return (
+                  <g key={cell.slot} transform={`translate(${at.x} ${at.y}) scale(${scale})`}>
+                    <g
+                      transform={`translate(0 ${(-LIFT * kit.state.lift).toFixed(3)})`}
+                      mask={`url(#${id}-chalk)`}
+                    >
+                      <Draw kit={kit} />
+                    </g>
+                  </g>
+                );
+              })}
+            <g transform={`translate(${logoCell.x} ${logoCell.y}) scale(${scale})`}>
+              <LogoPlate
+                kit={logoKit}
+                box={box}
+                showPlate={props.logoBadge.showPlate}
+                hasLogo={logo !== null}
+                grain={`url(#${id}-chalk)`}
+              />
+            </g>
           </g>
         </g>
       </svg>
       <LogoImage
         logo={logo}
         box={box}
-        x={logoAt.x}
-        y={logoAt.y}
+        x={logoCell.x}
+        y={logoCell.y}
+        shift={sheet}
         scale={scale}
         reveal={clamp01((logoKit.state.pop - 0.2) / 0.6)}
       />

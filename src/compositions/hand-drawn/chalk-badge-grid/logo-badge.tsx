@@ -17,6 +17,7 @@ export const LogoPlate = (props: {
   box: LogoBox;
   showPlate: boolean;
   hasLogo: boolean;
+  grain: string;
 }) => {
   const { kit, box } = props;
   const w = box.width + PAD * 2;
@@ -37,9 +38,11 @@ export const LogoPlate = (props: {
           />
         </g>
       ) : null}
-      <Sparkle kit={kit} x={-24} y={top - 30} r={13} color={kit.palette.highlight} phase={0.6} />
-      <Sparkle kit={kit} x={16} y={top - 44} r={10} color={kit.palette.highlight} phase={2.4} />
-      <Sparkle kit={kit} x={30} y={top - 18} r={7} color={kit.palette.highlight} phase={4.1} />
+      <g mask={props.grain}>
+        <Sparkle kit={kit} x={-24} y={top - 30} r={13} color={kit.palette.highlight} phase={0.6} />
+        <Sparkle kit={kit} x={16} y={top - 44} r={10} color={kit.palette.highlight} phase={2.4} />
+        <Sparkle kit={kit} x={30} y={top - 18} r={7} color={kit.palette.highlight} phase={4.1} />
+      </g>
     </>
   );
 };
@@ -49,6 +52,7 @@ export const LogoImage = (props: {
   box: LogoBox;
   x: number;
   y: number;
+  shift: { x: number; y: number };
   scale: number;
   reveal: number;
 }) => {
@@ -68,7 +72,7 @@ export const LogoImage = (props: {
         height: box.height,
         objectFit: 'contain',
         opacity: props.reveal,
-        transform: `scale(${(grow * props.scale).toFixed(4)})`,
+        transform: `translate(${props.shift.x.toFixed(3)}px, ${props.shift.y.toFixed(3)}px) scale(${(grow * props.scale).toFixed(4)})`,
       }}
     />
   );
