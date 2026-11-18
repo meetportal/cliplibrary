@@ -8,6 +8,7 @@ export type BadgeState = {
   ornament: number;
   live: number;
   pop: number;
+  lift: number;
 };
 
 export type GridTiming = {
@@ -23,7 +24,7 @@ const TAIL = 6;
 const span = (value: number, from: number, to: number) => clamp01((value - from) / (to - from));
 
 const smooth = Easing.inOut(Easing.sin);
-const settle = Easing.out(Easing.cubic);
+const popIn = Easing.bezier(0.42, 0, 0.2, 1);
 
 const SETTLE_FRAMES = 18;
 const LAST_ERASED = SLOT_COUNT - 2;
@@ -55,6 +56,12 @@ export const badgeState = (frame: number, slot: number, timing: GridTiming): Bad
     unwrite: smooth(span(erase, 0, 0.72)),
     ornament: ornamentIn * (1 - ornamentOut),
     live: smooth(settled) * smooth(leaving),
-    pop: settle(span(draw, 0, 0.5)) * (1 - shapeOut),
+    pop: popIn(span(draw, 0, 0.5)) * (1 - shapeOut),
+    lift: smooth(erase) - (1 - smooth(span(draw, 0, 0.9))),
   };
+};
+
+export const sheetDrift = (frame: number, timing: GridTiming, amount: number) => {
+  const turn = (2 * Math.PI * frame) / timing.total;
+  return { x: amount * Math.sin(turn), y: -amount * Math.cos(turn) };
 };

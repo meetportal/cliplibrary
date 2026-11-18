@@ -109,22 +109,61 @@ export const GridBoard = (props: GridBoardProps) => {
   );
 };
 
-export const ChalkGrain = (props: { id: string; grain: number }) => (
-  <filter id={props.id} x="-6%" y="-6%" width="112%" height="112%" colorInterpolationFilters="sRGB">
-    <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves={2} seed={5} result="noise" />
-    <feColorMatrix
-      in="noise"
-      type="matrix"
-      values={`0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  ${-3.1 * props.grain} 0 0 0 ${1 + 1.45 * props.grain}`}
-      result="holes"
-    />
-    <feComposite in="SourceGraphic" in2="holes" operator="in" result="dusty" />
-    <feDisplacementMap
-      in="dusty"
-      in2="noise"
-      scale={2 + 3 * props.grain}
-      xChannelSelector="R"
-      yChannelSelector="G"
-    />
-  </filter>
-);
+const GRAIN_TILE = 240;
+const GRAIN_PAD = 80;
+const BADGE_AREA = { x: -340, y: -240, width: 680, height: 480 };
+
+export const ChalkGrain = (props: { id: string; grain: number; width: number; height: number }) => {
+  const { id, grain } = props;
+  const area = {
+    x: -GRAIN_PAD,
+    y: -GRAIN_PAD,
+    width: props.width + GRAIN_PAD * 2,
+    height: props.height + GRAIN_PAD * 2,
+  };
+  return (
+    <>
+      <filter
+        id={`${id}-noise`}
+        filterUnits="userSpaceOnUse"
+        x={0}
+        y={0}
+        width={GRAIN_TILE}
+        height={GRAIN_TILE}
+        colorInterpolationFilters="sRGB"
+      >
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.62"
+          numOctaves={2}
+          seed={5}
+          stitchTiles="stitch"
+        />
+        <feColorMatrix
+          type="matrix"
+          values={`0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  ${-3.1 * grain} 0 0 0 ${1 + 1.45 * grain}`}
+        />
+      </filter>
+      <pattern
+        id={`${id}-tile`}
+        patternUnits="userSpaceOnUse"
+        width={GRAIN_TILE}
+        height={GRAIN_TILE}
+      >
+        <rect width={GRAIN_TILE} height={GRAIN_TILE} filter={`url(#${id}-noise)`} />
+      </pattern>
+      <mask id={id} maskUnits="userSpaceOnUse" {...BADGE_AREA}>
+        <rect {...BADGE_AREA} fill={`url(#${id}-tile)`} />
+      </mask>
+      <filter id={`${id}-rough`} filterUnits="userSpaceOnUse" {...area}>
+        <feTurbulence type="fractalNoise" baseFrequency="0.16" numOctaves={2} seed={5} />
+        <feDisplacementMap
+          in="SourceGraphic"
+          scale={2 + 3 * grain}
+          xChannelSelector="R"
+          yChannelSelector="G"
+        />
+      </filter>
+    </>
+  );
+};

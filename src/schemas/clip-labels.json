@@ -2989,7 +2989,7 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/chalk-badge.mp4"
   },
   "chalk-badge-grid": {
-    "summary": "A green chalkboard with a faint dotted grid fills with a sticker sheet of twelve chalk-lettered badges in a four by three grid. The logo appears first on a light plate under three yellow sparkles, then the company name on a blue ribbon in the middle, then ten short words chalk in one after another in reading order, each in its own style: a script word with a looping swoosh and pink sparkles, hand-lettered capitals between yellow lines, bold capitals on lavender tape, block capitals in a blue frame, a warm script word under an arc, capitals on a coral starburst, capitals in a ring with pink rays, a script word in a yellow speech bubble, capitals on a lavender arrow tag and a blue script word with motion dashes. The sheet holds while sparkles twinkle, rays breathe and a soft light drifts over the board, then the words wipe away in reading order and the ribbon last, while the logo stays on its plate so the loop comes back around it.",
+    "summary": "A green chalkboard with a faint dotted grid fills with a sticker sheet of twelve chalk-lettered badges in a four by three grid. The logo appears first on a solid light plate under three yellow sparkles, then the company name on a blue ribbon in the middle, then ten short words chalk in one after another in reading order, each in its own style: a script word with a looping swoosh and pink sparkles, hand-lettered capitals between yellow lines, bold capitals on lavender tape, block capitals in a blue frame, a warm script word under an arc, capitals on a coral starburst, capitals in a ring with pink rays, a script word in a yellow speech bubble, capitals on a lavender arrow tag and a blue script word with motion dashes. The whole sheet keeps drifting in a slow small circle over the board while it holds, sparkles twinkle, rays breathe and a soft light moves across, then each badge lifts a little as it wipes away in reading order and the ribbon last, while the logo stays on its plate so the loop comes back around it.",
     "beats": [
       {
         "at": 0.0,
@@ -3001,15 +3001,15 @@
       },
       {
         "at": 0.2,
-        "what": "ten word badges chalk in one after another in reading order: strokes draw, tape and tags fill from the left, the starburst spins in, then each word is written with a soft left to right wipe"
+        "what": "ten word badges chalk in one after another in reading order: strokes draw, tape and tags fill from the left, the starburst grows in from a point as it turns, and each badge rises a little into place while its word is written with a soft left to right wipe"
       },
       {
         "at": 2.1,
-        "what": "the full sheet holds while sparkles twinkle, the sun rays breathe, the motion dashes flick and a soft light drifts over the board"
+        "what": "the full sheet holds and slowly drifts in a small circle over the board while sparkles twinkle, the sun rays breathe, the motion dashes flick and a soft light drifts over the board"
       },
       {
         "at": 4.9,
-        "what": "the words are wiped away in reading order, strokes retract and shapes shrink"
+        "what": "the badges lift a little as their words are wiped away in reading order, strokes retract and shapes shrink"
       },
       {
         "at": 5.9,
@@ -3029,10 +3029,11 @@
       "soft left to right write wipe",
       "stroke draw",
       "tape and tag fill",
-      "starburst spin pop",
+      "starburst eased grow-in with a turn",
       "twinkling sparkles",
       "breathing rays",
       "drifting light",
+      "slow circling sheet drift",
       "erase in reading order"
     ],
     "mood": ["playful", "handmade", "friendly", "cheerful", "crafty"],
@@ -3058,7 +3059,7 @@
       "badge size, column and row spacing, logo size",
       "ornaments on or off and twinkle",
       "chalk grain, grid, smudges and light drift",
-      "draw time, stagger and the wipe at the end",
+      "draw time, stagger, sheet drift and the wipe at the end",
       "chalkboard on or off"
     ],
     "palette": ["#36524a", "#ec7a62", "#c0b2ea", "#a9d3e8", "#e9d27c", "#eef5ee"],
