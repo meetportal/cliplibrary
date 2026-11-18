@@ -4541,5 +4541,98 @@
       "Company Name": "Willow & Co.",
       "Logo": "design-assets/logos/willow-square.png"
     }
+  },
+  "echo-stack": {
+    "summary": "On a near-black backdrop with a faintly lighter centre, one line in bold geometric capitals, the company name and a word, sits on a Primary band in the middle of the frame. White echoes of the same line rise into the rows above and below it one after another from top to bottom until seven rows fill the frame, the band swelling softly as the cascade passes it. The wall drifts slowly as one, then the echoes slide down and blur away top to bottom, the band swelling once more as they pass, and the clip ends on the band alone, breathing gently, exactly where it began.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the name line on its Primary band alone in the middle of a near-black frame"
+      },
+      {
+        "at": 0.13,
+        "what": "white echoes of the line rise into the rows above and below one after another, top to bottom"
+      },
+      {
+        "at": 0.6,
+        "what": "the band swells softly as the cascade passes the middle row"
+      },
+      {
+        "at": 1.1,
+        "what": "seven rows fill the frame and the whole wall drifts slowly upward"
+      },
+      {
+        "at": 2.97,
+        "what": "the echoes slide down and blur away one after another, top to bottom, the band swelling once more"
+      },
+      {
+        "at": 3.77,
+        "what": "the last echo is gone and the band holds alone, swelling and settling gently, back to the opening frame"
+      }
+    ],
+    "visuals": [
+      "near-black backdrop with a faintly lighter centre",
+      "bold geometric capitals repeated on seven centred rows",
+      "middle row on a rounded Primary band with dark or light text picked for contrast",
+      "white echo rows above and below the band"
+    ],
+    "motion": [
+      "top to bottom cascade of echoes rising into their rows",
+      "soft swell of the band as each cascade passes it, and a slow breath while it is alone",
+      "slow drift of the whole stack through the hold and across the loop",
+      "top to bottom cascade of echoes sliding down and blurring away"
+    ],
+    "mood": ["bold", "punchy", "minimal", "confident", "rhythmic"],
+    "roles": ["opener", "closer", "transition"],
+    "useCases": [
+      "brand name sting for a reel or story",
+      "slogan or product launch post",
+      "bold opener before a promo",
+      "loopable brand background for a social post",
+      "end card that repeats the brand line"
+    ],
+    "editable": [
+      "the line, with the company name and a word",
+      "font, size, capitals and letter spacing",
+      "primary, text and background colours",
+      "number of rows, row spacing and echo strength",
+      "band padding, corner rounding, swell and breath",
+      "cascade gap, rise, exit slide, blur, end hold and drift"
+    ],
+    "palette": ["#ff5b2e", "#ebebe8", "#151515", "#060606", "#0b0b0c"],
+    "keywords": [
+      "echo",
+      "stack",
+      "repeat",
+      "repetition",
+      "cascade",
+      "kinetic type",
+      "wall of text",
+      "brand line",
+      "slogan",
+      "highlight band",
+      "loop",
+      "minimal",
+      "bold caps"
+    ],
+    "concept": "One short brand line repeated until it becomes a wall: the name line holds the centre on a Primary band, white echoes cascade in around it top to bottom, the repetition lands while the wall drifts, and the same cascade empties it again, leaving the line it started from. Punchy, confident, a name and one verb.",
+    "needs": ["company name", "tagline"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The brand name that starts the line on every row"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 12,
+        "hint": "One verb or short word that follows the name, like saves, blooms or is here"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Tagline": "blooms"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/echo-stack.mp4"
   }
 }
