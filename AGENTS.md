@@ -27,7 +27,10 @@ Everything lives in one package. Modules import each other through the `@/` alia
   picked media becomes an object URL. Keep compositions within what `@remotion/web-renderer`
   can draw: no `z-index`, `OffthreadVideo` or `Html5Video`, and prefer linear gradients over
   radial ones, blend modes, backdrop filters and 3D perspective, which only render when Chrome's
-  HTML-in-canvas capture is available (`HTML_IN_CANVAS_ORIGIN_TRIAL_TOKEN`).
+  HTML-in-canvas capture is available (`HTML_IN_CANVAS_ORIGIN_TRIAL_TOKEN`). That capture clips a
+  nested `<canvas>` to its own size at the origin of its nearest transform instead of at its
+  position, so `ProjectComposition` gives every canvas `contain: paint`, which puts the clip back in
+  place; canvas-drawn text and WebGL scenes then export where they sit.
 - `src/schemas` - per-clip Zod schemas, typed defaults, inferred types, the `ClipId` union and clip
   registry metadata. Pure, no React, no Node.
 - `src/compositions` - the Remotion scenes, motion kit, `Root`, and the `registerRoot` entry.
