@@ -3627,7 +3627,7 @@
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/charge-compare.mp4"
   },
   "chunky-type-stack": {
-    "summary": "A dark green chalkboard with a faint grid where four short lines of chunky cream poster capitals pop in letter by letter as a stepped staircase, the second line biggest, and a coral underline draws under the last line as it types. The stack holds, then every letter shrinks to a dot in a left to right sweep, line after line, a big coral ampersand pops up in the middle and shrinks away, and the company name pops in letter by letter over its own coral underline. The logo sits on a cream plate below the type from the first frame to the last.",
+    "summary": "A dark green chalkboard with a faint grid where four short lines of chunky cream poster capitals pop in letter by letter as a stepped staircase, the second line biggest, and a coral underline draws under the last line as it types. The stack holds, then every letter shrinks to a dot in a left to right sweep, line after line, a big coral ampersand blooms from a point in the middle and rushes past until it overflows the frame, then fades, and the company name pops in letter by letter over its own coral underline. The logo sits on a cream plate below the type from the first frame to the last.",
     "beats": [
       {
         "at": 0.0,
@@ -3638,36 +3638,36 @@
         "what": "line 1 pops in letter by letter in chunky cream capitals"
       },
       {
-        "at": 0.9,
+        "at": 0.97,
         "what": "line 2, the biggest, pops in stepped to the right"
       },
       {
-        "at": 1.4,
+        "at": 1.57,
         "what": "line 3 pops in stepped a little further right"
       },
       {
-        "at": 2.0,
+        "at": 2.2,
         "what": "line 4 pops in while a coral underline draws under it"
       },
       {
-        "at": 2.8,
+        "at": 3.1,
         "what": "the whole stack holds over the logo while the board light drifts"
       },
       {
-        "at": 4.1,
+        "at": 4.0,
         "what": "every letter shrinks to a dot in a left to right sweep, line after line, and the underline retracts"
       },
       {
-        "at": 5.07,
-        "what": "a big coral ampersand grows in the middle of the board, holds and shrinks away"
+        "at": 4.87,
+        "what": "a big coral ampersand blooms from a point in the middle, rushes past in solid colour until it overflows the frame and fades in its last frames"
       },
       {
-        "at": 5.9,
+        "at": 5.63,
         "what": "the company name pops in letter by letter as its coral underline draws"
       },
       {
-        "at": 6.8,
-        "what": "the end card holds: company name, underline and logo"
+        "at": 6.33,
+        "what": "the end card holds still: company name, underline and logo"
       }
     ],
     "visuals": [
@@ -3682,8 +3682,8 @@
       "letter by letter pop in",
       "underline draw",
       "left to right shrink-to-dot sweep",
-      "ampersand pop",
-      "slow circling board light"
+      "ampersand zoom-through fade",
+      "board light circles once and settles"
     ],
     "mood": ["bold", "playful", "punchy", "friendly", "confident"],
     "roles": ["opener", "feature", "closer"],
@@ -3724,7 +3724,7 @@
       "poster type",
       "four lines"
     ],
-    "concept": "A short four line slogan builds itself letter by letter into a chunky stepped stack, like poster type set by hand, so each line lands as its own beat and the biggest line carries the punch. Then the stack sweeps away, an ampersand pops as the and, and the company name lands as the answer, so the copy reads as a bold, upbeat promise followed by who makes it.",
+    "concept": "A short four line slogan builds itself letter by letter into a chunky stepped stack, like poster type set by hand, so each line lands as its own beat and the biggest line carries the punch. Then the stack sweeps away, an ampersand zooms past as the and, and the company name lands as the answer, so the copy reads as a bold, upbeat promise followed by who makes it.",
     "needs": ["logo", "company name", "four short slogan lines"],
     "placeholders": {
       "Line 1": {

@@ -38,6 +38,7 @@ export const Brand = (props: BrandProps) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        willChange: 'transform',
       }}
     >
       <Img src={logo.src} style={{ width, height, objectFit: 'contain' }} />

@@ -1,19 +1,25 @@
+import { mixLab } from '../../kit/lab-color';
 import { STACK_FAMILY } from './fonts';
-import { EASE_IN, EASE_IN_OUT } from './timeline';
+import { EASE_IN_OUT } from './timeline';
+
+const PEAK_SCALE = 4.4;
+const GROWTH = 2;
+const FADE_FROM = 0.8;
+const CHALK = '#ffffff';
 
 type AmpersandProps = {
   x: number;
   centerY: number;
   baseline: number;
   size: number;
-  grow: number;
-  shrink: number;
+  zoom: number;
   fill: string;
 };
 
-export const Ampersand = ({ x, centerY, baseline, size, grow, shrink, fill }: AmpersandProps) => {
-  const scale = EASE_IN_OUT(grow) * (1 - EASE_IN(shrink));
-  if (scale < 0.01) {
+export const Ampersand = ({ x, centerY, baseline, size, zoom, fill }: AmpersandProps) => {
+  const scale = PEAK_SCALE * zoom ** GROWTH;
+  const fade = EASE_IN_OUT(Math.max(0, (zoom - FADE_FROM) / (1 - FADE_FROM)));
+  if (scale < 0.01 || fade >= 1) {
     return null;
   }
   return (
@@ -23,7 +29,8 @@ export const Ampersand = ({ x, centerY, baseline, size, grow, shrink, fill }: Am
       fontSize={size}
       fontFamily={`"${STACK_FAMILY}"`}
       textAnchor="middle"
-      fill={fill}
+      fill={fade > 0 ? mixLab(fill, CHALK, Math.min(1, fade * 2) * 0.75) : fill}
+      opacity={1 - fade}
       transform={`translate(${x.toFixed(2)} ${centerY.toFixed(2)}) scale(${scale.toFixed(4)}) translate(${(-x).toFixed(2)} ${(-centerY).toFixed(2)})`}
     >
       &amp;
