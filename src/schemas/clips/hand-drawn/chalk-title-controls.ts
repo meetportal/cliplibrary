@@ -176,6 +176,11 @@ export const chalkTitleControls = defineControls<ChalkTitleProps>({
           label: 'Erased smear',
           hint: 'How strongly the wiped title stays as a faint smear; 0 wipes it clean. Needs Erase at the end',
         },
+        {
+          path: 'motion.drift',
+          label: 'Title drift',
+          hint: 'How far in pixels the whole title slowly circles over the board and back, so the held title never sits dead still; 0 holds it in place',
+        },
       ],
     },
   ],
