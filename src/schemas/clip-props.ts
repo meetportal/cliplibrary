@@ -33,6 +33,7 @@ import type { FilmDustProps } from './clips/overlays/film-dust';
 import type { FloatingCardsProps } from './clips/overlays/floating-cards';
 import type { ChargeCompareProps } from './clips/phone-layouts/charge-compare';
 import type { PhoneSpinInProps } from './clips/phone-reveals/phone-spin-in';
+import type { GoingLiveTeaserProps } from './clips/text-reveals/going-live-teaser';
 import type { MagnifierCaptionProps } from './clips/text-reveals/magnifier-caption';
 import type { NeonSignFlickerProps } from './clips/text-reveals/neon-sign-flicker';
 
@@ -65,6 +66,7 @@ export interface ClipPropsMap {
   'dot-ring-logo-reveal': DotRingLogoRevealProps;
   'dot-wordmark-reveal': DotWordmarkRevealProps;
   'magnifier-caption': MagnifierCaptionProps;
+  'going-live-teaser': GoingLiveTeaserProps;
   'gold-monogram-invite': GoldMonogramInviteProps;
   'neon-sign-flicker': NeonSignFlickerProps;
   'text-rings': TextRingsProps;
