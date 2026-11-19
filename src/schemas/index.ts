@@ -35,6 +35,7 @@ export * from './clips/kinetic-type/text-rings';
 export * from './clips/list-pickers/color-pills';
 export * from './clips/list-pickers/pill-fan';
 export * from './clips/list-pickers/word-picker';
+export * from './clips/overlays/film-dust';
 export * from './clips/phone-layouts/charge-compare';
 export * from './clips/phone-reveals/phone-spin-in';
 export * from './clips/text-reveals/magnifier-caption';
