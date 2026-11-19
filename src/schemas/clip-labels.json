@@ -4635,6 +4635,129 @@
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/film-dust.mp4"
   },
+  "floating-cards": {
+    "summary": "On a soft off-white backdrop with a gentle centre glow, three white app-style stat cards drift up one after another: a violet-tiled card at the upper left reading a growth figure, a green-tiled card at the right with its number in green, and a coral-tiled card at the lower left showing progress toward a goal. Each card has a rounded tinted icon tile with a thin line icon, a small grey label and a bold number, and sits at a slight tilt. Once all three have landed they float gently, a quarter cycle apart, rocking a little as their soft shadows deepen and drop when they lift, and the whole frame dips to black at the end.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the first card is already drifting up into the upper left"
+      },
+      {
+        "at": 0.1,
+        "what": "the highlighted card rises in at the right"
+      },
+      {
+        "at": 0.5,
+        "what": "the third card rises in at the lower left"
+      },
+      {
+        "at": 1.4,
+        "what": "all three cards have landed and float gently out of step"
+      },
+      {
+        "at": 4.5,
+        "what": "the frame dips to black while the cards keep floating"
+      }
+    ],
+    "visuals": [
+      "white rounded stat cards",
+      "tinted square icon tiles with line icons",
+      "small grey labels over bold numbers",
+      "one number in the highlight colour",
+      "soft drop shadows",
+      "off-white backdrop with a soft centre glow"
+    ],
+    "motion": [
+      "staggered drift up and fade in",
+      "gentle floating bob",
+      "slight tilt sway",
+      "lift shadows that soften as cards rise",
+      "dip to black"
+    ],
+    "mood": ["calm", "clean", "modern", "positive", "minimal"],
+    "roles": ["proof", "feature", "overlay"],
+    "useCases": [
+      "results or growth stats for a launch post",
+      "app or fintech feature promo",
+      "monthly recap or milestone post",
+      "notification overlay over product footage",
+      "fundraising or goal progress update"
+    ],
+    "editable": [
+      "three stat labels and numbers",
+      "one to four cards with their icon, colour, highlight, position and tilt",
+      "primary colour that turns all three card colours together",
+      "text, card and background colours",
+      "font, number and label sizes",
+      "card size, corners, padding, icon tile and shadow",
+      "float height, cycle, sway and lift shadow",
+      "rise-in stagger, length, distance and head start",
+      "end dip length and colour, background on or off"
+    ],
+    "palette": ["#f6f6f3", "#ffffff", "#1fb07f", "#6b54e6", "#ef6a55", "#121216"],
+    "keywords": [
+      "stat cards",
+      "stats",
+      "numbers",
+      "metrics",
+      "kpi",
+      "notification",
+      "fintech",
+      "finance",
+      "growth",
+      "payment",
+      "goal",
+      "app ui",
+      "floating",
+      "cards",
+      "overlay",
+      "dashboard",
+      "dip to black"
+    ],
+    "concept": "A few app-style stat cards drift in one after another and float in the air, each one a small win such as growth, a payment or a goal reached, so the viewer reads good-news numbers at a glance with nothing else on screen. The copy is three short labels over bold, upbeat figures, the middle one highlighted, and the floating trio ends on a dip to black.",
+    "needs": ["three short stat labels", "three bold numbers"],
+    "placeholders": {
+      "Stat 1 Label": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "Small grey line on the first card, top left, saying what the number is"
+      },
+      "Stat 1 Value": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Bold number on the first card, like a growth percentage"
+      },
+      "Stat 2 Label": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "Small grey line on the highlighted card at the right"
+      },
+      "Stat 2 Value": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Bold coloured number on the highlighted card, the headline win"
+      },
+      "Stat 3 Label": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "Small grey line on the last card, lower left"
+      },
+      "Stat 3 Value": {
+        "kind": "text",
+        "maxChars": 14,
+        "hint": "Bold number on the last card, like progress toward a goal"
+      }
+    },
+    "samples": {
+      "Stat 1 Label": "Revenue growth",
+      "Stat 1 Value": "+12.4%",
+      "Stat 2 Label": "Payment received",
+      "Stat 2 Value": "+$4,200",
+      "Stat 3 Label": "Spring launch goal",
+      "Stat 3 Value": "86% reached"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/floating-cards.mp4"
+  },
   "echo-stack": {
     "summary": "On a near-black backdrop with a faintly lighter centre, one line in bold geometric capitals, the company name and a word, sits on a Primary band in the middle of the frame. White echoes of the same line rise into the rows above and below it one after another from top to bottom until seven rows fill the frame, the band swelling softly as the cascade passes it. The wall drifts slowly as one, then the echoes slide down and blur away top to bottom, the band swelling once more as they pass, and the clip ends on the band alone, breathing gently, exactly where it began.",
     "beats": [
