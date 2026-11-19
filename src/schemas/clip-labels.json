@@ -4542,6 +4542,99 @@
       "Logo": "design-assets/logos/willow-square.png"
     }
   },
+  "film-dust": {
+    "summary": "An old film title card on a near-black plate: the company name in a big high-contrast serif with a short italic tagline below it between two thin gold rules. The title drifts in a slow circle as if weaving in a projector gate, while faint warm dust, curly hairs, fibres, round specks and the odd thin vertical scratch pop in at fixed spots, linger for a fraction of a second and fade. Nothing enters or leaves, so it loops seamlessly.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the title card is already on the film plate, company name over the italic tagline and its rules, with dust and hairs flickering over it"
+      },
+      {
+        "at": 1.0,
+        "what": "the title weaves slowly up and to the right in the gate while hairs and specks pop in at fixed spots and fade"
+      },
+      {
+        "at": 2.5,
+        "what": "the title reaches the top of its slow loop and drifts left while hairs, specks and the odd thin scratch come and go"
+      },
+      {
+        "at": 4.0,
+        "what": "the weave comes back down and to the right toward its start while the dust keeps flickering"
+      },
+      {
+        "at": 5.0,
+        "what": "the last frame flows straight into the first, so the loop has no seam"
+      }
+    ],
+    "visuals": [
+      "near-black film plate with a very soft vignette",
+      "company name in a big cream high-contrast serif",
+      "italic gold tagline between two thin gold rules",
+      "faint warm curly hairs, fibres and round dust specks",
+      "rare thin vertical film scratch"
+    ],
+    "motion": [
+      "slow circular gate weave of the title",
+      "dust and hairs popping in at fixed spots and fading",
+      "brief vertical scratch flashes",
+      "seamless loop"
+    ],
+    "mood": ["vintage", "cinematic", "nostalgic", "quiet", "classic"],
+    "roles": ["opener", "closer", "overlay", "background"],
+    "useCases": [
+      "vintage film style opener for a brand video",
+      "old movie title card for a shop, studio or event",
+      "anniversary or heritage story intro",
+      "film dust and scratch overlay over other clips",
+      "retro social post with a name and a line"
+    ],
+    "editable": [
+      "company name and tagline",
+      "title on or off, sizes, letter spacing, spacing, width limit and position",
+      "tagline rules on or off and their length",
+      "tagline and rule colour, name colour, dust colour, plate and edge colours",
+      "background on or off for overlay use",
+      "dust amount, strength, size, life, hair share, dark speck share and pattern",
+      "scratch frequency",
+      "gate weave distance and breathing"
+    ],
+    "palette": ["#0a0a0a", "#070707", "#f1e8d4", "#d6a04c", "#f0e4c8"],
+    "keywords": [
+      "film dust",
+      "film grain",
+      "old film",
+      "vintage",
+      "scratches",
+      "hairs",
+      "projector",
+      "title card",
+      "retro",
+      "overlay",
+      "cinematic",
+      "dust overlay",
+      "silent film",
+      "loop"
+    ],
+    "concept": "Real-looking film dust, hairs and scratches come and go at fixed spots on an almost black plate, so whatever sits on it feels like an old projected print. The company name and a short line sit in the middle as a classic title card, weaving gently in the gate, so the copy reads as a quiet, nostalgic presentation of who you are.",
+    "needs": ["company name", "tagline"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "The big serif title in the middle of the film; one line that shrinks to fit, and very short names grow"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 44,
+        "hint": "One short italic line under the name, like a film subtitle or a promise"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Tagline": "Flowers for every occasion"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/film-dust.mp4"
+  },
   "echo-stack": {
     "summary": "On a near-black backdrop with a faintly lighter centre, one line in bold geometric capitals, the company name and a word, sits on a Primary band in the middle of the frame. White echoes of the same line rise into the rows above and below it one after another from top to bottom until seven rows fill the frame, the band swelling softly as the cascade passes it. The wall drifts slowly as one, then the echoes slide down and blur away top to bottom, the band swelling once more as they pass, and the clip ends on the band alone, breathing gently, exactly where it began.",
     "beats": [
