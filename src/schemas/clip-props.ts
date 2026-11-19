@@ -30,6 +30,7 @@ import type { ColorPillsProps } from './clips/list-pickers/color-pills';
 import type { PillFanProps } from './clips/list-pickers/pill-fan';
 import type { WordPickerProps } from './clips/list-pickers/word-picker';
 import type { FilmDustProps } from './clips/overlays/film-dust';
+import type { FloatingCardsProps } from './clips/overlays/floating-cards';
 import type { ChargeCompareProps } from './clips/phone-layouts/charge-compare';
 import type { PhoneSpinInProps } from './clips/phone-reveals/phone-spin-in';
 import type { MagnifierCaptionProps } from './clips/text-reveals/magnifier-caption';
@@ -70,6 +71,7 @@ export interface ClipPropsMap {
   'pill-fan': PillFanProps;
   'color-pills': ColorPillsProps;
   'film-dust': FilmDustProps;
+  'floating-cards': FloatingCardsProps;
   'phone-spin-in': PhoneSpinInProps;
   'word-picker': WordPickerProps;
 }
