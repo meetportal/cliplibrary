@@ -1,5 +1,11 @@
 import type { ClipModule } from '../../registry';
 import {
+  goingLiveTeaserDefaults,
+  goingLiveTeaserMeta,
+  goingLiveTeaserSchema,
+} from './going-live-teaser';
+import { goingLiveTeaserControls } from './going-live-teaser-controls';
+import {
   magnifierCaptionDefaults,
   magnifierCaptionMeta,
   magnifierCaptionSchema,
@@ -26,5 +32,12 @@ export const textRevealsClips: ClipModule[] = [
     defaults: magnifierCaptionDefaults,
     meta: magnifierCaptionMeta,
     controls: magnifierCaptionControls,
+  },
+  {
+    id: 'going-live-teaser',
+    schema: goingLiveTeaserSchema,
+    defaults: goingLiveTeaserDefaults,
+    meta: goingLiveTeaserMeta,
+    controls: goingLiveTeaserControls,
   },
 ];

@@ -4850,5 +4850,163 @@
       "Tagline": "blooms"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/echo-stack.mp4"
+  },
+  "going-live-teaser": {
+    "summary": "A vertical launch teaser on a deep purple stage that says one word group at a time in the centre: a cream bar wipes in a big word that shrinks to size, a glitch line splits into orange and lavender between flying cream sheets and thin orange rings, a small word, a line over a rising dashboard panel, an orange curved wipe that leaves a line with an orange accent word and lavender smoke, and two punches that flash lavender and fan out into orange, lavender and cream echo stacks. Then the company name types in letter by letter under widening orange signal arcs, a cream arch plate builds and the logo grows into it above the name, a spaced-capital tagline with its last word in orange and underlined, the website and the phone and email.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a cream bar sweeps right to left and reveals a huge first word that shrinks to size while thin orange rings fade in"
+      },
+      {
+        "at": 1.5,
+        "what": "a glitch line splits into orange and lavender while motion-blurred cream sheets fly across and the rings widen in the corners"
+      },
+      {
+        "at": 3.1,
+        "what": "a small word holds as the sheets leave and a dark dashboard panel fades in behind it"
+      },
+      {
+        "at": 4.2,
+        "what": "a line holds over the dashboard panel as it rises with glowing orange dots"
+      },
+      {
+        "at": 5.5,
+        "what": "an orange curved wipe sweeps across and leaves a line with its last word in orange while lavender smoke drifts out"
+      },
+      {
+        "at": 7.2,
+        "what": "a lavender pulse and a punch that fans out into an orange, lavender and cream echo stack"
+      },
+      {
+        "at": 8.5,
+        "what": "a second punch and echo stack"
+      },
+      {
+        "at": 9.7,
+        "what": "the company name types in letter by letter out of a blur and holds while two orange signal arcs widen above it"
+      },
+      {
+        "at": 11.2,
+        "what": "a cream arch plate builds from a short line and the logo grows inside it"
+      },
+      {
+        "at": 12.1,
+        "what": "the company name, the tagline with its last word in orange and underlined, the website, phone and email land"
+      },
+      {
+        "at": 13.3,
+        "what": "the end card holds with a slow push while the signal arcs settle"
+      }
+    ],
+    "visuals": [
+      "deep purple radial stage",
+      "cream wipe bar",
+      "glitch colour split",
+      "blurred flying cream sheets",
+      "thin orange ring arcs",
+      "dark dashboard panel with orange bokeh",
+      "orange curved wipe",
+      "lavender smoke",
+      "lavender flash",
+      "echo stack type",
+      "cream arch logo plate",
+      "spaced capital tagline with underline",
+      "website, phone and email with icons",
+      "orange signal arcs over the logo"
+    ],
+    "motion": [
+      "bar wipe",
+      "scale punch",
+      "glitch split",
+      "fly-through",
+      "panel rise",
+      "curved wipe",
+      "echo stack fan",
+      "letter by letter type-on",
+      "plate build",
+      "slow push"
+    ],
+    "mood": ["bold", "suspenseful", "playful", "energetic"],
+    "roles": ["opener", "cta", "closer"],
+    "useCases": [
+      "product or brand launch teaser",
+      "coming soon announcement",
+      "instagram reel or story",
+      "event or opening countdown",
+      "brand intro with contacts"
+    ],
+    "editable": [
+      "teaser words",
+      "company name",
+      "logo image",
+      "tagline",
+      "website",
+      "phone",
+      "email",
+      "primary, secondary, text, surface and background colors",
+      "font and sizes",
+      "glitch, flash, smoke, sheets, rings and echo layers",
+      "logo plate, underline and end card name",
+      "positions"
+    ],
+    "palette": ["#2f1f5f", "#100a25", "#fda45a", "#9b7bfd", "#f4ede2"],
+    "keywords": [
+      "teaser",
+      "coming soon",
+      "launch",
+      "going live",
+      "kinetic type",
+      "glitch",
+      "echo",
+      "wipe",
+      "purple",
+      "portrait",
+      "announcement",
+      "logo",
+      "end card"
+    ],
+    "concept": "A launch teaser that tells one short sentence a word group at a time in the centre of a deep purple stage, each group with its own small effect, so the anticipation builds before the company name types in and the logo, tagline and contacts land as the reveal. Bold and a little suspenseful, the copy is a promise of something new.",
+    "needs": ["logo", "company name", "tagline", "website", "phone", "email"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The name that types in after the teaser words and repeats on the end card; shrinks to one line"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it settles into the arch plate"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 40,
+        "hint": "A short brand promise under the logo in spaced capitals; its last word is accented"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Website under the tagline"
+      },
+      "Phone": {
+        "kind": "text",
+        "maxChars": 20,
+        "hint": "Phone number at the bottom left"
+      },
+      "Email": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Email address at the bottom right"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Logo": "design-assets/logos/willow-square.png",
+      "Tagline": "Built to be remembered",
+      "Website": "willowandco.com",
+      "Phone": "+1 646 555 0119",
+      "Email": "hello@willowandco.com"
+    },
+    "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/going-live-teaser.mp4"
   }
 }
