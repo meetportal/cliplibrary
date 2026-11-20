@@ -35,6 +35,12 @@ import {
   dotWordmarkRevealSchema,
 } from './dot-wordmark-reveal';
 import { dotWordmarkRevealControls } from './dot-wordmark-reveal-controls';
+import {
+  pendulumBrandSwingDefaults,
+  pendulumBrandSwingMeta,
+  pendulumBrandSwingSchema,
+} from './pendulum-brand-swing';
+import { pendulumBrandSwingControls } from './pendulum-brand-swing-controls';
 
 export const brandClips: ClipModule[] = [
   {
@@ -92,5 +98,12 @@ export const brandClips: ClipModule[] = [
     defaults: dotWordmarkRevealDefaults,
     meta: dotWordmarkRevealMeta,
     controls: dotWordmarkRevealControls,
+  },
+  {
+    id: 'pendulum-brand-swing',
+    schema: pendulumBrandSwingSchema,
+    defaults: pendulumBrandSwingDefaults,
+    meta: pendulumBrandSwingMeta,
+    controls: pendulumBrandSwingControls,
   },
 ];
