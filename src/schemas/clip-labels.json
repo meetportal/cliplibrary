@@ -5250,5 +5250,147 @@
       "Headline": "Brand's Growth",
       "Website": "willowandco.com"
     }
+  },
+  "pill-sticker-collage": {
+    "summary": "On a near-black stage with a crimson glow in the top-right corner, the headline builds word by word as a pile of tilted stickers: red pills with white text, white pills with black text, outlined pills with white or red text, and round badges with an arrow, a starburst, a hash and a down-left arrow slotted between the words. Each sticker grows out of a dot with a quick spin and settles, row after row, while the whole pile drifts up and slowly sideways. As the last row lands the drift eases off, the stickers below it shrink away in a reverse pop, and the company name slaps down in the cleared space as the biggest red sticker with a white ring, the logo on a white plate beside it and the website on a white sticker under it with a red arrow badge. The last headline row, the name, the logo and the website hold together and drift gently sideways to the end.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the first headline word is already growing out of a dot as a red pill sticker in the upper left"
+      },
+      {
+        "at": 0.4,
+        "what": "the second word pops in beside it as a white pill and the pile starts drifting up and slowly sideways"
+      },
+      {
+        "at": 0.8,
+        "what": "a round arrow badge pops above them and a new row begins"
+      },
+      {
+        "at": 1.8,
+        "what": "outlined and filled word stickers keep landing about every half second, with a starburst badge whose rays keep turning"
+      },
+      {
+        "at": 3.2,
+        "what": "a hash badge and more rows stack upward, each row swinging left or right"
+      },
+      {
+        "at": 5.0,
+        "what": "the last headline row lands at the top of the frame while the upward drift eases to a stop"
+      },
+      {
+        "at": 5.8,
+        "what": "the stickers under the last row shrink and fade away one after another, clearing the middle of the frame"
+      },
+      {
+        "at": 6.1,
+        "what": "the company name slaps down in the cleared space as a big red sticker with a white ring"
+      },
+      {
+        "at": 6.3,
+        "what": "the logo lands on a white plate at the left end of the name, then the website on a white sticker under it and a white arrow badge pointing at it"
+      },
+      {
+        "at": 7.2,
+        "what": "the last headline row, the name, the logo and the website hold and drift slowly sideways to the last frame while the starburst keeps turning"
+      }
+    ],
+    "visuals": [
+      "near-black backdrop with a crimson glow from the top-right corner and a fine static dither",
+      "red pill stickers with white text",
+      "white pill stickers with black text",
+      "outlined pill stickers with white or red text",
+      "round white badges with an arrow, a starburst, a hash and a down-left arrow",
+      "short words as round disc stickers",
+      "big red company name sticker with a white ring, the logo on a white disc or wide plate beside or under it",
+      "white website sticker with a white arrow badge holding a red arrow",
+      "soft shadows under the stickers"
+    ],
+    "motion": [
+      "stickers grow out of a dot with a small spin and a long soft landing",
+      "one sticker about every half second, in reading order",
+      "rows stack upward while the pile drifts up and swings left and right",
+      "drift slowing as the headline completes",
+      "slow sideways drift and a turning starburst through the hold",
+      "stickers under the end lockup shrinking away in a reverse pop",
+      "brand stickers slapping down one after another in the cleared space"
+    ],
+    "mood": ["playful", "bold", "energetic", "modern", "punchy"],
+    "roles": ["opener", "feature", "closer"],
+    "useCases": [
+      "brand or product launch post",
+      "agency or studio promo for social",
+      "event or campaign teaser with a slogan",
+      "end card for a reel with the website",
+      "kinetic headline for a sale or announcement"
+    ],
+    "editable": [
+      "headline words",
+      "company name",
+      "website",
+      "logo image",
+      "primary, surface, text and background colours, glow colour",
+      "font, word size, name size and website size",
+      "badge count, tilt, outline width and shadow",
+      "row width, row spacing and scatter",
+      "logo plate size, brand position and the website arrow",
+      "time between stickers, pop length, pause before the name and drift easing",
+      "badge motion, glow strength, reach, drift and dither"
+    ],
+    "palette": ["#111010", "#ef4a5c", "#69272d", "#ffffff", "#2b1418"],
+    "keywords": [
+      "sticker",
+      "stickers",
+      "pill",
+      "pills",
+      "badge",
+      "collage",
+      "kinetic type",
+      "kinetic typography",
+      "word by word",
+      "pop",
+      "tilted",
+      "rounded",
+      "outline",
+      "slogan",
+      "headline",
+      "launch",
+      "promo",
+      "brand",
+      "end card",
+      "website",
+      "dark",
+      "red"
+    ],
+    "concept": "A headline is spelled out as a pile of tilted stickers, filled, white and outlined pills mixed with round arrow, starburst and hash badges, that slap down one after another while the pile drifts upward, so a plain sentence feels loud, playful and designed. The drift slows as the company name lands as the biggest sticker on top of the pile with the logo and website, so the collage ends on the brand. Copy is a short punchy slogan of everyday words.",
+    "needs": ["headline", "company name", "website", "logo"],
+    "placeholders": {
+      "Headline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "Short slogan; every word becomes its own sticker in reading order, one or two letter words become round stickers"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Brand name on the biggest red sticker under the last headline row; long names wrap onto two lines and move the logo under the name"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Website address on the white sticker under the name, next to an arrow badge"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; sits on a white disc or wide plate beside the name, or under it for long names"
+      }
+    },
+    "samples": {
+      "Headline": "Bold ideas made simple for brands that stand out",
+      "Company Name": "Willow & Co.",
+      "Website": "willowandco.com",
+      "Logo": "design-assets/logos/willow-round.png"
+    },
+    "inspiration": "https://elements.envato.com/modern-kinetic-typography-animations-RPWWBLL"
   }
 }

@@ -26,6 +26,7 @@ import type { CirclePopProps } from './clips/kinetic-type/circle-pop';
 import type { ComingSoonFlipsProps } from './clips/kinetic-type/coming-soon-flips';
 import type { DominoWordsProps } from './clips/kinetic-type/domino-words';
 import type { EchoStackProps } from './clips/kinetic-type/echo-stack';
+import type { PillStickerCollageProps } from './clips/kinetic-type/pill-sticker-collage';
 import type { TextRingsProps } from './clips/kinetic-type/text-rings';
 import type { ColorPillsProps } from './clips/list-pickers/color-pills';
 import type { PillFanProps } from './clips/list-pickers/pill-fan';
@@ -64,6 +65,7 @@ export interface ClipPropsMap {
   'circle-pop': CirclePopProps;
   'domino-words': DominoWordsProps;
   'echo-stack': EchoStackProps;
+  'pill-sticker-collage': PillStickerCollageProps;
   'dot-morph-wordmark': DotMorphWordmarkProps;
   'dot-ring-logo-reveal': DotRingLogoRevealProps;
   'dot-wordmark-reveal': DotWordmarkRevealProps;
