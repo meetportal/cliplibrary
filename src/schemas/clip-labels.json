@@ -5581,5 +5581,202 @@
       "Feature 2 Line": "Follow your delivery live, right to your door.",
       "Tagline": "Same-day flowers across New York in a few taps."
     }
+  },
+  "tech-stack-branches": {
+    "summary": "On a warm coral wash, a red root pill carries the logo on a white chip, then the company name and tagline. A hairline branches from it to a wheel of capsule pills strung on a dashed arc that bulges toward the root. The wheel ticks upward one item at a time; the pill level with the root turns red and full size while the others stay a softer orange, and a small light runs down the branch as each one lands.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the root pill with its logo chip and the branch line are on screen from the first frame while the wheel spins up into view from below"
+      },
+      {
+        "at": 1.0,
+        "what": "the wheel lands on the first item level with the root and a light pulse runs down the branch into it"
+      },
+      {
+        "at": 1.7,
+        "what": "the wheel ticks up and the second item takes the red highlight beside the root"
+      },
+      {
+        "at": 2.4,
+        "what": "the third item ticks in, the pills above and below shrinking and turning orange as they pass"
+      },
+      {
+        "at": 3.1,
+        "what": "the fourth item ticks in with the dashed arc sliding along with the wheel"
+      },
+      {
+        "at": 3.8,
+        "what": "the fifth item ticks in"
+      },
+      {
+        "at": 4.5,
+        "what": "the sixth item ticks in"
+      },
+      {
+        "at": 5.2,
+        "what": "the wheel ticks back to the first item, which keeps creeping slowly through level with the root to the last frame"
+      }
+    ],
+    "visuals": [
+      "coral to pale pink gradient wash",
+      "red root pill with company name and tagline",
+      "logo on a white chip inside the root pill",
+      "thin white branch line from the root to the wheel",
+      "capsule pills with asterisk marks and two lines of text",
+      "dashed arc through the wheel bulging left",
+      "highlighted red pill beside the root, softer orange pills above and below"
+    ],
+    "motion": [
+      "wheel ticking upward one item at a time",
+      "slow creep between ticks that never stops",
+      "highlight colour and size passing to the centre pill",
+      "light pulse running down the branch",
+      "opening spin that settles onto the first item",
+      "slow background drift",
+      "wheel fading in as it spins"
+    ],
+    "mood": ["modern", "warm", "organised", "confident"],
+    "roles": ["feature", "opener"],
+    "useCases": [
+      "services or capabilities rundown",
+      "product or platform stack overview",
+      "what we offer section of a promo",
+      "agency or studio intro",
+      "linkedin or instagram explainer post"
+    ],
+    "editable": [
+      "company name and tagline",
+      "logo chip size and color",
+      "four to eight items with detail lines",
+      "primary, secondary, text and background colors",
+      "font, pill size and icon",
+      "wheel spacing, curve, side pill size and fade",
+      "branch length, line width and pulse",
+      "frames per item, opening spin and drift",
+      "vertical position and margins"
+    ],
+    "palette": ["#f4545a", "#f9845f", "#feb197", "#fe7f80", "#fde3dc", "#ffffff"],
+    "keywords": [
+      "tech stack",
+      "branches",
+      "tree",
+      "mind map",
+      "node",
+      "pills",
+      "wheel",
+      "carousel",
+      "list",
+      "services",
+      "capabilities",
+      "features",
+      "architecture",
+      "ecosystem",
+      "platform",
+      "coral",
+      "red",
+      "orange",
+      "pink",
+      "dashed line",
+      "connector",
+      "logo",
+      "company name"
+    ],
+    "concept": "One root idea branches into its parts: the company sits on a fixed root pill while a wheel of its services or features ticks past beside it, each part getting its moment level with the root as a light runs down the branch to it. Calm, organised and confident copy, a short name and a few words of detail per item.",
+    "needs": ["logo", "company name", "tagline", "six items with a detail line each"],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Name on the root pill at the left, beside the logo chip, that every item branches from; long names shrink to one line"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Short line under the company name on the root pill, such as what the company is"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it sits on a white chip at the left end of the root pill, before the company name"
+      },
+      "Item 1": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "Item 1 on the wheel, one of the parts of the business or product, a word or two"
+      },
+      "Item 1 Detail": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Small line under item 1 that says what it covers"
+      },
+      "Item 2": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "Item 2 on the wheel, one of the parts of the business or product, a word or two"
+      },
+      "Item 2 Detail": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Small line under item 2 that says what it covers"
+      },
+      "Item 3": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "Item 3 on the wheel, one of the parts of the business or product, a word or two"
+      },
+      "Item 3 Detail": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Small line under item 3 that says what it covers"
+      },
+      "Item 4": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "Item 4 on the wheel, one of the parts of the business or product, a word or two"
+      },
+      "Item 4 Detail": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Small line under item 4 that says what it covers"
+      },
+      "Item 5": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "Item 5 on the wheel, one of the parts of the business or product, a word or two"
+      },
+      "Item 5 Detail": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Small line under item 5 that says what it covers"
+      },
+      "Item 6": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "Item 6 on the wheel, one of the parts of the business or product, a word or two"
+      },
+      "Item 6 Detail": {
+        "kind": "text",
+        "maxChars": 30,
+        "hint": "Small line under item 6 that says what it covers"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Tagline": "Flowers & Events Studio",
+      "Logo": "design-assets/logos/willow-wide.png",
+      "Item 1": "Wedding Florals",
+      "Item 1 Detail": "Ceremony & Reception",
+      "Item 2": "Event Styling",
+      "Item 2 Detail": "Corporate & Private",
+      "Item 3": "Same-day Delivery",
+      "Item 3 Detail": "Across New York",
+      "Item 4": "Workshops",
+      "Item 4 Detail": "Bouquets & Wreaths",
+      "Item 5": "Subscriptions",
+      "Item 5 Detail": "Fresh Stems Every Week",
+      "Item 6": "Online Shop",
+      "Item 6 Detail": "Gifts & Gift Cards"
+    },
+    "inspiration": "https://elements.envato.com/text-carousel-kinetic-typography-text-animation-pa-AQTKGV4"
   }
 }
