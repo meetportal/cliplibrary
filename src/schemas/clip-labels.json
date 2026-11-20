@@ -5392,5 +5392,194 @@
       "Logo": "design-assets/logos/willow-round.png"
     },
     "inspiration": "https://elements.envato.com/modern-kinetic-typography-animations-RPWWBLL"
+  },
+  "app-screens-promo": {
+    "summary": "On a pale lavender stage with large soft rounded app-icon shapes drifting behind, a white app icon holding your logo flips in from edge-on beside your app name in big bold type, creeps a little and lifts away upward. A dark phone with your main screen rises to the centre and two more slide out from behind it into a fan, then the fan flies up past the top edge as two tilted phones rise on the right beside a first feature caption with a short accent bar and a sentence. That pair flies up while a big phone sweeps in from below and pulls back into a tilted pair on the left beside a second caption. Finally two big upright phones rise on the left while your logo on a white app-icon plate, the app name in two bold lines, an accent bar, a tagline and two store badges rise in on the right and hold with the phones drifting gently upward.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "a white app icon with the logo flips in from edge-on at the right while the app name rises in on its left"
+      },
+      {
+        "at": 1.1,
+        "what": "the icon and name hold, the icon slowly turning and bobbing"
+      },
+      {
+        "at": 1.7,
+        "what": "the name fades and the icon lifts away out of the top edge"
+      },
+      {
+        "at": 1.9,
+        "what": "a dark phone with the main screen rises from below to the centre"
+      },
+      {
+        "at": 2.3,
+        "what": "two more phones slide out from behind it to the left and right into a fan of three"
+      },
+      {
+        "at": 4.5,
+        "what": "the fan accelerates up and out of the top edge, growing slightly as it passes"
+      },
+      {
+        "at": 5.2,
+        "what": "two phones tilted to the right rise into the right half"
+      },
+      {
+        "at": 5.9,
+        "what": "an accent bar, the first feature title and its line rise in on the left"
+      },
+      {
+        "at": 7.9,
+        "what": "the caption fades and the pair flies up and out"
+      },
+      {
+        "at": 8.5,
+        "what": "a big phone sweeps in from below and pulls back into a left-leaning pair on the left"
+      },
+      {
+        "at": 9.3,
+        "what": "the second feature caption rises in on the right"
+      },
+      {
+        "at": 11.1,
+        "what": "the caption fades and the pair flies up and out"
+      },
+      {
+        "at": 11.7,
+        "what": "two upright phones rise on the left, the main screen in front"
+      },
+      {
+        "at": 12.2,
+        "what": "the logo on its app-icon plate, the app name, accent bar, tagline and two store badges rise in one after another on the right"
+      },
+      {
+        "at": 13.6,
+        "what": "the end card holds with the phones drifting slowly upward and the backdrop shapes drifting"
+      }
+    ],
+    "visuals": [
+      "dark flat smartphones with app screenshots",
+      "pale lavender backdrop with large soft rounded-square shapes",
+      "white app icon holding the logo with two accent pills, flat again as the logo plate on the end card",
+      "big bold geometric sans app name and feature titles",
+      "short accent bars above the captions",
+      "black store badges with simple glyphs"
+    ],
+    "motion": [
+      "3d icon flip-in",
+      "rise from below and settle",
+      "fan slide-out from behind",
+      "fly up past the top edge",
+      "pull-back from a close phone",
+      "staggered text rise and fade",
+      "idle float and backdrop drift"
+    ],
+    "mood": ["clean", "modern", "friendly", "upbeat"],
+    "roles": ["opener", "feature", "cta", "closer"],
+    "useCases": [
+      "app launch video",
+      "app store preview",
+      "feature walkthrough of an app",
+      "social ad for a mobile app",
+      "download call to action"
+    ],
+    "editable": [
+      "three app screens",
+      "logo",
+      "app name",
+      "two feature titles and lines",
+      "tagline",
+      "store badge words and toggle",
+      "primary, text, background and phone colors",
+      "title font and sizes",
+      "phone size, tilt, fan spread and float",
+      "app icon size, turn and roundness",
+      "rise length and text stagger"
+    ],
+    "palette": ["#e2e2f0", "#201f2b", "#1c1d26", "#b02fd6", "#ffffff"],
+    "keywords": [
+      "app promo",
+      "app screens",
+      "phone mockup",
+      "multiple phones",
+      "phone fan",
+      "app launch",
+      "app store",
+      "google play",
+      "download badges",
+      "feature captions",
+      "mobile app ad",
+      "lavender",
+      "end card"
+    ],
+    "concept": "Your app's screens are the whole show: the app icon and name land first, then dark phones carrying the screens rise, fan out and fly up past camera one set after another, each pair named by a short feature caption, and it closes on the logo, name and store badges. Calm lavender stage, one steady upward flow, short confident copy.",
+    "inspiration": "https://elements.envato.com/app-promo-KJJP7DK",
+    "needs": [
+      "three app screenshots",
+      "logo",
+      "app name",
+      "two feature titles and lines",
+      "tagline"
+    ],
+    "placeholders": {
+      "Screen 1": {
+        "kind": "image",
+        "hint": "A portrait screenshot of your app (about 9 by 19.5); it fills the phone screen from the top and crops any extra. The main screen: centre of the fan, the second feature and the front phone of the end card"
+      },
+      "Screen 2": {
+        "kind": "image",
+        "hint": "A portrait screenshot of your app (about 9 by 19.5); it fills the phone screen from the top and crops any extra. Left of the fan, the front phone of the first feature and the back phone of the end card"
+      },
+      "Screen 3": {
+        "kind": "image",
+        "hint": "A portrait screenshot of your app (about 9 by 19.5); it fills the phone screen from the top and crops any extra. Right of the fan and the big phone that flies in for the second feature"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; it fills the app icon that flips in at the start and sits above the name on the end card"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 26,
+        "hint": "The app's name, big beside the app icon at the start and as the end card title; wraps to two lines and shrinks"
+      },
+      "Feature 1": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "Two or three words naming the first thing the app does well, set big beside the first pair of phones"
+      },
+      "Feature 1 Line": {
+        "kind": "text",
+        "maxChars": 56,
+        "hint": "One short sentence under the first feature that says what it means for the user"
+      },
+      "Feature 2": {
+        "kind": "text",
+        "maxChars": 22,
+        "hint": "Two or three words naming a second strength, set big beside the second pair of phones"
+      },
+      "Feature 2 Line": {
+        "kind": "text",
+        "maxChars": 56,
+        "hint": "One short sentence under the second feature"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 60,
+        "hint": "One line under the app name on the end card that says why to download it"
+      }
+    },
+    "samples": {
+      "Screen 1": "design-assets/screens/willow-app-home.jpg",
+      "Screen 2": "design-assets/screens/willow-app-bouquet.jpg",
+      "Screen 3": "design-assets/screens/willow-app-delivery.jpg",
+      "Logo": "design-assets/logos/willow-square.png",
+      "Company Name": "Willow & Co.",
+      "Feature 1": "Fresh every day",
+      "Feature 1 Line": "Bouquets hand tied each morning by our florists.",
+      "Feature 2": "Track every stem",
+      "Feature 2 Line": "Follow your delivery live, right to your door.",
+      "Tagline": "Same-day flowers across New York in a few taps."
+    }
   }
 }
