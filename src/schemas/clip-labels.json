@@ -5008,5 +5008,142 @@
       "Email": "hello@willowandco.com"
     },
     "inspiration": "https://github.com/meetportal/cliplibrary/blob/1f00977d/public/previews/going-live-teaser.mp4"
+  },
+  "pendulum-brand-swing": {
+    "roles": ["opener", "feature", "closer"],
+    "concept": "A branded pendulum does all the editing: the client's logo swings on a long Primary string, and on every pass the string slices through the centre copy and leaves the next line behind it, from the company name to the headline to the tagline and back. The rhythm is calm and metronomic, the headline returns between the other two lines as the anchor, and the copy is a short, confident agency promise.",
+    "needs": ["logo", "company name", "headline", "tagline", "services", "website"],
+    "inspiration": "https://pin.it/WkyxXdWnz",
+    "summary": "A vertical brand promo on a near-black plate with a faint centre glow. A round bob holding the logo on a light plate inside a crimson ring hangs from a long crimson string pinned just above the frame and swings like a pendulum, slowing at each end. On every pass the string slices through the big centre copy and leaves the next line behind it, with a soft motion-blurred edge: the company name, a three-line headline in bold, light and bold, a two-word tagline with its first word in crimson, the headline again, and back to the name. The small company name sits at the top with a crimson first letter, and two rows of services and a crimson website sit at the bottom. It loops seamlessly.",
+    "beats": [
+      {
+        "at": 0.0,
+        "what": "the bob rests at the right end of its swing and the company name holds in the centre"
+      },
+      {
+        "at": 0.6,
+        "what": "the bob swings left and its string wipes the name into the three-line headline"
+      },
+      {
+        "at": 1.3,
+        "what": "the bob slows at the left end while the headline holds"
+      },
+      {
+        "at": 1.9,
+        "what": "the bob swings right and wipes in the tagline with its first word in crimson"
+      },
+      {
+        "at": 2.5,
+        "what": "the tagline holds as the bob slows at the right end"
+      },
+      {
+        "at": 3.2,
+        "what": "the swing back wipes the headline in again"
+      },
+      {
+        "at": 4.4,
+        "what": "the next pass wipes back to the company name and the cycle repeats once more"
+      },
+      {
+        "at": 10.1,
+        "what": "the bob returns to the right end with the name in place and the loop starts over"
+      }
+    ],
+    "visuals": [
+      "near-black plate with a soft centre glow",
+      "long crimson pendulum string from above the frame",
+      "logo bob: light plate in a crimson ring with a drop shadow",
+      "soft motion trail behind the bob",
+      "big centre copy wiped by the string",
+      "bold, light and bold headline lines",
+      "tagline with a crimson first word",
+      "small company name with a crimson first letter",
+      "services rows and crimson website at the bottom"
+    ],
+    "motion": [
+      "pendulum swing",
+      "string wipe",
+      "motion-blurred wipe edge",
+      "dwell at each end",
+      "motion trail",
+      "seamless loop"
+    ],
+    "mood": ["confident", "rhythmic", "minimal", "bold"],
+    "useCases": [
+      "agency or studio promo",
+      "brand intro with services and website",
+      "instagram reel or story",
+      "service list teaser",
+      "looping brand post"
+    ],
+    "editable": [
+      "company name",
+      "headline",
+      "tagline",
+      "services",
+      "website",
+      "logo image",
+      "primary, text, surface and background colors",
+      "font and sizes",
+      "swing width, string length, pause at each end, bob size, string width, trail and shadow",
+      "positions"
+    ],
+    "palette": ["#1e1e20", "#121213", "#dc1046", "#ffffff", "#f7f4ef"],
+    "keywords": [
+      "pendulum",
+      "swing",
+      "wipe",
+      "string",
+      "agency",
+      "studio",
+      "brand promo",
+      "logo",
+      "services",
+      "website",
+      "loop",
+      "hypnotic",
+      "metronome",
+      "dark",
+      "crimson"
+    ],
+    "placeholders": {
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The brand name: wiped in as the first big line and shown small at the top"
+      },
+      "Headline": {
+        "kind": "text",
+        "maxChars": 36,
+        "hint": "Short promise in two to four short lines, one per row; it returns on every other pass"
+      },
+      "Tagline": {
+        "kind": "text",
+        "maxChars": 24,
+        "hint": "Two or three words on what you do; the first word is accented"
+      },
+      "Services": {
+        "kind": "text",
+        "maxChars": 90,
+        "hint": "What you offer, separated by bars, up to three rows above the website"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 32,
+        "hint": "Website on the last line"
+      },
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo on the swinging bob: wide, square or round"
+      }
+    },
+    "samples": {
+      "Company Name": "Willow & Co.",
+      "Headline": "Making\nMoments\nBloom.",
+      "Tagline": "Floral studio",
+      "Services": "Weddings | Events | Floral Design | Workshops\nSeasonal subscriptions",
+      "Website": "willowandco.com",
+      "Logo": "design-assets/logos/willow-round.png"
+    }
   }
 }
