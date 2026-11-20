@@ -40,6 +40,7 @@ export * from './clips/overlays/film-dust';
 export * from './clips/overlays/floating-cards';
 export * from './clips/phone-layouts/charge-compare';
 export * from './clips/phone-reveals/phone-spin-in';
+export * from './clips/screen-demos/growth-call-screen';
 export * from './clips/text-reveals/going-live-teaser';
 export * from './clips/text-reveals/magnifier-caption';
 export * from './clips/text-reveals/neon-sign-flicker';
