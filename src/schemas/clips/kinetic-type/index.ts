@@ -29,6 +29,12 @@ import { dominoWordsDefaults, dominoWordsMeta, dominoWordsSchema } from './domin
 import { dominoWordsControls } from './domino-words-controls';
 import { echoStackDefaults, echoStackMeta, echoStackSchema } from './echo-stack';
 import { echoStackControls } from './echo-stack-controls';
+import {
+  pillStickerCollageDefaults,
+  pillStickerCollageMeta,
+  pillStickerCollageSchema,
+} from './pill-sticker-collage';
+import { pillStickerCollageControls } from './pill-sticker-collage-controls';
 import { textRingsDefaults, textRingsMeta, textRingsSchema } from './text-rings';
 import { textRingsControls } from './text-rings-controls';
 
@@ -81,6 +87,13 @@ export const kineticTypeClips: ClipModule[] = [
     defaults: echoStackDefaults,
     meta: echoStackMeta,
     controls: echoStackControls,
+  },
+  {
+    id: 'pill-sticker-collage',
+    schema: pillStickerCollageSchema,
+    defaults: pillStickerCollageDefaults,
+    meta: pillStickerCollageMeta,
+    controls: pillStickerCollageControls,
   },
   {
     id: 'text-rings',

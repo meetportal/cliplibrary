@@ -32,6 +32,7 @@ export * from './clips/kinetic-type/circle-pop';
 export * from './clips/kinetic-type/coming-soon-flips';
 export * from './clips/kinetic-type/domino-words';
 export * from './clips/kinetic-type/echo-stack';
+export * from './clips/kinetic-type/pill-sticker-collage';
 export * from './clips/kinetic-type/text-rings';
 export * from './clips/list-pickers/color-pills';
 export * from './clips/list-pickers/pill-fan';

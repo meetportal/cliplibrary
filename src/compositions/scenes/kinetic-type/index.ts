@@ -6,6 +6,7 @@ import { circlePopScene } from './circle-pop';
 import { comingSoonFlipsScene } from './coming-soon-flips';
 import { dominoWordsScene } from './domino-words';
 import { echoStackScene } from './echo-stack';
+import { pillStickerCollageScene } from './pill-sticker-collage';
 import { textRingsScene } from './text-rings';
 
 export const kineticTypeScenes: SceneModule[] = [
@@ -16,5 +17,6 @@ export const kineticTypeScenes: SceneModule[] = [
   comingSoonFlipsScene,
   dominoWordsScene,
   echoStackScene,
+  pillStickerCollageScene,
   textRingsScene,
 ];
