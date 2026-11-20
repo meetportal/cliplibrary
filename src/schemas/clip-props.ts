@@ -30,6 +30,7 @@ import type { PillStickerCollageProps } from './clips/kinetic-type/pill-sticker-
 import type { TextRingsProps } from './clips/kinetic-type/text-rings';
 import type { ColorPillsProps } from './clips/list-pickers/color-pills';
 import type { PillFanProps } from './clips/list-pickers/pill-fan';
+import type { TechStackBranchesProps } from './clips/list-pickers/tech-stack-branches';
 import type { WordPickerProps } from './clips/list-pickers/word-picker';
 import type { FilmDustProps } from './clips/overlays/film-dust';
 import type { FloatingCardsProps } from './clips/overlays/floating-cards';
@@ -79,6 +80,7 @@ export interface ClipPropsMap {
   'neon-sign-flicker': NeonSignFlickerProps;
   'text-rings': TextRingsProps;
   'pill-fan': PillFanProps;
+  'tech-stack-branches': TechStackBranchesProps;
   'color-pills': ColorPillsProps;
   'film-dust': FilmDustProps;
   'floating-cards': FloatingCardsProps;
