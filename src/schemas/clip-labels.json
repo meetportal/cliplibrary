@@ -5145,5 +5145,110 @@
       "Website": "willowandco.com",
       "Logo": "design-assets/logos/willow-round.png"
     }
+  },
+  "growth-call-screen": {
+    "summary": "A black phone incoming-call screen where your logo sits on a white plate as the caller photo with soft accent ripples, the company name as caller ID and a three-line headline with the middle line in the accent colour; a shimmer sweeps across slide to answer until the knob slides across, the bar fills with the accent and your website appears on it.",
+    "beats": [
+      {
+        "at": 0,
+        "what": "Opens with the logo plate already fading in; caller ID and the three headline lines rise in, staggered"
+      },
+      {
+        "at": 0.3,
+        "what": "Remind Me and Message icons and the slide to answer bar rise in below; the whole screen is set by 0.8 s"
+      },
+      {
+        "at": 0.5,
+        "what": "A light sweeps across slide to answer every 1.4 s while thin accent ripples pulse out of the logo plate"
+      },
+      {
+        "at": 6.1,
+        "what": "The knob slides right and the bar fills with the accent colour behind it as the label fades"
+      },
+      {
+        "at": 6.9,
+        "what": "The website rises onto the filled bar"
+      },
+      {
+        "at": 7.5,
+        "what": "A gloss passes over the filled bar; the answered screen holds with the ripples still breathing"
+      }
+    ],
+    "visuals": [
+      "pure black phone call screen",
+      "logo on a white round or pill plate as the caller photo",
+      "soft accent ripples around the plate",
+      "headline Your / highlighted caller line / is calling...",
+      "alarm clock and speech bubble icons with Remind Me and Message",
+      "rounded slide to answer bar with a white knob and green phone glyph",
+      "accent-filled bar with the website"
+    ],
+    "motion": [
+      "staggered rise and fade entrance",
+      "light shimmer sweeping left to right across the slide label",
+      "ripples pulsing out from the logo",
+      "knob sliding across the bar as the fill follows",
+      "gloss sweep over the filled bar"
+    ],
+    "mood": ["teasing", "confident", "minimal", "playful"],
+    "roles": ["opener", "cta"],
+    "useCases": [
+      "marketing agency teaser post",
+      "growth or consulting service ad",
+      "story or reel hook that ends on the website",
+      "launch announcement styled as a phone call"
+    ],
+    "editable": [
+      "logo, with or without its plate",
+      "company name, highlighted caller line, the lines above and below, website",
+      "slide label and the two action labels",
+      "primary, text, background, surface, knob and phone icon colours",
+      "font and text sizes",
+      "ripple count and reach, ring rhythm and shimmer width",
+      "whether and when the call is answered",
+      "bar width and position, caller position, action row on or off"
+    ],
+    "palette": ["#000000", "#eebc14", "#ffffff", "#1f2222", "#3fae4d"],
+    "keywords": [
+      "incoming call",
+      "phone call screen",
+      "slide to answer",
+      "is calling",
+      "iphone call",
+      "growth is calling",
+      "shimmer text",
+      "agency ad",
+      "call to action"
+    ],
+    "concept": "A brand pitch dressed as the most familiar screen on a phone: an incoming call from your own logo, with the highlighted caller line saying what is on the line and the slide-to-answer shimmer quietly urging you to pick up. The call gets answered at the end and the bar turns into your website. Playful, teasing copy.",
+    "needs": ["logo", "company name", "headline", "website"],
+    "inspiration": "https://pin.it/3vFU8wYcq",
+    "placeholders": {
+      "Logo": {
+        "kind": "image",
+        "hint": "Logo: wide, square or round; shown as the caller photo at the top"
+      },
+      "Company Name": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "Caller ID under the logo, the name of whoever is calling"
+      },
+      "Headline": {
+        "kind": "text",
+        "maxChars": 28,
+        "hint": "The highlighted caller name in the line Your ... is calling, such as Brand's Growth"
+      },
+      "Website": {
+        "kind": "text",
+        "maxChars": 24,
+        "hint": "Where to go, shown on the bar once the call is answered"
+      }
+    },
+    "samples": {
+      "Logo": "design-assets/logos/willow-round.png",
+      "Company Name": "Willow & Co.",
+      "Headline": "Brand's Growth",
+      "Website": "willowandco.com"
+    }
   }
 }
