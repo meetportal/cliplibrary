@@ -39,6 +39,7 @@ export * from './clips/list-pickers/pill-fan';
 export * from './clips/list-pickers/word-picker';
 export * from './clips/overlays/film-dust';
 export * from './clips/overlays/floating-cards';
+export * from './clips/phone-layouts/app-screens-promo';
 export * from './clips/phone-layouts/charge-compare';
 export * from './clips/phone-reveals/phone-spin-in';
 export * from './clips/screen-demos/growth-call-screen';

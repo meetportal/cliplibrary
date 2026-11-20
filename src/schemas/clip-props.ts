@@ -33,6 +33,7 @@ import type { PillFanProps } from './clips/list-pickers/pill-fan';
 import type { WordPickerProps } from './clips/list-pickers/word-picker';
 import type { FilmDustProps } from './clips/overlays/film-dust';
 import type { FloatingCardsProps } from './clips/overlays/floating-cards';
+import type { AppScreensPromoProps } from './clips/phone-layouts/app-screens-promo';
 import type { ChargeCompareProps } from './clips/phone-layouts/charge-compare';
 import type { PhoneSpinInProps } from './clips/phone-reveals/phone-spin-in';
 import type { GrowthCallScreenProps } from './clips/screen-demos/growth-call-screen';
@@ -58,6 +59,7 @@ export interface ClipPropsMap {
   'chalk-badges-reel': ChalkBadgesReelProps;
   'chalk-title': ChalkTitleProps;
   'doodle-arrows': DoodleArrowsProps;
+  'app-screens-promo': AppScreensPromoProps;
   'charge-compare': ChargeCompareProps;
   'chevron-mark-assemble': ChevronMarkAssembleProps;
   'coming-soon-flips': ComingSoonFlipsProps;
