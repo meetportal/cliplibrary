@@ -10,6 +10,7 @@ import type { CtaEndCardProps } from './clips/brand/cta-end-card';
 import type { DotMorphWordmarkProps } from './clips/brand/dot-morph-wordmark';
 import type { DotRingLogoRevealProps } from './clips/brand/dot-ring-logo-reveal';
 import type { DotWordmarkRevealProps } from './clips/brand/dot-wordmark-reveal';
+import type { PendulumBrandSwingProps } from './clips/brand/pendulum-brand-swing';
 import type { ChalkBadgeProps } from './clips/hand-drawn/chalk-badge';
 import type { ChalkBadgeGridProps } from './clips/hand-drawn/chalk-badge-grid';
 import type { ChalkBadgesReelProps } from './clips/hand-drawn/chalk-badges-reel';
@@ -65,6 +66,7 @@ export interface ClipPropsMap {
   'dot-morph-wordmark': DotMorphWordmarkProps;
   'dot-ring-logo-reveal': DotRingLogoRevealProps;
   'dot-wordmark-reveal': DotWordmarkRevealProps;
+  'pendulum-brand-swing': PendulumBrandSwingProps;
   'magnifier-caption': MagnifierCaptionProps;
   'going-live-teaser': GoingLiveTeaserProps;
   'gold-monogram-invite': GoldMonogramInviteProps;

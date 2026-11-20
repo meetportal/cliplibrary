@@ -7,6 +7,7 @@ import { ctaEndCardScene } from './cta-end-card';
 import { dotMorphWordmarkScene } from './dot-morph-wordmark';
 import { dotRingLogoRevealScene } from './dot-ring-logo-reveal';
 import { dotWordmarkRevealScene } from './dot-wordmark-reveal';
+import { pendulumBrandSwingScene } from './pendulum-brand-swing';
 
 export const brandScenes: SceneModule[] = [
   appIconRevealScene,
@@ -17,4 +18,5 @@ export const brandScenes: SceneModule[] = [
   dotMorphWordmarkScene,
   dotRingLogoRevealScene,
   dotWordmarkRevealScene,
+  pendulumBrandSwingScene,
 ];
